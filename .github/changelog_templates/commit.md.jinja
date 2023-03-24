@@ -1,0 +1,8 @@
+- {{ commit.summary }} [{{ commit.short_sha }}]({{ repo_url }}/commit/{{ commit.sha }})
+  {{ commit.body|indent(2, first=True) }}
+  {% for key, val in commit.metadata["trailers"].items() %}
+  {% if key not in VALID_AUTHOR_TOKENS %}
+  **{{ key }}:** {{ val|join(", ") }}
+
+  {% endif %}
+{% endfor %}

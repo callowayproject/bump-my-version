@@ -1,0 +1,4 @@
+## {{ version.label }} ({{ version.date_time.strftime("%Y-%m-%d") }})
+{% if version.previous_tag %}
+[Compare the full difference.]({{ repo_url }}/compare/{{ version.previous_tag }}...{{ version.tag }})
+{% endif %}

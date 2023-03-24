@@ -1,0 +1,102 @@
+checkout: null
+commit: 81c961644e8b14b3d8c77783013ca32a567f1ceb
+context:
+  _copy_without_render:
+    - .github/**/*.jinja
+  _dev_requirements:
+    bump2version: '>=1.0.1'
+    generate-changelog: '>=0.7.6'
+    git-fame: '>=1.12.2'
+    pip-tools: ''
+  _docs_requirements: {}
+  _prod_requirements:
+    environs: '>=9.3.5'
+  _test_requirements:
+    coverage: ~=6.1.2
+    poetry: ~=1.3.2
+    pre-commit: ~=2.15.0
+    pytest: ~=6.0.0
+    pytest-cov: ~=3.0.0
+  author: Corey Oordt
+  email: coreyoordt@gmail.com
+  friendly_name: Bump My Version
+  github_user: callowayproject
+  packaging_tool: pip/setuptools
+  project_name: bump-my-version
+  project_short_description: Version bump your Python project
+  project_slug: bump_version
+  version: 0.1.0
+directory: cookiecutter-boilerplate
+merge_strategies:
+  '*.json': comprehensive
+  '*.yaml': comprehensive
+  '*.yml': comprehensive
+no_input: false
+overwrite: []
+overwrite_exclude: []
+password: null
+skip_generation: []
+skip_hooks: false
+skip_if_file_exists: true
+template: /Users/OORDCOR/Projects/datascience-cookiecomposer-templates/
+---
+checkout: null
+commit: 81c961644e8b14b3d8c77783013ca32a567f1ceb
+context:
+  _copy_without_render:
+    - .github/**/*.yaml
+  _prod_requirements:
+    rich-click: ''
+  friendly_name: Bump My Version
+  project_name: bump-my-version
+  project_short_description: Version bump your Python project
+  project_slug: bump_version
+  version: 0.1.0
+directory: cookiecutter-cli
+merge_strategies:
+  '*.cfg': comprehensive
+  '*.json': comprehensive
+  '*.yaml': comprehensive
+  '*.yml': comprehensive
+no_input: false
+overwrite: []
+overwrite_exclude: []
+password: null
+skip_generation: []
+skip_hooks: false
+skip_if_file_exists: true
+template: /Users/OORDCOR/Projects/datascience-cookiecomposer-templates/
+---
+checkout: null
+commit: 81c961644e8b14b3d8c77783013ca32a567f1ceb
+context:
+  _copy_without_render:
+    - docsrc/**/*.rst
+  _dev_requirements: {}
+  _docs_requirements:
+    Sphinx: '>=4.3.0'
+    furo: ''
+    ghp-import: ''
+    linkify-it-py: ''
+    myst-parser: ''
+    sphinx-autodoc-typehints: ''
+    sphinx-click: ''
+    sphinx-copybutton: ''
+  _prod_requirements: {}
+  friendly_name: Bump My Version
+  github_user: callowayproject
+  project_name: bump-my-version
+  project_slug: bump_version
+directory: cookiecutter-docs
+merge_strategies:
+  '*.json': comprehensive
+  '*.yaml': comprehensive
+  '*.yml': comprehensive
+no_input: false
+overwrite: []
+overwrite_exclude: []
+password: null
+skip_generation: []
+skip_hooks: false
+skip_if_file_exists: true
+template: /Users/OORDCOR/Projects/datascience-cookiecomposer-templates/
