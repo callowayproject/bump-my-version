@@ -1,0 +1,7 @@
+-r test.txt
+-r docs.txt
+
+bump2version>=1.0.1
+git-fame>=1.12.2
+generate-changelog>=0.7.6
+pip-tools

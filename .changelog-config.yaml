@@ -1,0 +1,128 @@
+# For more configuration information, please see https://coordt.github.io/generate-changelog/
+
+# User variables for reference in other parts of the configuration.
+variables:
+  repo_url: https://github.com/callowayproject/bump-my-version
+  changelog_filename: CHANGELOG.md
+
+# Pipeline to find the most recent tag for incremental changelog generation.
+# Leave empty to always start at first commit.
+starting_tag_pipeline:
+  - action: ReadFile
+    kwargs:
+      filename: "{{ changelog_filename }}"
+  - action: FirstRegExMatch
+    kwargs:
+      pattern: (?im)^## (?P<rev>\d+\.\d+(?:\.\d+)?)\s+\(\d+-\d{2}-\d{2}\)$
+      named_subgroup: rev
+
+# Used as the version title of the changes since the last valid tag.
+unreleased_label: Unreleased
+
+# Process the commit's first line for use in the changelog.
+summary_pipeline:
+  - action: strip_spaces
+  - action: Strip
+    comment: Get rid of any periods so we don't get double periods
+    kwargs:
+      chars: .
+  - action: SetDefault
+    args:
+      - no commit message
+  - action: capitalize
+  - action: append_dot
+
+# Process the commit's body for use in the changelog.
+body_pipeline:
+  - action: ParseTrailers
+    comment: Parse the trailers into metadata.
+    kwargs:
+      commit_metadata: save_commit_metadata
+
+# Process and store the full or partial changelog.
+output_pipeline:
+  - action: IncrementalFileInsert
+    kwargs:
+      filename: "{{ changelog_filename }}"
+      last_heading_pattern: (?im)^## \d+\.\d+(?:\.\d+)?\s+\([0-9]+-[0-9]{2}-[0-9]{2}\)$
+
+# Full or relative paths to look for output generation templates.
+template_dirs:
+  - ".github/changelog_templates/"
+
+# Group the commits within a version by these commit attributes.
+group_by:
+  - metadata.category
+
+# Only tags matching this regular expression are used for the changelog.
+tag_pattern: ^[0-9]+\.[0-9]+(?:\.[0-9]+)?$
+
+# Tells ``git-log`` whether to include merge commits in the log.
+include_merges: false
+
+# Ignore commits whose summary line matches any of these regular expression patterns.
+ignore_patterns:
+  - '[@!]minor'
+  - '[@!]cosmetic'
+  - '[@!]refactor'
+  - '[@!]wip'
+  - ^$
+  - ^Merge branch
+  - ^Merge pull
+  - ^Version updated
+
+# Set the commit's category metadata to the first classifier that returns ``True``.
+commit_classifiers:
+  - action: SummaryRegexMatch
+    category: New
+    kwargs:
+      pattern: (?i)^(?:new|add)[^\n]*$
+  - action: SummaryRegexMatch
+    category: Updates
+    kwargs:
+      pattern: (?i)^(?:update|change|rename|remove|delete|improve|refactor|chg|modif)[^\n]*$
+  - action: SummaryRegexMatch
+    category: Fixes
+    kwargs:
+      pattern: (?i)^(?:fix)[^\n]*$
+  - action:
+    category: Other
+
+# Tokens in git commit trailers that indicate authorship.
+valid_author_tokens:
+  - author
+  - based-on-a-patch-by
+  - based-on-patch-by
+  - co-authored-by
+  - co-committed-by
+  - contributions-by
+  - from
+  - helped-by
+  - improved-by
+  - original-patch-by
+
+# Rules applied to commits to determine the type of release to suggest.
+release_hint_rules:
+  - match_result: dev
+    no_match_result: no-release
+    branch: ^((?!master|main).)*$
+  - match_result: patch
+    no_match_result: no-release
+    grouping: Other
+    branch: master|main
+  - match_result: patch
+    no_match_result: no-release
+    grouping: Fixes
+    branch: master|main
+  - match_result: minor
+    no_match_result: no-release
+    grouping: Updates
+    branch: master|main
+  - match_result: minor
+    no_match_result: no-release
+    grouping: New
+    branch: master|main
+  - match_result: major
+    no_match_result: no-release
+    grouping: Breaking Changes
+    branch: master|main

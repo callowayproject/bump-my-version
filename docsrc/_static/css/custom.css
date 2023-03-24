@@ -1,0 +1,11 @@
+.class .sig-prename.descclassname {
+  display: none;
+}
+.subheading {
+  line-height: 1.25;
+  margin-bottom: 0;
+  color: #646776;
+}
+.subheading + section > h1 {
+  margin-top: 0;
+}

@@ -1,0 +1,73 @@
+repos:
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    # Ruff version.
+    rev: 'v0.0.254'
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+  - repo: https://github.com/python/black
+    rev: 23.1.0
+    hooks:
+      - id: black
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-json
+        exclude: test.*
+      - id: check-merge-conflict
+      - id: check-shebang-scripts-are-executable
+      - id: check-symlinks
+      - id: check-toml
+      - id: check-yaml
+        exclude: test.*
+        args: [--allow-multiple-documents]
+      - id: debug-statements
+      - id: end-of-file-fixer
+        exclude: "^tests/resources/"
+      - id: fix-byte-order-marker
+      - id: fix-encoding-pragma
+        args: ["--remove"]
+      - id: requirements-txt-fixer
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+    -   id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        additional_dependencies: ["gibberish-detector"]
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.0.0
+    hooks:
+      - id: mypy
+        args: [--no-strict-optional, --ignore-missing-imports]
+        additional_dependencies: ["pydantic", "toml", "types-all"]
+  - repo: https://github.com/terrencepreilly/darglint
+    rev: v1.8.1
+    hooks:
+      - id: darglint
+        exclude: test.*
+        args:
+          - -v 2
+          - "--message-template={path}:{line} in `{obj}`:\n        {msg_id}: {msg}"
+          - --strictness=short
+  - repo: https://github.com/econchick/interrogate
+    rev: 1.5.0  # or master if you're bold
+    hooks:
+      - id: interrogate
+        exclude: test.*
+  - repo: local
+    hooks:
+      - id: check-dependencies
+        name: check-dependencies
+        language: python
+        entry: make -C requirements all
+        files: ^requirements.*?\.(in|txt)$
+        pass_filenames: false
+        additional_dependencies:
+          - pip-tools
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.21.0
+    hooks:
+      - id: check-azure-pipelines
