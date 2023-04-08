@@ -1,8 +1,9 @@
-"""Tests for `bump_version` package."""
+"""Tests for `bumpversion` package."""
 
-import bump_version.cli as cli
 from click.testing import CliRunner, Result
-from bump_version import __version__
+
+from bumpversion import __version__, cli
+from tests.conftest import inside_dir
 
 # To learn more about testing Click applications, visit the link below.
 # https://click.palletsprojects.com/en/8.1.x/testing/
@@ -11,6 +12,7 @@ from bump_version import __version__
 def test_version_displays_library_version():
     """
     Arrange/Act: Run the `version` subcommand.
+
     Assert: The output matches the library version.
     """
     runner: CliRunner = CliRunner()
@@ -18,21 +20,41 @@ def test_version_displays_library_version():
     assert __version__ in result.output.strip(), "Version number should match library version."
 
 
-def test_verbose_output():
+def test_bump_no_configured_files(mocker, tmp_path):
     """
-    Arrange/Act: Run the `version` subcommand with the '-v' flag.
-    Assert: The output indicates verbose logging is enabled.
+    Arrange/Act: Run the `bump` subcommand with --no-configured-files.
+
+    Assert: There is no configured files specified to modify
     """
+    mocked_do_bump = mocker.patch("bumpversion.cli.do_bump")
     runner: CliRunner = CliRunner()
-    result: Result = runner.invoke(cli.cli, ["-v", "version"])
-    assert "Verbose" in result.output.strip(), "Verbose logging should be indicated in output."
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(
+            cli.cli, ["bump", "--current-version", "1.0.0", "--no-configured-files", "patch"]
+        )
+
+    if result.exit_code != 0:
+        print(result.output)
+
+    assert result.exit_code == 0
+
+    call_args = mocked_do_bump.call_args[0]
+    assert len(call_args[2].files) == 0
 
 
-def test_hello_displays_expected_message():
-    """
-    Arrange/Act: Run the `version` subcommand.
-    Assert:  The output matches the library version.
-    """
+def test_no_configured_files_still_file_args_work(mocker, tmp_path):
+    mocked_do_bump = mocker.patch("bumpversion.cli.do_bump")
     runner: CliRunner = CliRunner()
-    result: Result = runner.invoke(cli.cli, ["hello"])
-    assert "bump-my-version" in result.output.strip(), "'Hello' messages should contain the CLI name."
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(
+            cli.cli, ["bump", "--current-version", "1.0.0", "--no-configured-files", "patch", "do-this-file.txt"]
+        )
+
+    if result.exit_code != 0:
+        print(result.output)
+
+    assert result.exit_code == 0
+
+    call_args = mocked_do_bump.call_args[0]
+    assert len(call_args[2].files) == 1
+    assert call_args[2].files[0].filename == "do-this-file.txt"

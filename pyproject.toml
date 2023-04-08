@@ -20,7 +20,14 @@ show_missing = true
 exclude_lines = [
     "raise NotImplementedError",
     "pragma: no-coverage",
+    "pragma: no-cov",
 ]
+
+[tool.coverage.html]
+directory = "test-reports/htmlcov"
+
+[tool.coverage.xml]
+output = "test-reports/coverage.xml"
 
 [tool.pytest.ini_options]
 norecursedirs = [
@@ -34,6 +41,12 @@ norecursedirs = [
     "lib",
 ]
 python_files = "test*.py"
+addopts = [
+    "--cov=bumpversion",
+    "--cov-branch",
+    "--cov-report=term",
+    "--cov-report=html",
+]
 
 [tool.interrogate]
 ignore-init-method = true
@@ -64,7 +77,8 @@ select = ["E", "W", "F", "I", "N",  "B", "BLE", "C", "D", "E", "F", "I", "N", "S
 ignore = [
     "ANN002", "ANN003", "ANN101", "ANN102", "ANN204", "ANN401",
     "S101", "S104",
-    "D106", "D107", "D200", "D212",
+    "D105", "D106", "D107", "D200", "D212",
+    "PD011",
 ]
 
 # Allow autofix for all enabled rules (when `--fix`) is provided.

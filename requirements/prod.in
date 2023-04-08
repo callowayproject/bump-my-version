@@ -1,2 +1,5 @@
-
-environs>=9.3.5
+click
+pydantic
+rich-click
+rich
+tomlkit

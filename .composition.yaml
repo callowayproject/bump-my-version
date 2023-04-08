@@ -24,7 +24,7 @@ context:
   packaging_tool: pip/setuptools
   project_name: bump-my-version
   project_short_description: Version bump your Python project
-  project_slug: bump_version
+  project_slug: bumpversion
   version: 0.1.0
 directory: cookiecutter-boilerplate
 merge_strategies:
@@ -50,7 +50,7 @@ context:
   friendly_name: Bump My Version
   project_name: bump-my-version
   project_short_description: Version bump your Python project
-  project_slug: bump_version
+  project_slug: bumpversion
   version: 0.1.0
 directory: cookiecutter-cli
 merge_strategies:
@@ -86,7 +86,7 @@ context:
   friendly_name: Bump My Version
   github_user: callowayproject
   project_name: bump-my-version
-  project_slug: bump_version
+  project_slug: bumpversion
 directory: cookiecutter-docs
 merge_strategies:
   '*.json': comprehensive

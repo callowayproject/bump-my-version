@@ -8,14 +8,14 @@ from datetime import date
 
 sys.path.insert(0, os.path.abspath(".."))
 
-import bump_version  # NOQA
+import bumpversion
 
 project = "bump-my-version"
 copyright = f"{date.today():%Y}, C H Robinson"
 author = "Data Science Team"
 
-version = bump_version.__version__
-release = bump_version.__version__
+version = bumpversion.__version__
+release = bumpversion.__version__
 
 # -- General configuration ---------------------------------------------
 
