@@ -20,14 +20,14 @@ logger = logging.getLogger(__name__)
 class SCMInfo:
     """Information about the current source code manager and state."""
 
-    tool: Optional[Type["BaseVCS"]] = None
+    tool: Optional[Type["SourceCodeManager"]] = None
     commit_sha: Optional[str] = None
     distance_to_latest_tag: Optional[int] = None
     current_version: Optional[str] = None
     dirty: Optional[bool] = None
 
 
-class BaseVCS:
+class SourceCodeManager:
     """Base class for version control systems."""
 
     _TEST_USABLE_COMMAND: List[str] = []
@@ -148,7 +148,7 @@ class BaseVCS:
             cls.tag(tag_name, sign_tags, tag_message)
 
 
-class Git(BaseVCS):
+class Git(SourceCodeManager):
     """Git implementation."""
 
     _TEST_USABLE_COMMAND = ["git", "rev-parse", "--git-dir"]
@@ -236,7 +236,7 @@ class Git(BaseVCS):
         subprocess.check_output(command)
 
 
-class Mercurial(BaseVCS):
+class Mercurial(SourceCodeManager):
     """Mercurial implementation."""
 
     _TEST_USABLE_COMMAND = ["hg", "root"]
