@@ -201,7 +201,7 @@ def find_config_file(explicit_file: Union[str, Path, None] = None) -> Union[Path
     """
     search_paths = [Path(explicit_file)] if explicit_file else CONFIG_FILE_SEARCH_ORDER
     return next(
-        (config_file for config_file in search_paths if config_file.exists()),
+        (cfg_file for cfg_file in search_paths if cfg_file.exists() and "bumpversion]" in cfg_file.read_text()),
         None,
     )
 

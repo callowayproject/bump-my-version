@@ -112,15 +112,28 @@ def test_file_keyword_with_suffix_is_accepted(tmp_path: Path, cfg_file: str, cfg
 
 
 def test_multiple_config_files(tmp_path: Path):
+    """If there are multiple config files, the first one with content wins."""
     setup_cfg = tmp_path / "setup.cfg"
-    setup_cfg.write_text("[bumpversion]\n" "current_version: 0.10.2\n" "tag: true\n")
+    setup_cfg.write_text("[metadata]\nname: just-a-name\n")
     bumpversion_cfg = tmp_path / ".bumpversion.cfg"
-    bumpversion_cfg.write_text("[bumpversion]\n" "current_version: 0.10.2\n" "tag: false\n")
+    bumpversion_cfg.write_text("\n")
+    pyproject_toml = tmp_path / "pyproject.toml"
+    pyproject_toml.write_text(
+        "[tool.bumpversion]\n"
+        'current_version = "0.10.5"\n'
+        'parse = "(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?"\n'
+        "serialize = [\n"
+        '    "{major}.{minor}.{patch}-{release}",\n'
+        '    "{major}.{minor}.{patch}"\n'
+        "]\n"
+    )
+    with inside_dir(tmp_path):
+        cfg_file = config.find_config_file()
+        cfg = config.get_configuration(cfg_file)
 
-    cfg_file = config.find_config_file()
-    cfg = config.get_configuration(cfg_file)
-
-    assert cfg.tag is True
+    assert cfg.current_version == "0.10.5"
+    assert cfg.parse == "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?"
+    assert cfg.serialize == ["{major}.{minor}.{patch}-{release}", "{major}.{minor}.{patch}"]
 
 
 def test_utf8_message_from_config_file(tmp_path: Path, cfg_file):
