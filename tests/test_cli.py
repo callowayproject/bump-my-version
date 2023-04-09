@@ -29,9 +29,7 @@ def test_bump_no_configured_files(mocker, tmp_path):
     mocked_do_bump = mocker.patch("bumpversion.cli.do_bump")
     runner: CliRunner = CliRunner()
     with inside_dir(tmp_path):
-        result: Result = runner.invoke(
-            cli.cli, ["bump", "--current-version", "1.0.0", "--no-configured-files", "patch"]
-        )
+        result: Result = runner.invoke(cli.cli, ["--current-version", "1.0.0", "--no-configured-files", "patch"])
 
     if result.exit_code != 0:
         print(result.output)
@@ -47,7 +45,7 @@ def test_no_configured_files_still_file_args_work(mocker, tmp_path):
     runner: CliRunner = CliRunner()
     with inside_dir(tmp_path):
         result: Result = runner.invoke(
-            cli.cli, ["bump", "--current-version", "1.0.0", "--no-configured-files", "patch", "do-this-file.txt"]
+            cli.cli, ["--current-version", "1.0.0", "--no-configured-files", "patch", "do-this-file.txt"]
         )
 
     if result.exit_code != 0:

@@ -4,8 +4,10 @@ from typing import Optional
 
 import rich_click as click
 
+# from click.core import Context
 from bumpversion import __version__
-from bumpversion.aliases import AliasedGroup
+
+# from bumpversion.aliases import AliasedGroup
 from bumpversion.bump import do_bump
 from bumpversion.config import find_config_file, get_configuration
 from bumpversion.logging import setup_logging
@@ -14,14 +16,17 @@ from bumpversion.utils import get_overrides
 logger = logging.getLogger(__name__)
 
 
-@click.group(cls=AliasedGroup)
+# @click.group(cls=AliasedGroup)
+# @click.version_option(version=__version__)
+# @click.pass_context
+# def cli(ctx: Context) -> None:
+#     """Version bump your Python project."""
+#     if ctx.invoked_subcommand is None:
+#         ctx.invoke(bump)
+
+
+@click.command(context_settings={"ignore_unknown_options": True})
 @click.version_option(version=__version__)
-def cli() -> None:
-    """Version bump your Python project."""
-    pass
-
-
-@cli.command(context_settings={"ignore_unknown_options": True})
 @click.argument("version_part")
 @click.argument("files", nargs=-1, type=click.Path())
 @click.option(
@@ -135,7 +140,7 @@ def cli() -> None:
     required=False,
     help="Extra arguments to commit command",
 )
-def bump(
+def cli(
     version_part: str,
     files: list,
     config_file: Optional[str],
@@ -199,7 +204,3 @@ def _log_list(config: dict, new_version: str) -> None:
     logger.info("new_version=%s", new_version)
     for key, value in config.items():
         logger.info("%s=%s", key, value)
-
-
-if __name__ == "__main__":
-    cli()
