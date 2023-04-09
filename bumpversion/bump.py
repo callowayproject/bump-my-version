@@ -70,10 +70,12 @@ def do_bump(
     next_version_str = config.version_config.serialize(next_version, ctx)
     logger.info("New version will be '%s'", next_version_str)
 
+    if dry_run:
+        logger.info("Dry run active, won't touch any files.")
+
     ctx = get_context(config, version, next_version)
 
     configured_files = resolve_file_config(config.files, config.version_config)
-
     modify_files(configured_files, version, next_version, ctx, dry_run)
 
     update_config_file(config_file, config.current_version, next_version_str, dry_run)

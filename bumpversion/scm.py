@@ -47,7 +47,7 @@ class BaseVCS:
         env["BUMPVERSION_NEW_VERSION"] = new_version
 
         try:
-            subprocess.check_output([*cls._COMMIT_COMMAND, f.name, *extra_args], env=env)
+            subprocess.run([*cls._COMMIT_COMMAND, f.name, *extra_args], env=env, capture_output=True, check=True)
         except subprocess.CalledProcessError as exc:
             err_msg = f"Failed to run {exc.cmd}: return code {exc.returncode}, output: {exc.output}"
             logger.exception(err_msg)
@@ -59,7 +59,7 @@ class BaseVCS:
     def is_usable(cls) -> bool:
         """Is the VCS implementation usable."""
         try:
-            result = subprocess.run(cls._TEST_USABLE_COMMAND, check=True)
+            result = subprocess.run(cls._TEST_USABLE_COMMAND, check=True, capture_output=True)
             return result.returncode == 0
         except (FileNotFoundError, PermissionError, NotADirectoryError, subprocess.CalledProcessError):
             return False
@@ -172,8 +172,12 @@ class Git(BaseVCS):
         """Return information about the latest tag."""
         try:
             # git-describe doesn't update the git-index, so we do that
-            subprocess.run(["git", "update-index", "--refresh"], check=True)
+            subprocess.run(["git", "update-index", "--refresh", "-q"], capture_output=True)
+        except subprocess.CalledProcessError as e:
+            logger.debug("Error when running git update-index: %s", e.stderr)
+            return SCMInfo(tool=cls)
 
+        try:
             # get info about the latest tag in git
             # TODO: This only works if the tag name is prefixed with `v`.
             #   Should allow for the configured format for the tag name.
@@ -188,8 +192,8 @@ class Git(BaseVCS):
             ]
             result = subprocess.run(git_cmd, text=True, check=True, capture_output=True)
             describe_out = result.stdout.strip().split("-")
-        except subprocess.CalledProcessError:
-            logger.debug("Error when running git describe")
+        except subprocess.CalledProcessError as e:
+            logger.debug("Error when running git describe: %s", e.stderr)
             return SCMInfo(tool=cls)
 
         info = SCMInfo()

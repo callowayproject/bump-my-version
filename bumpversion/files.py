@@ -1,6 +1,7 @@
 """Methods for changing files."""
 import glob
 import logging
+from difflib import context_diff
 from typing import List, MutableMapping
 
 from bumpversion.config import FileConfig
@@ -92,8 +93,6 @@ class ConfiguredFile:
         self, current_version: Version, new_version: Version, context: MutableMapping, dry_run: bool = False
     ) -> None:
         """Replace the current version with the new version."""
-        from difflib import unified_diff
-
         with open(self.path, "rt", encoding="utf-8") as f:
             file_content_before = f.read()
             file_new_lines = f.newlines[0] if isinstance(f.newlines, tuple) else f.newlines
@@ -115,12 +114,12 @@ class ConfiguredFile:
             logger.info(
                 "\n".join(
                     list(
-                        unified_diff(
+                        context_diff(
                             file_content_before.splitlines(),
                             file_content_after.splitlines(),
+                            fromfile=f"before {self.path}",
+                            tofile=f"after {self.path}",
                             lineterm="",
-                            fromfile=f"a/{self.path}",
-                            tofile=f"b/{self.path}",
                         )
                     )
                 )
@@ -207,7 +206,7 @@ def _check_files_contain_version(
     """Make sure files exist and contain version string."""
     logger.info(
         "Asserting files %s contain the version string...",
-        ", ".join([str(f) for f in files]),
+        ", ".join({str(f.path) for f in files}),
     )
     for f in files:
         f.contains_version(current_version, context)

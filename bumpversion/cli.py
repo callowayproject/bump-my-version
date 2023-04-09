@@ -160,6 +160,8 @@ def bump(
     """Change the version."""
     setup_logging(verbose)
 
+    logger.info("Starting BumpVersion %s", __version__)
+
     overrides = get_overrides(
         allow_dirty=allow_dirty,
         current_version=current_version,
@@ -175,6 +177,7 @@ def bump(
         message=message,
         commit_args=commit_args,
     )
+
     found_config_file = find_config_file(config_file)
     config = get_configuration(found_config_file, **overrides)
 

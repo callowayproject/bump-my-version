@@ -4,6 +4,7 @@ from __future__ import annotations
 import itertools
 import logging
 import re
+from difflib import context_diff
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 
@@ -227,7 +228,6 @@ def read_config_file(config_file: Union[str, Path, None] = None) -> Dict[str, An
     if config_path.suffix == ".cfg":
         return read_ini_file(config_path)
     elif config_path.suffix == ".toml":
-        logger.info("Reading config file %s:", config_path)
         return read_toml_file(config_path)
     return {}
 
@@ -363,7 +363,19 @@ def update_config_file(
         config_path,
     )
 
-    logger.info(new_config)
+    logger.info(
+        "\n".join(
+            list(
+                context_diff(
+                    existing_config.splitlines(),
+                    new_config.splitlines(),
+                    fromfile=f"before {config_path}",
+                    tofile=f"after {config_path}",
+                    lineterm="",
+                )
+            )
+        )
+    )
 
     if not dry_run:
         config_path.write_text(new_config)
