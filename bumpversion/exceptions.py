@@ -1,11 +1,15 @@
 """Custom exceptions for BumpVersion."""
+from typing import Optional
+
+from click import Context, UsageError
 
 
-class BumpVersionError(Exception):
+class BumpVersionError(UsageError):
     """Custom base class for all BumpVersion exception types."""
 
-    def __init__(self, message: str):
+    def __init__(self, message: str, ctx: Optional[Context] = None):
         self.message = message
+        self.ctx = ctx
 
 
 class FormattingError(BumpVersionError):
