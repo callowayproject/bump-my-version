@@ -8,10 +8,10 @@ import rich_click as click
 from bumpversion import __version__
 
 # from bumpversion.aliases import AliasedGroup
-from bumpversion.bump import do_bump
-from bumpversion.config import find_config_file, get_configuration
+from bumpversion.bump import do_bump, get_next_version
+from bumpversion.config import Config, find_config_file, get_configuration
 from bumpversion.logging import setup_logging
-from bumpversion.utils import get_overrides
+from bumpversion.utils import get_context, get_overrides
 
 logger = logging.getLogger(__name__)
 
@@ -140,6 +140,12 @@ logger = logging.getLogger(__name__)
     required=False,
     help="Extra arguments to commit command",
 )
+@click.option(
+    "--list",
+    "show_list",
+    is_flag=True,
+    help="List machine readable information",
+)
 def cli(
     version_part: str,
     files: list,
@@ -161,6 +167,7 @@ def cli(
     tag_message: Optional[str],
     message: Optional[str],
     commit_args: Optional[str],
+    show_list: bool,
 ) -> None:
     """Change the version."""
     setup_logging(verbose)
@@ -186,6 +193,10 @@ def cli(
     found_config_file = find_config_file(config_file)
     config = get_configuration(found_config_file, **overrides)
 
+    if show_list:
+        log_list(config, version_part, new_version)
+        return
+
     config.allow_dirty = allow_dirty if allow_dirty is not None else config.allow_dirty
     if not config.allow_dirty and config.scm_info.tool:
         config.scm_info.tool.assert_nondirty()
@@ -199,8 +210,13 @@ def cli(
     do_bump(version_part, new_version, config, found_config_file, dry_run)
 
 
-def _log_list(config: dict, new_version: str) -> None:
+def log_list(config: Config, version_part: Optional[str], new_version: Optional[str]) -> None:
     """Output configuration with new version."""
-    logger.info("new_version=%s", new_version)
-    for key, value in config.items():
-        logger.info("%s=%s", key, value)
+    ctx = get_context(config)
+    version = config.version_config.parse(config.current_version)
+    next_version = get_next_version(version, config, version_part, new_version)
+    next_version_str = config.version_config.serialize(next_version, ctx)
+
+    click.echo(f"new_version={next_version_str}")
+    for key, value in config.dict(exclude={"scm_info", "parts"}).items():
+        click.echo(f"{key}={value}")
