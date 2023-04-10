@@ -254,3 +254,49 @@ def test_non_matching_search_does_not_modify_file(tmp_path: Path):
         files.modify_files(configured_files, current_version, new_version, get_context(conf))
 
     assert changelog_path.read_text() == changelog_content
+
+
+def test_simple_replacement_in_utf8_file(tmp_path: Path):
+    """Changing a file in UTF-8 should not change the non-ASCII characters."""
+    # Arrange
+    version_path = tmp_path / "VERSION"
+    version_path.write_bytes("Kröt1.3.0".encode())
+
+    overrides = {"current_version": "1.3.0", "files": [{"filename": str(version_path)}]}
+    with inside_dir(tmp_path):
+        conf, version_config, current_version = get_config_data(overrides)
+        new_version = current_version.bump("patch", version_config.order)
+
+    # Act
+    for file_cfg in conf.files:
+        cfg_file = files.ConfiguredFile(file_cfg, version_config)
+        cfg_file.replace_version(current_version, new_version, get_context(conf))
+
+    # Assert
+    out = version_path.read_text()
+    assert out == "Kröt1.3.1"
+
+
+def test_multi_line_search_is_found(tmp_path: Path) -> None:
+    """A multiline search string is found and replaced."""
+    # Arrange
+    alphabet_path = tmp_path / "the_alphabet.txt"
+    alphabet_path.write_text("A\nB\nC\n")
+
+    overrides = {
+        "current_version": "9.8.7",
+        "search": "A\nB\nC",
+        "replace": "A\nB\nC\n{new_version}",
+        "files": [{"filename": str(alphabet_path)}],
+    }
+    with inside_dir(tmp_path):
+        conf, version_config, current_version = get_config_data(overrides)
+        new_version = current_version.bump("major", version_config.order)
+
+    # Act
+    for file_cfg in conf.files:
+        cfg_file = files.ConfiguredFile(file_cfg, version_config)
+        cfg_file.replace_version(current_version, new_version, get_context(conf))
+
+    # Assert
+    assert alphabet_path.read_text() == "A\nB\nC\n10.0.0\n"
