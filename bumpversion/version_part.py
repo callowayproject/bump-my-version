@@ -5,6 +5,8 @@ import string
 from copy import copy
 from typing import Any, Dict, List, MutableMapping, Optional
 
+from click import UsageError
+
 from bumpversion.config import VersionPartConfig
 from bumpversion.exceptions import FormattingError, InvalidVersionPartError, MissingValueError
 from bumpversion.functions import NumericFunction, PartFunction, ValuesFunction
@@ -132,8 +134,7 @@ class VersionConfig:
         try:
             self.parse_regex = re.compile(parse, re.VERBOSE)
         except re.error as e:
-            logger.error("--parse '%s' is not a valid regex. %s", parse, e)
-            raise e
+            raise UsageError(f"--parse '{parse}' is not a valid regex.") from e
 
         self.serialize_formats = serialize
         self.part_configs = part_configs or {}

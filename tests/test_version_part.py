@@ -1,10 +1,13 @@
+from pathlib import Path
+
 import pytest
-from pytest import param
+from click import UsageError
+from pytest import LogCaptureFixture, param
 
 from bumpversion import config, exceptions
 from bumpversion.utils import get_context
 from bumpversion.version_part import VersionPart
-from tests.conftest import get_config_data
+from tests.conftest import get_config_data, inside_dir
 
 
 @pytest.fixture(
@@ -274,3 +277,24 @@ def test_part_first_value(initial: str, bump_type: str, expected: str):
 
     new_version = current_version.bump(bump_type, version_config.order)
     assert version_config.serialize(new_version, get_context(conf)) == expected
+
+
+def test_version_part_invalid_regex_exit(tmp_path: Path) -> None:
+    """A version part with an invalid regex should raise an exception."""
+    # Arrange
+    overrides = {
+        "current_version": "12",
+        "parse": "*kittens*",
+    }
+    with inside_dir(tmp_path):
+        with pytest.raises(UsageError):
+            get_config_data(overrides)
+
+
+def test_parse_doesnt_parse_current_version(tmp_path: Path, caplog: LogCaptureFixture) -> None:
+    """A warning should be output when the parse regex doesn't parse the version."""
+    overrides = {"current_version": "12", "parse": "xxx"}
+    with inside_dir(tmp_path):
+        get_config_data(overrides)
+
+    assert caplog.messages == ["Evaluating 'parse' option: 'xxx' does not parse current version '12'"]
