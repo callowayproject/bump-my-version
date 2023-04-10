@@ -6,7 +6,7 @@ import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from typing import TYPE_CHECKING, ChainMap, List, Optional, Type, Union
+from typing import TYPE_CHECKING, List, MutableMapping, Optional, Type, Union
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
@@ -89,7 +89,7 @@ class SourceCodeManager:
         cls,
         files: List[Union[str, Path]],
         config: "Config",
-        context: ChainMap,
+        context: MutableMapping,
         extra_args: Optional[List[str]] = None,
         dry_run: bool = False,
     ) -> None:
@@ -130,7 +130,7 @@ class SourceCodeManager:
             )
 
     @classmethod
-    def tag_in_scm(cls, config: "Config", context: ChainMap, dry_run: bool = False) -> None:
+    def tag_in_scm(cls, config: "Config", context: MutableMapping, dry_run: bool = False) -> None:
         """Tag the current commit in the source code management system."""
         sign_tags = config.sign_tags
         tag_name = config.tag_name.format(**context)
@@ -165,7 +165,7 @@ class Git(SourceCodeManager):
 
         if lines:
             joined_lines = b"\n".join(lines).decode()
-            raise DirtyWorkingDirectoryError(f"Git working directory is not clean:\n{joined_lines}")
+            raise DirtyWorkingDirectoryError(f"Git working directory is not clean:\n\n{joined_lines}")
 
     @classmethod
     def latest_tag_info(cls, tag_pattern: str) -> SCMInfo:
@@ -245,7 +245,19 @@ class Mercurial(SourceCodeManager):
     @classmethod
     def latest_tag_info(cls, tag_pattern: str) -> SCMInfo:
         """Return information about the latest tag."""
-        return SCMInfo(tool=cls)
+        current_version = None
+        re_pattern = tag_pattern.replace("*", ".*")
+        result = subprocess.run(
+            ["hg", "log", "-r", f"tag('re:{re_pattern}')", "--template", "{latesttag}\n"],
+            text=True,
+            check=True,
+            capture_output=True,
+        )
+        result.check_returncode()
+        if result.stdout:
+            current_version = result.stdout.splitlines(keepends=False)[0].lstrip("v")
+        is_dirty = len(subprocess.check_output(["hg", "status", "-mard"])) != 0
+        return SCMInfo(tool=cls, current_version=current_version, dirty=is_dirty)
 
     @classmethod
     def assert_nondirty(cls) -> None:
