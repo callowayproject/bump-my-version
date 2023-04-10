@@ -4,7 +4,7 @@ from collections import ChainMap
 from dataclasses import asdict
 from typing import TYPE_CHECKING, List, Optional
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
     from bumpversion.version_part import Version
 

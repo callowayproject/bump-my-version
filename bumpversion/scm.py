@@ -8,7 +8,7 @@ from pathlib import Path
 from tempfile import NamedTemporaryFile
 from typing import TYPE_CHECKING, ChainMap, List, Optional, Type, Union
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
 
 from bumpversion.exceptions import DirtyWorkingDirectoryError, SignedTagsError

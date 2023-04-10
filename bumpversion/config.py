@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 
 from bumpversion.utils import labels_for_format
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.scm import SCMInfo
     from bumpversion.version_part import VersionConfig
 
