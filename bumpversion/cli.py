@@ -33,6 +33,7 @@ logger = logging.getLogger(__name__)
     "--config-file",
     metavar="FILE",
     required=False,
+    envvar="BUMPVERSION_CONFIG_FILE",
     type=click.Path(exists=True),
     help="Config file to read most of the variables from.",
 )
@@ -41,30 +42,35 @@ logger = logging.getLogger(__name__)
     "--verbose",
     count=True,
     required=False,
-    help="Print verbose logging to stderr",
+    envvar="BUMPVERSION_VERBOSE",
+    help="Print verbose logging to stderr. Can specify several times for more verbosity.",
 )
 @click.option(
     "--allow-dirty/--no-allow-dirty",
     default=None,
     required=False,
+    envvar="BUMPVERSION_ALLOW_DIRTY",
     help="Don't abort if working directory is dirty, or explicitly abort if dirty.",
 )
 @click.option(
     "--current-version",
     metavar="VERSION",
     required=False,
+    envvar="BUMPVERSION_CURRENT_VERSION",
     help="Version that needs to be updated",
 )
 @click.option(
     "--new-version",
     metavar="VERSION",
     required=False,
+    envvar="BUMPVERSION_NEW_VERSION",
     help="New version that should be in the files",
 )
 @click.option(
     "--parse",
     metavar="REGEX",
     required=False,
+    envvar="BUMPVERSION_PARSE",
     help="Regex parsing the version string",
 )
 @click.option(
@@ -72,23 +78,27 @@ logger = logging.getLogger(__name__)
     metavar="FORMAT",
     multiple=True,
     required=False,
+    envvar="BUMPVERSION_SERIALIZE",
     help="How to format what is parsed back to a version",
 )
 @click.option(
     "--search",
     metavar="SEARCH",
     required=False,
+    envvar="BUMPVERSION_SEARCH",
     help="Template for complete string to search",
 )
 @click.option(
     "--replace",
     metavar="REPLACE",
     required=False,
+    envvar="BUMPVERSION_REPLACE",
     help="Template for complete string to replace",
 )
 @click.option(
     "--no-configured-files",
     is_flag=True,
+    envvar="BUMPVERSION_NO_CONFIGURED_FILES",
     help=(
         "Only replace the version in files specified on the command line, "
         "ignoring the files from the configuration file."
@@ -98,33 +108,39 @@ logger = logging.getLogger(__name__)
     "--dry-run",
     "-n",
     is_flag=True,
+    envvar="BUMPVERSION_DRY_RUN",
     help="Don't write any files, just pretend.",
 )
 @click.option(
     "--commit/--no-commit",
     default=None,
+    envvar="BUMPVERSION_COMMIT",
     help="Commit to version control",
 )
 @click.option(
     "--tag/--no-tag",
     default=None,
+    envvar="BUMPVERSION_TAG",
     help="Create a tag in version control",
 )
 @click.option(
     "--sign-tags/--no-sign-tags",
     default=None,
+    envvar="BUMPVERSION_SIGN_TAGS",
     help="Sign tags if created",
 )
 @click.option(
     "--tag-name",
     metavar="TAG_NAME",
     required=False,
+    envvar="BUMPVERSION_TAG_NAME",
     help="Tag name (only works with --tag)",
 )
 @click.option(
     "--tag-message",
     metavar="TAG_MESSAGE",
     required=False,
+    envvar="BUMPVERSION_TAG_MESSAGE",
     help="Tag message",
 )
 @click.option(
@@ -132,12 +148,14 @@ logger = logging.getLogger(__name__)
     "--message",
     metavar="COMMIT_MSG",
     required=False,
+    envvar="BUMPVERSION_MESSAGE",
     help="Commit message",
 )
 @click.option(
     "--commit-args",
     metavar="COMMIT_ARGS",
     required=False,
+    envvar="BUMPVERSION_COMMIT_ARGS",
     help="Extra arguments to commit command",
 )
 @click.option(
@@ -169,7 +187,16 @@ def cli(
     commit_args: Optional[str],
     show_list: bool,
 ) -> None:
-    """Change the version."""
+    """
+    Change the version.
+
+    VERSION_PART is the part of the version to increase, e.g. `minor` .
+    Valid values include those given in the `--serialize` / `--parse` option.
+
+    FILES are additional file(s) to modify.
+    If you want to rewrite only files specified on the command line, use with the
+    `--no-configured-files` option.
+    """
     setup_logging(verbose)
 
     logger.info("Starting BumpVersion %s", __version__)

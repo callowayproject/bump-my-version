@@ -68,7 +68,7 @@ class Config(BaseSettings):
     def add_files(self, filename: Union[str, List[str]]) -> None:
         """Add a filename to the list of files."""
         filenames = [filename] if isinstance(filename, str) else filename
-        self.files.extend([FileConfig(filename=name) for name in filenames])
+        self.files.extend([FileConfig(filename=name) for name in filenames])  # type: ignore[call-arg]
 
     @property
     def version_config(self) -> "VersionConfig":
@@ -99,6 +99,7 @@ DEFAULTS = {
 
 CONFIG_FILE_SEARCH_ORDER = (
     Path(".bumpversion.cfg"),
+    Path(".bumpversion.toml"),
     Path("setup.cfg"),
     Path("pyproject.toml"),
 )
@@ -148,7 +149,8 @@ def get_all_part_configs(config_dict: dict) -> Dict[str, VersionPartConfig]:
     parts = config_dict["parts"]
     all_labels = set(itertools.chain.from_iterable([labels_for_format(fmt) for fmt in serialize]))
     return {
-        label: VersionPartConfig(**parts[label]) if label in parts else VersionPartConfig() for label in all_labels
+        label: VersionPartConfig(**parts[label]) if label in parts else VersionPartConfig()  # type: ignore[call-arg]
+        for label in all_labels
     }
 
 
