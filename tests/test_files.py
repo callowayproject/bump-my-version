@@ -260,7 +260,7 @@ def test_simple_replacement_in_utf8_file(tmp_path: Path):
     """Changing a file in UTF-8 should not change the non-ASCII characters."""
     # Arrange
     version_path = tmp_path / "VERSION"
-    version_path.write_bytes("Kröt1.3.0".encode())
+    version_path.write_bytes("Kröt1.3.0".encode("utf-8"))
 
     overrides = {"current_version": "1.3.0", "files": [{"filename": str(version_path)}]}
     with inside_dir(tmp_path):
