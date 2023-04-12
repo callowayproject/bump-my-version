@@ -1,12 +1,13 @@
 repos:
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     # Ruff version.
-    rev: 'v0.0.254'
+    rev: 'v0.0.261'
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
+        exclude: test.*
   - repo: https://github.com/python/black
-    rev: 23.1.0
+    rev: 23.3.0
     hooks:
       - id: black
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -38,7 +39,7 @@ repos:
         args: ['--baseline', '.secrets.baseline']
         additional_dependencies: ["gibberish-detector"]
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.0.0
+    rev: v1.2.0
     hooks:
       - id: mypy
         args: [--no-strict-optional, --ignore-missing-imports]
@@ -47,7 +48,7 @@ repos:
     rev: v1.8.1
     hooks:
       - id: darglint
-        exclude: test.*
+        exclude: test.*|cli\.py
         args:
           - -v 2
           - "--message-template={path}:{line} in `{obj}`:\n        {msg_id}: {msg}"
@@ -68,6 +69,6 @@ repos:
         additional_dependencies:
           - pip-tools
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.21.0
+    rev: 0.22.0
     hooks:
       - id: check-azure-pipelines
