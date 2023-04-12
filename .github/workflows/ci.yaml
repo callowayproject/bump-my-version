@@ -1,12 +1,14 @@
 name: CI
 
 on:
-  - push
   - pull_request
 
 defaults:
   run:
     shell: bash
+
+env:
+  PYTHONUTF8: "1"
 
 jobs:
 
