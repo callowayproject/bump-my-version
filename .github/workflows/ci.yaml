@@ -10,7 +10,7 @@ defaults:
 
 jobs:
 
-  tox:
+  test:
     strategy:
       fail-fast: false
       matrix:
