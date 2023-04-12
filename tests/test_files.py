@@ -15,8 +15,8 @@ from tests.conftest import get_config_data, inside_dir
 @pytest.mark.parametrize(
     ["glob_pattern", "file_list"],
     [
-        param("*.txt", {"file1.txt", "file2.txt"}, id="simple-glob"),
-        param("**/*.txt", {"file1.txt", "file2.txt", "directory/file3.txt"}, id="recursive-glob"),
+        param("*.txt", {Path("file1.txt"), Path("file2.txt")}, id="simple-glob"),
+        param("**/*.txt", {Path("file1.txt"), Path("file2.txt"), Path("directory/file3.txt")}, id="recursive-glob"),
     ],
 )
 def test_get_glob_files(glob_pattern: str, file_list: set, fixtures_path: Path):
@@ -37,7 +37,7 @@ def test_get_glob_files(glob_pattern: str, file_list: set, fixtures_path: Path):
 
     assert len(result) == len(file_list)
     for f in result:
-        assert f.path in file_list
+        assert Path(f.path) in file_list
 
 
 def test_single_file_processed_twice(tmp_path: Path):
