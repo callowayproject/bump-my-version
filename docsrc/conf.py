@@ -11,8 +11,8 @@ sys.path.insert(0, os.path.abspath(".."))
 import bumpversion
 
 project = "bump-my-version"
-copyright = f"{date.today():%Y}, C H Robinson"
-author = "Data Science Team"
+copyright = f"{date.today():%Y} Calloway Project"
+author = "Contributors"
 
 version = bumpversion.__version__
 release = bumpversion.__version__
@@ -64,6 +64,7 @@ myst_enable_extensions = [
     "smartquotes",
     "substitution",
     "tasklist",
+    "fieldlist",
 ]
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),

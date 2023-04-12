@@ -1,11 +1,37 @@
 .class .sig-prename.descclassname {
   display: none;
 }
+
 .subheading {
   line-height: 1.25;
   margin-bottom: 0;
   color: #646776;
 }
+
 .subheading + section > h1 {
   margin-top: 0;
+}
+
+.field-list p {
+  margin: 0;
+}
+
+dl.field-list {
+  display: grid;
+  grid-template-columns: fit-content(30%) auto;
+  margin-bottom: 1rem;
+}
+
+dl.field-list > dt {
+  font-weight: bold;
+  word-break: break-word;
+  padding-left: 0.5em;
+  padding-right: 5px;
+}
+
+dl.field-list > dd {
+  padding-left: 0.5em;
+  margin-top: 0;
+  margin-left: 0;
+  margin-bottom: 0;
 }

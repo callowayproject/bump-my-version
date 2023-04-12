@@ -7,6 +7,8 @@ caption: Contents
 ---
 Introduction <readme>
 usage
+configuration
+cli
 api
 contributing
 changelog
