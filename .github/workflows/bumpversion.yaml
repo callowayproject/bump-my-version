@@ -1,0 +1,63 @@
+name: Auto-bump the version
+on:
+  pull_request:
+    types: [closed]
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  bumpversion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip' # caching pip dependencies
+
+      - name: Install requirements
+        run: |
+          python -m pip install generate-changelog
+          python -m pip install -e .
+
+      - name: Git check
+        run: |
+          git config --global user.email "bump-my-version@github.actions"
+          git config --global user.name "Testing Git"
+          git --version
+          git config --list
+
+      - name: Generate the changelog and get the release hint
+        id: generate-changelog
+        run: |
+          INFO=$(generate-changelog --output all)
+          RELEASE_KIND=$(echo "$INFO" | jq -r '.release_hint')
+          NOTES=$(echo "$INFO" | jq -r '.notes')
+          NOTES="${NOTES//'%'/'%25'}"
+          NOTES="${NOTES//$'\\n'/'%0A'}"
+          NOTES="${NOTES//$'\n'/'%0A'}"
+          NOTES="${NOTES//$'\r'/'%0D'}"
+
+          echo "::notice::Suggested release type is: ${RELEASE_KIND}"
+          echo "RELEASE_KIND=$RELEASE_KIND" >> $GITHUB_ENV
+          echo "release-kind=$RELEASE_KIND" >> $GITHUB_OUTPUT
+
+          echo "NOTES=$NOTES" >> $GITHUB_ENV
+          echo "notes=$NOTES" >> $GITHUB_OUTPUT
+          echo $NOTES >> release-notes.md
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-notes.md
+          path: release-notes.md
+
+      - name: Bump Version
+        shell: bash
+        run: |
+          if [[ $RELEASE_KIND != "no-release" ]]; then
+            bump-my-version -v "$RELEASE_KIND"
+            git push
+            git push --tags
+          fi

@@ -1,7 +1,9 @@
 name: CI
 
 on:
-  - pull_request
+  pull_request:
+    types: [opened, synchronize]
+    branches: [master]
 
 defaults:
   run:
