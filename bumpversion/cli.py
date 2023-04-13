@@ -1,6 +1,6 @@
 """bump-my-version Command line interface."""
 import logging
-from typing import Optional
+from typing import List, Optional
 
 import rich_click as click
 
@@ -173,7 +173,7 @@ def cli(
     current_version: Optional[str],
     new_version: Optional[str],
     parse: Optional[str],
-    serialize: Optional[list[str]],
+    serialize: Optional[List[str]],
     search: Optional[str],
     replace: Optional[str],
     no_configured_files: bool,

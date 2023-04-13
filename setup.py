@@ -5,7 +5,7 @@ from typing import List, Optional
 from setuptools import setup
 
 
-def parse_reqs_in(filepath: Path, visited: Optional[set] = None) -> List[str]:
+def parse_reqs_in(filepath: Path, visited: Optional[set] = None) -> List[str]:  # noqa: C901
     """
     Parse a file path containing a pip-tools requirements.in and return a list of requirements.
 
@@ -25,9 +25,9 @@ def parse_reqs_in(filepath: Path, visited: Optional[set] = None) -> List[str]:
         visited = set()
     reqstr: str = filepath.read_text()
     reqs: List[str] = []
-    for line in reqstr.splitlines():
-        line = line.strip()
-        if line == "":
+    for line in reqstr.splitlines(keepends=False):
+        line = line.strip()  # noqa: PLW2901
+        if not line:
             continue
         elif not line or line.startswith("#"):
             # comments are lines that start with # only

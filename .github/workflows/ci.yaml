@@ -1,16 +1,20 @@
 name: CI
 
 on:
-  - push
-  - pull_request
+  pull_request:
+    types: [opened, synchronize]
+    branches: [master]
 
 defaults:
   run:
     shell: bash
 
+env:
+  PYTHONUTF8: "1"
+
 jobs:
 
-  tox:
+  test:
     strategy:
       fail-fast: false
       matrix:
@@ -18,15 +22,14 @@ jobs:
           - ubuntu-latest
           - windows-latest
         python-version:
-          - "3.7"
           - "3.8"
           - "3.9"
           - "3.10"
           - "3.11"
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
       - name: Check git is working

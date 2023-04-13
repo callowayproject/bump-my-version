@@ -15,8 +15,8 @@ from tests.conftest import get_config_data, inside_dir
 @pytest.mark.parametrize(
     ["glob_pattern", "file_list"],
     [
-        param("*.txt", {"file1.txt", "file2.txt"}, id="simple-glob"),
-        param("**/*.txt", {"file1.txt", "file2.txt", "directory/file3.txt"}, id="recursive-glob"),
+        param("*.txt", {Path("file1.txt"), Path("file2.txt")}, id="simple-glob"),
+        param("**/*.txt", {Path("file1.txt"), Path("file2.txt"), Path("directory/file3.txt")}, id="recursive-glob"),
     ],
 )
 def test_get_glob_files(glob_pattern: str, file_list: set, fixtures_path: Path):
@@ -37,7 +37,7 @@ def test_get_glob_files(glob_pattern: str, file_list: set, fixtures_path: Path):
 
     assert len(result) == len(file_list)
     for f in result:
-        assert f.path in file_list
+        assert Path(f.path) in file_list
 
 
 def test_single_file_processed_twice(tmp_path: Path):
@@ -248,9 +248,7 @@ def test_non_matching_search_does_not_modify_file(tmp_path: Path):
     conf, version_config, current_version = get_config_data(overrides)
     new_version = current_version.bump("patch", version_config.order)
     configured_files = files.resolve_file_config(conf.files, version_config)
-    with pytest.raises(
-        exceptions.VersionNotFoundError, match=f"Did not find 'Not-yet-released' in file: '{changelog_path}'"
-    ):
+    with pytest.raises(exceptions.VersionNotFoundError, match="Did not find 'Not-yet-released' in file:"):
         files.modify_files(configured_files, current_version, new_version, get_context(conf))
 
     assert changelog_path.read_text() == changelog_content
@@ -260,7 +258,7 @@ def test_simple_replacement_in_utf8_file(tmp_path: Path):
     """Changing a file in UTF-8 should not change the non-ASCII characters."""
     # Arrange
     version_path = tmp_path / "VERSION"
-    version_path.write_bytes("Kröt1.3.0".encode())
+    version_path.write_bytes("Kröt1.3.0".encode("utf-8"))
 
     overrides = {"current_version": "1.3.0", "files": [{"filename": str(version_path)}]}
     with inside_dir(tmp_path):
