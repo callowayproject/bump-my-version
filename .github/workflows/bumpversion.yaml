@@ -13,6 +13,15 @@ on:
         description: Set the version to a specific value
         required: false
         type: string
+      verbose:
+        description: The amount of output detail
+        default: 0
+        type: choice
+        options:
+          - "0"
+          - "1"
+          - "2"
+
 jobs:
   bumpversion:
     runs-on: ubuntu-latest
@@ -62,6 +71,7 @@ jobs:
         env:
           BUMPVERSION_DRY_RUN: ${{ inputs.dry_run }}
           BUMPVERSION_NEW_VERSION: ${{ inputs.tags }}
+          BUMPVERSION_VERBOSE: ${{ inputs.verbose }}
         run: |
           bump-my-version -v "$RELEASE_KIND"
           if [[ BUMPVERSION_DRY_RUN == "false" ]]; then
