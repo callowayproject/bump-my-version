@@ -4,7 +4,15 @@ on:
     types: [closed]
     branches: [master]
   workflow_dispatch:
-
+    inputs:
+      dry_run:
+        description: Don't actually do the work, just describe it
+        default: true
+        type: boolean
+      new_version:
+        description: Set the version to a specific value
+        required: false
+        type: string
 jobs:
   bumpversion:
     runs-on: ubuntu-latest
@@ -31,33 +39,30 @@ jobs:
       - name: Generate the changelog and get the release hint
         id: generate-changelog
         run: |
-          INFO=$(generate-changelog --output all)
-          RELEASE_KIND=$(echo "$INFO" | jq -r '.release_hint')
-          NOTES=$(echo "$INFO" | jq -r '.notes')
-          NOTES="${NOTES//'%'/'%25'}"
-          NOTES="${NOTES//$'\\n'/'%0A'}"
-          NOTES="${NOTES//$'\n'/'%0A'}"
-          NOTES="${NOTES//$'\r'/'%0D'}"
-
+          RELEASE_KIND=$(generate-changelog --output release-hint)
           echo "::notice::Suggested release type is: ${RELEASE_KIND}"
           echo "RELEASE_KIND=$RELEASE_KIND" >> $GITHUB_ENV
           echo "release-kind=$RELEASE_KIND" >> $GITHUB_OUTPUT
 
-          echo "NOTES=$NOTES" >> $GITHUB_ENV
-          echo "notes=$NOTES" >> $GITHUB_OUTPUT
-          echo $NOTES >> release-notes.md
-
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: release-notes.md
-          path: release-notes.md
-
-      - name: Bump Version
+      - name: Bump Version auto
+        if: ${{ github.event_name != "workflow_dispatch" }}
         shell: bash
         run: |
           if [[ $RELEASE_KIND != "no-release" ]]; then
             bump-my-version -v "$RELEASE_KIND"
+            git push
+            git push --tags
+          fi
+
+      - name: Bump Version manual
+        if: ${{ github.event_name == "workflow_dispatch" }}
+        shell: bash
+        env:
+          BUMPVERSION_DRY_RUN: ${{ inputs.dry_run }}
+          BUMPVERSION_NEW_VERSION: ${{ inputs.tags }}
+        run: |
+          bump-my-version -v "$RELEASE_KIND"
+          if [[ BUMPVERSION_DRY_RUN == "false" ]]; then
             git push
             git push --tags
           fi
