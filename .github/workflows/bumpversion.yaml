@@ -45,7 +45,7 @@ jobs:
           echo "release-kind=$RELEASE_KIND" >> $GITHUB_OUTPUT
 
       - name: Bump Version auto
-        if: ${{ github.event_name != "workflow_dispatch" }}
+        if: ${{ github.event_name != 'workflow_dispatch' }}
         shell: bash
         run: |
           if [[ $RELEASE_KIND != "no-release" ]]; then
@@ -55,7 +55,7 @@ jobs:
           fi
 
       - name: Bump Version manual
-        if: ${{ github.event_name == "workflow_dispatch" }}
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         shell: bash
         env:
           BUMPVERSION_DRY_RUN: ${{ inputs.dry_run }}
