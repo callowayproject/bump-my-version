@@ -41,7 +41,7 @@ commits and tags:
 **Potential bugs to verify**
 
 - https://github.com/c4urself/bump2version/issues/267 Ignore-missing error in files flag
-- https://github.com/c4urself/bump2version/issues/260 Incorrect behavior when new version == current version
+- Fixed: https://github.com/c4urself/bump2version/issues/260 Incorrect behavior when new version == current version
 - https://github.com/c4urself/bump2version/issues/248 Potential bug/test case
 - https://github.com/c4urself/bump2version/issues/246 Release inconsistency
 - https://github.com/c4urself/bump2version/issues/233 How are relative configured file paths resolved?

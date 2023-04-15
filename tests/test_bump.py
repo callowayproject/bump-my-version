@@ -8,7 +8,7 @@ from bumpversion import bump
 from bumpversion.exceptions import ConfigurationError
 from bumpversion.files import ConfiguredFile
 from bumpversion.scm import Git, SCMInfo
-from tests.conftest import get_config_data
+from tests.conftest import get_config_data, inside_dir
 
 
 @pytest.fixture
@@ -116,15 +116,30 @@ def test_do_bump_with_new_version(mock_update_config_file, mock_modify_files):
     assert mock_update_config_file.call_args[0][3] is True
 
 
+@patch("bumpversion.files.modify_files")
+@patch("bumpversion.bump.update_config_file")
+def test_do_bump_when_new_equals_current(mock_update_config_file, mock_modify_files, tmp_path: Path):
+    """When the new version is the same as the current version, nothing should happen."""
+
+    # Arrange
+    version_part = None
+    new_version = "1.2.3"
+
+    with inside_dir(tmp_path):
+        config, version_config, current_version = get_config_data({"current_version": "1.2.3"})
+        # Act
+        bump.do_bump(version_part, new_version, config)
+
+    # Assert
+    mock_modify_files.assert_not_called()
+    mock_update_config_file.assert_not_called()
+
+
 def test_do_bump_with_no_arguments():
     # Arrange
     version_part = None
     new_version = None
-    config, version_config, current_version = get_config_data(
-        {
-            "current_version": "1.2.3",
-        }
-    )
+    config, version_config, current_version = get_config_data({"current_version": "1.2.3"})
     config.scm_info = SCMInfo()
     dry_run = False
 

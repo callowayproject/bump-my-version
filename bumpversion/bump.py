@@ -70,6 +70,10 @@ def do_bump(
     next_version_str = config.version_config.serialize(next_version, ctx)
     logger.info("New version will be '%s'", next_version_str)
 
+    if config.current_version == next_version_str:
+        logger.info("Version is already '%s'", next_version_str)
+        return
+
     if dry_run:
         logger.info("Dry run active, won't touch any files.")
 
