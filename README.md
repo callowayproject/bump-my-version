@@ -46,7 +46,7 @@ commits and tags:
 - https://github.com/c4urself/bump2version/issues/246 Release inconsistency
 - https://github.com/c4urself/bump2version/issues/233 How are relative configured file paths resolved?
 - https://github.com/c4urself/bump2version/issues/225 Properly resolve configuration file through parent directories when in a git or mercurial repo
-- https://github.com/c4urself/bump2version/issues/224 Verify tag doesn't exist
+- Fixed: https://github.com/c4urself/bump2version/issues/224 Verify tag doesn't exist
 
 **Documentation opportunities**
 
