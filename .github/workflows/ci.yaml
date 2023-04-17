@@ -46,3 +46,11 @@ jobs:
         run: pip install -r requirements/test.txt
       - name: Test
         run: pytest
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: test-reports/coverage.xml
+          flags: python-${{ matrix.python-version }}
+          verbose: true # optional (default = false)
+          env_vars: OS,PYTHON
