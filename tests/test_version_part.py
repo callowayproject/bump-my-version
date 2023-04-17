@@ -298,3 +298,35 @@ def test_parse_doesnt_parse_current_version(tmp_path: Path, caplog: LogCaptureFi
         get_config_data(overrides)
 
     assert caplog.messages == ["Evaluating 'parse' option: 'xxx' does not parse current version '12'"]
+
+
+def test_part_does_not_revert_to_zero_if_optional(tmp_path: Path) -> None:
+    """A non-numeric part with the optional value should not revert to zero."""
+    # From https://github.com/c4urself/bump2version/issues/248
+    # Arrange
+    overrides = {
+        "current_version": "0.3.1",
+        "parse": r"(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)((?P<release>\D+)(?P<build>\d*))?",
+        "serialize": [
+            "{major}.{minor}.{patch}{release}{build}",
+            "{major}.{minor}.{patch}{release}",
+            "{major}.{minor}.{patch}",
+        ],
+        "parts": {
+            "release": {
+                "optional_value": "g",
+                "first_value": "g",
+                "values": [
+                    "dev",
+                    "a",
+                    "b",
+                    "g",
+                ],
+            },
+        },
+    }
+    with inside_dir(tmp_path):
+        conf, version_config, current_version = get_config_data(overrides)
+
+    new_version = current_version.bump("build", version_config.order)
+    assert version_config.serialize(new_version, get_context(conf)) == "0.3.1g1"
