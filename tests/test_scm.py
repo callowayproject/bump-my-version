@@ -3,10 +3,11 @@ import subprocess
 from pathlib import Path
 
 import pytest
-from pytest import param
+from pytest import param, LogCaptureFixture
 
 from bumpversion import scm
 from bumpversion.exceptions import DirtyWorkingDirectoryError
+from bumpversion.logging import setup_logging
 from tests.conftest import get_config_data, inside_dir
 
 
@@ -42,7 +43,7 @@ def test_git_latest_tag_info(git_repo: Path) -> None:
     """Should return information about the latest tag."""
     readme = git_repo.joinpath("readme.md")
     readme.touch()
-    # with pytest.raises(DirtyWorkingDirectoryError):
+
     with inside_dir(git_repo):
         assert scm.Git.latest_tag_info("v*") == scm.SCMInfo(tool=scm.Git)
 
@@ -63,6 +64,33 @@ def test_git_latest_tag_info(git_repo: Path) -> None:
         assert tag_info.current_version == "0.1.0"
         assert tag_info.distance_to_latest_tag == 0
         assert tag_info.dirty is True
+
+
+def test_git_detects_existing_tag(git_repo: Path, caplog: LogCaptureFixture) -> None:
+    """Attempting to tag when a tag exists will do nothing."""
+    # Arrange
+    git_repo.joinpath("readme.md").touch()
+    git_repo.joinpath("something.md").touch()
+    overrides = {"current_version": "0.1.0", "commit": True, "tag": True}
+    context = {
+        "current_version": "0.1.0",
+        "new_version": "0.2.0",
+    }
+    setup_logging(2)
+    with inside_dir(git_repo):
+        conf, version_config, current_version = get_config_data(overrides)
+        subprocess.run(["git", "add", "readme.md"])
+        subprocess.run(["git", "commit", "-m", "first"])
+        subprocess.run(["git", "tag", "v0.1.0"])
+        subprocess.run(["git", "add", "something.md"])
+        subprocess.run(["git", "commit", "-m", "second"])
+        subprocess.run(["git", "tag", "v0.2.0"])
+
+        # Act
+        scm.Git.tag_in_scm(config=conf, context=context)
+
+    # Assert
+    assert "Will not tag" in caplog.text
 
 
 def test_hg_is_not_usable(tmp_path: Path) -> None:

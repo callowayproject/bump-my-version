@@ -32,6 +32,7 @@ class SourceCodeManager:
 
     _TEST_USABLE_COMMAND: List[str] = []
     _COMMIT_COMMAND: List[str] = []
+    _ALL_TAGS_COMMAND: List[str] = []
 
     @classmethod
     def commit(cls, message: str, current_version: str, new_version: str, extra_args: Optional[list] = None) -> None:
@@ -85,6 +86,15 @@ class SourceCodeManager:
         raise NotImplementedError
 
     @classmethod
+    def get_all_tags(cls) -> List[str]:
+        """Return all tags in VCS."""
+        try:
+            result = subprocess.run(cls._ALL_TAGS_COMMAND, text=True, check=True, capture_output=True)
+            return result.stdout.splitlines()
+        except (FileNotFoundError, PermissionError, NotADirectoryError, subprocess.CalledProcessError):
+            return []
+
+    @classmethod
     def commit_to_scm(
         cls,
         files: List[Union[str, Path]],
@@ -135,7 +145,13 @@ class SourceCodeManager:
         sign_tags = config.sign_tags
         tag_name = config.tag_name.format(**context)
         tag_message = config.tag_message.format(**context)
+        existing_tags = cls.get_all_tags()
         do_tag = config.tag and not dry_run
+
+        if tag_name in existing_tags and config.tag:
+            logger.warning("Tag '%s' already exists. Will not tag.", tag_name)
+            return
+
         logger.info(
             "%s '%s' %s in %s and %s",
             "Tagging" if do_tag else "Would tag",
@@ -153,6 +169,7 @@ class Git(SourceCodeManager):
 
     _TEST_USABLE_COMMAND = ["git", "rev-parse", "--git-dir"]
     _COMMIT_COMMAND = ["git", "commit", "-F"]
+    _ALL_TAGS_COMMAND = ["git", "tag", "--list"]
 
     @classmethod
     def assert_nondirty(cls) -> None:
@@ -241,6 +258,7 @@ class Mercurial(SourceCodeManager):
 
     _TEST_USABLE_COMMAND = ["hg", "root"]
     _COMMIT_COMMAND = ["hg", "commit", "--logfile"]
+    _ALL_TAGS_COMMAND = ["hg", "log", '--rev="tag()"', '--template="{tags}\n"']
 
     @classmethod
     def latest_tag_info(cls, tag_pattern: str) -> SCMInfo:

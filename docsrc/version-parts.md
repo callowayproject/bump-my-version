@@ -1,112 +1,129 @@
 # Version parts
 
-A version string consists of one or more parts, e.g. the version `1.0.2` has three parts, separated by a dot (`.`) character. The names of these parts are defined in the named groups within the `parse` regular expression. The default configuration ( `(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)`) names them *major, minor,* and *patch.*
+- The version string is the rendering of some or all version parts.
+- While the version string may be rendered differently in various places, the value for all parts is maintained in bump-my-version's configuration.
+- The version parts are typically dependent on each other. Incrementing one part might change other elements.
+- You can compare two version strings (of the same project) and know which is more recent.
 
-By default all parts are considered numeric, that is their initial value is `0` and they are increased as integers. Also, the value `0` is considered to be
-optional if it's not needed for serialization, i.e. the version `1.4.0` is
-equal to `1.4` if `{major}.{minor}` is given as a `serialize` value.
+## Version configuration
 
-For advanced versioning schemes, non-numeric parts may be desirable (e.g. to
-identify [alpha or beta versions](http://en.wikipedia.org/wiki/Software_release_life_cycle#Stages_of_development)
-to indicate the stage of development, the flavor of the software package or
-a release name). To do so, you can use a `[bumpversion:part:…]` section
-containing the part's name (e.g. a part named `release_name` is configured in
-a section called `[bumpversion:part:release_name]`.
+A version configuration consists of the following:
 
-The following options are valid inside a part configuration:
+- A regular expression that will parse all the possible parts and name them
+- A list of one or more serialization formats
 
+A version string consists of one or more parts; e.g., version `1.0.2` has three parts, separated by a dot (`.`) character.
 
+The names of these parts are defined in the named groups within the `parse` regular expression. The default configuration calls them *major, minor,* and *patch.*
 
+The `serialize` configuration value is a list of default formats. You have the option for multiple serialization formats to omit *optional* values. For example, the following configuration:
 
+```toml
+serialize = [
+		"{major}.{minor}.{patch}",
+		"{major}.{minor}",
+]
+```
+
+Bump-my-version will serialize using the first format if the `patch` value is not `0`. If the `patch` value *is* `0`, bump-my-version will use the second format.
+
+## Version part configuration
+
+A version part configuration consists of the following:
+
+- An incrementing function
+- An optional value
+- A first value
+- A flag indicating its dependence or independence of changes to other version parts
+
+### Incrementing functions
+
+There are two incrementing functions: numeric and value. The numeric function uses integer values and returns the next integer value. The values function uses a sequence of values and returns the next value until finished.
+
+By default, parts use the numeric function starting at 0.
+
+You can configure a part using the values function by providing a list of values in the version part's configuration. For example, for the `release_name` part:
+
+```toml
+[tool.bumpversion.parts.release_name]
+values = [
+	"witty-warthog",
+	"ridiculous-rat",
+	"marvelous-mantis",
+]
+```
+
+### Optional values
+
+By default, the *first* value of a version part is considered *optional.* An optional value may be omitted from the version serialization. Using the example from above:
+
+```toml
+serialize = [
+		"{major}.{minor}.{patch}",
+		"{major}.{minor}",
+]
+```
+
+Version `1.4.0` is rendered as `1.4` since the `patch` is `0`; as the first value, it is optional.
+
+Optional values are helpful for non-numeric version parts that indicate development stages, such as [alpha or beta](http://en.wikipedia.org/wiki/Software_release_life_cycle#Stages_of_development).
 
 Example:
 
-```ini
-[bumpversion:part:release_name]
-values =
-witty-warthog
-ridiculous-rat
-marvelous-mantis
+```toml
+[tool.bumpversion]
+current_version = "1.0.0"
+parse = """(?x)
+    (?P<major>[0-9]+)
+    \\.(?P<minor>[0-9]+)
+    \\.(?P<patch>[0-9]+)
+    (?:
+        -(?P<pre_label>alpha|beta|stable)
+        (?:-(?P<pre_n>[0-9]+))?
+    )?
+"""
+serialize = [
+	"{major}.{minor}.{patch}-{pre_label}-{pre_n}",
+	"{major}.{minor}.{patch}",
+]
+
+[tool.bumpversion.parts.pre_label]
+optional_value = "stable"
+values =[
+	"alpha",
+	"beta",
+	"stable",
+]
 ```
 
----
+Bumping the `patch` part of version `1.0.0` would change the version to `1.0.1-alpha-0`. Bumping the `pre_label` part would change the version to `1.0.1-beta-0`. Bumping the `pre_label` part again would change the version to `1.0.1`. The `stable-0` is not serialized because both `stable` and `0` are *optional*.
 
-Example:
+### First Values
 
-```ini
-[bumpversion]
-current_version = 1.alpha
-parse = (?P<num>\d+)(\.(?P<release>.*))?
-serialize =
-{num}.{release}
-{num}
+You can specify the starting number with the first_value configuration for numeric version parts.
 
-[bumpversion:part:release]
-optional_value = gamma
-values =
-alpha
-beta
-gamma
+For example, if we added the following to the above configuration:
+
+```toml
+[tool.bumpversion.parts.pre_n]
+first_value = "1"
 ```
 
-Here, `bump-my-version release` would bump `1.alpha` to `1.beta`. Executing
-`bump-my-version release` again would bump `1.beta` to `1`, because
-`release` being `gamma` is configured optional.
+Bumping the `patch` value of version `1.0.0` would change the version to `1.0.1-alpha-1` instead of `1.0.1-alpha-0`.
 
-You should consider the version of `1` to technically be `1.gamma`
-with the `.gamma` part not being serialized since it is optional.
-The `{num}` entry in the `serialize` list allows the release part to be
-hidden. If you only had `{num}.{release}`, an optional release will always
-be serialized.
+### Independent Values
 
-Attempting to bump the release when it is the value of
-`gamma` will cause a `ValueError` as it will think you are trying to
-exceed the `values` list of the release part.
+In the pattern `{major}.{minor}.{patch}-{pre_label}-{pre_n}`, each version part resets to its first value when the element preceding it changes. All these version parts are *dependent.*
 
----
+You can include a value that incremented *independently* from the other parts, such as a `build` part: `{major}.{minor}.{patch}-{pre_label}-{pre_n}+{build}`—in the configuration for that part, set `independent=true`.
 
-Example:
-
-```ini
-[bumpversion]
-current_version = 1.alpha1
-parse = (?P<num>\d+)(\.(?P<release>.*)(?P<build>\d+))?
-serialize =
-{num}.{release}{build}
-
-[bumpversion:part:release]
-values =
-alpha
-beta
-gamma
-
-[bumpversion:part:build]
-first_value = 1
+```toml
+[tool.bumpversion.parts.build]
+independent = true
 ```
 
-Here, `bump-my-version release` would bump `1.alpha1` to `1.beta1`.
+## Reference
 
-Without the `first_value = 1` of the build part configured,
-`bump-my-version release` would bump `1.alpha1` to `1.beta0`, starting
-the build at `0`.
-
-
-
----
-
-Example:
-
-```ini
-[bumpversion]
-current_version: 2.1.6-5123
-parse = (?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)\-(?P<build>\d+)
-serialize = {major}.{minor}.{patch}-{build}
-
-[bumpversion:file:VERSION.txt]
-
-[bumpversion:part:build]
-independent = True
-```
-
-Here, `bump-my-version build` would bump `2.1.6-5123` to `2.1.6-5124`. Executing`bump-my-version major`
-would bump `2.1.6-5124` to `3.0.0-5124` without resetting the build number.
+- https://devopedia.org/semantic-versioning
+- https://semver.org
+- https://calver.org
