@@ -3,11 +3,12 @@
 [![image](https://img.shields.io/pypi/v/bump-my-version.svg)](https://pypi.org/project/bump-my-version/)
 [![image](https://img.shields.io/pypi/l/bump-my-version.svg)](https://pypi.org/project/bump-my-version/)
 [![image](https://img.shields.io/pypi/pyversions/bump-my-version.svg)](https://pypi.org/project/bump-my-version/)
+[![codecov](https://codecov.io/gh/callowayproject/bump-my-version/branch/master/graph/badge.svg?token=D1GSOtWEPU)](https://codecov.io/gh/callowayproject/bump-my-version)
 [![GitHub Actions](https://github.com/callowayproject/bump-my-version/workflows/CI/badge.svg)](https://github.com/callowayproject/bump-my-version/actions)
 
 > **NOTE**
 >
-> This is a maintained refactor of the [bump2version fork of](https://github.com/c4urself/bump2version) the excellent [bumpversion project](https://github.com/peritus/bumpversion). The main goals of this refactor were:
+> This is a maintained refactor of the [bump2version fork](https://github.com/c4urself/bump2version) of the excellent [bumpversion project](https://github.com/peritus/bumpversion). The main goals of this refactor were:
 >
 > - Add support for `pyproject.toml` configuration files.
 > - Convert to [click](https://click.palletsprojects.com/en/8.1.x/) for and [rich](https://rich.readthedocs.io/en/stable/index.html) for the CLI interface
@@ -19,9 +20,7 @@
 
 Version-bump your software with a single command!
 
-A small command line tool to simplify releasing software by updating all
-version strings in your source code by the correct increment. Also creates
-commits and tags:
+A small command line tool to simplify releasing software by updating all version strings in your source code by the correct increment and optionally commit and tag the changes.
 
 * version formats are highly configurable
 * works without any source code manager, but happily reads tag information from and writes
@@ -35,18 +34,11 @@ commits and tags:
 - Switch having both the version part and files to change as arguments on the command line.
 - Make the version part argument _truly_ optional when `--new-version` is specified
 - Allow for multiple tags, including one that moves for having a `v2` that always points to the latest version of version 2.
-- https://github.com/c4urself/bump2version/issues/253 Have an always increment configuration
+- https://github.com/c4urself/bump2version/issues/253 Have an "always increment" configuration
 - Better UI with [Rich](https://rich.readthedocs.io/en/stable/index.html)
-
-**Potential bugs to verify**
-
 - https://github.com/c4urself/bump2version/issues/267 Ignore-missing error in files flag
-- Fixed: https://github.com/c4urself/bump2version/issues/260 Incorrect behavior when new version == current version
-- https://github.com/c4urself/bump2version/issues/248 Potential bug/test case
-- https://github.com/c4urself/bump2version/issues/246 Release inconsistency
 - https://github.com/c4urself/bump2version/issues/233 How are relative configured file paths resolved?
 - https://github.com/c4urself/bump2version/issues/225 Properly resolve configuration file through parent directories when in a git or mercurial repo
-- Fixed: https://github.com/c4urself/bump2version/issues/224 Verify tag doesn't exist
 
 **Documentation opportunities**
 
@@ -169,9 +161,7 @@ Thank you, contributors! You can find a full list here: https://github.com/callo
 
 See also our [CONTRIBUTING.md](CONTRIBUTING.md)
 
-Development of this happens on GitHub, patches including tests, and documentation
-are very welcome, as well as bug reports! Also please open an issue if this
-tool does not support every aspect of bumping versions in your development
+Development of this happens on GitHub, patches including tests, and documentation are very welcome, as well as bug reports! Please open an issue if this tool does not support every aspect of bumping versions in your development
 workflow, as it is intended to be very versatile.
 
 ## License
