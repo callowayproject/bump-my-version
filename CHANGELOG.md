@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.3.0 (2023-04-17)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.2.0...0.3.0)
+
+### Fixes
+
+- Fixed bug in SCMInfo setup. [e8fddc9](https://github.com/callowayproject/bump-my-version/commit/e8fddc99ec5f4632f097790ca6b851d8854e09bd)
+    
+- Fixed missing xml coverage report. [696503f](https://github.com/callowayproject/bump-my-version/commit/696503fff800ea1f3ffb559108cde726296f2d98)
+    
+- Fixed assertion in failing test. [7afe58c](https://github.com/callowayproject/bump-my-version/commit/7afe58c4a15e0b48f223c3f2c80c48679e44aebc)
+    
+- Fixes issue when new version equals current version. [64b0de3](https://github.com/callowayproject/bump-my-version/commit/64b0de39828367c6c6f3e7103497256ce3f44f41)
+    
+  - Now it reports they are the same and exits.
+- Fixes issue of duplicate tags. [c025650](https://github.com/callowayproject/bump-my-version/commit/c0256509cb39c3e78c09d35205007191fbf3732e)
+    
+  - Now it checks if the tag exists and reports a warning
+- Fixed automation tooling. [19f13b7](https://github.com/callowayproject/bump-my-version/commit/19f13b7c0c388f15af45cf3fa04424a2946b4a04)
+    
+  - changed name to bump-my-version in setup.cfg
+  - added PAT in release pipeline to (hopefully) allow committing and tagging to master without issue.
+### New
+
+- Added codecov to workflow. [a5009e0](https://github.com/callowayproject/bump-my-version/commit/a5009e04068787bb98363c3e6803f84a338ee798)
+    
+### Other
+
+- Migrated setuptools metadata to pyproject.toml. [0bd54dc](https://github.com/callowayproject/bump-my-version/commit/0bd54dca1230021de266042014164fada25e0837)
+    
+### Updates
+
+- Updated the readme. [1b1d910](https://github.com/callowayproject/bump-my-version/commit/1b1d910756be07638e6cb113ee05a6f5261f6393)
+    
+- Updated documentation. [6c3b4fe](https://github.com/callowayproject/bump-my-version/commit/6c3b4fe4995ea67b1cc13ca265d16506bde4dd02)
+    
+
 ## 0.2.0 (2023-04-14)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.1.0...0.2.0)
 
