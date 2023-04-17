@@ -213,7 +213,7 @@ class Git(SourceCodeManager):
             logger.debug("Error when running git describe: %s", e.stderr)
             return SCMInfo(tool=cls)
 
-        info = SCMInfo()
+        info = SCMInfo(tool=cls)
 
         if describe_out[-1].strip() == "dirty":
             info.dirty = True
