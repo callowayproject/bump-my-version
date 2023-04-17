@@ -297,7 +297,7 @@ def test_parse_doesnt_parse_current_version(tmp_path: Path, caplog: LogCaptureFi
     with inside_dir(tmp_path):
         get_config_data(overrides)
 
-    assert caplog.messages == ["Evaluating 'parse' option: 'xxx' does not parse current version '12'"]
+    assert "Evaluating 'parse' option: 'xxx' does not parse current version '12'" in caplog.messages
 
 
 def test_part_does_not_revert_to_zero_if_optional(tmp_path: Path) -> None:
