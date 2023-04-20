@@ -62,6 +62,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
+          depth: 0
           token: ${{ secrets.PAT }}
 
       - uses: actions/setup-python@v4

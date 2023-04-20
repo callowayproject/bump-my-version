@@ -1,6 +1,0 @@
--r test.txt
--r docs.txt
-
-git-fame>=1.12.2
-generate-changelog>=0.7.6
-pip-tools

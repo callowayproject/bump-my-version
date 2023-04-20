@@ -36,11 +36,43 @@ requires-python = ">=3.7"
 license = { file = "LICENSE" }
 keywords = ["bumpversion", "version", "release"]
 dynamic = ["version"]
+dependencies = [
+    "click",
+    "pydantic",
+    "rich-click",
+    "rich",
+    "tomlkit",
+]
 
 [project.urls]
 homepage = "https://github.com/callowayproject/bump-my-version"
 repository = "https://github.com/callowayproject/bump-my-version.git"
 documentation = "https://callowayproject.github.io/bump-my-version/"
+
+[project.optional-dependencies]
+dev = [
+    "git-fame>=1.12.2",
+    "generate-changelog>=0.7.6",
+    "pip-tools",
+    "pre-commit",
+]
+docs = [
+    "ghp-import",
+    "linkify-it-py",
+    "myst-parser",
+    "furo",
+    "Sphinx>=4.3.0",
+    "sphinx-autodoc-typehints",
+    "sphinx-click",
+    "sphinx-copybutton",
+]
+test = [
+    "coverage",
+    "pre-commit",
+    "pytest-cov",
+    "pytest",
+    "pytest-mock",
+]
 
 [tool.setuptools.dynamic]
 version = {attr = "bumpversion.__version__"}
