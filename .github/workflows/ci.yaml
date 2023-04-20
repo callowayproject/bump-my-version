@@ -43,7 +43,7 @@ jobs:
           echo -e '[ui]\nusername = Testing Mercurial<bumpversion-test-hg@github.actions>' > ~/.hgrc
           hg --version
       - name: Install test dependencies
-        run: pip install -r requirements/test.txt
+        run: pip install '.[test]'
       - name: Test
         run: pytest --cov-report=xml
       - name: Upload coverage to Codecov
@@ -62,7 +62,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          depth: 0
+          fetch-depth: 0
           token: ${{ secrets.PAT }}
 
       - uses: actions/setup-python@v4
