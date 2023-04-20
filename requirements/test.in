@@ -1,7 +1,0 @@
--r prod.txt
-
-coverage
-pre-commit
-pytest-cov
-pytest
-pytest-mock

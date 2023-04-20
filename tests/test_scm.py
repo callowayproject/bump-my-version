@@ -143,3 +143,67 @@ def test_commit_and_tag_from_below_scm_root(repo: str, scm_command: str, scm_cla
             assert tag_info.distance_to_latest_tag == 0
         assert tag_info.current_version == "30.1.0"
         assert tag_info.dirty is False
+
+
+# write tests for no-commit, no-tag and dry-run
+@pytest.mark.parametrize(
+    ["repo", "scm_command", "scm_class"],
+    [
+        param("git_repo", "git", scm.Git, id="git"),
+        param("hg_repo", "hg", scm.Mercurial, id="hg"),
+    ],
+)
+@pytest.mark.parametrize(
+    ["commit", "tag", "dry_run", "should_commit", "should_tag"],
+    [
+        param(True, True, True, False, False, id="dry-run-stops-commit-and-tag"),
+        param(True, False, False, True, False, id="commit-no-tag"),
+        param(False, True, False, False, False, id="no-commit-stops-tag"),
+    ],
+)
+def test_commit_tag_dry_run_interactions(
+    repo: str,
+    scm_command: str,
+    scm_class: scm.SourceCodeManager,
+    commit: bool,
+    tag: bool,
+    dry_run: bool,
+    should_commit: bool,
+    should_tag: bool,
+    caplog: LogCaptureFixture,
+    request,
+):
+    """Combinations of commit, tag, dry-run and should produce the expected results."""
+    # Arrange
+    repo_path: Path = request.getfixturevalue(repo)
+    version_path = repo_path / "VERSION"
+    version_path.write_text("30.0.3")
+
+    overrides = {"current_version": "30.0.3", "commit": commit, "tag": tag, "files": [{"filename": str(version_path)}]}
+    context = {
+        "current_version": "30.0.3",
+        "new_version": "30.1.0",
+    }
+    with inside_dir(repo_path):
+        conf, version_config, current_version = get_config_data(overrides)
+        subprocess.run([scm_command, "add", "VERSION"], check=True, capture_output=True)
+        subprocess.run([scm_command, "commit", "-m", "initial commit"], check=True, capture_output=True)
+        version_path.write_text("30.1.0")
+        # Act
+        scm_class.commit_to_scm(files=[version_path], config=conf, context=context, dry_run=dry_run)
+        scm_class.tag_in_scm(config=conf, context=context, dry_run=dry_run)
+
+        # Assert
+        if commit and dry_run:
+            assert "Would commit" in caplog.text
+        elif should_commit:
+            assert "Committing " in caplog.text
+        else:
+            assert "Would not commit" in caplog.text
+
+        if tag and dry_run:
+            assert "Would tag" in caplog.text
+        elif should_tag:
+            assert "Tagging " in caplog.text
+        else:
+            assert "Would not tag" in caplog.text

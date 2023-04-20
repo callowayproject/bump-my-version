@@ -108,21 +108,30 @@ release_hint_rules:
     branch: ^((?!master|main).)*$
   - match_result: patch
     no_match_result: no-release
+    path: requirements/prod.in
+    branch: master|main
+  - match_result: patch
+    no_match_result: no-release
     grouping: Other
+    path: bumpversion/*
     branch: master|main
   - match_result: patch
     no_match_result: no-release
     grouping: Fixes
+    path: bumpversion/*
     branch: master|main
   - match_result: minor
     no_match_result: no-release
     grouping: Updates
+    path: bumpversion/*
     branch: master|main
   - match_result: minor
     no_match_result: no-release
     grouping: New
+    path: bumpversion/*
     branch: master|main
   - match_result: major
     no_match_result: no-release
     grouping: Breaking Changes
+    path: bumpversion/*
     branch: master|main

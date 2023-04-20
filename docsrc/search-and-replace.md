@@ -13,7 +13,7 @@ using this `.bumpversion.toml` will ensure only the line containing `MyProject` 
 [tool.bumpversion]
 current_version = "1.5.6"
 
-[[tool.bumpversion:files]]
+[[tool.bumpversion.files]]
 filename = "requirements.txt"
 search = "MyProject=={current_version}"
 replace = "MyProject=={new_version}"

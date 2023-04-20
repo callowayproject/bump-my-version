@@ -58,16 +58,6 @@ repos:
     hooks:
       - id: interrogate
         exclude: test.*
-  - repo: local
-    hooks:
-      - id: check-dependencies
-        name: check-dependencies
-        language: python
-        entry: make -C requirements all
-        files: ^requirements.*?\.(in|txt)$
-        pass_filenames: false
-        additional_dependencies:
-          - pip-tools
   - repo: https://github.com/python-jsonschema/check-jsonschema
     rev: 0.22.0
     hooks:

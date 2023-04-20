@@ -49,7 +49,7 @@ class SourceCodeManager:
 
         try:
             subprocess.run([*cls._COMMIT_COMMAND, f.name, *extra_args], env=env, capture_output=True, check=True)
-        except subprocess.CalledProcessError as exc:
+        except subprocess.CalledProcessError as exc:  # pragma: no-coverage
             err_msg = f"Failed to run {exc.cmd}: return code {exc.returncode}, output: {exc.output}"
             logger.exception(err_msg)
             raise exc
@@ -106,7 +106,13 @@ class SourceCodeManager:
         """Commit the files to the source code management system."""
         if not cls.is_usable():
             logger.error("SCM tool '%s' is unusable, unable to commit.", cls.__name__)
-        do_commit = config.commit and not dry_run
+            return
+
+        if not config.commit:
+            logger.info("Would not commit")
+            return
+
+        do_commit = not dry_run
         logger.info(
             "%s %s commit",
             "Preparing" if do_commit else "Would prepare",
@@ -146,9 +152,16 @@ class SourceCodeManager:
         tag_name = config.tag_name.format(**context)
         tag_message = config.tag_message.format(**context)
         existing_tags = cls.get_all_tags()
-        do_tag = config.tag and not dry_run
+        if not config.commit:
+            logger.info("Would not tag since we are not committing")
+            return
+        if not config.tag:
+            logger.info("Would not tag")
+            return
 
-        if tag_name in existing_tags and config.tag:
+        do_tag = not dry_run
+
+        if tag_name in existing_tags:
             logger.warning("Tag '%s' already exists. Will not tag.", tag_name)
             return
 

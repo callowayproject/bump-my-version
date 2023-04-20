@@ -43,7 +43,7 @@ jobs:
           echo -e '[ui]\nusername = Testing Mercurial<bumpversion-test-hg@github.actions>' > ~/.hgrc
           hg --version
       - name: Install test dependencies
-        run: pip install -r requirements/test.txt
+        run: pip install '.[test]'
       - name: Test
         run: pytest --cov-report=xml
       - name: Upload coverage to Codecov
@@ -54,3 +54,41 @@ jobs:
           flags: python-${{ matrix.python-version }}
           verbose: true # optional (default = false)
           env_vars: OS,PYTHON
+
+  # Upload to Test PyPI.
+  release-test-pypi:
+    name: Publish in-dev package to test.pypi.org
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT }}
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip' # caching pip dependencies
+
+      - name: Install requirements
+        shell: bash
+        run: |
+          python -m pip install --disable-pip-version-check --no-python-version-warning build
+          python -m pip install --disable-pip-version-check --no-python-version-warning -e .
+
+      - name: Set dev version
+        shell: bash
+        run: |
+          bumpversion dev bumpversion/__init__.py --no-commit --no-configured-files -v
+
+      - name: Package
+        shell: bash
+        run: |
+          python -m pip install --disable-pip-version-check --no-python-version-warning build
+          python -m build
+
+      - name: Upload package to Test PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          repository-url: https://test.pypi.org/legacy/

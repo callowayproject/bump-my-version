@@ -9,6 +9,7 @@ Introduction <readme>
 usage
 configuration
 version-parts
+formatting-context
 search-and-replace
 cli
 api
