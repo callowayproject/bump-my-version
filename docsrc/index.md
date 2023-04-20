@@ -8,8 +8,6 @@ caption: Contents
 Introduction <readme>
 usage
 configuration
-version-parts
-search-and-replace
 cli
 api
 contributing
