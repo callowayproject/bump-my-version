@@ -54,3 +54,21 @@ jobs:
           flags: python-${{ matrix.python-version }}
           verbose: true # optional (default = false)
           env_vars: OS,PYTHON
+
+  # Upload to Test PyPI.
+  release-test-pypi:
+    name: Publish in-dev package to test.pypi.org
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT }}
+
+      - name: Package
+        uses: hynek/build-and-inspect-python-package@v1
+
+      - name: Upload package to Test PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          repository-url: https://test.pypi.org/legacy/
