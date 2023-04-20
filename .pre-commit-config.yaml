@@ -63,8 +63,12 @@ repos:
       - id: check-dependencies
         name: check-dependencies
         language: python
-        entry: make -C requirements all
-        files: ^requirements.*?\.(in|txt)$
+        entry: >
+          pip-compile -o requirements/prod.txt pyproject.toml;
+          pip-compile --extra test -o requirements/test.txt pyproject.toml;
+          pip-compile --extra docs -o requirements/docs.txt pyproject.toml;
+          pip-compile --extra dev --extra docs --extra test -o requirements/dev.txt pyproject.toml;
+        files: ^pyproject.toml$
         pass_filenames: false
         additional_dependencies:
           - pip-tools
