@@ -1,12 +1,8 @@
-include AUTHORS.md
 include CODE_OF_CONDUCT.md
 include CHANGELOG.md
 include CONTRIBUTING.md
 include LICENSE
 include README.md
-include requirements/*.txt
-include requirements/*.in
-include requirements.txt
 
 graft tests
 prune __pycache__

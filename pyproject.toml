@@ -77,6 +77,9 @@ test = [
 [tool.setuptools.dynamic]
 version = {attr = "bumpversion.__version__"}
 
+[tool.setuptools.packages.find]
+exclude = ["example*", "tests*", "docs*", "build"]
+
 [tool.coverage.run]
 branch = true
 omit = ["**/test_*.py", "**/__main__.py", "**/aliases.py"]
