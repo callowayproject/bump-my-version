@@ -44,6 +44,11 @@ dependencies = [
     "tomlkit",
 ]
 
+[project.scripts]
+bump-my-version = "bumpversion.cli:cli"
+bumpversion = "bumpversion.cli:cli"
+
+
 [project.urls]
 homepage = "https://github.com/callowayproject/bump-my-version"
 repository = "https://github.com/callowayproject/bump-my-version.git"
