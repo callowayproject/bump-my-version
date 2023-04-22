@@ -55,10 +55,10 @@ jobs:
 
           if [ -n "$content" ]; then
             echo "::notice::Found release notes for ${target_version}"
-            echo "RELEASE_NOTES=$content" >> $GITHUB_ENV
+            echo "$content" >> release-notes.md
           else
             echo "::warning::Did not find release notes for ${target_version}"
-            echo "RELEASE_NOTES=" >> $GITHUB_ENV
+            touch release-notes.md
           fi
 
       - name: Download packages built by build-and-inspect-python-package
@@ -72,7 +72,7 @@ jobs:
         with:
           files: dist/*
           tag_name: "${{ env.TAG_NAME }}"
-          body: "${{ env.RELEASE_NOTES }}"
+          body_path: release-notes.md
 
   # Upload to real PyPI on GitHub Releases.
   release-pypi:
