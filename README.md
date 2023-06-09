@@ -33,22 +33,8 @@ A small command line tool to simplify releasing software by updating all version
 - Make it easier to get the current version
 - Switch having both the version part and files to change as arguments on the command line.
 - Make the version part argument _truly_ optional when `--new-version` is specified
-- Allow for multiple tags, including one that moves for having a `v2` that always points to the latest version of version 2.
-- https://github.com/c4urself/bump2version/issues/253 Have an "always increment" configuration
+- Allow for multiple tags, including one that moves for having a `v2` that always points to the latest version of version 2. [For example](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#recommendations)
 - Better UI with [Rich](https://rich.readthedocs.io/en/stable/index.html)
-- https://github.com/c4urself/bump2version/issues/267 Ignore-missing error in files flag
-- https://github.com/c4urself/bump2version/issues/233 How are relative configured file paths resolved?
-- https://github.com/c4urself/bump2version/issues/225 Properly resolve configuration file through parent directories when in a git or mercurial repo
-
-**Documentation opportunities**
-
-- https://github.com/c4urself/bump2version/issues/252 
-- https://github.com/c4urself/bump2version/issues/247
-- https://github.com/c4urself/bump2version/issues/243
-- https://github.com/c4urself/bump2version/issues/240
-- https://github.com/c4urself/bump2version/issues/239
-- Add dates to releases in changelog
-- https://github.com/c4urself/bump2version/issues/200 Add CalVer examples
 
 ## Installation
 
