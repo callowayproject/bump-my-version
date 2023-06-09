@@ -89,6 +89,8 @@ def test_multi_file_configuration(tmp_path: Path):
     readme_path.write_text("MyAwesomeSoftware(TM) v1.0")
     build_num_path = tmp_path / "BUILD_NUMBER"
     build_num_path.write_text("1.0.3+joe+38943")
+    csv_path = tmp_path / "Version.csv"
+    csv_path.write_text("1;1;0;3;joe;38943")
 
     overrides = {
         "current_version": "1.0.3+joe+38943",
@@ -114,6 +116,13 @@ def test_multi_file_configuration(tmp_path: Path):
             {
                 "filename": str(build_num_path),
                 "serialize": ["{major}.{minor}.{patch}+{$USER}+{$BUILD_NUMBER}"],
+            },
+            {
+                "filename": str(csv_path),
+                "parse": r"(?P<major>\d+);(?P<minor>\d+);(?P<patch>\d+);(?P<user>[0-9A-Za-z]+)?;(?P<build_number>[0-9A-Za-z]+)?",
+                "serialize": ["{major};{minor};{patch};{$USER};{$BUILD_NUMBER}"],
+                "search": "1;{current_version}",
+                "replace": "1;{new_version}",
             },
         ],
     }
@@ -151,6 +160,77 @@ def test_multi_file_configuration(tmp_path: Path):
     assert maj_vers_path.read_text() == "2"
     assert readme_path.read_text() == "MyAwesomeSoftware(TM) v2.0"
     assert build_num_path.read_text() == "2.0.1+jane+38945"
+    assert csv_path.read_text() == "1;2;0;1;jane;38945"
+
+
+def test_issue_14(tmp_path: Path):
+    full_vers_path = tmp_path / "FULL_VERSION.txt"
+    full_vers_path.write_text("3.1.0-rc+build.1031")
+    assembly_path = tmp_path / "AssemblyInfo.cs"
+    assembly_path.write_text(
+        '[assembly: AssemblyFileVersion("3.1.0-rc+build.1031")]\n' '[assembly: AssemblyVersion("3.1.1031.0")]'
+    )
+    csv_path = tmp_path / "Version.csv"
+    csv_path.write_text("1;3;1;0;rc;build.1031")
+
+    overrides = {
+        "current_version": "3.1.0-rc+build.1031",
+        "parse": r"(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)(-(?P<release>[0-9A-Za-z]+))?(\+build\.(?P<build>.[0-9A-Za-z]+))?",
+        "serialize": ["{major}.{minor}.{patch}-{release}+build.{build}", "{major}.{minor}.{patch}+build.{build}"],
+        "commit": True,
+        "message": "Bump version: {current_version} -> {new_version}",
+        "tag": False,
+        "tag_name": "{new_version}",
+        "tag_message": "Version {new_version}",
+        "allow_dirty": True,
+        "files": [
+            {
+                "filename": str(full_vers_path),
+            },
+            {
+                "filename": str(assembly_path),
+                "search": '[assembly: AssemblyFileVersion("{current_version}")]',
+                "replace": '[assembly: AssemblyFileVersion("{new_version}")]',
+            },
+            {
+                "filename": str(assembly_path),
+                "parse": r"(?P<major>\d+)\.(?P<minor>\d+)\.(?P<build>\d+)\.(?P<patch>\d+)",
+                "serialize": ["{major}.{minor}.{build}.{patch}"],
+                "search": '[assembly: AssemblyVersion("{current_version}")]',
+                "replace": '[assembly: AssemblyVersion("{new_version}")]',
+            },
+            {
+                "filename": str(csv_path),
+                "parse": r"(?P<major>\d+);(?P<minor>\d+);(?P<patch>\d+);(?P<release>[0-9A-Za-z]+)?;(build\.(?P<build>.[0-9A-Za-z]+))?",
+                "serialize": [
+                    "{major};{minor};{patch};{release};build.{build}",
+                    "{major};{minor};{patch};;build.{build}",
+                ],
+                "search": "1;{current_version}",
+                "replace": "1;{new_version}",
+            },
+        ],
+        "parts": {
+            "release": {"values": ["beta", "rc", "final"], "optional_value": "final"},
+            "build": {
+                "first_value": 1000,
+                "independent": True,
+            },
+        },
+    }
+    conf, version_config, current_version = get_config_data(overrides)
+    major_version = current_version.bump("patch", version_config.order)
+
+    ctx = get_context(conf)
+
+    for file_cfg in conf.files:
+        cfg_file = files.ConfiguredFile(file_cfg, version_config)
+        cfg_file.replace_version(current_version, major_version, ctx)
+
+    assert full_vers_path.read_text() == "3.1.1-beta+build.1031"
+    expected = '[assembly: AssemblyFileVersion("3.1.1-beta+build.1031")]\n[assembly: AssemblyVersion("3.1.1031.1")]'
+    assert assembly_path.read_text() == expected
+    assert csv_path.read_text() == "1;3;1;1;beta;build.1031"
 
 
 def test_search_replace_to_avoid_updating_unconcerned_lines(tmp_path: Path):
