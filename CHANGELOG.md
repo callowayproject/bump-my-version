@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.4.1 (2023-06-09)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.4.0...0.4.1)
+
+### Fixes
+
+- Fixes release.yaml. [01870d5](https://github.com/callowayproject/bump-my-version/commit/01870d5878b5f0a6e601863c4b9c25572db6cbb0)
+    
+  Outputs the notes to a file instead of an environment variable.
+### Other
+
+- [pre-commit.ci] auto fixes from pre-commit.com hooks. [266002f](https://github.com/callowayproject/bump-my-version/commit/266002f4d60ed6fe3623ba5f713318dc6220ec00)
+    
+  for more information, see https://pre-commit.ci
+- [pre-commit.ci] pre-commit autoupdate. [edc444f](https://github.com/callowayproject/bump-my-version/commit/edc444f0328c27d905b35a5c970320a7171d738f)
+    
+  **updates:** - [github.com/charliermarsh/ruff-pre-commit: v0.0.261 → v0.0.270](https://github.com/charliermarsh/ruff-pre-commit/compare/v0.0.261...v0.0.270)
+
+
 ## 0.4.0 (2023-04-20)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.3.0...0.4.0)
 
