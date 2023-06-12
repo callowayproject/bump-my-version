@@ -9,12 +9,12 @@ There are two modes of operation: On the command line for single-file operation
 and using a configuration file (`pyproject.toml`) for more complex multi-file operations.
 
 ```console
-bump-my-version [OPTIONS] VERSION_PART [FILES]...
+bump-my-version [OPTIONS] [VERSION_PART] [FILES]...
 ```
 
 ## `VERSION_PART`
 
-_**required**_
+_**[optional]**_
 
 The part of the version to increase, e.g. `minor`.
 
