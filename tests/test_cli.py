@@ -101,7 +101,7 @@ def test_cli_options_override_config(tmp_path: Path, fixtures_path: Path, mocker
                 "my-replace",
                 "--no-commit",
                 "--no-tag",
-                "patch",
+                "slurp",
                 "do-this-file.txt",
             ],
         )
@@ -109,7 +109,7 @@ def test_cli_options_override_config(tmp_path: Path, fixtures_path: Path, mocker
     # Assert
     assert result.exit_code == 0
     assert mocked_do_bump.call_count == 1
-    assert mocked_do_bump.call_args[0][0] == "patch"
+    assert mocked_do_bump.call_args[0][0] == "slurp"
     assert mocked_do_bump.call_args[0][1] == "1.2.0"
     the_config = mocked_do_bump.call_args[0][2]
     assert the_config.current_version == "1.1.0"
