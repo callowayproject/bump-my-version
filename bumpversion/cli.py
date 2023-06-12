@@ -222,7 +222,7 @@ def cli(
     config = get_configuration(found_config_file, **overrides)
     if args:
         if args[0] not in config.parts.keys():
-            raise ValueError(f"Unknown version part: {args[0]}")
+            raise click.BadArgumentUsage(f"Unknown version part: {args[0]}")
         version_part = args[0]
         files = args[1:]
     else:
