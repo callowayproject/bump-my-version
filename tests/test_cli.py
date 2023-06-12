@@ -101,7 +101,7 @@ def test_cli_options_override_config(tmp_path: Path, fixtures_path: Path, mocker
                 "my-replace",
                 "--no-commit",
                 "--no-tag",
-                "patch",
+                "slurp",
                 "do-this-file.txt",
             ],
         )
@@ -109,7 +109,7 @@ def test_cli_options_override_config(tmp_path: Path, fixtures_path: Path, mocker
     # Assert
     assert result.exit_code == 0
     assert mocked_do_bump.call_count == 1
-    assert mocked_do_bump.call_args[0][0] == "patch"
+    assert mocked_do_bump.call_args[0][0] == "slurp"
     assert mocked_do_bump.call_args[0][1] == "1.2.0"
     the_config = mocked_do_bump.call_args[0][2]
     assert the_config.current_version == "1.1.0"
@@ -153,8 +153,8 @@ def test_dirty_work_dir_raises_error(repo: str, scm_command: str, request):
     assert "working directory is not clean" in result.output
 
 
-def test_listing_outputs_correctly_and_stops(tmp_path: Path, fixtures_path: Path):
-    """The --list option should list the configuration and nothing else."""
+def test_listing_with_version_part(tmp_path: Path, fixtures_path: Path):
+    """The --list option should list the configuration with new_version.."""
     # Arrange
     config_path = tmp_path / "pyproject.toml"
     toml_path = fixtures_path / "basic_cfg.toml"
@@ -193,6 +193,45 @@ def test_listing_outputs_correctly_and_stops(tmp_path: Path, fixtures_path: Path
     }
 
 
+def test_listing_without_version_part(tmp_path: Path, fixtures_path: Path):
+    """The --list option should list the configuration without new_version."""
+    # Arrange
+    config_path = tmp_path / "pyproject.toml"
+    toml_path = fixtures_path / "basic_cfg.toml"
+    shutil.copy(toml_path, config_path)
+    runner: CliRunner = CliRunner()
+
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(cli.cli, ["--list"])
+
+    if result.exit_code != 0:
+        print(result.output)
+        print(result.exception)
+
+    assert result.exit_code == 0
+    assert set(result.output.splitlines(keepends=False)) == {
+        "current_version=1.0.0",
+        "parse=(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?",
+        "serialize=['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}']",
+        "search={current_version}",
+        "replace={new_version}",
+        "tag=True",
+        "sign_tags=False",
+        "tag_name=v{new_version}",
+        "tag_message=Bump version: {current_version} → {new_version}",
+        "allow_dirty=False",
+        "commit=True",
+        "message=Bump version: {current_version} → {new_version}",
+        "commit_args=None",
+        "files=[{'filename': 'setup.py', 'glob': None, 'parse': None, 'serialize': "
+        "None, 'search': None, 'replace': None}, {'filename': "
+        "'bumpversion/__init__.py', 'glob': None, 'parse': None, 'serialize': None, "
+        "'search': None, 'replace': None}, {'filename': 'CHANGELOG.md', 'glob': None, "
+        "'parse': None, 'serialize': None, 'search': '**unreleased**', 'replace': "
+        "'**unreleased**\\n**v{new_version}**'}]",
+    }
+
+
 def test_non_scm_operations_if_scm_not_installed(tmp_path: Path, monkeypatch):
     """Everything works except SCM commands if the SCM is unusable."""
     # Arrange
@@ -209,3 +248,32 @@ def test_non_scm_operations_if_scm_not_installed(tmp_path: Path, monkeypatch):
 
     # Assert
     assert version_path.read_text() == "32.0.0"
+
+
+@pytest.mark.parametrize(
+    ["version_part"],
+    [
+        param("charlie", id="bad_version_part"),
+        param("", id="missing_version_part"),
+    ],
+)
+def test_detects_bad_or_missing_version_part(version_part: str, tmp_path: Path, monkeypatch):
+    """It properly detects bad or missing version part."""
+    # Arrange
+    monkeypatch.setenv("PATH", "")
+
+    with inside_dir(tmp_path):
+        version_path = tmp_path / "VERSION"
+        version_path.write_text("31.0.3")
+
+        runner: CliRunner = CliRunner()
+        args = ["--current-version", "31.0.3"]
+        if version_part:
+            args.append(version_part)
+        args.append("VERSION")
+        # Act
+        result = runner.invoke(cli.cli, args)
+
+    # Assert
+    assert result.exception is not None
+    assert "Unknown version part:" in result.stdout

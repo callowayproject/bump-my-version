@@ -27,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 @click.command(context_settings={"ignore_unknown_options": True})
 @click.version_option(version=__version__)
-@click.argument("version_part")
-@click.argument("files", nargs=-1, type=click.Path())
+@click.argument("args", nargs=-1, type=str)
 @click.option(
     "--config-file",
     metavar="FILE",
@@ -165,8 +164,8 @@ logger = logging.getLogger(__name__)
     help="List machine readable information",
 )
 def cli(
-    version_part: str,
-    files: list,
+    # version_part: str,
+    args: list,
     config_file: Optional[str],
     verbose: int,
     allow_dirty: Optional[bool],
@@ -189,6 +188,8 @@ def cli(
 ) -> None:
     """
     Change the version.
+
+    ARGS may contain any of the following:
 
     VERSION_PART is the part of the version to increase, e.g. `minor` .
     Valid values include those given in the `--serialize` / `--parse` option.
@@ -219,6 +220,14 @@ def cli(
 
     found_config_file = find_config_file(config_file)
     config = get_configuration(found_config_file, **overrides)
+    if args:
+        if args[0] not in config.parts.keys():
+            raise click.BadArgumentUsage(f"Unknown version part: {args[0]}")
+        version_part = args[0]
+        files = args[1:]
+    else:
+        version_part = None
+        files = args
 
     if show_list:
         log_list(config, version_part, new_version)
@@ -240,10 +249,12 @@ def cli(
 def log_list(config: Config, version_part: Optional[str], new_version: Optional[str]) -> None:
     """Output configuration with new version."""
     ctx = get_context(config)
-    version = config.version_config.parse(config.current_version)
-    next_version = get_next_version(version, config, version_part, new_version)
-    next_version_str = config.version_config.serialize(next_version, ctx)
+    if version_part:
+        version = config.version_config.parse(config.current_version)
+        next_version = get_next_version(version, config, version_part, new_version)
+        next_version_str = config.version_config.serialize(next_version, ctx)
 
-    click.echo(f"new_version={next_version_str}")
+        click.echo(f"new_version={next_version_str}")
+
     for key, value in config.dict(exclude={"scm_info", "parts"}).items():
         click.echo(f"{key}={value}")

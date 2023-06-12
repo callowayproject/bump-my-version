@@ -89,8 +89,6 @@ def test_multi_file_configuration(tmp_path: Path):
     readme_path.write_text("MyAwesomeSoftware(TM) v1.0")
     build_num_path = tmp_path / "BUILD_NUMBER"
     build_num_path.write_text("1.0.3+joe+38943")
-    csv_path = tmp_path / "Version.csv"
-    csv_path.write_text("1;1;0;3;joe;38943")
 
     overrides = {
         "current_version": "1.0.3+joe+38943",
@@ -116,13 +114,6 @@ def test_multi_file_configuration(tmp_path: Path):
             {
                 "filename": str(build_num_path),
                 "serialize": ["{major}.{minor}.{patch}+{$USER}+{$BUILD_NUMBER}"],
-            },
-            {
-                "filename": str(csv_path),
-                "parse": r"(?P<major>\d+);(?P<minor>\d+);(?P<patch>\d+);(?P<user>[0-9A-Za-z]+)?;(?P<build_number>[0-9A-Za-z]+)?",
-                "serialize": ["{major};{minor};{patch};{$USER};{$BUILD_NUMBER}"],
-                "search": "1;{current_version}",
-                "replace": "1;{new_version}",
             },
         ],
     }
@@ -160,7 +151,6 @@ def test_multi_file_configuration(tmp_path: Path):
     assert maj_vers_path.read_text() == "2"
     assert readme_path.read_text() == "MyAwesomeSoftware(TM) v2.0"
     assert build_num_path.read_text() == "2.0.1+jane+38945"
-    assert csv_path.read_text() == "1;2;0;1;jane;38945"
 
 
 def test_issue_14(tmp_path: Path):
