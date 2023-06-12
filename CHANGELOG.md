@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.5.0 (2023-06-12)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.4.1...0.5.0)
+
+### Fixes
+
+- Fixed ruff complaints about subprocess. [c429c68](https://github.com/callowayproject/bump-my-version/commit/c429c682515455558095836cb108a93fa23aa67f)
+    
+- Fixed issue with formatting. [da7544f](https://github.com/callowayproject/bump-my-version/commit/da7544f18780d5f289381d33a87b331c3eaf4d6b)
+    
+  There is an underlying edge case where the deriving previous environment variables with multple ways of formatting version numbers will fail.
+### New
+
+- Add test to reproduce issue #14. [d78ff46](https://github.com/callowayproject/bump-my-version/commit/d78ff46d65ce75b7651e5697eef59dbcb71c935e)
+    
+- Added documentation for replacing strings in different files. [893ec03](https://github.com/callowayproject/bump-my-version/commit/893ec03f6ceaf2a050c31f10006aa63c0411af4e)
+    
+  Fixes #6
+### Other
+
+- Made `VERSION_PART` optional. [f236b7d](https://github.com/callowayproject/bump-my-version/commit/f236b7de94d9f58e493c617848e3eb02e85a24c7)
+    
+  - Fixes #16
+  - `VERSION_PART` is detected from the arguments based on the configuration
+### Updates
+
+- Updated docs indicated VERSION_PART is optional. [22edeac](https://github.com/callowayproject/bump-my-version/commit/22edeac9018e75f79d7167fbfc6ca56cda4d3b07)
+    
+- Updated tests for bad version parts. [23be62d](https://github.com/callowayproject/bump-my-version/commit/23be62deed9fb7d51a8bbc195433d1a4ce74c11f)
+    
+- Changed exception type raised when bad version part is detected. [1e3ebc5](https://github.com/callowayproject/bump-my-version/commit/1e3ebc5b144294771b7bfe812299af4f92ae212a)
+    
+  - ValueError -> click.BadArgumentUsage
+- Updated readme. [7780265](https://github.com/callowayproject/bump-my-version/commit/7780265b97ce49492fef73ca3ac8a1cce27a2fad)
+    
+  Fixes #7
+
 ## 0.4.1 (2023-06-09)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.4.0...0.4.1)
 
