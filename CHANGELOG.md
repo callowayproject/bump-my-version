@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.5.1 (2023-06-14)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.5.0...0.5.1)
+
+### Fixes
+
+- Fixes reporting the wrong version missing in a file. [efb04e9](https://github.com/callowayproject/bump-my-version/commit/efb04e94a07fa886253bbfc9cf801040e4c03895)
+    
+  - Fixes issue #20
+  - Renders the correct `current_version` for each file being modified.
+### Other
+
+- [pre-commit.ci] auto fixes from pre-commit.com hooks. [5476cdf](https://github.com/callowayproject/bump-my-version/commit/5476cdf8b66666e06e9bfd4d71eaf2610103079a)
+    
+  for more information, see https://pre-commit.ci
+- [pre-commit.ci] pre-commit autoupdate. [6e500c2](https://github.com/callowayproject/bump-my-version/commit/6e500c24592f1688cbb13d3fcb6071aa0815ffe8)
+    
+  **updates:** - [github.com/charliermarsh/ruff-pre-commit: v0.0.270 → v0.0.272](https://github.com/charliermarsh/ruff-pre-commit/compare/v0.0.270...v0.0.272)
+
+
 ## 0.5.0 (2023-06-12)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.4.1...0.5.0)
 
