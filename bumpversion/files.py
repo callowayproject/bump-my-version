@@ -209,4 +209,5 @@ def _check_files_contain_version(
         ", ".join({str(f.path) for f in files}),
     )
     for f in files:
+        context["current_version"] = f.version_config.serialize(current_version, context)
         f.contains_version(current_version, context)
