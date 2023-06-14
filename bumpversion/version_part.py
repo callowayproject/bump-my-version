@@ -228,7 +228,7 @@ class VersionConfig:
         except KeyError as e:
             missing_key = getattr(e, "message", e.args[0])
             raise MissingValueError(
-                f"Did not find key {missing_key!r} in {repr(version)} when serializing version number"
+                f"Did not find key {missing_key!r} in {version!r} when serializing version number"
             ) from e
 
         keys_needing_representation = set()

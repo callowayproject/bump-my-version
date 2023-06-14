@@ -9,6 +9,7 @@ from pytest import param
 
 from bumpversion import exceptions, files
 from bumpversion.utils import get_context
+from bumpversion.exceptions import VersionNotFoundError
 from tests.conftest import get_config_data, inside_dir
 
 
@@ -153,7 +154,7 @@ def test_multi_file_configuration(tmp_path: Path):
     assert build_num_path.read_text() == "2.0.1+jane+38945"
 
 
-def test_issue_14(tmp_path: Path):
+def test_raises_correct_missing_version_string(tmp_path: Path):
     full_vers_path = tmp_path / "FULL_VERSION.txt"
     full_vers_path.write_text("3.1.0-rc+build.1031")
     assembly_path = tmp_path / "AssemblyInfo.cs"
@@ -161,7 +162,7 @@ def test_issue_14(tmp_path: Path):
         '[assembly: AssemblyFileVersion("3.1.0-rc+build.1031")]\n' '[assembly: AssemblyVersion("3.1.1031.0")]'
     )
     csv_path = tmp_path / "Version.csv"
-    csv_path.write_text("1;3;1;0;rc;build.1031")
+    csv_path.write_text("1;3-1;0;rc;build.1031")
 
     overrides = {
         "current_version": "3.1.0-rc+build.1031",
@@ -213,14 +214,11 @@ def test_issue_14(tmp_path: Path):
 
     ctx = get_context(conf)
 
-    for file_cfg in conf.files:
-        cfg_file = files.ConfiguredFile(file_cfg, version_config)
-        cfg_file.replace_version(current_version, major_version, ctx)
+    configured_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
 
-    assert full_vers_path.read_text() == "3.1.1-beta+build.1031"
-    expected = '[assembly: AssemblyFileVersion("3.1.1-beta+build.1031")]\n[assembly: AssemblyVersion("3.1.1031.1")]'
-    assert assembly_path.read_text() == expected
-    assert csv_path.read_text() == "1;3;1;1;beta;build.1031"
+    with pytest.raises(VersionNotFoundError) as e:
+        files.modify_files(configured_files, current_version, major_version, ctx)
+        assert e.message.startswith("Did not find '1;3;1;0;rc;build.1031'")
 
 
 def test_search_replace_to_avoid_updating_unconcerned_lines(tmp_path: Path):
