@@ -310,7 +310,7 @@ def read_toml_file(file_path: Path) -> Dict[str, Any]:
     import tomlkit
 
     # Load the TOML file
-    toml_data = tomlkit.parse(file_path.read_text())
+    toml_data = tomlkit.parse(file_path.read_text()).unwrap()
 
     return toml_data.get("tool", {}).get("bumpversion", {})
 
