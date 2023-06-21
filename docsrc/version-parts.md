@@ -20,8 +20,8 @@ The `serialize` configuration value is a list of default formats. You have the o
 
 ```toml
 serialize = [
-		"{major}.{minor}.{patch}",
-		"{major}.{minor}",
+    "{major}.{minor}.{patch}",
+    "{major}.{minor}",
 ]
 ```
 
