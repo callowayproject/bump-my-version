@@ -156,3 +156,15 @@ def test_do_show(
         show.do_show(config=conf, format_=format_, *req_args)
     captured = capsys.readouterr()
     assert captured.out.strip() == expected
+
+
+def test_do_show_increment(tmp_path: Path, fixtures_path: Path, capsys: pytest.CaptureFixture) -> None:
+    """Test the show method with increment."""
+    config_path = tmp_path / "pyproject.toml"
+    toml_path = fixtures_path / "basic_cfg.toml"
+    shutil.copy(toml_path, config_path)
+    with inside_dir(tmp_path):
+        conf = config.get_configuration(config_file=fixtures_path.joinpath(config_path))
+        show.do_show("current_version", "new_version", config=conf, format_="default", increment="minor")
+    captured = capsys.readouterr()
+    assert captured.out.strip() == "{'current_version': '1.0.0', 'new_version': '1.1.0-dev'}"

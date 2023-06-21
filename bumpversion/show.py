@@ -121,9 +121,16 @@ def log_list(config: Config, version_part: Optional[str], new_version: Optional[
         print_info(f"{key}={value}")
 
 
-def do_show(*args, config: Config, format_: str = "default") -> None:
+def do_show(*args, config: Config, format_: str = "default", increment: Optional[str] = None) -> None:
     """Show current version or configuration information."""
     config_dict = config.dict()
+    ctx = get_context(config)
+
+    if increment:
+        version = config.version_config.parse(config.current_version)
+        next_version = get_next_version(version, config, increment, None)
+        next_version_str = config.version_config.serialize(next_version, ctx)
+        config_dict["new_version"] = next_version_str
 
     try:
         if "all" in args or not args:

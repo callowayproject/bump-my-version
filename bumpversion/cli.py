@@ -272,12 +272,20 @@ def bump(
     default="default",
     help="Config file to read most of the variables from.",
 )
-def show(args: List[str], config_file: Optional[str], format_: str) -> None:
+@click.option(
+    "-i",
+    "--increment",
+    required=False,
+    envvar="BUMPVERSION_INCREMENT",
+    type=str,
+    help="Increment the version part and add `new_version` to the configuration.",
+)
+def show(args: List[str], config_file: Optional[str], format_: str, increment: Optional[str]) -> None:
     """Show current configuration information."""
     found_config_file = find_config_file(config_file)
     config = get_configuration(found_config_file)
 
     if not args:
-        do_show("all", config=config, format_=format_)
+        do_show("all", config=config, format_=format_, increment=increment)
     else:
-        do_show(*args, config=config, format_=format_)
+        do_show(*args, config=config, format_=format_, increment=increment)
