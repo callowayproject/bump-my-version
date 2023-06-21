@@ -3,30 +3,35 @@ import logging
 from typing import List, Optional
 
 import rich_click as click
+from click.core import Context
 
-# from click.core import Context
 from bumpversion import __version__
-
-# from bumpversion.aliases import AliasedGroup
-from bumpversion.bump import do_bump, get_next_version
-from bumpversion.config import Config, find_config_file, get_configuration
+from bumpversion.aliases import AliasedGroup
+from bumpversion.bump import do_bump
+from bumpversion.config import find_config_file, get_configuration
 from bumpversion.logging import setup_logging
 from bumpversion.utils import get_context, get_overrides
 
 logger = logging.getLogger(__name__)
 
 
-# @click.group(cls=AliasedGroup)
-# @click.version_option(version=__version__)
-# @click.pass_context
-# def cli(ctx: Context) -> None:
-#     """Version bump your Python project."""
-#     if ctx.invoked_subcommand is None:
-#         ctx.invoke(bump)
-
-
-@click.command(context_settings={"ignore_unknown_options": True})
+@click.group(
+    cls=AliasedGroup,
+    invoke_without_command=True,
+    context_settings={
+        "ignore_unknown_options": True,
+        "allow_interspersed_args": True,
+    },
+)
 @click.version_option(version=__version__)
+@click.pass_context
+def cli(ctx: Context) -> None:
+    """Version bump your Python project."""
+    if ctx.invoked_subcommand is None:
+        ctx.invoke(bump, *ctx.args)
+
+
+@cli.command(context_settings={"ignore_unknown_options": True})
 @click.argument("args", nargs=-1, type=str)
 @click.option(
     "--config-file",
@@ -163,7 +168,7 @@ logger = logging.getLogger(__name__)
     is_flag=True,
     help="List machine readable information",
 )
-def cli(
+def bump(
     # version_part: str,
     args: list,
     config_file: Optional[str],
