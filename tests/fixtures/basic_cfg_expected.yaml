@@ -1,0 +1,58 @@
+allow_dirty: false
+commit: true
+commit_args: null
+current_version: "1.0.0"
+files:
+  - filename: "setup.py"
+    glob: null
+    parse: null
+    replace: null
+    search: null
+    serialize: null
+  - filename: "bumpversion/__init__.py"
+    glob: null
+    parse: null
+    replace: null
+    search: null
+    serialize: null
+  - filename: "CHANGELOG.md"
+    glob: null
+    parse: null
+    replace: "**unreleased**\n**v{new_version}**"
+    search: "**unreleased**"
+    serialize: null
+message: "Bump version: {current_version} → {new_version}"
+parse: "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?"
+parts:
+  major:
+    first_value: null
+    independent: false
+    optional_value: null
+    values: null
+  minor:
+    first_value: null
+    independent: false
+    optional_value: null
+    values: null
+  patch:
+    first_value: null
+    independent: false
+    optional_value: null
+    values: null
+  release:
+    first_value: null
+    independent: false
+    optional_value: "gamma"
+    values:
+      - "dev"
+      - "gamma"
+replace: "{new_version}"
+scm_info: "SCMInfo(tool=No SCM tool, commit_sha=None, distance_to_latest_tag=None, current_version=None, dirty=None)"
+search: "{current_version}"
+serialize:
+  - "{major}.{minor}.{patch}-{release}"
+  - "{major}.{minor}.{patch}"
+sign_tags: false
+tag: true
+tag_message: "Bump version: {current_version} → {new_version}"
+tag_name: "v{new_version}"

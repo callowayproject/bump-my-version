@@ -26,6 +26,17 @@ class SCMInfo:
     current_version: Optional[str] = None
     dirty: Optional[bool] = None
 
+    def __str__(self):
+        return self.__repr__()
+
+    def __repr__(self):
+        tool_name = self.tool.__name__ if self.tool else "No SCM tool"
+        return (
+            f"SCMInfo(tool={tool_name}, commit_sha={self.commit_sha}, "
+            f"distance_to_latest_tag={self.distance_to_latest_tag}, current_version={self.current_version}, "
+            f"dirty={self.dirty})"
+        )
+
 
 class SourceCodeManager:
     """Base class for version control systems."""
@@ -177,6 +188,12 @@ class SourceCodeManager:
         if do_tag:
             cls.tag(tag_name, sign_tags, tag_message)
 
+    def __str__(self):
+        return self.__repr__()
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}"
+
 
 class Git(SourceCodeManager):
     """Git implementation."""
@@ -257,7 +274,7 @@ class Git(SourceCodeManager):
         Args:
             name: The name of the tag
             sign: True to sign the tag
-            message: A optional message to annotate the tag.
+            message: An optional message to annotate the tag.
         """
         command = ["git", "tag", name]
         if sign:

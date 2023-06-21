@@ -10,7 +10,8 @@ from bumpversion.aliases import AliasedGroup
 from bumpversion.bump import do_bump
 from bumpversion.config import find_config_file, get_configuration
 from bumpversion.logging import setup_logging
-from bumpversion.utils import get_context, get_overrides
+from bumpversion.show import do_show, log_list
+from bumpversion.utils import get_overrides
 
 logger = logging.getLogger(__name__)
 
@@ -251,15 +252,32 @@ def bump(
     do_bump(version_part, new_version, config, found_config_file, dry_run)
 
 
-def log_list(config: Config, version_part: Optional[str], new_version: Optional[str]) -> None:
-    """Output configuration with new version."""
-    ctx = get_context(config)
-    if version_part:
-        version = config.version_config.parse(config.current_version)
-        next_version = get_next_version(version, config, version_part, new_version)
-        next_version_str = config.version_config.serialize(next_version, ctx)
+@cli.command()
+@click.argument("args", nargs=-1, type=str)
+@click.option(
+    "--config-file",
+    metavar="FILE",
+    required=False,
+    envvar="BUMPVERSION_CONFIG_FILE",
+    type=click.Path(exists=True),
+    help="Config file to read most of the variables from.",
+)
+@click.option(
+    "-f",
+    "--format",
+    "format_",
+    required=False,
+    envvar="BUMPVERSION_FORMAT",
+    type=click.Choice(["default", "yaml", "json"], case_sensitive=False),
+    default="default",
+    help="Config file to read most of the variables from.",
+)
+def show(args: List[str], config_file: Optional[str], format_: str) -> None:
+    """Show current configuration information."""
+    found_config_file = find_config_file(config_file)
+    config = get_configuration(found_config_file)
 
-        click.echo(f"new_version={next_version_str}")
-
-    for key, value in config.dict(exclude={"scm_info", "parts"}).items():
-        click.echo(f"{key}={value}")
+    if not args:
+        do_show("all", config=config, format_=format_)
+    else:
+        do_show(*args, config=config, format_=format_)
