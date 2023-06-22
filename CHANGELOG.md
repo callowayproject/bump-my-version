@@ -1,5 +1,36 @@
 # Changelog
 
+## Unreleased (2023-06-21)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.5.1...HEAD)
+
+### Fixes
+
+- Fixed issue regarding TOML types. [8960d24](https://github.com/callowayproject/bump-my-version/commit/8960d249183cf78d8b35967b86fef8701fc9c37e)
+    
+  - `tomlkit.parse()` returns a `TOMLDocument`.
+  - `unwrap()` converts it into a `dict`
+### New
+
+- Added documentation for the show command. [d537274](https://github.com/callowayproject/bump-my-version/commit/d5372742a8cf76777f1bf4450bf31e9310d04681)
+    
+- Adds `--increment` option to `show` subcommand. [b01fffc](https://github.com/callowayproject/bump-my-version/commit/b01fffcad8479db25375d53fdeebc879d7317b11)
+    
+  - when specified it increments the current version and adds `new_version` to the available output.
+- Added `show` subcommand. [9bce887](https://github.com/callowayproject/bump-my-version/commit/9bce887cf5e72907ae00b45a7b7f4812dcc2f17e)
+    
+  - supersedes the `--list` option
+  - provides much more capability
+  - Can output in YAML, JSON, and default
+  - Can specify one or more items to display
+  - Can use dotted-notation to pull items from nested data structures.
+### Updates
+
+- Changes bump-my-version into subcommands. [31ffbcf](https://github.com/callowayproject/bump-my-version/commit/31ffbcf839e2491c31d90b51041d1e840371108f)
+    
+  - Is backwards-compatible with previous versions
+  - `bump-my-version` forwards command to `bump-my-version bump` subcommand
+  - Only problem is that Click will not show help automatically, must provide `--help`
+
 ## 0.5.1 (2023-06-14)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.5.0...0.5.1)
 

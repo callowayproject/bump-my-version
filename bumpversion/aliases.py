@@ -32,6 +32,9 @@ class AliasedGroup(RichGroup):
         # always return the full command name
         original_args = args[:]
         _, cmd, args = super().resolve_command(ctx, args)
+
         if cmd.name == "bump" and args != original_args:
+            if "bump" in original_args:
+                original_args.remove("bump")
             return cmd.name, cmd, original_args
         return cmd.name, cmd, args

@@ -23,6 +23,7 @@ logger = logging.getLogger(__name__)
         "ignore_unknown_options": True,
         "allow_interspersed_args": True,
     },
+    add_help_option=False,
 )
 @click.version_option(version=__version__)
 @click.pass_context
