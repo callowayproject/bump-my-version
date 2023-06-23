@@ -24,6 +24,7 @@ class SCMInfo:
     commit_sha: Optional[str] = None
     distance_to_latest_tag: Optional[int] = None
     current_version: Optional[str] = None
+    branch_name: Optional[str] = None
     dirty: Optional[bool] = None
 
     def __str__(self):
@@ -240,11 +241,15 @@ class Git(SourceCodeManager):
             ]
             result = subprocess.run(git_cmd, text=True, check=True, capture_output=True)  # noqa: S603
             describe_out = result.stdout.strip().split("-")
+
+            git_cmd = ["git", "rev-parse", "--abbrev-ref", "HEAD"]
+            result = subprocess.run(git_cmd, text=True, check=True, capture_output=True)  # noqa: S603
+            branch_name = result.stdout.strip()
         except subprocess.CalledProcessError as e:
             logger.debug("Error when running git describe: %s", e.stderr)
             return SCMInfo(tool=cls)
 
-        info = SCMInfo(tool=cls)
+        info = SCMInfo(tool=cls, branch_name=branch_name)
 
         if describe_out[-1].strip() == "dirty":
             info.dirty = True
