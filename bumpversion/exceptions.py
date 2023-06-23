@@ -52,3 +52,9 @@ class ConfigurationError(BumpVersionError):
     """A configuration key-value is missing or in the wrong type."""
 
     pass
+
+
+class BadInputError(BumpVersionError):
+    """User input was bad."""
+
+    pass

@@ -262,7 +262,7 @@ In this example (in TOML):
 serialize = [
     "{major}.{minor}.{patch}",
     "{major}.{minor}",
-		"{major}"
+    "{major}"
 ]
 ```
 

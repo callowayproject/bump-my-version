@@ -110,7 +110,7 @@ You can use bump-my-version to maintain the major version number within the `go.
 
 ```toml
 [tool.bumpversion]
-current_version = 2.21.4
+current_version = "2.21.4"
 
 [[tool.bumpversion.files]]
 filename = "go.mod"
