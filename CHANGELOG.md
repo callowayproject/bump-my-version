@@ -1,16 +1,22 @@
 # Changelog
 
-## Unreleased (2023-06-21)
-[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.5.1...HEAD)
+## 0.6.0 (2023-06-23)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.5.1.dev69...0.6.0)
 
 ### Fixes
 
+- Fixed `--help` and `bump` invocations. [9d965e5](https://github.com/callowayproject/bump-my-version/commit/9d965e57f2c0a41476d75ec053653416eae966c9)
+    
+  - `--help` works for individual sub-commands, but not for the command
+  - `bump` now works and fixed tests
 - Fixed issue regarding TOML types. [8960d24](https://github.com/callowayproject/bump-my-version/commit/8960d249183cf78d8b35967b86fef8701fc9c37e)
     
   - `tomlkit.parse()` returns a `TOMLDocument`.
   - `unwrap()` converts it into a `dict`
 ### New
 
+- Adds `branch_name` to SCM information. [173be1a](https://github.com/callowayproject/bump-my-version/commit/173be1a7a107639be912d0fb76149accb54b0332)
+    
 - Added documentation for the show command. [d537274](https://github.com/callowayproject/bump-my-version/commit/d5372742a8cf76777f1bf4450bf31e9310d04681)
     
 - Adds `--increment` option to `show` subcommand. [b01fffc](https://github.com/callowayproject/bump-my-version/commit/b01fffcad8479db25375d53fdeebc879d7317b11)
