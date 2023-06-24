@@ -60,7 +60,12 @@ class VersionPart:
         return self.config.independent
 
     def __format__(self, format_spec: str) -> str:
-        return self.value
+        try:
+            val = int(self.value)
+        except ValueError:
+            return self.value
+        else:
+            return int.__format__(val, format_spec)
 
     def __repr__(self) -> str:
         return f"<bumpversion.VersionPart:{self.func.__class__.__name__}:{self.value}>"
