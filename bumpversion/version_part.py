@@ -129,7 +129,7 @@ class VersionConfig:
         serialize: List[str],
         search: str,
         replace: str,
-        part_configs: Dict[str, VersionPartConfig] = None,
+        part_configs: Optional[Dict[str, VersionPartConfig]] = None,
     ):
         try:
             self.parse_regex = re.compile(parse, re.VERBOSE)
