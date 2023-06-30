@@ -7,7 +7,7 @@ import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from typing import TYPE_CHECKING, List, MutableMapping, Optional, Type, Union
+from typing import TYPE_CHECKING, ClassVar, List, MutableMapping, Optional, Type, Union
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
@@ -44,9 +44,9 @@ class SCMInfo:
 class SourceCodeManager:
     """Base class for version control systems."""
 
-    _TEST_USABLE_COMMAND: List[str] = []
-    _COMMIT_COMMAND: List[str] = []
-    _ALL_TAGS_COMMAND: List[str] = []
+    _TEST_USABLE_COMMAND: ClassVar[List[str]] = []
+    _COMMIT_COMMAND: ClassVar[List[str]] = []
+    _ALL_TAGS_COMMAND: ClassVar[List[str]] = []
 
     @classmethod
     def commit(cls, message: str, current_version: str, new_version: str, extra_args: Optional[list] = None) -> None:
@@ -201,9 +201,9 @@ class SourceCodeManager:
 class Git(SourceCodeManager):
     """Git implementation."""
 
-    _TEST_USABLE_COMMAND = ["git", "rev-parse", "--git-dir"]
-    _COMMIT_COMMAND = ["git", "commit", "-F"]
-    _ALL_TAGS_COMMAND = ["git", "tag", "--list"]
+    _TEST_USABLE_COMMAND: ClassVar[List[str]] = ["git", "rev-parse", "--git-dir"]
+    _COMMIT_COMMAND: ClassVar[List[str]] = ["git", "commit", "-F"]
+    _ALL_TAGS_COMMAND: ClassVar[List[str]] = ["git", "tag", "--list"]
 
     @classmethod
     def assert_nondirty(cls) -> None:
@@ -295,9 +295,9 @@ class Git(SourceCodeManager):
 class Mercurial(SourceCodeManager):
     """Mercurial implementation."""
 
-    _TEST_USABLE_COMMAND = ["hg", "root"]
-    _COMMIT_COMMAND = ["hg", "commit", "--logfile"]
-    _ALL_TAGS_COMMAND = ["hg", "log", '--rev="tag()"', '--template="{tags}\n"']
+    _TEST_USABLE_COMMAND: ClassVar[List[str]] = ["hg", "root"]
+    _COMMIT_COMMAND: ClassVar[List[str]] = ["hg", "commit", "--logfile"]
+    _ALL_TAGS_COMMAND: ClassVar[List[str]] = ["hg", "log", '--rev="tag()"', '--template="{tags}\n"']
 
     @classmethod
     def latest_tag_info(cls, tag_pattern: str) -> SCMInfo:
