@@ -161,16 +161,16 @@ class SourceCodeManager:
     @classmethod
     def tag_in_scm(cls, config: "Config", context: MutableMapping, dry_run: bool = False) -> None:
         """Tag the current commit in the source code management system."""
-        sign_tags = config.sign_tags
-        tag_name = config.tag_name.format(**context)
-        tag_message = config.tag_message.format(**context)
-        existing_tags = cls.get_all_tags()
         if not config.commit:
             logger.info("Would not tag since we are not committing")
             return
         if not config.tag:
             logger.info("Would not tag")
             return
+        sign_tags = config.sign_tags
+        tag_name = config.tag_name.format(**context)
+        tag_message = config.tag_message.format(**context)
+        existing_tags = cls.get_all_tags()
 
         do_tag = not dry_run
 
