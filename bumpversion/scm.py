@@ -2,6 +2,7 @@
 
 import logging
 import os
+import re
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
@@ -25,6 +26,7 @@ class SCMInfo:
     distance_to_latest_tag: Optional[int] = None
     current_version: Optional[str] = None
     branch_name: Optional[str] = None
+    short_branch_name: Optional[str] = None
     dirty: Optional[bool] = None
 
     def __str__(self):
@@ -161,16 +163,16 @@ class SourceCodeManager:
     @classmethod
     def tag_in_scm(cls, config: "Config", context: MutableMapping, dry_run: bool = False) -> None:
         """Tag the current commit in the source code management system."""
-        sign_tags = config.sign_tags
-        tag_name = config.tag_name.format(**context)
-        tag_message = config.tag_message.format(**context)
-        existing_tags = cls.get_all_tags()
         if not config.commit:
             logger.info("Would not tag since we are not committing")
             return
         if not config.tag:
             logger.info("Would not tag")
             return
+        sign_tags = config.sign_tags
+        tag_name = config.tag_name.format(**context)
+        tag_message = config.tag_message.format(**context)
+        existing_tags = cls.get_all_tags()
 
         do_tag = not dry_run
 
@@ -245,11 +247,12 @@ class Git(SourceCodeManager):
             git_cmd = ["git", "rev-parse", "--abbrev-ref", "HEAD"]
             result = subprocess.run(git_cmd, text=True, check=True, capture_output=True)  # noqa: S603
             branch_name = result.stdout.strip()
+            short_branch_name = re.sub(r"([^a-zA-Z0-9]*)", "", branch_name).lower()[:20]
         except subprocess.CalledProcessError as e:
             logger.debug("Error when running git describe: %s", e.stderr)
             return SCMInfo(tool=cls)
 
-        info = SCMInfo(tool=cls, branch_name=branch_name)
+        info = SCMInfo(tool=cls, branch_name=branch_name, short_branch_name=short_branch_name)
 
         if describe_out[-1].strip() == "dirty":
             info.dirty = True
