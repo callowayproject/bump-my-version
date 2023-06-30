@@ -2,6 +2,7 @@
 
 import logging
 import os
+import re
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
@@ -25,6 +26,7 @@ class SCMInfo:
     distance_to_latest_tag: Optional[int] = None
     current_version: Optional[str] = None
     branch_name: Optional[str] = None
+    short_branch_name: Optional[str] = None
     dirty: Optional[bool] = None
 
     def __str__(self):
@@ -245,11 +247,12 @@ class Git(SourceCodeManager):
             git_cmd = ["git", "rev-parse", "--abbrev-ref", "HEAD"]
             result = subprocess.run(git_cmd, text=True, check=True, capture_output=True)  # noqa: S603
             branch_name = result.stdout.strip()
+            short_branch_name = re.sub(r"([^a-zA-Z0-9]*)", "", branch_name).lower()[:20]
         except subprocess.CalledProcessError as e:
             logger.debug("Error when running git describe: %s", e.stderr)
             return SCMInfo(tool=cls)
 
-        info = SCMInfo(tool=cls, branch_name=branch_name)
+        info = SCMInfo(tool=cls, branch_name=branch_name, short_branch_name=short_branch_name)
 
         if describe_out[-1].strip() == "dirty":
             info.dirty = True
