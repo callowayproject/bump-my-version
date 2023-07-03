@@ -2,11 +2,12 @@
 
 import logging
 import os
+import re
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from typing import TYPE_CHECKING, List, MutableMapping, Optional, Type, Union
+from typing import TYPE_CHECKING, ClassVar, List, MutableMapping, Optional, Type, Union
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
@@ -25,6 +26,7 @@ class SCMInfo:
     distance_to_latest_tag: Optional[int] = None
     current_version: Optional[str] = None
     branch_name: Optional[str] = None
+    short_branch_name: Optional[str] = None
     dirty: Optional[bool] = None
 
     def __str__(self):
@@ -42,9 +44,9 @@ class SCMInfo:
 class SourceCodeManager:
     """Base class for version control systems."""
 
-    _TEST_USABLE_COMMAND: List[str] = []
-    _COMMIT_COMMAND: List[str] = []
-    _ALL_TAGS_COMMAND: List[str] = []
+    _TEST_USABLE_COMMAND: ClassVar[List[str]] = []
+    _COMMIT_COMMAND: ClassVar[List[str]] = []
+    _ALL_TAGS_COMMAND: ClassVar[List[str]] = []
 
     @classmethod
     def commit(cls, message: str, current_version: str, new_version: str, extra_args: Optional[list] = None) -> None:
@@ -199,9 +201,9 @@ class SourceCodeManager:
 class Git(SourceCodeManager):
     """Git implementation."""
 
-    _TEST_USABLE_COMMAND = ["git", "rev-parse", "--git-dir"]
-    _COMMIT_COMMAND = ["git", "commit", "-F"]
-    _ALL_TAGS_COMMAND = ["git", "tag", "--list"]
+    _TEST_USABLE_COMMAND: ClassVar[List[str]] = ["git", "rev-parse", "--git-dir"]
+    _COMMIT_COMMAND: ClassVar[List[str]] = ["git", "commit", "-F"]
+    _ALL_TAGS_COMMAND: ClassVar[List[str]] = ["git", "tag", "--list"]
 
     @classmethod
     def assert_nondirty(cls) -> None:
@@ -245,11 +247,12 @@ class Git(SourceCodeManager):
             git_cmd = ["git", "rev-parse", "--abbrev-ref", "HEAD"]
             result = subprocess.run(git_cmd, text=True, check=True, capture_output=True)  # noqa: S603
             branch_name = result.stdout.strip()
+            short_branch_name = re.sub(r"([^a-zA-Z0-9]*)", "", branch_name).lower()[:20]
         except subprocess.CalledProcessError as e:
             logger.debug("Error when running git describe: %s", e.stderr)
             return SCMInfo(tool=cls)
 
-        info = SCMInfo(tool=cls, branch_name=branch_name)
+        info = SCMInfo(tool=cls, branch_name=branch_name, short_branch_name=short_branch_name)
 
         if describe_out[-1].strip() == "dirty":
             info.dirty = True
@@ -292,9 +295,9 @@ class Git(SourceCodeManager):
 class Mercurial(SourceCodeManager):
     """Mercurial implementation."""
 
-    _TEST_USABLE_COMMAND = ["hg", "root"]
-    _COMMIT_COMMAND = ["hg", "commit", "--logfile"]
-    _ALL_TAGS_COMMAND = ["hg", "log", '--rev="tag()"', '--template="{tags}\n"']
+    _TEST_USABLE_COMMAND: ClassVar[List[str]] = ["hg", "root"]
+    _COMMIT_COMMAND: ClassVar[List[str]] = ["hg", "commit", "--logfile"]
+    _ALL_TAGS_COMMAND: ClassVar[List[str]] = ["hg", "log", '--rev="tag()"', '--template="{tags}\n"']
 
     @classmethod
     def latest_tag_info(cls, tag_pattern: str) -> SCMInfo:

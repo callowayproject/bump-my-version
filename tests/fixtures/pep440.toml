@@ -1,0 +1,75 @@
+[tool.bumpversion]
+allow_dirty = false
+commit = false
+message = "Bump version: {current_version} → {new_version}"
+commit_args = ""
+tag = false
+sign_tags = false
+tag_name = "v{new_version}"
+tag_message = "Bump version: {current_version} → {new_version}"
+current_version = "1.0.0"
+parse = """(?x)
+(?:
+    (?P<release>
+        (?P<major>[0-9]+)
+        (?:
+            \\.(?P<minor>[0-9]+)
+            (?:
+                \\.(?P<patch>[0-9]+)
+            )?
+        )?
+    )
+    (?P<prerelease>
+        [-_\\.]?
+        (?P<pre_label>a|b|rc)
+        [-_\\.]?
+        (?P<pre_n>[0-9]+)?
+    )?
+    (?P<postrelease>
+        (?:
+            [-_\\.]?
+            (?P<post_label>post|rev|r)
+            [-_\\.]?
+            (?P<post_n>[0-9]+)?
+        )
+    )?
+    (?P<dev>
+        [-_\\.]?
+        (?P<dev_label>dev)
+        [-_\\.]?
+        (?P<dev_n>[0-9]+)?
+    )?
+)
+(?:\\+(?P<local>[a-z0-9]+(?:[-_\\.][a-z0-9]+)*))?
+"""
+serialize = [
+    "{major}.{minor}.{patch}.{dev_label}{distance_to_latest_tag}+{short_branch_name}",
+#    "{major}.{minor}.{patch}{pre_label}{pre_n}",
+#    "{major}.{minor}.{patch}+{branch_name}",
+    "{major}.{minor}.{patch}",
+]
+search = "{current_version}"
+replace = "{new_version}"
+
+[tool.bumpversion.parts.pre_label]
+values = ["final", "a", "b", "rc"]
+
+[tool.bumpversion.parts.pre_n]
+first_value = 1
+
+[tool.bumpversion.parts.post_label]
+values = ["final", "post"]
+
+[tool.bumpversion.parts.post_n]
+first_value = 1
+
+
+[tool.bumpversion.parts.dev_label]
+values = ["final", "dev"]
+independent = true
+
+[tool.bumpversion.parts.dev_n]
+first_value = 1
+
+[tool.bumpversion.parts.local]
+independent = true

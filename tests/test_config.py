@@ -5,6 +5,7 @@ from pathlib import Path
 from textwrap import dedent
 
 import pytest
+from click.testing import CliRunner, Result
 from pytest import param
 
 from bumpversion import config
@@ -194,3 +195,54 @@ def test_update_config_file(tmp_path: Path, cfg_file_name: str, expected_diff: s
     new_content = cfg_path.read_text().splitlines(keepends=True)
     difference = difflib.context_diff(original_content, new_content, n=0)
     assert "".join(difference) == expected_diff
+
+
+def test_pep440_config(git_repo: Path, fixtures_path: Path):
+    """
+    Check the PEP440 config file.
+    """
+    from bumpversion.utils import get_context
+    from bumpversion.bump import get_next_version
+    from bumpversion import cli
+    import subprocess
+
+    # Arrange
+
+    cfg_path = git_repo / "pyproject.toml"
+    orig_path = fixtures_path / "pep440.toml"
+    cfg_path.write_text(orig_path.read_text())
+    version_path = git_repo / "VERSION"
+    version_path.write_text("1.0.0")
+    readme_path = git_repo / "README.md"
+    runner: CliRunner = CliRunner()
+
+    with inside_dir(git_repo):
+        subprocess.run(["git", "add", "VERSION"], check=True, capture_output=True)
+        subprocess.run(["git", "commit", "-m", "initial commit"], check=True, capture_output=True)
+        subprocess.run(["git", "tag", "v1.0.0"], check=True, capture_output=True)
+
+        cfg = config.get_configuration(cfg_path)
+        ctx = get_context(cfg)
+        version = cfg.version_config.parse(cfg.current_version)
+        next_version = get_next_version(version, cfg, "patch", None)
+        next_version_str = cfg.version_config.serialize(next_version, ctx)
+        assert next_version_str == "1.0.1"
+
+        subprocess.run(["git", "checkout", "-b", "my-really-LONG-branch_name"], check=True, capture_output=True)
+        readme_path.write_text("This is my branch!")
+        result: Result = runner.invoke(cli.cli, ["bump", "dev_label", "--no-tag"])
+        assert result.exit_code == 0
+        cfg = config.get_configuration(cfg_path)
+        assert cfg.current_version == "1.0.0.dev0+myreallylongbranchna"
+
+        # try:
+        #     subprocess.run(["git", "add", "README.md"], check=True, capture_output=True)
+        #     subprocess.run(["git", "commit", "-am", "my branch commit"], check=True, capture_output=True)
+        # except subprocess.CalledProcessError as e:
+        #     print(e.stdout)
+        #     print(e.stderr)
+        #     raise
+        # result: Result = runner.invoke(cli.cli, ["bump", "dev_label", "--no-tag"])
+        # assert result.exit_code == 0
+        # cfg = config.get_configuration(cfg_path)
+        # assert cfg.current_version == "1.0.0.dev1+myreallylongbranchna"
