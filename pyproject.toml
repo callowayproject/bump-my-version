@@ -38,7 +38,7 @@ keywords = ["bumpversion", "version", "release"]
 dynamic = ["version"]
 dependencies = [
     "click",
-    "pydantic",
+    "pydantic<2.0.0",
     "rich-click",
     "rich",
     "tomlkit",
@@ -210,7 +210,7 @@ order-by-type = true
 convention = "google"
 
 [tool.bumpversion]
-current_version = "0.6.0"
+current_version = "0.7.0"
 commit = true
 commit_args = "--no-verify"
 tag = true
