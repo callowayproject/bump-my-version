@@ -38,7 +38,7 @@ keywords = ["bumpversion", "version", "release"]
 dynamic = ["version"]
 dependencies = [
     "click",
-    "pydantic",
+    "pydantic<2.0.0",
     "rich-click",
     "rich",
     "tomlkit",
