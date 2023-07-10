@@ -1,5 +1,51 @@
 # Changelog
 
+## 0.7.0 (2023-07-10)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.6.0...0.7.0)
+
+### Fixes
+
+- Fixed test coverage. [3fe96f0](https://github.com/callowayproject/bump-my-version/commit/3fe96f0e244ab5be4f96ec8ecbe1ca63f1f06e6b)
+    
+- Fixed wrong pydantic version pinning. [d4b125e](https://github.com/callowayproject/bump-my-version/commit/d4b125ea1e1c0179f3f544cfffed90d27c997ff5)
+    
+- Fixed typing issue. [bfe5306](https://github.com/callowayproject/bump-my-version/commit/bfe530668d8f176843eedcd7096fcd2b85eef228)
+    
+  - Declared SourceCodeManager attributes as `ClassVar[List[str]]`
+  - `_TEST_USABLE_COMMAND`, `_COMMIT_COMMAND`, and `_ALL_TAGS_COMMAND` affected
+### New
+
+- Added tests for CLI replace command. [a53cddc](https://github.com/callowayproject/bump-my-version/commit/a53cddc3c13bb21f5432d1cd331a51027a25981f)
+    
+- Added and re-organized documentation. [c62d65e](https://github.com/callowayproject/bump-my-version/commit/c62d65e71fdc617d5435976cfa587f43b03ac92b)
+    
+- Added replace subcommand. [8722a0f](https://github.com/callowayproject/bump-my-version/commit/8722a0f84ab60cbfc254741b2a5bc0d968e423d9)
+    
+  - Works just like `bump` but
+    - doesn't do any version incrementing
+    - Will not change the configuration file
+    - Will not commit or tag
+
+  - Can use `bumpversion show new_version --increment <versionpart>` to see what the new version would be
+- Adds `short_branch_name` to version rendering context. [7f7e50c](https://github.com/callowayproject/bump-my-version/commit/7f7e50c98dc20210468a9cef34baf4374956c2e9)
+    
+  - `short_branch_name` is the branch name, lower case, containing only a-z and 0-9, and truncated to 20 characters.
+
+  Fixes #28
+### Other
+
+- Check config before tagging. [3a6e3ee](https://github.com/callowayproject/bump-my-version/commit/3a6e3eebdbc16ae509754fd977625a4c9b19d82a)
+    
+- Format version parts. [ee43bdb](https://github.com/callowayproject/bump-my-version/commit/ee43bdb18f3d96ed702094bb75b06a1338c9aa9c)
+    
+- [pre-commit.ci] auto fixes from pre-commit.com hooks. [5e6f566](https://github.com/callowayproject/bump-my-version/commit/5e6f566b3c3bc96a070780a70c82a92b817e2299)
+    
+  for more information, see https://pre-commit.ci
+- [pre-commit.ci] pre-commit autoupdate. [f1acd35](https://github.com/callowayproject/bump-my-version/commit/f1acd353aa4c58afaa15321f7a7ab9dfb12ce040)
+    
+  **updates:** - [github.com/charliermarsh/ruff-pre-commit: v0.0.272 → v0.0.275](https://github.com/charliermarsh/ruff-pre-commit/compare/v0.0.272...v0.0.275)
+
+
 ## 0.6.0 (2023-06-23)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.5.1.dev69...0.6.0)
 
