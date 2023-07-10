@@ -1,0 +1,86 @@
+# {py:mod}`bumpversion.cli`
+
+```{py:module} bumpversion.cli
+```
+
+```{autodoc2-docstring} bumpversion.cli
+:allowtitles:
+```
+
+## Module Contents
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`cli <bumpversion.cli.cli>`
+  - ```{autodoc2-docstring} bumpversion.cli.cli
+    :summary:
+    ```
+* - {py:obj}`bump <bumpversion.cli.bump>`
+  - ```{autodoc2-docstring} bumpversion.cli.bump
+    :summary:
+    ```
+* - {py:obj}`show <bumpversion.cli.show>`
+  - ```{autodoc2-docstring} bumpversion.cli.show
+    :summary:
+    ```
+* - {py:obj}`replace <bumpversion.cli.replace>`
+  - ```{autodoc2-docstring} bumpversion.cli.replace
+    :summary:
+    ```
+````
+
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`logger <bumpversion.cli.logger>`
+  - ```{autodoc2-docstring} bumpversion.cli.logger
+    :summary:
+    ```
+````
+
+### API
+
+````{py:data} logger
+:canonical: bumpversion.cli.logger
+:value: >
+   None
+
+```{autodoc2-docstring} bumpversion.cli.logger
+```
+
+````
+
+````{py:function} cli(ctx: click.core.Context) -> None
+:canonical: bumpversion.cli.cli
+
+```{autodoc2-docstring} bumpversion.cli.cli
+```
+````
+
+````{py:function} bump(args: list, config_file: typing.Optional[str], verbose: int, allow_dirty: typing.Optional[bool], current_version: typing.Optional[str], new_version: typing.Optional[str], parse: typing.Optional[str], serialize: typing.Optional[typing.List[str]], search: typing.Optional[str], replace: typing.Optional[str], no_configured_files: bool, dry_run: bool, commit: typing.Optional[bool], tag: typing.Optional[bool], sign_tags: typing.Optional[bool], tag_name: typing.Optional[str], tag_message: typing.Optional[str], message: typing.Optional[str], commit_args: typing.Optional[str], show_list: bool) -> None
+:canonical: bumpversion.cli.bump
+
+```{autodoc2-docstring} bumpversion.cli.bump
+```
+````
+
+````{py:function} show(args: typing.List[str], config_file: typing.Optional[str], format_: str, increment: typing.Optional[str]) -> None
+:canonical: bumpversion.cli.show
+
+```{autodoc2-docstring} bumpversion.cli.show
+```
+````
+
+````{py:function} replace(files: list, config_file: typing.Optional[str], verbose: int, allow_dirty: typing.Optional[bool], current_version: typing.Optional[str], new_version: typing.Optional[str], parse: typing.Optional[str], serialize: typing.Optional[typing.List[str]], search: typing.Optional[str], replace: typing.Optional[str], no_configured_files: bool, dry_run: bool) -> None
+:canonical: bumpversion.cli.replace
+
+```{autodoc2-docstring} bumpversion.cli.replace
+```
+````
