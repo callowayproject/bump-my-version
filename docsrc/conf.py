@@ -21,7 +21,8 @@ release = bumpversion.__version__
 
 extensions = [
     "myst_parser",
-    "sphinx.ext.autodoc",
+    "autodoc2",
+    # "sphinx.ext.autodoc",
     "sphinx.ext.viewcode",
     "sphinx.ext.autosummary",
     "sphinx.ext.intersphinx",
@@ -35,6 +36,11 @@ extensions = [
 ]
 autosectionlabel_prefix_document = True
 autosectionlabel_maxdepth = 2
+
+autodoc2_packages = ["../bumpversion"]
+autodoc2_render_plugin = "myst"
+autodoc2_output_dir = "reference"
+autodoc2_index_template = None
 
 autodoc_default_flags = [
     # Make sure that any autodoc declarations show the right members

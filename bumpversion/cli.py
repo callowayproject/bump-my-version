@@ -330,7 +330,7 @@ def show(args: List[str], config_file: Optional[str], format_: str, increment: O
     metavar="VERSION",
     required=False,
     envvar="BUMPVERSION_NEW_VERSION",
-    help="New version that should be in the files",
+    help="New version that should be in the files. If not specified, it will be None.",
 )
 @click.option(
     "--parse",

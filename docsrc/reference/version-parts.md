@@ -47,9 +47,9 @@ You can configure a part using the values function by providing a list of values
 ```toml
 [tool.bumpversion.parts.release_name]
 values = [
-	"witty-warthog",
-	"ridiculous-rat",
-	"marvelous-mantis",
+    "witty-warthog", 
+    "ridiculous-rat", 
+    "marvelous-mantis",
 ]
 ```
 
@@ -59,8 +59,8 @@ By default, the *first* value of a version part is considered *optional.* An opt
 
 ```toml
 serialize = [
-		"{major}.{minor}.{patch}",
-		"{major}.{minor}",
+    "{major}.{minor}.{patch}",
+    "{major}.{minor}",
 ]
 ```
 
