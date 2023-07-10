@@ -385,3 +385,47 @@ def test_replace(mocker, tmp_path, fixtures_path):
     assert len(configured_files) == 3
     actual_filenames = {f.path for f in configured_files}
     assert actual_filenames == {"setup.py", "CHANGELOG.md", "bumpversion/__init__.py"}
+
+
+def test_replace_no_newversion(mocker, tmp_path, fixtures_path):
+    """The replace subcommand should set new_version to None in the context."""
+    # Arrange
+    toml_path = fixtures_path / "basic_cfg.toml"
+    config_path = tmp_path / "pyproject.toml"
+    shutil.copy(toml_path, config_path)
+
+    mocked_modify_files = mocker.patch("bumpversion.cli.modify_files")
+    runner: CliRunner = CliRunner()
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(cli.cli, ["replace"])
+
+    if result.exit_code != 0:
+        print(result.output)
+
+    assert result.exit_code == 0
+
+    call_args = mocked_modify_files.call_args[0]
+    assert call_args[2] is None
+
+
+def test_replace_specific_files(mocker, git_repo, fixtures_path):
+    """The replace subcommand should set the files to only the specified files."""
+    # Arrange
+    toml_path = fixtures_path / "basic_cfg.toml"
+    config_path = git_repo / "pyproject.toml"
+    shutil.copy(toml_path, config_path)
+
+    mocked_modify_files = mocker.patch("bumpversion.cli.modify_files")
+    runner: CliRunner = CliRunner()
+    with inside_dir(git_repo):
+        result: Result = runner.invoke(cli.cli, ["replace", "--no-configured-files", "VERSION"])
+
+    if result.exit_code != 0:
+        print(result.output)
+
+    assert result.exit_code == 0
+
+    call_args = mocked_modify_files.call_args[0]
+    configured_files = call_args[0]
+    assert len(configured_files) == 1
+    assert configured_files[0].path == "VERSION"
