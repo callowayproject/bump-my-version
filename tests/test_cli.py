@@ -361,3 +361,27 @@ def test_show_no_args(tmp_path: Path, fixtures_path: Path):
 
     assert result.exit_code == 0
     assert result.output.strip() == expected_output.strip()
+
+
+def test_replace(mocker, tmp_path, fixtures_path):
+    """The replace subcommand should replace the version in the file."""
+    # Arrange
+    toml_path = fixtures_path / "basic_cfg.toml"
+    config_path = tmp_path / "pyproject.toml"
+    shutil.copy(toml_path, config_path)
+
+    mocked_modify_files = mocker.patch("bumpversion.cli.modify_files")
+    runner: CliRunner = CliRunner()
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(cli.cli, ["replace", "--new-version", "1.1.0"])
+
+    if result.exit_code != 0:
+        print(result.output)
+
+    assert result.exit_code == 0
+
+    call_args = mocked_modify_files.call_args[0]
+    configured_files = call_args[0]
+    assert len(configured_files) == 3
+    actual_filenames = {f.path for f in configured_files}
+    assert actual_filenames == {"setup.py", "CHANGELOG.md", "bumpversion/__init__.py"}
