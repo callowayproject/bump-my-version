@@ -1,4 +1,4 @@
-# Searching and replacing versions
+# Searching and replace configuration
 
 Bump-my-version uses [template strings](https://docs.python.org/3/library/string.html#format-string-syntax) to search the configured files for the old or current version and replace the text with the new version.
 

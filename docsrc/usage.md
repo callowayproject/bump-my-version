@@ -2,14 +2,13 @@
 
 ```{admonition} NOTE
 
-Throughout this document, you can use `bumpversion` or `bump-my-version` interchangeably.
+You can use `bumpversion` or `bump-my-version` throughout this document  interchangeably.
 ```
-
-There are two modes of operation: On the command line for single-file operation and using a configuration file (`pyproject.toml` or `.bumpversion.toml`) for more complex multi-file processes.
+There are two modes of operation: On the command line for single-file operation and using a configuration file (`pyproject.toml` or `.bumpversion.toml`) for more complex multi-file processes. We recommend using a configuration file for all but the simplest of projects.
 
 ```{admonition} WARNING
 
-The invocation of `bump-my-version` changed in version 0.6.0. It split functionality into sub-commands. It remains backward-compatible with previous versions. Previous usage is discouraged and may be removed in a 1.0 release.
+The invocation of `bump-my-version` changed in version 0.6.0. It splits functionality into sub-commands. It remains backward-compatible with previous versions. Previous usage is discouraged and may be removed in a 1.0 release.
 ```
 ## Incrementing a version
 
@@ -17,7 +16,7 @@ The invocation of `bump-my-version` changed in version 0.6.0. It split functiona
 bump-my-version bump [OPTIONS] [ARGS]...
 ```
 
-The `bump` sub-command triggers a version increment. The [complete list of options](cli.rst#bumpversion-bump) is available. The `ARGS` may contain a `VERSION_PART` or `FILES`
+The `bump` sub-command triggers a version increment. The [complete list of options](reference/cli.rst#bumpversion-bump) is available. The `ARGS` may contain a `VERSION_PART` or `FILES`
 
 
 ### `VERSION_PART`
@@ -26,12 +25,12 @@ _**[optional]**_
 
 The part of the version to increase, e.g., `minor`.
 
-Valid values include those given in the [`--serialize`](configuration.md#serialize) / [`--parse`](configuration.md#parse) option.
+Valid values include those given in the [`--serialize`](reference/configuration.md#serialize) / [`--parse`](reference/configuration.md#parse) option.
 
-Example bumping 0.5.1 to 0.6.0:
+For example, if the current version is `0.5.1` and you want to bump it to `0.6.0`:
 
 ```console
-bump-my-version bump --current-version 0.5.1 minor src/VERSION
+bump-my-version bump minor
 ```
 
 
@@ -44,16 +43,16 @@ The additional file(s) to modify.
 
 This file is added to the list of files specified in the configuration file. If you want to rewrite only files specified on the command line, use `--no-configured-files`.
 
-Example bumping version 1.1.9 to 2.0.0 in the `setup.py` file:
+For example, if the current version is `1.1.9` and you want to bump the version to `2.0.0` and also change the version in the `_version.txt` file:
 
 ```console
-bump-my-version bump --current-version 1.1.9 major setup.py
+bump-my-version bump major _version.txt
 ```
 
-Example bumping version 1.1.9 to 2.0.0 in _only_ the `setup.py` file:
+If you want to bump the current version of `1.1.9` to `2.0.0` and _only_ change the `_version.txt` file:
 
 ```console
-bump-my-version bump --current-version 1.1.9 --no-configured-files major setup.py
+bump-my-version bump --no-configured-files major _version.txt
 ```
 
 ## Showing configuration information
@@ -95,4 +94,26 @@ $ bump-my-version show --format json current_version commit
   "current_version": "1.0.0",
   "commit": false,
 }
+```
+
+## Searching and replacing without bumping
+
+More complex workflows may require you to change one or more files without changing the `current_version` in the configuration file.
+
+The `replace` sub-command works identically to the `bump` sub-command except for the following:
+
+- It will not commit or tag any changes
+- It will not increment the version
+- It will not change the configuration file
+
+```{admonition} NOTE
+
+If you do not include the `--new-version` option, the `new_version` context variable will be `None`.
+```
+
+One way of providing the `--new-version` option is to use the `bumpversion show` subcommand with an environment variable:
+
+```console
+$ export BUMPVERSION_NEW_VERSION=$(bumpversion show new_version --increment <versionpart>)
+$ bumpversion replace
 ```

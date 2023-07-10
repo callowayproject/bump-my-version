@@ -96,7 +96,7 @@ Bump-my-version's default behavior is to abort if the working directory is dirty
 
 Whether to create a commit using git or Mercurial.
 
-If you have pre-commit hooks, you might also want to add an option to [`commit_args`](#commit-args) to disable your pre-commit hooks. For Git use `--no-verify` and use `--config hooks.pre-commit=` for Mercurial.
+If you have pre-commit hooks, you might also want to add an option to [`commit_args`](configuration.md#commit-args) to disable your pre-commit hooks. For Git use `--no-verify` and use `--config hooks.pre-commit=` for Mercurial.
 
 ### `message`
 
@@ -110,7 +110,7 @@ If you have pre-commit hooks, you might also want to add an option to [`commit_a
 
 :environment var: `BUMPVERSION_MESSAGE`
 
-The commit message template to use when creating a commit. This is only used when the [`commit`](#commit) option is set to `True`.
+The commit message template to use when creating a commit. This is only used when the [`commit`](configuration.md#commit) option is set to `True`.
 
 This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). Available in the template context are:
 
@@ -133,7 +133,7 @@ This string is templated using the [Python Format String Syntax](https://docs.py
 
 :environment var: `BUMPVERSION_COMMIT_ARGS`
 
-Extra arguments to pass to commit command. This is only used when the [`commit`](#commit) option is set to `True`.
+Extra arguments to pass to commit command. This is only used when the [`commit`](configuration.md#commit) option is set to `True`.
 
 If you have pre-commit hooks, you might also want to add an option to disable your pre-commit hooks. For Git use `--no-verify` and use `--config hooks.pre-commit=` for Mercurial.
 
@@ -149,7 +149,7 @@ If you have pre-commit hooks, you might also want to add an option to disable yo
 
 :environment var: `BUMPVERSION_TAG`
 
-If `True`, create a tag after committing the changes. The tag is named using the [`tag_name`](#tag-name) option. 
+If `True`, create a tag after committing the changes. The tag is named using the [`tag_name`](configuration.md#tag-name) option. 
 
 If you are using `git`, don't forget to `git-push` with the `--tags` flag when you are done.
 
@@ -164,7 +164,7 @@ If you are using `git`, don't forget to `git-push` with the `--tags` flag when y
 
 :environment var: `BUMPVERSION_SIGN_TAGS`
 
-If `True`, sign the created tag, when [`tag`](#tag) is `True`.
+If `True`, sign the created tag, when [`tag`](configuration.md#tag) is `True`.
 
 ### `tag_name`
 :required: No
@@ -177,7 +177,7 @@ If `True`, sign the created tag, when [`tag`](#tag) is `True`.
 
 :environment var: `BUMPVERSION_TAG_NAME`
 
-The name template used to render the tag, when [`tag`](#tag) is `True`.
+The name template used to render the tag, when [`tag`](configuration.md#tag) is `True`.
 
 This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). Available in the template context are:
 
@@ -199,7 +199,7 @@ This string is templated using the [Python Format String Syntax](https://docs.py
 
 :environment var: `BUMPVERSION_TAG_MESSAGE`
 
-The tag message template to use when creating a tag, when [`tag`](#tag) is `True`
+The tag message template to use when creating a tag, when [`tag`](configuration.md#tag) is `True`
 
 This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). Available in the template context are:
 
@@ -239,7 +239,7 @@ The current version of the software package before bumping. A value for this is 
 
 This is the default regular expression (using [Python regular expression syntax](https://docs.python.org/3/library/re.html#regular-expression-syntax)) for finding and parsing the version string into its components. Individual part or file configurations may override this.
 
-The regular expression must be able to parse all strings produced by the configured [`serialize`](#serialize) value. Named matching groups ("`(?P<name>...)`") indicate the version part the matched value belongs to.
+The regular expression must be able to parse all strings produced by the configured [`serialize`](configuration.md#serialize) value. Named matching groups ("`(?P<name>...)`") indicate the version part the matched value belongs to.
 
 ### `serialize`
 :required: No
@@ -268,15 +268,7 @@ serialize = [
 
 Since `0` is optional by default, Version `1.8.9` will serialize to  `1.8.9`, `1.9.0` will serialize to `1.9`, and version `2.0.0` will serialize as `2`. 
 
-Each string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). Available in the template context are:
-
-- Each named group from the `parse` regular expression (e.g. `major`, `minor`, and `patch`)
-- `current_version`
-- `new_version`
-- `current_[part]` (e.g. `current_major`)
-- `new_[part]` (e.g. `new_major`)
-- all environment variables are exposed, prefixed with `$`, such as `$BUILD_NUMBER`
-- `now` or `utcnow` to get a current timestamp. Both accept [datetime formatting](https://docs.python.org/3.11/library/datetime.html#strftime-and-strptime-behavior) (e.g.  `{now:%d.%m.%Y}`).
+Each string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](formatting-context.md) describes the available variables.
 
 ### `search`
 :required: No

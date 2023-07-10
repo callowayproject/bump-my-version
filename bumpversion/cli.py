@@ -9,9 +9,10 @@ from bumpversion import __version__
 from bumpversion.aliases import AliasedGroup
 from bumpversion.bump import do_bump
 from bumpversion.config import find_config_file, get_configuration
+from bumpversion.files import modify_files, resolve_file_config
 from bumpversion.logging import setup_logging
 from bumpversion.show import do_show, log_list
-from bumpversion.utils import get_overrides
+from bumpversion.utils import get_context, get_overrides
 
 logger = logging.getLogger(__name__)
 
@@ -290,3 +291,156 @@ def show(args: List[str], config_file: Optional[str], format_: str, increment: O
         do_show("all", config=config, format_=format_, increment=increment)
     else:
         do_show(*args, config=config, format_=format_, increment=increment)
+
+
+@cli.command()
+@click.argument("files", nargs=-1, type=str)
+@click.option(
+    "--config-file",
+    metavar="FILE",
+    required=False,
+    envvar="BUMPVERSION_CONFIG_FILE",
+    type=click.Path(exists=True),
+    help="Config file to read most of the variables from.",
+)
+@click.option(
+    "-v",
+    "--verbose",
+    count=True,
+    required=False,
+    envvar="BUMPVERSION_VERBOSE",
+    help="Print verbose logging to stderr. Can specify several times for more verbosity.",
+)
+@click.option(
+    "--allow-dirty/--no-allow-dirty",
+    default=None,
+    required=False,
+    envvar="BUMPVERSION_ALLOW_DIRTY",
+    help="Don't abort if working directory is dirty, or explicitly abort if dirty.",
+)
+@click.option(
+    "--current-version",
+    metavar="VERSION",
+    required=False,
+    envvar="BUMPVERSION_CURRENT_VERSION",
+    help="Version that needs to be updated",
+)
+@click.option(
+    "--new-version",
+    metavar="VERSION",
+    required=False,
+    envvar="BUMPVERSION_NEW_VERSION",
+    help="New version that should be in the files. If not specified, it will be None.",
+)
+@click.option(
+    "--parse",
+    metavar="REGEX",
+    required=False,
+    envvar="BUMPVERSION_PARSE",
+    help="Regex parsing the version string",
+)
+@click.option(
+    "--serialize",
+    metavar="FORMAT",
+    multiple=True,
+    required=False,
+    envvar="BUMPVERSION_SERIALIZE",
+    help="How to format what is parsed back to a version",
+)
+@click.option(
+    "--search",
+    metavar="SEARCH",
+    required=False,
+    envvar="BUMPVERSION_SEARCH",
+    help="Template for complete string to search",
+)
+@click.option(
+    "--replace",
+    metavar="REPLACE",
+    required=False,
+    envvar="BUMPVERSION_REPLACE",
+    help="Template for complete string to replace",
+)
+@click.option(
+    "--no-configured-files",
+    is_flag=True,
+    envvar="BUMPVERSION_NO_CONFIGURED_FILES",
+    help=(
+        "Only replace the version in files specified on the command line, "
+        "ignoring the files from the configuration file."
+    ),
+)
+@click.option(
+    "--dry-run",
+    "-n",
+    is_flag=True,
+    envvar="BUMPVERSION_DRY_RUN",
+    help="Don't write any files, just pretend.",
+)
+def replace(
+    files: list,
+    config_file: Optional[str],
+    verbose: int,
+    allow_dirty: Optional[bool],
+    current_version: Optional[str],
+    new_version: Optional[str],
+    parse: Optional[str],
+    serialize: Optional[List[str]],
+    search: Optional[str],
+    replace: Optional[str],
+    no_configured_files: bool,
+    dry_run: bool,
+) -> None:
+    """
+    Replace the version in files.
+
+    FILES are additional file(s) to modify.
+    If you want to rewrite only files specified on the command line, use with the
+    `--no-configured-files` option.
+    """
+    setup_logging(verbose)
+
+    logger.info("Starting BumpVersion %s", __version__)
+
+    overrides = get_overrides(
+        allow_dirty=allow_dirty,
+        current_version=current_version,
+        new_version=new_version,
+        parse=parse,
+        serialize=serialize or None,
+        search=search,
+        replace=replace,
+        commit=False,
+        tag=False,
+        sign_tags=False,
+        tag_name=None,
+        tag_message=None,
+        message=None,
+        commit_args=None,
+    )
+
+    found_config_file = find_config_file(config_file)
+    config = get_configuration(found_config_file, **overrides)
+
+    config.allow_dirty = allow_dirty if allow_dirty is not None else config.allow_dirty
+    if not config.allow_dirty and config.scm_info.tool:
+        config.scm_info.tool.assert_nondirty()
+
+    if no_configured_files:
+        config.files = []
+
+    if files:
+        config.add_files(files)
+
+    version = config.version_config.parse(config.current_version)
+
+    if new_version:
+        next_version = config.version_config.parse(new_version)
+    else:
+        next_version = None
+
+    ctx = get_context(config, version, next_version)
+
+    configured_files = resolve_file_config(config.files, config.version_config)
+
+    modify_files(configured_files, version, next_version, ctx, dry_run)

@@ -1,4 +1,4 @@
-# Bump My Version's documentation
+# Bump My Version
 
 ```{toctree}
 ---
@@ -7,12 +7,10 @@ caption: Contents
 ---
 Introduction <readme>
 usage
-configuration
-version-parts
-formatting-context
-search-and-replace
-cli
-api
+tutorials/index
+howtos/index
+reference/index
+explanation/index
 contributing
 changelog
 ```
