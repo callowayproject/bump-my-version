@@ -103,8 +103,7 @@ class ConfiguredFile:
             file_content_before = f.read()
             file_new_lines = f.newlines[0] if isinstance(f.newlines, tuple) else f.newlines
 
-        if current_version:
-            context["current_version"] = self.version_config.serialize(current_version, context)
+        context["current_version"] = self.version_config.serialize(current_version, context)
         if new_version:
             context["new_version"] = self.version_config.serialize(new_version, context)
 
@@ -135,14 +134,14 @@ class ConfiguredFile:
         else:
             logger.info("%s file %s", "Would not change" if dry_run else "Not changing", self.path)
 
-        if not dry_run:
+        if not dry_run:  # pragma: no-coverage
             with open(self.path, "wt", encoding="utf-8", newline=file_new_lines) as f:
                 f.write(file_content_after)
 
-    def __str__(self) -> str:
+    def __str__(self) -> str:  # pragma: no-coverage
         return self.path
 
-    def __repr__(self) -> str:
+    def __repr__(self) -> str:  # pragma: no-coverage
         return f"<bumpversion.ConfiguredFile:{self.path}>"
 
 
