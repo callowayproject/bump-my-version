@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.7.1 (2023-07-12)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.7.0...0.7.1)
+
+### Fixes
+
+- Fix search and replace options for replace. [781e8d8](https://github.com/callowayproject/bump-my-version/commit/781e8d8094ba9f16d915a551b3bc51bd6aa54cfa)
+    
+  - The `--search` and `--replace` options now completely override any other search and replace logic.
+
+  Fixes #34
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [531738d](https://github.com/callowayproject/bump-my-version/commit/531738d62d3a2583c7831d17151cb8ae7b14677c)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.0.276 → v0.0.277](https://github.com/astral-sh/ruff-pre-commit/compare/v0.0.276...v0.0.277)
+
+- [pre-commit.ci] pre-commit autoupdate. [61e6747](https://github.com/callowayproject/bump-my-version/commit/61e6747529b347530c7ef3e7a6fe13c19cbe61d9)
+    
+  **updates:** - https://github.com/charliermarsh/ruff-pre-commit → https://github.com/astral-sh/ruff-pre-commit
+
+
 ## 0.7.0 (2023-07-10)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.6.0...0.7.0)
 
