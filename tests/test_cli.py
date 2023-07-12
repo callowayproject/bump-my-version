@@ -1,6 +1,7 @@
 """Tests for `bumpversion` package."""
 import shutil
 import subprocess
+import traceback
 from pathlib import Path
 
 import pytest
@@ -429,3 +430,62 @@ def test_replace_specific_files(mocker, git_repo, fixtures_path):
     configured_files = call_args[0]
     assert len(configured_files) == 1
     assert configured_files[0].path == "VERSION"
+
+
+TEST_REPLACE_CONFIG = {
+    "tool": {
+        "bumpversion": {
+            "allow_dirty": True,
+            "commit": False,
+            "current_version": "2.17.7",
+            "files": [],
+            "message": "Bump version: {current_version} → {new_version}",
+            "parse": "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)",
+            "parts": {
+                "major": {},
+                "minor": {},
+                "patch": {},
+            },
+            "replace": "{new_version}",
+            "search": "{current_version}",
+            "serialize": ["{major}.{minor}.{patch}"],
+            "sign_tags": False,
+            "tag": False,
+            "tag_message": "Bump version: {current_version} → {new_version}",
+            "tag_name": "v{new_version}",
+        }
+    }
+}
+
+
+def test_replace_search_with_plain_string(tmp_path, fixtures_path):
+    """Replace should not worry if the search or replace values have version info."""
+    from tomlkit import dumps
+
+    # Arrange
+    config_path = tmp_path / "pyproject.toml"
+    config_path.write_text(dumps(TEST_REPLACE_CONFIG))
+    doc_path = tmp_path / "docs.yaml"
+    doc_path.write_text("url: https://github.com/sampleuser/workflows/main/.github/update_mailmap.py")
+
+    runner: CliRunner = CliRunner()
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(
+            cli.cli,
+            [
+                "replace",
+                "--no-configured-files",
+                "--search",
+                "/workflows/main/",
+                "--replace",
+                "/workflows/v{current_version}/",
+                "./docs.yaml",
+            ],
+        )
+
+    if result.exit_code != 0:
+        print("Here is the output:")
+        print(result.output)
+        print(traceback.print_exception(result.exc_info[1]))
+
+    assert result.exit_code == 0

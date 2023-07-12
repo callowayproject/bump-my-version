@@ -408,8 +408,6 @@ def replace(
         new_version=new_version,
         parse=parse,
         serialize=serialize or None,
-        search=search,
-        replace=replace,
         commit=False,
         tag=False,
         sign_tags=False,
@@ -441,6 +439,6 @@ def replace(
 
     ctx = get_context(config, version, next_version)
 
-    configured_files = resolve_file_config(config.files, config.version_config)
+    configured_files = resolve_file_config(config.files, config.version_config, search, replace)
 
     modify_files(configured_files, version, next_version, ctx, dry_run)
