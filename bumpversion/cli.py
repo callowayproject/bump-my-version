@@ -12,6 +12,7 @@ from bumpversion.config import find_config_file, get_configuration
 from bumpversion.files import modify_files, resolve_file_config
 from bumpversion.logging import setup_logging
 from bumpversion.show import do_show, log_list
+from bumpversion.ui import print_warning
 from bumpversion.utils import get_context, get_overrides
 
 logger = logging.getLogger(__name__)
@@ -32,6 +33,42 @@ def cli(ctx: Context) -> None:
     """Version bump your Python project."""
     if ctx.invoked_subcommand is None:
         ctx.invoke(bump, *ctx.args)
+
+
+click.rich_click.OPTION_GROUPS = {
+    "bumpversion bump": [
+        {
+            "name": "Configuration",
+            "options": [
+                "--config-file",
+                "--current-version",
+                "--new-version",
+                "--parse",
+                "--serialize",
+                "--search",
+                "--replace",
+                "--no-configured-files",
+                "--ignore-missing-version",
+            ],
+        },
+        {
+            "name": "Output",
+            "options": ["--dry-run", "--verbose"],
+        },
+        {
+            "name": "Committing and tagging",
+            "options": [
+                "--allow-dirty" "--commit",
+                "--commit-args",
+                "--message",
+                "--tag",
+                "--tag-name",
+                "--tag-message",
+                "--sign-tags",
+            ],
+        },
+    ]
+}
 
 
 @cli.command(context_settings={"ignore_unknown_options": True})
@@ -238,6 +275,7 @@ def bump(
         files = args
 
     if show_list:
+        print_warning("DEPRECATED: The --list option is deprecated and will be removed in a future version.")
         log_list(config, version_part, new_version)
         return
 
