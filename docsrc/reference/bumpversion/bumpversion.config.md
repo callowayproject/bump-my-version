@@ -35,6 +35,10 @@
 :class: autosummary longtable
 :align: left
 
+* - {py:obj}`get_all_file_configs <bumpversion.config.get_all_file_configs>`
+  - ```{autodoc2-docstring} bumpversion.config.get_all_file_configs
+    :summary:
+    ```
 * - {py:obj}`get_configuration <bumpversion.config.get_configuration>`
   - ```{autodoc2-docstring} bumpversion.config.get_configuration
     :summary:
@@ -229,6 +233,17 @@ Bases: {py:obj}`pydantic.BaseModel`
 
 ````
 
+````{py:attribute} ignore_missing_version
+:canonical: bumpversion.config.FileConfig.ignore_missing_version
+:type: typing.Optional[bool]
+:value: >
+   None
+
+```{autodoc2-docstring} bumpversion.config.FileConfig.ignore_missing_version
+```
+
+````
+
 `````
 
 ``````{py:class} Config
@@ -290,6 +305,17 @@ Bases: {py:obj}`pydantic.BaseSettings`
    None
 
 ```{autodoc2-docstring} bumpversion.config.Config.replace
+```
+
+````
+
+````{py:attribute} ignore_missing_version
+:canonical: bumpversion.config.Config.ignore_missing_version
+:type: bool
+:value: >
+   None
+
+```{autodoc2-docstring} bumpversion.config.Config.ignore_missing_version
 ```
 
 ````
@@ -470,6 +496,13 @@ Bases: {py:obj}`pydantic.BaseSettings`
 ```{autodoc2-docstring} bumpversion.config.CONFIG_FILE_SEARCH_ORDER
 ```
 
+````
+
+````{py:function} get_all_file_configs(config_dict: dict) -> typing.List[bumpversion.config.FileConfig]
+:canonical: bumpversion.config.get_all_file_configs
+
+```{autodoc2-docstring} bumpversion.config.get_all_file_configs
+```
 ````
 
 ````{py:function} get_configuration(config_file: typing.Union[str, pathlib.Path, None] = None, **overrides) -> bumpversion.config.Config

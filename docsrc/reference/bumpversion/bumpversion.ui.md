@@ -23,6 +23,10 @@
   - ```{autodoc2-docstring} bumpversion.ui.print_error
     :summary:
     ```
+* - {py:obj}`print_warning <bumpversion.ui.print_warning>`
+  - ```{autodoc2-docstring} bumpversion.ui.print_warning
+    :summary:
+    ```
 ````
 
 ### API
@@ -38,5 +42,12 @@
 :canonical: bumpversion.ui.print_error
 
 ```{autodoc2-docstring} bumpversion.ui.print_error
+```
+````
+
+````{py:function} print_warning(msg: str) -> None
+:canonical: bumpversion.ui.print_warning
+
+```{autodoc2-docstring} bumpversion.ui.print_warning
 ```
 ````

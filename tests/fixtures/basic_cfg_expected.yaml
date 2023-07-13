@@ -5,22 +5,32 @@ current_version: "1.0.0"
 files:
   - filename: "setup.py"
     glob: null
-    parse: null
-    replace: null
-    search: null
-    serialize: null
+    ignore_missing_version: false
+    parse: "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?"
+    replace: "{new_version}"
+    search: "{current_version}"
+    serialize:
+      - "{major}.{minor}.{patch}-{release}"
+      - "{major}.{minor}.{patch}"
   - filename: "bumpversion/__init__.py"
     glob: null
-    parse: null
-    replace: null
-    search: null
-    serialize: null
+    ignore_missing_version: false
+    parse: "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?"
+    replace: "{new_version}"
+    search: "{current_version}"
+    serialize:
+      - "{major}.{minor}.{patch}-{release}"
+      - "{major}.{minor}.{patch}"
   - filename: "CHANGELOG.md"
     glob: null
-    parse: null
+    ignore_missing_version: false
+    parse: "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?"
     replace: "**unreleased**\n**v{new_version}**"
     search: "**unreleased**"
-    serialize: null
+    serialize:
+      - "{major}.{minor}.{patch}-{release}"
+      - "{major}.{minor}.{patch}"
+ignore_missing_version: false
 message: "Bump version: {current_version} → {new_version}"
 parse: "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?"
 parts:

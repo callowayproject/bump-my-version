@@ -5,6 +5,8 @@ import rich_click as click
 from click import Context
 from rich_click.rich_group import RichGroup
 
+from bumpversion.ui import print_warning
+
 
 class AliasedGroup(RichGroup):
     """
@@ -36,5 +38,9 @@ class AliasedGroup(RichGroup):
         if cmd.name == "bump" and args != original_args:
             if "bump" in original_args:
                 original_args.remove("bump")
+            else:
+                print_warning(
+                    "Calling bumpversion without a subcommand is deprecated. " "Please use `bumpversion bump` instead"
+                )
             return cmd.name, cmd, original_args
         return cmd.name, cmd, args

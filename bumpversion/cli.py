@@ -12,6 +12,7 @@ from bumpversion.config import find_config_file, get_configuration
 from bumpversion.files import modify_files, resolve_file_config
 from bumpversion.logging import setup_logging
 from bumpversion.show import do_show, log_list
+from bumpversion.ui import print_warning
 from bumpversion.utils import get_context, get_overrides
 
 logger = logging.getLogger(__name__)
@@ -32,6 +33,42 @@ def cli(ctx: Context) -> None:
     """Version bump your Python project."""
     if ctx.invoked_subcommand is None:
         ctx.invoke(bump, *ctx.args)
+
+
+click.rich_click.OPTION_GROUPS = {
+    "bumpversion bump": [
+        {
+            "name": "Configuration",
+            "options": [
+                "--config-file",
+                "--current-version",
+                "--new-version",
+                "--parse",
+                "--serialize",
+                "--search",
+                "--replace",
+                "--no-configured-files",
+                "--ignore-missing-version",
+            ],
+        },
+        {
+            "name": "Output",
+            "options": ["--dry-run", "--verbose"],
+        },
+        {
+            "name": "Committing and tagging",
+            "options": [
+                "--allow-dirty" "--commit",
+                "--commit-args",
+                "--message",
+                "--tag",
+                "--tag-name",
+                "--tag-message",
+                "--sign-tags",
+            ],
+        },
+    ]
+}
 
 
 @cli.command(context_settings={"ignore_unknown_options": True})
@@ -112,6 +149,12 @@ def cli(ctx: Context) -> None:
     ),
 )
 @click.option(
+    "--ignore-missing-version",
+    is_flag=True,
+    envvar="BUMPVERSION_IGNORE_MISSING_VERSION",
+    help="Ignore any Version Not Found errors when searching and replacing in files.",
+)
+@click.option(
     "--dry-run",
     "-n",
     is_flag=True,
@@ -184,6 +227,7 @@ def bump(
     search: Optional[str],
     replace: Optional[str],
     no_configured_files: bool,
+    ignore_missing_version: bool,
     dry_run: bool,
     commit: Optional[bool],
     tag: Optional[bool],
@@ -224,6 +268,7 @@ def bump(
         tag_message=tag_message,
         message=message,
         commit_args=commit_args,
+        ignore_missing_version=ignore_missing_version,
     )
 
     found_config_file = find_config_file(config_file)
@@ -238,6 +283,7 @@ def bump(
         files = args
 
     if show_list:
+        print_warning("DEPRECATED: The --list option is deprecated and will be removed in a future version.")
         log_list(config, version_part, new_version)
         return
 
@@ -371,6 +417,12 @@ def show(args: List[str], config_file: Optional[str], format_: str, increment: O
     ),
 )
 @click.option(
+    "--ignore-missing-version",
+    is_flag=True,
+    envvar="BUMPVERSION_IGNORE_MISSING_VERSION",
+    help="Ignore any Version Not Found errors when searching and replacing in files.",
+)
+@click.option(
     "--dry-run",
     "-n",
     is_flag=True,
@@ -389,6 +441,7 @@ def replace(
     search: Optional[str],
     replace: Optional[str],
     no_configured_files: bool,
+    ignore_missing_version: bool,
     dry_run: bool,
 ) -> None:
     """
@@ -415,6 +468,7 @@ def replace(
         tag_message=None,
         message=None,
         commit_args=None,
+        ignore_missing_version=ignore_missing_version,
     )
 
     found_config_file = find_config_file(config_file)

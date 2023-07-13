@@ -196,12 +196,16 @@ def test_listing_with_version_part(tmp_path: Path, fixtures_path: Path):
 
     assert result.exit_code == 0
     assert set(result.output.splitlines(keepends=False)) == {
+        "WARNING:",
+        "",
+        "DEPRECATED: The --list option is deprecated and will be removed in a future version.",
         "new_version=1.0.1-dev",
         "current_version=1.0.0",
         "parse=(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?",
         "serialize=['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}']",
         "search={current_version}",
         "replace={new_version}",
+        "ignore_missing_version=False",
         "tag=True",
         "sign_tags=False",
         "tag_name=v{new_version}",
@@ -210,12 +214,21 @@ def test_listing_with_version_part(tmp_path: Path, fixtures_path: Path):
         "commit=True",
         "message=Bump version: {current_version} → {new_version}",
         "commit_args=None",
-        "files=[{'filename': 'setup.py', 'glob': None, 'parse': None, 'serialize': "
-        "None, 'search': None, 'replace': None}, {'filename': "
-        "'bumpversion/__init__.py', 'glob': None, 'parse': None, 'serialize': None, "
-        "'search': None, 'replace': None}, {'filename': 'CHANGELOG.md', 'glob': None, "
-        "'parse': None, 'serialize': None, 'search': '**unreleased**', 'replace': "
-        "'**unreleased**\\n**v{new_version}**'}]",
+        (
+            "files=["
+            "{'filename': 'setup.py', 'glob': None, 'parse': "
+            "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', 'serialize': "
+            "['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}'], 'search': '{current_version}', "
+            "'replace': '{new_version}', 'ignore_missing_version': False}, "
+            "{'filename': 'bumpversion/__init__.py', 'glob': None, 'parse': "
+            "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', 'serialize': "
+            "['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}'], 'search': '{current_version}', "
+            "'replace': '{new_version}', 'ignore_missing_version': False}, "
+            "{'filename': 'CHANGELOG.md', 'glob': None, 'parse': "
+            "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', 'serialize': "
+            "['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}'], 'search': '**unreleased**', "
+            "'replace': '**unreleased**\\n**v{new_version}**', 'ignore_missing_version': False}]"
+        ),
     }
 
 
@@ -236,11 +249,15 @@ def test_listing_without_version_part(tmp_path: Path, fixtures_path: Path):
 
     assert result.exit_code == 0
     assert set(result.output.splitlines(keepends=False)) == {
+        "WARNING:",
+        "",
+        "DEPRECATED: The --list option is deprecated and will be removed in a future version.",
         "current_version=1.0.0",
         "parse=(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?",
         "serialize=['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}']",
         "search={current_version}",
         "replace={new_version}",
+        "ignore_missing_version=False",
         "tag=True",
         "sign_tags=False",
         "tag_name=v{new_version}",
@@ -249,12 +266,21 @@ def test_listing_without_version_part(tmp_path: Path, fixtures_path: Path):
         "commit=True",
         "message=Bump version: {current_version} → {new_version}",
         "commit_args=None",
-        "files=[{'filename': 'setup.py', 'glob': None, 'parse': None, 'serialize': "
-        "None, 'search': None, 'replace': None}, {'filename': "
-        "'bumpversion/__init__.py', 'glob': None, 'parse': None, 'serialize': None, "
-        "'search': None, 'replace': None}, {'filename': 'CHANGELOG.md', 'glob': None, "
-        "'parse': None, 'serialize': None, 'search': '**unreleased**', 'replace': "
-        "'**unreleased**\\n**v{new_version}**'}]",
+        (
+            "files=["
+            "{'filename': 'setup.py', 'glob': None, 'parse': "
+            "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', 'serialize': "
+            "['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}'], 'search': '{current_version}', "
+            "'replace': '{new_version}', 'ignore_missing_version': False}, "
+            "{'filename': 'bumpversion/__init__.py', 'glob': None, 'parse': "
+            "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', 'serialize': "
+            "['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}'], 'search': '{current_version}', "
+            "'replace': '{new_version}', 'ignore_missing_version': False}, "
+            "{'filename': 'CHANGELOG.md', 'glob': None, 'parse': "
+            "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', 'serialize': "
+            "['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}'], 'search': '**unreleased**', "
+            "'replace': '**unreleased**\\n**v{new_version}**', 'ignore_missing_version': False}]"
+        ),
     }
 
 

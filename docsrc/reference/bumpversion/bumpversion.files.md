@@ -69,7 +69,7 @@
 
 ````
 
-`````{py:class} ConfiguredFile(file_cfg: bumpversion.config.FileConfig, version_config: bumpversion.version_part.VersionConfig)
+`````{py:class} ConfiguredFile(file_cfg: bumpversion.config.FileConfig, version_config: bumpversion.version_part.VersionConfig, search: typing.Optional[str] = None, replace: typing.Optional[str] = None)
 :canonical: bumpversion.files.ConfiguredFile
 
 ```{autodoc2-docstring} bumpversion.files.ConfiguredFile
@@ -117,7 +117,7 @@
 
 `````
 
-````{py:function} resolve_file_config(files: typing.List[bumpversion.config.FileConfig], version_config: bumpversion.version_part.VersionConfig) -> typing.List[bumpversion.files.ConfiguredFile]
+````{py:function} resolve_file_config(files: typing.List[bumpversion.config.FileConfig], version_config: bumpversion.version_part.VersionConfig, search: typing.Optional[str] = None, replace: typing.Optional[str] = None) -> typing.List[bumpversion.files.ConfiguredFile]
 :canonical: bumpversion.files.resolve_file_config
 
 ```{autodoc2-docstring} bumpversion.files.resolve_file_config
@@ -131,7 +131,7 @@
 ```
 ````
 
-````{py:function} get_glob_files(file_cfg: bumpversion.config.FileConfig, version_config: bumpversion.version_part.VersionConfig) -> typing.List[bumpversion.files.ConfiguredFile]
+````{py:function} get_glob_files(file_cfg: bumpversion.config.FileConfig, version_config: bumpversion.version_part.VersionConfig, search: typing.Optional[str] = None, replace: typing.Optional[str] = None) -> typing.List[bumpversion.files.ConfiguredFile]
 :canonical: bumpversion.files.get_glob_files
 
 ```{autodoc2-docstring} bumpversion.files.get_glob_files
