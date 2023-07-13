@@ -27,47 +27,6 @@ By using a configuration file, you no longer need to specify those options on th
 
 The general configuration is grouped in a `[tool.bumpversion]` or  `[bumpversion]` section, depending on if it is a TOML or INI file respectfully.
 
-TOML example:
-
-```toml
-[tool.bumpversion]
-allow_dirty = false
-commit = false
-message = "Bump version: {current_version} → {new_version}"
-commit_args = ""
-tag = false
-sign_tags = false
-tag_name = "v{new_version}"
-tag_message = "Bump version: {current_version} → {new_version}"
-current_version = "1.0.0"
-parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
-serialize = [
-    "{major}.{minor}.{patch}"
-]
-search = "{current_version}"
-replace = "{new_version}"
-```
-
-INI-style example:
-
-```ini
-[bumpversion]
-allow_dirty = False
-commit = False
-message = Bump version: {current_version} → {new_version}
-commit_args = 
-tag = False
-sign_tags = False
-tag_name = v{new_version}
-tag_message = Bump version: {current_version} → {new_version}
-current_version = 1.0.0
-parse = (?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)
-serialize =
-	{major}.{minor}.{patch}
-search = {current_version}
-replace = {new_version}
-```
-
 ### `allow_dirty`
 
 :required: No
@@ -112,14 +71,7 @@ If you have pre-commit hooks, you might also want to add an option to [`commit_a
 
 The commit message template to use when creating a commit. This is only used when the [`commit`](configuration.md#commit) option is set to `True`.
 
-This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). Available in the template context are:
-
-- `current_version`
-- `new_version`
-- `current_[part]` (e.g. `current_major`)
-- `new_[part]` (e.g. `new_major`)
-- all environment variables are exposed, prefixed with `$`, such as `$BUILD_NUMBER`
-- `now` or `utcnow` to get a current timestamp. Both accept [datetime formatting](https://docs.python.org/3.11/library/datetime.html#strftime-and-strptime-behavior) (e.g.  `{now:%d.%m.%Y}`).
+This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](formatting-context.md) describes the available variables.
 
 ### `commit_args`
 
@@ -179,14 +131,7 @@ If `True`, sign the created tag, when [`tag`](configuration.md#tag) is `True`.
 
 The name template used to render the tag, when [`tag`](configuration.md#tag) is `True`.
 
-This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). Available in the template context are:
-
-- `current_version`
-- `new_version`
-- `current_[part]` (e.g. `current_major`)
-- `new_[part]` (e.g. `new_major`)
-- all environment variables are exposed, prefixed with `$`, such as `$BUILD_NUMBER`
-- `now` or `utcnow` to get a current timestamp. Both accept [datetime formatting](https://docs.python.org/3.11/library/datetime.html#strftime-and-strptime-behavior) (e.g.  `{now:%d.%m.%Y}`).
+This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](formatting-context.md) describes the available variables.
 
 ### `tag_message`
 :required: No
@@ -201,16 +146,9 @@ This string is templated using the [Python Format String Syntax](https://docs.py
 
 The tag message template to use when creating a tag, when [`tag`](configuration.md#tag) is `True`
 
-This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). Available in the template context are:
+This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](formatting-context.md) describes the available variables.
 
-- `current_version`
-- `new_version`
-- `current_[part]` (e.g. `current_major`)
-- `new_[part]` (e.g. `new_major`)
-- all environment variables are exposed, prefixed with `$`, such as `$BUILD_NUMBER`
-- `now` or `utcnow` to get a current timestamp. Both accept [datetime formatting](https://docs.python.org/3.11/library/datetime.html#strftime-and-strptime-behavior) (e.g.  `{now:%d.%m.%Y}`).
-
-`bump-my-version` creates an *annotated* tag in Git by default. To disable this and create a *lightweight* tag, you must explicitly set an empty `tag_message`:
+`bump-my-version` creates an *annotated* tag in Git by default. To disable this and create a *lightweight* tag, you must explicitly set an empty `tag_message` value.
 
 ### `current_version`
 
@@ -281,7 +219,7 @@ Each string is templated using the [Python Format String Syntax](https://docs.py
 
 :environment var: `BUMPVERSION_SEARCH`
 
-This is the template string how to search for the string to be replaced in the file. Individual file configurations may override this. This can span multiple lines, and is templated using [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax).
+This is the template string how to search for the string to be replaced in the file. Individual file configurations may override this. This can span multiple lines, and is templated using [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](formatting-context.md) describes the available variables.
 
 This is useful if there is the remotest possibility that the current version number might be present multiple times in the file and you mean to only bump one of the occurrences. 
 
@@ -298,34 +236,65 @@ This is useful if there is the remotest possibility that the current version num
 
 This is the template to create the string that will replace the current version number in the file.
 
+### `ingore_missing_version`
+:required: No
+
+:default: `False`
+
+:type: boolean
+
+:command line option: `--ignore-missing-version`
+
+:environment var: `BUMPVERSION_IGNORE_MISSING_VERSION`
+
+If `True`, don't fail if the version string to be replaced is not found in the file.
+
+### TOML example
+
+```toml
+[tool.bumpversion]
+allow_dirty = false
+commit = false
+message = "Bump version: {current_version} → {new_version}"
+commit_args = ""
+tag = false
+sign_tags = false
+tag_name = "v{new_version}"
+tag_message = "Bump version: {current_version} → {new_version}"
+current_version = "1.0.0"
+parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
+serialize = [
+    "{major}.{minor}.{patch}"
+]
+search = "{current_version}"
+replace = "{new_version}"
+```
+
+### INI-style example
+
+```ini
+[bumpversion]
+allow_dirty = False
+commit = False
+message = Bump version: {current_version} → {new_version}
+commit_args = 
+tag = False
+sign_tags = False
+tag_name = v{new_version}
+tag_message = Bump version: {current_version} → {new_version}
+current_version = 1.0.0
+parse = (?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)
+serialize =
+	{major}.{minor}.{patch}
+search = {current_version}
+replace = {new_version}
+```
+
 ## Version part-specific configuration
 
 Version part configuration is grouped in a `[tool.bumpversion.parts.<partname>]` or  `[bumpversion:part:<partname>]` section, depending on if it is a TOML or INI file respectfully.
 
 You only need to configure version parts if they deviate from the default, and then you only need to specify the options that are different.
-
-TOML example:
-
-```toml
-[tool.bumpversion.parts.release]
-values = [
-    "alpha",
-    "beta",
-    "gamma"
-]
-optional_value = "gamma"
-```
-
-INI-style example:
-
-```ini
-[bumpversion:part:release]
-optional_value = gamma
-values =
-	alpha
-	beta
-	gamma
-```
 
 ### `values`
 
@@ -378,55 +347,33 @@ Numeric values are still treated as strings internally, so when specifying a fir
 When this value is set to `True`, the part is not reset when other parts are incremented. Its incrementation is
 independent of the other parts. It is useful when you have a build number in your version that is incremented independently of the actual version.
 
+### TOML example
+
+```toml
+[tool.bumpversion.parts.release]
+values = [
+    "alpha",
+    "beta",
+    "gamma"
+]
+optional_value = "gamma"
+```
+
+### INI-style example
+
+```ini
+[bumpversion:part:release]
+optional_value = gamma
+values =
+	alpha
+	beta
+	gamma
+```
+
 
 ## File-specific configuration
 
 This section configures which files bump-my-version should update by replacing their current version with the newly bumped version.
-
-### INI-style configuration files
-
-INI-style configuration is in the section: `[bumpversion:file:<filename>]` or `[bumpversion:glob:<glob pattern>]`.
-
-Both, `file:` and `glob:` are configured the same. Their difference is that file will match file names directly like `requirements.txt`. While glob also matches multiple files via wildcards like `**/pom.xml`.
-
-:::{note}
-
-The configuration file format requires each section header to be unique. If you want to process a certain file multiple times, you may append a description between parens to the `file` keyword: `[bumpversion:file (special one):…]`.
-
-:::
-
-For example, to change `coolapp/__init__.py` with the defaults, and alter `CHANGELOG.md` in twice:
-
-```ini
-[bumpversion:file:coolapp/__init__.py]
-
-[bumpversion:file(version heading):CHANGELOG.md]
-search = Unreleased
-
-[bumpversion:file(previous version):CHANGELOG.md]
-search = {current_version}...HEAD
-replace = {current_version}...{new_version}
-```
-
-### TOML configuration files
-
-TOML allows us to specify the files using an [array of tables.](https://toml.io/en/v1.0.0#array-of-tables) TOML configuration files add two configuration fields to each file configuration: `filename` and `glob`. These fields are mutually exclusive: if you specify a value for both, only the `glob` value is used.
-
-For example, to change `coolapp/__init__.py` with the defaults, and alter `CHANGELOG.md` in twice:
-
-```toml
-[[tool.bumpversion.files]]
-filename = "coolapp/__init__.py"
-
-[[tool.bumpversion.files]]
-filename = "CHANGELOG.md"
-search = "Unreleased"
-
-[[tool.bumpversion.files]]
-filename = "CHANGELOG.md"
-search = "{current_version}...HEAD"
-replace = "{current_version}...{new_version}"
-```
 
 ### `filename`
 
@@ -500,4 +447,56 @@ This is an override to the default template string how to search for the string 
 
 This is an override to the template to create the string that will replace the current version number in the file.
 
-## 
+### `ingore_missing_version`
+:required: No
+
+:default: The value configured in the global `ingore_missing_version` field
+
+:type: boolean
+
+If `True`, don't fail if the version string to be replaced is not found in the file.
+
+### INI-style configuration files
+
+INI-style configuration is in the section: `[bumpversion:file:<filename>]` or `[bumpversion:glob:<glob pattern>]`.
+
+Both, `file:` and `glob:` are configured the same. Their difference is that file will match file names directly like `requirements.txt`. While glob also matches multiple files via wildcards like `**/pom.xml`.
+
+:::{note}
+
+The configuration file format requires each section header to be unique. If you want to process a certain file multiple times, you may append a description between parens to the `file` keyword: `[bumpversion:file (special one):…]`.
+
+:::
+
+For example, to change `coolapp/__init__.py` with the defaults, and alter `CHANGELOG.md` in twice:
+
+```ini
+[bumpversion:file:coolapp/__init__.py]
+
+[bumpversion:file(version heading):CHANGELOG.md]
+search = Unreleased
+
+[bumpversion:file(previous version):CHANGELOG.md]
+search = {current_version}...HEAD
+replace = {current_version}...{new_version}
+```
+
+### TOML configuration files
+
+TOML allows us to specify the files using an [array of tables.](https://toml.io/en/v1.0.0#array-of-tables) TOML configuration files add two configuration fields to each file configuration: `filename` and `glob`. These fields are mutually exclusive: if you specify a value for both, only the `glob` value is used.
+
+For example, to change `coolapp/__init__.py` with the defaults, and alter `CHANGELOG.md` in twice:
+
+```toml
+[[tool.bumpversion.files]]
+filename = "coolapp/__init__.py"
+
+[[tool.bumpversion.files]]
+filename = "CHANGELOG.md"
+search = "Unreleased"
+
+[[tool.bumpversion.files]]
+filename = "CHANGELOG.md"
+search = "{current_version}...HEAD"
+replace = "{current_version}...{new_version}"
+```
