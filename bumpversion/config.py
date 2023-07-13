@@ -40,6 +40,7 @@ class FileConfig(BaseModel):
     serialize: Optional[List[str]]  # If different from outer scope
     search: Optional[str]  # If different from outer scope
     replace: Optional[str]  # If different from outer scope
+    ignore_missing_version: Optional[bool]
 
 
 class Config(BaseSettings):
@@ -50,6 +51,7 @@ class Config(BaseSettings):
     serialize: List[str] = Field(min_items=1)
     search: str
     replace: str
+    ignore_missing_version: bool
     tag: bool
     sign_tags: bool
     tag_name: str
@@ -84,6 +86,7 @@ DEFAULTS = {
     "serialize": ["{major}.{minor}.{patch}"],
     "search": "{current_version}",
     "replace": "{new_version}",
+    "ignore_missing_version": False,
     "tag": False,
     "sign_tags": False,
     "tag_name": "v{new_version}",
@@ -103,6 +106,21 @@ CONFIG_FILE_SEARCH_ORDER = (
     Path("setup.cfg"),
     Path("pyproject.toml"),
 )
+
+
+def get_all_file_configs(config_dict: dict) -> List[FileConfig]:
+    """Make sure all version parts are included."""
+    defaults = {
+        "parse": config_dict["parse"],
+        "serialize": config_dict["serialize"],
+        "search": config_dict["search"],
+        "replace": config_dict["replace"],
+        "ignore_missing_version": config_dict["ignore_missing_version"],
+    }
+    files = [{k: v for k, v in filecfg.items() if v} for filecfg in config_dict["files"]]
+    for f in files:
+        f.update({k: v for k, v in defaults.items() if k not in f})
+    return [FileConfig(**f) for f in files]
 
 
 def get_configuration(config_file: Union[str, Path, None] = None, **overrides) -> Config:
@@ -129,6 +147,11 @@ def get_configuration(config_file: Union[str, Path, None] = None, **overrides) -
 
     # Set any missing version parts
     config_dict["parts"] = get_all_part_configs(config_dict)
+
+    # Set any missing file configuration
+    config_dict["files"] = get_all_file_configs(config_dict)
+
+    # Resolve the SCMInfo class for Pydantic's BaseSettings
     Config.update_forward_refs(SCMInfo=SCMInfo)
     config = Config(**config_dict)  # type: ignore[arg-type]
 
