@@ -26,6 +26,7 @@ class ConfiguredFile:
         self.serialize = file_cfg.serialize or version_config.serialize_formats
         self.search = search or file_cfg.search or version_config.search
         self.replace = replace or file_cfg.replace or version_config.replace
+        self.ignore_missing_version = file_cfg.ignore_missing_version or False
         self.version_config = VersionConfig(
             self.parse, self.serialize, self.search, self.replace, version_config.part_configs
         )
@@ -63,6 +64,8 @@ class ConfiguredFile:
             return True
 
         # version not found
+        if self.ignore_missing_version:
+            return False
         raise VersionNotFoundError(f"Did not find '{search_expression}' in file: '{self.path}'")
 
     def contains(self, search: str) -> bool:
