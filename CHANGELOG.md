@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.8.0 (2023-07-13)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.7.1...0.8.0)
+
+### New
+
+- Added documentation for ignore missing version. [e0731c3](https://github.com/callowayproject/bump-my-version/commit/e0731c37b8cc1c5ac558462158c86bcb9467a166)
+    
+- Added `--ignore-missing-version` flag to `bump` and `replace`. [a5bd008](https://github.com/callowayproject/bump-my-version/commit/a5bd008cd60cde13f13505e7d21ba48b4820174a)
+    
+- Added `ignore-missing-version` configuration. [45c85be](https://github.com/callowayproject/bump-my-version/commit/45c85be6cd1eea10baa37e4529c3fd9ca7afc78d)
+    
+  - Defaults to `False`
+  - File configurations can also override this value
+- Added deprecation warnings. [733438b](https://github.com/callowayproject/bump-my-version/commit/733438beb8ad8e320968ef0b2ba2031dc05bd0a5)
+    
+  - `--list` option will go bye-bye in 1.0
+  - calling `bumpversion` without a subcomand will leave in 1.0
+
 ## 0.7.1 (2023-07-12)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.7.0...0.7.1)
 
