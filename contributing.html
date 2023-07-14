@@ -1,0 +1,566 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Changelog" href="changelog.html" /><link rel="prev" title="Explanation" href="explanation/index.html" />
+
+    <!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
+        <title>Contributing to Bump My Version - Bump My Version 0.8.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Bump My Version 0.8.0</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">Bump My Version 0.8.0</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="tutorials/index.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Tutorials</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/semantic-versioning-example.html">Semantic versioning example</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="howtos/index.html">How-To Guides</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of How-To Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="howtos/avoid-incorrect-replacements.html">Avoiding incorrect replacements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtos/custom-version-formats-by-file.html">Custom version formats in different files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtos/multiple-replacements.html">Multiple replacements within the same file</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/cli.html">Command-line Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/formatting-context.html">Formatting context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/version-parts.html">Version parts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/search-and-replace-config.html">Searching and replace configuration</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="reference/bumpversion/bumpversion.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of bumpversion</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.version_part.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.version_part</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.logging</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.files.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.files</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.ui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.ui</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.autocast.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.autocast</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.aliases.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.aliases</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.cli</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.utils</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.bump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.bump</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.exceptions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.exceptions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.scm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.scm</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.yaml_dump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.yaml_dump</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.__main__</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Contributing to Bump My Version</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section class="tex2jax_ignore mathjax_ignore" id="contributing-to-bump-my-version">
+<h1>Contributing to Bump My Version<a class="headerlink" href="#contributing-to-bump-my-version" title="Permalink to this heading">#</a></h1>
+<p>First off, thanks for taking the time to contribute! ❤️</p>
+<p>All types of contributions are encouraged and valued. See the <a class="reference internal" href="#table-of-contents"><span class="xref myst">Table of Contents</span></a> for different ways to help and details about how this project handles them. Please make sure to read the relevant section before making your contribution. It will make it much easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions. 🎉</p>
+<blockquote>
+<div><p>If you like the project but don’t have time to contribute, that’s fine. There are other easy ways to support the project and show your appreciation, which we would also be very happy about:</p>
+<ul class="simple">
+<li><p>Star the project</p></li>
+<li><p>Tweet about it</p></li>
+<li><p>Refer to this project in your project’s readme</p></li>
+<li><p>Mention the project at local meetups and tell your friends/colleagues</p></li>
+</ul>
+</div></blockquote>
+<section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#code-of-conduct"><span class="xref myst">Code of Conduct</span></a></p></li>
+<li><p><a class="reference internal" href="#i-have-a-question"><span class="xref myst">I Have a Question</span></a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/bugs.html#reporting-bugs" title="Python 3.11"><span class="xref myst">Reporting Bugs</span></a></p></li>
+<li><p><a class="reference internal" href="#suggesting-enhancements"><span class="xref myst">Suggesting Enhancements</span></a></p></li>
+<li><p><a class="reference internal" href="#your-first-code-contribution"><span class="xref myst">Your First Code Contribution</span></a></p></li>
+<li><p><a class="reference internal" href="#improving-the-documentation"><span class="xref myst">Improving The Documentation</span></a></p></li>
+<li><p><a class="reference internal" href="#styleguides"><span class="xref myst">Styleguides</span></a></p></li>
+<li><p><a class="reference internal" href="#commit-messages"><span class="xref myst">Commit Messages</span></a></p></li>
+<li><p><a class="reference internal" href="#join-the-project-team"><span class="xref myst">Join The Project Team</span></a></p></li>
+</ul>
+</section>
+<section id="code-of-conduct">
+<h2>Code of Conduct<a class="headerlink" href="#code-of-conduct" title="Permalink to this heading">#</a></h2>
+<p>This project and everyone participating in it are governed by the
+<a class="reference external" href="https://github.com/callowayproject/bump-my-versionblob/master/CODE_OF_CONDUCT.md">Bump My Version Code of Conduct</a>. By participating, you are expected to uphold this code. Please report unacceptable behavior
+to <a class="reference external" href="mailto:coreyoordt&#37;&#52;&#48;gmail&#46;com">coreyoordt<span>&#64;</span>gmail<span>&#46;</span>com</a>.</p>
+</section>
+<section id="i-have-a-question">
+<h2>I Have a Question<a class="headerlink" href="#i-have-a-question" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>If you want to ask a question, we assume that you have read the available <a class="reference external" href="https://callowayproject.github.io/bump-my-version/">Documentation</a>.</p>
+</div></blockquote>
+<p>Before you ask a question, it is best to search for existing <a class="reference external" href="https://github.com/callowayproject/bump-my-version/issues">Issues</a> that might help you. In case you have found a suitable issue and still need clarification, you can write your question in this issue. It is also advisable to search the internet for answers first.</p>
+<p>If you then still feel the need to ask a question and need clarification, we recommend the following:</p>
+<ul class="simple">
+<li><p>Open an <a class="reference external" href="https://github.com/callowayproject/bump-my-version/issues/new">Issue</a>.</p></li>
+<li><p>Provide as much context as you can about what you’re running into.</p></li>
+<li><p>Provide project and platform versions (nodejs, npm, etc), depending on what seems relevant.</p></li>
+</ul>
+<p>We will then take care of the issue as soon as possible.</p>
+</section>
+<section id="reporting-bugs">
+<h2>Reporting Bugs<a class="headerlink" href="#reporting-bugs" title="Permalink to this heading">#</a></h2>
+<section id="before-submitting-a-bug-report">
+<h3>Before Submitting a Bug Report<a class="headerlink" href="#before-submitting-a-bug-report" title="Permalink to this heading">#</a></h3>
+<p>A good bug report shouldn’t leave others needing to chase you up for more information. Therefore, we ask you to investigate carefully, collect information, and describe the issue in detail in your report. Please complete the following steps in advance to help us fix any potential bug as fast as possible.</p>
+<ul class="simple">
+<li><p>Make sure that you are using the latest version.</p></li>
+<li><p>Determine if your bug is really a bug and not an error on your side e.g. using incompatible environment components/versions (Make sure that you have read the <a class="reference external" href="https://callowayproject.github.io/bump-my-version/">documentation</a>. If you are looking for support, you might want to check <a class="reference internal" href="#i-have-a-question"><span class="xref myst">this section</span></a>).</p></li>
+<li><p>To see if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the <a class="reference external" href="https://github.com/callowayproject/bump-my-version/issues">bug tracker</a>.</p></li>
+<li><p>Also, make sure to search the internet (including Stack Overflow) to see if users outside of the GitHub community have discussed the issue.</p></li>
+<li><p>Collect information about the bug:</p>
+<ul>
+<li><p>Stack trace (Traceback)</p></li>
+<li><p>OS, Platform, and Version (Windows, Linux, macOS, x86, ARM)</p></li>
+<li><p>The version of Python</p></li>
+<li><p>Possibly your input and the output</p></li>
+<li><p>Can you reliably reproduce the issue? And can you also reproduce it with older versions?</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="how-do-i-submit-a-good-bug-report">
+<h3>How Do I Submit a Good Bug Report?<a class="headerlink" href="#how-do-i-submit-a-good-bug-report" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>You must never report security-related issues, vulnerabilities, or bugs that include sensitive information to the issue tracker or elsewhere in public. Instead, sensitive bugs must be sent by email to <a class="reference external" href="mailto:coreyoordt&#37;&#52;&#48;gmail&#46;com">coreyoordt<span>&#64;</span>gmail<span>&#46;</span>com</a>.</p>
+</div></blockquote>
+<p>We use GitHub issues to track bugs and errors. If you run into an issue with the project:</p>
+<ul class="simple">
+<li><p>Open an <a class="reference external" href="https://github.com/callowayproject/bump-my-version/issues/new">Issue</a>. (Since we can’t be sure at this point whether it is a bug or not, we ask you not to talk about a bug yet and not to label the issue.)</p></li>
+<li><p>Explain the behavior you would expect and the actual behavior.</p></li>
+<li><p>Please provide as much context as possible and describe the <em>reproduction steps</em> that someone else can follow to recreate the issue on their own. This usually includes your code. For good bug reports, you should isolate the problem and create a reduced test case.</p></li>
+<li><p>Provide the information you collected in the previous section.</p></li>
+</ul>
+<p>Once it’s filed:</p>
+<ul class="simple">
+<li><p>The project team will label the issue accordingly.</p></li>
+<li><p>A team member will try to reproduce the issue with your provided steps. If there are no reproduction steps or no obvious way to reproduce the issue, the team will ask you for those steps and will not address them until they are included.</p></li>
+<li><p>If the team is able to reproduce the issue, the issue will be left to be <a class="reference internal" href="#your-first-code-contribution"><span class="xref myst">implemented by someone</span></a>.</p></li>
+</ul>
+</section>
+</section>
+<section id="suggesting-enhancements">
+<h2>Suggesting Enhancements<a class="headerlink" href="#suggesting-enhancements" title="Permalink to this heading">#</a></h2>
+<p>This section guides you through submitting an enhancement suggestion for Bump My Version, <strong>including completely new features and minor improvements to existing functionality</strong>. Following these guidelines will help maintainers and the community to understand your suggestion and find related suggestions.</p>
+<section id="before-submitting-an-enhancement">
+<h3>Before Submitting an Enhancement<a class="headerlink" href="#before-submitting-an-enhancement" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Make sure that you are using the latest version.</p></li>
+<li><p>Read the <a class="reference external" href="https://callowayproject.github.io/bump-my-version/">documentation</a> carefully and find out if the functionality is already covered, maybe by an individual configuration.</p></li>
+<li><p>Perform a <a class="reference external" href="https://github.com/callowayproject/bump-my-version/issues">search</a> to see if the enhancement has already been suggested. If it has, add a comment to the existing issue instead of opening a new one.</p></li>
+<li><p>Find out whether your idea fits with the scope and aims of the project. It’s up to you to make a strong case to convince the project’s developers of the merits of this feature. Keep in mind that we want features that will be useful to the majority of our users and not just a small subset. If you’re just targeting a minority of users, consider writing an add-on/plugin library.</p></li>
+</ul>
+</section>
+<section id="how-do-i-submit-a-good-enhancement-suggestion">
+<h3>How Do I Submit a Good Enhancement Suggestion?<a class="headerlink" href="#how-do-i-submit-a-good-enhancement-suggestion" title="Permalink to this heading">#</a></h3>
+<p>Enhancement suggestions are tracked as <a class="reference external" href="https://github.com/callowayproject/bump-my-version/issues">GitHub issues</a>.</p>
+<ul class="simple">
+<li><p>Use a <strong>clear and descriptive title</strong> for the issue to identify the suggestion.</p></li>
+<li><p><strong>Describe the problem or use case</strong> this enhancement solves <strong>or the new benefit</strong> it provides.</p></li>
+<li><p><strong>Explain why this enhancement would be useful</strong> to most Bump My Version users. You may also want to point out the other projects that solved it better and which could serve as inspiration.</p></li>
+<li><p>Provide a <strong>step-by-step description of the suggested enhancement</strong> in as many details as possible.</p></li>
+<li><p>You may also tell how current alternatives do not work for you, if appropriate</p></li>
+</ul>
+<!-- You might want to create an issue template for enhancement suggestions that can be used as a guide and that defines the structure of the information to be included. If you do so, reference it here in the description. -->
+</section>
+</section>
+<section id="your-first-code-contribution">
+<h2>Your First Code Contribution<a class="headerlink" href="#your-first-code-contribution" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><h3 class="rubric" id="legal-notice">Legal Notice</h3>
+<p>When contributing to this project, you must agree that you have authored 100% of the content, that you have the necessary rights to the content and that the content you contribute may be provided under the project license.</p>
+</div></blockquote>
+<section id="setup">
+<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h3>
+<p>There are several ways to create an isolated Python development environment. This is the <a class="reference external" href="https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment">default method</a>.</p>
+<p>Run the following in a terminal:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Clone<span class="w"> </span>the<span class="w"> </span>repository
+<span class="go">git clone https://github.com/callowayproject/bump-my-version.git</span>
+
+<span class="gp"># </span>Enter<span class="w"> </span>the<span class="w"> </span>repository
+<span class="go">cd bump-my-version</span>
+
+<span class="gp"># </span>Create,<span class="w"> </span><span class="k">then</span><span class="w"> </span>activate<span class="w"> </span>a<span class="w"> </span>virtual<span class="w"> </span>environment
+<span class="go">python -m venv env</span>
+<span class="go">source env/bin/activate</span>
+
+<span class="gp"># </span>Install<span class="w"> </span>the<span class="w"> </span>development<span class="w"> </span>requirements
+<span class="go">python -m pip install -r requirements/dev.txt</span>
+</pre></div>
+</div>
+</section>
+<section id="run-tests">
+<h3>Run tests<a class="headerlink" href="#run-tests" title="Permalink to this heading">#</a></h3>
+<p>Once setup, you should be able to run tests:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pytest</span>
+</pre></div>
+</div>
+</section>
+<section id="install-pre-commit-hooks">
+<h3>Install Pre-commit Hooks<a class="headerlink" href="#install-pre-commit-hooks" title="Permalink to this heading">#</a></h3>
+<p>Pre-commit hooks are scripts that run every time you make a commit. If any of the scripts fail, it stops the commit. You can see a listing of the checks in the <code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code> file.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pre-commit install</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="improving-the-documentation">
+<h2>Improving The Documentation<a class="headerlink" href="#improving-the-documentation" title="Permalink to this heading">#</a></h2>
+<p>Please, please help us here.</p>
+</section>
+<section id="styleguides">
+<h2>Styleguides<a class="headerlink" href="#styleguides" title="Permalink to this heading">#</a></h2>
+<section id="coding-style">
+<h3>Coding Style<a class="headerlink" href="#coding-style" title="Permalink to this heading">#</a></h3>
+<p>All of the basic coding styles are configured into tools for fixing and checking them. <a class="reference external" href="https://pre-commit.com">Pre-commit</a> is used to automate the process.</p>
+</section>
+<section id="commit-messages">
+<h3>Commit Messages<a class="headerlink" href="#commit-messages" title="Permalink to this heading">#</a></h3>
+<p><strong>Commit messages are used to generate the change log.</strong></p>
+<p><strong>New changes</strong></p>
+<p>Commit messages are categorized as “new” if the commit message starts with:</p>
+<ul class="simple">
+<li><p>new</p></li>
+<li><p>add</p></li>
+</ul>
+<p>For example: <code class="docutils literal notranslate"><span class="pre">Added</span> <span class="pre">this</span> <span class="pre">cool</span> <span class="pre">new</span> <span class="pre">feature</span></code> or <code class="docutils literal notranslate"><span class="pre">New</span> <span class="pre">document</span> <span class="pre">type</span> <span class="pre">added</span></code>.</p>
+<p><strong>Updates</strong></p>
+<p>Commit messages are categorized as “updates” if the commit message starts with:</p>
+<ul class="simple">
+<li><p>update</p></li>
+<li><p>change</p></li>
+<li><p>rename</p></li>
+<li><p>remove</p></li>
+<li><p>delete</p></li>
+<li><p>improve</p></li>
+<li><p>refacto</p></li>
+<li><p>chg</p></li>
+<li><p>modif</p></li>
+</ul>
+<p>For example: <code class="docutils literal notranslate"><span class="pre">Modified</span> <span class="pre">the</span> <span class="pre">taxonomy</span> <span class="pre">schema</span></code> or <code class="docutils literal notranslate"><span class="pre">Improves</span> <span class="pre">performance</span> <span class="pre">by</span> <span class="pre">419%</span></code></p>
+<p><strong>Fixes</strong></p>
+<p>Commit messages are categorizes as “fixes” if the commit message starts with:</p>
+<ul class="simple">
+<li><p>fix</p></li>
+</ul>
+<p>For example: <code class="docutils literal notranslate"><span class="pre">Fixes</span> <span class="pre">bug</span> <span class="pre">#123</span></code></p>
+<p><strong>Other</strong></p>
+<p>All other commit messages are categorized as “other.”</p>
+<p><strong>Ignoring commit messages</strong></p>
+<p>To have the change log generator ignore this commit, add to the summary line:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;minor</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">!minor</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;cosmetic</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">!cosmetic</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;refactor</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">!refactor</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;wip</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">!wip</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="join-the-project-team">
+<h2>Join The Project Team<a class="headerlink" href="#join-the-project-team" title="Permalink to this heading">#</a></h2>
+<p>If you would like to be a maintainer, reach out to <a class="reference external" href="mailto:coreyoordt&#37;&#52;&#48;gmail&#46;com">coreyoordt<span>&#64;</span>gmail<span>&#46;</span>com</a>.</p>
+</section>
+<section id="attribution">
+<h2>Attribution<a class="headerlink" href="#attribution" title="Permalink to this heading">#</a></h2>
+<p>This guide is based on the <strong>contributing-gen</strong>. <a class="reference external" href="https://github.com/bttger/contributing-gen">Make your own</a>!</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="changelog.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Changelog</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="explanation/index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Explanation</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023 Calloway Project
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/callowayproject/bump-my-version" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Contributing to Bump My Version</a><ul>
+<li><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
+<li><a class="reference internal" href="#code-of-conduct">Code of Conduct</a></li>
+<li><a class="reference internal" href="#i-have-a-question">I Have a Question</a></li>
+<li><a class="reference internal" href="#reporting-bugs">Reporting Bugs</a><ul>
+<li><a class="reference internal" href="#before-submitting-a-bug-report">Before Submitting a Bug Report</a></li>
+<li><a class="reference internal" href="#how-do-i-submit-a-good-bug-report">How Do I Submit a Good Bug Report?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#suggesting-enhancements">Suggesting Enhancements</a><ul>
+<li><a class="reference internal" href="#before-submitting-an-enhancement">Before Submitting an Enhancement</a></li>
+<li><a class="reference internal" href="#how-do-i-submit-a-good-enhancement-suggestion">How Do I Submit a Good Enhancement Suggestion?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#your-first-code-contribution">Your First Code Contribution</a><ul>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#run-tests">Run tests</a></li>
+<li><a class="reference internal" href="#install-pre-commit-hooks">Install Pre-commit Hooks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#improving-the-documentation">Improving The Documentation</a></li>
+<li><a class="reference internal" href="#styleguides">Styleguides</a><ul>
+<li><a class="reference internal" href="#coding-style">Coding Style</a></li>
+<li><a class="reference internal" href="#commit-messages">Commit Messages</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#join-the-project-team">Join The Project Team</a></li>
+<li><a class="reference internal" href="#attribution">Attribution</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/scripts/furo.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    </body>
+</html>

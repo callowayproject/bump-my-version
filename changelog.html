@@ -1,0 +1,829 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="Contributing to Bump My Version" href="contributing.html" />
+
+    <!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
+        <title>Changelog - Bump My Version 0.8.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Bump My Version 0.8.0</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">Bump My Version 0.8.0</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="tutorials/index.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Tutorials</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/semantic-versioning-example.html">Semantic versioning example</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="howtos/index.html">How-To Guides</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of How-To Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="howtos/avoid-incorrect-replacements.html">Avoiding incorrect replacements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtos/custom-version-formats-by-file.html">Custom version formats in different files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtos/multiple-replacements.html">Multiple replacements within the same file</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/cli.html">Command-line Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/formatting-context.html">Formatting context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/version-parts.html">Version parts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/search-and-replace-config.html">Searching and replace configuration</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="reference/bumpversion/bumpversion.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of bumpversion</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.version_part.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.version_part</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.logging</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.files.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.files</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.ui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.ui</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.autocast.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.autocast</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.aliases.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.aliases</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.cli</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.utils</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.bump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.bump</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.exceptions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.exceptions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.scm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.scm</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.yaml_dump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.yaml_dump</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.__main__</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to Bump My Version</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Changelog</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section class="tex2jax_ignore mathjax_ignore" id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this heading">#</a></h1>
+<section id="id1">
+<h2>0.8.0 (2023-07-13)<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://github.com/callowayproject/bump-my-version/compare/0.7.1...0.8.0">Compare the full difference.</a></p>
+<section id="new">
+<h3>New<a class="headerlink" href="#new" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Added documentation for ignore missing version. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/e0731c37b8cc1c5ac558462158c86bcb9467a166">e0731c3</a></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">--ignore-missing-version</span></code> flag to <code class="docutils literal notranslate"><span class="pre">bump</span></code> and <code class="docutils literal notranslate"><span class="pre">replace</span></code>. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/a5bd008cd60cde13f13505e7d21ba48b4820174a">a5bd008</a></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">ignore-missing-version</span></code> configuration. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/45c85be6cd1eea10baa37e4529c3fd9ca7afc78d">45c85be</a></p>
+<ul>
+<li><p>Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p>File configurations can also override this value</p></li>
+</ul>
+</li>
+<li><p>Added deprecation warnings. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/733438beb8ad8e320968ef0b2ba2031dc05bd0a5">733438b</a></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">--list</span></code> option will go bye-bye in 1.0</p></li>
+<li><p>calling <code class="docutils literal notranslate"><span class="pre">bumpversion</span></code> without a subcomand will leave in 1.0</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id2">
+<h2>0.7.1 (2023-07-12)<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://github.com/callowayproject/bump-my-version/compare/0.7.0...0.7.1">Compare the full difference.</a></p>
+<section id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p>Fix search and replace options for replace. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/781e8d8094ba9f16d915a551b3bc51bd6aa54cfa">781e8d8</a></p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">--search</span></code> and <code class="docutils literal notranslate"><span class="pre">--replace</span></code> options now completely override any other search and replace logic.</p></li>
+</ul>
+<p>Fixes #34</p>
+</li>
+</ul>
+</section>
+<section id="other">
+<h3>Other<a class="headerlink" href="#other" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p>[<a class="reference external" href="http://pre-commit.ci">pre-commit.ci</a>] pre-commit autoupdate. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/531738d62d3a2583c7831d17151cb8ae7b14677c">531738d</a></p>
+<p><strong>updates:</strong> - <a class="reference external" href="https://github.com/astral-sh/ruff-pre-commit/compare/v0.0.276...v0.0.277">github.com/astral-sh/ruff-pre-commit: v0.0.276 → v0.0.277</a></p>
+</li>
+<li><p>[<a class="reference external" href="http://pre-commit.ci">pre-commit.ci</a>] pre-commit autoupdate. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/61e6747529b347530c7ef3e7a6fe13c19cbe61d9">61e6747</a></p>
+<p><strong>updates:</strong> - <a class="reference external" href="https://github.com/charliermarsh/ruff-pre-commit">https://github.com/charliermarsh/ruff-pre-commit</a> → <a class="reference external" href="https://github.com/astral-sh/ruff-pre-commit">https://github.com/astral-sh/ruff-pre-commit</a></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="id3">
+<h2>0.7.0 (2023-07-10)<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://github.com/callowayproject/bump-my-version/compare/0.6.0...0.7.0">Compare the full difference.</a></p>
+<section id="id4">
+<h3>Fixes<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fixed test coverage. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/3fe96f0e244ab5be4f96ec8ecbe1ca63f1f06e6b">3fe96f0</a></p></li>
+<li><p>Fixed wrong pydantic version pinning. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/d4b125ea1e1c0179f3f544cfffed90d27c997ff5">d4b125e</a></p></li>
+<li><p>Fixed typing issue. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/bfe530668d8f176843eedcd7096fcd2b85eef228">bfe5306</a></p>
+<ul>
+<li><p>Declared SourceCodeManager attributes as <code class="docutils literal notranslate"><span class="pre">ClassVar[List[str]]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_TEST_USABLE_COMMAND</span></code>, <code class="docutils literal notranslate"><span class="pre">_COMMIT_COMMAND</span></code>, and <code class="docutils literal notranslate"><span class="pre">_ALL_TAGS_COMMAND</span></code> affected</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id5">
+<h3>New<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p>Added tests for CLI replace command. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/a53cddc3c13bb21f5432d1cd331a51027a25981f">a53cddc</a></p></li>
+<li><p>Added and re-organized documentation. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/c62d65e71fdc617d5435976cfa587f43b03ac92b">c62d65e</a></p></li>
+<li><p>Added replace subcommand. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/8722a0f84ab60cbfc254741b2a5bc0d968e423d9">8722a0f</a></p>
+<ul class="simple">
+<li><p>Works just like <code class="docutils literal notranslate"><span class="pre">bump</span></code> but</p>
+<ul>
+<li><p>doesn’t do any version incrementing</p></li>
+<li><p>Will not change the configuration file</p></li>
+<li><p>Will not commit or tag</p></li>
+</ul>
+</li>
+<li><p>Can use <code class="docutils literal notranslate"><span class="pre">bumpversion</span> <span class="pre">show</span> <span class="pre">new_version</span> <span class="pre">--increment</span> <span class="pre">&lt;versionpart&gt;</span></code> to see what the new version would be</p></li>
+</ul>
+</li>
+<li><p>Adds <code class="docutils literal notranslate"><span class="pre">short_branch_name</span></code> to version rendering context. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/7f7e50c98dc20210468a9cef34baf4374956c2e9">7f7e50c</a></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">short_branch_name</span></code> is the branch name, lower case, containing only a-z and 0-9, and truncated to 20 characters.</p></li>
+</ul>
+<p>Fixes #28</p>
+</li>
+</ul>
+</section>
+<section id="id6">
+<h3>Other<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p>Check config before tagging. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/3a6e3eebdbc16ae509754fd977625a4c9b19d82a">3a6e3ee</a></p></li>
+<li><p>Format version parts. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/ee43bdb18f3d96ed702094bb75b06a1338c9aa9c">ee43bdb</a></p></li>
+<li><p>[<a class="reference external" href="http://pre-commit.ci">pre-commit.ci</a>] auto fixes from <a class="reference external" href="http://pre-commit.com">pre-commit.com</a> hooks. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/5e6f566b3c3bc96a070780a70c82a92b817e2299">5e6f566</a></p>
+<p>for more information, see <a class="reference external" href="https://pre-commit.ci">https://pre-commit.ci</a></p>
+</li>
+<li><p>[<a class="reference external" href="http://pre-commit.ci">pre-commit.ci</a>] pre-commit autoupdate. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/f1acd353aa4c58afaa15321f7a7ab9dfb12ce040">f1acd35</a></p>
+<p><strong>updates:</strong> - <a class="reference external" href="https://github.com/charliermarsh/ruff-pre-commit/compare/v0.0.272...v0.0.275">github.com/charliermarsh/ruff-pre-commit: v0.0.272 → v0.0.275</a></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="id7">
+<h2>0.6.0 (2023-06-23)<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://github.com/callowayproject/bump-my-version/compare/0.5.1.dev69...0.6.0">Compare the full difference.</a></p>
+<section id="id8">
+<h3>Fixes<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">--help</span></code> and <code class="docutils literal notranslate"><span class="pre">bump</span></code> invocations. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/9d965e57f2c0a41476d75ec053653416eae966c9">9d965e5</a></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">--help</span></code> works for individual sub-commands, but not for the command</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bump</span></code> now works and fixed tests</p></li>
+</ul>
+</li>
+<li><p>Fixed issue regarding TOML types. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/8960d249183cf78d8b35967b86fef8701fc9c37e">8960d24</a></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">tomlkit.parse()</span></code> returns a <code class="docutils literal notranslate"><span class="pre">TOMLDocument</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unwrap()</span></code> converts it into a <code class="docutils literal notranslate"><span class="pre">dict</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id9">
+<h3>New<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Adds <code class="docutils literal notranslate"><span class="pre">branch_name</span></code> to SCM information. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/173be1a7a107639be912d0fb76149accb54b0332">173be1a</a></p></li>
+<li><p>Added documentation for the show command. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/d5372742a8cf76777f1bf4450bf31e9310d04681">d537274</a></p></li>
+<li><p>Adds <code class="docutils literal notranslate"><span class="pre">--increment</span></code> option to <code class="docutils literal notranslate"><span class="pre">show</span></code> subcommand. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/b01fffcad8479db25375d53fdeebc879d7317b11">b01fffc</a></p>
+<ul>
+<li><p>when specified it increments the current version and adds <code class="docutils literal notranslate"><span class="pre">new_version</span></code> to the available output.</p></li>
+</ul>
+</li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">show</span></code> subcommand. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/9bce887cf5e72907ae00b45a7b7f4812dcc2f17e">9bce887</a></p>
+<ul>
+<li><p>supersedes the <code class="docutils literal notranslate"><span class="pre">--list</span></code> option</p></li>
+<li><p>provides much more capability</p></li>
+<li><p>Can output in YAML, JSON, and default</p></li>
+<li><p>Can specify one or more items to display</p></li>
+<li><p>Can use dotted-notation to pull items from nested data structures.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="updates">
+<h3>Updates<a class="headerlink" href="#updates" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Changes bump-my-version into subcommands. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/31ffbcf839e2491c31d90b51041d1e840371108f">31ffbcf</a></p>
+<ul>
+<li><p>Is backwards-compatible with previous versions</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bump-my-version</span></code> forwards command to <code class="docutils literal notranslate"><span class="pre">bump-my-version</span> <span class="pre">bump</span></code> subcommand</p></li>
+<li><p>Only problem is that Click will not show help automatically, must provide <code class="docutils literal notranslate"><span class="pre">--help</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id10">
+<h2>0.5.1 (2023-06-14)<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://github.com/callowayproject/bump-my-version/compare/0.5.0...0.5.1">Compare the full difference.</a></p>
+<section id="id11">
+<h3>Fixes<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fixes reporting the wrong version missing in a file. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/efb04e94a07fa886253bbfc9cf801040e4c03895">efb04e9</a></p>
+<ul>
+<li><p>Fixes issue #20</p></li>
+<li><p>Renders the correct <code class="docutils literal notranslate"><span class="pre">current_version</span></code> for each file being modified.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id12">
+<h3>Other<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p>[<a class="reference external" href="http://pre-commit.ci">pre-commit.ci</a>] auto fixes from <a class="reference external" href="http://pre-commit.com">pre-commit.com</a> hooks. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/5476cdf8b66666e06e9bfd4d71eaf2610103079a">5476cdf</a></p>
+<p>for more information, see <a class="reference external" href="https://pre-commit.ci">https://pre-commit.ci</a></p>
+</li>
+<li><p>[<a class="reference external" href="http://pre-commit.ci">pre-commit.ci</a>] pre-commit autoupdate. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/6e500c24592f1688cbb13d3fcb6071aa0815ffe8">6e500c2</a></p>
+<p><strong>updates:</strong> - <a class="reference external" href="https://github.com/charliermarsh/ruff-pre-commit/compare/v0.0.270...v0.0.272">github.com/charliermarsh/ruff-pre-commit: v0.0.270 → v0.0.272</a></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="id13">
+<h2>0.5.0 (2023-06-12)<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://github.com/callowayproject/bump-my-version/compare/0.4.1...0.5.0">Compare the full difference.</a></p>
+<section id="id14">
+<h3>Fixes<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p>Fixed ruff complaints about subprocess. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/c429c682515455558095836cb108a93fa23aa67f">c429c68</a></p></li>
+<li><p>Fixed issue with formatting. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/da7544f18780d5f289381d33a87b331c3eaf4d6b">da7544f</a></p>
+<p>There is an underlying edge case where the deriving previous environment variables with multple ways of formatting version numbers will fail.</p>
+</li>
+</ul>
+</section>
+<section id="id15">
+<h3>New<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p>Add test to reproduce issue #14. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/d78ff46d65ce75b7651e5697eef59dbcb71c935e">d78ff46</a></p></li>
+<li><p>Added documentation for replacing strings in different files. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/893ec03f6ceaf2a050c31f10006aa63c0411af4e">893ec03</a></p>
+<p>Fixes #6</p>
+</li>
+</ul>
+</section>
+<section id="id16">
+<h3>Other<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Made <code class="docutils literal notranslate"><span class="pre">VERSION_PART</span></code> optional. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/f236b7de94d9f58e493c617848e3eb02e85a24c7">f236b7d</a></p>
+<ul>
+<li><p>Fixes #16</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VERSION_PART</span></code> is detected from the arguments based on the configuration</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id17">
+<h3>Updates<a class="headerlink" href="#id17" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p>Updated docs indicated VERSION_PART is optional. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/22edeac9018e75f79d7167fbfc6ca56cda4d3b07">22edeac</a></p></li>
+<li><p>Updated tests for bad version parts. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/23be62deed9fb7d51a8bbc195433d1a4ce74c11f">23be62d</a></p></li>
+<li><p>Changed exception type raised when bad version part is detected. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/1e3ebc5b144294771b7bfe812299af4f92ae212a">1e3ebc5</a></p>
+<ul class="simple">
+<li><p>ValueError -&gt; click.BadArgumentUsage</p></li>
+</ul>
+</li>
+<li><p>Updated readme. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/7780265b97ce49492fef73ca3ac8a1cce27a2fad">7780265</a></p>
+<p>Fixes #7</p>
+</li>
+</ul>
+</section>
+</section>
+<section id="id18">
+<h2>0.4.1 (2023-06-09)<a class="headerlink" href="#id18" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://github.com/callowayproject/bump-my-version/compare/0.4.0...0.4.1">Compare the full difference.</a></p>
+<section id="id19">
+<h3>Fixes<a class="headerlink" href="#id19" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p>Fixes release.yaml. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/01870d5878b5f0a6e601863c4b9c25572db6cbb0">01870d5</a></p>
+<p>Outputs the notes to a file instead of an environment variable.</p>
+</li>
+</ul>
+</section>
+<section id="id20">
+<h3>Other<a class="headerlink" href="#id20" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p>[<a class="reference external" href="http://pre-commit.ci">pre-commit.ci</a>] auto fixes from <a class="reference external" href="http://pre-commit.com">pre-commit.com</a> hooks. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/266002f4d60ed6fe3623ba5f713318dc6220ec00">266002f</a></p>
+<p>for more information, see <a class="reference external" href="https://pre-commit.ci">https://pre-commit.ci</a></p>
+</li>
+<li><p>[<a class="reference external" href="http://pre-commit.ci">pre-commit.ci</a>] pre-commit autoupdate. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/edc444f0328c27d905b35a5c970320a7171d738f">edc444f</a></p>
+<p><strong>updates:</strong> - <a class="reference external" href="https://github.com/charliermarsh/ruff-pre-commit/compare/v0.0.261...v0.0.270">github.com/charliermarsh/ruff-pre-commit: v0.0.261 → v0.0.270</a></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="id21">
+<h2>0.4.0 (2023-04-20)<a class="headerlink" href="#id21" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://github.com/callowayproject/bump-my-version/compare/0.3.0...0.4.0">Compare the full difference.</a></p>
+<section id="id22">
+<h3>Fixes<a class="headerlink" href="#id22" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fixed pre-commit hook for dependency checking. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/3d5c2533333112577c43cfe84d2091b1b60564b0">3d5c253</a></p></li>
+<li><p>Fixed installing test dependencies. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/c1034ebb0ae08ef140d8d36b345deb8c5f7b33dd">c1034eb</a></p></li>
+<li><p>Fixed dependency spec. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/47827452afa41906fb8cb108e4ab61e1b9aa908d">4782745</a></p></li>
+<li><p>Fixed missing python in pypi test. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/e5ed27dee7850a011ac50a063ad055c1bed613d7">e5ed27d</a></p></li>
+<li><p>Fixed some CI issues. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/d4b03d7c0d8dacc4f8c726b208763071202e76c5">d4b03d7</a></p></li>
+<li><p>Fixed vague commit and tagging info. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/4fb515851f3ddf78916c624db86c0b3e1869293b">4fb5158</a></p>
+<ul>
+<li><p>If commit is configured false, it will report that it will not commit</p></li>
+<li><p>If commit is configured false, tagging is disabled and it reports that</p></li>
+<li><p>If tagging is configured false, it will report it is not tagging</p></li>
+</ul>
+</li>
+<li><p>Fixes test package. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/7c12072b11938385ec81c5e9cd285d91ac1c00d7">7c12072</a></p>
+<ul>
+<li><p>The build-and-inspect action didn’t save the dist packages</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id23">
+<h3>New<a class="headerlink" href="#id23" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Added tests for logging branches. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/f8f027846349df4c66377c2cf4cc6903cd1f9bf7">f8f0278</a></p></li>
+<li><p>Added path restrictions on release-hints. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/e1af65865e16f93441bb07e82800df469232b253">e1af658</a></p></li>
+<li><p>Added test build to CI. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/8738f3f58b8c940ec44ecc8559192b75b45ccbac">8738f3f</a></p></li>
+<li><p>Added doc files to table of contents. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/49858c0fef25f167f221e4c00070492f48f47070">49858c0</a></p></li>
+</ul>
+</section>
+<section id="id24">
+<h3>Other<a class="headerlink" href="#id24" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p>Completely migrated setuptools to use pyproject.toml. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/f10f8b25303c503753b33b434a344600c94409ee">f10f8b2</a></p></li>
+<li><p>[<a class="reference external" href="http://pre-commit.ci">pre-commit.ci</a>] pre-commit autoupdate. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/d626f7d6240bfae07ab5a6795df222bdbf48d985">d626f7d</a></p>
+<p><strong>updates:</strong> - <a class="reference external" href="https://github.com/python/black">https://github.com/python/black</a> → <a class="reference external" href="https://github.com/psf/black">https://github.com/psf/black</a></p>
+</li>
+</ul>
+</section>
+<section id="id25">
+<h3>Updates<a class="headerlink" href="#id25" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Removed pre-commit dependency hook. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/ac6cdd03e5260d319146ea0d93cc093496e79a19">ac6cdd0</a></p></li>
+<li><p>Changed the version serialization. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/c529452b043e8ab1b5711065c1ef96d73030978b">c529452</a></p>
+<ul>
+<li><p>can bump “dev” to get a development release</p></li>
+</ul>
+</li>
+<li><p>Updated formatting documentation. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/8006f3efc749a2b8ad21fd365da4d29ebf81cc3b">8006f3e</a></p></li>
+</ul>
+</section>
+</section>
+<section id="id26">
+<h2>0.3.0 (2023-04-17)<a class="headerlink" href="#id26" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://github.com/callowayproject/bump-my-version/compare/0.2.0...0.3.0">Compare the full difference.</a></p>
+<section id="id27">
+<h3>Fixes<a class="headerlink" href="#id27" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fixed bug in SCMInfo setup. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/e8fddc99ec5f4632f097790ca6b851d8854e09bd">e8fddc9</a></p></li>
+<li><p>Fixed missing xml coverage report. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/696503fff800ea1f3ffb559108cde726296f2d98">696503f</a></p></li>
+<li><p>Fixed assertion in failing test. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/7afe58c4a15e0b48f223c3f2c80c48679e44aebc">7afe58c</a></p></li>
+<li><p>Fixes issue when new version equals current version. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/64b0de39828367c6c6f3e7103497256ce3f44f41">64b0de3</a></p>
+<ul>
+<li><p>Now it reports they are the same and exits.</p></li>
+</ul>
+</li>
+<li><p>Fixes issue of duplicate tags. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/c0256509cb39c3e78c09d35205007191fbf3732e">c025650</a></p>
+<ul>
+<li><p>Now it checks if the tag exists and reports a warning</p></li>
+</ul>
+</li>
+<li><p>Fixed automation tooling. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/19f13b7c0c388f15af45cf3fa04424a2946b4a04">19f13b7</a></p>
+<ul>
+<li><p>changed name to bump-my-version in setup.cfg</p></li>
+<li><p>added PAT in release pipeline to (hopefully) allow committing and tagging to master without issue.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id28">
+<h3>New<a class="headerlink" href="#id28" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Added codecov to workflow. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/a5009e04068787bb98363c3e6803f84a338ee798">a5009e0</a></p></li>
+</ul>
+</section>
+<section id="id29">
+<h3>Other<a class="headerlink" href="#id29" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Migrated setuptools metadata to pyproject.toml. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/0bd54dca1230021de266042014164fada25e0837">0bd54dc</a></p></li>
+</ul>
+</section>
+<section id="id30">
+<h3>Updates<a class="headerlink" href="#id30" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Updated the readme. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/1b1d910756be07638e6cb113ee05a6f5261f6393">1b1d910</a></p></li>
+<li><p>Updated documentation. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/6c3b4fe4995ea67b1cc13ca265d16506bde4dd02">6c3b4fe</a></p></li>
+</ul>
+</section>
+</section>
+<section id="id31">
+<h2>0.2.0 (2023-04-14)<a class="headerlink" href="#id31" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://github.com/callowayproject/bump-my-version/compare/0.1.0...0.2.0">Compare the full difference.</a></p>
+<section id="id32">
+<h3>Fixes<a class="headerlink" href="#id32" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p>Fixed configuration to allow_dirty in bumpversion. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/b042e31c47fe03978847552e1efea6a1acb8729e">b042e31</a></p></li>
+<li><p>Fixes issue with generate-changelog and git. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/2a977af4f7a7d860dbe012ae3b29eb20e482d854">2a977af</a></p></li>
+<li><p>Fixes the quoting in the bumpversion expressions. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/9a55d6d410bc6da6c451bda45f8228990bb542ab">9a55d6d</a></p></li>
+<li><p>Fixed issue with windows testing. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/b8abc44e77d62e85f7315e4866b772f0cf6c5eff">b8abc44</a></p>
+<ul class="simple">
+<li><p>different methods for reporting paths was resolved by casting them the pathlib.Paths</p></li>
+</ul>
+</li>
+<li><p>Fixes windows testing error. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/556853bd017360651b3600cce00cdd6bf00d59f0">556853b</a></p>
+<ul class="simple">
+<li><p>the differences in path specifications seems to be causing problems.</p></li>
+</ul>
+</li>
+<li><p>Fixed type issue in Python 3.7, 3.8. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/ddfd3bf1e72109ef45307e8c76576dfe9f3e575c">ddfd3bf</a></p></li>
+<li><p>Fixed configuration file detection. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/fbf85c2134b454043465c0211cc2204e25365ca4">fbf85c2</a></p>
+<p>Doesn’t just stop when it finds one, it checks for the existence of the header.</p>
+</li>
+<li><p>Fixed logging output and output in general. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/0aea9dcd84eca1cc9b47acacbada3fc0783a5ee9">0aea9dc</a></p></li>
+</ul>
+</section>
+<section id="id33">
+<h3>New<a class="headerlink" href="#id33" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Added additional option to manual runs: verbose. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/81eb097e1e30f48f8afb7962c9af5f6a4c80ed96">81eb097</a></p></li>
+<li><p>Added new workflows. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/a9cac5b7728fabd46551926b552aba12ed91bd0c">a9cac5b</a></p>
+<ul>
+<li><p>Added bumpversion.yaml to increase the version when a PR is closed</p></li>
+<li><p>Added release.yaml to create a github relase and upload things to PyPI</p></li>
+</ul>
+</li>
+<li><p>Added PYTHONUTF8 mode. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/91a73e26af94185194aea1ddb803ac621c0ae84a">91a73e2</a></p>
+<ul>
+<li><p>see <a class="reference external" href="https://docs.python.org/3/using/windows.html#utf-8-mode">https://docs.python.org/3/using/windows.html#utf-8-mode</a></p></li>
+</ul>
+</li>
+<li><p>Added explicit environment variable declarations. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/80fe7ef0cf1005333143cce38835dbc9ad811884">80fe7ef</a></p></li>
+<li><p>Added a github CI workflow. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/2b3b3585afe3fdcf13ff47a229b4e3d3b5dacdc9">2b3b358</a></p></li>
+<li><p>Added files for coverage to ignore. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/cfbba08f23c44dd8e44b545961cbca2599b96e69">cfbba08</a></p>
+<ul>
+<li><p><strong>main</strong>.py</p></li>
+<li><p><a class="reference external" href="http://aliases.py">aliases.py</a></p></li>
+</ul>
+</li>
+<li><p>Added LICENSE. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/34a9be5617a24b9d7eb042dc12e657ef1eb4258c">34a9be5</a></p></li>
+<li><p>Added tests for version parsing errors. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/71a204b0eb1ea2e7ae291055f26f5c499d429f1b">71a204b</a></p></li>
+<li><p>Added utf8 test in files. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/9cb8f605ba9f8095cb2b8f961f7a7a8000be16dc">9cb8f60</a></p></li>
+<li><p>Added more tests for scm. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/fe794dd71aa3b500635379aabc3eae4d47bcb2ea">fe794dd</a></p></li>
+<li><p>Added –list function. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/88709fd602c94c2b1bb44a503e91f4ed3ceb0e6c">88709fd</a></p></li>
+</ul>
+</section>
+<section id="id34">
+<h3>Other<a class="headerlink" href="#id34" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Removing testing for Python 3.7. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/19eaeef7a29112ec96cf171df5f89c69916926f3">19eaeef</a></p></li>
+<li><p>Moved configuration to pyproject.toml. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/d3390074e8a68db0c2624d1609d166a932d20a2e">d339007</a></p></li>
+<li><p>Initial conversion. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/f5d1cab933f44648ad4a2e6669edffdb907f6779">f5d1cab</a></p></li>
+<li><p>Initial commit. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/d7dec79f4cad1952ea6c573e8d5975d1d4944928">d7dec79</a></p></li>
+</ul>
+</section>
+<section id="id35">
+<h3>Updates<a class="headerlink" href="#id35" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p>Updated workflows. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/857835d7ce10fe52633fb3cc12f52a55a117cd31">857835d</a></p>
+<ul class="simple">
+<li><p>Added better changelog parsing</p></li>
+<li><p>Added workflow dispatch inputs for manual runs</p></li>
+</ul>
+</li>
+<li><p>Improved documentation. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/f3b7a0f4b1ec72e584677ff59ce4b0b6d59cd083">f3b7a0f</a></p></li>
+<li><p>Renamed tox job to test. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/a9b6db35abae273a44e6f196e75603cb83f0c228">a9b6db3</a></p></li>
+<li><p>Updated README and other documentation. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/e0cebb3ecaac58a8b7a8773847079fe1a7cd3035">e0cebb3</a></p></li>
+<li><p>Improved Mercurial support. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/560999dba12366837e329a2d68931d1d4f81a4d3">560999d</a></p></li>
+<li><p>Improved logging output. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/6ccfa7d9c65a84347368e4409b37fcf7d84bab56">6ccfa7d</a></p></li>
+<li><p>Changed errors to subclass UsageError. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/a4476516bd799cc047cab4cd6b42939e851a4907">a447651</a></p></li>
+<li><p>Changed BaseVCS to SourceCodeManager. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/11c560982700fe4a649bd65f74dbeee2a28d8fc5">11c5609</a></p>
+<p>Just for consistency.</p>
+</li>
+<li><p>Modified the group command back to a single command. <a class="reference external" href="https://github.com/callowayproject/bump-my-version/commit/6d4179b9bbba6fd81453de274468716528832b15">6d4179b</a></p>
+<p>Will eventually change to a group command, but later.</p>
+</li>
+</ul>
+</section>
+</section>
+<section id="id36">
+<h2>0.1.0 (2023-03-24)<a class="headerlink" href="#id36" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Initial creation</p></li>
+</ul>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          <a class="prev-page" href="contributing.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Contributing to Bump My Version</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023 Calloway Project
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/callowayproject/bump-my-version" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Changelog</a><ul>
+<li><a class="reference internal" href="#id1">0.8.0 (2023-07-13)</a><ul>
+<li><a class="reference internal" href="#new">New</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id2">0.7.1 (2023-07-12)</a><ul>
+<li><a class="reference internal" href="#fixes">Fixes</a></li>
+<li><a class="reference internal" href="#other">Other</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id3">0.7.0 (2023-07-10)</a><ul>
+<li><a class="reference internal" href="#id4">Fixes</a></li>
+<li><a class="reference internal" href="#id5">New</a></li>
+<li><a class="reference internal" href="#id6">Other</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7">0.6.0 (2023-06-23)</a><ul>
+<li><a class="reference internal" href="#id8">Fixes</a></li>
+<li><a class="reference internal" href="#id9">New</a></li>
+<li><a class="reference internal" href="#updates">Updates</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10">0.5.1 (2023-06-14)</a><ul>
+<li><a class="reference internal" href="#id11">Fixes</a></li>
+<li><a class="reference internal" href="#id12">Other</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id13">0.5.0 (2023-06-12)</a><ul>
+<li><a class="reference internal" href="#id14">Fixes</a></li>
+<li><a class="reference internal" href="#id15">New</a></li>
+<li><a class="reference internal" href="#id16">Other</a></li>
+<li><a class="reference internal" href="#id17">Updates</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id18">0.4.1 (2023-06-09)</a><ul>
+<li><a class="reference internal" href="#id19">Fixes</a></li>
+<li><a class="reference internal" href="#id20">Other</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id21">0.4.0 (2023-04-20)</a><ul>
+<li><a class="reference internal" href="#id22">Fixes</a></li>
+<li><a class="reference internal" href="#id23">New</a></li>
+<li><a class="reference internal" href="#id24">Other</a></li>
+<li><a class="reference internal" href="#id25">Updates</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id26">0.3.0 (2023-04-17)</a><ul>
+<li><a class="reference internal" href="#id27">Fixes</a></li>
+<li><a class="reference internal" href="#id28">New</a></li>
+<li><a class="reference internal" href="#id29">Other</a></li>
+<li><a class="reference internal" href="#id30">Updates</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id31">0.2.0 (2023-04-14)</a><ul>
+<li><a class="reference internal" href="#id32">Fixes</a></li>
+<li><a class="reference internal" href="#id33">New</a></li>
+<li><a class="reference internal" href="#id34">Other</a></li>
+<li><a class="reference internal" href="#id35">Updates</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id36">0.1.0 (2023-03-24)</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/scripts/furo.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    </body>
+</html>
