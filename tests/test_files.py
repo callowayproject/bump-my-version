@@ -389,3 +389,51 @@ def test_ignore_missing_version(tmp_path: Path) -> None:
 
     # Assert
     assert version_path.read_text() == "1.2.3"
+
+
+def test_regex_search(tmp_path: Path) -> None:
+    """A regex search string is found and replaced."""
+    # Arrange
+    version_path = tmp_path / "VERSION"
+    version_path.write_text("Release: 1234-56-78 '1.2.3'")
+
+    overrides = {
+        "current_version": "1.2.3",
+        "search": r"Release: \d{{4}}-\d{{2}}-\d{{2}} '{current_version}'",
+        "replace": r"Release {now:%Y-%m-%d} '{new_version}'",
+        "files": [{"filename": str(version_path)}],
+    }
+    conf, version_config, current_version = get_config_data(overrides)
+    new_version = current_version.bump("patch", version_config.order)
+    cfg_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
+
+    # Act
+    files.modify_files(cfg_files, current_version, new_version, get_context(conf))
+
+    # Assert
+    now = datetime.now().isoformat()[:10]
+    assert version_path.read_text() == f"Release {now} '1.2.4'"
+
+
+def test_bad_regex_search(tmp_path: Path, caplog) -> None:
+    """A search string not meant to be a regex is still found and replaced."""
+    # Arrange
+    version_path = tmp_path / "VERSION"
+    version_path.write_text("Score: A+ ( '1.2.3'")
+
+    overrides = {
+        "current_version": "1.2.3",
+        "search": r"Score: A+ ( '{current_version}'",
+        "replace": r"Score: A+ ( '{new_version}'",
+        "files": [{"filename": str(version_path)}],
+    }
+    conf, version_config, current_version = get_config_data(overrides)
+    new_version = current_version.bump("patch", version_config.order)
+    cfg_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
+
+    # Act
+    files.modify_files(cfg_files, current_version, new_version, get_context(conf))
+
+    # Assert
+    assert version_path.read_text() == "Score: A+ ( '1.2.4'"
+    assert "Invalid regex" in caplog.text

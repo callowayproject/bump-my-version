@@ -1,6 +1,7 @@
 """Methods for changing files."""
 import glob
 import logging
+import re
 from difflib import context_diff
 from typing import List, MutableMapping, Optional
 
@@ -30,6 +31,22 @@ class ConfiguredFile:
         self.version_config = VersionConfig(
             self.parse, self.serialize, self.search, self.replace, version_config.part_configs
         )
+        self._newlines: Optional[str] = None
+
+    def get_file_contents(self) -> str:
+        """Return the contents of the file."""
+        with open(self.path, "rt", encoding="utf-8") as f:
+            contents = f.read()
+            self._newlines = f.newlines[0] if isinstance(f.newlines, tuple) else f.newlines
+            return contents
+
+    def write_file_contents(self, contents: str) -> None:
+        """Write the contents of the file."""
+        if self._newlines is None:
+            _ = self.get_file_contents()
+
+        with open(self.path, "wt", encoding="utf-8", newline=self._newlines) as f:
+            f.write(contents)
 
     def contains_version(self, version: Version, context: MutableMapping) -> bool:
         """
@@ -73,51 +90,58 @@ class ConfiguredFile:
         if not search:
             return False
 
-        with open(self.path, "rt", encoding="utf-8") as f:
-            search_lines = search.splitlines()
-            lookbehind = []
+        f = self.get_file_contents()
+        search_lines = search.splitlines()
+        lookbehind = []
 
-            for lineno, line in enumerate(f.readlines()):
-                lookbehind.append(line.rstrip("\n"))
+        for lineno, line in enumerate(f.splitlines(keepends=True)):
+            lookbehind.append(line.rstrip("\n"))
 
-                if len(lookbehind) > len(search_lines):
-                    lookbehind = lookbehind[1:]
+            if len(lookbehind) > len(search_lines):
+                lookbehind = lookbehind[1:]
 
-                if (
-                    search_lines[0] in lookbehind[0]
-                    and search_lines[-1] in lookbehind[-1]
-                    and search_lines[1:-1] == lookbehind[1:-1]
-                ):
-                    logger.info(
-                        "Found '%s' in %s at line %s: %s",
-                        search,
-                        self.path,
-                        lineno - (len(lookbehind) - 1),
-                        line.rstrip(),
-                    )
-                    return True
+            if (
+                search_lines[0] in lookbehind[0]
+                and search_lines[-1] in lookbehind[-1]
+                and search_lines[1:-1] == lookbehind[1:-1]
+            ):
+                logger.info(
+                    "Found '%s' in %s at line %s: %s",
+                    search,
+                    self.path,
+                    lineno - (len(lookbehind) - 1),
+                    line.rstrip(),
+                )
+                return True
         return False
 
     def replace_version(
         self, current_version: Version, new_version: Version, context: MutableMapping, dry_run: bool = False
     ) -> None:
         """Replace the current version with the new version."""
-        with open(self.path, "rt", encoding="utf-8") as f:
-            file_content_before = f.read()
-            file_new_lines = f.newlines[0] if isinstance(f.newlines, tuple) else f.newlines
+        file_content_before = self.get_file_contents()
 
         context["current_version"] = self.version_config.serialize(current_version, context)
         if new_version:
             context["new_version"] = self.version_config.serialize(new_version, context)
+        re_context = {key: re.escape(str(value)) for key, value in context.items()}
 
-        search_for = self.version_config.search.format(**context)
+        search_for = self.version_config.search.format(**re_context)
+        search_for_re = self.compile_regex(search_for)
         replace_with = self.version_config.replace.format(**context)
 
-        file_content_after = file_content_before.replace(search_for, replace_with)
+        if search_for_re:
+            file_content_after = search_for_re.sub(replace_with, file_content_before)
+        else:
+            file_content_after = file_content_before.replace(search_for, replace_with)
 
         if file_content_before == file_content_after and current_version.original:
             search_for_original_formatted = self.version_config.search.format(current_version=current_version.original)
-            file_content_after = file_content_before.replace(search_for_original_formatted, replace_with)
+            search_for_original_formatted_re = self.compile_regex(re.escape(search_for_original_formatted))
+            if search_for_original_formatted_re:
+                file_content_after = search_for_original_formatted_re.sub(replace_with, file_content_before)
+            else:
+                file_content_after = file_content_before.replace(search_for_original_formatted, replace_with)
 
         if file_content_before != file_content_after:
             logger.info("%s file %s:", "Would change" if dry_run else "Changing", self.path)
@@ -138,8 +162,16 @@ class ConfiguredFile:
             logger.info("%s file %s", "Would not change" if dry_run else "Not changing", self.path)
 
         if not dry_run:  # pragma: no-coverage
-            with open(self.path, "wt", encoding="utf-8", newline=file_new_lines) as f:
-                f.write(file_content_after)
+            self.write_file_contents(file_content_after)
+
+    def compile_regex(self, pattern: str) -> Optional[re.Pattern]:
+        """Compile the regex if it is valid, otherwise return None."""
+        try:
+            search_for_re = re.compile(pattern)
+            return search_for_re
+        except re.error as e:
+            logger.error("Invalid regex '%s' for file %s: %s. Treating it as a regular string.", pattern, self.path, e)
+        return None
 
     def __str__(self) -> str:  # pragma: no-coverage
         return self.path
