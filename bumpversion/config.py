@@ -8,6 +8,7 @@ from difflib import context_diff
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 
+from bumpversion.ui import print_warning
 from bumpversion.utils import labels_for_format
 
 if TYPE_CHECKING:  # pragma: no-coverage
@@ -251,6 +252,7 @@ def read_config_file(config_file: Union[str, Path, None] = None) -> Dict[str, An
     logger.info("Reading config file %s:", config_file)
     config_path = Path(config_file)
     if config_path.suffix == ".cfg":
+        print_warning("The .cfg file format is deprecated. Please use .toml instead.")
         return read_ini_file(config_path)
     elif config_path.suffix == ".toml":
         return read_toml_file(config_path)
