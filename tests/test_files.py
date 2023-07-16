@@ -221,7 +221,10 @@ def test_raises_correct_missing_version_string(tmp_path: Path):
         assert e.message.startswith("Did not find '1;3;1;0;rc;build.1031'")
 
 
-def test_search_replace_to_avoid_updating_unconcerned_lines(tmp_path: Path):
+def test_search_replace_to_avoid_updating_unconcerned_lines(tmp_path: Path, caplog):
+    import logging
+
+    caplog.set_level(logging.DEBUG)
     req_path = tmp_path / "requirements.txt"
     req_path.write_text("Django>=1.5.6,<1.6\nMyProject==1.5.6")
 
@@ -255,6 +258,7 @@ def test_search_replace_to_avoid_updating_unconcerned_lines(tmp_path: Path):
                 "filename": str(changelog_path),
                 "search": "## [Unreleased]",
                 "replace": "## [Unreleased]\n\n## [{new_version}] - {utcnow:%Y-%m-%d}",
+                "no_regex": True,
             },
         ],
     }
@@ -283,7 +287,7 @@ def test_search_replace_to_avoid_updating_unconcerned_lines(tmp_path: Path):
       standardized open source project CHANGELOG.
     """
     )
-
+    print(caplog.text)
     assert req_path.read_text() == "Django>=1.5.6,<1.6\nMyProject==1.6.0"
     assert changelog_path.read_text() == expected_chglog
 

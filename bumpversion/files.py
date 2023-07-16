@@ -2,6 +2,7 @@
 import glob
 import logging
 import re
+from copy import deepcopy
 from difflib import context_diff
 from typing import List, MutableMapping, Optional
 
@@ -27,6 +28,7 @@ class ConfiguredFile:
         self.serialize = file_cfg.serialize or version_config.serialize_formats
         self.search = search or file_cfg.search or version_config.search
         self.replace = replace or file_cfg.replace or version_config.replace
+        self.no_regex = file_cfg.no_regex or False
         self.ignore_missing_version = file_cfg.ignore_missing_version or False
         self.version_config = VersionConfig(
             self.parse, self.serialize, self.search, self.replace, version_config.part_configs
@@ -62,7 +64,7 @@ class ConfiguredFile:
         Returns:
             True if the version number is in fact present.
         """
-        search_expression = self.search.format(**context)
+        search_expression = self.get_search_pattern(context)
 
         if self.contains(search_expression):
             return True
@@ -75,44 +77,33 @@ class ConfiguredFile:
         # very specific parts of the file
         search_pattern_is_default = self.search == self.version_config.search
 
-        if search_pattern_is_default and self.contains(version.original):
-            # original version is present, and we're not looking for something
+        if search_pattern_is_default and self.contains(re.compile(re.escape(version.original))):
+            # The original version is present, and we're not looking for something
             # more specific -> this is accepted as a match
             return True
 
         # version not found
         if self.ignore_missing_version:
             return False
-        raise VersionNotFoundError(f"Did not find '{search_expression}' in file: '{self.path}'")
+        raise VersionNotFoundError(f"Did not find '{search_expression.pattern}' in file: '{self.path}'")
 
-    def contains(self, search: str) -> bool:
+    def contains(self, search: re.Pattern) -> bool:
         """Does the work of the contains_version method."""
         if not search:
             return False
 
-        f = self.get_file_contents()
-        search_lines = search.splitlines()
-        lookbehind = []
+        contents = self.get_file_contents()
 
-        for lineno, line in enumerate(f.splitlines(keepends=True)):
-            lookbehind.append(line.rstrip("\n"))
-
-            if len(lookbehind) > len(search_lines):
-                lookbehind = lookbehind[1:]
-
-            if (
-                search_lines[0] in lookbehind[0]
-                and search_lines[-1] in lookbehind[-1]
-                and search_lines[1:-1] == lookbehind[1:-1]
-            ):
-                logger.info(
-                    "Found '%s' in %s at line %s: %s",
-                    search,
-                    self.path,
-                    lineno - (len(lookbehind) - 1),
-                    line.rstrip(),
-                )
-                return True
+        for m in re.finditer(search, contents):
+            line_no = contents.count("\n", 0, m.start(0)) + 1
+            logger.info(
+                "Found '%s' in %s at line %s: %s",
+                search,
+                self.path,
+                line_no,
+                m.string[m.start() : m.end(0)],
+            )
+            return True
         return False
 
     def replace_version(
@@ -124,24 +115,17 @@ class ConfiguredFile:
         context["current_version"] = self.version_config.serialize(current_version, context)
         if new_version:
             context["new_version"] = self.version_config.serialize(new_version, context)
-        re_context = {key: re.escape(str(value)) for key, value in context.items()}
 
-        search_for = self.version_config.search.format(**re_context)
-        search_for_re = self.compile_regex(search_for)
+        search_for = self.get_search_pattern(context)
         replace_with = self.version_config.replace.format(**context)
 
-        if search_for_re:
-            file_content_after = search_for_re.sub(replace_with, file_content_before)
-        else:
-            file_content_after = file_content_before.replace(search_for, replace_with)
+        file_content_after = search_for.sub(replace_with, file_content_before)
 
         if file_content_before == file_content_after and current_version.original:
-            search_for_original_formatted = self.version_config.search.format(current_version=current_version.original)
-            search_for_original_formatted_re = self.compile_regex(re.escape(search_for_original_formatted))
-            if search_for_original_formatted_re:
-                file_content_after = search_for_original_formatted_re.sub(replace_with, file_content_before)
-            else:
-                file_content_after = file_content_before.replace(search_for_original_formatted, replace_with)
+            og_context = deepcopy(context)
+            og_context["current_version"] = current_version.original
+            search_for_og = self.get_search_pattern(og_context)
+            file_content_after = search_for_og.sub(replace_with, file_content_before)
 
         if file_content_before != file_content_after:
             logger.info("%s file %s:", "Would change" if dry_run else "Changing", self.path)
@@ -164,14 +148,25 @@ class ConfiguredFile:
         if not dry_run:  # pragma: no-coverage
             self.write_file_contents(file_content_after)
 
-    def compile_regex(self, pattern: str) -> Optional[re.Pattern]:
-        """Compile the regex if it is valid, otherwise return None."""
+    def get_search_pattern(self, context: MutableMapping) -> re.Pattern:
+        """Compile and return the regex if it is valid, otherwise return the string."""
+        # the default search pattern is escaped, so we can still use it in a regex
+        default = re.compile(re.escape(self.version_config.search.format(**context)), re.MULTILINE | re.DOTALL)
+        if self.no_regex:
+            logger.debug("No RegEx flag detected. Searching for the default pattern: '%s'", default.pattern)
+            return default
+
+        re_context = {key: re.escape(str(value)) for key, value in context.items()}
+        regex_pattern = self.version_config.search.format(**re_context)
         try:
-            search_for_re = re.compile(pattern)
+            search_for_re = re.compile(regex_pattern, re.MULTILINE | re.DOTALL)
+            logger.debug("Searching for the regex: '%s'", search_for_re.pattern)
             return search_for_re
         except re.error as e:
-            logger.error("Invalid regex '%s' for file %s: %s. Treating it as a regular string.", pattern, self.path, e)
-        return None
+            logger.error("Invalid regex '%s' for file %s: %s.", default, self.path, e)
+
+        logger.debug("Searching for the default pattern: '%s'", default.pattern)
+        return default
 
     def __str__(self) -> str:  # pragma: no-coverage
         return self.path

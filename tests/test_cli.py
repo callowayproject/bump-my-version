@@ -205,6 +205,7 @@ def test_listing_with_version_part(tmp_path: Path, fixtures_path: Path):
         "serialize=['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}']",
         "search={current_version}",
         "replace={new_version}",
+        "no_regex=False",
         "ignore_missing_version=False",
         "tag=True",
         "sign_tags=False",
@@ -219,15 +220,15 @@ def test_listing_with_version_part(tmp_path: Path, fixtures_path: Path):
             "{'filename': 'setup.py', 'glob': None, 'parse': "
             "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', 'serialize': "
             "['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}'], 'search': '{current_version}', "
-            "'replace': '{new_version}', 'ignore_missing_version': False}, "
+            "'replace': '{new_version}', 'no_regex': False, 'ignore_missing_version': False}, "
             "{'filename': 'bumpversion/__init__.py', 'glob': None, 'parse': "
             "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', 'serialize': "
             "['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}'], 'search': '{current_version}', "
-            "'replace': '{new_version}', 'ignore_missing_version': False}, "
+            "'replace': '{new_version}', 'no_regex': False, 'ignore_missing_version': False}, "
             "{'filename': 'CHANGELOG.md', 'glob': None, 'parse': "
             "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', 'serialize': "
             "['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}'], 'search': '**unreleased**', "
-            "'replace': '**unreleased**\\n**v{new_version}**', 'ignore_missing_version': False}]"
+            "'replace': '**unreleased**\\n**v{new_version}**', 'no_regex': False, 'ignore_missing_version': False}]"
         ),
     }
 
@@ -257,6 +258,7 @@ def test_listing_without_version_part(tmp_path: Path, fixtures_path: Path):
         "serialize=['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}']",
         "search={current_version}",
         "replace={new_version}",
+        "no_regex=False",
         "ignore_missing_version=False",
         "tag=True",
         "sign_tags=False",
@@ -271,15 +273,15 @@ def test_listing_without_version_part(tmp_path: Path, fixtures_path: Path):
             "{'filename': 'setup.py', 'glob': None, 'parse': "
             "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', 'serialize': "
             "['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}'], 'search': '{current_version}', "
-            "'replace': '{new_version}', 'ignore_missing_version': False}, "
+            "'replace': '{new_version}', 'no_regex': False, 'ignore_missing_version': False}, "
             "{'filename': 'bumpversion/__init__.py', 'glob': None, 'parse': "
             "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', 'serialize': "
             "['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}'], 'search': '{current_version}', "
-            "'replace': '{new_version}', 'ignore_missing_version': False}, "
+            "'replace': '{new_version}', 'no_regex': False, 'ignore_missing_version': False}, "
             "{'filename': 'CHANGELOG.md', 'glob': None, 'parse': "
             "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', 'serialize': "
             "['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}'], 'search': '**unreleased**', "
-            "'replace': '**unreleased**\\n**v{new_version}**', 'ignore_missing_version': False}]"
+            "'replace': '**unreleased**\\n**v{new_version}**', 'no_regex': False, 'ignore_missing_version': False}]"
         ),
     }
 
