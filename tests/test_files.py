@@ -419,6 +419,30 @@ def test_regex_search(tmp_path: Path) -> None:
     assert version_path.read_text() == f"Release {now} '1.2.4'"
 
 
+def test_regex_search_with_escaped_chars(tmp_path: Path) -> None:
+    """A search that uses special characters is not treated as a regex."""
+    # Arrange
+    version_path = tmp_path / "VERSION"
+    version_path.write_text("## [Release] 1.2.3 1234-56-78")
+
+    overrides = {
+        "current_version": "1.2.3",
+        "search": r"## \[Release\] {current_version} \d{{4}}-\d{{2}}-\d{{2}}",
+        "replace": r"## [Release] {new_version} {now:%Y-%m-%d}",
+        "files": [{"filename": str(version_path)}],
+    }
+    conf, version_config, current_version = get_config_data(overrides)
+    new_version = current_version.bump("patch", version_config.order)
+    cfg_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
+
+    # Act
+    files.modify_files(cfg_files, current_version, new_version, get_context(conf))
+
+    # Assert
+    now = datetime.now().isoformat()[:10]
+    assert version_path.read_text() == f"## [Release] 1.2.4 {now}"
+
+
 def test_bad_regex_search(tmp_path: Path, caplog) -> None:
     """A search string not meant to be a regex is still found and replaced."""
     # Arrange
