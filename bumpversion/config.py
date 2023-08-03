@@ -8,6 +8,7 @@ from difflib import context_diff
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 
+from bumpversion.ui import print_warning
 from bumpversion.utils import labels_for_format
 
 if TYPE_CHECKING:  # pragma: no-coverage
@@ -40,6 +41,7 @@ class FileConfig(BaseModel):
     serialize: Optional[List[str]]  # If different from outer scope
     search: Optional[str]  # If different from outer scope
     replace: Optional[str]  # If different from outer scope
+    no_regex: Optional[bool]  # If different from outer scope
     ignore_missing_version: Optional[bool]
 
 
@@ -51,6 +53,7 @@ class Config(BaseSettings):
     serialize: List[str] = Field(min_items=1)
     search: str
     replace: str
+    no_regex: bool
     ignore_missing_version: bool
     tag: bool
     sign_tags: bool
@@ -86,6 +89,7 @@ DEFAULTS = {
     "serialize": ["{major}.{minor}.{patch}"],
     "search": "{current_version}",
     "replace": "{new_version}",
+    "no_regex": False,
     "ignore_missing_version": False,
     "tag": False,
     "sign_tags": False,
@@ -116,6 +120,7 @@ def get_all_file_configs(config_dict: dict) -> List[FileConfig]:
         "search": config_dict["search"],
         "replace": config_dict["replace"],
         "ignore_missing_version": config_dict["ignore_missing_version"],
+        "no_regex": config_dict["no_regex"],
     }
     files = [{k: v for k, v in filecfg.items() if v} for filecfg in config_dict["files"]]
     for f in files:
@@ -251,6 +256,7 @@ def read_config_file(config_file: Union[str, Path, None] = None) -> Dict[str, An
     logger.info("Reading config file %s:", config_file)
     config_path = Path(config_file)
     if config_path.suffix == ".cfg":
+        print_warning("The .cfg file format is deprecated. Please use .toml instead.")
         return read_ini_file(config_path)
     elif config_path.suffix == ".toml":
         return read_toml_file(config_path)
