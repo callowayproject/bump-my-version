@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.9.0 (2023-08-03)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.8.0...0.9.0)
+
+### New
+
+- Added documentation about regular expressions. [449b70a](https://github.com/callowayproject/bump-my-version/commit/449b70aca09c44be2d834b531c85b6a8ff5dde03)
+    
+- Added configuration and command-line `no_regex` option. [a295a32](https://github.com/callowayproject/bump-my-version/commit/a295a328caedabfe8a1c270a34a6f3ddc41dff7b)
+    
+  - Global and individual file configurations available for `no_regex`
+  - Command-line flag `--no-regex` flag added for `bump` and `replace` sub-commands
+- Adds regular expression searching ability. [0210d74](https://github.com/callowayproject/bump-my-version/commit/0210d74a2a66deb58b59b601d61a1b0409c2b6eb)
+    
+  - Search strings are treated as regular expressions after the initial substitution
+- Added deprecation warning on .cfg files. [a0481b7](https://github.com/callowayproject/bump-my-version/commit/a0481b7fb9d9b210fc8162abcb5d5a8ba2710134)
+    
+
 ## 0.8.0 (2023-07-13)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.7.1...0.8.0)
 
