@@ -14,7 +14,7 @@ from bumpversion.utils import get_context
 def output_default(value: dict) -> None:
     """Output the value with key=value or just value if there is only one item."""
     if len(value) == 1:
-        print_info(list(value.values())[0])
+        print_info(next(iter(value.values())))
     else:
         buffer = StringIO()
         pprint(value, stream=buffer)  # noqa: T203
