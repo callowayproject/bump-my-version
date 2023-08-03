@@ -140,6 +140,12 @@ click.rich_click.OPTION_GROUPS = {
     help="Template for complete string to replace",
 )
 @click.option(
+    "--no-regex",
+    is_flag=True,
+    envvar="BUMPVERSION_NO_REGEX",
+    help="Do not treat the search parameter as a regular expression",
+)
+@click.option(
     "--no-configured-files",
     is_flag=True,
     envvar="BUMPVERSION_NO_CONFIGURED_FILES",
@@ -226,6 +232,7 @@ def bump(
     serialize: Optional[List[str]],
     search: Optional[str],
     replace: Optional[str],
+    no_regex: bool,
     no_configured_files: bool,
     ignore_missing_version: bool,
     dry_run: bool,
@@ -269,6 +276,7 @@ def bump(
         message=message,
         commit_args=commit_args,
         ignore_missing_version=ignore_missing_version,
+        no_regex=no_regex,
     )
 
     found_config_file = find_config_file(config_file)
@@ -408,6 +416,12 @@ def show(args: List[str], config_file: Optional[str], format_: str, increment: O
     help="Template for complete string to replace",
 )
 @click.option(
+    "--no-regex",
+    is_flag=True,
+    envvar="BUMPVERSION_NO_REGEX",
+    help="Do not treat the search parameter as a regular expression",
+)
+@click.option(
     "--no-configured-files",
     is_flag=True,
     envvar="BUMPVERSION_NO_CONFIGURED_FILES",
@@ -440,6 +454,7 @@ def replace(
     serialize: Optional[List[str]],
     search: Optional[str],
     replace: Optional[str],
+    no_regex: bool,
     no_configured_files: bool,
     ignore_missing_version: bool,
     dry_run: bool,
@@ -469,6 +484,7 @@ def replace(
         message=None,
         commit_args=None,
         ignore_missing_version=ignore_missing_version,
+        no_regex=no_regex,
     )
 
     found_config_file = find_config_file(config_file)
