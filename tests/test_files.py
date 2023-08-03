@@ -221,7 +221,10 @@ def test_raises_correct_missing_version_string(tmp_path: Path):
         assert e.message.startswith("Did not find '1;3;1;0;rc;build.1031'")
 
 
-def test_search_replace_to_avoid_updating_unconcerned_lines(tmp_path: Path):
+def test_search_replace_to_avoid_updating_unconcerned_lines(tmp_path: Path, caplog):
+    import logging
+
+    caplog.set_level(logging.DEBUG)
     req_path = tmp_path / "requirements.txt"
     req_path.write_text("Django>=1.5.6,<1.6\nMyProject==1.5.6")
 
@@ -255,6 +258,7 @@ def test_search_replace_to_avoid_updating_unconcerned_lines(tmp_path: Path):
                 "filename": str(changelog_path),
                 "search": "## [Unreleased]",
                 "replace": "## [Unreleased]\n\n## [{new_version}] - {utcnow:%Y-%m-%d}",
+                "no_regex": True,
             },
         ],
     }
@@ -283,7 +287,7 @@ def test_search_replace_to_avoid_updating_unconcerned_lines(tmp_path: Path):
       standardized open source project CHANGELOG.
     """
     )
-
+    print(caplog.text)
     assert req_path.read_text() == "Django>=1.5.6,<1.6\nMyProject==1.6.0"
     assert changelog_path.read_text() == expected_chglog
 
@@ -389,3 +393,75 @@ def test_ignore_missing_version(tmp_path: Path) -> None:
 
     # Assert
     assert version_path.read_text() == "1.2.3"
+
+
+def test_regex_search(tmp_path: Path) -> None:
+    """A regex search string is found and replaced."""
+    # Arrange
+    version_path = tmp_path / "VERSION"
+    version_path.write_text("Release: 1234-56-78 '1.2.3'")
+
+    overrides = {
+        "current_version": "1.2.3",
+        "search": r"Release: \d{{4}}-\d{{2}}-\d{{2}} '{current_version}'",
+        "replace": r"Release {now:%Y-%m-%d} '{new_version}'",
+        "files": [{"filename": str(version_path)}],
+    }
+    conf, version_config, current_version = get_config_data(overrides)
+    new_version = current_version.bump("patch", version_config.order)
+    cfg_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
+
+    # Act
+    files.modify_files(cfg_files, current_version, new_version, get_context(conf))
+
+    # Assert
+    now = datetime.now().isoformat()[:10]
+    assert version_path.read_text() == f"Release {now} '1.2.4'"
+
+
+def test_regex_search_with_escaped_chars(tmp_path: Path) -> None:
+    """A search that uses special characters is not treated as a regex."""
+    # Arrange
+    version_path = tmp_path / "VERSION"
+    version_path.write_text("## [Release] 1.2.3 1234-56-78")
+
+    overrides = {
+        "current_version": "1.2.3",
+        "search": r"## \[Release\] {current_version} \d{{4}}-\d{{2}}-\d{{2}}",
+        "replace": r"## [Release] {new_version} {now:%Y-%m-%d}",
+        "files": [{"filename": str(version_path)}],
+    }
+    conf, version_config, current_version = get_config_data(overrides)
+    new_version = current_version.bump("patch", version_config.order)
+    cfg_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
+
+    # Act
+    files.modify_files(cfg_files, current_version, new_version, get_context(conf))
+
+    # Assert
+    now = datetime.now().isoformat()[:10]
+    assert version_path.read_text() == f"## [Release] 1.2.4 {now}"
+
+
+def test_bad_regex_search(tmp_path: Path, caplog) -> None:
+    """A search string not meant to be a regex is still found and replaced."""
+    # Arrange
+    version_path = tmp_path / "VERSION"
+    version_path.write_text("Score: A+ ( '1.2.3'")
+
+    overrides = {
+        "current_version": "1.2.3",
+        "search": r"Score: A+ ( '{current_version}'",
+        "replace": r"Score: A+ ( '{new_version}'",
+        "files": [{"filename": str(version_path)}],
+    }
+    conf, version_config, current_version = get_config_data(overrides)
+    new_version = current_version.bump("patch", version_config.order)
+    cfg_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
+
+    # Act
+    files.modify_files(cfg_files, current_version, new_version, get_context(conf))
+
+    # Assert
+    assert version_path.read_text() == "Score: A+ ( '1.2.4'"
+    assert "Invalid regex" in caplog.text
