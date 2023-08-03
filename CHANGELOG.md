@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.9.1 (2023-08-03)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.9.0...0.9.1)
+
+### Other
+
+- [pre-commit.ci] auto fixes from pre-commit.com hooks. [4b457d0](https://github.com/callowayproject/bump-my-version/commit/4b457d0d15b881612de7e8970f729f5ea0556c9d)
+    
+  for more information, see https://pre-commit.ci
+- [pre-commit.ci] pre-commit autoupdate. [adb7e4c](https://github.com/callowayproject/bump-my-version/commit/adb7e4c09eea7d568a3bf3597a5b03f352543c3f)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.0.277 → v0.0.281](https://github.com/astral-sh/ruff-pre-commit/compare/v0.0.277...v0.0.281)
+
+### Updates
+
+- Remove `pygments_style` from docsrc/conf.py. [32798a9](https://github.com/callowayproject/bump-my-version/commit/32798a9bcd4d7f1b52fffc84572567c1f60aed9e)
+    
+  The theme defaults, subjectively, look better.
+
 ## 0.9.0 (2023-08-03)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.8.0...0.9.0)
 
