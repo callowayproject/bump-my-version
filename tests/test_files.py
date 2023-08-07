@@ -1,5 +1,6 @@
 """File processing tests."""
 import os
+import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 from textwrap import dedent
@@ -7,9 +8,10 @@ from textwrap import dedent
 import pytest
 from pytest import param
 
-from bumpversion import exceptions, files
+from bumpversion import exceptions, files, config, bump
 from bumpversion.utils import get_context
 from bumpversion.exceptions import VersionNotFoundError
+from bumpversion.version_part import VersionConfig
 from tests.conftest import get_config_data, inside_dir
 
 
@@ -154,71 +156,46 @@ def test_multi_file_configuration(tmp_path: Path):
     assert build_num_path.read_text() == "2.0.1+jane+38945"
 
 
-def test_raises_correct_missing_version_string(tmp_path: Path):
-    full_vers_path = tmp_path / "FULL_VERSION.txt"
-    full_vers_path.write_text("3.1.0-rc+build.1031")
-    assembly_path = tmp_path / "AssemblyInfo.cs"
-    assembly_path.write_text(
-        '[assembly: AssemblyFileVersion("3.1.0-rc+build.1031")]\n' '[assembly: AssemblyVersion("3.1.1031.0")]'
-    )
-    csv_path = tmp_path / "Version.csv"
-    csv_path.write_text("1;3-1;0;rc;build.1031")
+def test_raises_correct_missing_version_string(tmp_path: Path, fixtures_path: Path):
+    """When a file is missing the version string, the error should indicate the correct serialization missing."""
+    csharp_path = fixtures_path / "csharp"
+    dst_path: Path = shutil.copytree(csharp_path, tmp_path / "csharp")
 
-    overrides = {
-        "current_version": "3.1.0-rc+build.1031",
-        "parse": r"(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)(-(?P<release>[0-9A-Za-z]+))?(\+build\.(?P<build>.[0-9A-Za-z]+))?",
-        "serialize": ["{major}.{minor}.{patch}-{release}+build.{build}", "{major}.{minor}.{patch}+build.{build}"],
-        "commit": True,
-        "message": "Bump version: {current_version} -> {new_version}",
-        "tag": False,
-        "tag_name": "{new_version}",
-        "tag_message": "Version {new_version}",
-        "allow_dirty": True,
-        "files": [
-            {
-                "filename": str(full_vers_path),
-            },
-            {
-                "filename": str(assembly_path),
-                "search": '[assembly: AssemblyFileVersion("{current_version}")]',
-                "replace": '[assembly: AssemblyFileVersion("{new_version}")]',
-            },
-            {
-                "filename": str(assembly_path),
-                "parse": r"(?P<major>\d+)\.(?P<minor>\d+)\.(?P<build>\d+)\.(?P<patch>\d+)",
-                "serialize": ["{major}.{minor}.{build}.{patch}"],
-                "search": '[assembly: AssemblyVersion("{current_version}")]',
-                "replace": '[assembly: AssemblyVersion("{new_version}")]',
-            },
-            {
-                "filename": str(csv_path),
-                "parse": r"(?P<major>\d+);(?P<minor>\d+);(?P<patch>\d+);(?P<release>[0-9A-Za-z]+)?;(build\.(?P<build>.[0-9A-Za-z]+))?",
-                "serialize": [
-                    "{major};{minor};{patch};{release};build.{build}",
-                    "{major};{minor};{patch};;build.{build}",
-                ],
-                "search": "1;{current_version}",
-                "replace": "1;{new_version}",
-            },
-        ],
-        "parts": {
-            "release": {"values": ["beta", "rc", "final"], "optional_value": "final"},
-            "build": {
-                "first_value": 1000,
-                "independent": True,
-            },
-        },
-    }
-    conf, version_config, current_version = get_config_data(overrides)
-    major_version = current_version.bump("patch", version_config.order)
+    with inside_dir(dst_path):
+        conf = config.get_configuration(config_file=dst_path.joinpath(".bumpversion.toml"))
+        version_config = VersionConfig(conf.parse, conf.serialize, conf.search, conf.replace, conf.parts)
+        current_version = version_config.parse(conf.current_version)
+        dst_path.joinpath("Version.csv").write_text("1;3-1;0;rc;build.1031")
 
-    ctx = get_context(conf)
+        major_version = current_version.bump("patch", version_config.order)
+        ctx = get_context(conf)
 
-    configured_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
+        configured_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
 
-    with pytest.raises(VersionNotFoundError) as e:
-        files.modify_files(configured_files, current_version, major_version, ctx)
-        assert e.message.startswith("Did not find '1;3;1;0;rc;build.1031'")
+        with pytest.raises(VersionNotFoundError) as e:
+            files.modify_files(configured_files, current_version, major_version, ctx)
+            assert e.message.startswith("Did not find '1;3;1;0;rc;build.1031'")
+
+
+def test_uses_correct_serialization_for_tag_and_commit_messages(git_repo: Path, fixtures_path: Path, caplog):
+    """The tag and commit messages should use the root configured serialization."""
+    import subprocess
+    import logging
+
+    caplog.set_level(logging.INFO)
+
+    csharp_path = fixtures_path / "csharp"
+    dst_path: Path = shutil.copytree(csharp_path, git_repo / "csharp")
+    subprocess.check_call(["git", "add", "."], cwd=git_repo)
+    subprocess.check_call(["git", "commit", "-m", "Initial commit"], cwd=git_repo)
+    subprocess.check_call(["git", "tag", "3.1.0-rc+build.1031"], cwd=git_repo)
+
+    with inside_dir(dst_path):
+        config_file = dst_path.joinpath(".bumpversion.toml")
+        conf = config.get_configuration(config_file=config_file)
+        bump.do_bump("patch", None, conf, config_file, dry_run=True)
+
+    assert "Bump version: 3.1.0-rc+build.1031 -> 3.1.1" in caplog.text
 
 
 def test_search_replace_to_avoid_updating_unconcerned_lines(tmp_path: Path, caplog):

@@ -81,9 +81,10 @@ def do_bump(
 
     configured_files = resolve_file_config(config.files, config.version_config)
     modify_files(configured_files, version, next_version, ctx, dry_run)
-
     update_config_file(config_file, config.current_version, next_version_str, dry_run)
 
+    ctx = get_context(config, version, next_version)
+    ctx["new_version"] = next_version_str
     commit_and_tag(config, config_file, configured_files, ctx, dry_run)
 
 

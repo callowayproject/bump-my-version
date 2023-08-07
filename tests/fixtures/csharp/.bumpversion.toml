@@ -1,0 +1,41 @@
+[tool.bumpversion]
+current_version = "3.1.0-rc+build.1031"
+parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(-(?P<release>[0-9A-Za-z]+))?(\\+build\\.(?P<build>.[0-9A-Za-z]+))?"
+serialize = ["{major}.{minor}.{patch}-{release}+build.{build}", "{major}.{minor}.{patch}+build.{build}"]
+commit = true
+message = "Bump version: {current_version} -> {new_version}"
+tag = false
+tag_name = "{new_version}"
+tag_message = "Version {new_version}"
+allow_dirty = true
+
+[[tool.bumpversion.files]]
+filename = "FULL_VERSION.txt"
+
+[[tool.bumpversion.files]]
+filename = "AssemblyInfo.cs"
+search = "[assembly: AssemblyFileVersion(\"{current_version}\")]"
+replace = "[assembly: AssemblyFileVersion(\"{new_version}\")]"
+
+[[tool.bumpversion.files]]
+filename = "AssemblyInfo.cs"
+parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<build>\\d+)\\.(?P<patch>\\d+)"
+serialize = ["{major}.{minor}.{build}.{patch}"]
+search = "[assembly: AssemblyVersion(\"{current_version}\")]"
+replace = "[assembly: AssemblyVersion(\"{new_version}\")]"
+
+[[tool.bumpversion.files]]
+filename = "Version.csv"
+parse = "(?P<major>\\d+);(?P<minor>\\d+);(?P<patch>\\d+);(?P<release>[0-9A-Za-z]+)?;(build\\.(?P<build>.[0-9A-Za-z]+))?"
+serialize = ["{major};{minor};{patch};{release};build.{build}", "{major};{minor};{patch};;build.{build}"]
+search = "1;{current_version}"
+replace = "1;{new_version}"
+
+[tool.bumpversion.parts]
+[tool.bumpversion.parts.release]
+values = ["beta", "rc", "final"]
+optional_value = "final"
+
+[tool.bumpversion.parts.build]
+first_value = 1000
+independent = true

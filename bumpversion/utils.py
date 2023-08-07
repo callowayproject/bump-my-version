@@ -40,9 +40,9 @@ def get_context(
         {c: c for c in ("#", ";")},
     )
     if current_version:
-        ctx.new_child({f"current_{part}": current_version[part].value for part in current_version})
+        ctx = ctx.new_child({f"current_{part}": current_version[part].value for part in current_version})
     if new_version:
-        ctx.new_child({f"new_{part}": new_version[part].value for part in new_version})
+        ctx = ctx.new_child({f"new_{part}": new_version[part].value for part in new_version})
     return ctx
 
 
