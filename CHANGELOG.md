@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.9.2 (2023-08-07)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.9.1...0.9.2)
+
+### Fixes
+
+- Fixed modified context when committing. [130bbe0](https://github.com/callowayproject/bump-my-version/commit/130bbe0dc9cbc436ed2d4a74878937fc784fbccd)
+    
+  - Resets the context before committing and tagging
+  - Fixes #14
+
 ## 0.9.1 (2023-08-03)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.9.0...0.9.1)
 
