@@ -279,9 +279,16 @@
 <section id="using-regular-expressions">
 <h2>Using regular expressions<a class="headerlink" href="#using-regular-expressions" title="Permalink to this heading">#</a></h2>
 <p>Only the search template will use <a class="reference external" href="https://docs.python.org/3/library/re.html#regular-expression-syntax">Python’s regular expression syntax</a> with minor changes. The template string is rendered using the formatting context. The resulting string is treated as a regular expression for searching unless configured otherwise.</p>
-<p>Curly braces (<code class="docutils literal notranslate"><span class="pre">{}</span></code>) and backslashes (<code class="docutils literal notranslate"><span class="pre">\</span></code>) must be doubled in the regular expression to escape them from the string formatting process.</p>
+<p>Curly braces (<code class="docutils literal notranslate"><span class="pre">{}</span></code>) must be doubled in the regular expression to escape them from the string-formatting process.</p>
+<p>If you are using a TOML-formatted configuration file, you must also escape backslashes (<code class="docutils literal notranslate"><span class="pre">\</span></code>) in the regular expression. The TOML parser will treat a single backslash as an escape character.</p>
 <p>The following template:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>{current_version} date-released: \\d{{4}}-\\d{{2}}-\\d{{2}}
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="c1"># TOML-formatted configuration file</span>
+<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;{current_version} date-released: \\d{{4}}-\\d{{2}}-\\d{{2}}&quot;</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="c1"># INI-formatted configuration file</span>
+<span class="na">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;{current_version} date-released: \d{{4}}-\d{{2}}-\d{{2}}&quot;</span>
 </pre></div>
 </div>
 <p>Gets rendered to:</p>

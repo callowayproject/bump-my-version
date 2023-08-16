@@ -47,12 +47,22 @@ version={new_version}"""
 
 Only the search template will use [Python's regular expression syntax](https://docs.python.org/3/library/re.html#regular-expression-syntax) with minor changes. The template string is rendered using the formatting context. The resulting string is treated as a regular expression for searching unless configured otherwise.
 
-Curly braces (`{}`) and backslashes (`\`) must be doubled in the regular expression to escape them from the string formatting process.
+Curly braces (`{}`) must be doubled in the regular expression to escape them from the string-formatting process.
+
+If you are using a TOML-formatted configuration file, you must also escape backslashes (`\`) in the regular expression. The TOML parser will treat a single backslash as an escape character. 
 
 The following template:
 
-```text
-{current_version} date-released: \\d{{4}}-\\d{{2}}-\\d{{2}}
+```toml
+# TOML-formatted configuration file
+search = "{current_version} date-released: \\d{{4}}-\\d{{2}}-\\d{{2}}"
+```
+
+or 
+
+```ini
+# INI-formatted configuration file
+search = "{current_version} date-released: \d{{4}}-\d{{2}}-\d{{2}}"
 ```
 
 Gets rendered to:
