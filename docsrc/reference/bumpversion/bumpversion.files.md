@@ -81,6 +81,22 @@
 ```{autodoc2-docstring} bumpversion.files.ConfiguredFile.__init__
 ```
 
+````{py:method} get_file_contents() -> str
+:canonical: bumpversion.files.ConfiguredFile.get_file_contents
+
+```{autodoc2-docstring} bumpversion.files.ConfiguredFile.get_file_contents
+```
+
+````
+
+````{py:method} write_file_contents(contents: str) -> None
+:canonical: bumpversion.files.ConfiguredFile.write_file_contents
+
+```{autodoc2-docstring} bumpversion.files.ConfiguredFile.write_file_contents
+```
+
+````
+
 ````{py:method} contains_version(version: bumpversion.version_part.Version, context: typing.MutableMapping) -> bool
 :canonical: bumpversion.files.ConfiguredFile.contains_version
 
@@ -89,7 +105,7 @@
 
 ````
 
-````{py:method} contains(search: str) -> bool
+````{py:method} contains(search: re.Pattern) -> bool
 :canonical: bumpversion.files.ConfiguredFile.contains
 
 ```{autodoc2-docstring} bumpversion.files.ConfiguredFile.contains
@@ -101,6 +117,14 @@
 :canonical: bumpversion.files.ConfiguredFile.replace_version
 
 ```{autodoc2-docstring} bumpversion.files.ConfiguredFile.replace_version
+```
+
+````
+
+````{py:method} get_search_pattern(context: typing.MutableMapping) -> re.Pattern
+:canonical: bumpversion.files.ConfiguredFile.get_search_pattern
+
+```{autodoc2-docstring} bumpversion.files.ConfiguredFile.get_search_pattern
 ```
 
 ````

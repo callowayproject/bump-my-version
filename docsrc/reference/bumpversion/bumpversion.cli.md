@@ -64,7 +64,7 @@
 ```
 ````
 
-````{py:function} bump(args: list, config_file: typing.Optional[str], verbose: int, allow_dirty: typing.Optional[bool], current_version: typing.Optional[str], new_version: typing.Optional[str], parse: typing.Optional[str], serialize: typing.Optional[typing.List[str]], search: typing.Optional[str], replace: typing.Optional[str], no_configured_files: bool, ignore_missing_version: bool, dry_run: bool, commit: typing.Optional[bool], tag: typing.Optional[bool], sign_tags: typing.Optional[bool], tag_name: typing.Optional[str], tag_message: typing.Optional[str], message: typing.Optional[str], commit_args: typing.Optional[str], show_list: bool) -> None
+````{py:function} bump(args: list, config_file: typing.Optional[str], verbose: int, allow_dirty: typing.Optional[bool], current_version: typing.Optional[str], new_version: typing.Optional[str], parse: typing.Optional[str], serialize: typing.Optional[typing.List[str]], search: typing.Optional[str], replace: typing.Optional[str], no_regex: bool, no_configured_files: bool, ignore_missing_version: bool, dry_run: bool, commit: typing.Optional[bool], tag: typing.Optional[bool], sign_tags: typing.Optional[bool], tag_name: typing.Optional[str], tag_message: typing.Optional[str], message: typing.Optional[str], commit_args: typing.Optional[str], show_list: bool) -> None
 :canonical: bumpversion.cli.bump
 
 ```{autodoc2-docstring} bumpversion.cli.bump
@@ -78,7 +78,7 @@
 ```
 ````
 
-````{py:function} replace(files: list, config_file: typing.Optional[str], verbose: int, allow_dirty: typing.Optional[bool], current_version: typing.Optional[str], new_version: typing.Optional[str], parse: typing.Optional[str], serialize: typing.Optional[typing.List[str]], search: typing.Optional[str], replace: typing.Optional[str], no_configured_files: bool, ignore_missing_version: bool, dry_run: bool) -> None
+````{py:function} replace(files: list, config_file: typing.Optional[str], verbose: int, allow_dirty: typing.Optional[bool], current_version: typing.Optional[str], new_version: typing.Optional[str], parse: typing.Optional[str], serialize: typing.Optional[typing.List[str]], search: typing.Optional[str], replace: typing.Optional[str], no_regex: bool, no_configured_files: bool, ignore_missing_version: bool, dry_run: bool) -> None
 :canonical: bumpversion.cli.replace
 
 ```{autodoc2-docstring} bumpversion.cli.replace

@@ -6,6 +6,8 @@
 #
 alabaster==0.7.13
     # via sphinx
+astroid==2.15.6
+    # via sphinx-autodoc2
 babel==2.12.1
     # via sphinx
 beautifulsoup4==4.12.2
@@ -36,6 +38,8 @@ jinja2==3.1.2
     # via
     #   myst-parser
     #   sphinx
+lazy-object-proxy==1.9.0
+    # via astroid
 linkify-it-py==2.0.2
     # via bump-my-version (pyproject.toml)
 markdown-it-py==3.0.0
@@ -89,6 +93,8 @@ sphinx==7.0.1
     #   sphinx-copybutton
 sphinx-autodoc-typehints==1.23.2
     # via bump-my-version (pyproject.toml)
+sphinx-autodoc2==0.4.2
+    # via bump-my-version (pyproject.toml)
 sphinx-basic-ng==1.0.0b1
     # via furo
 sphinx-click==4.4.0
@@ -107,11 +113,18 @@ sphinxcontrib-qthelp==1.0.3
     # via sphinx
 sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
+tomli==2.0.1
+    # via sphinx-autodoc2
 tomlkit==0.11.8
     # via bump-my-version (pyproject.toml)
 typing-extensions==4.6.3
-    # via pydantic
+    # via
+    #   astroid
+    #   pydantic
+    #   sphinx-autodoc2
 uc-micro-py==1.0.2
     # via linkify-it-py
 urllib3==2.0.3
     # via requests
+wrapt==1.15.0
+    # via astroid

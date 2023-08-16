@@ -35,6 +35,13 @@ docs: ## generate Sphinx HTML documentation, including API docs
 pubdocs: docs ## Publish the documentation to GitHub
 	ghp-import -op docs
 
+
+update-requires:  ## Update the requirements.txt file
+	pip-compile --output-file=requirements/prod.txt pyproject.toml
+	pip-compile --extra=test --output-file=requirements/test.txt pyproject.toml
+	pip-compile --extra=docs --output-file=requirements/docs.txt pyproject.toml
+	pip-compile --extra=dev --extra=docs --extra=test --output-file=requirements/dev.txt pyproject.toml
+
 #
 # Helper targets. Not meant to use directly
 #
