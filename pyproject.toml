@@ -67,6 +67,7 @@ docs = [
     "myst-parser",
     "furo",
     "Sphinx>=4.3.0",
+    "sphinx-autodoc2",
     "sphinx-autodoc-typehints",
     "sphinx-click",
     "sphinx-copybutton",

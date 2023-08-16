@@ -233,6 +233,17 @@ Bases: {py:obj}`pydantic.BaseModel`
 
 ````
 
+````{py:attribute} no_regex
+:canonical: bumpversion.config.FileConfig.no_regex
+:type: typing.Optional[bool]
+:value: >
+   None
+
+```{autodoc2-docstring} bumpversion.config.FileConfig.no_regex
+```
+
+````
+
 ````{py:attribute} ignore_missing_version
 :canonical: bumpversion.config.FileConfig.ignore_missing_version
 :type: typing.Optional[bool]
@@ -305,6 +316,17 @@ Bases: {py:obj}`pydantic.BaseSettings`
    None
 
 ```{autodoc2-docstring} bumpversion.config.Config.replace
+```
+
+````
+
+````{py:attribute} no_regex
+:canonical: bumpversion.config.Config.no_regex
+:type: bool
+:value: >
+   None
+
+```{autodoc2-docstring} bumpversion.config.Config.no_regex
 ```
 
 ````

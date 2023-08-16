@@ -8,6 +8,8 @@ alabaster==0.7.13
     # via sphinx
 argopt==0.8.2
     # via git-fame
+astroid==2.15.6
+    # via sphinx-autodoc2
 babel==2.12.1
     # via sphinx
 beautifulsoup4==4.12.2
@@ -67,6 +69,8 @@ jinja2==3.1.2
     #   generate-changelog
     #   myst-parser
     #   sphinx
+lazy-object-proxy==1.9.0
+    # via astroid
 linkify-it-py==2.0.2
     # via bump-my-version (pyproject.toml)
 markdown-it-py==3.0.0
@@ -154,6 +158,8 @@ sphinx==7.0.1
     #   sphinx-copybutton
 sphinx-autodoc-typehints==1.23.2
     # via bump-my-version (pyproject.toml)
+sphinx-autodoc2==0.4.2
+    # via bump-my-version (pyproject.toml)
 sphinx-basic-ng==1.0.0b1
     # via furo
 sphinx-click==4.4.0
@@ -180,6 +186,7 @@ tomli==2.0.1
     #   coverage
     #   pyproject-hooks
     #   pytest
+    #   sphinx-autodoc2
 tomlkit==0.11.8
     # via bump-my-version (pyproject.toml)
 tqdm==4.65.0
@@ -188,7 +195,9 @@ typer==0.9.0
     # via generate-changelog
 typing-extensions==4.6.3
     # via
+    #   astroid
     #   pydantic
+    #   sphinx-autodoc2
     #   typer
 uc-micro-py==1.0.2
     # via linkify-it-py
@@ -198,6 +207,8 @@ virtualenv==20.23.1
     # via pre-commit
 wheel==0.40.0
     # via pip-tools
+wrapt==1.15.0
+    # via astroid
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
