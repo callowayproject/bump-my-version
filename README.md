@@ -26,7 +26,7 @@ A small command line tool to simplify releasing software by updating all version
 * works without any source code manager, but happily reads tag information from and writes
   commits and tags to Git and Mercurial if available
 * just handles text files, so it's not specific to any programming language
-* supports Python 3.8+ and PyPy3. Python 3.7 should work but isn't actively tested.
+* supports Python 3.8+ and PyPy3.
 
 ## Future Direction
 
