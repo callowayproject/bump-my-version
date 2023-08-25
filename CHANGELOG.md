@@ -1,5 +1,45 @@
 # Changelog
 
+## 0.9.3 (2023-08-25)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.9.2...0.9.3)
+
+### Fixes
+
+- Fixed file configuration overrides. [c1ef3b2](https://github.com/callowayproject/bump-my-version/commit/c1ef3b290746e10e24dcdcb56c52effb6b324464)
+    
+  Fixes #55
+
+  The file config was ignoring falsey values when constructing the dict.
+
+  It now ignores `None` values.
+- Fixed documentation regarding regex config. [cd71a1a](https://github.com/callowayproject/bump-my-version/commit/cd71a1a4216286e49e0d1b8b9d867a26ee88eff8)
+    
+  - TOML requires the double backslash while INI doesn't
+- Fixed requirements for docs. [7856ee0](https://github.com/callowayproject/bump-my-version/commit/7856ee01559289e943a26af7e36382855973e485)
+    
+### New
+
+- Added documentation building workflow. [48980d7](https://github.com/callowayproject/bump-my-version/commit/48980d7d3445a323c7f8532a8edd61dc09d3fb51)
+    
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [7c38c40](https://github.com/callowayproject/bump-my-version/commit/7c38c401a3755329bce5f127a956e4603c7c4645)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.0.284 → v0.0.285](https://github.com/astral-sh/ruff-pre-commit/compare/v0.0.284...v0.0.285)
+
+- [pre-commit.ci] pre-commit autoupdate. [c30bd12](https://github.com/callowayproject/bump-my-version/commit/c30bd128ca27adea1a93876a29656c5cb7f6d178)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.0.282 → v0.0.284](https://github.com/astral-sh/ruff-pre-commit/compare/v0.0.282...v0.0.284)
+
+- [pre-commit.ci] pre-commit autoupdate. [95c89fb](https://github.com/callowayproject/bump-my-version/commit/95c89fb94ea6cfa5c9d28ed06ee6def9f98ab59f)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.0.281 → v0.0.282](https://github.com/astral-sh/ruff-pre-commit/compare/v0.0.281...v0.0.282)
+
+### Updates
+
+- Removed mentions of Python 3.7. [a91f690](https://github.com/callowayproject/bump-my-version/commit/a91f690ab2c36bef9243058f9e9bbdc1968e9af1)
+    
+
 ## 0.9.2 (2023-08-07)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.9.1...0.9.2)
 
