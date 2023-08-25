@@ -349,7 +349,16 @@ def test_multi_line_search_is_found(tmp_path: Path) -> None:
     assert alphabet_path.read_text() == "A\nB\nC\n10.0.0\n"
 
 
-def test_ignore_missing_version(tmp_path: Path) -> None:
+@pytest.mark.parametrize(
+    ["global_value", "file_value", "should_raise"],
+    [
+        param(True, True, False, id="ignore global and file"),
+        param(True, False, True, id="ignore global only"),
+        param(False, True, False, id="ignore file only"),
+        param(False, False, True, id="ignore none"),
+    ],
+)
+def test_ignore_missing_version(global_value: bool, file_value: bool, should_raise: bool, tmp_path: Path) -> None:
     """If the version is not found in the file, do nothing."""
     # Arrange
     version_path = tmp_path / Path("VERSION")
@@ -357,16 +366,20 @@ def test_ignore_missing_version(tmp_path: Path) -> None:
 
     overrides = {
         "current_version": "1.2.5",
-        "ignore_missing_version": True,
-        "files": [{"filename": str(version_path)}],
+        "ignore_missing_version": global_value,
+        "files": [{"filename": str(version_path), "ignore_missing_version": file_value}],
     }
-    conf, version_config, current_version = get_config_data(overrides)
-    assert conf.ignore_missing_version is True
-    new_version = current_version.bump("patch", version_config.order)
-    cfg_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
+    with inside_dir(tmp_path):
+        conf, version_config, current_version = get_config_data(overrides)
+        new_version = current_version.bump("patch", version_config.order)
+        cfg_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
 
-    # Act
-    files.modify_files(cfg_files, current_version, new_version, get_context(conf))
+        # Act
+        if should_raise:
+            with pytest.raises(VersionNotFoundError):
+                files.modify_files(cfg_files, current_version, new_version, get_context(conf))
+        else:
+            files.modify_files(cfg_files, current_version, new_version, get_context(conf))
 
     # Assert
     assert version_path.read_text() == "1.2.3"
