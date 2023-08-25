@@ -64,6 +64,7 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.PAT }}
+          ref: ${{ github.head_ref }}
 
       - uses: actions/setup-python@v4
         with:
