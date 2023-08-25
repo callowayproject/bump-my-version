@@ -236,7 +236,7 @@ This is useful if there is the remotest possibility that the current version num
 
 This is the template to create the string that will replace the current version number in the file.
 
-### `ingore_missing_version`
+### `ignore_missing_version`
 :required: No
 
 :default: `False`
@@ -447,10 +447,10 @@ This is an override to the default template string how to search for the string 
 
 This is an override to the template to create the string that will replace the current version number in the file.
 
-### `ingore_missing_version`
+### `ignore_missing_version`
 :required: No
 
-:default: The value configured in the global `ingore_missing_version` field
+:default: The value configured in the global `ignore_missing_version` field
 
 :type: boolean
 
