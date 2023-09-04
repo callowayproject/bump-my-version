@@ -1,5 +1,4 @@
 """Methods for changing files."""
-import glob
 import logging
 import re
 from copy import deepcopy
@@ -190,14 +189,7 @@ def resolve_file_config(
     Returns:
         A list of ConfiguredFiles
     """
-    configured_files = []
-    for file_cfg in files:
-        if file_cfg.glob:
-            configured_files.extend(get_glob_files(file_cfg, version_config))
-        else:
-            configured_files.append(ConfiguredFile(file_cfg, version_config, search, replace))
-
-    return configured_files
+    return [ConfiguredFile(file_cfg, version_config, search, replace) for file_cfg in files]
 
 
 def modify_files(
@@ -220,29 +212,6 @@ def modify_files(
     _check_files_contain_version(files, current_version, context)
     for f in files:
         f.replace_version(current_version, new_version, context, dry_run)
-
-
-def get_glob_files(
-    file_cfg: FileConfig, version_config: VersionConfig, search: Optional[str] = None, replace: Optional[str] = None
-) -> List[ConfiguredFile]:
-    """
-    Return a list of files that match the glob pattern.
-
-    Args:
-        file_cfg: The file configuration containing the glob pattern
-        version_config: The version configuration
-        search: The search pattern to use instead of any configured search pattern
-        replace: The replace pattern to use instead of any configured replace pattern
-
-    Returns:
-        A list of resolved files according to the pattern.
-    """
-    files = []
-    for filename_glob in glob.glob(file_cfg.glob, recursive=True):
-        new_file_cfg = file_cfg.copy()
-        new_file_cfg.filename = filename_glob
-        files.append(ConfiguredFile(new_file_cfg, version_config, search, replace))
-    return files
 
 
 def _check_files_contain_version(

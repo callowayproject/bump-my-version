@@ -15,34 +15,6 @@ from bumpversion.version_part import VersionConfig
 from tests.conftest import get_config_data, inside_dir
 
 
-@pytest.mark.parametrize(
-    ["glob_pattern", "file_list"],
-    [
-        param("*.txt", {Path("file1.txt"), Path("file2.txt")}, id="simple-glob"),
-        param("**/*.txt", {Path("file1.txt"), Path("file2.txt"), Path("directory/file3.txt")}, id="recursive-glob"),
-    ],
-)
-def test_get_glob_files(glob_pattern: str, file_list: set, fixtures_path: Path):
-    """Get glob files should return all the globbed files and nothing else."""
-    overrides = {
-        "current_version": "1.0.0",
-        "parse": r"(?P<major>\d+)\.(?P<minor>\d+)(\.(?P<release>[a-z]+))?",
-        "serialize": ["{major}.{minor}.{release}", "{major}.{minor}"],
-        "files": [
-            {
-                "glob": glob_pattern,
-            }
-        ],
-    }
-    conf, version_config, current_version = get_config_data(overrides)
-    with inside_dir(fixtures_path.joinpath("glob")):
-        result = files.get_glob_files(conf.files[0], version_config)
-
-    assert len(result) == len(file_list)
-    for f in result:
-        assert Path(f.path) in file_list
-
-
 def test_single_file_processed_twice(tmp_path: Path):
     """
     Verify that a single file "file2" can be processed twice.
@@ -264,7 +236,6 @@ def test_search_replace_to_avoid_updating_unconcerned_lines(tmp_path: Path, capl
       standardized open source project CHANGELOG.
     """
     )
-    print(caplog.text)
     assert req_path.read_text() == "Django>=1.5.6,<1.6\nMyProject==1.6.0"
     assert changelog_path.read_text() == expected_chglog
 

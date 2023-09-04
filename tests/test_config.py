@@ -9,7 +9,7 @@ from click.testing import CliRunner, Result
 from pytest import param
 
 from bumpversion import config
-from tests.conftest import inside_dir
+from tests.conftest import inside_dir, get_config_data
 
 
 @pytest.fixture(params=[".bumpversion.cfg", "setup.cfg"])
@@ -246,3 +246,31 @@ def test_pep440_config(git_repo: Path, fixtures_path: Path):
         # assert result.exit_code == 0
         # cfg = config.get_configuration(cfg_path)
         # assert cfg.current_version == "1.0.0.dev1+myreallylongbranchna"
+
+
+@pytest.mark.parametrize(
+    ["glob_pattern", "file_list"],
+    [
+        param("*.txt", {Path("file1.txt"), Path("file2.txt")}, id="simple-glob"),
+        param("**/*.txt", {Path("file1.txt"), Path("file2.txt"), Path("directory/file3.txt")}, id="recursive-glob"),
+    ],
+)
+def test_get_glob_files(glob_pattern: str, file_list: set, fixtures_path: Path):
+    """Get glob files should return all the globbed files and nothing else."""
+    overrides = {
+        "current_version": "1.0.0",
+        "parse": r"(?P<major>\d+)\.(?P<minor>\d+)(\.(?P<release>[a-z]+))?",
+        "serialize": ["{major}.{minor}.{release}", "{major}.{minor}"],
+        "files": [
+            {
+                "glob": glob_pattern,
+            }
+        ],
+    }
+    conf, version_config, current_version = get_config_data(overrides)
+    with inside_dir(fixtures_path.joinpath("glob")):
+        result = config.get_glob_files(conf.files[0])
+
+    assert len(result) == len(file_list)
+    for f in result:
+        assert Path(f.filename) in file_list

@@ -79,7 +79,7 @@ def do_bump(
 
     ctx = get_context(config, version, next_version)
 
-    configured_files = resolve_file_config(config.files, config.version_config)
+    configured_files = resolve_file_config(config.files_to_modify, config.version_config)
     modify_files(configured_files, version, next_version, ctx, dry_run)
     update_config_file(config_file, config.current_version, next_version_str, dry_run)
 
