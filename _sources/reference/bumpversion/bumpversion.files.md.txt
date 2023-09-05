@@ -35,10 +35,6 @@
   - ```{autodoc2-docstring} bumpversion.files.modify_files
     :summary:
     ```
-* - {py:obj}`get_glob_files <bumpversion.files.get_glob_files>`
-  - ```{autodoc2-docstring} bumpversion.files.get_glob_files
-    :summary:
-    ```
 * - {py:obj}`_check_files_contain_version <bumpversion.files._check_files_contain_version>`
   - ```{autodoc2-docstring} bumpversion.files._check_files_contain_version
     :summary:
@@ -152,13 +148,6 @@
 :canonical: bumpversion.files.modify_files
 
 ```{autodoc2-docstring} bumpversion.files.modify_files
-```
-````
-
-````{py:function} get_glob_files(file_cfg: bumpversion.config.FileConfig, version_config: bumpversion.version_part.VersionConfig, search: typing.Optional[str] = None, replace: typing.Optional[str] = None) -> typing.List[bumpversion.files.ConfiguredFile]
-:canonical: bumpversion.files.get_glob_files
-
-```{autodoc2-docstring} bumpversion.files.get_glob_files
 ```
 ````
 

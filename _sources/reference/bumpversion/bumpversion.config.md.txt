@@ -71,6 +71,10 @@
   - ```{autodoc2-docstring} bumpversion.config.update_config_file
     :summary:
     ```
+* - {py:obj}`get_glob_files <bumpversion.config.get_glob_files>`
+  - ```{autodoc2-docstring} bumpversion.config.get_glob_files
+    :summary:
+    ```
 ````
 
 ### Data
@@ -463,6 +467,28 @@ Bases: {py:obj}`pydantic.BaseSettings`
 
 ````
 
+````{py:attribute} included_paths
+:canonical: bumpversion.config.Config.included_paths
+:type: typing.List[str]
+:value: >
+   []
+
+```{autodoc2-docstring} bumpversion.config.Config.included_paths
+```
+
+````
+
+````{py:attribute} excluded_paths
+:canonical: bumpversion.config.Config.excluded_paths
+:type: typing.List[str]
+:value: >
+   []
+
+```{autodoc2-docstring} bumpversion.config.Config.excluded_paths
+```
+
+````
+
 `````{py:class} Config
 :canonical: bumpversion.config.Config.Config
 
@@ -485,6 +511,24 @@ Bases: {py:obj}`pydantic.BaseSettings`
 :canonical: bumpversion.config.Config.add_files
 
 ```{autodoc2-docstring} bumpversion.config.Config.add_files
+```
+
+````
+
+````{py:property} resolved_filemap
+:canonical: bumpversion.config.Config.resolved_filemap
+:type: typing.Dict[str, bumpversion.config.FileConfig]
+
+```{autodoc2-docstring} bumpversion.config.Config.resolved_filemap
+```
+
+````
+
+````{py:property} files_to_modify
+:canonical: bumpversion.config.Config.files_to_modify
+:type: typing.List[bumpversion.config.FileConfig]
+
+```{autodoc2-docstring} bumpversion.config.Config.files_to_modify
 ```
 
 ````
@@ -580,5 +624,12 @@ Bases: {py:obj}`pydantic.BaseSettings`
 :canonical: bumpversion.config.update_config_file
 
 ```{autodoc2-docstring} bumpversion.config.update_config_file
+```
+````
+
+````{py:function} get_glob_files(file_cfg: bumpversion.config.FileConfig) -> typing.List[bumpversion.config.FileConfig]
+:canonical: bumpversion.config.get_glob_files
+
+```{autodoc2-docstring} bumpversion.config.get_glob_files
 ```
 ````

@@ -238,6 +238,7 @@
 <span></span><span class="sd">&quot;&quot;&quot;Configuration management.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">import</span> <span class="nn">glob</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">re</span>
@@ -303,6 +304,8 @@
     <span class="n">scm_info</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;SCMInfo&quot;</span><span class="p">]</span>
     <span class="n">parts</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VersionPartConfig</span><span class="p">]</span>
     <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">FileConfig</span><span class="p">]</span>
+    <span class="n">included_paths</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">excluded_paths</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
 <div class="viewcode-block" id="Config.Config"><a class="viewcode-back" href="../../reference/bumpversion/bumpversion.config.html#bumpversion.config.Config.Config">[docs]</a>    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
         <span class="n">env_prefix</span> <span class="o">=</span> <span class="s2">&quot;bumpversion_&quot;</span></div>
@@ -310,7 +313,42 @@
 <div class="viewcode-block" id="Config.add_files"><a class="viewcode-back" href="../../reference/bumpversion/bumpversion.config.html#bumpversion.config.Config.add_files">[docs]</a>    <span class="k">def</span> <span class="nf">add_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a filename to the list of files.&quot;&quot;&quot;</span>
         <span class="n">filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">filename</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">filename</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">FileConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">])</span>  <span class="c1"># type: ignore[call-arg]</span></div>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolved_filemap</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">FileConfig</span><span class="p">(</span>
+                    <span class="n">filename</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                    <span class="n">glob</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">parse</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parse</span><span class="p">,</span>
+                    <span class="n">serialize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">serialize</span><span class="p">,</span>
+                    <span class="n">search</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">search</span><span class="p">,</span>
+                    <span class="n">replace</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">replace</span><span class="p">,</span>
+                    <span class="n">no_regex</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">no_regex</span><span class="p">,</span>
+                    <span class="n">ignore_missing_version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ignore_missing_version</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">resolved_filemap</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">FileConfig</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a map of filenames to file configs, expanding any globs.&quot;&quot;&quot;</span>
+        <span class="n">new_files</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">file_cfg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">file_cfg</span><span class="o">.</span><span class="n">glob</span><span class="p">:</span>
+                <span class="n">new_files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">get_glob_files</span><span class="p">(</span><span class="n">file_cfg</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_cfg</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="n">file_cfg</span><span class="o">.</span><span class="n">filename</span><span class="p">:</span> <span class="n">file_cfg</span> <span class="k">for</span> <span class="n">file_cfg</span> <span class="ow">in</span> <span class="n">new_files</span><span class="p">}</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">files_to_modify</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">FileConfig</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a list of files to modify.&quot;&quot;&quot;</span>
+        <span class="n">files_not_excluded</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">file_cfg</span><span class="o">.</span><span class="n">filename</span> <span class="k">for</span> <span class="n">file_cfg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="k">if</span> <span class="n">file_cfg</span><span class="o">.</span><span class="n">filename</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">excluded_paths</span>
+        <span class="p">]</span>
+        <span class="n">inclusion_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">included_paths</span><span class="p">)</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span><span class="n">files_not_excluded</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">file_cfg</span> <span class="k">for</span> <span class="n">file_cfg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="k">if</span> <span class="n">file_cfg</span><span class="o">.</span><span class="n">filename</span> <span class="ow">in</span> <span class="n">inclusion_set</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">version_config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;VersionConfig&quot;</span><span class="p">:</span>
@@ -647,6 +685,25 @@
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">dry_run</span><span class="p">:</span>
         <span class="n">config_path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">new_config</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_glob_files"><a class="viewcode-back" href="../../reference/bumpversion/bumpversion.config.html#bumpversion.config.get_glob_files">[docs]</a><span class="k">def</span> <span class="nf">get_glob_files</span><span class="p">(</span><span class="n">file_cfg</span><span class="p">:</span> <span class="n">FileConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">FileConfig</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a list of files that match the glob pattern.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file_cfg: The file configuration containing the glob pattern</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list of resolved file configurations according to the pattern.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">filename_glob</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">file_cfg</span><span class="o">.</span><span class="n">glob</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">new_file_cfg</span> <span class="o">=</span> <span class="n">file_cfg</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">new_file_cfg</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename_glob</span>
+        <span class="n">new_file_cfg</span><span class="o">.</span><span class="n">glob</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_file_cfg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">files</span></div>
 </pre></div>
         </article>
       </div>

@@ -264,10 +264,7 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.files.modify_files" title="bumpversion.files.modify_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_files</span></code></a></p></td>
 <td><p>Modify the files, searching and replacing values according to the FileConfig.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.files.get_glob_files" title="bumpversion.files.get_glob_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_glob_files</span></code></a></p></td>
-<td><p>Return a list of files that match the glob pattern.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.files._check_files_contain_version" title="bumpversion.files._check_files_contain_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_check_files_contain_version</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.files._check_files_contain_version" title="bumpversion.files._check_files_contain_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_check_files_contain_version</span></code></a></p></td>
 <td><p>Make sure files exist and contain version string.</p></td>
 </tr>
 </tbody>
@@ -326,7 +323,7 @@ True if the version number is in fact present.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bumpversion.files.ConfiguredFile.contains">
-<span class="sig-name descname"><span class="pre">contains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">re.Pattern</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../_modules/bumpversion/files.html#ConfiguredFile.contains"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.files.ConfiguredFile.contains" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">contains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/re.html#re.Pattern" title="(in Python v3.11)"><span class="pre">re.Pattern</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../_modules/bumpversion/files.html#ConfiguredFile.contains"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.files.ConfiguredFile.contains" title="Permalink to this definition">#</a></dt>
 <dd><p>Does the work of the contains_version method.</p>
 </dd></dl>
 
@@ -338,7 +335,7 @@ True if the version number is in fact present.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bumpversion.files.ConfiguredFile.get_search_pattern">
-<span class="sig-name descname"><span class="pre">get_search_pattern</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.MutableMapping" title="(in Python v3.11)"><span class="pre">MutableMapping</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">re.Pattern</span></span></span><a class="reference internal" href="../../_modules/bumpversion/files.html#ConfiguredFile.get_search_pattern"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.files.ConfiguredFile.get_search_pattern" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_search_pattern</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.MutableMapping" title="(in Python v3.11)"><span class="pre">MutableMapping</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/re.html#re.Pattern" title="(in Python v3.11)"><span class="pre">re.Pattern</span></a></span></span><a class="reference internal" href="../../_modules/bumpversion/files.html#ConfiguredFile.get_search_pattern"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.files.ConfiguredFile.get_search_pattern" title="Permalink to this definition">#</a></dt>
 <dd><p>Compile and return the regex if it is valid, otherwise return the string.</p>
 </dd></dl>
 
@@ -377,19 +374,6 @@ current_version: The current version
 new_version: The next version
 context: The context used for rendering the version
 dry_run: True if this should be a report-only job</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="bumpversion.files.get_glob_files">
-<span class="sig-prename descclassname"><span class="pre">bumpversion.files.</span></span><span class="sig-name descname"><span class="pre">get_glob_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="bumpversion.config.html#bumpversion.config.FileConfig" title="bumpversion.config.FileConfig"><span class="pre">bumpversion.config.FileConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">version_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="bumpversion.version_part.html#bumpversion.version_part.VersionConfig" title="bumpversion.version_part.VersionConfig"><span class="pre">bumpversion.version_part.VersionConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">search</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#bumpversion.files.ConfiguredFile" title="bumpversion.files.ConfiguredFile"><span class="pre">bumpversion.files.ConfiguredFile</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/bumpversion/files.html#get_glob_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.files.get_glob_files" title="Permalink to this definition">#</a></dt>
-<dd><p>Return a list of files that match the glob pattern.</p>
-<p>Args:
-file_cfg: The file configuration containing the glob pattern
-version_config: The version configuration
-search: The search pattern to use instead of any configured search pattern
-replace: The replace pattern to use instead of any configured replace pattern</p>
-<p>Returns:
-A list of resolved files according to the pattern.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -484,7 +468,6 @@ A list of resolved files according to the pattern.</p>
 </li>
 <li><a class="reference internal" href="#bumpversion.files.resolve_file_config"><code class="docutils literal notranslate"><span class="pre">resolve_file_config()</span></code></a></li>
 <li><a class="reference internal" href="#bumpversion.files.modify_files"><code class="docutils literal notranslate"><span class="pre">modify_files()</span></code></a></li>
-<li><a class="reference internal" href="#bumpversion.files.get_glob_files"><code class="docutils literal notranslate"><span class="pre">get_glob_files()</span></code></a></li>
 <li><a class="reference internal" href="#bumpversion.files._check_files_contain_version"><code class="docutils literal notranslate"><span class="pre">_check_files_contain_version()</span></code></a></li>
 </ul>
 </li>

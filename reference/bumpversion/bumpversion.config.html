@@ -291,6 +291,9 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.config.update_config_file" title="bumpversion.config.update_config_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_config_file</span></code></a></p></td>
 <td><p>Update the current_version key in the configuration file.</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.config.get_glob_files" title="bumpversion.config.get_glob_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_glob_files</span></code></a></p></td>
+<td><p>Return a list of files that match the glob pattern.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -520,6 +523,18 @@
 <dd><p>None</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bumpversion.config.Config.included_paths">
+<span class="sig-name descname"><span class="pre">included_paths</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bumpversion.config.Config.included_paths" title="Permalink to this definition">#</a></dt>
+<dd><p>[]</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bumpversion.config.Config.excluded_paths">
+<span class="sig-name descname"><span class="pre">excluded_paths</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bumpversion.config.Config.excluded_paths" title="Permalink to this definition">#</a></dt>
+<dd><p>[]</p>
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="bumpversion.config.Config.Config">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="reference internal" href="../../_modules/bumpversion/config.html#Config.Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.config.Config.Config" title="Permalink to this definition">#</a></dt>
@@ -535,6 +550,18 @@
 <dt class="sig sig-object py" id="bumpversion.config.Config.add_files">
 <span class="sig-name descname"><span class="pre">add_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/bumpversion/config.html#Config.add_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.config.Config.add_files" title="Permalink to this definition">#</a></dt>
 <dd><p>Add a filename to the list of files.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="bumpversion.config.Config.resolved_filemap">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resolved_filemap</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#bumpversion.config.FileConfig" title="bumpversion.config.FileConfig"><span class="pre">bumpversion.config.FileConfig</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bumpversion.config.Config.resolved_filemap" title="Permalink to this definition">#</a></dt>
+<dd><p>Return a map of filenames to file configs, expanding any globs.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="bumpversion.config.Config.files_to_modify">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">files_to_modify</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#bumpversion.config.FileConfig" title="bumpversion.config.FileConfig"><span class="pre">bumpversion.config.FileConfig</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bumpversion.config.Config.files_to_modify" title="Permalink to this definition">#</a></dt>
+<dd><p>Return a list of files to modify.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -654,6 +681,16 @@ new_version: The serialized new version.
 dry_run: True if the update should be a dry run.</p>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="bumpversion.config.get_glob_files">
+<span class="sig-prename descclassname"><span class="pre">bumpversion.config.</span></span><span class="sig-name descname"><span class="pre">get_glob_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#bumpversion.config.FileConfig" title="bumpversion.config.FileConfig"><span class="pre">bumpversion.config.FileConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#bumpversion.config.FileConfig" title="bumpversion.config.FileConfig"><span class="pre">bumpversion.config.FileConfig</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/bumpversion/config.html#get_glob_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.config.get_glob_files" title="Permalink to this definition">#</a></dt>
+<dd><p>Return a list of files that match the glob pattern.</p>
+<p>Args:
+file_cfg: The file configuration containing the glob pattern</p>
+<p>Returns:
+A list of resolved file configurations according to the pattern.</p>
+</dd></dl>
+
 </section>
 </section>
 </section>
@@ -764,11 +801,15 @@ dry_run: True if the update should be a dry run.</p>
 <li><a class="reference internal" href="#bumpversion.config.Config.scm_info"><code class="docutils literal notranslate"><span class="pre">Config.scm_info</span></code></a></li>
 <li><a class="reference internal" href="#bumpversion.config.Config.parts"><code class="docutils literal notranslate"><span class="pre">Config.parts</span></code></a></li>
 <li><a class="reference internal" href="#bumpversion.config.Config.files"><code class="docutils literal notranslate"><span class="pre">Config.files</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.config.Config.included_paths"><code class="docutils literal notranslate"><span class="pre">Config.included_paths</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.config.Config.excluded_paths"><code class="docutils literal notranslate"><span class="pre">Config.excluded_paths</span></code></a></li>
 <li><a class="reference internal" href="#bumpversion.config.Config.Config"><code class="docutils literal notranslate"><span class="pre">Config.Config</span></code></a><ul>
 <li><a class="reference internal" href="#bumpversion.config.Config.Config.env_prefix"><code class="docutils literal notranslate"><span class="pre">Config.Config.env_prefix</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#bumpversion.config.Config.add_files"><code class="docutils literal notranslate"><span class="pre">Config.add_files()</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.config.Config.resolved_filemap"><code class="docutils literal notranslate"><span class="pre">Config.resolved_filemap</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.config.Config.files_to_modify"><code class="docutils literal notranslate"><span class="pre">Config.files_to_modify</span></code></a></li>
 <li><a class="reference internal" href="#bumpversion.config.Config.version_config"><code class="docutils literal notranslate"><span class="pre">Config.version_config</span></code></a></li>
 </ul>
 </li>
@@ -783,6 +824,7 @@ dry_run: True if the update should be a dry run.</p>
 <li><a class="reference internal" href="#bumpversion.config.read_ini_file"><code class="docutils literal notranslate"><span class="pre">read_ini_file()</span></code></a></li>
 <li><a class="reference internal" href="#bumpversion.config.read_toml_file"><code class="docutils literal notranslate"><span class="pre">read_toml_file()</span></code></a></li>
 <li><a class="reference internal" href="#bumpversion.config.update_config_file"><code class="docutils literal notranslate"><span class="pre">update_config_file()</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.config.get_glob_files"><code class="docutils literal notranslate"><span class="pre">get_glob_files()</span></code></a></li>
 </ul>
 </li>
 </ul>

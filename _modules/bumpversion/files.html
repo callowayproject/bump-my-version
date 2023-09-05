@@ -236,7 +236,6 @@
         <article role="main">
           <h1>Source code for bumpversion.files</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Methods for changing files.&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">glob</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
@@ -427,14 +426,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        A list of ConfiguredFiles</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">configured_files</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">file_cfg</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">file_cfg</span><span class="o">.</span><span class="n">glob</span><span class="p">:</span>
-            <span class="n">configured_files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">get_glob_files</span><span class="p">(</span><span class="n">file_cfg</span><span class="p">,</span> <span class="n">version_config</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">configured_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ConfiguredFile</span><span class="p">(</span><span class="n">file_cfg</span><span class="p">,</span> <span class="n">version_config</span><span class="p">,</span> <span class="n">search</span><span class="p">,</span> <span class="n">replace</span><span class="p">))</span>
-
-    <span class="k">return</span> <span class="n">configured_files</span></div>
+    <span class="k">return</span> <span class="p">[</span><span class="n">ConfiguredFile</span><span class="p">(</span><span class="n">file_cfg</span><span class="p">,</span> <span class="n">version_config</span><span class="p">,</span> <span class="n">search</span><span class="p">,</span> <span class="n">replace</span><span class="p">)</span> <span class="k">for</span> <span class="n">file_cfg</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="modify_files"><a class="viewcode-back" href="../../reference/bumpversion/bumpversion.files.html#bumpversion.files.modify_files">[docs]</a><span class="k">def</span> <span class="nf">modify_files</span><span class="p">(</span>
@@ -457,29 +449,6 @@
     <span class="n">_check_files_contain_version</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">current_version</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
         <span class="n">f</span><span class="o">.</span><span class="n">replace_version</span><span class="p">(</span><span class="n">current_version</span><span class="p">,</span> <span class="n">new_version</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">dry_run</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="get_glob_files"><a class="viewcode-back" href="../../reference/bumpversion/bumpversion.files.html#bumpversion.files.get_glob_files">[docs]</a><span class="k">def</span> <span class="nf">get_glob_files</span><span class="p">(</span>
-    <span class="n">file_cfg</span><span class="p">:</span> <span class="n">FileConfig</span><span class="p">,</span> <span class="n">version_config</span><span class="p">:</span> <span class="n">VersionConfig</span><span class="p">,</span> <span class="n">search</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">replace</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ConfiguredFile</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return a list of files that match the glob pattern.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        file_cfg: The file configuration containing the glob pattern</span>
-<span class="sd">        version_config: The version configuration</span>
-<span class="sd">        search: The search pattern to use instead of any configured search pattern</span>
-<span class="sd">        replace: The replace pattern to use instead of any configured replace pattern</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        A list of resolved files according to the pattern.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">filename_glob</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">file_cfg</span><span class="o">.</span><span class="n">glob</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="n">new_file_cfg</span> <span class="o">=</span> <span class="n">file_cfg</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">new_file_cfg</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename_glob</span>
-        <span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ConfiguredFile</span><span class="p">(</span><span class="n">new_file_cfg</span><span class="p">,</span> <span class="n">version_config</span><span class="p">,</span> <span class="n">search</span><span class="p">,</span> <span class="n">replace</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">files</span></div>
 
 
 <div class="viewcode-block" id="_check_files_contain_version"><a class="viewcode-back" href="../../reference/bumpversion/bumpversion.files.html#bumpversion.files._check_files_contain_version">[docs]</a><span class="k">def</span> <span class="nf">_check_files_contain_version</span><span class="p">(</span>
