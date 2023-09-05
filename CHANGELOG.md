@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.10.0 (2023-09-05)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.9.3...0.10.0)
+
+### Updates
+
+- Refactored file resolution, inclusion, and exclusion. [646af54](https://github.com/callowayproject/bump-my-version/commit/646af5438740e5dd17425144c6f2e4f305ffc30b)
+    
+  - Fixes #61
+  - Config now includes `resolved_filemap` property
+  - resolved filemap exapands all globs
+  - Config now includes `files_to_modify` property
+  - files to modify resolves inclusions and exclutions
+  - Improved Config.add_files property
+
 ## 0.9.3 (2023-08-25)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.9.2...0.9.3)
 
