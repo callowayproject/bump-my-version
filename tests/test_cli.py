@@ -201,12 +201,14 @@ def test_listing_with_version_part(tmp_path: Path, fixtures_path: Path):
         "DEPRECATED: The --list option is deprecated and will be removed in a future version.",
         "new_version=1.0.1-dev",
         "current_version=1.0.0",
+        "excluded_paths=[]",
         "parse=(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?",
         "serialize=['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}']",
         "search={current_version}",
         "replace={new_version}",
         "no_regex=False",
         "ignore_missing_version=False",
+        "included_paths=[]",
         "tag=True",
         "sign_tags=False",
         "tag_name=v{new_version}",
@@ -254,12 +256,14 @@ def test_listing_without_version_part(tmp_path: Path, fixtures_path: Path):
         "",
         "DEPRECATED: The --list option is deprecated and will be removed in a future version.",
         "current_version=1.0.0",
+        "excluded_paths=[]",
         "parse=(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?",
         "serialize=['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}']",
         "search={current_version}",
         "replace={new_version}",
         "no_regex=False",
         "ignore_missing_version=False",
+        "included_paths=[]",
         "tag=True",
         "sign_tags=False",
         "tag_name=v{new_version}",
@@ -517,3 +521,52 @@ def test_replace_search_with_plain_string(tmp_path, fixtures_path):
         print(traceback.print_exception(result.exc_info[1]))
 
     assert result.exit_code == 0
+
+
+def test_valid_regex_not_ignoring_regex(tmp_path: Path, caplog) -> None:
+    """A search string not meant to be a regex (but is) is still found and replaced correctly."""
+    # Arrange
+    search = "(unreleased)"
+    replace = "(2023-01-01)"
+
+    version_path = tmp_path / "VERSION"
+    version_path.write_text("# Changelog\n\n## [0.0.1 (unreleased)](https://cool.url)\n\n- Test unreleased package.\n")
+    config_file = tmp_path / ".bumpversion.toml"
+    config_file.write_text(
+        "[tool.bumpversion]\n"
+        'current_version = "0.0.1"\n'
+        "allow_dirty = true\n\n"
+        "[[tool.bumpversion.files]]\n"
+        'filename = "VERSION"\n'
+        "no_regex = true\n"
+        f'search = "{search}"\n'
+        f'replace = "{replace}"\n'
+    )
+
+    # Act
+    runner: CliRunner = CliRunner()
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(
+            cli.cli,
+            [
+                "replace",
+                "--verbose",
+                "--no-regex",
+                "--no-configured-files",
+                "--search",
+                search,
+                "--replace",
+                replace,
+                "VERSION",
+            ],
+        )
+
+    # Assert
+    if result.exit_code != 0:
+        print(result.output)
+
+    assert result.exit_code == 0
+    assert (
+        version_path.read_text()
+        == "# Changelog\n\n## [0.0.1 (2023-01-01)](https://cool.url)\n\n- Test unreleased package.\n"
+    )

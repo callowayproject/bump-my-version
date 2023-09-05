@@ -9,7 +9,7 @@ from bumpversion import __version__
 from bumpversion.aliases import AliasedGroup
 from bumpversion.bump import do_bump
 from bumpversion.config import find_config_file, get_configuration
-from bumpversion.files import modify_files, resolve_file_config
+from bumpversion.files import ConfiguredFile, modify_files
 from bumpversion.logging import setup_logging
 from bumpversion.show import do_show, log_list
 from bumpversion.ui import print_warning
@@ -300,10 +300,11 @@ def bump(
         config.scm_info.tool.assert_nondirty()
 
     if no_configured_files:
-        config.files = []
+        config.excluded_paths = list(config.resolved_filemap.keys())
 
     if files:
         config.add_files(files)
+        config.included_paths = files
 
     do_bump(version_part, new_version, config, found_config_file, dry_run)
 
@@ -495,20 +496,22 @@ def replace(
         config.scm_info.tool.assert_nondirty()
 
     if no_configured_files:
-        config.files = []
+        config.excluded_paths = list(config.resolved_filemap.keys())
 
     if files:
         config.add_files(files)
+        config.included_paths = files
+
+    configured_files = [
+        ConfiguredFile(file_cfg, config.version_config, search, replace) for file_cfg in config.files_to_modify
+    ]
 
     version = config.version_config.parse(config.current_version)
-
     if new_version:
         next_version = config.version_config.parse(new_version)
     else:
         next_version = None
 
     ctx = get_context(config, version, next_version)
-
-    configured_files = resolve_file_config(config.files, config.version_config, search, replace)
 
     modify_files(configured_files, version, next_version, ctx, dry_run)

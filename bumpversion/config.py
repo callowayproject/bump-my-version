@@ -1,6 +1,7 @@
 """Configuration management."""
 from __future__ import annotations
 
+import glob
 import itertools
 import logging
 import re
@@ -66,6 +67,8 @@ class Config(BaseSettings):
     scm_info: Optional["SCMInfo"]
     parts: Dict[str, VersionPartConfig]
     files: List[FileConfig]
+    included_paths: List[str] = []
+    excluded_paths: List[str] = []
 
     class Config:
         env_prefix = "bumpversion_"
@@ -73,7 +76,42 @@ class Config(BaseSettings):
     def add_files(self, filename: Union[str, List[str]]) -> None:
         """Add a filename to the list of files."""
         filenames = [filename] if isinstance(filename, str) else filename
-        self.files.extend([FileConfig(filename=name) for name in filenames])  # type: ignore[call-arg]
+        for name in filenames:
+            if name in self.resolved_filemap:
+                continue
+            self.files.append(
+                FileConfig(
+                    filename=name,
+                    glob=None,
+                    parse=self.parse,
+                    serialize=self.serialize,
+                    search=self.search,
+                    replace=self.replace,
+                    no_regex=self.no_regex,
+                    ignore_missing_version=self.ignore_missing_version,
+                )
+            )
+
+    @property
+    def resolved_filemap(self) -> Dict[str, FileConfig]:
+        """Return a map of filenames to file configs, expanding any globs."""
+        new_files = []
+        for file_cfg in self.files:
+            if file_cfg.glob:
+                new_files.extend(get_glob_files(file_cfg))
+            else:
+                new_files.append(file_cfg)
+
+        return {file_cfg.filename: file_cfg for file_cfg in new_files}
+
+    @property
+    def files_to_modify(self) -> List[FileConfig]:
+        """Return a list of files to modify."""
+        files_not_excluded = [
+            file_cfg.filename for file_cfg in self.files if file_cfg.filename not in self.excluded_paths
+        ]
+        inclusion_set = set(self.included_paths) | set(files_not_excluded)
+        return [file_cfg for file_cfg in self.files if file_cfg.filename in inclusion_set]
 
     @property
     def version_config(self) -> "VersionConfig":
@@ -410,3 +448,22 @@ def update_config_file(
 
     if not dry_run:
         config_path.write_text(new_config)
+
+
+def get_glob_files(file_cfg: FileConfig) -> List[FileConfig]:
+    """
+    Return a list of files that match the glob pattern.
+
+    Args:
+        file_cfg: The file configuration containing the glob pattern
+
+    Returns:
+        A list of resolved file configurations according to the pattern.
+    """
+    files = []
+    for filename_glob in glob.glob(file_cfg.glob, recursive=True):
+        new_file_cfg = file_cfg.copy()
+        new_file_cfg.filename = filename_glob
+        new_file_cfg.glob = None
+        files.append(new_file_cfg)
+    return files
