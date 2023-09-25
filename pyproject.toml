@@ -42,7 +42,6 @@ dependencies = [
 
 [project.scripts]
 bump-my-version = "bumpversion.cli:cli"
-bumpversion = "bumpversion.cli:cli"
 
 
 [project.urls]
