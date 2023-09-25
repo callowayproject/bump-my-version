@@ -6,6 +6,8 @@
 #
 alabaster==0.7.13
     # via sphinx
+annotated-types==0.5.0
+    # via pydantic
 argopt==0.8.2
     # via git-fame
 astroid==2.15.6
@@ -103,7 +105,13 @@ pluggy==1.0.0
     # via pytest
 pre-commit==3.3.3
     # via bump-my-version (pyproject.toml)
-pydantic==1.10.9
+pydantic==2.4.0
+    # via
+    #   bump-my-version (pyproject.toml)
+    #   pydantic-settings
+pydantic-core==2.10.0
+    # via pydantic
+pydantic-settings==2.0.3
     # via bump-my-version (pyproject.toml)
 pygments==2.15.1
     # via
@@ -123,6 +131,8 @@ pytest-mock==3.11.1
     # via bump-my-version (pyproject.toml)
 python-dateutil==2.8.2
     # via ghp-import
+python-dotenv==1.0.0
+    # via pydantic-settings
 pyyaml==6.0
     # via
     #   myst-parser
@@ -197,6 +207,7 @@ typing-extensions==4.6.3
     # via
     #   astroid
     #   pydantic
+    #   pydantic-core
     #   sphinx-autodoc2
     #   typer
 uc-micro-py==1.0.2

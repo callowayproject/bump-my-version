@@ -6,6 +6,8 @@
 #
 alabaster==0.7.13
     # via sphinx
+annotated-types==0.5.0
+    # via pydantic
 astroid==2.15.6
     # via sphinx-autodoc2
 babel==2.12.1
@@ -57,7 +59,13 @@ myst-parser==2.0.0
     # via bump-my-version (pyproject.toml)
 packaging==23.1
     # via sphinx
-pydantic==1.10.9
+pydantic==2.4.0
+    # via
+    #   bump-my-version (pyproject.toml)
+    #   pydantic-settings
+pydantic-core==2.10.0
+    # via pydantic
+pydantic-settings==2.0.3
     # via bump-my-version (pyproject.toml)
 pygments==2.15.1
     # via
@@ -66,6 +74,8 @@ pygments==2.15.1
     #   sphinx
 python-dateutil==2.8.2
     # via ghp-import
+python-dotenv==1.0.0
+    # via pydantic-settings
 pyyaml==6.0
     # via myst-parser
 requests==2.31.0
@@ -121,6 +131,7 @@ typing-extensions==4.6.3
     # via
     #   astroid
     #   pydantic
+    #   pydantic-core
     #   sphinx-autodoc2
 uc-micro-py==1.0.2
     # via linkify-it-py

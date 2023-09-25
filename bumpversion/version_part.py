@@ -3,7 +3,7 @@ import logging
 import re
 import string
 from copy import copy
-from typing import Any, Dict, List, MutableMapping, Optional
+from typing import Any, Dict, List, MutableMapping, Optional, Union
 
 from click import UsageError
 
@@ -23,12 +23,15 @@ class VersionPart:
     based on the configuration given.
     """
 
-    def __init__(self, config: VersionPartConfig, value: Optional[str] = None):
-        self._value = value
+    def __init__(self, config: VersionPartConfig, value: Union[str, int, None] = None):
+        self._value = str(value) if value is not None else None
         self.config = config
         self.func: Optional[PartFunction] = None
         if config.values:
-            self.func = ValuesFunction(config.values, config.optional_value, config.first_value)
+            str_values = [str(v) for v in config.values]
+            str_optional_value = str(config.optional_value) if config.optional_value is not None else None
+            str_first_value = str(config.first_value) if config.first_value is not None else None
+            self.func = ValuesFunction(str_values, str_optional_value, str_first_value)
         else:
             self.func = NumericFunction(config.optional_value, config.first_value or "0")
 

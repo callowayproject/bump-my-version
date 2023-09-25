@@ -44,15 +44,12 @@ repos:
       - id: mypy
         args: [--no-strict-optional, --ignore-missing-imports]
         additional_dependencies: ["pydantic<2.0", "toml", "types-all"]
-  - repo: https://github.com/terrencepreilly/darglint
-    rev: v1.8.1
+  - repo: https://github.com/jsh9/pydoclint
+    rev: 0.3.2
     hooks:
-      - id: darglint
-        exclude: test.*|cli\.py
+      - id: pydoclint
         args:
-          - -v 2
-          - "--message-template={path}:{line} in `{obj}`:\n        {msg_id}: {msg}"
-          - --strictness=short
+          - "--config=pyproject.toml"
   - repo: https://github.com/econchick/interrogate
     rev: 1.5.0  # or master if you're bold
     hooks:
