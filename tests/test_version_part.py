@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 
 import pytest
@@ -330,3 +331,35 @@ def test_part_does_not_revert_to_zero_if_optional(tmp_path: Path) -> None:
 
     new_version = current_version.bump("build", version_config.order)
     assert version_config.serialize(new_version, get_context(conf)) == "0.3.1g1"
+
+
+def test_order_of_serialization(tmp_path: Path, caplog: LogCaptureFixture) -> None:
+    """The order of serialization should be as specified in the config."""
+    caplog.set_level(logging.DEBUG)
+    overrides = {
+        "current_version": "3.16.dev1",
+        "parse": r"(?P<major>\d+)\.(?P<minor>\d+)\.(?P<release>[a-z]+)?(?P<patch>\d+)?",
+        "serialize": [
+            "{major}.{minor}.{release}{patch}",
+            "{major}.{minor}.{release}",
+            "{major}.{minor}.{patch}",
+        ],
+        "parts": {
+            "release": {
+                "optional_value": "prod",
+                "first_value": "dev",
+                "values": [
+                    "dev",
+                    "prod",
+                ],
+            },
+        },
+    }
+    with inside_dir(tmp_path):
+        conf, version_config, current_version = get_config_data(overrides)
+
+    new_version = current_version.bump("release", version_config.order)
+    new_version_str = version_config.serialize(new_version, get_context(conf))
+    for msg in caplog.messages:
+        print(msg)
+    assert new_version_str == "3.16.prod"

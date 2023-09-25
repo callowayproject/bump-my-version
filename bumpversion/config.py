@@ -16,7 +16,8 @@ if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.scm import SCMInfo
     from bumpversion.version_part import VersionConfig
 
-from pydantic import BaseModel, BaseSettings, Field
+from pydantic import BaseModel, Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from bumpversion.exceptions import ConfigurationError
 
@@ -26,24 +27,24 @@ logger = logging.getLogger(__name__)
 class VersionPartConfig(BaseModel):
     """Configuration of a part of the version."""
 
-    values: Optional[list]  # Optional. Numeric is used if missing or no items in list
-    optional_value: Optional[str]  # Optional.
+    values: Optional[list] = None  # Optional. Numeric is used if missing or no items in list
+    optional_value: Optional[str] = None  # Optional.
     # Defaults to first value. 0 in the case of numeric. Empty string means nothing is optional.
-    first_value: Optional[str]  # Optional. Defaults to first value in values
+    first_value: Union[str, int, None] = None  # Optional. Defaults to first value in values
     independent: bool = False
 
 
 class FileConfig(BaseModel):
     """Search and replace file config."""
 
-    filename: Optional[str]
-    glob: Optional[str]  # Conflicts with filename. If both are specified, glob wins
-    parse: Optional[str]  # If different from outer scope
-    serialize: Optional[List[str]]  # If different from outer scope
-    search: Optional[str]  # If different from outer scope
-    replace: Optional[str]  # If different from outer scope
-    no_regex: Optional[bool]  # If different from outer scope
-    ignore_missing_version: Optional[bool]
+    filename: Optional[str] = None
+    glob: Optional[str] = None  # Conflicts with filename. If both are specified, glob wins
+    parse: Optional[str] = None  # If different from outer scope
+    serialize: Optional[List[str]] = None  # If different from outer scope
+    search: Optional[str] = None  # If different from outer scope
+    replace: Optional[str] = None  # If different from outer scope
+    no_regex: Optional[bool] = None  # If different from outer scope
+    ignore_missing_version: Optional[bool] = None
 
 
 class Config(BaseSettings):
@@ -51,7 +52,7 @@ class Config(BaseSettings):
 
     current_version: Optional[str]
     parse: str
-    serialize: List[str] = Field(min_items=1)
+    serialize: List[str] = Field(min_length=1)
     search: str
     replace: str
     no_regex: bool
@@ -67,11 +68,9 @@ class Config(BaseSettings):
     scm_info: Optional["SCMInfo"]
     parts: Dict[str, VersionPartConfig]
     files: List[FileConfig]
-    included_paths: List[str] = []
-    excluded_paths: List[str] = []
-
-    class Config:
-        env_prefix = "bumpversion_"
+    included_paths: List[str] = Field(default_factory=list)
+    excluded_paths: List[str] = Field(default_factory=list)
+    model_config = SettingsConfigDict(env_prefix="bumpversion_")
 
     def add_files(self, filename: Union[str, List[str]]) -> None:
         """Add a filename to the list of files."""
@@ -177,7 +176,7 @@ def get_configuration(config_file: Union[str, Path, None] = None, **overrides) -
     Returns:
         The configuration
     """
-    from bumpversion.scm import SCMInfo, get_scm_info
+    from bumpversion.scm import SCMInfo, SourceCodeManager, get_scm_info  # noqa: F401
 
     config_dict = DEFAULTS.copy()
     parsed_config = read_config_file(config_file) if config_file else {}
@@ -195,7 +194,7 @@ def get_configuration(config_file: Union[str, Path, None] = None, **overrides) -
     config_dict["files"] = get_all_file_configs(config_dict)
 
     # Resolve the SCMInfo class for Pydantic's BaseSettings
-    Config.update_forward_refs(SCMInfo=SCMInfo)
+    Config.model_rebuild()
     config = Config(**config_dict)  # type: ignore[arg-type]
 
     # Get the information about the SCM

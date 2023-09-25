@@ -31,12 +31,12 @@ class NumericFunction(PartFunction):
 
     FIRST_NUMERIC = re.compile(r"(\D*)(\d+)(.*)")
 
-    def __init__(self, optional_value: Optional[str] = None, first_value: Optional[str] = None):
+    def __init__(self, optional_value: Union[str, int, None] = None, first_value: Union[str, int, None] = None):
         if first_value is not None and not self.FIRST_NUMERIC.search(str(first_value)):
             raise ValueError(f"The given first value {first_value} does not contain any digit")
 
         self.first_value = str(first_value or 0)
-        self.optional_value = optional_value or self.first_value
+        self.optional_value = str(optional_value or self.first_value)
 
     def bump(self, value: Union[str, int]) -> str:
         """Increase the first numerical value by one."""

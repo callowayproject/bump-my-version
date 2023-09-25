@@ -80,7 +80,15 @@
     }
   },
   "replace": "{new_version}",
-  "scm_info": "SCMInfo(tool=No SCM tool, commit_sha=None, distance_to_latest_tag=None, current_version=None, dirty=None)",
+  "scm_info": {
+    "branch_name": null,
+    "commit_sha": null,
+    "current_version": null,
+    "dirty": null,
+    "distance_to_latest_tag": null,
+    "short_branch_name": null,
+    "tool": null
+  },
   "search": "{current_version}",
   "serialize": [
     "{major}.{minor}.{patch}-{release}",
