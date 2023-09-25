@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.11.0 (2023-09-25)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.10.0...0.11.0)
+
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [4a3d046](https://github.com/callowayproject/bump-my-version/commit/4a3d0460fa7d914cb9d5444660f2b09487ad33df)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.0.285 → v0.0.290](https://github.com/astral-sh/ruff-pre-commit/compare/v0.0.285...v0.0.290)
+
+### Updates
+
+- Removed bumpversion as a duplicate of the bump-my-version script. [a59ced8](https://github.com/callowayproject/bump-my-version/commit/a59ced8e5ed126cf2c43070d26d5a001982de962)
+    
+- Updated dependency from Pydantic 1 to 2. [577aa4c](https://github.com/callowayproject/bump-my-version/commit/577aa4cd6408c7b6a46e8ba7cb5c54cd38cef769)
+    
+
 ## 0.10.0 (2023-09-05)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.9.3...0.10.0)
 
