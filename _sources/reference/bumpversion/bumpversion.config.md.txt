@@ -109,12 +109,18 @@
 
 ````
 
-`````{py:class} VersionPartConfig
+`````{py:class} VersionPartConfig(**data: typing.Any)
 :canonical: bumpversion.config.VersionPartConfig
 
 Bases: {py:obj}`pydantic.BaseModel`
 
 ```{autodoc2-docstring} bumpversion.config.VersionPartConfig
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} bumpversion.config.VersionPartConfig.__init__
 ```
 
 ````{py:attribute} values
@@ -141,7 +147,7 @@ Bases: {py:obj}`pydantic.BaseModel`
 
 ````{py:attribute} first_value
 :canonical: bumpversion.config.VersionPartConfig.first_value
-:type: typing.Optional[str]
+:type: typing.Union[str, int, None]
 :value: >
    None
 
@@ -163,12 +169,18 @@ Bases: {py:obj}`pydantic.BaseModel`
 
 `````
 
-`````{py:class} FileConfig
+`````{py:class} FileConfig(**data: typing.Any)
 :canonical: bumpversion.config.FileConfig
 
 Bases: {py:obj}`pydantic.BaseModel`
 
 ```{autodoc2-docstring} bumpversion.config.FileConfig
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} bumpversion.config.FileConfig.__init__
 ```
 
 ````{py:attribute} filename
@@ -261,12 +273,18 @@ Bases: {py:obj}`pydantic.BaseModel`
 
 `````
 
-``````{py:class} Config
+`````{py:class} Config(_case_sensitive: bool | None = None, _env_prefix: str | None = None, _env_file: pydantic_settings.sources.DotenvType | None = ENV_FILE_SENTINEL, _env_file_encoding: str | None = None, _env_nested_delimiter: str | None = None, _secrets_dir: str | pathlib.Path | None = None, **values: typing.Any)
 :canonical: bumpversion.config.Config
 
-Bases: {py:obj}`pydantic.BaseSettings`
+Bases: {py:obj}`pydantic_settings.BaseSettings`
 
 ```{autodoc2-docstring} bumpversion.config.Config
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} bumpversion.config.Config.__init__
 ```
 
 ````{py:attribute} current_version
@@ -471,7 +489,7 @@ Bases: {py:obj}`pydantic.BaseSettings`
 :canonical: bumpversion.config.Config.included_paths
 :type: typing.List[str]
 :value: >
-   []
+   None
 
 ```{autodoc2-docstring} bumpversion.config.Config.included_paths
 ```
@@ -482,30 +500,22 @@ Bases: {py:obj}`pydantic.BaseSettings`
 :canonical: bumpversion.config.Config.excluded_paths
 :type: typing.List[str]
 :value: >
-   []
+   None
 
 ```{autodoc2-docstring} bumpversion.config.Config.excluded_paths
 ```
 
 ````
 
-`````{py:class} Config
-:canonical: bumpversion.config.Config.Config
-
-```{autodoc2-docstring} bumpversion.config.Config.Config
-```
-
-````{py:attribute} env_prefix
-:canonical: bumpversion.config.Config.Config.env_prefix
+````{py:attribute} model_config
+:canonical: bumpversion.config.Config.model_config
 :value: >
-   'bumpversion_'
+   None
 
-```{autodoc2-docstring} bumpversion.config.Config.Config.env_prefix
+```{autodoc2-docstring} bumpversion.config.Config.model_config
 ```
 
 ````
-
-`````
 
 ````{py:method} add_files(filename: typing.Union[str, typing.List[str]]) -> None
 :canonical: bumpversion.config.Config.add_files
@@ -542,7 +552,7 @@ Bases: {py:obj}`pydantic.BaseSettings`
 
 ````
 
-``````
+`````
 
 ````{py:data} DEFAULTS
 :canonical: bumpversion.config.DEFAULTS

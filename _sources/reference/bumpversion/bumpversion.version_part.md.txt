@@ -53,7 +53,7 @@
 
 ````
 
-`````{py:class} VersionPart(config: bumpversion.config.VersionPartConfig, value: typing.Optional[str] = None)
+`````{py:class} VersionPart(config: bumpversion.config.VersionPartConfig, value: typing.Union[str, int, None] = None)
 :canonical: bumpversion.version_part.VersionPart
 
 ```{autodoc2-docstring} bumpversion.version_part.VersionPart

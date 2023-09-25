@@ -13,22 +13,22 @@
 :titlesonly:
 :maxdepth: 1
 
-bumpversion.functions
-bumpversion.show
-bumpversion.ui
-bumpversion.scm
-bumpversion.bump
-bumpversion.exceptions
-bumpversion.logging
-bumpversion.config
-bumpversion.version_part
-bumpversion.autocast
-bumpversion.__main__
-bumpversion.cli
-bumpversion.yaml_dump
 bumpversion.files
-bumpversion.utils
+bumpversion.show
+bumpversion.logging
+bumpversion.cli
 bumpversion.aliases
+bumpversion.functions
+bumpversion.autocast
+bumpversion.yaml_dump
+bumpversion.version_part
+bumpversion.ui
+bumpversion.bump
+bumpversion.config
+bumpversion.__main__
+bumpversion.exceptions
+bumpversion.scm
+bumpversion.utils
 ```
 
 ## Package Contents
