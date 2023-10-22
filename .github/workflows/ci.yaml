@@ -80,7 +80,8 @@ jobs:
       - name: Set dev version
         shell: bash
         run: |
-          export PR_NUMBER=$(gh pr view --json number -q .number || echo "")
+          PR_NUMBER=$(gh pr view --json number -q .number || echo "")
+          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
           bump-my-version bump dev bumpversion/__init__.py --no-commit --no-configured-files -v
 
       - name: Package
