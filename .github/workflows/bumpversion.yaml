@@ -38,8 +38,7 @@ jobs:
 
       - name: Install requirements
         run: |
-          python -m pip install generate-changelog
-          python -m pip install -e .
+          python -m pip install generate-changelog bump-my-version
 
       - name: Git check
         run: |
@@ -74,8 +73,15 @@ jobs:
           BUMPVERSION_NEW_VERSION: ${{ inputs.tags }}
           BUMPVERSION_VERBOSE: ${{ inputs.verbose }}
         run: |
-          bump-my-version -v "$RELEASE_KIND"
-          if [[ BUMPVERSION_DRY_RUN == "false" ]]; then
-            git push
-            git push --tags
-          fi
+          case "$RELEASE_KIND" in
+            major|minor|patch)
+              bump-my-version bump "$RELEASE_KIND"
+              if [[ BUMPVERSION_DRY_RUN == "false" ]];  then
+                git push
+                git push --tags
+              fi
+              ;;
+            release-candidate)
+              bump-my-version bump --no-commit "$RELEASE_KIND"
+              ;;
+          esac
