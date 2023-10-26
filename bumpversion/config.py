@@ -107,10 +107,12 @@ class Config(BaseSettings):
     def files_to_modify(self) -> List[FileConfig]:
         """Return a list of files to modify."""
         files_not_excluded = [
-            file_cfg.filename for file_cfg in self.files if file_cfg.filename not in self.excluded_paths
+            file_cfg.filename
+            for file_cfg in self.resolved_filemap.values()
+            if file_cfg.filename not in self.excluded_paths
         ]
         inclusion_set = set(self.included_paths) | set(files_not_excluded)
-        return [file_cfg for file_cfg in self.files if file_cfg.filename in inclusion_set]
+        return [file_cfg for file_cfg in self.resolved_filemap.values() if file_cfg.filename in inclusion_set]
 
     @property
     def version_config(self) -> "VersionConfig":
