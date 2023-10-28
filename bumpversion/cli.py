@@ -24,6 +24,7 @@ logger = logging.getLogger(__name__)
     context_settings={
         "ignore_unknown_options": True,
         "allow_interspersed_args": True,
+        "help_option_names": ["-h", "--help"],
     },
     add_help_option=False,
 )
