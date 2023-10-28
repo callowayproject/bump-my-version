@@ -230,8 +230,6 @@ class Git(SourceCodeManager):
 
         try:
             # get info about the latest tag in git
-            # TODO: This only works if the tag name is prefixed with `v`.
-            #   Should allow for the configured format for the tag name.
             git_cmd = [
                 "git",
                 "describe",
