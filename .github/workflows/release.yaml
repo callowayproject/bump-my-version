@@ -11,16 +11,16 @@ on:
 
 jobs:
   # Package when a new tag is pushed
-  build-package:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.PAT }}
-
-      - name: Package
-        uses: hynek/build-and-inspect-python-package@v1
+#  build-package:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#        with:
+#          fetch-depth: 0
+#          token: ${{ secrets.PAT }}
+#
+#      - name: Package
+#        uses: hynek/build-and-inspect-python-package@v1
 
   # Create a GitHub release
   release:
