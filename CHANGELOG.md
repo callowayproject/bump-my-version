@@ -1,5 +1,59 @@
 # Changelog
 
+## Unreleased (2023-11-04)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.11.0...0.12.0)
+
+### Fixes
+
+- Fixed versioning. [8769671](https://github.com/callowayproject/bump-my-version/commit/87696710968d1c270c88b39738e2fac79720be51)
+    
+- Fix dev versioning with PR number. [463082b](https://github.com/callowayproject/bump-my-version/commit/463082b1996d3bbd7cd4b6adfe732ede73f5cf54)
+    
+- Fix dev versioning. [1eed99b](https://github.com/callowayproject/bump-my-version/commit/1eed99bb93b2144cd033f47c13e324a78e8beb0f)
+    
+  - added an echo of the PR_NUMBER
+- Fix versioning of development versions. [e89599f](https://github.com/callowayproject/bump-my-version/commit/e89599f19843537c2e10d4c97da367d377e95914)
+    
+- Fixes workflows. [5ebb0d7](https://github.com/callowayproject/bump-my-version/commit/5ebb0d77f3302ed7ee5ce2398834573314908927)
+    
+- Fixed bug #65 where glob'd files weren't used. [357b9dc](https://github.com/callowayproject/bump-my-version/commit/357b9dc85e248845a331ff9a42bc72de5583c8be)
+    
+### New
+
+- Add -h for help option. [fda71b0](https://github.com/callowayproject/bump-my-version/commit/fda71b0fce4115514fa85cf1d627e5f3673dba66)
+    
+  Fixes #67
+### Other
+
+- Drop Python3.7 as compatible version. [890edc8](https://github.com/callowayproject/bump-my-version/commit/890edc8a0c0911ad3696a9bc0ddca7a9a72c5afd)
+    
+  Since this is no longer tested, it's safer to start at 3.8.
+- [pre-commit.ci] auto fixes from pre-commit.com hooks. [fbcef03](https://github.com/callowayproject/bump-my-version/commit/fbcef038d3b94ca1aef7a6aab52b16fc614a6a9b)
+    
+  for more information, see https://pre-commit.ci
+- Recommend calling 'bump-my-version' instead of 'bumpversion'. [9fb1a1d](https://github.com/callowayproject/bump-my-version/commit/9fb1a1d2f940ec026358d36e6b3f1a81acd7c7d9)
+    
+- [pre-commit.ci] pre-commit autoupdate. [e2579d6](https://github.com/callowayproject/bump-my-version/commit/e2579d6cd9b62a5f9b2df15ff0df0af4c4d1b2f2)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.0.290 → v0.0.292](https://github.com/astral-sh/ruff-pre-commit/compare/v0.0.290...v0.0.292)
+
+- [pre-commit.ci] pre-commit autoupdate. [e21fdd9](https://github.com/callowayproject/bump-my-version/commit/e21fdd9b11071315a1500af0bfa0a5f29a5e6e0c)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.0.290 → v0.1.1](https://github.com/astral-sh/ruff-pre-commit/compare/v0.0.290...v0.1.1)
+
+- [pre-commit.ci] pre-commit autoupdate. [7e5d1bc](https://github.com/callowayproject/bump-my-version/commit/7e5d1bc95b2fffa907e0a1321bb393aad6221208)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.0.290 → v0.1.3](https://github.com/astral-sh/ruff-pre-commit/compare/v0.0.290...v0.1.3)
+
+### Updates
+
+- Changed the default regex search to non-regex. [0034716](https://github.com/callowayproject/bump-my-version/commit/0034716e4a8a4a45808a9c563a9957db5c63cac4)
+    
+  Fixes #59
+
+  - Changed the flags to --regex/--no-regex
+  - updated tests and docs
+
 ## 0.11.0 (2023-09-25)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.10.0...0.11.0)
 
