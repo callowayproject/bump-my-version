@@ -356,6 +356,54 @@ def test_show(tmp_path: Path, fixtures_path: Path):
     assert result.output.splitlines(keepends=False) == ["1.0.0"]
 
 
+def test_major(tmp_path: Path):
+    """The major subcommand should bump the given value to the next major version."""
+    # Arrange
+    runner: CliRunner = CliRunner()
+
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(cli.cli, ["major", "v0.1.2"])
+
+    if result.exit_code != 0:
+        print(result.output)
+        print(result.exception)
+
+    assert result.exit_code == 0
+    assert result.output.splitlines(keepends=False) == ["1.0.0"]
+
+
+def test_minor(tmp_path: Path):
+    """The minor subcommand should bump the given value to the next minor version."""
+    # Arrange
+    runner: CliRunner = CliRunner()
+
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(cli.cli, ["minor", "v0.0.2"])
+
+    if result.exit_code != 0:
+        print(result.output)
+        print(result.exception)
+
+    assert result.exit_code == 0
+    assert result.output.splitlines(keepends=False) == ["0.1.0"]
+
+
+def test_patch(tmp_path: Path):
+    """The patch subcommand should bump the given value to the next patch version."""
+    # Arrange
+    runner: CliRunner = CliRunner()
+
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(cli.cli, ["patch", "v1.2.3"])
+
+    if result.exit_code != 0:
+        print(result.output)
+        print(result.exception)
+
+    assert result.exit_code == 0
+    assert result.output.splitlines(keepends=False) == ["1.2.4"]
+
+
 def test_show_and_increment(tmp_path: Path, fixtures_path: Path):
     """The show subcommand should incrment the version and display it."""
     # Arrange

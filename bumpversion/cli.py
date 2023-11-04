@@ -350,6 +350,30 @@ def show(args: List[str], config_file: Optional[str], format_: str, increment: O
 
 
 @cli.command()
+@click.argument("current_version", nargs=1, type=str)
+def major(current_version: List[str]) -> None:
+    """Bump current_version to next major version without changing files."""
+    conf = get_configuration(current_version=current_version)
+    do_show("new_version", config=conf, format_="default", increment="major")
+
+
+@cli.command()
+@click.argument("current_version", nargs=1, type=str)
+def minor(current_version: List[str]) -> None:
+    """Bump current_version to next minor version without changing files."""
+    conf = get_configuration(current_version=current_version)
+    do_show("new_version", config=conf, format_="default", increment="minor")
+
+
+@cli.command()
+@click.argument("current_version", nargs=1, type=str)
+def patch(current_version: List[str]) -> None:
+    """Bump current_version to next patch version without changing files."""
+    conf = get_configuration(current_version=current_version)
+    do_show("new_version", config=conf, format_="default", increment="patch")
+
+
+@cli.command()
 @click.argument("files", nargs=-1, type=str)
 @click.option(
     "--config-file",
