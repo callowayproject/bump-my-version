@@ -1,0 +1,15 @@
+.git/
+.github/
+.pytest_cache/
+bump_my_version.egg-info/
+docsrc/
+tests/
+tools/
+.*
+*.md
+*.yaml
+CODEOWNERS
+Dockerfile
+LICENSE
+Makefile
+MANIFEST.in
