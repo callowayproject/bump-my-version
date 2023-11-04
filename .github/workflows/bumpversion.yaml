@@ -4,23 +4,6 @@ on:
     types: [closed]
     branches: [master]
   workflow_dispatch:
-    inputs:
-      dry_run:
-        description: Don't actually do the work, just describe it
-        default: true
-        type: boolean
-      new_version:
-        description: Set the version to a specific value
-        required: false
-        type: string
-      verbose:
-        description: The amount of output detail
-        default: 0
-        type: choice
-        options:
-          - "0"
-          - "1"
-          - "2"
 
 jobs:
   bumpversion:
@@ -38,8 +21,7 @@ jobs:
 
       - name: Install requirements
         run: |
-          python -m pip install generate-changelog
-          python -m pip install -e .
+          python -m pip install generate-changelog bump-my-version
 
       - name: Git check
         run: |
@@ -55,27 +37,44 @@ jobs:
           echo "::notice::Suggested release type is: ${RELEASE_KIND}"
           echo "RELEASE_KIND=$RELEASE_KIND" >> $GITHUB_ENV
           echo "release-kind=$RELEASE_KIND" >> $GITHUB_OUTPUT
+          echo "PACKAGE=false" >> $GITHUB_ENV
 
       - name: Bump Version auto
         if: ${{ github.event_name != 'workflow_dispatch' }}
         shell: bash
         run: |
           if [[ $RELEASE_KIND != "no-release" ]]; then
-            bump-my-version -v "$RELEASE_KIND"
+            bump-my-version bump -v "$RELEASE_KIND"
             git push
             git push --tags
+            echo "PACKAGE=true" >> $GITHUB_ENV
           fi
 
       - name: Bump Version manual
         if: ${{ github.event_name == 'workflow_dispatch' }}
         shell: bash
-        env:
-          BUMPVERSION_DRY_RUN: ${{ inputs.dry_run }}
-          BUMPVERSION_NEW_VERSION: ${{ inputs.tags }}
-          BUMPVERSION_VERBOSE: ${{ inputs.verbose }}
         run: |
-          bump-my-version -v "$RELEASE_KIND"
-          if [[ BUMPVERSION_DRY_RUN == "false" ]]; then
-            git push
-            git push --tags
-          fi
+          case "$RELEASE_KIND" in
+            major|minor|patch)
+              bump-my-version bump "$RELEASE_KIND"
+              if [[ BUMPVERSION_DRY_RUN == "false" ]];  then
+                git push
+                git push --tags
+                echo "PACKAGE=true" >> $GITHUB_ENV
+              fi
+              ;;
+            dev)
+              bump-my-version bump -v --no-commit "$RELEASE_KIND"
+              echo "PACKAGE=true" >> $GITHUB_ENV
+              ;;
+          esac
+
+      - name: Package
+        if: ${{ env.PACKAGE == 'true' }}
+        uses: hynek/build-and-inspect-python-package@v1
+
+      - name: Upload dev release to PyPI
+        if: ${{ env.PACKAGE == 'true' && env.RELEASE_KIND == 'dev' }}
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
