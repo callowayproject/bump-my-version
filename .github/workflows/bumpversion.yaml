@@ -54,6 +54,9 @@ jobs:
         if: ${{ github.event_name == 'workflow_dispatch' }}
         shell: bash
         run: |
+          PR_NUMBER=$(gh pr view --json number -q .number || echo "")
+          REVISION=$(git describe --tags --long | awk -F- '{print $2}')
+          export PR_NUMBER REVISION
           case "$RELEASE_KIND" in
             major|minor|patch)
               bump-my-version bump "$RELEASE_KIND"
