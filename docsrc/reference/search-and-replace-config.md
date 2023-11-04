@@ -2,7 +2,7 @@
 
 Bump-my-version uses a combination of [template strings](https://docs.python.org/3/library/string.html#format-string-syntax) using a [formatting context](formatting-context.md) and regular expressions to search the configured files for the old or current version and replace the text with the new version.
 
-Bump My Version falls back to using a simple string search if the search template is not a valid regular expression or if the `no-regex` flag is `True`. The search template is always rendered using the formatting context. The basic logic is:
+Bump My Version defaults to using a simple string search. If the search template is not a valid regular expression or if the `no-regex` flag is `True`. The search template is always rendered using the formatting context. The basic logic is:
 
 1. Escape the formatting context for use in a regular expression.
 2. Render the search string using the escaped formatting context.

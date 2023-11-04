@@ -8,8 +8,8 @@ files:
   - filename: "setup.py"
     glob: null
     ignore_missing_version: false
-    no_regex: false
     parse: "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?"
+    regex: false
     replace: "{new_version}"
     search: "{current_version}"
     serialize:
@@ -18,8 +18,8 @@ files:
   - filename: "bumpversion/__init__.py"
     glob: null
     ignore_missing_version: false
-    no_regex: false
     parse: "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?"
+    regex: false
     replace: "{new_version}"
     search: "{current_version}"
     serialize:
@@ -28,8 +28,8 @@ files:
   - filename: "CHANGELOG.md"
     glob: null
     ignore_missing_version: false
-    no_regex: false
     parse: "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?"
+    regex: false
     replace: "**unreleased**\n**v{new_version}**"
     search: "**unreleased**"
     serialize:
@@ -39,7 +39,6 @@ ignore_missing_version: false
 included_paths:
 
 message: "Bump version: {current_version} → {new_version}"
-no_regex: false
 parse: "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?"
 parts:
   major:
@@ -64,6 +63,7 @@ parts:
     values:
       - "dev"
       - "gamma"
+regex: false
 replace: "{new_version}"
 scm_info:
   branch_name: null
