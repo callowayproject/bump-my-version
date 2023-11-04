@@ -43,7 +43,7 @@ class FileConfig(BaseModel):
     serialize: Optional[List[str]] = None  # If different from outer scope
     search: Optional[str] = None  # If different from outer scope
     replace: Optional[str] = None  # If different from outer scope
-    no_regex: Optional[bool] = None  # If different from outer scope
+    regex: Optional[bool] = None  # If different from outer scope
     ignore_missing_version: Optional[bool] = None
 
 
@@ -55,7 +55,7 @@ class Config(BaseSettings):
     serialize: List[str] = Field(min_length=1)
     search: str
     replace: str
-    no_regex: bool
+    regex: bool
     ignore_missing_version: bool
     tag: bool
     sign_tags: bool
@@ -86,7 +86,7 @@ class Config(BaseSettings):
                     serialize=self.serialize,
                     search=self.search,
                     replace=self.replace,
-                    no_regex=self.no_regex,
+                    regex=self.regex,
                     ignore_missing_version=self.ignore_missing_version,
                 )
             )
@@ -128,7 +128,7 @@ DEFAULTS = {
     "serialize": ["{major}.{minor}.{patch}"],
     "search": "{current_version}",
     "replace": "{new_version}",
-    "no_regex": False,
+    "regex": False,
     "ignore_missing_version": False,
     "tag": False,
     "sign_tags": False,
@@ -159,7 +159,7 @@ def get_all_file_configs(config_dict: dict) -> List[FileConfig]:
         "search": config_dict["search"],
         "replace": config_dict["replace"],
         "ignore_missing_version": config_dict["ignore_missing_version"],
-        "no_regex": config_dict["no_regex"],
+        "regex": config_dict["regex"],
     }
     files = [{k: v for k, v in filecfg.items() if v is not None} for filecfg in config_dict["files"]]
     for f in files:

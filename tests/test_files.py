@@ -363,6 +363,7 @@ def test_regex_search(tmp_path: Path) -> None:
     version_path.write_text("Release: 1234-56-78 '1.2.3'")
 
     overrides = {
+        "regex": True,
         "current_version": "1.2.3",
         "search": r"Release: \d{{4}}-\d{{2}}-\d{{2}} '{current_version}'",
         "replace": r"Release {now:%Y-%m-%d} '{new_version}'",
@@ -387,6 +388,7 @@ def test_regex_search_with_escaped_chars(tmp_path: Path) -> None:
     version_path.write_text("## [Release] 1.2.3 1234-56-78")
 
     overrides = {
+        "regex": True,
         "current_version": "1.2.3",
         "search": r"## \[Release\] {current_version} \d{{4}}-\d{{2}}-\d{{2}}",
         "replace": r"## [Release] {new_version} {now:%Y-%m-%d}",
@@ -411,6 +413,7 @@ def test_bad_regex_search(tmp_path: Path, caplog) -> None:
     version_path.write_text("Score: A+ ( '1.2.3'")
 
     overrides = {
+        "regex": True,
         "current_version": "1.2.3",
         "search": r"Score: A+ ( '{current_version}'",
         "replace": r"Score: A+ ( '{new_version}'",
