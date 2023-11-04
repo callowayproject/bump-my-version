@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily" # Update Docker tags daily
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly" # Update GitHub Actions weekly
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "daily" # Update pip dependencies daily
