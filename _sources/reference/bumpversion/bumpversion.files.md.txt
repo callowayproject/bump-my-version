@@ -117,7 +117,7 @@
 
 ````
 
-````{py:method} get_search_pattern(context: typing.MutableMapping) -> re.Pattern
+````{py:method} get_search_pattern(context: typing.MutableMapping) -> typing.Tuple[re.Pattern, str]
 :canonical: bumpversion.files.ConfiguredFile.get_search_pattern
 
 ```{autodoc2-docstring} bumpversion.files.ConfiguredFile.get_search_pattern

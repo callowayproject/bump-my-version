@@ -178,21 +178,21 @@
 <li class="toctree-l2"><a class="reference internal" href="search-and-replace-config.html">Search and replace configuration</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="bumpversion/bumpversion.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of bumpversion</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.files.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.files</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.logging</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.cli</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.aliases.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.aliases</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.version_part.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.version_part</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.logging</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.utils</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.exceptions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.exceptions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.autocast.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.autocast</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.yaml_dump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.yaml_dump</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.version_part.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.version_part</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.ui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.ui</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.bump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.bump</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.cli</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.__main__</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.exceptions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.exceptions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.scm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.scm</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.utils</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -319,9 +319,9 @@ If you want to rewrite only files specified on the command line, use with the
 </dd></dl>
 
 <dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-bumpversion-bump-no-regex">
-<span class="sig-name descname"><span class="pre">--no-regex</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-bumpversion-bump-no-regex" title="Permalink to this definition">#</a></dt>
-<dd><p>Do not treat the search parameter as a regular expression</p>
+<dt class="sig sig-object std" id="cmdoption-bumpversion-bump-regex">
+<span id="cmdoption-bumpversion-bump-no-regex"></span><span class="sig-name descname"><span class="pre">--regex</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--no-regex</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-bumpversion-bump-regex" title="Permalink to this definition">#</a></dt>
+<dd><p>Treat the search parameter as a regular expression or explicitly do not treat it as a regular expression.</p>
 </dd></dl>
 
 <dl class="std option">
@@ -470,11 +470,11 @@ If you want to rewrite only files specified on the command line, use with the
 </div></blockquote>
 </dd></dl>
 
-<span class="target" id="bumpversion-bump-no-regex-bumpversion-no-regex"></span><dl class="std envvar">
+<span class="target" id="bumpversion-bump-regex-bumpversion-regex"></span><dl class="std envvar">
 <dt class="sig sig-object std">
-<span class="sig-name descname"><span class="pre">BUMPVERSION_NO_REGEX</span></span></dt>
+<span class="sig-name descname"><span class="pre">BUMPVERSION_REGEX</span></span></dt>
 <dd><blockquote>
-<div><p>Provide a default for <a class="reference internal" href="#cmdoption-bumpversion-bump-no-regex"><code class="xref std std-option docutils literal notranslate"><span class="pre">--no-regex</span></code></a></p>
+<div><p>Provide a default for <a class="reference internal" href="#cmdoption-bumpversion-bump-regex"><code class="xref std std-option docutils literal notranslate"><span class="pre">--regex</span></code></a></p>
 </div></blockquote>
 </dd></dl>
 
@@ -624,9 +624,9 @@ If you want to rewrite only files specified on the command line, use with the
 </dd></dl>
 
 <dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-bumpversion-replace-no-regex">
-<span class="sig-name descname"><span class="pre">--no-regex</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-bumpversion-replace-no-regex" title="Permalink to this definition">#</a></dt>
-<dd><p>Do not treat the search parameter as a regular expression</p>
+<dt class="sig sig-object std" id="cmdoption-bumpversion-replace-regex">
+<span id="cmdoption-bumpversion-replace-no-regex"></span><span class="sig-name descname"><span class="pre">--regex</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--no-regex</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-bumpversion-replace-regex" title="Permalink to this definition">#</a></dt>
+<dd><p>Treat the search parameter as a regular expression or explicitly do not treat it as a regular expression.</p>
 </dd></dl>
 
 <dl class="std option">
@@ -727,11 +727,11 @@ If you want to rewrite only files specified on the command line, use with the
 </div></blockquote>
 </dd></dl>
 
-<span class="target" id="bumpversion-replace-no-regex-bumpversion-no-regex"></span><dl class="std envvar">
+<span class="target" id="bumpversion-replace-regex-bumpversion-regex"></span><dl class="std envvar">
 <dt class="sig sig-object std">
-<span class="sig-name descname"><span class="pre">BUMPVERSION_NO_REGEX</span></span></dt>
+<span class="sig-name descname"><span class="pre">BUMPVERSION_REGEX</span></span></dt>
 <dd><blockquote>
-<div><p>Provide a default for <a class="reference internal" href="#cmdoption-bumpversion-replace-no-regex"><code class="xref std std-option docutils literal notranslate"><span class="pre">--no-regex</span></code></a></p>
+<div><p>Provide a default for <a class="reference internal" href="#cmdoption-bumpversion-replace-regex"><code class="xref std std-option docutils literal notranslate"><span class="pre">--regex</span></code></a></p>
 </div></blockquote>
 </dd></dl>
 

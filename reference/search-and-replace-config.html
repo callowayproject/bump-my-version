@@ -178,21 +178,21 @@
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Search and replace configuration</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="bumpversion/bumpversion.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of bumpversion</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.files.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.files</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.logging</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.cli</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.aliases.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.aliases</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.version_part.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.version_part</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.logging</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.utils</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.exceptions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.exceptions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.autocast.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.autocast</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.yaml_dump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.yaml_dump</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.version_part.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.version_part</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.ui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.ui</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.bump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.bump</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.cli</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.__main__</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.exceptions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.exceptions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.scm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.scm</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="bumpversion/bumpversion.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.utils</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -239,7 +239,7 @@
           <section class="tex2jax_ignore mathjax_ignore" id="search-and-replace-configuration">
 <h1>Search and replace configuration<a class="headerlink" href="#search-and-replace-configuration" title="Permalink to this heading">#</a></h1>
 <p>Bump-my-version uses a combination of <a class="reference external" href="https://docs.python.org/3/library/string.html#format-string-syntax">template strings</a> using a <a class="reference internal" href="formatting-context.html"><span class="std std-doc">formatting context</span></a> and regular expressions to search the configured files for the old or current version and replace the text with the new version.</p>
-<p>Bump My Version falls back to using a simple string search if the search template is not a valid regular expression or if the <code class="docutils literal notranslate"><span class="pre">no-regex</span></code> flag is <code class="docutils literal notranslate"><span class="pre">True</span></code>. The search template is always rendered using the formatting context. The basic logic is:</p>
+<p>Bump My Version defaults to using a simple string search. If the search template is not a valid regular expression or if the <code class="docutils literal notranslate"><span class="pre">no-regex</span></code> flag is <code class="docutils literal notranslate"><span class="pre">True</span></code>. The search template is always rendered using the formatting context. The basic logic is:</p>
 <ol class="arabic simple">
 <li><p>Escape the formatting context for use in a regular expression.</p></li>
 <li><p>Render the search string using the escaped formatting context.</p></li>

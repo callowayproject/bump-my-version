@@ -177,21 +177,21 @@
 <li class="toctree-l2"><a class="reference internal" href="../../reference/search-and-replace-config.html">Search and replace configuration</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../reference/bumpversion/bumpversion.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of bumpversion</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.files.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.files</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.logging</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.cli</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.aliases.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.aliases</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.version_part.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.version_part</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.logging</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.utils</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.exceptions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.exceptions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.autocast.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.autocast</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.yaml_dump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.yaml_dump</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.version_part.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.version_part</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.ui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.ui</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.bump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.bump</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.cli</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.__main__</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.exceptions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.exceptions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.scm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.scm</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.utils</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -280,7 +280,7 @@
     <span class="n">serialize</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># If different from outer scope</span>
     <span class="n">search</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># If different from outer scope</span>
     <span class="n">replace</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># If different from outer scope</span>
-    <span class="n">no_regex</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># If different from outer scope</span>
+    <span class="n">regex</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># If different from outer scope</span>
     <span class="n">ignore_missing_version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
@@ -292,7 +292,7 @@
     <span class="n">serialize</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">min_length</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">search</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">replace</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">no_regex</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">regex</span><span class="p">:</span> <span class="nb">bool</span>
     <span class="n">ignore_missing_version</span><span class="p">:</span> <span class="nb">bool</span>
     <span class="n">tag</span><span class="p">:</span> <span class="nb">bool</span>
     <span class="n">sign_tags</span><span class="p">:</span> <span class="nb">bool</span>
@@ -323,7 +323,7 @@
                     <span class="n">serialize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">serialize</span><span class="p">,</span>
                     <span class="n">search</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">search</span><span class="p">,</span>
                     <span class="n">replace</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">replace</span><span class="p">,</span>
-                    <span class="n">no_regex</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">no_regex</span><span class="p">,</span>
+                    <span class="n">regex</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">regex</span><span class="p">,</span>
                     <span class="n">ignore_missing_version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ignore_missing_version</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="p">)</span></div>
@@ -344,10 +344,12 @@
     <span class="k">def</span> <span class="nf">files_to_modify</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">FileConfig</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a list of files to modify.&quot;&quot;&quot;</span>
         <span class="n">files_not_excluded</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">file_cfg</span><span class="o">.</span><span class="n">filename</span> <span class="k">for</span> <span class="n">file_cfg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="k">if</span> <span class="n">file_cfg</span><span class="o">.</span><span class="n">filename</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">excluded_paths</span>
+            <span class="n">file_cfg</span><span class="o">.</span><span class="n">filename</span>
+            <span class="k">for</span> <span class="n">file_cfg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolved_filemap</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">file_cfg</span><span class="o">.</span><span class="n">filename</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">excluded_paths</span>
         <span class="p">]</span>
         <span class="n">inclusion_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">included_paths</span><span class="p">)</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span><span class="n">files_not_excluded</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">file_cfg</span> <span class="k">for</span> <span class="n">file_cfg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="k">if</span> <span class="n">file_cfg</span><span class="o">.</span><span class="n">filename</span> <span class="ow">in</span> <span class="n">inclusion_set</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">file_cfg</span> <span class="k">for</span> <span class="n">file_cfg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolved_filemap</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">file_cfg</span><span class="o">.</span><span class="n">filename</span> <span class="ow">in</span> <span class="n">inclusion_set</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">version_config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;VersionConfig&quot;</span><span class="p">:</span>
@@ -363,7 +365,7 @@
     <span class="s2">&quot;serialize&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}</span><span class="s2">&quot;</span><span class="p">],</span>
     <span class="s2">&quot;search&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{current_version}</span><span class="s2">&quot;</span><span class="p">,</span>
     <span class="s2">&quot;replace&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{new_version}</span><span class="s2">&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;no_regex&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;regex&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
     <span class="s2">&quot;ignore_missing_version&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
     <span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
     <span class="s2">&quot;sign_tags&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
@@ -394,7 +396,7 @@
         <span class="s2">&quot;search&quot;</span><span class="p">:</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;search&quot;</span><span class="p">],</span>
         <span class="s2">&quot;replace&quot;</span><span class="p">:</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;replace&quot;</span><span class="p">],</span>
         <span class="s2">&quot;ignore_missing_version&quot;</span><span class="p">:</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;ignore_missing_version&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;no_regex&quot;</span><span class="p">:</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;no_regex&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;regex&quot;</span><span class="p">:</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;regex&quot;</span><span class="p">],</span>
     <span class="p">}</span>
     <span class="n">files</span> <span class="o">=</span> <span class="p">[{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">filecfg</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span> <span class="k">for</span> <span class="n">filecfg</span> <span class="ow">in</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]]</span>
     <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>

@@ -176,21 +176,21 @@
 <li class="toctree-l2"><a class="reference internal" href="reference/search-and-replace-config.html">Search and replace configuration</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="reference/bumpversion/bumpversion.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of bumpversion</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.files.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.files</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.logging</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.cli</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.aliases.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.aliases</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.version_part.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.version_part</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.logging</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.utils</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.exceptions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.exceptions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.autocast.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.autocast</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.yaml_dump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.yaml_dump</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.version_part.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.version_part</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.ui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.ui</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.bump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.bump</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.cli</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.__main__</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.exceptions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.exceptions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.scm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.scm</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.utils</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -369,13 +369,11 @@
     --no-regex
 
         <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-no-regex">bumpversion-bump command line option</a>
+          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-regex">bumpversion-bump command line option</a>
 </li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-no-regex">bumpversion-replace command line option</a>
+          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-regex">bumpversion-replace command line option</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     --no-sign-tags
 
@@ -383,6 +381,8 @@
           <li><a href="reference/cli.html#cmdoption-bumpversion-bump-sign-tags">bumpversion-bump command line option</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     --no-tag
 
@@ -397,6 +397,15 @@
           <li><a href="reference/cli.html#cmdoption-bumpversion-bump-parse">bumpversion-bump command line option</a>
 </li>
           <li><a href="reference/cli.html#cmdoption-bumpversion-replace-parse">bumpversion-replace command line option</a>
+</li>
+        </ul></li>
+        <li>
+    --regex
+
+        <ul>
+          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-regex">bumpversion-bump command line option</a>
+</li>
+          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-regex">bumpversion-replace command line option</a>
 </li>
         </ul></li>
         <li>
@@ -702,13 +711,15 @@
 </li>
           <li><a href="reference/cli.html#cmdoption-bumpversion-bump-no-configured-files">--no-configured-files</a>
 </li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-no-regex">--no-regex</a>
+          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-regex">--no-regex</a>
 </li>
           <li><a href="reference/cli.html#cmdoption-bumpversion-bump-sign-tags">--no-sign-tags</a>
 </li>
           <li><a href="reference/cli.html#cmdoption-bumpversion-bump-tag">--no-tag</a>
 </li>
           <li><a href="reference/cli.html#cmdoption-bumpversion-bump-parse">--parse</a>
+</li>
+          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-regex">--regex</a>
 </li>
           <li><a href="reference/cli.html#cmdoption-bumpversion-bump-replace">--replace</a>
 </li>
@@ -755,9 +766,11 @@
 </li>
           <li><a href="reference/cli.html#cmdoption-bumpversion-replace-no-configured-files">--no-configured-files</a>
 </li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-no-regex">--no-regex</a>
+          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-regex">--no-regex</a>
 </li>
           <li><a href="reference/cli.html#cmdoption-bumpversion-replace-parse">--parse</a>
+</li>
+          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-regex">--regex</a>
 </li>
           <li><a href="reference/cli.html#cmdoption-bumpversion-replace-replace">--replace</a>
 </li>
@@ -1231,16 +1244,10 @@
   <h2>N</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="reference/bumpversion/bumpversion.config.html#bumpversion.config.Config.no_regex">no_regex (bumpversion.config.Config attribute)</a>
-
-        <ul>
-          <li><a href="reference/bumpversion/bumpversion.config.html#bumpversion.config.FileConfig.no_regex">(bumpversion.config.FileConfig attribute)</a>
-</li>
-        </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="reference/bumpversion/bumpversion.autocast.html#bumpversion.autocast.noneify">noneify() (in module bumpversion.autocast)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.VersionPart.null">null() (bumpversion.version_part.VersionPart method)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.functions.html#bumpversion.functions.NumericFunction">NumericFunction (class in bumpversion.functions)</a>
@@ -1315,6 +1322,12 @@
 </li>
         <li><a href="reference/bumpversion/bumpversion.config.html#bumpversion.config.read_toml_file">read_toml_file() (in module bumpversion.config)</a>
 </li>
+        <li><a href="reference/bumpversion/bumpversion.config.html#bumpversion.config.Config.regex">regex (bumpversion.config.Config attribute)</a>
+
+        <ul>
+          <li><a href="reference/bumpversion/bumpversion.config.html#bumpversion.config.FileConfig.regex">(bumpversion.config.FileConfig attribute)</a>
+</li>
+        </ul></li>
         <li><a href="reference/bumpversion/bumpversion.config.html#bumpversion.config.Config.replace">replace (bumpversion.config.Config attribute)</a>
 
         <ul>

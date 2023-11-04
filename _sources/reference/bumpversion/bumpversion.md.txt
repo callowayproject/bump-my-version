@@ -14,21 +14,21 @@
 :maxdepth: 1
 
 bumpversion.files
-bumpversion.show
-bumpversion.logging
-bumpversion.cli
 bumpversion.aliases
-bumpversion.functions
+bumpversion.version_part
+bumpversion.logging
+bumpversion.utils
+bumpversion.exceptions
 bumpversion.autocast
 bumpversion.yaml_dump
-bumpversion.version_part
+bumpversion.functions
 bumpversion.ui
 bumpversion.bump
 bumpversion.config
+bumpversion.cli
+bumpversion.show
 bumpversion.__main__
-bumpversion.exceptions
 bumpversion.scm
-bumpversion.utils
 ```
 
 ## Package Contents

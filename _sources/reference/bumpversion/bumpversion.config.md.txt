@@ -249,13 +249,13 @@ Bases: {py:obj}`pydantic.BaseModel`
 
 ````
 
-````{py:attribute} no_regex
-:canonical: bumpversion.config.FileConfig.no_regex
+````{py:attribute} regex
+:canonical: bumpversion.config.FileConfig.regex
 :type: typing.Optional[bool]
 :value: >
    None
 
-```{autodoc2-docstring} bumpversion.config.FileConfig.no_regex
+```{autodoc2-docstring} bumpversion.config.FileConfig.regex
 ```
 
 ````
@@ -342,13 +342,13 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
 
 ````
 
-````{py:attribute} no_regex
-:canonical: bumpversion.config.Config.no_regex
+````{py:attribute} regex
+:canonical: bumpversion.config.Config.regex
 :type: bool
 :value: >
    None
 
-```{autodoc2-docstring} bumpversion.config.Config.no_regex
+```{autodoc2-docstring} bumpversion.config.Config.regex
 ```
 
 ````
