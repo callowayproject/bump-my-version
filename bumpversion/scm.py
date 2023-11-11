@@ -310,7 +310,7 @@ class Mercurial(SourceCodeManager):
         )
         result.check_returncode()
         if result.stdout:
-            current_version = result.stdout.splitlines(keepends=False)[0].lstrip("v")
+            current_version = result.stdout.splitlines(keepends=False)[-1].lstrip("v")
         is_dirty = len(subprocess.check_output(["hg", "status", "-mard"])) != 0  # noqa: S603, S607
         return SCMInfo(tool=cls, current_version=current_version, dirty=is_dirty)
 
