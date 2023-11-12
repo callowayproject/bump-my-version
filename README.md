@@ -44,6 +44,23 @@ You can download and install the latest version of this software from the Python
 pip install --upgrade bump-my-version
 ```
 
+## Docker
+
+Just bump a version number inside a CI workflow: 
+```console
+NEW_VERSION=$(docker run --rm calloway/bump-my-version patch $CURRENT_VERSION)
+```
+
+Run in the current working directory:
+```console
+docker run --rm -v "$PWD":/out calloway/bump-my-version bump --current-version 0.5.1 minor
+```
+
+Access config file outside the current working directory:
+```console
+docker run --rm -v /tmp:/in -v "$PWD":/out calloway/bump-my-version bump --config-file /in/bumpversion.toml --current-version 0.5.1 minor
+```
+
 ## Changelog
 
 Please find the changelog here: [CHANGELOG.md](CHANGELOG.md)

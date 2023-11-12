@@ -12,6 +12,8 @@ FROM python:3.12.0-alpine
 COPY --from=0 /etc/passwd /etc/group /etc/
 COPY --from=0 --chown=1000:1000 /app/venv/ /app/venv/
 USER app
+WORKDIR /in
+WORKDIR /out
 
 LABEL org.opencontainers.image.authors="Calloway https://github.com/callowayproject"
 LABEL org.opencontainers.image.base.name="docker.io/library/python:3.12.0-alpine"
