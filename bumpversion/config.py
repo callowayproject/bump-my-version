@@ -200,8 +200,7 @@ def get_configuration(config_file: Union[str, Path, None] = None, **overrides) -
     config = Config(**config_dict)  # type: ignore[arg-type]
 
     # Get the information about the SCM
-    tag_pattern = config.tag_name.replace("{new_version}", "*")
-    scm_info = get_scm_info(tag_pattern)
+    scm_info = get_scm_info(config.tag_name, config.parse)
     config.scm_info = scm_info
 
     # Update and verify the current_version
