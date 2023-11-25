@@ -40,8 +40,25 @@ def get_search_pattern(search_str: str, context: MutableMapping, use_regex: bool
     except re.error as e:
         logger.error("Invalid regex '%s': %s.", default, e)
 
-    logger.debug("Searching for the default pattern: '%s'", raw_pattern)
+    logger.debug("Invalid regex. Searching for the default pattern: '%s'", raw_pattern)
     return default, raw_pattern
+
+
+def contains_pattern(search: re.Pattern, contents: str) -> bool:
+    """Does the search pattern match any part of the contents?"""
+    if not search or not contents:
+        return False
+
+    for m in re.finditer(search, contents):
+        line_no = contents.count("\n", 0, m.start(0)) + 1
+        logger.info(
+            "Found '%s' at line %s: %s",
+            search,
+            line_no,
+            m.string[m.start() : m.end(0)],
+        )
+        return True
+    return False
 
 
 class ConfiguredFile:
@@ -96,8 +113,8 @@ class ConfiguredFile:
             True if the version number is in fact present.
         """
         search_expression, raw_search_expression = get_search_pattern(self.search, context, self.regex)
-
-        if self.contains(search_expression):
+        file_contents = self.get_file_contents()
+        if contains_pattern(search_expression, file_contents):
             return True
 
         # the `search` pattern did not match, but the original supplied
@@ -108,7 +125,7 @@ class ConfiguredFile:
         # very specific parts of the file
         search_pattern_is_default = self.search == self.version_config.search
 
-        if search_pattern_is_default and self.contains(re.compile(re.escape(version.original))):
+        if search_pattern_is_default and contains_pattern(re.compile(re.escape(version.original)), file_contents):
             # The original version is present, and we're not looking for something
             # more specific -> this is accepted as a match
             return True
@@ -117,25 +134,6 @@ class ConfiguredFile:
         if self.ignore_missing_version:
             return False
         raise VersionNotFoundError(f"Did not find '{raw_search_expression}' in file: '{self.path}'")
-
-    def contains(self, search: re.Pattern) -> bool:
-        """Does the work of the contains_version method."""
-        if not search:
-            return False
-
-        contents = self.get_file_contents()
-
-        for m in re.finditer(search, contents):
-            line_no = contents.count("\n", 0, m.start(0)) + 1
-            logger.info(
-                "Found '%s' in %s at line %s: %s",
-                search,
-                self.path,
-                line_no,
-                m.string[m.start() : m.end(0)],
-            )
-            return True
-        return False
 
     def replace_version(
         self, current_version: Version, new_version: Version, context: MutableMapping, dry_run: bool = False
