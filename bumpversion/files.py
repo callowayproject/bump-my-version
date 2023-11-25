@@ -12,6 +12,38 @@ from bumpversion.version_part import Version, VersionConfig
 logger = logging.getLogger(__name__)
 
 
+def get_search_pattern(search_str: str, context: MutableMapping, use_regex: bool = False) -> Tuple[re.Pattern, str]:
+    """
+    Render the search pattern and return the compiled regex pattern and the raw pattern.
+
+    Args:
+        search_str: A string containing the search pattern as a format string
+        context: The context to use for rendering the search pattern
+        use_regex: If True, the search pattern is treated as a regex pattern
+
+    Returns:
+        A tuple of the compiled regex pattern and the raw pattern as a string.
+    """
+    # the default search pattern is escaped, so we can still use it in a regex
+    raw_pattern = search_str.format(**context)
+    default = re.compile(re.escape(raw_pattern), re.MULTILINE | re.DOTALL)
+    if not use_regex:
+        logger.debug("No RegEx flag detected. Searching for the default pattern: '%s'", default.pattern)
+        return default, raw_pattern
+
+    re_context = {key: re.escape(str(value)) for key, value in context.items()}
+    regex_pattern = search_str.format(**re_context)
+    try:
+        search_for_re = re.compile(regex_pattern, re.MULTILINE | re.DOTALL)
+        logger.debug("Searching for the regex: '%s'", search_for_re.pattern)
+        return search_for_re, raw_pattern
+    except re.error as e:
+        logger.error("Invalid regex '%s': %s.", default, e)
+
+    logger.debug("Searching for the default pattern: '%s'", raw_pattern)
+    return default, raw_pattern
+
+
 class ConfiguredFile:
     """A file to modify in a configured way."""
 
@@ -63,7 +95,7 @@ class ConfiguredFile:
         Returns:
             True if the version number is in fact present.
         """
-        search_expression, raw_search_expression = self.get_search_pattern(context)
+        search_expression, raw_search_expression = get_search_pattern(self.search, context, self.regex)
 
         if self.contains(search_expression):
             return True
@@ -115,7 +147,7 @@ class ConfiguredFile:
         if new_version:
             context["new_version"] = self.version_config.serialize(new_version, context)
 
-        search_for, raw_search_pattern = self.get_search_pattern(context)
+        search_for, raw_search_pattern = get_search_pattern(self.search, context, self.regex)
         replace_with = self.version_config.replace.format(**context)
 
         file_content_after = search_for.sub(replace_with, file_content_before)
@@ -123,7 +155,7 @@ class ConfiguredFile:
         if file_content_before == file_content_after and current_version.original:
             og_context = deepcopy(context)
             og_context["current_version"] = current_version.original
-            search_for_og, og_raw_search_pattern = self.get_search_pattern(og_context)
+            search_for_og, og_raw_search_pattern = get_search_pattern(self.search, og_context, self.regex)
             file_content_after = search_for_og.sub(replace_with, file_content_before)
 
         if file_content_before != file_content_after:
@@ -146,27 +178,6 @@ class ConfiguredFile:
 
         if not dry_run:  # pragma: no-coverage
             self.write_file_contents(file_content_after)
-
-    def get_search_pattern(self, context: MutableMapping) -> Tuple[re.Pattern, str]:
-        """Compile and return the regex if it is valid, otherwise return the string."""
-        # the default search pattern is escaped, so we can still use it in a regex
-        raw_pattern = self.version_config.search.format(**context)
-        default = re.compile(re.escape(raw_pattern), re.MULTILINE | re.DOTALL)
-        if not self.regex:
-            logger.debug("No RegEx flag detected. Searching for the default pattern: '%s'", default.pattern)
-            return default, raw_pattern
-
-        re_context = {key: re.escape(str(value)) for key, value in context.items()}
-        regex_pattern = self.version_config.search.format(**re_context)
-        try:
-            search_for_re = re.compile(regex_pattern, re.MULTILINE | re.DOTALL)
-            logger.debug("Searching for the regex: '%s'", search_for_re.pattern)
-            return search_for_re, raw_pattern
-        except re.error as e:
-            logger.error("Invalid regex '%s' for file %s: %s.", default, self.path, e)
-
-        logger.debug("Searching for the default pattern: '%s'", raw_pattern)
-        return default, raw_pattern
 
     def __str__(self) -> str:  # pragma: no-coverage
         return self.path
