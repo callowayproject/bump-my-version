@@ -37,14 +37,15 @@ class VersionPartConfig(BaseModel):
 class FileConfig(BaseModel):
     """Search and replace file config."""
 
+    parse: str
+    serialize: List[str]
+    search: str
+    replace: str
+    regex: bool
+    ignore_missing_version: bool
     filename: Optional[str] = None
     glob: Optional[str] = None  # Conflicts with filename. If both are specified, glob wins
-    parse: Optional[str] = None  # If different from outer scope
-    serialize: Optional[List[str]] = None  # If different from outer scope
-    search: Optional[str] = None  # If different from outer scope
-    replace: Optional[str] = None  # If different from outer scope
-    regex: Optional[bool] = None  # If different from outer scope
-    ignore_missing_version: Optional[bool] = None
+    key_path: Optional[str] = None  # If specified, and has an appropriate extension, will be treated as a data file
 
 
 class Config(BaseSettings):
@@ -82,6 +83,7 @@ class Config(BaseSettings):
                 FileConfig(
                     filename=name,
                     glob=None,
+                    key_path=None,
                     parse=self.parse,
                     serialize=self.serialize,
                     search=self.search,

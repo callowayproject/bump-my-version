@@ -146,6 +146,7 @@ class VersionConfig:
 
         self.serialize_formats = serialize
         self.part_configs = part_configs or {}
+        # TODO: I think these two should be removed from the config object
         self.search = search
         self.replace = replace
 

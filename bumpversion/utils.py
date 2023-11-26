@@ -2,11 +2,19 @@
 import string
 from collections import ChainMap
 from dataclasses import asdict
-from typing import TYPE_CHECKING, List, Optional
+from typing import TYPE_CHECKING, Any, List, Optional
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
     from bumpversion.version_part import Version
+
+
+def recursive_sort_dict(input_value: Any) -> Any:
+    """Sort a dictionary recursively."""
+    if not isinstance(input_value, dict):
+        return input_value
+
+    return {key: recursive_sort_dict(input_value[key]) for key in sorted(input_value.keys())}
 
 
 def key_val_string(d: dict) -> str:
