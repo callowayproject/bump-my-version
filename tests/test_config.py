@@ -274,3 +274,58 @@ def test_get_glob_files(glob_pattern: str, file_list: set, fixtures_path: Path):
     assert len(result) == len(file_list)
     for f in result:
         assert Path(f.filename) in file_list
+
+
+def test_file_overrides_config(fixtures_path: Path):
+    """If a file has a different config, it should override the main config."""
+    cfg_file = fixtures_path / "file_config_overrides.toml"
+    conf = config.get_configuration(cfg_file)
+    file_map = {f.filename: f for f in conf.files}
+    assert file_map["should_contain_defaults.txt"].parse == conf.parse
+    assert file_map["should_contain_defaults.txt"].serialize == conf.serialize
+    assert file_map["should_contain_defaults.txt"].search == conf.search
+    assert file_map["should_contain_defaults.txt"].replace == conf.replace
+    assert file_map["should_contain_defaults.txt"].regex == conf.regex
+    assert file_map["should_contain_defaults.txt"].ignore_missing_version == conf.ignore_missing_version
+
+    assert file_map["should_override_search.txt"].parse == conf.parse
+    assert file_map["should_override_search.txt"].serialize == conf.serialize
+    assert file_map["should_override_search.txt"].search == "**unreleased**"
+    assert file_map["should_override_search.txt"].replace == conf.replace
+    assert file_map["should_override_search.txt"].regex == conf.regex
+    assert file_map["should_override_search.txt"].ignore_missing_version == conf.ignore_missing_version
+
+    assert file_map["should_override_replace.txt"].parse == conf.parse
+    assert file_map["should_override_replace.txt"].serialize == conf.serialize
+    assert file_map["should_override_replace.txt"].search == conf.search
+    assert file_map["should_override_replace.txt"].replace == "**unreleased**"
+    assert file_map["should_override_replace.txt"].regex == conf.regex
+    assert file_map["should_override_replace.txt"].ignore_missing_version == conf.ignore_missing_version
+
+    assert file_map["should_override_parse.txt"].parse == "version(?P<major>\d+)"
+    assert file_map["should_override_parse.txt"].serialize == conf.serialize
+    assert file_map["should_override_parse.txt"].search == conf.search
+    assert file_map["should_override_parse.txt"].replace == conf.replace
+    assert file_map["should_override_parse.txt"].regex == conf.regex
+    assert file_map["should_override_parse.txt"].ignore_missing_version == conf.ignore_missing_version
+
+    assert file_map["should_override_serialize.txt"].parse == conf.parse
+    assert file_map["should_override_serialize.txt"].serialize == ["{major}"]
+    assert file_map["should_override_serialize.txt"].search == conf.search
+    assert file_map["should_override_serialize.txt"].replace == conf.replace
+    assert file_map["should_override_serialize.txt"].regex == conf.regex
+    assert file_map["should_override_serialize.txt"].ignore_missing_version == conf.ignore_missing_version
+
+    assert file_map["should_override_ignore_missing.txt"].parse == conf.parse
+    assert file_map["should_override_ignore_missing.txt"].serialize == conf.serialize
+    assert file_map["should_override_ignore_missing.txt"].search == conf.search
+    assert file_map["should_override_ignore_missing.txt"].replace == conf.replace
+    assert file_map["should_override_ignore_missing.txt"].regex == conf.regex
+    assert file_map["should_override_ignore_missing.txt"].ignore_missing_version is False
+
+    assert file_map["should_override_regex.txt"].parse == conf.parse
+    assert file_map["should_override_regex.txt"].serialize == conf.serialize
+    assert file_map["should_override_regex.txt"].search == conf.search
+    assert file_map["should_override_regex.txt"].replace == conf.replace
+    assert file_map["should_override_regex.txt"].regex is False
+    assert file_map["should_override_regex.txt"].ignore_missing_version == conf.ignore_missing_version

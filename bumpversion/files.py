@@ -61,6 +61,35 @@ def contains_pattern(search: re.Pattern, contents: str) -> bool:
     return False
 
 
+def log_changes(file_path: str, file_content_before: str, file_content_after: str, dry_run: bool = False) -> None:
+    """
+    Log the changes that would be made to the file.
+
+    Args:
+        file_path: The path to the file
+        file_content_before: The file contents before the change
+        file_content_after: The file contents after the change
+        dry_run: True if this is a report-only job
+    """
+    if file_content_before != file_content_after:
+        logger.info("%s file %s:", "Would change" if dry_run else "Changing", file_path)
+        logger.info(
+            "\n".join(
+                list(
+                    context_diff(
+                        file_content_before.splitlines(),
+                        file_content_after.splitlines(),
+                        fromfile=f"before {file_path}",
+                        tofile=f"after {file_path}",
+                        lineterm="",
+                    )
+                )
+            )
+        )
+    else:
+        logger.info("%s file %s", "Would not change" if dry_run else "Not changing", file_path)
+
+
 class ConfiguredFile:
     """A file to modify in a configured way."""
 
@@ -156,23 +185,7 @@ class ConfiguredFile:
             search_for_og, og_raw_search_pattern = get_search_pattern(self.search, og_context, self.regex)
             file_content_after = search_for_og.sub(replace_with, file_content_before)
 
-        if file_content_before != file_content_after:
-            logger.info("%s file %s:", "Would change" if dry_run else "Changing", self.path)
-            logger.info(
-                "\n".join(
-                    list(
-                        context_diff(
-                            file_content_before.splitlines(),
-                            file_content_after.splitlines(),
-                            fromfile=f"before {self.path}",
-                            tofile=f"after {self.path}",
-                            lineterm="",
-                        )
-                    )
-                )
-            )
-        else:
-            logger.info("%s file %s", "Would not change" if dry_run else "Not changing", self.path)
+        log_changes(self.path, file_content_before, file_content_after, dry_run)
 
         if not dry_run:  # pragma: no-coverage
             self.write_file_contents(file_content_after)
