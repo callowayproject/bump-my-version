@@ -5,7 +5,7 @@ from copy import deepcopy
 from difflib import context_diff
 from typing import List, MutableMapping, Optional, Tuple
 
-from bumpversion.config import FileConfig
+from bumpversion.config.models import FileConfig, VersionPartConfig
 from bumpversion.exceptions import VersionNotFoundError
 from bumpversion.version_part import Version, VersionConfig
 

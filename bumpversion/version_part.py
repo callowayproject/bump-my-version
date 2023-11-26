@@ -7,7 +7,7 @@ from typing import Any, Dict, List, MutableMapping, Optional, Union
 
 from click import UsageError
 
-from bumpversion.config import VersionPartConfig
+from bumpversion.config.models import VersionPartConfig
 from bumpversion.exceptions import FormattingError, InvalidVersionPartError, MissingValueError
 from bumpversion.functions import NumericFunction, PartFunction, ValuesFunction
 from bumpversion.utils import key_val_string, labels_for_format

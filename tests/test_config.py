@@ -8,6 +8,8 @@ import pytest
 from click.testing import CliRunner, Result
 from pytest import param
 
+import bumpversion.config.files
+import bumpversion.config.utils
 from bumpversion import config
 from tests.conftest import inside_dir, get_config_data
 
@@ -39,7 +41,7 @@ def cfg_file_keyword(request):
 )
 def test_read_ini_file(conf_file: str, expected_file: str, fixtures_path: Path) -> None:
     """Parsing the config file should match the expected results."""
-    result = config.read_ini_file(fixtures_path.joinpath(conf_file))
+    result = bumpversion.config.files.read_ini_file(fixtures_path.joinpath(conf_file))
     expected = json.loads(fixtures_path.joinpath(expected_file).read_text())
     assert result == expected
 
@@ -52,7 +54,7 @@ def test_read_ini_file(conf_file: str, expected_file: str, fixtures_path: Path) 
 )
 def test_read_toml_file(conf_file: str, expected_file: str, fixtures_path: Path) -> None:
     """Parsing the config file should match the expected results."""
-    result = config.read_toml_file(fixtures_path.joinpath(conf_file))
+    result = bumpversion.config.files.read_toml_file(fixtures_path.joinpath(conf_file))
     expected = json.loads(fixtures_path.joinpath(expected_file).read_text())
     assert result == expected
 
@@ -129,7 +131,7 @@ def test_multiple_config_files(tmp_path: Path):
         "]\n"
     )
     with inside_dir(tmp_path):
-        cfg_file = config.find_config_file()
+        cfg_file = bumpversion.config.files.find_config_file()
         cfg = config.get_configuration(cfg_file)
 
     assert cfg.current_version == "0.10.5"
@@ -269,7 +271,7 @@ def test_get_glob_files(glob_pattern: str, file_list: set, fixtures_path: Path):
     }
     conf, version_config, current_version = get_config_data(overrides)
     with inside_dir(fixtures_path.joinpath("glob")):
-        result = config.get_glob_files(conf.files[0])
+        result = bumpversion.config.utils.resolve_glob_files(conf.files[0])
 
     assert len(result) == len(file_list)
     for f in result:
