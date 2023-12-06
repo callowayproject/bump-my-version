@@ -2,14 +2,14 @@
 from __future__ import annotations
 
 import logging
-import re
-from difflib import context_diff
-from pathlib import Path
-from typing import Union
+from typing import TYPE_CHECKING, Union
 
 from bumpversion.config.files import read_config_file
 from bumpversion.config.models import Config
 from bumpversion.exceptions import ConfigurationError
+
+if TYPE_CHECKING:  # pragma: no-coverage
+    from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -110,71 +110,3 @@ def check_current_version(config: Config) -> str:
         return current_version
 
     raise ConfigurationError("Unable to determine the current version.")
-
-
-def update_config_file(
-    config_file: Union[str, Path, None], current_version: str, new_version: str, dry_run: bool = False
-) -> None:
-    """
-    Update the current_version key in the configuration file.
-
-    If no explicit configuration file is passed, it will search in several files to
-    find its configuration.
-
-    Instead of parsing and re-writing the config file with new information, it will use
-    a regular expression to just replace the current_version value. The idea is it will
-    avoid unintentional changes (like formatting) to the config file.
-
-    Args:
-        config_file: The configuration file to explicitly use.
-        current_version: The serialized current version.
-        new_version: The serialized new version.
-        dry_run: True if the update should be a dry run.
-    """
-    toml_current_version_regex = re.compile(
-        f'(?P<section_prefix>\\[tool\\.bumpversion]\n[^[]*current_version\\s*=\\s*)(\\"{current_version}\\")',
-        re.MULTILINE,
-    )
-    cfg_current_version_regex = re.compile(
-        f"(?P<section_prefix>\\[bumpversion]\n[^[]*current_version\\s*=\\s*)(?P<version>{current_version})",
-        re.MULTILINE,
-    )
-
-    if not config_file:
-        logger.info("No configuration file found to update.")
-        return
-
-    config_path = Path(config_file)
-    existing_config = config_path.read_text()
-    if config_path.suffix == ".cfg" and cfg_current_version_regex.search(existing_config):
-        sub_str = f"\\g<section_prefix>{new_version}"
-        new_config = cfg_current_version_regex.sub(sub_str, existing_config)
-    elif config_path.suffix == ".toml" and toml_current_version_regex.search(existing_config):
-        sub_str = f'\\g<section_prefix>"{new_version}"'
-        new_config = toml_current_version_regex.sub(sub_str, existing_config)
-    else:
-        logger.info("Could not find the current version in the config file: %s.", config_path)
-        return
-
-    logger.info(
-        "%s to config file %s:",
-        "Would write" if dry_run else "Writing",
-        config_path,
-    )
-
-    logger.info(
-        "\n".join(
-            list(
-                context_diff(
-                    existing_config.splitlines(),
-                    new_config.splitlines(),
-                    fromfile=f"before {config_path}",
-                    tofile=f"after {config_path}",
-                    lineterm="",
-                )
-            )
-        )
-    )
-
-    if not dry_run:
-        config_path.write_text(new_config)

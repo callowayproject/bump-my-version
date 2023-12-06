@@ -10,6 +10,7 @@ from pytest import param
 
 import bumpversion.config.files
 import bumpversion.config.utils
+from bumpversion.utils import get_context
 from bumpversion import config
 from tests.conftest import inside_dir, get_config_data
 
@@ -177,23 +178,53 @@ TOML_EXPECTED_DIFF = (
 
 
 @pytest.mark.parametrize(
-    ["cfg_file_name", "expected_diff"],
     [
-        (".bumpversion.cfg", CFG_EXPECTED_DIFF),
-        ("setup.cfg", CFG_EXPECTED_DIFF),
-        ("pyproject.toml", TOML_EXPECTED_DIFF),
+        "cfg_file_name",
+    ],
+    [
+        ("pyproject.toml",),
     ],
 )
-def test_update_config_file(tmp_path: Path, cfg_file_name: str, expected_diff: str, fixtures_path: Path) -> None:
+def test_update_config_file(tmp_path: Path, cfg_file_name: str, fixtures_path: Path) -> None:
     """
     Make sure only the version string is updated in the config file.
     """
+    expected_diff = TOML_EXPECTED_DIFF
+    cfg_path = tmp_path / cfg_file_name
+    orig_path = fixtures_path / f"basic_cfg{cfg_path.suffix}"
+    cfg_path.write_text(orig_path.read_text())
+    original_content = orig_path.read_text().splitlines(keepends=True)
+    with inside_dir(tmp_path):
+        cfg = config.get_configuration(cfg_path)
+        ctx = get_context(cfg)
+    current_version = cfg.version_config.parse("1.0.0")
+    new_version = cfg.version_config.parse("1.0.1")
+    bumpversion.config.files.update_config_file(cfg_path, cfg, current_version, new_version, ctx)
+    new_content = cfg_path.read_text().splitlines(keepends=True)
+    difference = difflib.context_diff(original_content, new_content, n=0)
+    assert "".join(difference) == expected_diff
+
+
+@pytest.mark.parametrize(
+    [
+        "cfg_file_name",
+    ],
+    [
+        (".bumpversion.cfg",),
+        ("setup.cfg",),
+    ],
+)
+def test_update_ini_config_file(tmp_path: Path, cfg_file_name: str, fixtures_path: Path) -> None:
+    """
+    Make sure only the version string is updated in the config file.
+    """
+    expected_diff = CFG_EXPECTED_DIFF
     cfg_path = tmp_path / cfg_file_name
     orig_path = fixtures_path / f"basic_cfg{cfg_path.suffix}"
     cfg_path.write_text(orig_path.read_text())
     original_content = orig_path.read_text().splitlines(keepends=True)
 
-    config.update_config_file(cfg_path, "1.0.0", "1.0.1")
+    bumpversion.config.files.update_ini_config_file(cfg_path, "1.0.0", "1.0.1")
     new_content = cfg_path.read_text().splitlines(keepends=True)
     difference = difflib.context_diff(original_content, new_content, n=0)
     assert "".join(difference) == expected_diff

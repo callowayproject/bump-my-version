@@ -3,7 +3,8 @@ import logging
 import re
 from copy import deepcopy
 from difflib import context_diff
-from typing import List, MutableMapping, Optional, Tuple
+from pathlib import Path
+from typing import Dict, List, MutableMapping, Optional, Tuple
 
 from bumpversion.config.models import FileConfig, VersionPartConfig
 from bumpversion.exceptions import VersionNotFoundError
@@ -248,3 +249,91 @@ def _check_files_contain_version(
     for f in files:
         context["current_version"] = f.version_config.serialize(current_version, context)
         f.contains_version(current_version, context)
+
+
+class FileUpdater:
+    """A class to handle updating files."""
+
+    def __init__(
+        self,
+        file_cfg: FileConfig,
+        version_config: VersionConfig,
+        search: Optional[str] = None,
+        replace: Optional[str] = None,
+    ) -> None:
+        self.path = file_cfg.filename
+        self.version_config = version_config
+        self.parse = file_cfg.parse or version_config.parse_regex.pattern
+        self.serialize = file_cfg.serialize or version_config.serialize_formats
+        self.search = search or file_cfg.search or version_config.search
+        self.replace = replace or file_cfg.replace or version_config.replace
+        self.regex = file_cfg.regex or False
+        self.ignore_missing_version = file_cfg.ignore_missing_version or False
+        self.version_config = VersionConfig(
+            self.parse, self.serialize, self.search, self.replace, version_config.part_configs
+        )
+        self._newlines: Optional[str] = None
+
+    def update_file(
+        self, current_version: Version, new_version: Version, context: MutableMapping, dry_run: bool = False
+    ) -> None:
+        """Update the files."""
+        # TODO: Implement this
+        pass
+
+
+class DataFileUpdater:
+    """A class to handle updating files."""
+
+    def __init__(
+        self,
+        file_cfg: FileConfig,
+        version_part_configs: Dict[str, VersionPartConfig],
+    ) -> None:
+        self.path = Path(file_cfg.filename)
+        self.key_path = file_cfg.key_path
+        self.search = file_cfg.search
+        self.replace = file_cfg.replace
+        self.regex = file_cfg.regex
+        self.ignore_missing_version = file_cfg.ignore_missing_version
+        self.version_config = VersionConfig(
+            file_cfg.parse, file_cfg.serialize, file_cfg.search, file_cfg.replace, version_part_configs
+        )
+
+    def update_file(
+        self, current_version: Version, new_version: Version, context: MutableMapping, dry_run: bool = False
+    ) -> None:
+        """Update the files."""
+        new_context = deepcopy(context)
+        new_context["current_version"] = self.version_config.serialize(current_version, context)
+        new_context["new_version"] = self.version_config.serialize(new_version, context)
+        search_for, raw_search_pattern = get_search_pattern(self.search, new_context, self.regex)
+        replace_with = self.replace.format(**new_context)
+        if self.path.suffix == ".toml":
+            self._update_toml_file(search_for, raw_search_pattern, replace_with, dry_run)
+
+    def _update_toml_file(
+        self, search_for: re.Pattern, raw_search_pattern: str, replace_with: str, dry_run: bool = False
+    ) -> None:
+        """Update a TOML file."""
+        import dotted
+        import tomlkit
+
+        toml_data = tomlkit.parse(self.path.read_text())
+        value_before = dotted.get(toml_data, self.key_path)
+
+        if value_before is None:
+            raise KeyError(f"Key path '{self.key_path}' does not exist in {self.path}")
+        elif not contains_pattern(search_for, value_before) and not self.ignore_missing_version:
+            raise ValueError(
+                f"Key '{self.key_path}' in {self.path} does not contain the correct contents: {raw_search_pattern}"
+            )
+
+        new_value = search_for.sub(replace_with, value_before)
+        log_changes(f"{self.path}:{self.key_path}", value_before, new_value, dry_run)
+
+        if dry_run:
+            return
+
+        dotted.update(toml_data, self.key_path, new_value)
+        self.path.write_text(tomlkit.dumps(toml_data))
