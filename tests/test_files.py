@@ -2,13 +2,16 @@
 import os
 import shutil
 from datetime import datetime, timezone
+from difflib import context_diff
 from pathlib import Path
 from textwrap import dedent
+import tomlkit
 
 import pytest
 from pytest import param
 
 from bumpversion import exceptions, files, config, bump
+from bumpversion.config.models import FileConfig
 from bumpversion.utils import get_context
 from bumpversion.exceptions import VersionNotFoundError
 from bumpversion.version_part import VersionConfig
@@ -429,3 +432,58 @@ def test_bad_regex_search(tmp_path: Path, caplog) -> None:
     # Assert
     assert version_path.read_text() == "Score: A+ ( '1.2.4'"
     assert "Invalid regex" in caplog.text
+
+
+def test_datafileupdater_replaces_key(tmp_path: Path, fixtures_path: Path) -> None:
+    """A key specific key is replaced and nothing else is touched."""
+    # Arrange
+    config_path = tmp_path / "pyproject.toml"
+    fixture_path = fixtures_path / "partial_version_strings.toml"
+    shutil.copy(fixture_path, config_path)
+
+    contents_before = config_path.read_text()
+    conf = config.get_configuration(config_file=config_path, files=[{"filename": str(config_path)}])
+    version_config = VersionConfig(conf.parse, conf.serialize, conf.search, conf.replace, conf.parts)
+    current_version = version_config.parse(conf.current_version)
+    new_version = current_version.bump("minor", version_config.order)
+    datafile_config = FileConfig(
+        filename=str(config_path),
+        key_path="tool.bumpversion.current_version",
+        search=conf.search,
+        replace=conf.replace,
+        regex=conf.regex,
+        ignore_missing_version=conf.ignore_missing_version,
+        serialize=conf.serialize,
+        parse=conf.parse,
+    )
+
+    # Act
+    files.DataFileUpdater(datafile_config, version_config.part_configs).update_file(
+        current_version, new_version, get_context(conf)
+    )
+
+    # Assert
+    contents_after = config_path.read_text()
+    toml_data = tomlkit.parse(config_path.read_text()).unwrap()
+    actual_difference = list(
+        context_diff(
+            contents_before.splitlines(),
+            contents_after.splitlines(),
+            fromfile="before",
+            tofile="after",
+            n=0,
+            lineterm="",
+        )
+    )
+    expected_difference = [
+        "*** before",
+        "--- after",
+        "***************",
+        "*** 28 ****",
+        '! current_version = "0.0.2"',
+        "--- 28 ----",
+        '! current_version = "0.1.0"',
+    ]
+    assert actual_difference == expected_difference
+    assert toml_data["tool"]["pdm"]["dev-dependencies"]["lint"] == ["ruff==0.0.292"]
+    assert toml_data["tool"]["bumpversion"]["current_version"] == "0.1.0"

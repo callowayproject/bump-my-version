@@ -43,12 +43,22 @@ jobs:
         if: ${{ github.event_name != 'workflow_dispatch' }}
         shell: bash
         run: |
-          if [[ $RELEASE_KIND != "no-release" ]]; then
-            bump-my-version bump -v "$RELEASE_KIND"
-            git push
-            git push --tags
-            echo "PACKAGE=true" >> $GITHUB_ENV
-          fi
+          PR_NUMBER=$(gh pr view --json number -q .number || echo "")
+          REVISION=$(git describe --tags --long | awk -F- '{print $2}')
+          export PR_NUMBER REVISION
+          case "$RELEASE_KIND" in
+            major|minor|patch)
+              bump-my-version bump "$RELEASE_KIND"
+              if [[ BUMPVERSION_DRY_RUN == "false" ]];  then
+                git push
+                git push --tags
+                echo "PACKAGE=true" >> $GITHUB_ENV
+              fi
+              ;;
+             dev)
+              echo "Intentionally not bumping version for dev release"
+              ;;
+          esac
 
       - name: Bump Version manual
         if: ${{ github.event_name == 'workflow_dispatch' }}

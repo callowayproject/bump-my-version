@@ -9,6 +9,8 @@ from pathlib import Path
 from tempfile import NamedTemporaryFile
 from typing import TYPE_CHECKING, ClassVar, List, MutableMapping, Optional, Type, Union
 
+from utils import extract_regex_flags
+
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
 
@@ -86,7 +88,7 @@ class SourceCodeManager:
         raise NotImplementedError()
 
     @classmethod
-    def latest_tag_info(cls, tag_pattern: str) -> SCMInfo:
+    def latest_tag_info(cls, tag_name: str, parse_pattern: str) -> SCMInfo:
         """Return information about the latest tag."""
         raise NotImplementedError()
 
@@ -108,6 +110,16 @@ class SourceCodeManager:
             return result.stdout.splitlines()
         except (FileNotFoundError, PermissionError, NotADirectoryError, subprocess.CalledProcessError):
             return []
+
+    @classmethod
+    def get_version_from_tag(cls, tag: str, tag_name: str, parse_pattern: str) -> Optional[str]:
+        """Return the version from a tag."""
+        version_pattern = parse_pattern.replace("\\\\", "\\")
+        version_pattern, regex_flags = extract_regex_flags(version_pattern)
+        rep = tag_name.replace("{new_version}", f"(?P<current_version>{version_pattern})")
+        rep = f"{regex_flags}{rep}"
+        tag_regex = re.compile(rep)
+        return match["current_version"] if (match := tag_regex.match(tag)) else None
 
     @classmethod
     def commit_to_scm(
@@ -173,7 +185,6 @@ class SourceCodeManager:
         tag_name = config.tag_name.format(**context)
         tag_message = config.tag_message.format(**context)
         existing_tags = cls.get_all_tags()
-
         do_tag = not dry_run
 
         if tag_name in existing_tags:
@@ -219,7 +230,7 @@ class Git(SourceCodeManager):
             raise DirtyWorkingDirectoryError(f"Git working directory is not clean:\n\n{joined_lines}")
 
     @classmethod
-    def latest_tag_info(cls, tag_pattern: str) -> SCMInfo:
+    def latest_tag_info(cls, tag_name: str, parse_pattern: str) -> SCMInfo:
         """Return information about the latest tag."""
         try:
             # git-describe doesn't update the git-index, so we do that
@@ -227,7 +238,7 @@ class Git(SourceCodeManager):
         except subprocess.CalledProcessError as e:
             logger.debug("Error when running git update-index: %s", e.stderr)
             return SCMInfo(tool=cls)
-
+        tag_pattern = tag_name.replace("{new_version}", "*")
         try:
             # get info about the latest tag in git
             git_cmd = [
@@ -260,7 +271,8 @@ class Git(SourceCodeManager):
 
         info.commit_sha = describe_out.pop().lstrip("g")
         info.distance_to_latest_tag = int(describe_out.pop())
-        info.current_version = "-".join(describe_out).lstrip("v")
+        version = cls.get_version_from_tag(describe_out[-1], tag_name, parse_pattern)
+        info.current_version = version or "-".join(describe_out).lstrip("v")
 
         return info
 
@@ -298,10 +310,10 @@ class Mercurial(SourceCodeManager):
     _ALL_TAGS_COMMAND: ClassVar[List[str]] = ["hg", "log", '--rev="tag()"', '--template="{tags}\n"']
 
     @classmethod
-    def latest_tag_info(cls, tag_pattern: str) -> SCMInfo:
+    def latest_tag_info(cls, tag_name: str, parse_pattern: str) -> SCMInfo:
         """Return information about the latest tag."""
         current_version = None
-        re_pattern = tag_pattern.replace("*", ".*")
+        re_pattern = tag_name.replace("{new_version}", ".*")
         result = subprocess.run(
             ["hg", "log", "-r", f"tag('re:{re_pattern}')", "--template", "{latesttag}\n"],  # noqa: S603, S607
             text=True,
@@ -310,7 +322,10 @@ class Mercurial(SourceCodeManager):
         )
         result.check_returncode()
         if result.stdout:
-            current_version = result.stdout.splitlines(keepends=False)[-1].lstrip("v")
+            tag_string = result.stdout.splitlines(keepends=False)[-1]
+            current_version = cls.get_version_from_tag(tag_string, tag_name, parse_pattern)
+        else:
+            logger.debug("No tags found")
         is_dirty = len(subprocess.check_output(["hg", "status", "-mard"])) != 0  # noqa: S603, S607
         return SCMInfo(tool=cls, current_version=current_version, dirty=is_dirty)
 
@@ -356,11 +371,11 @@ class Mercurial(SourceCodeManager):
         subprocess.check_output(command)  # noqa: S603
 
 
-def get_scm_info(tag_pattern: str) -> SCMInfo:
+def get_scm_info(tag_name: str, parse_pattern: str) -> SCMInfo:
     """Return a dict with the latest source code management info."""
     if Git.is_usable():
-        return Git.latest_tag_info(tag_pattern)
+        return Git.latest_tag_info(tag_name, parse_pattern)
     elif Mercurial.is_usable():
-        return Mercurial.latest_tag_info(tag_pattern)
+        return Mercurial.latest_tag_info(tag_name, parse_pattern)
     else:
         return SCMInfo()
