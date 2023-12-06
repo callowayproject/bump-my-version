@@ -6,10 +6,9 @@ from typing import TYPE_CHECKING, Dict, List, Optional, Union
 from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-
 if TYPE_CHECKING:
-    from bumpversion.version_part import VersionConfig
     from bumpversion.scm import SCMInfo
+    from bumpversion.version_part import VersionConfig
 
 
 class VersionPartConfig(BaseModel):
