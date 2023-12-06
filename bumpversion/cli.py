@@ -8,11 +8,11 @@ from click.core import Context
 from bumpversion import __version__
 from bumpversion.aliases import AliasedGroup
 from bumpversion.bump import do_bump
-from bumpversion.config import find_config_file, get_configuration
+from bumpversion.config import get_configuration
+from bumpversion.config.files import find_config_file
 from bumpversion.files import ConfiguredFile, modify_files
-from bumpversion.logging import setup_logging
 from bumpversion.show import do_show, log_list
-from bumpversion.ui import print_warning
+from bumpversion.ui import print_warning, setup_logging
 from bumpversion.utils import get_context, get_overrides
 
 logger = logging.getLogger(__name__)

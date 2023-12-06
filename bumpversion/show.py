@@ -8,7 +8,7 @@ from bumpversion.bump import get_next_version
 from bumpversion.config import Config
 from bumpversion.exceptions import BadInputError
 from bumpversion.ui import print_error, print_info
-from bumpversion.utils import get_context
+from bumpversion.utils import get_context, recursive_sort_dict
 
 
 def output_default(value: dict) -> None:
@@ -17,7 +17,7 @@ def output_default(value: dict) -> None:
         print_info(next(iter(value.values())))
     else:
         buffer = StringIO()
-        pprint(value, stream=buffer)  # noqa: T203
+        pprint(value, stream=buffer, sort_dicts=True)  # noqa: T203
         print_info(buffer.getvalue())
 
 
@@ -25,7 +25,7 @@ def output_yaml(value: dict) -> None:
     """Output the value as yaml."""
     from bumpversion.yaml_dump import dump
 
-    print_info(dump(value))
+    print_info(dump(recursive_sort_dict(value)))
 
 
 def output_json(value: dict) -> None:
@@ -117,13 +117,14 @@ def log_list(config: Config, version_part: Optional[str], new_version: Optional[
 
         print_info(f"new_version={next_version_str}")
 
-    for key, value in config.dict(exclude={"scm_info", "parts"}).items():
+    config_dict = recursive_sort_dict(config.model_dump(exclude={"scm_info", "parts"}))
+    for key, value in config_dict.items():
         print_info(f"{key}={value}")
 
 
 def do_show(*args, config: Config, format_: str = "default", increment: Optional[str] = None) -> None:
     """Show current version or configuration information."""
-    config_dict = config.dict()
+    config_dict = config.model_dump()
     ctx = get_context(config)
 
     if increment:

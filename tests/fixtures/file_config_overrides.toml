@@ -1,0 +1,31 @@
+[tool.bumpversion]
+current_version = "0.0.1"
+ignore_missing_version = true
+regex = true
+
+[[tool.bumpversion.files]]
+filename = "should_contain_defaults.txt"
+
+[[tool.bumpversion.files]]
+filename = "should_override_search.txt"
+search = "**unreleased**"
+
+[[tool.bumpversion.files]]
+filename = "should_override_replace.txt"
+replace = "**unreleased**"
+
+[[tool.bumpversion.files]]
+filename = "should_override_parse.txt"
+parse = "version(?P<major>\\d+)"
+
+[[tool.bumpversion.files]]
+filename = "should_override_serialize.txt"
+serialize = ["{major}"]
+
+[[tool.bumpversion.files]]
+filename = "should_override_ignore_missing.txt"
+ignore_missing_version = false
+
+[[tool.bumpversion.files]]
+filename = "should_override_regex.txt"
+regex = false
