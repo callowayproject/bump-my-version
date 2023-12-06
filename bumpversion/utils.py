@@ -2,11 +2,28 @@
 import string
 from collections import ChainMap
 from dataclasses import asdict
-from typing import TYPE_CHECKING, Any, List, Optional
+from typing import TYPE_CHECKING, Any, List, Optional, Tuple
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
     from bumpversion.version_part import Version
+
+
+def extract_regex_flags(regex_pattern: str) -> Tuple[str, str]:
+    """
+    Extract the regex flags from the regex pattern.
+
+    Args:
+        regex_pattern: The pattern that might start with regex flags
+
+    Returns:
+        A tuple of the regex pattern without the flag string and regex flag string
+    """
+    import re
+
+    flag_pattern = r"^(\(\?[aiLmsux]+\))"
+    bits = re.split(flag_pattern, regex_pattern)
+    return (regex_pattern, "") if len(bits) == 1 else (bits[2], bits[1])
 
 
 def recursive_sort_dict(input_value: Any) -> Any:
