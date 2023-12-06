@@ -43,7 +43,7 @@ repos:
     hooks:
       - id: mypy
         args: [--no-strict-optional, --ignore-missing-imports]
-        additional_dependencies: ["pydantic<2.0", "toml", "types-all"]
+        additional_dependencies: ["pydantic>2.0", "toml", "types-all"]
   - repo: https://github.com/jsh9/pydoclint
     rev: 0.3.8
     hooks:
@@ -59,3 +59,5 @@ repos:
     rev: 0.27.1
     hooks:
       - id: check-azure-pipelines
+ci:
+  autofix_prs: false

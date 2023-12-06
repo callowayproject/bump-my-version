@@ -7,7 +7,7 @@ from pytest import param, LogCaptureFixture
 
 from bumpversion import scm
 from bumpversion.exceptions import DirtyWorkingDirectoryError
-from bumpversion.logging import setup_logging
+from bumpversion.ui import setup_logging
 from tests.conftest import get_config_data, inside_dir
 
 

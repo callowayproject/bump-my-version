@@ -9,6 +9,8 @@ from pathlib import Path
 from tempfile import NamedTemporaryFile
 from typing import TYPE_CHECKING, ClassVar, List, MutableMapping, Optional, Type, Union
 
+from utils import extract_regex_flags
+
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
 
@@ -113,7 +115,9 @@ class SourceCodeManager:
     def get_version_from_tag(cls, tag: str, tag_name: str, parse_pattern: str) -> Optional[str]:
         """Return the version from a tag."""
         version_pattern = parse_pattern.replace("\\\\", "\\")
+        version_pattern, regex_flags = extract_regex_flags(version_pattern)
         rep = tag_name.replace("{new_version}", f"(?P<current_version>{version_pattern})")
+        rep = f"{regex_flags}{rep}"
         tag_regex = re.compile(rep)
         return match["current_version"] if (match := tag_regex.match(tag)) else None
 

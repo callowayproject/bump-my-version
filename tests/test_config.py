@@ -8,6 +8,9 @@ import pytest
 from click.testing import CliRunner, Result
 from pytest import param
 
+import bumpversion.config.files
+import bumpversion.config.utils
+from bumpversion.utils import get_context
 from bumpversion import config
 from tests.conftest import inside_dir, get_config_data
 
@@ -39,7 +42,7 @@ def cfg_file_keyword(request):
 )
 def test_read_ini_file(conf_file: str, expected_file: str, fixtures_path: Path) -> None:
     """Parsing the config file should match the expected results."""
-    result = config.read_ini_file(fixtures_path.joinpath(conf_file))
+    result = bumpversion.config.files.read_ini_file(fixtures_path.joinpath(conf_file))
     expected = json.loads(fixtures_path.joinpath(expected_file).read_text())
     assert result == expected
 
@@ -52,7 +55,7 @@ def test_read_ini_file(conf_file: str, expected_file: str, fixtures_path: Path) 
 )
 def test_read_toml_file(conf_file: str, expected_file: str, fixtures_path: Path) -> None:
     """Parsing the config file should match the expected results."""
-    result = config.read_toml_file(fixtures_path.joinpath(conf_file))
+    result = bumpversion.config.files.read_toml_file(fixtures_path.joinpath(conf_file))
     expected = json.loads(fixtures_path.joinpath(expected_file).read_text())
     assert result == expected
 
@@ -129,7 +132,7 @@ def test_multiple_config_files(tmp_path: Path):
         "]\n"
     )
     with inside_dir(tmp_path):
-        cfg_file = config.find_config_file()
+        cfg_file = bumpversion.config.files.find_config_file()
         cfg = config.get_configuration(cfg_file)
 
     assert cfg.current_version == "0.10.5"
@@ -175,23 +178,53 @@ TOML_EXPECTED_DIFF = (
 
 
 @pytest.mark.parametrize(
-    ["cfg_file_name", "expected_diff"],
     [
-        (".bumpversion.cfg", CFG_EXPECTED_DIFF),
-        ("setup.cfg", CFG_EXPECTED_DIFF),
-        ("pyproject.toml", TOML_EXPECTED_DIFF),
+        "cfg_file_name",
+    ],
+    [
+        ("pyproject.toml",),
     ],
 )
-def test_update_config_file(tmp_path: Path, cfg_file_name: str, expected_diff: str, fixtures_path: Path) -> None:
+def test_update_config_file(tmp_path: Path, cfg_file_name: str, fixtures_path: Path) -> None:
     """
     Make sure only the version string is updated in the config file.
     """
+    expected_diff = TOML_EXPECTED_DIFF
+    cfg_path = tmp_path / cfg_file_name
+    orig_path = fixtures_path / f"basic_cfg{cfg_path.suffix}"
+    cfg_path.write_text(orig_path.read_text())
+    original_content = orig_path.read_text().splitlines(keepends=True)
+    with inside_dir(tmp_path):
+        cfg = config.get_configuration(cfg_path)
+        ctx = get_context(cfg)
+    current_version = cfg.version_config.parse("1.0.0")
+    new_version = cfg.version_config.parse("1.0.1")
+    bumpversion.config.files.update_config_file(cfg_path, cfg, current_version, new_version, ctx)
+    new_content = cfg_path.read_text().splitlines(keepends=True)
+    difference = difflib.context_diff(original_content, new_content, n=0)
+    assert "".join(difference) == expected_diff
+
+
+@pytest.mark.parametrize(
+    [
+        "cfg_file_name",
+    ],
+    [
+        (".bumpversion.cfg",),
+        ("setup.cfg",),
+    ],
+)
+def test_update_ini_config_file(tmp_path: Path, cfg_file_name: str, fixtures_path: Path) -> None:
+    """
+    Make sure only the version string is updated in the config file.
+    """
+    expected_diff = CFG_EXPECTED_DIFF
     cfg_path = tmp_path / cfg_file_name
     orig_path = fixtures_path / f"basic_cfg{cfg_path.suffix}"
     cfg_path.write_text(orig_path.read_text())
     original_content = orig_path.read_text().splitlines(keepends=True)
 
-    config.update_config_file(cfg_path, "1.0.0", "1.0.1")
+    bumpversion.config.files.update_ini_config_file(cfg_path, "1.0.0", "1.0.1")
     new_content = cfg_path.read_text().splitlines(keepends=True)
     difference = difflib.context_diff(original_content, new_content, n=0)
     assert "".join(difference) == expected_diff
@@ -269,8 +302,63 @@ def test_get_glob_files(glob_pattern: str, file_list: set, fixtures_path: Path):
     }
     conf, version_config, current_version = get_config_data(overrides)
     with inside_dir(fixtures_path.joinpath("glob")):
-        result = config.get_glob_files(conf.files[0])
+        result = bumpversion.config.utils.resolve_glob_files(conf.files[0])
 
     assert len(result) == len(file_list)
     for f in result:
         assert Path(f.filename) in file_list
+
+
+def test_file_overrides_config(fixtures_path: Path):
+    """If a file has a different config, it should override the main config."""
+    cfg_file = fixtures_path / "file_config_overrides.toml"
+    conf = config.get_configuration(cfg_file)
+    file_map = {f.filename: f for f in conf.files}
+    assert file_map["should_contain_defaults.txt"].parse == conf.parse
+    assert file_map["should_contain_defaults.txt"].serialize == conf.serialize
+    assert file_map["should_contain_defaults.txt"].search == conf.search
+    assert file_map["should_contain_defaults.txt"].replace == conf.replace
+    assert file_map["should_contain_defaults.txt"].regex == conf.regex
+    assert file_map["should_contain_defaults.txt"].ignore_missing_version == conf.ignore_missing_version
+
+    assert file_map["should_override_search.txt"].parse == conf.parse
+    assert file_map["should_override_search.txt"].serialize == conf.serialize
+    assert file_map["should_override_search.txt"].search == "**unreleased**"
+    assert file_map["should_override_search.txt"].replace == conf.replace
+    assert file_map["should_override_search.txt"].regex == conf.regex
+    assert file_map["should_override_search.txt"].ignore_missing_version == conf.ignore_missing_version
+
+    assert file_map["should_override_replace.txt"].parse == conf.parse
+    assert file_map["should_override_replace.txt"].serialize == conf.serialize
+    assert file_map["should_override_replace.txt"].search == conf.search
+    assert file_map["should_override_replace.txt"].replace == "**unreleased**"
+    assert file_map["should_override_replace.txt"].regex == conf.regex
+    assert file_map["should_override_replace.txt"].ignore_missing_version == conf.ignore_missing_version
+
+    assert file_map["should_override_parse.txt"].parse == "version(?P<major>\d+)"
+    assert file_map["should_override_parse.txt"].serialize == conf.serialize
+    assert file_map["should_override_parse.txt"].search == conf.search
+    assert file_map["should_override_parse.txt"].replace == conf.replace
+    assert file_map["should_override_parse.txt"].regex == conf.regex
+    assert file_map["should_override_parse.txt"].ignore_missing_version == conf.ignore_missing_version
+
+    assert file_map["should_override_serialize.txt"].parse == conf.parse
+    assert file_map["should_override_serialize.txt"].serialize == ["{major}"]
+    assert file_map["should_override_serialize.txt"].search == conf.search
+    assert file_map["should_override_serialize.txt"].replace == conf.replace
+    assert file_map["should_override_serialize.txt"].regex == conf.regex
+    assert file_map["should_override_serialize.txt"].ignore_missing_version == conf.ignore_missing_version
+
+    assert file_map["should_override_ignore_missing.txt"].parse == conf.parse
+    assert file_map["should_override_ignore_missing.txt"].serialize == conf.serialize
+    assert file_map["should_override_ignore_missing.txt"].search == conf.search
+    assert file_map["should_override_ignore_missing.txt"].replace == conf.replace
+    assert file_map["should_override_ignore_missing.txt"].regex == conf.regex
+    assert file_map["should_override_ignore_missing.txt"].ignore_missing_version is False
+
+    assert file_map["should_override_regex.txt"].parse == conf.parse
+    assert file_map["should_override_regex.txt"].serialize == conf.serialize
+    assert file_map["should_override_regex.txt"].search == conf.search
+    assert file_map["should_override_regex.txt"].replace == conf.replace
+    assert file_map["should_override_regex.txt"].regex is False
+    assert file_map["should_override_regex.txt"].ignore_missing_version == conf.ignore_missing_version

@@ -8,7 +8,8 @@ if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.files import ConfiguredFile
     from bumpversion.version_part import Version
 
-from bumpversion.config import Config, update_config_file
+from bumpversion.config import Config
+from bumpversion.config.files import update_config_file, update_ini_config_file
 from bumpversion.exceptions import ConfigurationError
 from bumpversion.utils import get_context, key_val_string
 
@@ -81,7 +82,10 @@ def do_bump(
 
     configured_files = resolve_file_config(config.files_to_modify, config.version_config)
     modify_files(configured_files, version, next_version, ctx, dry_run)
-    update_config_file(config_file, config.current_version, next_version_str, dry_run)
+    if config_file and config_file.suffix in {".cfg", ".ini"}:
+        update_ini_config_file(config_file, config.current_version, next_version_str, dry_run)
+    else:
+        update_config_file(config_file, config, version, next_version, ctx, dry_run)
 
     ctx = get_context(config, version, next_version)
     ctx["new_version"] = next_version_str

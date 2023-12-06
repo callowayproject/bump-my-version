@@ -1,0 +1,28 @@
+[project]
+name = "sample-repo"
+version = "0.0.2"
+description = ""
+authors = [
+    {name = "Someone", email = "someone@example.com"},
+]
+dependencies = []
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.pdm.dev-dependencies]
+lint = [
+    "ruff==0.0.292", # Comments should be saved
+]
+build = [
+    "bump-my-version>=0.12.0",
+]
+
+[tool.bumpversion]
+commit = false
+tag = false
+current_version = "0.0.2"
