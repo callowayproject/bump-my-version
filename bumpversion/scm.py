@@ -9,7 +9,7 @@ from pathlib import Path
 from tempfile import NamedTemporaryFile
 from typing import TYPE_CHECKING, ClassVar, List, MutableMapping, Optional, Type, Union
 
-from utils import extract_regex_flags
+from bumpversion.utils import extract_regex_flags
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
