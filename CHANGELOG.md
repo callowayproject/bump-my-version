@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased (2023-12-06)
+## 0.13.0 (2023-12-06)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.12.0...0.13.0)
 
 ### Fixes
