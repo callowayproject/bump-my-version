@@ -22,20 +22,20 @@ bumpversion.config
 :titlesonly:
 :maxdepth: 1
 
-bumpversion.files
-bumpversion.cli
 bumpversion.yaml_dump
-bumpversion.__main__
-bumpversion.exceptions
-bumpversion.show
-bumpversion.ui
-bumpversion.bump
-bumpversion.autocast
-bumpversion.scm
-bumpversion.utils
-bumpversion.version_part
 bumpversion.aliases
+bumpversion.files
+bumpversion.scm
+bumpversion.show
+bumpversion.autocast
+bumpversion.exceptions
+bumpversion.utils
+bumpversion.bump
 bumpversion.functions
+bumpversion.version_part
+bumpversion.cli
+bumpversion.__main__
+bumpversion.ui
 ```
 
 ## Package Contents
@@ -58,7 +58,7 @@ bumpversion.functions
 :canonical: bumpversion.__version__
 :type: str
 :value: >
-   '0.12.0'
+   '0.13.0'
 
 ```{autodoc2-docstring} bumpversion.__version__
 ```

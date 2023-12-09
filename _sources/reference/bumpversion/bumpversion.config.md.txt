@@ -13,8 +13,8 @@
 :titlesonly:
 :maxdepth: 1
 
-bumpversion.config.files
 bumpversion.config.models
+bumpversion.config.files
 bumpversion.config.utils
 ```
 
