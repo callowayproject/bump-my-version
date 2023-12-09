@@ -1,6 +1,55 @@
 # Changelog
 
-## Unreleased (2023-11-04)
+## Unreleased (2023-12-06)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.12.0...0.13.0)
+
+### Fixes
+
+- Fixed import of extract_regex_flags. [a980670](https://github.com/callowayproject/bump-my-version/commit/a980670c3f9d789fa20ace553aa07c7d14b2f9ca)
+    
+- Fixed logging and regex regression in 3.11. [cae12dc](https://github.com/callowayproject/bump-my-version/commit/cae12dc4b86339a5c2e4c9ff7658d391cb8eeecc)
+    
+- Fixed issue with tag name. [e218264](https://github.com/callowayproject/bump-my-version/commit/e2182645b90830478c1efa4c92d8ccd0e3b2d027)
+    
+  Fixes #74
+
+  current_version and tag_name now do not need to match exactly
+- Fixed logic in auto bump workflow. [909a53f](https://github.com/callowayproject/bump-my-version/commit/909a53f628fc4e79b1b3537e51f1cc47f00eb5a3)
+    
+- Fixes https://github.com/callowayproject/bump-my-version/issues/85. [97049e0](https://github.com/callowayproject/bump-my-version/commit/97049e078fd4b412431b879e86b9f9ce25fbea83)
+    
+  HG returns the tags in the order they were created so we want the last one in the list
+- Fixed autoversioning. [a308a35](https://github.com/callowayproject/bump-my-version/commit/a308a35edb60096e9ccf9a85f62b4986323c9159)
+    
+### New
+
+- Added key_path to FileConfig. [e160b40](https://github.com/callowayproject/bump-my-version/commit/e160b401b0d14cef77255bbd87748721db4e2e3d)
+    
+  - Also made all attributes required except `filename`, `glob`, and `key_path`
+### Other
+
+- [pre-commit.ci] auto fixes from pre-commit.com hooks. [8188a42](https://github.com/callowayproject/bump-my-version/commit/8188a42d1e25efab1f45499b448f2c007738cbbe)
+    
+  for more information, see https://pre-commit.ci
+- [pre-commit.ci] pre-commit autoupdate. [4c81ad4](https://github.com/callowayproject/bump-my-version/commit/4c81ad4906ac645887f86b4b5a30497ba93ee921)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.1.3 → v0.1.5](https://github.com/astral-sh/ruff-pre-commit/compare/v0.1.3...v0.1.5)
+
+- [pre-commit.ci] pre-commit autoupdate. [7109d70](https://github.com/callowayproject/bump-my-version/commit/7109d706f15c9e2dcf143896672ac2bbe2b0f5c1)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.1.3 → v0.1.6](https://github.com/astral-sh/ruff-pre-commit/compare/v0.1.3...v0.1.6)
+
+### Updates
+
+- Refactored configuration file updating. [e407974](https://github.com/callowayproject/bump-my-version/commit/e40797470e8c331f1ef6d93ed8e99851b423aa82)
+    
+  TOML files are parsed, specific values are updated, and re-written to avoid updating the wrong data.
+
+  It uses a two-way parser, so all formatting and comments are maintained.
+
+  INI-type configuration files use the old way, since that format is deprecated.
+
+## 0.12.0 (2023-11-04)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.11.0...0.12.0)
 
 ### Fixes
@@ -53,8 +102,7 @@
 
   - Changed the flags to --regex/--no-regex
   - updated tests and docs
-
-## 0.11.0 (2023-09-25)
+## 0.11.0 (2023-09-26)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.10.0...0.11.0)
 
 ### Other
