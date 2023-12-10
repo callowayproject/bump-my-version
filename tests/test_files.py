@@ -11,7 +11,7 @@ import pytest
 from pytest import param
 
 from bumpversion import exceptions, files, config, bump
-from bumpversion.config.models import FileConfig
+from bumpversion.config.models import FileChange
 from bumpversion.utils import get_context
 from bumpversion.exceptions import VersionNotFoundError
 from bumpversion.version_part import VersionConfig
@@ -446,7 +446,7 @@ def test_datafileupdater_replaces_key(tmp_path: Path, fixtures_path: Path) -> No
     version_config = VersionConfig(conf.parse, conf.serialize, conf.search, conf.replace, conf.parts)
     current_version = version_config.parse(conf.current_version)
     new_version = current_version.bump("minor", version_config.order)
-    datafile_config = FileConfig(
+    datafile_config = FileChange(
         filename=str(config_path),
         key_path="tool.bumpversion.current_version",
         search=conf.search,

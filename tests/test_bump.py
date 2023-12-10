@@ -76,7 +76,7 @@ def test_do_bump_with_version_part(mock_update_config_file, mock_modify_files):
     # Assert
     mock_modify_files.assert_called_once()
     mock_update_config_file.assert_called_once()
-    assert {f.path for f in mock_modify_files.call_args[0][0]} == {
+    assert {f.file_change.filename for f in mock_modify_files.call_args[0][0]} == {
         "foo.txt",
         "bar.txt",
     }

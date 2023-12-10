@@ -4,45 +4,13 @@ import re
 from copy import deepcopy
 from difflib import context_diff
 from pathlib import Path
-from typing import Dict, List, MutableMapping, Optional, Tuple
+from typing import Dict, List, MutableMapping, Optional
 
-from bumpversion.config.models import FileConfig, VersionPartConfig
+from bumpversion.config.models import FileChange, VersionPartConfig
 from bumpversion.exceptions import VersionNotFoundError
 from bumpversion.version_part import Version, VersionConfig
 
 logger = logging.getLogger(__name__)
-
-
-def get_search_pattern(search_str: str, context: MutableMapping, use_regex: bool = False) -> Tuple[re.Pattern, str]:
-    """
-    Render the search pattern and return the compiled regex pattern and the raw pattern.
-
-    Args:
-        search_str: A string containing the search pattern as a format string
-        context: The context to use for rendering the search pattern
-        use_regex: If True, the search pattern is treated as a regex pattern
-
-    Returns:
-        A tuple of the compiled regex pattern and the raw pattern as a string.
-    """
-    # the default search pattern is escaped, so we can still use it in a regex
-    raw_pattern = search_str.format(**context)
-    default = re.compile(re.escape(raw_pattern), re.MULTILINE | re.DOTALL)
-    if not use_regex:
-        logger.debug("No RegEx flag detected. Searching for the default pattern: '%s'", default.pattern)
-        return default, raw_pattern
-
-    re_context = {key: re.escape(str(value)) for key, value in context.items()}
-    regex_pattern = search_str.format(**re_context)
-    try:
-        search_for_re = re.compile(regex_pattern, re.MULTILINE | re.DOTALL)
-        logger.debug("Searching for the regex: '%s'", search_for_re.pattern)
-        return search_for_re, raw_pattern
-    except re.error as e:
-        logger.error("Invalid regex '%s': %s.", default, e)
-
-    logger.debug("Invalid regex. Searching for the default pattern: '%s'", raw_pattern)
-    return default, raw_pattern
 
 
 def contains_pattern(search: re.Pattern, contents: str) -> bool:
@@ -96,26 +64,34 @@ class ConfiguredFile:
 
     def __init__(
         self,
-        file_cfg: FileConfig,
+        file_change: FileChange,
         version_config: VersionConfig,
         search: Optional[str] = None,
         replace: Optional[str] = None,
     ) -> None:
-        self.path = file_cfg.filename
-        self.parse = file_cfg.parse or version_config.parse_regex.pattern
-        self.serialize = file_cfg.serialize or version_config.serialize_formats
-        self.search = search or file_cfg.search or version_config.search
-        self.replace = replace or file_cfg.replace or version_config.replace
-        self.regex = file_cfg.regex or False
-        self.ignore_missing_version = file_cfg.ignore_missing_version or False
+        self.file_change = FileChange(
+            parse=file_change.parse or version_config.parse_regex.pattern,
+            serialize=file_change.serialize or version_config.serialize_formats,
+            search=search or file_change.search or version_config.search,
+            replace=replace or file_change.replace or version_config.replace,
+            regex=file_change.regex or False,
+            ignore_missing_version=file_change.ignore_missing_version or False,
+            filename=file_change.filename,
+            glob=file_change.glob,
+            key_path=file_change.key_path,
+        )
         self.version_config = VersionConfig(
-            self.parse, self.serialize, self.search, self.replace, version_config.part_configs
+            self.file_change.parse,
+            self.file_change.serialize,
+            self.file_change.search,
+            self.file_change.replace,
+            version_config.part_configs,
         )
         self._newlines: Optional[str] = None
 
     def get_file_contents(self) -> str:
         """Return the contents of the file."""
-        with open(self.path, "rt", encoding="utf-8") as f:
+        with open(self.file_change.filename, "rt", encoding="utf-8") as f:
             contents = f.read()
             self._newlines = f.newlines[0] if isinstance(f.newlines, tuple) else f.newlines
             return contents
@@ -125,7 +101,7 @@ class ConfiguredFile:
         if self._newlines is None:
             _ = self.get_file_contents()
 
-        with open(self.path, "wt", encoding="utf-8", newline=self._newlines) as f:
+        with open(self.file_change.filename, "wt", encoding="utf-8", newline=self._newlines) as f:
             f.write(contents)
 
     def contains_version(self, version: Version, context: MutableMapping) -> bool:
@@ -142,7 +118,7 @@ class ConfiguredFile:
         Returns:
             True if the version number is in fact present.
         """
-        search_expression, raw_search_expression = get_search_pattern(self.search, context, self.regex)
+        search_expression, raw_search_expression = self.file_change.get_search_pattern(context)
         file_contents = self.get_file_contents()
         if contains_pattern(search_expression, file_contents):
             return True
@@ -153,7 +129,7 @@ class ConfiguredFile:
 
         # check whether `search` isn't customized, i.e. should match only
         # very specific parts of the file
-        search_pattern_is_default = self.search == self.version_config.search
+        search_pattern_is_default = self.file_change.search == self.version_config.search
 
         if search_pattern_is_default and contains_pattern(re.compile(re.escape(version.original)), file_contents):
             # The original version is present, and we're not looking for something
@@ -161,9 +137,9 @@ class ConfiguredFile:
             return True
 
         # version not found
-        if self.ignore_missing_version:
+        if self.file_change.ignore_missing_version:
             return False
-        raise VersionNotFoundError(f"Did not find '{raw_search_expression}' in file: '{self.path}'")
+        raise VersionNotFoundError(f"Did not find '{raw_search_expression}' in file: '{self.file_change.filename}'")
 
     def replace_version(
         self, current_version: Version, new_version: Version, context: MutableMapping, dry_run: bool = False
@@ -175,7 +151,7 @@ class ConfiguredFile:
         if new_version:
             context["new_version"] = self.version_config.serialize(new_version, context)
 
-        search_for, raw_search_pattern = get_search_pattern(self.search, context, self.regex)
+        search_for, raw_search_pattern = self.file_change.get_search_pattern(context)
         replace_with = self.version_config.replace.format(**context)
 
         file_content_after = search_for.sub(replace_with, file_content_before)
@@ -183,23 +159,23 @@ class ConfiguredFile:
         if file_content_before == file_content_after and current_version.original:
             og_context = deepcopy(context)
             og_context["current_version"] = current_version.original
-            search_for_og, og_raw_search_pattern = get_search_pattern(self.search, og_context, self.regex)
+            search_for_og, og_raw_search_pattern = self.file_change.get_search_pattern(og_context)
             file_content_after = search_for_og.sub(replace_with, file_content_before)
 
-        log_changes(self.path, file_content_before, file_content_after, dry_run)
+        log_changes(self.file_change.filename, file_content_before, file_content_after, dry_run)
 
         if not dry_run:  # pragma: no-coverage
             self.write_file_contents(file_content_after)
 
     def __str__(self) -> str:  # pragma: no-coverage
-        return self.path
+        return self.file_change.filename
 
     def __repr__(self) -> str:  # pragma: no-coverage
-        return f"<bumpversion.ConfiguredFile:{self.path}>"
+        return f"<bumpversion.ConfiguredFile:{self.file_change.filename}>"
 
 
 def resolve_file_config(
-    files: List[FileConfig], version_config: VersionConfig, search: Optional[str] = None, replace: Optional[str] = None
+    files: List[FileChange], version_config: VersionConfig, search: Optional[str] = None, replace: Optional[str] = None
 ) -> List[ConfiguredFile]:
     """
     Resolve the files, searching and replacing values according to the FileConfig.
@@ -244,7 +220,7 @@ def _check_files_contain_version(
     """Make sure files exist and contain version string."""
     logger.info(
         "Asserting files %s contain the version string...",
-        ", ".join({str(f.path) for f in files}),
+        ", ".join({str(f.file_change.filename) for f in files}),
     )
     for f in files:
         context["current_version"] = f.version_config.serialize(current_version, context)
@@ -256,21 +232,28 @@ class FileUpdater:
 
     def __init__(
         self,
-        file_cfg: FileConfig,
+        file_change: FileChange,
         version_config: VersionConfig,
         search: Optional[str] = None,
         replace: Optional[str] = None,
     ) -> None:
-        self.path = file_cfg.filename
-        self.version_config = version_config
-        self.parse = file_cfg.parse or version_config.parse_regex.pattern
-        self.serialize = file_cfg.serialize or version_config.serialize_formats
-        self.search = search or file_cfg.search or version_config.search
-        self.replace = replace or file_cfg.replace or version_config.replace
-        self.regex = file_cfg.regex or False
-        self.ignore_missing_version = file_cfg.ignore_missing_version or False
+        self.file_change = FileChange(
+            parse=file_change.parse or version_config.parse_regex.pattern,
+            serialize=file_change.serialize or version_config.serialize_formats,
+            search=search or file_change.search or version_config.search,
+            replace=replace or file_change.replace or version_config.replace,
+            regex=file_change.regex or False,
+            ignore_missing_version=file_change.ignore_missing_version or False,
+            filename=file_change.filename,
+            glob=file_change.glob,
+            key_path=file_change.key_path,
+        )
         self.version_config = VersionConfig(
-            self.parse, self.serialize, self.search, self.replace, version_config.part_configs
+            self.file_change.parse,
+            self.file_change.serialize,
+            self.file_change.search,
+            self.file_change.replace,
+            version_config.part_configs,
         )
         self._newlines: Optional[str] = None
 
@@ -287,18 +270,19 @@ class DataFileUpdater:
 
     def __init__(
         self,
-        file_cfg: FileConfig,
+        file_change: FileChange,
         version_part_configs: Dict[str, VersionPartConfig],
     ) -> None:
-        self.path = Path(file_cfg.filename)
-        self.key_path = file_cfg.key_path
-        self.search = file_cfg.search
-        self.replace = file_cfg.replace
-        self.regex = file_cfg.regex
-        self.ignore_missing_version = file_cfg.ignore_missing_version
+        self.file_change = file_change
         self.version_config = VersionConfig(
-            file_cfg.parse, file_cfg.serialize, file_cfg.search, file_cfg.replace, version_part_configs
+            self.file_change.parse,
+            self.file_change.serialize,
+            self.file_change.search,
+            self.file_change.replace,
+            version_part_configs,
         )
+        self.path = Path(self.file_change.filename)
+        self._newlines: Optional[str] = None
 
     def update_file(
         self, current_version: Version, new_version: Version, context: MutableMapping, dry_run: bool = False
@@ -307,8 +291,8 @@ class DataFileUpdater:
         new_context = deepcopy(context)
         new_context["current_version"] = self.version_config.serialize(current_version, context)
         new_context["new_version"] = self.version_config.serialize(new_version, context)
-        search_for, raw_search_pattern = get_search_pattern(self.search, new_context, self.regex)
-        replace_with = self.replace.format(**new_context)
+        search_for, raw_search_pattern = self.file_change.get_search_pattern(new_context)
+        replace_with = self.file_change.replace.format(**new_context)
         if self.path.suffix == ".toml":
             self._update_toml_file(search_for, raw_search_pattern, replace_with, dry_run)
 
@@ -320,20 +304,21 @@ class DataFileUpdater:
         import tomlkit
 
         toml_data = tomlkit.parse(self.path.read_text())
-        value_before = dotted.get(toml_data, self.key_path)
+        value_before = dotted.get(toml_data, self.file_change.key_path)
 
         if value_before is None:
-            raise KeyError(f"Key path '{self.key_path}' does not exist in {self.path}")
-        elif not contains_pattern(search_for, value_before) and not self.ignore_missing_version:
+            raise KeyError(f"Key path '{self.file_change.key_path}' does not exist in {self.path}")
+        elif not contains_pattern(search_for, value_before) and not self.file_change.ignore_missing_version:
             raise ValueError(
-                f"Key '{self.key_path}' in {self.path} does not contain the correct contents: {raw_search_pattern}"
+                f"Key '{self.file_change.key_path}' in {self.path} does not contain the correct contents: "
+                f"{raw_search_pattern}"
             )
 
         new_value = search_for.sub(replace_with, value_before)
-        log_changes(f"{self.path}:{self.key_path}", value_before, new_value, dry_run)
+        log_changes(f"{self.path}:{self.file_change.key_path}", value_before, new_value, dry_run)
 
         if dry_run:
             return
 
-        dotted.update(toml_data, self.key_path, new_value)
+        dotted.update(toml_data, self.file_change.key_path, new_value)
         self.path.write_text(tomlkit.dumps(toml_data))

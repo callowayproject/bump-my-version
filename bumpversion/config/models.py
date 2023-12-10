@@ -1,7 +1,9 @@
 """Bump My Version configuration models."""
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Dict, List, Optional, Union
+import logging
+import re
+from typing import TYPE_CHECKING, Dict, List, MutableMapping, Optional, Tuple, Union
 
 from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -9,6 +11,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 if TYPE_CHECKING:
     from bumpversion.scm import SCMInfo
     from bumpversion.version_part import VersionConfig
+
+logger = logging.getLogger(__name__)
 
 
 class VersionPartConfig(BaseModel):
@@ -21,8 +25,8 @@ class VersionPartConfig(BaseModel):
     independent: bool = False
 
 
-class FileConfig(BaseModel):
-    """Search and replace file config."""
+class FileChange(BaseModel):
+    """A change to make to a file."""
 
     parse: str
     serialize: List[str]
@@ -33,6 +37,35 @@ class FileConfig(BaseModel):
     filename: Optional[str] = None
     glob: Optional[str] = None  # Conflicts with filename. If both are specified, glob wins
     key_path: Optional[str] = None  # If specified, and has an appropriate extension, will be treated as a data file
+
+    def get_search_pattern(self, context: MutableMapping) -> Tuple[re.Pattern, str]:
+        """
+        Render the search pattern and return the compiled regex pattern and the raw pattern.
+
+        Args:
+            context: The context to use for rendering the search pattern
+
+        Returns:
+            A tuple of the compiled regex pattern and the raw pattern as a string.
+        """
+        # the default search pattern is escaped, so we can still use it in a regex
+        raw_pattern = self.search.format(**context)
+        default = re.compile(re.escape(raw_pattern), re.MULTILINE | re.DOTALL)
+        if not self.regex:
+            logger.debug("No RegEx flag detected. Searching for the default pattern: '%s'", default.pattern)
+            return default, raw_pattern
+
+        re_context = {key: re.escape(str(value)) for key, value in context.items()}
+        regex_pattern = self.search.format(**re_context)
+        try:
+            search_for_re = re.compile(regex_pattern, re.MULTILINE | re.DOTALL)
+            logger.debug("Searching for the regex: '%s'", search_for_re.pattern)
+            return search_for_re, raw_pattern
+        except re.error as e:
+            logger.error("Invalid regex '%s': %s.", default, e)
+
+        logger.debug("Invalid regex. Searching for the default pattern: '%s'", raw_pattern)
+        return default, raw_pattern
 
 
 class Config(BaseSettings):
@@ -55,7 +88,7 @@ class Config(BaseSettings):
     commit_args: Optional[str]
     scm_info: Optional["SCMInfo"]
     parts: Dict[str, VersionPartConfig]
-    files: List[FileConfig]
+    files: List[FileChange]
     included_paths: List[str] = Field(default_factory=list)
     excluded_paths: List[str] = Field(default_factory=list)
     model_config = SettingsConfigDict(env_prefix="bumpversion_")
@@ -67,7 +100,7 @@ class Config(BaseSettings):
             if name in self.resolved_filemap:
                 continue
             self.files.append(
-                FileConfig(
+                FileChange(
                     filename=name,
                     glob=None,
                     key_path=None,
@@ -81,7 +114,7 @@ class Config(BaseSettings):
             )
 
     @property
-    def resolved_filemap(self) -> Dict[str, FileConfig]:
+    def resolved_filemap(self) -> Dict[str, FileChange]:
         """Return a map of filenames to file configs, expanding any globs."""
         from bumpversion.config.utils import resolve_glob_files
 
@@ -95,7 +128,7 @@ class Config(BaseSettings):
         return {file_cfg.filename: file_cfg for file_cfg in new_files}
 
     @property
-    def files_to_modify(self) -> List[FileConfig]:
+    def files_to_modify(self) -> List[FileChange]:
         """Return a list of files to modify."""
         files_not_excluded = [
             file_cfg.filename

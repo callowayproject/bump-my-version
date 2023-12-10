@@ -426,7 +426,7 @@ def test_replace(mocker, tmp_path, fixtures_path):
     call_args = mocked_modify_files.call_args[0]
     configured_files = call_args[0]
     assert len(configured_files) == 3
-    actual_filenames = {f.path for f in configured_files}
+    actual_filenames = {f.file_change.filename for f in configured_files}
     assert actual_filenames == {"setup.py", "CHANGELOG.md", "bumpversion/__init__.py"}
 
 
@@ -471,7 +471,7 @@ def test_replace_specific_files(mocker, git_repo, fixtures_path):
     call_args = mocked_modify_files.call_args[0]
     configured_files = call_args[0]
     assert len(configured_files) == 1
-    assert configured_files[0].path == "VERSION"
+    assert configured_files[0].file_change.filename == "VERSION"
 
 
 TEST_REPLACE_CONFIG = {

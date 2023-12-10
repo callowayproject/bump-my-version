@@ -116,7 +116,7 @@ def update_config_file(
         context: The context to use for serialization.
         dry_run: True if the update should be a dry run.
     """
-    from bumpversion.config.models import FileConfig
+    from bumpversion.config.models import FileChange
     from bumpversion.files import DataFileUpdater
 
     if not config_file:
@@ -129,7 +129,7 @@ def update_config_file(
         return
 
     # TODO: Eventually this should be transformed into another default "files_to_modify" entry
-    datafile_config = FileConfig(
+    datafile_config = FileChange(
         filename=str(config_path),
         key_path="tool.bumpversion.current_version",
         search=config.search,

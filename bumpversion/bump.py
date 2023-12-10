@@ -115,7 +115,7 @@ def commit_and_tag(
 
     extra_args = shlex.split(config.commit_args) if config.commit_args else []
 
-    commit_files = {f.path for f in configured_files}
+    commit_files = {f.file_change.filename for f in configured_files}
     if config_file:
         commit_files |= {str(config_file)}
 
