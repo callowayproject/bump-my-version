@@ -2,49 +2,107 @@
 import difflib
 import json
 from pathlib import Path
-from textwrap import dedent
 
-import pytest
 from click.testing import CliRunner, Result
-from pytest import param
+import pytest
+from pytest import LogCaptureFixture, param
 
-import bumpversion.config.files
-import bumpversion.config.utils
 from bumpversion.utils import get_context
 from bumpversion import config
+from bumpversion.config.files import find_config_file, CONFIG_FILE_SEARCH_ORDER
+import bumpversion.config.utils
+
 from tests.conftest import inside_dir, get_config_data
 
 
-@pytest.fixture(params=[".bumpversion.cfg", "setup.cfg"])
-def cfg_file(request) -> str:
-    """Return both config-file styles ('.bumpversion.cfg', 'setup.cfg')."""
-    return request.param
+class TestFindConfigFile:
+    """Tests for finding the config file."""
+
+    class TestWhenExplictConfigFileIsPassed:
+        """Tests for when an explicit config file is passed."""
+
+        def test_returns_path_to_existing_file(self, tmp_path: Path) -> None:
+            """If an explicit config file is passed, it should be returned."""
+            cfg_file = tmp_path / "bump.toml"
+            cfg_file.write_text('[tool.bumpversion]\ncurrent_version = "1.0.0"')
+            assert find_config_file(cfg_file) == cfg_file
+
+        def test_returns_none_when_missing_file(self, tmp_path: Path) -> None:
+            """If an explicit config file is passed, it should be returned."""
+            cfg_file = tmp_path / "bump.toml"
+            assert find_config_file(cfg_file) is None
+
+    class TestWhenNoExplicitConfigFileIsPassed:
+        """Tests for when no explicit config file is passed."""
+
+        @pytest.mark.parametrize(
+            ["cfg_file_name"],
+            (param(item, id=item) for item in CONFIG_FILE_SEARCH_ORDER),
+        )
+        def test_returns_path_to_existing_default_file(self, tmp_path: Path, cfg_file_name: str) -> None:
+            """If no explicit config file is passed, it returns the path to an existing expected file."""
+            cfg_file = tmp_path / cfg_file_name
+            cfg_file.write_text('[tool.bumpversion]\ncurrent_version = "1.0.0"')
+            with inside_dir(tmp_path):
+                assert find_config_file() == cfg_file
+
+        def test_returns_none_when_missing_file(self, tmp_path: Path) -> None:
+            """If an explicit config file is passed, it should be returned."""
+            with inside_dir(tmp_path):
+                assert find_config_file() is None
+
+        def test_returns_path_to_existing_file_in_correct_order(self, tmp_path: Path) -> None:
+            """If no explicit config file is passed, it returns the path to an existing expected file."""
+            expected_order = list(CONFIG_FILE_SEARCH_ORDER)[:]  # make a copy so we can mutate it
+            cfg_file_paths = [tmp_path / cfg_file_name for cfg_file_name in expected_order]
+            for cfg_file in cfg_file_paths:  # create all the files
+                cfg_file.write_text('[tool.bumpversion]\ncurrent_version = "1.0.0"')
+
+            with inside_dir(tmp_path):
+                while expected_order:
+                    expected_file = expected_order.pop(0)  # the top item in the list is the next expected file
+                    expected_path = tmp_path / expected_file
+                    assert find_config_file() == expected_path
+                    expected_path.unlink()  # remove the file so it doesn't get found again
 
 
-@pytest.fixture(
-    params=[
-        "file",
-        "file(suffix)",
-        "file (suffix with space)",
-        "file (suffix lacking closing paren",
-    ]
-)
-def cfg_file_keyword(request):
-    """Return multiple possible styles for the bumpversion:file keyword."""
-    return request.param
+class TestReadConfigFile:
+    """Tests for reading the config file."""
 
+    class TestWhenExplictConfigFileIsPassed:
+        def test_returns_empty_dict_when_missing_file(self, tmp_path: Path, caplog: LogCaptureFixture) -> None:
+            """If an explicit config file is passed and doesn't exist, it returns an empty dict."""
+            cfg_file = tmp_path / "bump.toml"
+            assert config.read_config_file(cfg_file) == {}
+            assert "Configuration file not found" in caplog.text
 
-@pytest.mark.parametrize(
-    ["conf_file", "expected_file"],
-    [
-        param("basic_cfg.cfg", "basic_cfg_expected.json", id="ini basic cfg"),
-    ],
-)
-def test_read_ini_file(conf_file: str, expected_file: str, fixtures_path: Path) -> None:
-    """Parsing the config file should match the expected results."""
-    result = bumpversion.config.files.read_ini_file(fixtures_path.joinpath(conf_file))
-    expected = json.loads(fixtures_path.joinpath(expected_file).read_text())
-    assert result == expected
+        def test_returns_dict_of_cfg_file(self, fixtures_path: Path) -> None:
+            """Files with a .cfg suffix is parsed into a dict and returned."""
+            cfg_file = fixtures_path / "basic_cfg.cfg"
+            expected = json.loads(fixtures_path.joinpath("basic_cfg_expected.json").read_text())
+            assert config.read_config_file(cfg_file) == expected
+
+        def test_returns_dict_of_toml_file(self, fixtures_path: Path) -> None:
+            """Files with a .toml suffix is parsed into a dict and returned."""
+            cfg_file = fixtures_path / "basic_cfg.toml"
+            expected = json.loads(fixtures_path.joinpath("basic_cfg_expected.json").read_text())
+            assert config.read_config_file(cfg_file) == expected
+
+        def test_returns_empty_dict_with_unknown_suffix(self, tmp_path: Path, caplog: LogCaptureFixture) -> None:
+            """Files with an unknown suffix return an empty dict."""
+            cfg_file = tmp_path / "basic_cfg.unknown"
+            cfg_file.write_text('[tool.bumpversion]\ncurrent_version = "1.0.0"')
+            with inside_dir(tmp_path):
+                assert config.read_config_file(cfg_file) == {}
+            assert "Unknown config file suffix" in caplog.text
+
+    class TestWhenNoConfigFileIsPassed:
+        """Tests for when no explicit config file is passed."""
+
+        def test_returns_empty_dict(self, caplog: LogCaptureFixture) -> None:
+            """If no explicit config file is passed, it returns an empty dict."""
+            assert config.read_config_file() == {}
+            assert "No configuration file found." in caplog.text
 
 
 @pytest.mark.parametrize(
@@ -58,61 +116,6 @@ def test_read_toml_file(conf_file: str, expected_file: str, fixtures_path: Path)
     result = bumpversion.config.files.read_toml_file(fixtures_path.joinpath(conf_file))
     expected = json.loads(fixtures_path.joinpath(expected_file).read_text())
     assert result == expected
-
-
-def test_independent_falsy_value_in_config_does_not_bump_independently(tmp_path: Path):
-    # tmp_path.joinpath("VERSION").write_text("2.1.0-5123")
-    config_file = tmp_path.joinpath(".bumpversion.cfg")
-    config_file.write_text(
-        dedent(
-            r"""
-        [bumpversion]
-        current_version: 2.1.0-5123
-        parse = (?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)\-(?P<build>\d+)
-        serialize = {major}.{minor}.{patch}-{build}
-
-        [bumpversion:file:VERSION]
-
-        [bumpversion:part:build]
-        independent = 0
-        """
-        )
-    )
-
-    conf = config.get_configuration(config_file)
-    assert conf.parts["build"].independent is False
-
-
-def test_correct_interpolation_for_setup_cfg_files(tmp_path: Path, fixtures_path: Path):
-    """
-    Reported here: https://github.com/c4urself/bump2version/issues/21.
-    """
-    test_fixtures_path = fixtures_path.joinpath("interpolation")
-    setup_cfg = config.get_configuration(test_fixtures_path.joinpath("setup.cfg"))
-    bumpversion_cfg = config.get_configuration(test_fixtures_path.joinpath(".bumpversion.cfg"))
-    pyproject_toml = config.get_configuration(test_fixtures_path.joinpath("pyproject.toml"))
-
-    assert setup_cfg.replace == "{now:%m-%d-%Y} v. {new_version}"
-    assert bumpversion_cfg.replace == "{now:%m-%d-%Y} v. {new_version}"
-    assert pyproject_toml.replace == "{now:%m-%d-%Y} v. {new_version}"
-
-
-def test_file_keyword_with_suffix_is_accepted(tmp_path: Path, cfg_file: str, cfg_file_keyword: str):
-    cfg_file_path = tmp_path / cfg_file
-    cfg_file_path.write_text(
-        "[bumpversion]\n"
-        "current_version = 0.10.2\n"
-        "new_version = 0.10.3\n"
-        "[bumpversion:file (foobar):file2]\n"
-        "search = version {current_version}\n"
-        "replace = version {new_version}\n"
-        f"[bumpversion:{cfg_file_keyword}:file2]\n"
-        "search = The current version is {current_version}\n"
-        "replace = The current version is {new_version}\n"
-    )
-    setup_cfg = config.get_configuration(cfg_file_path)
-    assert len(setup_cfg.files) == 2
-    assert all(f.filename == "file2" for f in setup_cfg.files)
 
 
 def test_multiple_config_files(tmp_path: Path):
@@ -139,32 +142,6 @@ def test_multiple_config_files(tmp_path: Path):
     assert cfg.parse == "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?"
     assert cfg.serialize == ["{major}.{minor}.{patch}-{release}", "{major}.{minor}.{patch}"]
 
-
-def test_utf8_message_from_config_file(tmp_path: Path, cfg_file):
-    cfg_path = tmp_path / cfg_file
-    initial_config = (
-        "[bumpversion]\n"
-        "current_version = 500.0.0\n"
-        "commit = True\n"
-        "message = Nová verze: {current_version} ☃, {new_version} ☀\n"
-    )
-    cfg_path.write_bytes(initial_config.encode("utf-8"))
-
-    with inside_dir(tmp_path):
-        cfg = config.get_configuration(cfg_path)
-
-    assert cfg.message == "Nová verze: {current_version} ☃, {new_version} ☀"
-
-
-CFG_EXPECTED_DIFF = (
-    "*** \n"
-    "--- \n"
-    "***************\n"
-    "*** 11 ****\n"
-    "! current_version = 1.0.0\n"
-    "--- 11 ----\n"
-    "! current_version = 1.0.1\n"
-)
 
 TOML_EXPECTED_DIFF = (
     "*** \n"
@@ -200,31 +177,6 @@ def test_update_config_file(tmp_path: Path, cfg_file_name: str, fixtures_path: P
     current_version = cfg.version_config.parse("1.0.0")
     new_version = cfg.version_config.parse("1.0.1")
     bumpversion.config.files.update_config_file(cfg_path, cfg, current_version, new_version, ctx)
-    new_content = cfg_path.read_text().splitlines(keepends=True)
-    difference = difflib.context_diff(original_content, new_content, n=0)
-    assert "".join(difference) == expected_diff
-
-
-@pytest.mark.parametrize(
-    [
-        "cfg_file_name",
-    ],
-    [
-        (".bumpversion.cfg",),
-        ("setup.cfg",),
-    ],
-)
-def test_update_ini_config_file(tmp_path: Path, cfg_file_name: str, fixtures_path: Path) -> None:
-    """
-    Make sure only the version string is updated in the config file.
-    """
-    expected_diff = CFG_EXPECTED_DIFF
-    cfg_path = tmp_path / cfg_file_name
-    orig_path = fixtures_path / f"basic_cfg{cfg_path.suffix}"
-    cfg_path.write_text(orig_path.read_text())
-    original_content = orig_path.read_text().splitlines(keepends=True)
-
-    bumpversion.config.files.update_ini_config_file(cfg_path, "1.0.0", "1.0.1")
     new_content = cfg_path.read_text().splitlines(keepends=True)
     difference = difflib.context_diff(original_content, new_content, n=0)
     assert "".join(difference) == expected_diff

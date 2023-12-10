@@ -9,7 +9,8 @@ if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.version_part import Version
 
 from bumpversion.config import Config
-from bumpversion.config.files import update_config_file, update_ini_config_file
+from bumpversion.config.files import update_config_file
+from bumpversion.config.files_legacy import update_ini_config_file
 from bumpversion.exceptions import ConfigurationError
 from bumpversion.utils import get_context, key_val_string
 
