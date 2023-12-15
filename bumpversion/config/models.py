@@ -1,18 +1,21 @@
 """Bump My Version configuration models."""
 from __future__ import annotations
 
-import logging
 import re
+from collections import defaultdict
+from itertools import chain
 from typing import TYPE_CHECKING, Dict, List, MutableMapping, Optional, Tuple, Union
 
 from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from bumpversion.ui import get_indented_logger
+
 if TYPE_CHECKING:
     from bumpversion.scm import SCMInfo
     from bumpversion.version_part import VersionConfig
 
-logger = logging.getLogger(__name__)
+logger = get_indented_logger(__name__)
 
 
 class VersionPartConfig(BaseModel):
@@ -48,11 +51,14 @@ class FileChange(BaseModel):
         Returns:
             A tuple of the compiled regex pattern and the raw pattern as a string.
         """
+        logger.debug("Rendering search pattern with context")
+        logger.indent()
         # the default search pattern is escaped, so we can still use it in a regex
         raw_pattern = self.search.format(**context)
         default = re.compile(re.escape(raw_pattern), re.MULTILINE | re.DOTALL)
         if not self.regex:
             logger.debug("No RegEx flag detected. Searching for the default pattern: '%s'", default.pattern)
+            logger.dedent()
             return default, raw_pattern
 
         re_context = {key: re.escape(str(value)) for key, value in context.items()}
@@ -60,11 +66,14 @@ class FileChange(BaseModel):
         try:
             search_for_re = re.compile(regex_pattern, re.MULTILINE | re.DOTALL)
             logger.debug("Searching for the regex: '%s'", search_for_re.pattern)
+            logger.dedent()
             return search_for_re, raw_pattern
         except re.error as e:
             logger.error("Invalid regex '%s': %s.", default, e)
 
         logger.debug("Invalid regex. Searching for the default pattern: '%s'", raw_pattern)
+        logger.dedent()
+
         return default, raw_pattern
 
 
@@ -97,8 +106,6 @@ class Config(BaseSettings):
         """Add a filename to the list of files."""
         filenames = [filename] if isinstance(filename, str) else filename
         for name in filenames:
-            if name in self.resolved_filemap:
-                continue
             self.files.append(
                 FileChange(
                     filename=name,
@@ -114,10 +121,11 @@ class Config(BaseSettings):
             )
 
     @property
-    def resolved_filemap(self) -> Dict[str, FileChange]:
+    def resolved_filemap(self) -> Dict[str, List[FileChange]]:
         """Return a map of filenames to file configs, expanding any globs."""
         from bumpversion.config.utils import resolve_glob_files
 
+        output = defaultdict(list)
         new_files = []
         for file_cfg in self.files:
             if file_cfg.glob:
@@ -125,18 +133,20 @@ class Config(BaseSettings):
             else:
                 new_files.append(file_cfg)
 
-        return {file_cfg.filename: file_cfg for file_cfg in new_files}
+        for file_cfg in new_files:
+            output[file_cfg.filename].append(file_cfg)
+        return output
 
     @property
     def files_to_modify(self) -> List[FileChange]:
         """Return a list of files to modify."""
-        files_not_excluded = [
-            file_cfg.filename
-            for file_cfg in self.resolved_filemap.values()
-            if file_cfg.filename not in self.excluded_paths
-        ]
+        files_not_excluded = [filename for filename in self.resolved_filemap if filename not in self.excluded_paths]
         inclusion_set = set(self.included_paths) | set(files_not_excluded)
-        return [file_cfg for file_cfg in self.resolved_filemap.values() if file_cfg.filename in inclusion_set]
+        return list(
+            chain.from_iterable(
+                file_cfg_list for key, file_cfg_list in self.resolved_filemap.items() if key in inclusion_set
+            )
+        )
 
     @property
     def version_config(self) -> "VersionConfig":

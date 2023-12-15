@@ -53,7 +53,7 @@ def test_single_file_processed_twice(tmp_path: Path):
     assert len(conf.files) == 2
     for file_cfg in conf.files:
         cfg_file = files.ConfiguredFile(file_cfg, version_config)
-        cfg_file.replace_version(current_version, new_version, ctx)
+        cfg_file.make_file_change(current_version, new_version, ctx)
 
     assert filepath.read_text() == "dots: 0.10.3\ndashes: 0-10-3"
 
@@ -106,7 +106,7 @@ def test_multi_file_configuration(tmp_path: Path):
 
     for file_cfg in conf.files:
         cfg_file = files.ConfiguredFile(file_cfg, version_config)
-        cfg_file.replace_version(current_version, major_version, ctx)
+        cfg_file.make_file_change(current_version, major_version, ctx)
 
     assert full_vers_path.read_text() == "2.0.0"
     assert maj_vers_path.read_text() == "2"
@@ -123,7 +123,7 @@ def test_multi_file_configuration(tmp_path: Path):
     major_patch_version = major_version.bump("patch", version_config.order)
     for file_cfg in conf.files:
         cfg_file = files.ConfiguredFile(file_cfg, version_config)
-        cfg_file.replace_version(major_version, major_patch_version, ctx)
+        cfg_file.make_file_change(major_version, major_patch_version, ctx)
 
     assert full_vers_path.read_text() == "2.0.1"
     assert maj_vers_path.read_text() == "2"
@@ -220,7 +220,7 @@ def test_search_replace_to_avoid_updating_unconcerned_lines(tmp_path: Path, capl
 
     for file_cfg in conf.files:
         cfg_file = files.ConfiguredFile(file_cfg, version_config)
-        cfg_file.replace_version(current_version, new_version, get_context(conf))
+        cfg_file.make_file_change(current_version, new_version, get_context(conf))
 
     utc_today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     expected_chglog = dedent(
@@ -291,7 +291,7 @@ def test_simple_replacement_in_utf8_file(tmp_path: Path):
     # Act
     for file_cfg in conf.files:
         cfg_file = files.ConfiguredFile(file_cfg, version_config)
-        cfg_file.replace_version(current_version, new_version, get_context(conf))
+        cfg_file.make_file_change(current_version, new_version, get_context(conf))
 
     # Assert
     out = version_path.read_text()
@@ -317,7 +317,7 @@ def test_multi_line_search_is_found(tmp_path: Path) -> None:
     # Act
     for file_cfg in conf.files:
         cfg_file = files.ConfiguredFile(file_cfg, version_config)
-        cfg_file.replace_version(current_version, new_version, get_context(conf))
+        cfg_file.make_file_change(current_version, new_version, get_context(conf))
 
     # Assert
     assert alphabet_path.read_text() == "A\nB\nC\n10.0.0\n"
