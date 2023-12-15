@@ -2,18 +2,17 @@
 
 from __future__ import annotations
 
-import logging
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, MutableMapping, Union
 
 from bumpversion.config.files_legacy import read_ini_file
-from bumpversion.ui import print_warning
+from bumpversion.ui import get_indented_logger, print_warning
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config.models import Config
     from bumpversion.version_part import Version
 
-logger = logging.getLogger(__name__)
+logger = get_indented_logger(__name__)
 
 CONFIG_FILE_SEARCH_ORDER = (
     ".bumpversion.cfg",
@@ -67,7 +66,7 @@ def read_config_file(config_file: Union[str, Path, None] = None) -> Dict[str, An
         logger.info("Configuration file not found: %s.", config_path)
         return {}
 
-    logger.info("Reading config file %s:", config_file)
+    logger.info("Reading config file: %s", config_file)
 
     if config_path.suffix == ".cfg":
         print_warning("The .cfg file format is deprecated. Please use .toml instead.")
@@ -120,9 +119,11 @@ def update_config_file(
     from bumpversion.files import DataFileUpdater
 
     if not config_file:
-        logger.info("No configuration file found to update.")
+        logger.info("\n%sNo configuration file found to update.", logger.indent_str)
         return
-
+    else:
+        logger.info("\n%sProcessing config file: %s", logger.indent_str, config_file)
+    logger.indent()
     config_path = Path(config_file)
     if config_path.suffix != ".toml":
         logger.info("You must have a `.toml` suffix to update the config file: %s.", config_path)
@@ -142,3 +143,4 @@ def update_config_file(
 
     updater = DataFileUpdater(datafile_config, config.version_config.part_configs)
     updater.update_file(current_version, new_version, context, dry_run)
+    logger.dedent()

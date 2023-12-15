@@ -32,6 +32,13 @@ class IndentedLoggerAdapter(logging.LoggerAdapter):
         if reset:
             self.reset()
 
+    @property
+    def current_indent(self) -> int:
+        """
+        The current indent level.
+        """
+        return CURRENT_INDENT.get()
+
     def indent(self, amount: int = 1) -> None:
         """
         Increase the indent level by `amount`.

@@ -1,5 +1,4 @@
 """Module for managing Versions and their internal parts."""
-import logging
 import re
 import string
 from copy import copy
@@ -10,9 +9,10 @@ from click import UsageError
 from bumpversion.config.models import VersionPartConfig
 from bumpversion.exceptions import FormattingError, InvalidVersionPartError, MissingValueError
 from bumpversion.functions import NumericFunction, PartFunction, ValuesFunction
+from bumpversion.ui import get_indented_logger
 from bumpversion.utils import key_val_string, labels_for_format
 
-logger = logging.getLogger(__name__)
+logger = get_indented_logger(__name__)
 
 
 class VersionPart:
@@ -183,6 +183,7 @@ class VersionConfig:
             version_string,
             regexp_one_line,
         )
+        logger.indent()
 
         match = self.parse_regex.search(version_string)
 
@@ -202,6 +203,7 @@ class VersionConfig:
         v = Version(_parsed, version_string)
 
         logger.info("Parsed the following values: %s", key_val_string(v.values))
+        logger.dedent()
 
         return v
 
@@ -268,8 +270,8 @@ class VersionConfig:
     def _choose_serialize_format(self, version: Version, context: MutableMapping) -> str:
         chosen = None
 
-        logger.debug("Available serialization formats: '%s'", "', '".join(self.serialize_formats))
-
+        logger.debug("Evaluating serialization formats")
+        logger.indent()
         for serialize_format in self.serialize_formats:
             try:
                 self._serialize(version, serialize_format, context, raise_if_incomplete=True)
@@ -291,7 +293,7 @@ class VersionConfig:
 
         if not chosen:
             raise KeyError("Did not find suitable serialization format")
-
+        logger.dedent()
         logger.debug("Selected serialization format '%s'", chosen)
 
         return chosen
@@ -307,6 +309,9 @@ class VersionConfig:
         Returns:
             The serialized version as a string
         """
+        logger.debug("Serializing version '%s'", version)
+        logger.indent()
         serialized = self._serialize(version, self._choose_serialize_format(version, context), context)
         logger.debug("Serialized to '%s'", serialized)
+        logger.dedent()
         return serialized

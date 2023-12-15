@@ -1,13 +1,14 @@
 """This module handles the legacy config file format."""
 from __future__ import annotations
 
-import logging
 import re
 from difflib import context_diff
 from pathlib import Path
 from typing import Any, Dict, Union
 
-logger = logging.getLogger(__name__)
+from bumpversion.ui import get_indented_logger
+
+logger = get_indented_logger(__name__)
 
 
 def read_ini_file(file_path: Path) -> Dict[str, Any]:  # noqa: C901

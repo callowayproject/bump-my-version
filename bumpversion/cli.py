@@ -1,5 +1,4 @@
 """bump-my-version Command line interface."""
-import logging
 from typing import List, Optional
 
 import rich_click as click
@@ -12,10 +11,10 @@ from bumpversion.config import get_configuration
 from bumpversion.config.files import find_config_file
 from bumpversion.files import ConfiguredFile, modify_files
 from bumpversion.show import do_show, log_list
-from bumpversion.ui import print_warning, setup_logging
+from bumpversion.ui import get_indented_logger, print_warning, setup_logging
 from bumpversion.utils import get_context, get_overrides
 
-logger = logging.getLogger(__name__)
+logger = get_indented_logger(__name__)
 
 
 @click.group(
@@ -307,6 +306,7 @@ def bump(
         config.add_files(files)
         config.included_paths = files
 
+    logger.dedent()
     do_bump(version_part, new_version, config, found_config_file, dry_run)
 
 
