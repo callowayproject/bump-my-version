@@ -220,18 +220,6 @@ def test_pep440_config(git_repo: Path, fixtures_path: Path):
         cfg = config.get_configuration(cfg_path)
         assert cfg.current_version == "1.0.0.dev0+myreallylongbranchna"
 
-        # try:
-        #     subprocess.run(["git", "add", "README.md"], check=True, capture_output=True)
-        #     subprocess.run(["git", "commit", "-am", "my branch commit"], check=True, capture_output=True)
-        # except subprocess.CalledProcessError as e:
-        #     print(e.stdout)
-        #     print(e.stderr)
-        #     raise
-        # result: Result = runner.invoke(cli.cli, ["bump", "dev_label", "--no-tag"])
-        # assert result.exit_code == 0
-        # cfg = config.get_configuration(cfg_path)
-        # assert cfg.current_version == "1.0.0.dev1+myreallylongbranchna"
-
 
 @pytest.mark.parametrize(
     ["glob_pattern", "file_list"],
