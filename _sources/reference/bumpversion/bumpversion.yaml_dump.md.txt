@@ -51,8 +51,8 @@
   - ```{autodoc2-docstring} bumpversion.yaml_dump.format_dict
     :summary:
     ```
-* - {py:obj}`format_list <bumpversion.yaml_dump.format_list>`
-  - ```{autodoc2-docstring} bumpversion.yaml_dump.format_list
+* - {py:obj}`format_sequence <bumpversion.yaml_dump.format_sequence>`
+  - ```{autodoc2-docstring} bumpversion.yaml_dump.format_sequence
     :summary:
     ```
 * - {py:obj}`format_none <bumpversion.yaml_dump.format_none>`
@@ -128,7 +128,7 @@ Bases: {py:obj}`collections.UserDict`
 ````{py:data} YAML_DUMPERS
 :canonical: bumpversion.yaml_dump.YAML_DUMPERS
 :value: >
-   None
+   'YAMLDumpers(...)'
 
 ```{autodoc2-docstring} bumpversion.yaml_dump.YAML_DUMPERS
 ```
@@ -187,10 +187,10 @@ Bases: {py:obj}`collections.UserDict`
 ```
 ````
 
-````{py:function} format_list(val: list) -> str
-:canonical: bumpversion.yaml_dump.format_list
+````{py:function} format_sequence(val: typing.Union[list, tuple]) -> str
+:canonical: bumpversion.yaml_dump.format_sequence
 
-```{autodoc2-docstring} bumpversion.yaml_dump.format_list
+```{autodoc2-docstring} bumpversion.yaml_dump.format_sequence
 ```
 ````
 

@@ -23,20 +23,12 @@
   - ```{autodoc2-docstring} bumpversion.config.files.read_config_file
     :summary:
     ```
-* - {py:obj}`read_ini_file <bumpversion.config.files.read_ini_file>`
-  - ```{autodoc2-docstring} bumpversion.config.files.read_ini_file
-    :summary:
-    ```
 * - {py:obj}`read_toml_file <bumpversion.config.files.read_toml_file>`
   - ```{autodoc2-docstring} bumpversion.config.files.read_toml_file
     :summary:
     ```
 * - {py:obj}`update_config_file <bumpversion.config.files.update_config_file>`
   - ```{autodoc2-docstring} bumpversion.config.files.update_config_file
-    :summary:
-    ```
-* - {py:obj}`update_ini_config_file <bumpversion.config.files.update_ini_config_file>`
-  - ```{autodoc2-docstring} bumpversion.config.files.update_ini_config_file
     :summary:
     ```
 ````
@@ -62,7 +54,7 @@
 ````{py:data} logger
 :canonical: bumpversion.config.files.logger
 :value: >
-   None
+   'get_indented_logger(...)'
 
 ```{autodoc2-docstring} bumpversion.config.files.logger
 ```
@@ -72,7 +64,7 @@
 ````{py:data} CONFIG_FILE_SEARCH_ORDER
 :canonical: bumpversion.config.files.CONFIG_FILE_SEARCH_ORDER
 :value: >
-   ()
+   ('.bumpversion.cfg', '.bumpversion.toml', 'setup.cfg', 'pyproject.toml')
 
 ```{autodoc2-docstring} bumpversion.config.files.CONFIG_FILE_SEARCH_ORDER
 ```
@@ -93,13 +85,6 @@
 ```
 ````
 
-````{py:function} read_ini_file(file_path: pathlib.Path) -> typing.Dict[str, typing.Any]
-:canonical: bumpversion.config.files.read_ini_file
-
-```{autodoc2-docstring} bumpversion.config.files.read_ini_file
-```
-````
-
 ````{py:function} read_toml_file(file_path: pathlib.Path) -> typing.Dict[str, typing.Any]
 :canonical: bumpversion.config.files.read_toml_file
 
@@ -111,12 +96,5 @@
 :canonical: bumpversion.config.files.update_config_file
 
 ```{autodoc2-docstring} bumpversion.config.files.update_config_file
-```
-````
-
-````{py:function} update_ini_config_file(config_file: typing.Union[str, pathlib.Path], current_version: str, new_version: str, dry_run: bool = False) -> None
-:canonical: bumpversion.config.files.update_ini_config_file
-
-```{autodoc2-docstring} bumpversion.config.files.update_ini_config_file
 ```
 ````

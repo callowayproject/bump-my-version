@@ -23,7 +23,7 @@
 
 ### API
 
-`````{py:class} AliasedGroup(name: typing.Optional[str] = None, commands: typing.Optional[typing.Union[typing.Dict[str, click.core.Command], typing.Sequence[click.core.Command]]] = None, **attrs: typing.Any)
+`````{py:class} AliasedGroup(*args: typing.Any, **kwargs: typing.Any)
 :canonical: bumpversion.aliases.AliasedGroup
 
 Bases: {py:obj}`rich_click.rich_group.RichGroup`

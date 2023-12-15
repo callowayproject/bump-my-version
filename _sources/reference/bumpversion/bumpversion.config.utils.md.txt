@@ -31,7 +31,7 @@
 
 ### API
 
-````{py:function} get_all_file_configs(config_dict: dict) -> typing.List[bumpversion.config.models.FileConfig]
+````{py:function} get_all_file_configs(config_dict: dict) -> typing.List[bumpversion.config.models.FileChange]
 :canonical: bumpversion.config.utils.get_all_file_configs
 
 ```{autodoc2-docstring} bumpversion.config.utils.get_all_file_configs
@@ -45,7 +45,7 @@
 ```
 ````
 
-````{py:function} resolve_glob_files(file_cfg: bumpversion.config.models.FileConfig) -> typing.List[bumpversion.config.models.FileConfig]
+````{py:function} resolve_glob_files(file_cfg: bumpversion.config.models.FileChange) -> typing.List[bumpversion.config.models.FileChange]
 :canonical: bumpversion.config.utils.resolve_glob_files
 
 ```{autodoc2-docstring} bumpversion.config.utils.resolve_glob_files

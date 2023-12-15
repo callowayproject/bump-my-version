@@ -62,7 +62,7 @@
 ````{py:data} logger
 :canonical: bumpversion.scm.logger
 :value: >
-   None
+   'get_indented_logger(...)'
 
 ```{autodoc2-docstring} bumpversion.scm.logger
 ```

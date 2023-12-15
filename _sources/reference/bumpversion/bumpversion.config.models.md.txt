@@ -19,8 +19,8 @@
   - ```{autodoc2-docstring} bumpversion.config.models.VersionPartConfig
     :summary:
     ```
-* - {py:obj}`FileConfig <bumpversion.config.models.FileConfig>`
-  - ```{autodoc2-docstring} bumpversion.config.models.FileConfig
+* - {py:obj}`FileChange <bumpversion.config.models.FileChange>`
+  - ```{autodoc2-docstring} bumpversion.config.models.FileChange
     :summary:
     ```
 * - {py:obj}`Config <bumpversion.config.models.Config>`
@@ -29,7 +29,29 @@
     ```
 ````
 
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`logger <bumpversion.config.models.logger>`
+  - ```{autodoc2-docstring} bumpversion.config.models.logger
+    :summary:
+    ```
+````
+
 ### API
+
+````{py:data} logger
+:canonical: bumpversion.config.models.logger
+:value: >
+   'get_indented_logger(...)'
+
+```{autodoc2-docstring} bumpversion.config.models.logger
+```
+
+````
 
 `````{py:class} VersionPartConfig(**data: typing.Any)
 :canonical: bumpversion.config.models.VersionPartConfig
@@ -91,115 +113,131 @@ Bases: {py:obj}`pydantic.BaseModel`
 
 `````
 
-`````{py:class} FileConfig(**data: typing.Any)
-:canonical: bumpversion.config.models.FileConfig
+`````{py:class} FileChange(**data: typing.Any)
+:canonical: bumpversion.config.models.FileChange
 
 Bases: {py:obj}`pydantic.BaseModel`
 
-```{autodoc2-docstring} bumpversion.config.models.FileConfig
+```{autodoc2-docstring} bumpversion.config.models.FileChange
 ```
 
 ```{rubric} Initialization
 ```
 
-```{autodoc2-docstring} bumpversion.config.models.FileConfig.__init__
+```{autodoc2-docstring} bumpversion.config.models.FileChange.__init__
 ```
 
 ````{py:attribute} parse
-:canonical: bumpversion.config.models.FileConfig.parse
+:canonical: bumpversion.config.models.FileChange.parse
 :type: str
 :value: >
    None
 
-```{autodoc2-docstring} bumpversion.config.models.FileConfig.parse
+```{autodoc2-docstring} bumpversion.config.models.FileChange.parse
 ```
 
 ````
 
 ````{py:attribute} serialize
-:canonical: bumpversion.config.models.FileConfig.serialize
-:type: typing.List[str]
+:canonical: bumpversion.config.models.FileChange.serialize
+:type: tuple
 :value: >
    None
 
-```{autodoc2-docstring} bumpversion.config.models.FileConfig.serialize
+```{autodoc2-docstring} bumpversion.config.models.FileChange.serialize
 ```
 
 ````
 
 ````{py:attribute} search
-:canonical: bumpversion.config.models.FileConfig.search
+:canonical: bumpversion.config.models.FileChange.search
 :type: str
 :value: >
    None
 
-```{autodoc2-docstring} bumpversion.config.models.FileConfig.search
+```{autodoc2-docstring} bumpversion.config.models.FileChange.search
 ```
 
 ````
 
 ````{py:attribute} replace
-:canonical: bumpversion.config.models.FileConfig.replace
+:canonical: bumpversion.config.models.FileChange.replace
 :type: str
 :value: >
    None
 
-```{autodoc2-docstring} bumpversion.config.models.FileConfig.replace
+```{autodoc2-docstring} bumpversion.config.models.FileChange.replace
 ```
 
 ````
 
 ````{py:attribute} regex
-:canonical: bumpversion.config.models.FileConfig.regex
+:canonical: bumpversion.config.models.FileChange.regex
 :type: bool
 :value: >
    None
 
-```{autodoc2-docstring} bumpversion.config.models.FileConfig.regex
+```{autodoc2-docstring} bumpversion.config.models.FileChange.regex
 ```
 
 ````
 
 ````{py:attribute} ignore_missing_version
-:canonical: bumpversion.config.models.FileConfig.ignore_missing_version
+:canonical: bumpversion.config.models.FileChange.ignore_missing_version
 :type: bool
 :value: >
    None
 
-```{autodoc2-docstring} bumpversion.config.models.FileConfig.ignore_missing_version
+```{autodoc2-docstring} bumpversion.config.models.FileChange.ignore_missing_version
 ```
 
 ````
 
 ````{py:attribute} filename
-:canonical: bumpversion.config.models.FileConfig.filename
+:canonical: bumpversion.config.models.FileChange.filename
 :type: typing.Optional[str]
 :value: >
    None
 
-```{autodoc2-docstring} bumpversion.config.models.FileConfig.filename
+```{autodoc2-docstring} bumpversion.config.models.FileChange.filename
 ```
 
 ````
 
 ````{py:attribute} glob
-:canonical: bumpversion.config.models.FileConfig.glob
+:canonical: bumpversion.config.models.FileChange.glob
 :type: typing.Optional[str]
 :value: >
    None
 
-```{autodoc2-docstring} bumpversion.config.models.FileConfig.glob
+```{autodoc2-docstring} bumpversion.config.models.FileChange.glob
 ```
 
 ````
 
 ````{py:attribute} key_path
-:canonical: bumpversion.config.models.FileConfig.key_path
+:canonical: bumpversion.config.models.FileChange.key_path
 :type: typing.Optional[str]
 :value: >
    None
 
-```{autodoc2-docstring} bumpversion.config.models.FileConfig.key_path
+```{autodoc2-docstring} bumpversion.config.models.FileChange.key_path
+```
+
+````
+
+````{py:method} __hash__()
+:canonical: bumpversion.config.models.FileChange.__hash__
+
+```{autodoc2-docstring} bumpversion.config.models.FileChange.__hash__
+```
+
+````
+
+````{py:method} get_search_pattern(context: typing.MutableMapping) -> typing.Tuple[re.Pattern, str]
+:canonical: bumpversion.config.models.FileChange.get_search_pattern
+
+```{autodoc2-docstring} bumpversion.config.models.FileChange.get_search_pattern
 ```
 
 ````
@@ -244,9 +282,9 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
 
 ````{py:attribute} serialize
 :canonical: bumpversion.config.models.Config.serialize
-:type: typing.List[str]
+:type: tuple
 :value: >
-   None
+   'Field(...)'
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.serialize
 ```
@@ -409,9 +447,9 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
 
 ````{py:attribute} files
 :canonical: bumpversion.config.models.Config.files
-:type: typing.List[bumpversion.config.models.FileConfig]
+:type: typing.List[bumpversion.config.models.FileChange]
 :value: >
-   None
+   'Field(...)'
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.files
 ```
@@ -422,7 +460,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
 :canonical: bumpversion.config.models.Config.included_paths
 :type: typing.List[str]
 :value: >
-   None
+   'Field(...)'
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.included_paths
 ```
@@ -433,7 +471,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
 :canonical: bumpversion.config.models.Config.excluded_paths
 :type: typing.List[str]
 :value: >
-   None
+   'Field(...)'
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.excluded_paths
 ```
@@ -443,9 +481,20 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
 ````{py:attribute} model_config
 :canonical: bumpversion.config.models.Config.model_config
 :value: >
-   None
+   'SettingsConfigDict(...)'
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.model_config
+```
+
+````
+
+````{py:attribute} _resolved_filemap
+:canonical: bumpversion.config.models.Config._resolved_filemap
+:type: typing.Optional[typing.Dict[str, typing.List[bumpversion.config.models.FileChange]]]
+:value: >
+   None
+
+```{autodoc2-docstring} bumpversion.config.models.Config._resolved_filemap
 ```
 
 ````
@@ -460,16 +509,24 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
 
 ````{py:property} resolved_filemap
 :canonical: bumpversion.config.models.Config.resolved_filemap
-:type: typing.Dict[str, bumpversion.config.models.FileConfig]
+:type: typing.Dict[str, typing.List[bumpversion.config.models.FileChange]]
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.resolved_filemap
 ```
 
 ````
 
+````{py:method} _resolve_filemap() -> typing.Dict[str, typing.List[bumpversion.config.models.FileChange]]
+:canonical: bumpversion.config.models.Config._resolve_filemap
+
+```{autodoc2-docstring} bumpversion.config.models.Config._resolve_filemap
+```
+
+````
+
 ````{py:property} files_to_modify
 :canonical: bumpversion.config.models.Config.files_to_modify
-:type: typing.List[bumpversion.config.models.FileConfig]
+:type: typing.List[bumpversion.config.models.FileChange]
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.files_to_modify
 ```

@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>bumpversion.config.files - Bump My Version 0.13.0</title>
+        <title>bumpversion.config.files_legacy - Bump My Version 0.13.0</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -240,164 +240,140 @@
           </label>
         </div>
         <article role="main">
-          <h1>Source code for bumpversion.config.files</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Contains methods for finding and reading configuration files.&quot;&quot;&quot;</span>
-
+          <h1>Source code for bumpversion.config.files_legacy</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;This module handles the legacy config file format.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">difflib</span> <span class="kn">import</span> <span class="n">context_diff</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">bumpversion.config.files_legacy</span> <span class="kn">import</span> <span class="n">read_ini_file</span>
-<span class="kn">from</span> <span class="nn">bumpversion.ui</span> <span class="kn">import</span> <span class="n">get_indented_logger</span><span class="p">,</span> <span class="n">print_warning</span>
-
-<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>  <span class="c1"># pragma: no-coverage</span>
-    <span class="kn">from</span> <span class="nn">bumpversion.config.models</span> <span class="kn">import</span> <span class="n">Config</span>
-    <span class="kn">from</span> <span class="nn">bumpversion.version_part</span> <span class="kn">import</span> <span class="n">Version</span>
+<span class="kn">from</span> <span class="nn">bumpversion.ui</span> <span class="kn">import</span> <span class="n">get_indented_logger</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">get_indented_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-<span class="n">CONFIG_FILE_SEARCH_ORDER</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;.bumpversion.cfg&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;.bumpversion.toml&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;setup.cfg&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;pyproject.toml&quot;</span><span class="p">,</span>
-<span class="p">)</span>
 
-
-<div class="viewcode-block" id="find_config_file">
-<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.config.files.html#bumpversion.config.files.find_config_file">[docs]</a>
-<span class="k">def</span> <span class="nf">find_config_file</span><span class="p">(</span><span class="n">explicit_file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<div class="viewcode-block" id="read_ini_file">
+<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.config.files_legacy.html#bumpversion.config.files_legacy.read_ini_file">[docs]</a>
+<span class="k">def</span> <span class="nf">read_ini_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>  <span class="c1"># noqa: C901</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Find the configuration file, if it exists.</span>
-
-<span class="sd">    If no explicit configuration file is passed, it will search in several files to</span>
-<span class="sd">    find its configuration.</span>
+<span class="sd">    Parse an INI file and return a dictionary of sections and their options.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        explicit_file: The configuration file to explicitly use.</span>
+<span class="sd">        file_path: The path to the INI file.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        The configuration file path</span>
+<span class="sd">        dict: A dictionary of sections and their options.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">search_paths</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="n">explicit_file</span><span class="p">)]</span> <span class="k">if</span> <span class="n">explicit_file</span> <span class="k">else</span> <span class="p">[</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">CONFIG_FILE_SEARCH_ORDER</span><span class="p">]</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="nb">next</span><span class="p">(</span>
-        <span class="p">(</span><span class="n">cfg_file</span> <span class="k">for</span> <span class="n">cfg_file</span> <span class="ow">in</span> <span class="n">search_paths</span> <span class="k">if</span> <span class="n">cfg_file</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="s2">&quot;bumpversion]&quot;</span> <span class="ow">in</span> <span class="n">cfg_file</span><span class="o">.</span><span class="n">read_text</span><span class="p">()),</span>
-        <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span></div>
+    <span class="kn">import</span> <span class="nn">configparser</span>
+
+    <span class="kn">from</span> <span class="nn">bumpversion</span> <span class="kn">import</span> <span class="n">autocast</span>
+
+    <span class="c1"># Create a ConfigParser object and read the INI file</span>
+    <span class="n">config_parser</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">RawConfigParser</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">file_path</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;setup.cfg&quot;</span><span class="p">:</span>
+        <span class="n">config_parser</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+
+    <span class="n">config_parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+    <span class="c1"># Create an empty dictionary to hold the parsed sections and options</span>
+    <span class="n">bumpversion_options</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;files&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;parts&quot;</span><span class="p">:</span> <span class="p">{}}</span>
+
+    <span class="c1"># Loop through each section in the INI file</span>
+    <span class="k">for</span> <span class="n">section_name</span> <span class="ow">in</span> <span class="n">config_parser</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">section_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;bumpversion&quot;</span><span class="p">):</span>
+            <span class="k">continue</span>
+
+        <span class="n">section_parts</span> <span class="o">=</span> <span class="n">section_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+        <span class="n">num_parts</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">section_parts</span><span class="p">)</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">autocast</span><span class="o">.</span><span class="n">autocast_value</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">config_parser</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">section_name</span><span class="p">)}</span>
+
+        <span class="k">if</span> <span class="n">num_parts</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># bumpversion section</span>
+            <span class="n">bumpversion_options</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+            <span class="n">serialize</span> <span class="o">=</span> <span class="n">bumpversion_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;serialize&quot;</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="k">if</span> <span class="s2">&quot;message&quot;</span> <span class="ow">in</span> <span class="n">bumpversion_options</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bumpversion_options</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">bumpversion_options</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bumpversion_options</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">serialize</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">bumpversion_options</span><span class="p">[</span><span class="s2">&quot;serialize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">serialize</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">num_parts</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">section_parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;file&quot;</span><span class="p">):</span>
+            <span class="n">file_options</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">section_parts</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+            <span class="p">}</span>
+            <span class="n">file_options</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;replace&quot;</span> <span class="ow">in</span> <span class="n">file_options</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_options</span><span class="p">[</span><span class="s2">&quot;replace&quot;</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">file_options</span><span class="p">[</span><span class="s2">&quot;replace&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">file_options</span><span class="p">[</span><span class="s2">&quot;replace&quot;</span><span class="p">])</span>
+            <span class="n">bumpversion_options</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_options</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">num_parts</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">section_parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;glob&quot;</span><span class="p">):</span>
+            <span class="n">file_options</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;glob&quot;</span><span class="p">:</span> <span class="n">section_parts</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+            <span class="p">}</span>
+            <span class="n">file_options</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;replace&quot;</span> <span class="ow">in</span> <span class="n">file_options</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_options</span><span class="p">[</span><span class="s2">&quot;replace&quot;</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">file_options</span><span class="p">[</span><span class="s2">&quot;replace&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">file_options</span><span class="p">[</span><span class="s2">&quot;replace&quot;</span><span class="p">])</span>
+            <span class="n">bumpversion_options</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_options</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">num_parts</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">section_parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;part&quot;</span><span class="p">):</span>
+            <span class="n">bumpversion_options</span><span class="p">[</span><span class="s2">&quot;parts&quot;</span><span class="p">][</span><span class="n">section_parts</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span> <span class="o">=</span> <span class="n">options</span>
+
+    <span class="c1"># Return the dictionary of sections and options</span>
+    <span class="k">return</span> <span class="n">bumpversion_options</span></div>
 
 
 
-<div class="viewcode-block" id="read_config_file">
-<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.config.files.html#bumpversion.config.files.read_config_file">[docs]</a>
-<span class="k">def</span> <span class="nf">read_config_file</span><span class="p">(</span><span class="n">config_file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Read the configuration file, if it exists.</span>
-
-<span class="sd">    If no explicit configuration file is passed, it will search in several files to</span>
-<span class="sd">    find its configuration.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        config_file: The configuration file to explicitly use.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        A dictionary of read key-values</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">config_file</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;No configuration file found.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">{}</span>
-
-    <span class="n">config_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">config_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Configuration file not found: </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">config_path</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">{}</span>
-
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Reading config file: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">config_file</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">config_path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.cfg&quot;</span><span class="p">:</span>
-        <span class="n">print_warning</span><span class="p">(</span><span class="s2">&quot;The .cfg file format is deprecated. Please use .toml instead.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">read_ini_file</span><span class="p">(</span><span class="n">config_path</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">config_path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.toml&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">read_toml_file</span><span class="p">(</span><span class="n">config_path</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Unknown config file suffix: </span><span class="si">%s</span><span class="s2">. Using defaults.&quot;</span><span class="p">,</span> <span class="n">config_path</span><span class="o">.</span><span class="n">suffix</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">{}</span></div>
-
-
-
-<div class="viewcode-block" id="read_toml_file">
-<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.config.files.html#bumpversion.config.files.read_toml_file">[docs]</a>
-<span class="k">def</span> <span class="nf">read_toml_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Parse a TOML file and return the `bumpversion` section.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        file_path: The path to the TOML file.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        dict: A dictionary of the `bumpversion` section.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">import</span> <span class="nn">tomlkit</span>
-
-    <span class="c1"># Load the TOML file</span>
-    <span class="n">toml_data</span> <span class="o">=</span> <span class="n">tomlkit</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">file_path</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span><span class="o">.</span><span class="n">unwrap</span><span class="p">()</span>
-
-    <span class="k">return</span> <span class="n">toml_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tool&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;bumpversion&quot;</span><span class="p">,</span> <span class="p">{})</span></div>
-
-
-
-<div class="viewcode-block" id="update_config_file">
-<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.config.files.html#bumpversion.config.files.update_config_file">[docs]</a>
-<span class="k">def</span> <span class="nf">update_config_file</span><span class="p">(</span>
-    <span class="n">config_file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
-    <span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">,</span>
-    <span class="n">current_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span>
-    <span class="n">new_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span>
-    <span class="n">context</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">,</span>
-    <span class="n">dry_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<div class="viewcode-block" id="update_ini_config_file">
+<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.config.files_legacy.html#bumpversion.config.files_legacy.update_ini_config_file">[docs]</a>
+<span class="k">def</span> <span class="nf">update_ini_config_file</span><span class="p">(</span>
+    <span class="n">config_file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">current_version</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">new_version</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dry_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Update the current_version key in the configuration file.</span>
 
+<span class="sd">    Instead of parsing and re-writing the config file with new information, it will use</span>
+<span class="sd">    a regular expression to just replace the current_version value. The idea is it will</span>
+<span class="sd">    avoid unintentional changes (like formatting) to the config file.</span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        config_file: The configuration file to explicitly use.</span>
-<span class="sd">        config: The configuration to use.</span>
-<span class="sd">        current_version: The current version.</span>
-<span class="sd">        new_version: The new version.</span>
-<span class="sd">        context: The context to use for serialization.</span>
+<span class="sd">        current_version: The serialized current version.</span>
+<span class="sd">        new_version: The serialized new version.</span>
 <span class="sd">        dry_run: True if the update should be a dry run.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">bumpversion.config.models</span> <span class="kn">import</span> <span class="n">FileChange</span>
-    <span class="kn">from</span> <span class="nn">bumpversion.files</span> <span class="kn">import</span> <span class="n">DataFileUpdater</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">config_file</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">%s</span><span class="s2">No configuration file found to update.&quot;</span><span class="p">,</span> <span class="n">logger</span><span class="o">.</span><span class="n">indent_str</span><span class="p">)</span>
-        <span class="k">return</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">%s</span><span class="s2">Processing config file: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">logger</span><span class="o">.</span><span class="n">indent_str</span><span class="p">,</span> <span class="n">config_file</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">indent</span><span class="p">()</span>
-    <span class="n">config_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">config_path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">!=</span> <span class="s2">&quot;.toml&quot;</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;You must have a `.toml` suffix to update the config file: </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">config_path</span><span class="p">)</span>
-        <span class="k">return</span>
-
-    <span class="c1"># TODO: Eventually this should be transformed into another default &quot;files_to_modify&quot; entry</span>
-    <span class="n">datafile_config</span> <span class="o">=</span> <span class="n">FileChange</span><span class="p">(</span>
-        <span class="n">filename</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">config_path</span><span class="p">),</span>
-        <span class="n">key_path</span><span class="o">=</span><span class="s2">&quot;tool.bumpversion.current_version&quot;</span><span class="p">,</span>
-        <span class="n">search</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">search</span><span class="p">,</span>
-        <span class="n">replace</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">replace</span><span class="p">,</span>
-        <span class="n">regex</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">regex</span><span class="p">,</span>
-        <span class="n">ignore_missing_version</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">ignore_missing_version</span><span class="p">,</span>
-        <span class="n">serialize</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">serialize</span><span class="p">,</span>
-        <span class="n">parse</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">parse</span><span class="p">,</span>
+    <span class="n">cfg_current_version_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;(?P&lt;section_prefix&gt;</span><span class="se">\\</span><span class="s2">[bumpversion]</span><span class="se">\n</span><span class="s2">[^[]*current_version</span><span class="se">\\</span><span class="s2">s*=</span><span class="se">\\</span><span class="s2">s*)(?P&lt;version&gt;</span><span class="si">{</span><span class="n">current_version</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+        <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">updater</span> <span class="o">=</span> <span class="n">DataFileUpdater</span><span class="p">(</span><span class="n">datafile_config</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">version_config</span><span class="o">.</span><span class="n">part_configs</span><span class="p">)</span>
-    <span class="n">updater</span><span class="o">.</span><span class="n">update_file</span><span class="p">(</span><span class="n">current_version</span><span class="p">,</span> <span class="n">new_version</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">dry_run</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">dedent</span><span class="p">()</span></div>
+    <span class="n">config_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+    <span class="n">existing_config</span> <span class="o">=</span> <span class="n">config_path</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">config_path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.cfg&quot;</span> <span class="ow">and</span> <span class="n">cfg_current_version_regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">existing_config</span><span class="p">):</span>
+        <span class="n">sub_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">g&lt;section_prefix&gt;</span><span class="si">{</span><span class="n">new_version</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">new_config</span> <span class="o">=</span> <span class="n">cfg_current_version_regex</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">sub_str</span><span class="p">,</span> <span class="n">existing_config</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Could not find the current version in the config file: </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">config_path</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> to config file </span><span class="si">%s</span><span class="s2">:&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Would write&quot;</span> <span class="k">if</span> <span class="n">dry_run</span> <span class="k">else</span> <span class="s2">&quot;Writing&quot;</span><span class="p">,</span>
+        <span class="n">config_path</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="nb">list</span><span class="p">(</span>
+                <span class="n">context_diff</span><span class="p">(</span>
+                    <span class="n">existing_config</span><span class="o">.</span><span class="n">splitlines</span><span class="p">(),</span>
+                    <span class="n">new_config</span><span class="o">.</span><span class="n">splitlines</span><span class="p">(),</span>
+                    <span class="n">fromfile</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;before </span><span class="si">{</span><span class="n">config_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">tofile</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;after </span><span class="si">{</span><span class="n">config_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">lineterm</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">dry_run</span><span class="p">:</span>
+        <span class="n">config_path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">new_config</span><span class="p">)</span></div>
 
 </pre></div>
         </article>

@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>bumpversion.autocast - Bump My Version 0.13.0</title>
+        <title>bumpversion.indented_logger - Bump My Version 0.13.0</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -240,98 +240,101 @@
           </label>
         </div>
         <article role="main">
-          <h1>Source code for bumpversion.autocast</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Automatically detect the true Python type of a string and cast it to the correct type.</span>
+          <h1>Source code for bumpversion.indented_logger</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;A logger adapter that adds an indent to the beginning of each message.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">contextvars</span> <span class="kn">import</span> <span class="n">ContextVar</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 
-<span class="sd">Based on https://github.com/cgreer/cgAutoCast/blob/master/cgAutoCast.py</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="kn">import</span> <span class="nn">contextlib</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="n">CURRENT_INDENT</span> <span class="o">=</span> <span class="n">ContextVar</span><span class="p">(</span><span class="s2">&quot;current_indent&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="boolify">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.autocast.html#bumpversion.autocast.boolify">[docs]</a>
-<span class="k">def</span> <span class="nf">boolify</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a string to a boolean.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;True&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">}:</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;False&quot;</span><span class="p">,</span> <span class="s2">&quot;false&quot;</span><span class="p">}:</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not Boolean Value!&quot;</span><span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="noneify">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.autocast.html#bumpversion.autocast.noneify">[docs]</a>
-<span class="k">def</span> <span class="nf">noneify</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a string to None.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="s2">&quot;None&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">None</span>
-    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not None Value!&quot;</span><span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="listify">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.autocast.html#bumpversion.autocast.listify">[docs]</a>
-<span class="k">def</span> <span class="nf">listify</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<div class="viewcode-block" id="IndentedLoggerAdapter">
+<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.indented_logger.html#bumpversion.indented_logger.IndentedLoggerAdapter">[docs]</a>
+<span class="k">class</span> <span class="nc">IndentedLoggerAdapter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">LoggerAdapter</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Convert a string representation of a list into list of homogenous basic types.</span>
+<span class="sd">    Logger adapter that adds an indent to the beginning of each message.</span>
 
-<span class="sd">    Type of elements in list is determined via first element. Successive elements are</span>
-<span class="sd">    cast to that type.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        s: String representation of a list.</span>
-
-<span class="sd">    Raises:</span>
-<span class="sd">        ValueError: If string does not represent a list.</span>
-<span class="sd">        TypeError: If string does not represent a list of homogenous basic types.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        List of homogenous basic types.</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        logger: The logger to adapt.</span>
+<span class="sd">        extra: Extra values to add to the logging context.</span>
+<span class="sd">        depth: The number of `indent_char` to generate for each indent level.</span>
+<span class="sd">        indent_char: The character or string to use for indenting.</span>
+<span class="sd">        reset: `True` if the indent level should be reset to zero.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="s2">&quot;,&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">s</span> <span class="ow">and</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not a List&quot;</span><span class="p">)</span>
 
-    <span class="c1"># derive the type of the variable</span>
-    <span class="n">str_list</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;,&quot;</span> <span class="ow">in</span> <span class="n">s</span> <span class="k">else</span> <span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">element_caster</span> <span class="o">=</span> <span class="nb">str</span>
-    <span class="k">for</span> <span class="n">caster</span> <span class="ow">in</span> <span class="p">(</span><span class="n">boolify</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">noneify</span><span class="p">,</span> <span class="n">element_caster</span><span class="p">):</span>
-        <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">suppress</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
-            <span class="n">caster</span><span class="p">(</span><span class="n">str_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># type: ignore[operator]</span>
-            <span class="n">element_caster</span> <span class="o">=</span> <span class="n">caster</span>  <span class="c1"># type: ignore[assignment]</span>
-            <span class="k">break</span>
-    <span class="c1"># cast all elements</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">element_caster</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">str_list</span><span class="p">]</span>
-    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Autocasted list must be all same type&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span></div>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">logger</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="p">,</span>
+        <span class="n">extra</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">indent_char</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="p">,</span>
+        <span class="n">reset</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">extra</span> <span class="ow">or</span> <span class="p">{})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_depth</span> <span class="o">=</span> <span class="n">depth</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_indent_char</span> <span class="o">=</span> <span class="n">indent_char</span>
+        <span class="k">if</span> <span class="n">reset</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">current_indent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The current indent level.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">CURRENT_INDENT</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+<div class="viewcode-block" id="IndentedLoggerAdapter.indent">
+<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.indented_logger.html#bumpversion.indented_logger.IndentedLoggerAdapter.indent">[docs]</a>
+    <span class="k">def</span> <span class="nf">indent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Increase the indent level by `amount`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">CURRENT_INDENT</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">CURRENT_INDENT</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="n">amount</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="IndentedLoggerAdapter.dedent">
+<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.indented_logger.html#bumpversion.indented_logger.IndentedLoggerAdapter.dedent">[docs]</a>
+    <span class="k">def</span> <span class="nf">dedent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Decrease the indent level by `amount`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">CURRENT_INDENT</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">CURRENT_INDENT</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">-</span> <span class="n">amount</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="autocast_value">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.autocast.html#bumpversion.autocast.autocast_value">[docs]</a>
-<span class="k">def</span> <span class="nf">autocast_value</span><span class="p">(</span><span class="n">var</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Guess the string representation of the variable&#39;s type.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        var: Value to autocast.</span>
+<div class="viewcode-block" id="IndentedLoggerAdapter.reset">
+<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.indented_logger.html#bumpversion.indented_logger.IndentedLoggerAdapter.reset">[docs]</a>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reset the indent level to zero.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">CURRENT_INDENT</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        The autocasted value.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>  <span class="c1"># don&#39;t need to guess non-string types</span>
-        <span class="k">return</span> <span class="n">var</span>
 
-    <span class="c1"># guess string representation of var</span>
-    <span class="k">for</span> <span class="n">caster</span> <span class="ow">in</span> <span class="p">(</span><span class="n">boolify</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">noneify</span><span class="p">,</span> <span class="n">listify</span><span class="p">):</span>
-        <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">suppress</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">caster</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>  <span class="c1"># type: ignore[operator]</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">indent_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The indent string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_indent_char</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_depth</span><span class="p">)</span> <span class="o">*</span> <span class="n">CURRENT_INDENT</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 
-    <span class="k">return</span> <span class="n">var</span></div>
+<div class="viewcode-block" id="IndentedLoggerAdapter.process">
+<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.indented_logger.html#bumpversion.indented_logger.IndentedLoggerAdapter.process">[docs]</a>
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MutableMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process the message and add the indent.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            msg: The logging message.</span>
+<span class="sd">            kwargs: Keyword arguments passed to the logger.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A tuple containing the message and keyword arguments.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indent_str</span> <span class="o">+</span> <span class="n">msg</span>
+
+        <span class="k">return</span> <span class="n">msg</span><span class="p">,</span> <span class="n">kwargs</span></div>
+</div>
 
 </pre></div>
         </article>

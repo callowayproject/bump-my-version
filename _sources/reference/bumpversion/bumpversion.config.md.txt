@@ -13,9 +13,10 @@
 :titlesonly:
 :maxdepth: 1
 
-bumpversion.config.models
+bumpversion.config.files_legacy
 bumpversion.config.files
 bumpversion.config.utils
+bumpversion.config.models
 ```
 
 ## Package Contents
@@ -57,7 +58,7 @@ bumpversion.config.utils
 ````{py:data} logger
 :canonical: bumpversion.config.logger
 :value: >
-   None
+   'get_indented_logger(...)'
 
 ```{autodoc2-docstring} bumpversion.config.logger
 ```

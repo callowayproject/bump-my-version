@@ -98,7 +98,7 @@ Bases: {py:obj}`bumpversion.functions.PartFunction`
 ````{py:attribute} FIRST_NUMERIC
 :canonical: bumpversion.functions.NumericFunction.FIRST_NUMERIC
 :value: >
-   None
+   'compile(...)'
 
 ```{autodoc2-docstring} bumpversion.functions.NumericFunction.FIRST_NUMERIC
 ```

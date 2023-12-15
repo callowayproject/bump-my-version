@@ -46,7 +46,7 @@
 ````{py:data} logger
 :canonical: bumpversion.version_part.logger
 :value: >
-   None
+   'get_indented_logger(...)'
 
 ```{autodoc2-docstring} bumpversion.version_part.logger
 ```
@@ -189,7 +189,7 @@
 
 `````
 
-`````{py:class} VersionConfig(parse: str, serialize: typing.List[str], search: str, replace: str, part_configs: typing.Optional[typing.Dict[str, bumpversion.config.models.VersionPartConfig]] = None)
+`````{py:class} VersionConfig(parse: str, serialize: typing.Tuple[str], search: str, replace: str, part_configs: typing.Optional[typing.Dict[str, bumpversion.config.models.VersionPartConfig]] = None)
 :canonical: bumpversion.version_part.VersionConfig
 
 ```{autodoc2-docstring} bumpversion.version_part.VersionConfig

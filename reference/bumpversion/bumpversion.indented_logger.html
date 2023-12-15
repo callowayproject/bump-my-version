@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="bumpversion.autocast" href="bumpversion.autocast.html" /><link rel="prev" title="bumpversion.utils" href="bumpversion.utils.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="bumpversion.version_part" href="bumpversion.version_part.html" /><link rel="prev" title="bumpversion.show" href="bumpversion.show.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>bumpversion.bump - Bump My Version 0.13.0</title>
+        <title>bumpversion.indented_logger - Bump My Version 0.13.0</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -188,14 +188,14 @@
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.files.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.files</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.ui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.ui</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.utils</span></code></a></li>
-<li class="toctree-l3 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.bump</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bumpversion.bump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.bump</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.autocast.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.autocast</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.yaml_dump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.yaml_dump</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.aliases.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.aliases</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.cli</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.scm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.scm</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="bumpversion.indented_logger.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.indented_logger</span></code></a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.indented_logger</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.version_part.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.version_part</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.__main__</span></code></a></li>
@@ -242,24 +242,18 @@
           </label>
         </div>
         <article role="main">
-          <section class="tex2jax_ignore mathjax_ignore" id="module-bumpversion.bump">
-<span id="bumpversion-bump"></span><h1><a class="reference internal" href="#module-bumpversion.bump" title="bumpversion.bump"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.bump</span></code></a><a class="headerlink" href="#module-bumpversion.bump" title="Link to this heading">#</a></h1>
-<p>Version changing methods.</p>
+          <section class="tex2jax_ignore mathjax_ignore" id="module-bumpversion.indented_logger">
+<span id="bumpversion-indented-logger"></span><h1><a class="reference internal" href="#module-bumpversion.indented_logger" title="bumpversion.indented_logger"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.indented_logger</span></code></a><a class="headerlink" href="#module-bumpversion.indented_logger" title="Link to this heading">#</a></h1>
+<p>A logger adapter that adds an indent to the beginning of each message.</p>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
-<section id="functions">
-<h3>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h3>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h3>
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-left">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.bump.get_next_version" title="bumpversion.bump.get_next_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_next_version</span></code></a></p></td>
-<td><p>Bump the version_part to the next value.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.bump.do_bump" title="bumpversion.bump.do_bump"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_bump</span></code></a></p></td>
-<td><p>Bump the version_part to the next value or set the version to new_version.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.bump.commit_and_tag" title="bumpversion.bump.commit_and_tag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">commit_and_tag</span></code></a></p></td>
-<td><p>Commit and tag the changes, if a tool is configured.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.indented_logger.IndentedLoggerAdapter" title="bumpversion.indented_logger.IndentedLoggerAdapter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IndentedLoggerAdapter</span></code></a></p></td>
+<td><p>Logger adapter that adds an indent to the beginning of each message.</p></td>
 </tr>
 </tbody>
 </table>
@@ -270,7 +264,7 @@
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-left">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.bump.logger" title="bumpversion.bump.logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logger</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.indented_logger.CURRENT_INDENT" title="bumpversion.indented_logger.CURRENT_INDENT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CURRENT_INDENT</span></code></a></p></td>
 <td></td>
 </tr>
 </tbody>
@@ -280,48 +274,70 @@
 <section id="api">
 <h3>API<a class="headerlink" href="#api" title="Link to this heading">#</a></h3>
 <dl class="py data">
-<dt class="sig sig-object py" id="bumpversion.bump.logger">
-<span class="sig-prename descclassname"><span class="pre">bumpversion.bump.</span></span><span class="sig-name descname"><span class="pre">logger</span></span><a class="headerlink" href="#bumpversion.bump.logger" title="Link to this definition">#</a></dt>
-<dd><p>‘get_indented_logger(…)’</p>
+<dt class="sig sig-object py" id="bumpversion.indented_logger.CURRENT_INDENT">
+<span class="sig-prename descclassname"><span class="pre">bumpversion.indented_logger.</span></span><span class="sig-name descname"><span class="pre">CURRENT_INDENT</span></span><a class="headerlink" href="#bumpversion.indented_logger.CURRENT_INDENT" title="Link to this definition">#</a></dt>
+<dd><p>‘ContextVar(…)’</p>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="bumpversion.bump.get_next_version">
-<span class="sig-prename descclassname"><span class="pre">bumpversion.bump.</span></span><span class="sig-name descname"><span class="pre">get_next_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="bumpversion.version_part.html#bumpversion.version_part.Version" title="bumpversion.version_part.Version"><span class="pre">bumpversion.version_part.Version</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bumpversion.config.Config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version_part</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="bumpversion.version_part.html#bumpversion.version_part.Version" title="bumpversion.version_part.Version"><span class="pre">bumpversion.version_part.Version</span></a></span></span><a class="reference internal" href="../../_modules/bumpversion/bump.html#get_next_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.bump.get_next_version" title="Link to this definition">#</a></dt>
-<dd><p>Bump the version_part to the next value.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="bumpversion.indented_logger.IndentedLoggerAdapter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bumpversion.indented_logger.</span></span><span class="sig-name descname"><span class="pre">IndentedLoggerAdapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Logger" title="(in Python v3.12)"><span class="pre">logging.Logger</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent_char</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/bumpversion/indented_logger.html#IndentedLoggerAdapter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.indented_logger.IndentedLoggerAdapter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.LoggerAdapter" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logging.LoggerAdapter</span></code></a></p>
+<p>Logger adapter that adds an indent to the beginning of each message.</p>
+<p>Parameters:
+logger: The logger to adapt.
+extra: Extra values to add to the logging context.
+depth: The number of <code class="docutils literal notranslate"><span class="pre">indent_char</span></code> to generate for each indent level.
+indent_char: The character or string to use for indenting.
+reset: <code class="docutils literal notranslate"><span class="pre">True</span></code> if the indent level should be reset to zero.</p>
+<p class="rubric">Initialization</p>
+<p>Initialize the adapter with a logger and a dict-like object which
+provides contextual information. This constructor signature allows
+easy stacking of LoggerAdapters, if so desired.</p>
+<p>You can effectively pass keyword arguments as shown in the
+following example:</p>
+<p>adapter = LoggerAdapter(someLogger, dict(p1=v1, p2=“v2”))</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="bumpversion.indented_logger.IndentedLoggerAdapter.current_indent">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_indent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#bumpversion.indented_logger.IndentedLoggerAdapter.current_indent" title="Link to this definition">#</a></dt>
+<dd><p>The current indent level.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bumpversion.indented_logger.IndentedLoggerAdapter.indent">
+<span class="sig-name descname"><span class="pre">indent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/bumpversion/indented_logger.html#IndentedLoggerAdapter.indent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.indented_logger.IndentedLoggerAdapter.indent" title="Link to this definition">#</a></dt>
+<dd><p>Increase the indent level by <code class="docutils literal notranslate"><span class="pre">amount</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bumpversion.indented_logger.IndentedLoggerAdapter.dedent">
+<span class="sig-name descname"><span class="pre">dedent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/bumpversion/indented_logger.html#IndentedLoggerAdapter.dedent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.indented_logger.IndentedLoggerAdapter.dedent" title="Link to this definition">#</a></dt>
+<dd><p>Decrease the indent level by <code class="docutils literal notranslate"><span class="pre">amount</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bumpversion.indented_logger.IndentedLoggerAdapter.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/bumpversion/indented_logger.html#IndentedLoggerAdapter.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.indented_logger.IndentedLoggerAdapter.reset" title="Link to this definition">#</a></dt>
+<dd><p>Reset the indent level to zero.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="bumpversion.indented_logger.IndentedLoggerAdapter.indent_str">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indent_str</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#bumpversion.indented_logger.IndentedLoggerAdapter.indent_str" title="Link to this definition">#</a></dt>
+<dd><p>The indent string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bumpversion.indented_logger.IndentedLoggerAdapter.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.MutableMapping" title="(in Python v3.12)"><span class="pre">MutableMapping</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.MutableMapping" title="(in Python v3.12)"><span class="pre">MutableMapping</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/bumpversion/indented_logger.html#IndentedLoggerAdapter.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.indented_logger.IndentedLoggerAdapter.process" title="Link to this definition">#</a></dt>
+<dd><p>Process the message and add the indent.</p>
 <p>Args:
-current_version: The current version
-config: The current configuration
-version_part: Optional part of the version to bump
-new_version: Optional specific version to bump to</p>
+msg: The logging message.
+kwargs: Keyword arguments passed to the logger.</p>
 <p>Returns:
-The new version</p>
-<p>Raises:
-ConfigurationError: If it can’t generate the next version.</p>
+A tuple containing the message and keyword arguments.</p>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="bumpversion.bump.do_bump">
-<span class="sig-prename descclassname"><span class="pre">bumpversion.bump.</span></span><span class="sig-name descname"><span class="pre">do_bump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version_part</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bumpversion.config.Config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">pathlib.Path</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dry_run</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/bumpversion/bump.html#do_bump"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.bump.do_bump" title="Link to this definition">#</a></dt>
-<dd><p>Bump the version_part to the next value or set the version to new_version.</p>
-<p>Args:
-version_part: The version part to bump
-new_version: The explicit version to set
-config: The configuration to use
-config_file: The configuration file to update
-dry_run: True if the operation should be a dry run</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="bumpversion.bump.commit_and_tag">
-<span class="sig-prename descclassname"><span class="pre">bumpversion.bump.</span></span><span class="sig-name descname"><span class="pre">commit_and_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bumpversion.config.Config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">pathlib.Path</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configured_files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="bumpversion.files.html#bumpversion.files.ConfiguredFile" title="bumpversion.files.ConfiguredFile"><span class="pre">bumpversion.files.ConfiguredFile</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.ChainMap" title="(in Python v3.12)"><span class="pre">ChainMap</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dry_run</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/bumpversion/bump.html#commit_and_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.bump.commit_and_tag" title="Link to this definition">#</a></dt>
-<dd><p>Commit and tag the changes, if a tool is configured.</p>
-<p>Args:
-config: The configuration
-config_file: The configuration file to include in the commit, if it exists
-configured_files: A list of files to commit
-ctx: The context used to render the tag and tag message
-dry_run: True if the operation should be a dry run</p>
 </dd></dl>
 
 </section>
@@ -333,23 +349,23 @@ dry_run: True if the operation should be a dry run</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="bumpversion.autocast.html">
+          <a class="next-page" href="bumpversion.version_part.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.autocast</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.version_part</span></code></div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="bumpversion.utils.html">
+          <a class="prev-page" href="bumpversion.show.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.utils</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></div>
                 
               </div>
             </a>
@@ -390,15 +406,21 @@ dry_run: True if the operation should be a dry run</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.bump</span></code></a><ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.indented_logger</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
-<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#classes">Classes</a></li>
 <li><a class="reference internal" href="#data">Data</a></li>
 <li><a class="reference internal" href="#api">API</a><ul>
-<li><a class="reference internal" href="#bumpversion.bump.logger"><code class="docutils literal notranslate"><span class="pre">logger</span></code></a></li>
-<li><a class="reference internal" href="#bumpversion.bump.get_next_version"><code class="docutils literal notranslate"><span class="pre">get_next_version()</span></code></a></li>
-<li><a class="reference internal" href="#bumpversion.bump.do_bump"><code class="docutils literal notranslate"><span class="pre">do_bump()</span></code></a></li>
-<li><a class="reference internal" href="#bumpversion.bump.commit_and_tag"><code class="docutils literal notranslate"><span class="pre">commit_and_tag()</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.indented_logger.CURRENT_INDENT"><code class="docutils literal notranslate"><span class="pre">CURRENT_INDENT</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.indented_logger.IndentedLoggerAdapter"><code class="docutils literal notranslate"><span class="pre">IndentedLoggerAdapter</span></code></a><ul>
+<li><a class="reference internal" href="#bumpversion.indented_logger.IndentedLoggerAdapter.current_indent"><code class="docutils literal notranslate"><span class="pre">IndentedLoggerAdapter.current_indent</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.indented_logger.IndentedLoggerAdapter.indent"><code class="docutils literal notranslate"><span class="pre">IndentedLoggerAdapter.indent()</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.indented_logger.IndentedLoggerAdapter.dedent"><code class="docutils literal notranslate"><span class="pre">IndentedLoggerAdapter.dedent()</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.indented_logger.IndentedLoggerAdapter.reset"><code class="docutils literal notranslate"><span class="pre">IndentedLoggerAdapter.reset()</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.indented_logger.IndentedLoggerAdapter.indent_str"><code class="docutils literal notranslate"><span class="pre">IndentedLoggerAdapter.indent_str</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.indented_logger.IndentedLoggerAdapter.process"><code class="docutils literal notranslate"><span class="pre">IndentedLoggerAdapter.process()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
