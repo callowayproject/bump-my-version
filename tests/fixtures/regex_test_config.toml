@@ -1,0 +1,8 @@
+[tool.bumpversion]
+current_version = "4.7.1"
+regex = true
+
+[[tool.bumpversion.files]]
+filename = "./citation.cff"
+search = "date-released: \\d{{4}}-\\d{{2}}-\\d{{2}}"
+replace = "date-released: {utcnow:%Y-%m-%d}"

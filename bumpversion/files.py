@@ -1,4 +1,5 @@
 """Methods for changing files."""
+import os.path
 import re
 from copy import deepcopy
 from difflib import context_diff
@@ -94,7 +95,18 @@ class ConfiguredFile:
         self._newlines: Optional[str] = None
 
     def get_file_contents(self) -> str:
-        """Return the contents of the file."""
+        """
+        Return the contents of the file.
+
+        Raises:
+            FileNotFoundError: if the file doesn't exist
+
+        Returns:
+            The contents of the file
+        """
+        if not os.path.exists(self.file_change.filename):
+            raise FileNotFoundError(f"File not found: '{self.file_change.filename}'")
+
         with open(self.file_change.filename, "rt", encoding="utf-8") as f:
             contents = f.read()
             self._newlines = f.newlines[0] if isinstance(f.newlines, tuple) else f.newlines
