@@ -120,6 +120,7 @@ class Config(BaseSettings):
                     ignore_missing_version=self.ignore_missing_version,
                 )
             )
+        self._resolved_filemap = None
 
     @property
     def resolved_filemap(self) -> Dict[str, List[FileChange]]:
