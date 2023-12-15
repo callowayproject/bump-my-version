@@ -140,7 +140,7 @@ def test_multiple_config_files(tmp_path: Path):
 
     assert cfg.current_version == "0.10.5"
     assert cfg.parse == "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?"
-    assert cfg.serialize == ["{major}.{minor}.{patch}-{release}", "{major}.{minor}.{patch}"]
+    assert cfg.serialize == ("{major}.{minor}.{patch}-{release}", "{major}.{minor}.{patch}")
 
 
 TOML_EXPECTED_DIFF = (
@@ -283,7 +283,7 @@ def test_file_overrides_config(fixtures_path: Path):
     assert file_map["should_override_parse.txt"].ignore_missing_version == conf.ignore_missing_version
 
     assert file_map["should_override_serialize.txt"].parse == conf.parse
-    assert file_map["should_override_serialize.txt"].serialize == ["{major}"]
+    assert file_map["should_override_serialize.txt"].serialize == ("{major}",)
     assert file_map["should_override_serialize.txt"].search == conf.search
     assert file_map["should_override_serialize.txt"].replace == conf.replace
     assert file_map["should_override_serialize.txt"].regex == conf.regex

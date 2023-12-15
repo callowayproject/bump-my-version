@@ -2,7 +2,7 @@
 import re
 import string
 from copy import copy
-from typing import Any, Dict, List, MutableMapping, Optional, Union
+from typing import Any, Dict, List, MutableMapping, Optional, Tuple, Union
 
 from click import UsageError
 
@@ -134,7 +134,7 @@ class VersionConfig:
     def __init__(
         self,
         parse: str,
-        serialize: List[str],
+        serialize: Tuple[str],
         search: str,
         replace: str,
         part_configs: Optional[Dict[str, VersionPartConfig]] = None,

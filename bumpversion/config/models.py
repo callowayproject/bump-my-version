@@ -32,7 +32,7 @@ class FileChange(BaseModel):
     """A change to make to a file."""
 
     parse: str
-    serialize: List[str]
+    serialize: tuple
     search: str
     replace: str
     regex: bool
@@ -40,6 +40,10 @@ class FileChange(BaseModel):
     filename: Optional[str] = None
     glob: Optional[str] = None  # Conflicts with filename. If both are specified, glob wins
     key_path: Optional[str] = None  # If specified, and has an appropriate extension, will be treated as a data file
+
+    def __hash__(self):
+        """Return a hash of the model."""
+        return hash(tuple(sorted(self.model_dump().items())))
 
     def get_search_pattern(self, context: MutableMapping) -> Tuple[re.Pattern, str]:
         """
@@ -82,7 +86,7 @@ class Config(BaseSettings):
 
     current_version: Optional[str]
     parse: str
-    serialize: List[str] = Field(min_length=1)
+    serialize: tuple = Field(min_length=1)
     search: str
     replace: str
     regex: bool
@@ -97,7 +101,7 @@ class Config(BaseSettings):
     commit_args: Optional[str]
     scm_info: Optional["SCMInfo"]
     parts: Dict[str, VersionPartConfig]
-    files: List[FileChange]
+    files: List[FileChange] = Field(default_factory=list)
     included_paths: List[str] = Field(default_factory=list)
     excluded_paths: List[str] = Field(default_factory=list)
     model_config = SettingsConfigDict(env_prefix="bumpversion_")
@@ -106,8 +110,9 @@ class Config(BaseSettings):
     def add_files(self, filename: Union[str, List[str]]) -> None:
         """Add a filename to the list of files."""
         filenames = [filename] if isinstance(filename, str) else filename
+        files = set(self.files)
         for name in filenames:
-            self.files.append(
+            files.add(
                 FileChange(
                     filename=name,
                     glob=None,
@@ -120,6 +125,8 @@ class Config(BaseSettings):
                     ignore_missing_version=self.ignore_missing_version,
                 )
             )
+        self.files = list(files)
+
         self._resolved_filemap = None
 
     @property
