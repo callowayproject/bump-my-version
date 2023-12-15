@@ -21,7 +21,7 @@ jobs:
 
       - name: Install requirements
         run: |
-          python -m pip install . bump-my-version
+          python -m pip install generate-changelog bump-my-version
 
       - name: Generate the changelog and get the release hint
         id: generate-changelog
