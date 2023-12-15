@@ -139,7 +139,7 @@ def test_cli_options_override_config(tmp_path: Path, fixtures_path: Path, mocker
     assert the_config.current_version == "1.1.0"
     assert the_config.allow_dirty
     assert the_config.parse == r"XXX(?P<spam>\d+);(?P<blob>\d+);(?P<slurp>\d+)"
-    assert the_config.serialize == ["XXX{spam};{blob};{slurp}"]
+    assert the_config.serialize == ("XXX{spam};{blob};{slurp}",)
     assert the_config.search == "my-search"
     assert the_config.replace == "my-replace"
     assert the_config.commit is False
@@ -203,7 +203,7 @@ def test_listing_with_version_part(tmp_path: Path, fixtures_path: Path):
         "current_version=1.0.0",
         "excluded_paths=[]",
         "parse=(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?",
-        "serialize=['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}']",
+        "serialize=('{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}')",
         "search={current_version}",
         "replace={new_version}",
         "regex=False",
@@ -220,19 +220,19 @@ def test_listing_with_version_part(tmp_path: Path, fixtures_path: Path):
         (
             "files=[{'parse': "
             "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', "
-            "'serialize': ['{major}.{minor}.{patch}-{release}', "
-            "'{major}.{minor}.{patch}'], 'search': '{current_version}', 'replace': "
+            "'serialize': ('{major}.{minor}.{patch}-{release}', "
+            "'{major}.{minor}.{patch}'), 'search': '{current_version}', 'replace': "
             "'{new_version}', 'regex': False, 'ignore_missing_version': False, "
             "'filename': 'setup.py', 'glob': None, 'key_path': None}, {'parse': "
             "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', "
-            "'serialize': ['{major}.{minor}.{patch}-{release}', "
-            "'{major}.{minor}.{patch}'], 'search': '{current_version}', 'replace': "
+            "'serialize': ('{major}.{minor}.{patch}-{release}', "
+            "'{major}.{minor}.{patch}'), 'search': '{current_version}', 'replace': "
             "'{new_version}', 'regex': False, 'ignore_missing_version': False, "
             "'filename': 'bumpversion/__init__.py', 'glob': None, 'key_path': None}, "
             "{'parse': "
             "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', "
-            "'serialize': ['{major}.{minor}.{patch}-{release}', "
-            "'{major}.{minor}.{patch}'], 'search': '**unreleased**', 'replace': "
+            "'serialize': ('{major}.{minor}.{patch}-{release}', "
+            "'{major}.{minor}.{patch}'), 'search': '**unreleased**', 'replace': "
             "'**unreleased**\\n**v{new_version}**', 'regex': False, "
             "'ignore_missing_version': False, 'filename': 'CHANGELOG.md', 'glob': None, "
             "'key_path': None}]"
@@ -263,7 +263,7 @@ def test_listing_without_version_part(tmp_path: Path, fixtures_path: Path):
         "current_version=1.0.0",
         "excluded_paths=[]",
         "parse=(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?",
-        "serialize=['{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}']",
+        "serialize=('{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}')",
         "search={current_version}",
         "replace={new_version}",
         "regex=False",
@@ -280,19 +280,19 @@ def test_listing_without_version_part(tmp_path: Path, fixtures_path: Path):
         (
             "files=[{'parse': "
             "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', "
-            "'serialize': ['{major}.{minor}.{patch}-{release}', "
-            "'{major}.{minor}.{patch}'], 'search': '{current_version}', 'replace': "
+            "'serialize': ('{major}.{minor}.{patch}-{release}', "
+            "'{major}.{minor}.{patch}'), 'search': '{current_version}', 'replace': "
             "'{new_version}', 'regex': False, 'ignore_missing_version': False, "
             "'filename': 'setup.py', 'glob': None, 'key_path': None}, {'parse': "
             "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', "
-            "'serialize': ['{major}.{minor}.{patch}-{release}', "
-            "'{major}.{minor}.{patch}'], 'search': '{current_version}', 'replace': "
+            "'serialize': ('{major}.{minor}.{patch}-{release}', "
+            "'{major}.{minor}.{patch}'), 'search': '{current_version}', 'replace': "
             "'{new_version}', 'regex': False, 'ignore_missing_version': False, "
             "'filename': 'bumpversion/__init__.py', 'glob': None, 'key_path': None}, "
             "{'parse': "
             "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', "
-            "'serialize': ['{major}.{minor}.{patch}-{release}', "
-            "'{major}.{minor}.{patch}'], 'search': '**unreleased**', 'replace': "
+            "'serialize': ('{major}.{minor}.{patch}-{release}', "
+            "'{major}.{minor}.{patch}'), 'search': '**unreleased**', 'replace': "
             "'**unreleased**\\n**v{new_version}**', 'regex': False, "
             "'ignore_missing_version': False, 'filename': 'CHANGELOG.md', 'glob': None, "
             "'key_path': None}]"
@@ -426,7 +426,7 @@ def test_replace(mocker, tmp_path, fixtures_path):
     call_args = mocked_modify_files.call_args[0]
     configured_files = call_args[0]
     assert len(configured_files) == 3
-    actual_filenames = {f.path for f in configured_files}
+    actual_filenames = {f.file_change.filename for f in configured_files}
     assert actual_filenames == {"setup.py", "CHANGELOG.md", "bumpversion/__init__.py"}
 
 
@@ -471,7 +471,7 @@ def test_replace_specific_files(mocker, git_repo, fixtures_path):
     call_args = mocked_modify_files.call_args[0]
     configured_files = call_args[0]
     assert len(configured_files) == 1
-    assert configured_files[0].path == "VERSION"
+    assert configured_files[0].file_change.filename == "VERSION"
 
 
 TEST_REPLACE_CONFIG = {

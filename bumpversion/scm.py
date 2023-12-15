@@ -1,6 +1,5 @@
 """Version control system management."""
 
-import logging
 import os
 import re
 import subprocess
@@ -9,6 +8,7 @@ from pathlib import Path
 from tempfile import NamedTemporaryFile
 from typing import TYPE_CHECKING, ClassVar, List, MutableMapping, Optional, Type, Union
 
+from bumpversion.ui import get_indented_logger
 from bumpversion.utils import extract_regex_flags
 
 if TYPE_CHECKING:  # pragma: no-coverage
@@ -16,7 +16,7 @@ if TYPE_CHECKING:  # pragma: no-coverage
 
 from bumpversion.exceptions import DirtyWorkingDirectoryError, SignedTagsError
 
-logger = logging.getLogger(__name__)
+logger = get_indented_logger(__name__)
 
 
 @dataclass
@@ -145,6 +145,7 @@ class SourceCodeManager:
             "Preparing" if do_commit else "Would prepare",
             cls.__name__,
         )
+        logger.indent()
         for path in files:
             logger.info(
                 "%s changes in file '%s' to %s",
@@ -171,6 +172,7 @@ class SourceCodeManager:
                 new_version=context["new_version"],
                 extra_args=extra_args,
             )
+        logger.dedent()
 
     @classmethod
     def tag_in_scm(cls, config: "Config", context: MutableMapping, dry_run: bool = False) -> None:

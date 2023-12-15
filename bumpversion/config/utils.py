@@ -5,11 +5,11 @@ import glob
 import itertools
 from typing import Dict, List
 
-from bumpversion.config.models import FileConfig, VersionPartConfig
+from bumpversion.config.models import FileChange, VersionPartConfig
 from bumpversion.utils import labels_for_format
 
 
-def get_all_file_configs(config_dict: dict) -> List[FileConfig]:
+def get_all_file_configs(config_dict: dict) -> List[FileChange]:
     """Make sure all version parts are included."""
     defaults = {
         "parse": config_dict["parse"],
@@ -22,7 +22,7 @@ def get_all_file_configs(config_dict: dict) -> List[FileConfig]:
     files = [{k: v for k, v in filecfg.items() if v is not None} for filecfg in config_dict["files"]]
     for f in files:
         f.update({k: v for k, v in defaults.items() if k not in f})
-    return [FileConfig(**f) for f in files]
+    return [FileChange(**f) for f in files]
 
 
 def get_all_part_configs(config_dict: dict) -> Dict[str, VersionPartConfig]:
@@ -36,7 +36,7 @@ def get_all_part_configs(config_dict: dict) -> Dict[str, VersionPartConfig]:
     }
 
 
-def resolve_glob_files(file_cfg: FileConfig) -> List[FileConfig]:
+def resolve_glob_files(file_cfg: FileChange) -> List[FileChange]:
     """
     Return a list of file configurations that match the glob pattern.
 

@@ -1,5 +1,4 @@
 """Version changing methods."""
-import logging
 import shlex
 from pathlib import Path
 from typing import TYPE_CHECKING, ChainMap, List, Optional
@@ -9,11 +8,13 @@ if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.version_part import Version
 
 from bumpversion.config import Config
-from bumpversion.config.files import update_config_file, update_ini_config_file
+from bumpversion.config.files import update_config_file
+from bumpversion.config.files_legacy import update_ini_config_file
 from bumpversion.exceptions import ConfigurationError
+from bumpversion.ui import get_indented_logger
 from bumpversion.utils import get_context, key_val_string
 
-logger = logging.getLogger("bumpversion")
+logger = get_indented_logger(__name__)
 
 
 def get_next_version(
@@ -35,14 +36,18 @@ def get_next_version(
         ConfigurationError: If it can't generate the next version.
     """
     if new_version:
+        logger.info("Attempting to set new version '%s'", new_version)
+        logger.indent()
         next_version = config.version_config.parse(new_version)
     elif version_part:
         logger.info("Attempting to increment part '%s'", version_part)
+        logger.indent()
         next_version = current_version.bump(version_part, config.version_config.order)
     else:
         raise ConfigurationError("Unable to get the next version.")
 
     logger.info("Values are now: %s", key_val_string(next_version.values))
+    logger.dedent()
     return next_version
 
 
@@ -65,8 +70,13 @@ def do_bump(
     """
     from bumpversion.files import modify_files, resolve_file_config
 
+    logger.indent()
+
     ctx = get_context(config)
+    logger.info("Parsing current version '%s'", config.current_version)
+    logger.indent()
     version = config.version_config.parse(config.current_version)
+    logger.dedent()
     next_version = get_next_version(version, config, version_part, new_version)
     next_version_str = config.version_config.serialize(next_version, ctx)
     logger.info("New version will be '%s'", next_version_str)
@@ -74,6 +84,8 @@ def do_bump(
     if config.current_version == next_version_str:
         logger.info("Version is already '%s'", next_version_str)
         return
+
+    logger.dedent()
 
     if dry_run:
         logger.info("Dry run active, won't touch any files.")
@@ -90,6 +102,7 @@ def do_bump(
     ctx = get_context(config, version, next_version)
     ctx["new_version"] = next_version_str
     commit_and_tag(config, config_file, configured_files, ctx, dry_run)
+    logger.info("Done.")
 
 
 def commit_and_tag(
@@ -114,7 +127,7 @@ def commit_and_tag(
 
     extra_args = shlex.split(config.commit_args) if config.commit_args else []
 
-    commit_files = {f.path for f in configured_files}
+    commit_files = {f.file_change.filename for f in configured_files}
     if config_file:
         commit_files |= {str(config_file)}
 

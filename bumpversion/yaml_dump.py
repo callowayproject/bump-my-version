@@ -3,7 +3,7 @@ import datetime
 from collections import UserDict
 from io import StringIO
 from textwrap import indent
-from typing import Any, Callable
+from typing import Any, Callable, Union
 
 DumperFunc = Callable[[Any], str]
 
@@ -89,7 +89,7 @@ def format_dict(val: dict) -> str:
 
     for key, value in sorted(val.items()):
         rendered_value = dump(value).strip()
-        if isinstance(value, (dict, list)):
+        if isinstance(value, (dict, list, tuple)):
             rendered_value = f"\n{indent(rendered_value, INDENT)}"
         else:
             rendered_value = f" {rendered_value}"
@@ -101,7 +101,7 @@ def format_dict(val: dict) -> str:
 YAML_DUMPERS.add_dumper(dict, format_dict)
 
 
-def format_list(val: list) -> str:
+def format_sequence(val: Union[list, tuple]) -> str:
     """Return a string representation of a value."""
     buffer = StringIO()
 
@@ -110,7 +110,7 @@ def format_list(val: list) -> str:
         if isinstance(item, dict):
             rendered_value = indent(rendered_value, INDENT).strip()
 
-        if isinstance(item, list):
+        if isinstance(item, (list, tuple)):
             rendered_value = f"\n{indent(rendered_value, INDENT)}"
         else:
             rendered_value = f" {rendered_value}"
@@ -119,7 +119,8 @@ def format_list(val: list) -> str:
     return buffer.getvalue()
 
 
-YAML_DUMPERS.add_dumper(list, format_list)
+YAML_DUMPERS.add_dumper(list, format_sequence)
+YAML_DUMPERS.add_dumper(tuple, format_sequence)
 
 
 def format_none(_: None) -> str:
