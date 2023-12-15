@@ -1,8 +1,46 @@
 # Changelog
 
-## Unreleased (2023-12-09)
-[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.13.0...HEAD)
+## 0.14.0 (2023-12-15)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.13.0...0.14.0)
 
+### Fixes
+
+- Fixed issue when adding files. [84556f8](https://github.com/callowayproject/bump-my-version/commit/84556f8afefde297c3e34547a23379321fe26be1)
+    
+- Fixed missing requirement in GH action. [42bab83](https://github.com/callowayproject/bump-my-version/commit/42bab8328a42237c360ff7079b5dc92ecf816a55)
+    
+- Fixed regression regarding multiple changes in one file. [e7a7629](https://github.com/callowayproject/bump-my-version/commit/e7a7629b19e89e6272e1dbee5b20692656ff197f)
+    
+  Changed the method of marking changes from a dict keyed by the file name to a list of FileChanges.
+
+  FileChanges encapsulate a single change to a file.
+- Refactored logging to provide indented output. [4e68214](https://github.com/callowayproject/bump-my-version/commit/4e682145817cbe2db9d60645fca0d1b17846b7a7)
+    
+- Refactored FileConfig to FileChange. [249a999](https://github.com/callowayproject/bump-my-version/commit/249a99992088caf5c2c05bfa9a38d10795c0c896)
+    
+  This better describes what the class does: describe a file change.
+
+  Also moved `get_search_pattern` to the class, since it is specific to each instance
+- Refactored config file management. [a4c90b2](https://github.com/callowayproject/bump-my-version/commit/a4c90b2fdcdf57a17242f67c850446b65a27470a)
+    
+  Moved the INI format stuff into files_legacy.py
+- Fixes generate-requirements.sh to upgrade. [121ef69](https://github.com/callowayproject/bump-my-version/commit/121ef69b2d73606a4cce744ee3f9f762ec16b29d)
+    
+### New
+
+- Added caching to the resolved filemap. [c96e0bd](https://github.com/callowayproject/bump-my-version/commit/c96e0bd125168c70d42c0c353d9ff9f1a2faaf87)
+    
+- Added custom GitHub action. [4ce17a9](https://github.com/callowayproject/bump-my-version/commit/4ce17a9716e259357d0097ee8e8302b9400c4683)
+    
+- Added indented logger to improve console output. [d1d19e3](https://github.com/callowayproject/bump-my-version/commit/d1d19e3d06b6ea9f3e0e4967ce5f79b05729adcd)
+    
+### Updates
+
+- Changed the management of file changes. [909396d](https://github.com/callowayproject/bump-my-version/commit/909396d7541a5876e19dfd948e5468d90ef43640)
+    
+  File changes are hashable to weed out duplication.
+- Removed some commented lines. [89686b8](https://github.com/callowayproject/bump-my-version/commit/89686b89659814878ed782f21b73c308efbbaf0e)
+    
 
 ## 0.13.0 (2023-12-06)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.12.0...0.13.0)

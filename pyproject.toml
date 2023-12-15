@@ -208,7 +208,7 @@ order-by-type = true
 convention = "google"
 
 [tool.bumpversion]
-current_version = "0.13.0"
+current_version = "0.14.0"
 commit = true
 commit_args = "--no-verify"
 tag = true
@@ -238,6 +238,7 @@ search = "Unreleased"
 filename = "CHANGELOG.md"
 search = "{current_version}...HEAD"
 replace = "{current_version}...{new_version}"
+
 
 
 [tool.pydoclint]
