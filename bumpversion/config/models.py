@@ -101,6 +101,7 @@ class Config(BaseSettings):
     included_paths: List[str] = Field(default_factory=list)
     excluded_paths: List[str] = Field(default_factory=list)
     model_config = SettingsConfigDict(env_prefix="bumpversion_")
+    _resolved_filemap: Optional[Dict[str, List[FileChange]]] = None
 
     def add_files(self, filename: Union[str, List[str]]) -> None:
         """Add a filename to the list of files."""
@@ -122,6 +123,12 @@ class Config(BaseSettings):
 
     @property
     def resolved_filemap(self) -> Dict[str, List[FileChange]]:
+        """Return the cached resolved filemap."""
+        if self._resolved_filemap is None:
+            self._resolved_filemap = self._resolve_filemap()
+        return self._resolved_filemap
+
+    def _resolve_filemap(self) -> Dict[str, List[FileChange]]:
         """Return a map of filenames to file configs, expanding any globs."""
         from bumpversion.config.utils import resolve_glob_files
 
