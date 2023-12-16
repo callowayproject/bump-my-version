@@ -437,6 +437,24 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">search</span> <span class="o">=</span> <span class="n">search</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">replace</span> <span class="o">=</span> <span class="n">replace</span>
 
+<div class="viewcode-block" id="VersionConfig.__repr__">
+<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.VersionConfig.__repr__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;bumpversion.VersionConfig:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parse_regex</span><span class="o">.</span><span class="n">pattern</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">serialize_formats</span><span class="si">}</span><span class="s2">&gt;&quot;</span></div>
+
+
+<div class="viewcode-block" id="VersionConfig.__eq__">
+<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.VersionConfig.__eq__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parse_regex</span><span class="o">.</span><span class="n">pattern</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">parse_regex</span><span class="o">.</span><span class="n">pattern</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">serialize_formats</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">serialize_formats</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">part_configs</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">part_configs</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">search</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">search</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">replace</span>
+        <span class="p">)</span></div>
+
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">order</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>

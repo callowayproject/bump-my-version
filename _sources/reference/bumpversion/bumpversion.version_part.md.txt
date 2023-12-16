@@ -201,6 +201,16 @@
 ```{autodoc2-docstring} bumpversion.version_part.VersionConfig.__init__
 ```
 
+````{py:method} __repr__() -> str
+:canonical: bumpversion.version_part.VersionConfig.__repr__
+
+````
+
+````{py:method} __eq__(other: typing.Any) -> bool
+:canonical: bumpversion.version_part.VersionConfig.__eq__
+
+````
+
 ````{py:property} order
 :canonical: bumpversion.version_part.VersionConfig.order
 :type: typing.List[str]
