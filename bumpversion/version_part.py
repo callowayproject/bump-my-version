@@ -150,6 +150,18 @@ class VersionConfig:
         self.search = search
         self.replace = replace
 
+    def __repr__(self) -> str:
+        return f"<bumpversion.VersionConfig:{self.parse_regex.pattern}:{self.serialize_formats}>"
+
+    def __eq__(self, other: Any) -> bool:
+        return (
+            self.parse_regex.pattern == other.parse_regex.pattern
+            and self.serialize_formats == other.serialize_formats
+            and self.part_configs == other.part_configs
+            and self.search == other.search
+            and self.replace == other.replace
+        )
+
     @property
     def order(self) -> List[str]:
         """

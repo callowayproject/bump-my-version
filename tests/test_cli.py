@@ -2,6 +2,7 @@
 import shutil
 import subprocess
 import traceback
+from datetime import datetime
 from pathlib import Path
 
 import pytest
@@ -43,6 +44,32 @@ def test_bump_no_configured_files(mocker, tmp_path):
 
     call_args = mocked_do_bump.call_args[0]
     assert len(call_args[2].files) == 0
+
+
+def test_bump_nested_regex(tmp_path: Path, fixtures_path: Path, caplog):
+    """
+    Arrange/Act: Run the `bump` subcommand with --no-configured-files.
+
+    Assert: There is no configured files specified to modify
+    """
+    cff_path = tmp_path / "citation.cff"
+    cff_path.write_text("cff-version: 1.2.0\ndate-released: 2023-09-19\n")
+    content = fixtures_path.joinpath("regex_test_config.toml").read_text()
+    config_path = tmp_path / ".bumpversion.toml"
+    config_path.write_text(content)
+
+    runner: CliRunner = CliRunner()
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(cli.cli, ["bump", "-vv", "patch"])
+
+    if result.exit_code != 0:
+        print(result.output)
+        print(caplog.text)
+
+    assert result.exit_code == 0
+
+    now = datetime.now().isoformat()[:10]
+    assert cff_path.read_text() == f"cff-version: 1.2.0\ndate-released: {now}\n"
 
 
 def test_bump_legacy(mocker, tmp_path):

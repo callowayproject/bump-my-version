@@ -41,6 +41,6 @@ replace = """**unreleased**
 [tool.bumpversion.parts.release]
 optional_value = "gamma"
 values =[
-	"dev",
-	"gamma",
+    "dev",
+    "gamma",
 ]
