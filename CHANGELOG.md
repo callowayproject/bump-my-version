@@ -1,5 +1,20 @@
 # Changelog
 
+## Unreleased (2023-12-16)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.14.0...0.15.0)
+
+### Fixes
+
+- Fixed requirements for github action. [d96e07a](https://github.com/callowayproject/bump-my-version/commit/d96e07a79aef643a363449b86847008152599f64)
+    
+### Updates
+
+- Changed default regex CLI value to None. [93191f3](https://github.com/callowayproject/bump-my-version/commit/93191f3c20e0f91224f1c2e1df70c3d477cc67ec)
+    
+  Fixes #64
+
+  The default value of False was overriding other values.
+
 ## 0.14.0 (2023-12-15)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.13.0...0.14.0)
 
