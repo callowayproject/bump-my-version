@@ -1,5 +1,9 @@
 name: Package and upload artifacts
 description: Package a Python project and upload the artifacts and release notes
+inputs:
+  tag-name:
+    description: 'The name of the tag for the GitHub release'
+    required: true
 runs:
   using: 'composite'
   steps:
@@ -22,7 +26,7 @@ runs:
         }
 
         changelog=$(cat "CHANGELOG.md")
-        target_version=${GITHUB_REF#refs/tags/}
+        target_version=${{ inputs.tag-name }}
         echo "TAG_NAME=$target_version" >> $GITHUB_ENV
         content=$(extract_version_content "$changelog" "$target_version")
 

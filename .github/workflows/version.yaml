@@ -42,18 +42,25 @@ jobs:
           case "$RELEASE_KIND" in
             major|minor|patch)
               bump-my-version bump --allow-dirty --verbose "$RELEASE_KIND"
-              git push
-              git push --tags
+              echo "TAG_NAME=$(bump-my-version show current_version)" >> $GITHUB_ENV
+              # git push
+              # git push --tags
               echo "PACKAGE=true" >> $GITHUB_ENV
               ;;
             dev)
-              echo "Intentionally not bumping version for dev release"
+              echo "Temporary dev release for testing"
+              bump-my-version bump --allow-dirty --verbose "$RELEASE_KIND"
+              echo "TAG_NAME=$(bump-my-version show current_version)" >> $GITHUB_ENV
+              echo "PACKAGE=true" >> $GITHUB_ENV
+              # echo "Intentionally not bumping version for dev release"
               ;;
           esac
 
       - name: Package and upload artifacts
         if: ${{ env.PACKAGE == 'true' }}
         uses: ./.github/actions/package-and-upload-artifacts
+        with:
+          tag-name: ${{ env.TAG_NAME }}
 
       - name: Create a GitHub release
         if: ${{ env.PACKAGE == 'true' }}
