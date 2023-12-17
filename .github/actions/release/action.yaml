@@ -1,0 +1,37 @@
+name: Release
+description: Create a GitHub release and upload the package to PyPI
+inputs:
+  pypi-api-token:
+    description: 'PyPI API token'
+    required: true
+  tag-name:
+    description: 'The name of the tag for the GitHub release'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Download packages built by build-and-inspect-python-package
+      uses: actions/download-artifact@v3
+      with:
+        name: Packages
+        path: dist
+        if-no-files-found: warn
+
+    - name: Download release notes
+      uses: actions/download-artifact@v3
+      with:
+        name: release-notes
+        if-no-files-found: warn
+
+    - name: Create a GitHub release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: dist/*
+        tag_name: "${{ env.TAG_NAME }}"
+        body_path: release-notes.md
+
+    - name: Upload package to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        password: ${{ inputs.pypi-api-token }}

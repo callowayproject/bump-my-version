@@ -51,6 +51,10 @@ jobs:
               ;;
           esac
 
-      - name: Package
+      - name: Package and upload artifacts
         if: ${{ env.PACKAGE == 'true' }}
-        uses: hynek/build-and-inspect-python-package@v1
+        uses: ./.github/actions/package-and-upload-artifacts
+
+      - name: Create a GitHub release
+        if: ${{ env.PACKAGE == 'true' }}
+        uses: ./.github/actions/release
