@@ -5,7 +5,7 @@ on:
     branches: [master]
 
 jobs:
-  version-hint:
+  version:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -49,7 +49,7 @@ jobs:
               ;;
             dev)
               echo "Temporary dev release for testing"
-              bump-my-version bump --allow-dirty --verbose "$RELEASE_KIND"
+              bump-my-version bump --allow-dirty --verbose --no-commit "$RELEASE_KIND"
               echo "TAG_NAME=$(bump-my-version show current_version)" >> $GITHUB_ENV
               echo "PACKAGE=true" >> $GITHUB_ENV
               # echo "Intentionally not bumping version for dev release"

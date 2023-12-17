@@ -12,17 +12,15 @@ runs:
   using: "composite"
   steps:
     - name: Download packages built by build-and-inspect-python-package
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: Packages
         path: dist
-        if-no-files-found: warn
 
     - name: Download release notes
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: release-notes
-        if-no-files-found: warn
 
     - name: Create a GitHub release
       uses: softprops/action-gh-release@v1
