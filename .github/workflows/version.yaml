@@ -37,8 +37,9 @@ jobs:
         shell: bash
         run: |
           PR_NUMBER=$(gh pr view --json number -q .number || echo "")
-          REVISION=$(git describe --tags --long | awk -F- '{print $2}')
-          export PR_NUMBER REVISION
+          echo "::notice::PR_NUMBER is: ${PR_NUMBER}"
+          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+          export PR_NUMBER
           case "$RELEASE_KIND" in
             major|minor|patch)
               bump-my-version bump --allow-dirty --verbose "$RELEASE_KIND"
@@ -55,6 +56,8 @@ jobs:
               # echo "Intentionally not bumping version for dev release"
               ;;
           esac
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Package and upload artifacts
         if: ${{ env.PACKAGE == 'true' }}
