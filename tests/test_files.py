@@ -409,6 +409,31 @@ def test_regex_search_with_escaped_chars(tmp_path: Path) -> None:
     assert version_path.read_text() == f"## [Release] 1.2.4 {now}"
 
 
+def test_regex_search_with_caret(tmp_path: Path, fixtures_path: Path) -> None:
+    """A search that uses a caret to indicate the beginning of the line works correctly."""
+    # Arrange
+    config_path = tmp_path / ".bumpversion.toml"
+    thingy_path = tmp_path / "thingy.yaml"
+    shutil.copyfile(fixtures_path / "regex_with_caret.yaml", thingy_path)
+    shutil.copyfile(fixtures_path / "regex_with_caret_config.toml", config_path)
+
+    conf = config.get_configuration(config_file=config_path)
+    version_config = VersionConfig(conf.parse, conf.serialize, conf.search, conf.replace, conf.parts)
+    current_version = version_config.parse(conf.current_version)
+    new_version = current_version.bump("patch", version_config.order)
+
+    with inside_dir(tmp_path):
+        cfg_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
+
+        # Act
+        files.modify_files(cfg_files, current_version, new_version, get_context(conf))
+
+    # Assert
+    assert (
+        thingy_path.read_text() == "version: 1.0.1\ndependencies:\n- name: kube-prometheus-stack\n  version: 1.0.0\n"
+    )
+
+
 def test_bad_regex_search(tmp_path: Path, caplog) -> None:
     """A search string not meant to be a regex is still found and replaced."""
     # Arrange
