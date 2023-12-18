@@ -1,10 +1,9 @@
 name: CI
 
 on:
-  workflow_call:
-#  pull_request:
-#    types: [opened, synchronize]
-#    branches: [master]
+  pull_request:
+    types: [opened, synchronize]
+    branches: [master]
 
 defaults:
   run:
