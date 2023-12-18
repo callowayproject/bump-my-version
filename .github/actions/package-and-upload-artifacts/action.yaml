@@ -43,11 +43,11 @@ runs:
         fi
 
     - name: Upload release notes
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: release-notes
         path: release-notes.md
 
     - name: Package and upload artifacts
       if: ${{ env.PACKAGE == 'true' }}
-      uses: hynek/build-and-inspect-python-package@v1
+      uses: hynek/build-and-inspect-python-package@v2
