@@ -58,6 +58,9 @@ jobs:
           esac
         env:
           GH_TOKEN: ${{ github.token }}
+      - name: show runid
+        run: |
+          echo "::notice::GitHub Run ID is ${{ github.run_id }}"
 
       - name: Package and upload artifacts
         if: ${{ env.PACKAGE == 'true' }}
