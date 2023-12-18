@@ -39,9 +39,10 @@ jobs:
         id: pr
         run: |
           PR_NUMBER=$(gh pr view --json number -q .number || echo "")
-          echo "::set-output name=pull_request_number::${PR_NUMBER}"
+          echo "pull_request_number=${PR_NUMBER}" >> $GITHUB_OUTPUT
           echo "::notice::PR_NUMBER is ${PR_NUMBER}"
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+          echo "::notice::event number is ${{ github.event.number }}"
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
