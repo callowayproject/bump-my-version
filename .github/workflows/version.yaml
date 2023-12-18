@@ -9,6 +9,7 @@ jobs:
     permissions:
       id-token: write
       pull-requests: read
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -71,3 +72,7 @@ jobs:
       - name: Create a GitHub release
         if: ${{ env.PACKAGE == 'true' }}
         uses: ./.github/actions/release
+        with:
+          tag-name: ${{ env.TAG_NAME }}
+          github-token: ${{ secrets.PAT }}
+          pypi-api-token: ${{ secrets.PYPI_API_TOKEN }}
