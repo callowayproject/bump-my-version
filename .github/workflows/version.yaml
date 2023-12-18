@@ -38,11 +38,10 @@ jobs:
       - name: Get Pull Request Number
         id: pr
         run: |
-          PR_NUMBER=$(gh pr view --json number -q .number || echo "")
+          PR_NUMBER=$(gh pr view --json number -q .number || echo "${{ github.event.number }}")
           echo "pull_request_number=${PR_NUMBER}" >> $GITHUB_OUTPUT
           echo "::notice::PR_NUMBER is ${PR_NUMBER}"
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
-          echo "::notice::event number is ${{ github.event.number }}"
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
@@ -50,10 +49,6 @@ jobs:
         if: ${{ env.RELEASE_KIND != 'no-release' }}
         shell: bash
         run: |
-          # PR_NUMBER=$(gh pr view --json number -q .number || echo "")
-          # echo "::notice::PR_NUMBER is: ${PR_NUMBER}"
-          # echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
-          # export PR_NUMBER
           case "$RELEASE_KIND" in
             major|minor|patch)
               bump-my-version bump --allow-dirty --verbose "$RELEASE_KIND"
@@ -70,18 +65,13 @@ jobs:
               # echo "Intentionally not bumping version for dev release"
               ;;
           esac
-        env:
-          GH_TOKEN: ${{ github.token }}
-      - name: show runid
-        run: |
-          echo "::notice::GitHub Run ID is ${{ github.run_id }}"
 
-      - name: Package and upload artifacts
-        if: ${{ env.PACKAGE == 'true' }}
-        uses: ./.github/actions/package-and-upload-artifacts
-        with:
-          tag-name: ${{ env.TAG_NAME }}
+#      - name: Package and upload artifacts
+#        if: ${{ env.PACKAGE == 'true' }}
+#        uses: ./.github/actions/package-and-upload-artifacts
+#        with:
+#          tag-name: ${{ env.TAG_NAME }}
 
-      - name: Create a GitHub release
-        if: ${{ env.PACKAGE == 'true' }}
-        uses: ./.github/actions/release
+#      - name: Create a GitHub release
+#        if: ${{ env.PACKAGE == 'true' }}
+#        uses: ./.github/actions/release

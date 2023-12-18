@@ -27,12 +27,12 @@ runs:
       with:
         name: release-notes
 
-#    - name: Create a GitHub release
-#      uses: softprops/action-gh-release@v1
-#      with:
-#        files: dist/*
-#        tag_name: "${{ env.TAG_NAME }}"
-#        body_path: release-notes.md
+    - name: Create a GitHub release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: dist/*
+        tag_name: "${{ env.TAG_NAME }}"
+        body_path: release-notes.md
 
     - name: Upload package to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
