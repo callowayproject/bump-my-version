@@ -51,7 +51,7 @@ bumpversion.__main__
 :canonical: bumpversion.__version__
 :type: str
 :value: >
-   '0.15.1'
+   '0.15.2'
 
 ```{autodoc2-docstring} bumpversion.__version__
 ```

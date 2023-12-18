@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.15.2 (2023-12-18)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.15.1...0.15.2)
+
+### Fixes
+
+- Fixed regression in config update. [2bbbd74](https://github.com/callowayproject/bump-my-version/commit/2bbbd74fe4b80895b3719692d1fe0023cc388bbb)
+    
+  Fixes #108
+### New
+
+- Added a test case for line-start regexes. [ef4823c](https://github.com/callowayproject/bump-my-version/commit/ef4823c0cdb92660439095aacdbac6801953e4ae)
+    
+
 ## 0.15.1 (2023-12-18)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.15.0...0.15.1)
 
