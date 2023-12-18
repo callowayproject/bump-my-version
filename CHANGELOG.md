@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.15.3 (2023-12-18)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.15.2...0.15.3)
+
+### Fixes
+
+- Fix miscast of current_version. [b8ea252](https://github.com/callowayproject/bump-my-version/commit/b8ea2525aad07f370e59066bfb21db33e6656639)
+    
+  - When using the legacy configuration format, a single-digit version is parsed as an int
+
+  Fixes #99
+
 ## 0.15.2 (2023-12-18)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.15.1...0.15.2)
 
