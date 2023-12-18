@@ -560,6 +560,40 @@ def test_replace_search_with_plain_string(tmp_path, fixtures_path):
     assert result.exit_code == 0
 
 
+def test_replace_with_empty_string(tmp_path, fixtures_path):
+    """Replace should not worry if the replace value has version info."""
+    from tomlkit import dumps
+
+    # Arrange
+    config_path = tmp_path / "pyproject.toml"
+    config_path.write_text(dumps(TEST_REPLACE_CONFIG))
+    doc_path = tmp_path / "docs.yaml"
+    doc_path.write_text("We should censor profanity\n\n")
+
+    runner: CliRunner = CliRunner()
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(
+            cli.cli,
+            [
+                "replace",
+                "--no-configured-files",
+                "--allow-dirty",
+                "--search",
+                "profanity",
+                "--replace",
+                "",
+                "./docs.yaml",
+            ],
+        )
+
+    if result.exit_code != 0:
+        print("Here is the output:")
+        print(result.output)
+        print(traceback.print_exception(result.exc_info[1]))
+
+    assert result.exit_code == 0
+
+
 def test_valid_regex_not_ignoring_regex(tmp_path: Path, caplog) -> None:
     """A search string not meant to be a regex (but is) is still found and replaced correctly."""
     # Arrange
