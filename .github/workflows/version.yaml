@@ -8,6 +8,7 @@ jobs:
   version:
     permissions:
       id-token: write
+      pull-requests: read
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,14 +35,24 @@ jobs:
           echo "release-kind=$RELEASE_KIND" >> $GITHUB_OUTPUT
           echo "PACKAGE=false" >> $GITHUB_ENV
 
+      - name: Get Pull Request Number
+        id: pr
+        run: |
+          PR_NUMBER=$(gh pr view --json number -q .number || echo "")
+          echo "::set-output name=pull_request_number::${PR_NUMBER}"
+          echo "::notice::PR_NUMBER is ${PR_NUMBER}"
+          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
       - name: Bump version
         if: ${{ env.RELEASE_KIND != 'no-release' }}
         shell: bash
         run: |
-          PR_NUMBER=$(gh pr view --json number -q .number || echo "")
-          echo "::notice::PR_NUMBER is: ${PR_NUMBER}"
-          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
-          export PR_NUMBER
+          # PR_NUMBER=$(gh pr view --json number -q .number || echo "")
+          # echo "::notice::PR_NUMBER is: ${PR_NUMBER}"
+          # echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+          # export PR_NUMBER
           case "$RELEASE_KIND" in
             major|minor|patch)
               bump-my-version bump --allow-dirty --verbose "$RELEASE_KIND"
