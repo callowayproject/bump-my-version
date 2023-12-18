@@ -1,6 +1,31 @@
 # Changelog
 
-## Unreleased (2023-12-16)
+## Unreleased (2023-12-18)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.15.0...HEAD)
+
+### Fixes
+
+- Fixes workflow triggers. [690452e](https://github.com/callowayproject/bump-my-version/commit/690452e6164a529a48c1f2043c00fc315b50bb05)
+    
+- Fixes mismatched artifact up/downloading versions. [3f61742](https://github.com/callowayproject/bump-my-version/commit/3f6174297498b641e19ce6a02e48496e6e5c97c8)
+    
+- Fixed PR_NUMBER retrieval. [85a8b48](https://github.com/callowayproject/bump-my-version/commit/85a8b4852e55c493f43db8a5e8dd2c2fcaa5fb14)
+    
+- Fixes committing and download-artifact. [12ba54f](https://github.com/callowayproject/bump-my-version/commit/12ba54f21e5f1c1853fcd38fca5d23c7350b41a2)
+    
+- Refactored workflows. [d2f30a8](https://github.com/callowayproject/bump-my-version/commit/d2f30a8e649d099668c03a3e292c2e5a41e3c670)
+    
+### Other
+
+- Testing PR acquisition. [67ab83d](https://github.com/callowayproject/bump-my-version/commit/67ab83d79d67e729bec62a1d25c735ecad41afdb)
+    
+- Put in temporary debugging steps. [6ac064e](https://github.com/callowayproject/bump-my-version/commit/6ac064eb9b1889981c32782a915cd25b86e4ffe9)
+    
+### Updates
+
+- Changed the triggers to cause runs. [23e6c18](https://github.com/callowayproject/bump-my-version/commit/23e6c18cd941e7a8717a8ff62ee9e8aa23a5c242)
+    
+## 0.15.0 (2023-12-16)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.14.0...0.15.0)
 
 ### Fixes
