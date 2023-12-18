@@ -43,6 +43,8 @@ def read_ini_file(file_path: Path) -> Dict[str, Any]:  # noqa: C901
         section_parts = section_name.split(":")
         num_parts = len(section_parts)
         options = {key: autocast.autocast_value(val) for key, val in config_parser.items(section_name)}
+        if "current_version" in options:
+            options["current_version"] = str(options["current_version"])
 
         if num_parts == 1:  # bumpversion section
             bumpversion_options.update(options)

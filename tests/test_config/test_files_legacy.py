@@ -148,3 +148,22 @@ def test_utf8_message_from_config_file(tmp_path: Path, cfg_file):
         cfg = config.get_configuration(cfg_path)
 
     assert cfg.message == "Nová verze: {current_version} ☃, {new_version} ☀"
+
+
+def test_current_version_is_always_a_string(tmp_path: Path):
+    cfg_path = tmp_path / ".bumpversion.cfg"
+    initial_config = (
+        "[bumpversion]\n"
+        "current_version = 2\n"
+        "commit = False\n"
+        "tag = False\n"
+        "parse = (?P<major>\d+)\n"
+        "serialize = \n"
+        "	{major}\n"
+    )
+    cfg_path.write_bytes(initial_config.encode("utf-8"))
+
+    with inside_dir(tmp_path):
+        cfg = config.get_configuration(cfg_path)
+
+    assert cfg.current_version == "2"
