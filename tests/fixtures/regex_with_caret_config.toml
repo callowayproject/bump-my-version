@@ -1,0 +1,8 @@
+[tool.bumpversion]
+current_version = "1.0.0"
+regex = true
+
+[[tool.bumpversion.files]]
+filename = "thingy.yaml"
+search = "^version: {current_version}"
+replace = "version: {new_version}"
