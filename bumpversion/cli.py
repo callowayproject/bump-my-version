@@ -1,5 +1,4 @@
 """bump-my-version Command line interface."""
-import logging
 from typing import List, Optional
 
 import rich_click as click
@@ -12,10 +11,10 @@ from bumpversion.config import get_configuration
 from bumpversion.config.files import find_config_file
 from bumpversion.files import ConfiguredFile, modify_files
 from bumpversion.show import do_show, log_list
-from bumpversion.ui import print_warning, setup_logging
+from bumpversion.ui import get_indented_logger, print_warning, setup_logging
 from bumpversion.utils import get_context, get_overrides
 
-logger = logging.getLogger(__name__)
+logger = get_indented_logger(__name__)
 
 
 @click.group(
@@ -142,7 +141,7 @@ click.rich_click.OPTION_GROUPS = {
 )
 @click.option(
     "--regex/--no-regex",
-    default=False,
+    default=None,
     envvar="BUMPVERSION_REGEX",
     help="Treat the search parameter as a regular expression or explicitly do not treat it as a regular expression.",
 )
@@ -233,7 +232,7 @@ def bump(
     serialize: Optional[List[str]],
     search: Optional[str],
     replace: Optional[str],
-    regex: bool,
+    regex: Optional[bool],
     no_configured_files: bool,
     ignore_missing_version: bool,
     dry_run: bool,
@@ -307,6 +306,7 @@ def bump(
         config.add_files(files)
         config.included_paths = files
 
+    logger.dedent()
     do_bump(version_part, new_version, config, found_config_file, dry_run)
 
 

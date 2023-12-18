@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 rm -Rf dist
 RELEASE_KIND=$(generate-changelog --output release-hint)
 echo "::notice::Suggested release type is: ${RELEASE_KIND}"

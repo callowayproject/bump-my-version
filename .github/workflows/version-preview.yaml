@@ -5,7 +5,7 @@ on:
     branches: [master]
 
 jobs:
-  bumpversion:
+  preview-version-hint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,7 +22,7 @@ jobs:
 
       - name: Install requirements
         run: |
-          python -m pip install . bump-my-version
+          python -m pip install generate-changelog bump-my-version
 
       - name: Get the release hint
         id: generate-changelog
@@ -32,14 +32,20 @@ jobs:
           echo "RELEASE_KIND=$RELEASE_KIND" >> $GITHUB_ENV
           echo "release-kind=$RELEASE_KIND" >> $GITHUB_OUTPUT
 
+      - name: Get Pull Request Number
+        id: pr
+        run: |
+          PR_NUMBER=$(gh pr view --json number -q .number || echo "${{ github.event.number }}")
+          echo "pull_request_number=${PR_NUMBER}" >> $GITHUB_OUTPUT
+          echo "::notice::PR_NUMBER is ${PR_NUMBER}"
+          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
       - name: Bump version dry run
         if: ${{ env.RELEASE_KIND != 'no-release' }}
         shell: bash
         run: |
-          PR_NUMBER=$(gh pr view --json number -q .number || echo "")
-          REVISION=$(git describe --tags --long | awk -F- '{print $2}')
-          export PR_NUMBER REVISION
-
           # This will display a full log of what would happen if we were to bump the version.
           bump-my-version bump --dry-run --verbose "$RELEASE_KIND"
 

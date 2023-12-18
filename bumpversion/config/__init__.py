@@ -1,17 +1,17 @@
 """Configuration management."""
 from __future__ import annotations
 
-import logging
 from typing import TYPE_CHECKING, Union
 
 from bumpversion.config.files import read_config_file
 from bumpversion.config.models import Config
 from bumpversion.exceptions import ConfigurationError
+from bumpversion.ui import get_indented_logger
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from pathlib import Path
 
-logger = logging.getLogger(__name__)
+logger = get_indented_logger(__name__)
 
 DEFAULTS = {
     "current_version": None,
@@ -49,6 +49,9 @@ def get_configuration(config_file: Union[str, Path, None] = None, **overrides) -
     from bumpversion.config.utils import get_all_file_configs, get_all_part_configs
     from bumpversion.scm import SCMInfo, SourceCodeManager, get_scm_info  # noqa: F401
 
+    logger.info("Reading configuration")
+    logger.indent()
+
     config_dict = DEFAULTS.copy()
     parsed_config = read_config_file(config_file) if config_file else {}
 
@@ -74,6 +77,8 @@ def get_configuration(config_file: Union[str, Path, None] = None, **overrides) -
 
     # Update and verify the current_version
     config.current_version = check_current_version(config)
+
+    logger.dedent()
 
     return config
 

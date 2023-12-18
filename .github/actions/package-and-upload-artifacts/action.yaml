@@ -1,0 +1,49 @@
+name: Package and upload artifacts
+description: Package a Python project and upload the artifacts and release notes
+inputs:
+  tag-name:
+    description: 'The name of the tag for the GitHub release'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Parse changelog for release notes
+      shell: bash
+      run: |
+        function extract_version_content() {
+          changelog=$1
+          target_version=$2
+
+          awk -v target="$target_version" '
+            /^## / {
+              if (found) exit;
+              version=$2;
+              if (version == target) found=1;
+              next;
+            }
+            found { print; }
+          ' <<< "$changelog"
+        }
+
+        changelog=$(cat "CHANGELOG.md")
+        target_version=${{ inputs.tag-name }}
+        echo "TAG_NAME=$target_version" >> $GITHUB_ENV
+        content=$(extract_version_content "$changelog" "$target_version")
+
+        if [ -n "$content" ]; then
+          echo "::notice::Found release notes for ${target_version}"
+          echo "$content" >> release-notes.md
+        else
+          echo "::warning::Did not find release notes for ${target_version}"
+          touch release-notes.md
+        fi
+
+    - name: Upload release notes
+      uses: actions/upload-artifact@v4
+      with:
+        name: release-notes
+        path: release-notes.md
+
+    - name: Package and upload artifacts
+      if: ${{ env.PACKAGE == 'true' }}
+      uses: hynek/build-and-inspect-python-package@v2

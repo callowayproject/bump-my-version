@@ -80,11 +80,11 @@ commit_classifiers:
   - action: SummaryRegexMatch
     category: Updates
     kwargs:
-      pattern: (?i)^(?:update|change|rename|remove|delete|improve|refactor|chg|modif)[^\n]*$
+      pattern: (?i)^(?:update|change|rename|remove|delete|improve|chg|modif)[^\n]*$
   - action: SummaryRegexMatch
     category: Fixes
     kwargs:
-      pattern: (?i)^(?:fix)[^\n]*$
+      pattern: (?i)^(?:refactor|fix)[^\n]*$
   - action:
     category: Other
 

@@ -5,6 +5,8 @@ import click
 from click import UsageError, secho
 from rich.logging import RichHandler
 
+from bumpversion.indented_logger import IndentedLoggerAdapter
+
 logger = logging.getLogger("bumpversion")
 
 VERBOSITY = {
@@ -12,6 +14,11 @@ VERBOSITY = {
     1: logging.INFO,
     2: logging.DEBUG,
 }
+
+
+def get_indented_logger(name: str) -> "IndentedLoggerAdapter":
+    """Get a logger with indentation."""
+    return IndentedLoggerAdapter(logging.getLogger(name))
 
 
 def setup_logging(verbose: int = 0) -> None:
@@ -26,7 +33,7 @@ def setup_logging(verbose: int = 0) -> None:
             )
         ],
     )
-    root_logger = logging.getLogger("")
+    root_logger = get_indented_logger("")
     root_logger.setLevel(VERBOSITY.get(verbose, logging.DEBUG))
 
 

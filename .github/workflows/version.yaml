@@ -1,0 +1,77 @@
+name: Bump the version on merge
+on:
+  pull_request:
+    types: [closed]
+    branches: [master]
+
+jobs:
+  version:
+    permissions:
+      id-token: write
+      pull-requests: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        name: Checkout the repository
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT }}
+
+      - name: Setup Python and Git
+        uses: ./.github/actions/setup-python-and-git
+        with:
+          python-version: '3.11'
+
+      - name: Install requirements
+        run: |
+          python -m pip install generate-changelog bump-my-version
+
+      - name: Generate the changelog and get the release hint
+        id: generate-changelog
+        run: |
+          RELEASE_KIND=$(generate-changelog --output release-hint)
+          echo "::notice::Suggested release type for this branch is: ${RELEASE_KIND}"
+          echo "RELEASE_KIND=$RELEASE_KIND" >> $GITHUB_ENV
+          echo "release-kind=$RELEASE_KIND" >> $GITHUB_OUTPUT
+          echo "PACKAGE=false" >> $GITHUB_ENV
+
+      - name: Get Pull Request Number
+        id: pr
+        run: |
+          PR_NUMBER=$(gh pr view --json number -q .number || echo "${{ github.event.number }}")
+          echo "pull_request_number=${PR_NUMBER}" >> $GITHUB_OUTPUT
+          echo "::notice::PR_NUMBER is ${PR_NUMBER}"
+          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - name: Bump version
+        if: ${{ env.RELEASE_KIND != 'no-release' }}
+        shell: bash
+        run: |
+          case "$RELEASE_KIND" in
+            major|minor|patch)
+              bump-my-version bump --allow-dirty --verbose "$RELEASE_KIND"
+              echo "TAG_NAME=$(bump-my-version show current_version)" >> $GITHUB_ENV
+              # git push
+              # git push --tags
+              echo "PACKAGE=true" >> $GITHUB_ENV
+              ;;
+            dev)
+              echo "Temporary dev release for testing"
+              bump-my-version bump --allow-dirty --verbose --no-commit "$RELEASE_KIND"
+              echo "TAG_NAME=$(bump-my-version show current_version)" >> $GITHUB_ENV
+              echo "PACKAGE=true" >> $GITHUB_ENV
+              # echo "Intentionally not bumping version for dev release"
+              ;;
+          esac
+
+#      - name: Package and upload artifacts
+#        if: ${{ env.PACKAGE == 'true' }}
+#        uses: ./.github/actions/package-and-upload-artifacts
+#        with:
+#          tag-name: ${{ env.TAG_NAME }}
+
+#      - name: Create a GitHub release
+#        if: ${{ env.PACKAGE == 'true' }}
+#        uses: ./.github/actions/release

@@ -6,7 +6,7 @@ from datetime import datetime, date
 
 
 def test_dump_unknown():
-    assert yaml_dump.dump((1, 2)) == '"(1, 2)"'
+    assert yaml_dump.dump({1, 2}) == '"{1, 2}"'
 
 
 def test_format_str():
@@ -42,10 +42,15 @@ def test_format_dict():
         "key8": True,
         "key9": False,
         "key10": 1.43,
+        "key11": (1, 2, 3),
     }
     expected = (
         'key: "strval"\n'
         "key10: 1.43\n"
+        "key11:\n"
+        "  - 1\n"
+        "  - 2\n"
+        "  - 3\n"
         "key2: 30\n"
         "key3: 2023-06-19 13:45:30\n"
         "key4: 2023-06-19\n"
@@ -63,8 +68,10 @@ def test_format_dict():
 
 
 def test_format_list():
-    assert yaml_dump.format_list(["item"]) == '- "item"\n'
-    assert yaml_dump.format_list(["item", ["item2"]]) == '- "item"\n-\n  - "item2"\n'
+    assert yaml_dump.format_sequence(["item"]) == '- "item"\n'
+    assert yaml_dump.format_sequence(["item", ["item2"]]) == '- "item"\n-\n  - "item2"\n'
+    assert yaml_dump.format_sequence(("item",)) == '- "item"\n'
+    assert yaml_dump.format_sequence(("item", ("item2",))) == '- "item"\n-\n  - "item2"\n'
 
 
 def test_dump_none_val():
