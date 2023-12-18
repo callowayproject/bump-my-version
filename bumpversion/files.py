@@ -180,6 +180,9 @@ class ConfiguredFile:
             logger.indent()
             context["new_version"] = self.version_config.serialize(new_version, context)
             logger.dedent()
+        else:
+            logger.debug("No new version, using current version as new version")
+            context["new_version"] = context["current_version"]
 
         search_for, raw_search_pattern = self.file_change.get_search_pattern(context)
         replace_with = self.version_config.replace.format(**context)
