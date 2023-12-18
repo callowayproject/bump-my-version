@@ -1,5 +1,6 @@
 """Tests for the bump module."""
 from pathlib import Path
+from textwrap import dedent
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -186,3 +187,70 @@ def test_commit_and_tag_with_config_file(mock_context):
     config.scm_info.tool.commit_to_scm.assert_called_once()
     config.scm_info.tool.tag_in_scm.assert_called_once()
     assert set(config.scm_info.tool.commit_to_scm.call_args[0][0]) == {"foo.txt", "bar.txt", "pyproject.toml"}
+
+
+def test_key_path_required_for_toml_change(tmp_path: Path, caplog):
+    """If the key_path is not provided, the toml file should use standard search and replace."""
+    from bumpversion import config
+    from bumpversion.version_part import VersionConfig
+
+    # Arrange
+    config_path = tmp_path / "pyproject.toml"
+    config_path.write_text(
+        dedent(
+            """
+        [project]
+        version = "0.1.26"
+
+        [tool.bumpversion]
+        current_version = "0.1.26"
+        allow_dirty = true
+        commit = true
+
+        [[tool.bumpversion.files]]
+        filename = "pyproject.toml"
+        search = "version = \\"{current_version}\\""
+        replace = "version = \\"{new_version}\\""
+        """
+        )
+    )
+
+    conf = config.get_configuration(config_file=config_path)
+
+    # Act
+    from click.testing import CliRunner, Result
+    from bumpversion import cli
+
+    runner: CliRunner = CliRunner()
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(
+            cli.cli,
+            ["bump", "-vv", "minor"],
+        )
+
+    if result.exit_code != 0:
+        print(caplog.text)
+        print("Here is the output:")
+        print(result.output)
+        import traceback
+
+        print(traceback.print_exception(result.exc_info[1]))
+
+    # Assert
+    assert result.exit_code == 0
+    assert config_path.read_text() == dedent(
+        """
+        [project]
+        version = "0.2.0"
+
+        [tool.bumpversion]
+        current_version = "0.2.0"
+        allow_dirty = true
+        commit = true
+
+        [[tool.bumpversion.files]]
+        filename = "pyproject.toml"
+        search = "version = \\"{current_version}\\""
+        replace = "version = \\"{new_version}\\""
+        """
+    )
