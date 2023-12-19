@@ -9,7 +9,8 @@ from typing import Dict, List, MutableMapping, Optional
 from bumpversion.config.models import FileChange, VersionPartConfig
 from bumpversion.exceptions import VersionNotFoundError
 from bumpversion.ui import get_indented_logger
-from bumpversion.version_part import Version, VersionConfig
+from bumpversion.version_part import VersionConfig
+from bumpversion.versioning.models import Version
 
 logger = get_indented_logger(__name__)
 

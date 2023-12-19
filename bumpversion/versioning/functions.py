@@ -29,7 +29,7 @@ class NumericFunction(PartFunction):
     considered (e.g. 'r3-001' --> 'r4-001').
     """
 
-    FIRST_NUMERIC = re.compile(r"(\D*)(\d+)(.*)")
+    FIRST_NUMERIC = re.compile(r"(?P<prefix>[^-0-9]*)(?P<number>-?\d+)(?P<suffix>.*)")
 
     def __init__(self, optional_value: Union[str, int, None] = None, first_value: Union[str, int, None] = None):
         if first_value is not None and not self.FIRST_NUMERIC.search(str(first_value)):
@@ -43,7 +43,14 @@ class NumericFunction(PartFunction):
         match = self.FIRST_NUMERIC.search(str(value))
         if not match:
             raise ValueError(f"The given value {value} does not contain any digit")
+
         part_prefix, part_numeric, part_suffix = match.groups()
+
+        if int(part_numeric) < int(self.first_value):
+            raise ValueError(
+                f"The given value {value} is lower than the first value {self.first_value} and cannot be bumped."
+            )
+
         bumped_numeric = int(part_numeric) + 1
 
         return "".join([part_prefix, str(bumped_numeric), part_suffix])

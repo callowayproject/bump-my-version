@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, ChainMap, List, Optional
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.files import ConfiguredFile
-    from bumpversion.version_part import Version
+    from bumpversion.versioning.models import Version
 
 from bumpversion.config import Config
 from bumpversion.config.files import update_config_file

@@ -10,7 +10,7 @@ from bumpversion.ui import get_indented_logger, print_warning
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config.models import Config
-    from bumpversion.version_part import Version
+    from bumpversion.versioning.models import Version
 
 logger = get_indented_logger(__name__)
 

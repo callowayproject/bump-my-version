@@ -2,128 +2,17 @@
 import re
 import string
 from copy import copy
-from typing import Any, Dict, List, MutableMapping, Optional, Tuple, Union
+from typing import Any, Dict, List, MutableMapping, Optional, Tuple
 
 from click import UsageError
 
 from bumpversion.config.models import VersionPartConfig
-from bumpversion.exceptions import FormattingError, InvalidVersionPartError, MissingValueError
-from bumpversion.functions import NumericFunction, PartFunction, ValuesFunction
+from bumpversion.exceptions import FormattingError, MissingValueError
 from bumpversion.ui import get_indented_logger
 from bumpversion.utils import key_val_string, labels_for_format
+from bumpversion.versioning.models import Version, VersionPart
 
 logger = get_indented_logger(__name__)
-
-
-class VersionPart:
-    """
-    Represent part of a version number.
-
-    Determines the PartFunction that rules how the part behaves when increased or reset
-    based on the configuration given.
-    """
-
-    def __init__(self, config: VersionPartConfig, value: Union[str, int, None] = None):
-        self._value = str(value) if value is not None else None
-        self.config = config
-        self.func: Optional[PartFunction] = None
-        if config.values:
-            str_values = [str(v) for v in config.values]
-            str_optional_value = str(config.optional_value) if config.optional_value is not None else None
-            str_first_value = str(config.first_value) if config.first_value is not None else None
-            self.func = ValuesFunction(str_values, str_optional_value, str_first_value)
-        else:
-            self.func = NumericFunction(config.optional_value, config.first_value or "0")
-
-    @property
-    def value(self) -> str:
-        """Return the value of the part."""
-        return self._value or self.func.optional_value
-
-    def copy(self) -> "VersionPart":
-        """Return a copy of the part."""
-        return VersionPart(self.config, self._value)
-
-    def bump(self) -> "VersionPart":
-        """Return a part with bumped value."""
-        return VersionPart(self.config, self.func.bump(self.value))
-
-    def null(self) -> "VersionPart":
-        """Return a part with first value."""
-        return VersionPart(self.config, self.func.first_value)
-
-    @property
-    def is_optional(self) -> bool:
-        """Is the part optional?"""
-        return self.value == self.func.optional_value
-
-    @property
-    def is_independent(self) -> bool:
-        """Is the part independent of the other parts?"""
-        return self.config.independent
-
-    def __format__(self, format_spec: str) -> str:
-        try:
-            val = int(self.value)
-        except ValueError:
-            return self.value
-        else:
-            return int.__format__(val, format_spec)
-
-    def __repr__(self) -> str:
-        return f"<bumpversion.VersionPart:{self.func.__class__.__name__}:{self.value}>"
-
-    def __eq__(self, other: Any) -> bool:
-        return self.value == other.value if isinstance(other, VersionPart) else False
-
-
-class Version:
-    """The specification of a version and its parts."""
-
-    def __init__(self, values: Dict[str, VersionPart], original: Optional[str] = None):
-        self.values = values
-        self.original = original
-
-    def __getitem__(self, key: str) -> VersionPart:
-        return self.values[key]
-
-    def __len__(self) -> int:
-        return len(self.values)
-
-    def __iter__(self):
-        return iter(self.values)
-
-    def __repr__(self):
-        return f"<bumpversion.Version:{key_val_string(self.values)}>"
-
-    def __eq__(self, other: Any) -> bool:
-        return (
-            all(value == other.values[key] for key, value in self.values.items())
-            if isinstance(other, Version)
-            else False
-        )
-
-    def bump(self, part_name: str, order: List[str]) -> "Version":
-        """Increase the value of the given part."""
-        bumped = False
-
-        new_values = {}
-
-        for label in order:
-            if label not in self.values:
-                continue
-            if label == part_name:
-                new_values[label] = self.values[label].bump()
-                bumped = True
-            elif bumped and not self.values[label].is_independent:
-                new_values[label] = self.values[label].null()
-            else:
-                new_values[label] = self.values[label].copy()
-
-        if not bumped:
-            raise InvalidVersionPartError(f"No part named {part_name!r}")
-
-        return Version(new_values)
 
 
 class VersionConfig:
