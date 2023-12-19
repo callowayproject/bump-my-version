@@ -2,7 +2,7 @@
 import shutil
 import subprocess
 import traceback
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
@@ -68,7 +68,7 @@ def test_bump_nested_regex(tmp_path: Path, fixtures_path: Path, caplog):
 
     assert result.exit_code == 0
 
-    now = datetime.now().isoformat()[:10]
+    now = datetime.now(timezone.utc).isoformat()[:10]
     assert cff_path.read_text() == f"cff-version: 1.2.0\ndate-released: {now}\n"
 
 
