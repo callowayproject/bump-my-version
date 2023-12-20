@@ -235,15 +235,6 @@ def test_version_part_invalid_regex_exit(tmp_path: Path) -> None:
             get_config_data(overrides)
 
 
-def test_parse_doesnt_parse_current_version(tmp_path: Path, caplog: LogCaptureFixture) -> None:
-    """A warning should be output when the parse regex doesn't parse the version."""
-    overrides = {"current_version": "12", "parse": "xxx"}
-    with inside_dir(tmp_path):
-        get_config_data(overrides)
-
-    assert "    Evaluating 'parse' option: 'xxx' does not parse current version '12'" in caplog.messages
-
-
 def test_part_does_not_revert_to_zero_if_optional(tmp_path: Path) -> None:
     """A non-numeric part with the optional value should not revert to zero."""
     # From https://github.com/c4urself/bump2version/issues/248

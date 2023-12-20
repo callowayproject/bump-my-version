@@ -6,6 +6,61 @@ from bumpversion.exceptions import InvalidVersionPartError
 from bumpversion.utils import key_val_string
 from bumpversion.versioning.functions import NumericFunction, PartFunction, ValuesFunction
 
+# Adapted from https://regex101.com/r/Ly7O1x/3/
+SEMVER_PATTERN = r"""
+    (?P<major>0|[1-9]\d*)\.
+    (?P<minor>0|[1-9]\d*)\.
+    (?P<patch>0|[1-9]\d*)
+    (?:
+        -                             # dash seperator for pre-release section
+        (?P<pre_l>[a-zA-Z-]+)         # pre-release label
+        (?P<pre_n>0|[1-9]\d*)         # pre-release version number
+    )?                                # pre-release section is optional
+    (?:
+        \+                            # plus seperator for build metadata section
+        (?P<buildmetadata>
+            [0-9a-zA-Z-]+
+            (?:\.[0-9a-zA-Z-]+)*
+        )
+    )?                                # build metadata section is optional
+"""
+
+# Adapted from https://packaging.python.org/en/latest/specifications/version-specifiers/
+PEP440_PATTERN = r"""
+    v?
+    (?:
+        (?:(?P<epoch>[0-9]+)!)?                           # Optional epoch
+        (?P<release>
+            (?P<major>0|[1-9]\d*)\.
+            (?P<minor>0|[1-9]\d*)\.
+            (?P<patch>0|[1-9]\d*)
+        )
+        (?P<pre>                                          # pre-release
+            [-_\.]?
+            (?P<pre_l>(a|b|c|rc|alpha|beta|pre|preview))
+            [-_\.]?
+            (?P<pre_n>[0-9]+)?
+        )?
+        (?P<post>                                         # post release
+            (?:-(?P<post_n1>[0-9]+))
+            |
+            (?:
+                [-_\.]?
+                (?P<post_l>post|rev|r)
+                [-_\.]?
+                (?P<post_n2>[0-9]+)?
+            )
+        )?
+        (?P<dev>                                          # dev release
+            [-_\.]?
+            (?P<dev_l>dev)
+            [-_\.]?
+            (?P<dev_n>[0-9]+)?
+        )?
+    )
+    (?:\+(?P<local>[a-z0-9]+(?:[-_\.][a-z0-9]+)*))?       # local version
+"""
+
 
 class VersionPart:
     """

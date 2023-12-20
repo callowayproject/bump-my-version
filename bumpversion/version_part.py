@@ -9,8 +9,9 @@ from click import UsageError
 from bumpversion.config.models import VersionPartConfig
 from bumpversion.exceptions import FormattingError, MissingValueError
 from bumpversion.ui import get_indented_logger
-from bumpversion.utils import key_val_string, labels_for_format
+from bumpversion.utils import labels_for_format
 from bumpversion.versioning.models import Version, VersionPart
+from bumpversion.versioning.serialization import parse_version
 
 logger = get_indented_logger(__name__)
 
@@ -74,39 +75,17 @@ class VersionConfig:
         Returns:
             A Version object representing the string.
         """
-        if not version_string:
-            return None
+        parsed = parse_version(version_string, self.parse_regex.pattern)
 
-        regexp_one_line = "".join([line.split("#")[0].strip() for line in self.parse_regex.pattern.splitlines()])
-
-        logger.info(
-            "Parsing version '%s' using regexp '%s'",
-            version_string,
-            regexp_one_line,
-        )
-        logger.indent()
-
-        match = self.parse_regex.search(version_string)
-
-        if not match:
-            logger.warning(
-                "Evaluating 'parse' option: '%s' does not parse current version '%s'",
-                self.parse_regex.pattern,
-                version_string,
-            )
+        if not parsed:
             return None
 
         _parsed = {
             key: VersionPart(self.part_configs[key], value)
-            for key, value in match.groupdict().items()
+            for key, value in parsed.items()
             if key in self.part_configs
         }
-        v = Version(_parsed, version_string)
-
-        logger.info("Parsed the following values: %s", key_val_string(v.values))
-        logger.dedent()
-
-        return v
+        return Version(_parsed, version_string)
 
     def _serialize(
         self, version: Version, serialize_format: str, context: MutableMapping, raise_if_incomplete: bool = False
@@ -169,6 +148,19 @@ class VersionConfig:
         return serialized
 
     def _choose_serialize_format(self, version: Version, context: MutableMapping) -> str:
+        """
+        Choose a serialization format for the given version and context.
+
+        Args:
+            version: The version to serialize
+            context: The context to use when serializing the version
+
+        Returns:
+            The serialized version as a string
+
+        Raises:
+            MissingValueError: if not all parts required in the format have values
+        """
         chosen = None
 
         logger.debug("Evaluating serialization formats")
