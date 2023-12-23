@@ -5,12 +5,12 @@ from copy import copy
 from typing import Any, Dict, List, MutableMapping, Optional, Tuple
 
 from click import UsageError
+from versioning.models import VersionComponentConfig
 
-from bumpversion.config.models import VersionPartConfig
 from bumpversion.exceptions import FormattingError, MissingValueError
 from bumpversion.ui import get_indented_logger
 from bumpversion.utils import labels_for_format
-from bumpversion.versioning.models import Version, VersionPart
+from bumpversion.versioning.models import Version, VersionComponent, VersionSpec
 from bumpversion.versioning.serialization import parse_version
 
 logger = get_indented_logger(__name__)
@@ -27,7 +27,7 @@ class VersionConfig:
         serialize: Tuple[str],
         search: str,
         replace: str,
-        part_configs: Optional[Dict[str, VersionPartConfig]] = None,
+        part_configs: Optional[Dict[str, VersionComponentConfig]] = None,
     ):
         try:
             self.parse_regex = re.compile(parse, re.VERBOSE)
@@ -36,6 +36,7 @@ class VersionConfig:
 
         self.serialize_formats = serialize
         self.part_configs = part_configs or {}
+        self.version_spec = VersionSpec(self.part_configs)
         # TODO: I think these two should be removed from the config object
         self.search = search
         self.replace = replace
@@ -80,12 +81,16 @@ class VersionConfig:
         if not parsed:
             return None
 
-        _parsed = {
-            key: VersionPart(self.part_configs[key], value)
-            for key, value in parsed.items()
-            if key in self.part_configs
-        }
-        return Version(_parsed, version_string)
+        version = self.version_spec.create_version(parsed)
+        version.original = version_string
+        return version
+
+        # _parsed = {
+        #     key: VersionComponent(self.part_configs[key], value)
+        #     for key, value in parsed.items()
+        #     if key in self.part_configs
+        # }
+        # return Version(_parsed, version_string)
 
     def _serialize(
         self, version: Version, serialize_format: str, context: MutableMapping, raise_if_incomplete: bool = False
@@ -128,7 +133,7 @@ class VersionConfig:
         for i, k in enumerate(keys):
             v = values[k]
 
-            if not isinstance(v, VersionPart):
+            if not isinstance(v, VersionComponent):
                 # values coming from environment variables don't need
                 # representation
                 continue

@@ -84,7 +84,7 @@ def test_do_bump_with_version_part(mock_update_config_file, mock_modify_files):
     assert mock_update_config_file.call_args[0][0] is None
     assert mock_update_config_file.call_args[0][1] == config
     assert mock_update_config_file.call_args[0][2] == current_version
-    assert mock_update_config_file.call_args[0][3] == current_version.bump(version_part, version_config.order)
+    assert mock_update_config_file.call_args[0][3] == current_version.bump(version_part)
     assert mock_update_config_file.call_args[0][5] is False
 
 

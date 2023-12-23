@@ -16,7 +16,7 @@ def test_bump_version_missing_part():
     }
     conf, version_config, current_version = get_config_data(overrides)
     with pytest.raises(exceptions.InvalidVersionPartError, match="No part named 'bugfix'"):
-        current_version.bump("bugfix", version_config.order)
+        current_version.bump("bugfix")
 
 
 def test_build_number_configuration():
@@ -32,18 +32,18 @@ def test_build_number_configuration():
     }
     conf, version_config, current_version = get_config_data(overrides)
 
-    build_version_bump = current_version.bump("build", version_config.order)
-    assert build_version_bump.values["build"].value == "5124"
-    assert build_version_bump.values["build"].is_independent
+    build_version_bump = current_version.bump("build")
+    assert build_version_bump["build"].value == "5124"
+    assert build_version_bump["build"].is_independent
 
-    major_version_bump = build_version_bump.bump("major", version_config.order)
-    assert major_version_bump.values["build"].value == "5124"
-    assert build_version_bump.values["build"].is_independent
-    assert major_version_bump.values["major"].value == "3"
+    major_version_bump = build_version_bump.bump("major")
+    assert major_version_bump["build"].value == "5124"
+    assert build_version_bump["build"].is_independent
+    assert major_version_bump["major"].value == "3"
 
-    build_version_bump = major_version_bump.bump("build", version_config.order)
-    assert build_version_bump.values["build"].value == "5125"
-    assert build_version_bump.values["build"].is_independent
+    build_version_bump = major_version_bump.bump("build")
+    assert build_version_bump["build"].value == "5125"
+    assert build_version_bump["build"].is_independent
 
 
 def test_serialize_with_distance_to_latest_tag():
@@ -83,7 +83,7 @@ def test_serialize_with_newlines():
         "serialize": ["MAJOR={major}\nMINOR={minor}\nPATCH={patch}\n"],
     }
     conf, version_config, current_version = get_config_data(overrides)
-    new_version = current_version.bump("major", version_config.order)
+    new_version = current_version.bump("major")
     assert version_config.serialize(new_version, get_context(conf)) == "MAJOR=32\nMINOR=0\nPATCH=0\n"
 
 
@@ -103,7 +103,7 @@ def test_serialize_three_part(bump_type: str, expected: str):
     }
     conf, version_config, current_version = get_config_data(overrides)
 
-    new_version = current_version.bump(bump_type, version_config.order)
+    new_version = current_version.bump(bump_type)
     assert version_config.serialize(new_version, get_context(conf)) == expected
 
 
@@ -128,7 +128,7 @@ def test_bump_non_numeric_parts(initial: str, bump_type: str, expected: str):
     }
     conf, version_config, current_version = get_config_data(overrides)
 
-    new_version = current_version.bump(bump_type, version_config.order)
+    new_version = current_version.bump(bump_type)
     assert version_config.serialize(new_version, get_context(conf)) == expected
 
 
@@ -153,7 +153,7 @@ def test_optional_value(initial: str, bump_type: str, expected: str):
     }
     conf, version_config, current_version = get_config_data(overrides)
 
-    new_version = current_version.bump(bump_type, version_config.order)
+    new_version = current_version.bump(bump_type)
     assert version_config.serialize(new_version, get_context(conf)) == expected
 
 
@@ -198,7 +198,7 @@ def test_python_pre_release_release_post_release(initial: str, bump_type: str, e
     }
     conf, version_config, current_version = get_config_data(overrides)
 
-    new_version = current_version.bump(bump_type, version_config.order)
+    new_version = current_version.bump(bump_type)
     assert version_config.serialize(new_version, get_context(conf)) == expected
 
 
@@ -219,7 +219,7 @@ def test_part_first_value(initial: str, bump_type: str, expected: str):
     }
     conf, version_config, current_version = get_config_data(overrides)
 
-    new_version = current_version.bump(bump_type, version_config.order)
+    new_version = current_version.bump(bump_type)
     assert version_config.serialize(new_version, get_context(conf)) == expected
 
 
@@ -263,7 +263,7 @@ def test_part_does_not_revert_to_zero_if_optional(tmp_path: Path) -> None:
     with inside_dir(tmp_path):
         conf, version_config, current_version = get_config_data(overrides)
 
-    new_version = current_version.bump("build", version_config.order)
+    new_version = current_version.bump("build")
     assert version_config.serialize(new_version, get_context(conf)) == "0.3.1g1"
 
 
@@ -292,7 +292,7 @@ def test_order_of_serialization(tmp_path: Path, caplog: LogCaptureFixture) -> No
     with inside_dir(tmp_path):
         conf, version_config, current_version = get_config_data(overrides)
 
-    new_version = current_version.bump("release", version_config.order)
+    new_version = current_version.bump("release")
     new_version_str = version_config.serialize(new_version, get_context(conf))
     for msg in caplog.messages:
         print(msg)

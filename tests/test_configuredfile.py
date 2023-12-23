@@ -1,6 +1,7 @@
 """Tests for the ConfiguredFile class."""
 from bumpversion.files import ConfiguredFile, FileChange
 from bumpversion.version_part import VersionConfig
+from versioning.models import VersionComponentConfig
 
 
 class TestConfiguredFile:
@@ -25,6 +26,11 @@ class TestConfiguredFile:
                 serialize=("{major}.{minor}.{patch}",),
                 search="{current_version}",
                 replace="{new_version}",
+                part_configs={
+                    "major": VersionComponentConfig(),
+                    "minor": VersionComponentConfig(),
+                    "patch": VersionComponentConfig(),
+                },
             )
             cfg_file = ConfiguredFile(change, version_config)
             assert cfg_file.file_change == change
@@ -46,6 +52,11 @@ class TestConfiguredFile:
                 serialize=("{major}.{minor}.{patch}",),
                 search="{current_version}",
                 replace="{new_version}",
+                part_configs={
+                    "major": VersionComponentConfig(),
+                    "minor": VersionComponentConfig(),
+                    "patch": VersionComponentConfig(),
+                },
             )
             expected = VersionConfig(
                 parse=change.parse,

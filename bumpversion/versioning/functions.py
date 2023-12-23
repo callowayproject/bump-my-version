@@ -15,6 +15,23 @@ class PartFunction:
         raise NotImplementedError
 
 
+class IndependentFunction(PartFunction):
+    """
+    This is a class that provides an independent function for version parts.
+
+    It simply returns the optional value, which is equal to the first value.
+    """
+
+    def __init__(self, value: Union[str, int, None] = None):
+        self.first_value = str(value)
+        self.optional_value = str(value)
+        self.independent = True
+
+    def bump(self, value: str) -> str:
+        """Return the optional value."""
+        return self.optional_value
+
+
 class NumericFunction(PartFunction):
     """
     This is a class that provides a numeric function for version parts.
@@ -37,6 +54,7 @@ class NumericFunction(PartFunction):
 
         self.first_value = str(first_value or 0)
         self.optional_value = str(optional_value or self.first_value)
+        self.independent = False
 
     def bump(self, value: Union[str, int]) -> str:
         """Increase the first numerical value by one."""
@@ -80,6 +98,7 @@ class ValuesFunction(PartFunction):
             raise ValueError("Version part values cannot be empty")
 
         self._values = values
+        self.independent = False
 
         if optional_value is None:
             optional_value = values[0]

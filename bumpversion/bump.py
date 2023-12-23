@@ -42,11 +42,11 @@ def get_next_version(
     elif version_part:
         logger.info("Attempting to increment part '%s'", version_part)
         logger.indent()
-        next_version = current_version.bump(version_part, config.version_config.order)
+        next_version = current_version.bump(version_part)
     else:
         raise ConfigurationError("Unable to get the next version.")
 
-    logger.info("Values are now: %s", key_val_string(next_version.values))
+    logger.info("Values are now: %s", key_val_string(next_version.components))
     logger.dedent()
     return next_version
 
@@ -113,7 +113,7 @@ def commit_and_tag(
     dry_run: bool = False,
 ) -> None:
     """
-    Commit and tag the changes, if a tool is configured.
+    Commit and tag the changes if a tool is configured.
 
     Args:
         config: The configuration

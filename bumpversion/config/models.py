@@ -14,18 +14,9 @@ from bumpversion.ui import get_indented_logger
 if TYPE_CHECKING:
     from bumpversion.scm import SCMInfo
     from bumpversion.version_part import VersionConfig
+    from bumpversion.versioning.models import VersionComponentConfig, VersionSpec
 
 logger = get_indented_logger(__name__)
-
-
-class VersionPartConfig(BaseModel):
-    """Configuration of a part of the version."""
-
-    values: Optional[list] = None  # Optional. Numeric is used if missing or no items in list
-    optional_value: Optional[str] = None  # Optional.
-    # Defaults to first value. 0 in the case of numeric. Empty string means nothing is optional.
-    first_value: Union[str, int, None] = None  # Optional. Defaults to first value in values
-    independent: bool = False
 
 
 class FileChange(BaseModel):
@@ -100,7 +91,7 @@ class Config(BaseSettings):
     message: str
     commit_args: Optional[str]
     scm_info: Optional["SCMInfo"]
-    parts: Dict[str, VersionPartConfig]
+    parts: Dict[str, VersionComponentConfig]
     files: List[FileChange] = Field(default_factory=list)
     included_paths: List[str] = Field(default_factory=list)
     excluded_paths: List[str] = Field(default_factory=list)
@@ -169,3 +160,9 @@ class Config(BaseSettings):
         from bumpversion.version_part import VersionConfig
 
         return VersionConfig(self.parse, self.serialize, self.search, self.replace, self.parts)
+
+    def version_spec(self, version: Optional[str] = None) -> "VersionSpec":
+        """Return the version specification."""
+        from bumpversion.versioning.models import VersionSpec
+
+        return VersionSpec(self.parts)

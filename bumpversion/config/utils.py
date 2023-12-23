@@ -2,11 +2,12 @@
 from __future__ import annotations
 
 import glob
-import itertools
 from typing import Dict, List
 
-from bumpversion.config.models import FileChange, VersionPartConfig
-from bumpversion.utils import labels_for_format
+from exceptions import BumpVersionError
+
+from bumpversion.config.models import FileChange
+from bumpversion.versioning.models import VersionComponentConfig
 
 
 def get_all_file_configs(config_dict: dict) -> List[FileChange]:
@@ -25,15 +26,25 @@ def get_all_file_configs(config_dict: dict) -> List[FileChange]:
     return [FileChange(**f) for f in files]
 
 
-def get_all_part_configs(config_dict: dict) -> Dict[str, VersionPartConfig]:
+def get_all_part_configs(config_dict: dict) -> Dict[str, VersionComponentConfig]:
     """Make sure all version parts are included."""
-    serialize = config_dict["serialize"]
+    import re
+
+    try:
+        parsing_groups = list(re.compile(config_dict["parse"]).groupindex.keys())
+    except re.error as e:
+        raise BumpVersionError(f"Could not parse regex '{config_dict['parse']}': {e}") from e
     parts = config_dict["parts"]
-    all_labels = set(itertools.chain.from_iterable([labels_for_format(fmt) for fmt in serialize]))
-    return {
-        label: VersionPartConfig(**parts[label]) if label in parts else VersionPartConfig()  # type: ignore[call-arg]
-        for label in all_labels
-    }
+
+    part_configs = {}
+    for label in parsing_groups:
+        is_independent = label.startswith("$")
+        part_configs[label] = (
+            VersionComponentConfig(**parts[label])
+            if label in parts
+            else VersionComponentConfig(independent=is_independent)
+        )
+    return part_configs
 
 
 def resolve_glob_files(file_cfg: FileChange) -> List[FileChange]:

@@ -6,7 +6,9 @@ from difflib import context_diff
 from pathlib import Path
 from typing import Dict, List, MutableMapping, Optional
 
-from bumpversion.config.models import FileChange, VersionPartConfig
+from versioning.models import VersionComponentConfig
+
+from bumpversion.config.models import FileChange
 from bumpversion.exceptions import VersionNotFoundError
 from bumpversion.ui import get_indented_logger
 from bumpversion.version_part import VersionConfig
@@ -297,7 +299,7 @@ class DataFileUpdater:
     def __init__(
         self,
         file_change: FileChange,
-        version_part_configs: Dict[str, VersionPartConfig],
+        version_part_configs: Dict[str, VersionComponentConfig],
     ) -> None:
         self.file_change = file_change
         self.version_config = VersionConfig(
