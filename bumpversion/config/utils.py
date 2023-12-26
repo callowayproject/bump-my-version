@@ -4,9 +4,8 @@ from __future__ import annotations
 import glob
 from typing import Dict, List
 
-from exceptions import BumpVersionError
-
 from bumpversion.config.models import FileChange
+from bumpversion.exceptions import BumpVersionError
 from bumpversion.versioning.models import VersionComponentConfig
 
 
