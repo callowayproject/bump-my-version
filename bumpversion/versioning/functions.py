@@ -23,13 +23,15 @@ class IndependentFunction(PartFunction):
     """
 
     def __init__(self, value: Union[str, int, None] = None):
+        if value is None:
+            value = ""
         self.first_value = str(value)
         self.optional_value = str(value)
         self.independent = True
 
-    def bump(self, value: str) -> str:
+    def bump(self, value: Optional[str] = None) -> str:
         """Return the optional value."""
-        return self.optional_value
+        return value or self.optional_value
 
 
 class NumericFunction(PartFunction):
