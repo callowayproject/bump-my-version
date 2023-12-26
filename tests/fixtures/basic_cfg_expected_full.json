@@ -54,24 +54,28 @@
   "parse": "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?",
   "parts": {
     "major": {
+      "depends_on": null,
       "first_value": null,
       "independent": false,
       "optional_value": null,
       "values": null
     },
     "minor": {
+      "depends_on": null,
       "first_value": null,
       "independent": false,
       "optional_value": null,
       "values": null
     },
     "patch": {
+      "depends_on": null,
       "first_value": null,
       "independent": false,
       "optional_value": null,
       "values": null
     },
     "release": {
+      "depends_on": null,
       "first_value": null,
       "independent": false,
       "optional_value": "gamma",

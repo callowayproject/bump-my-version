@@ -1,7 +1,7 @@
 import pytest
 from pytest import param
 
-from bumpversion.versioning.functions import NumericFunction, ValuesFunction
+from bumpversion.versioning.functions import NumericFunction, ValuesFunction, IndependentFunction
 
 
 # NumericFunction
@@ -120,3 +120,28 @@ class TestValuesFunction:
             func = ValuesFunction(["0", "5", "10"])
             with pytest.raises(ValueError):
                 func.bump("3")
+
+
+class TestIndependentFunction:
+    """The independent function manages incrementing and resetting version parts."""
+
+    class TestCreation:
+        """The independent function can be created."""
+
+        def test_value_sets_first_value_and_optional_value(self):
+            func = IndependentFunction("value")
+            assert func.optional_value == "value"
+            assert func.first_value == "value"
+
+        def test_value_is_not_required(self):
+            assert IndependentFunction().optional_value == ""
+            assert IndependentFunction("").optional_value == ""
+
+    class TestBump:
+        def test_bump_with_value_returns_value(self):
+            func = IndependentFunction("1")
+            assert func.bump("5") == "5"
+
+        def test_bump_with_no_value_returns_initial_value(self):
+            func = IndependentFunction("1")
+            assert func.bump() == "1"

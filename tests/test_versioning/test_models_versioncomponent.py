@@ -1,6 +1,6 @@
 """Tests of the VersionPart model."""
 
-from versioning.models import VersionComponentConfig
+from bumpversion.versioning.models import VersionComponentConfig
 from bumpversion.versioning.functions import ValuesFunction, NumericFunction
 import pytest
 

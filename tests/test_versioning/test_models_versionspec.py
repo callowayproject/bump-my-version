@@ -2,7 +2,7 @@
 
 import pytest
 from bumpversion.versioning.models import VersionSpec
-from versioning.models import VersionComponentConfig
+from bumpversion.versioning.models import VersionComponentConfig
 
 
 class TestVersionSpec:

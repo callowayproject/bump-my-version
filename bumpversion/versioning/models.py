@@ -10,61 +10,6 @@ from bumpversion.exceptions import InvalidVersionPartError
 from bumpversion.utils import key_val_string
 from bumpversion.versioning.functions import NumericFunction, PartFunction, ValuesFunction
 
-# Adapted from https://regex101.com/r/Ly7O1x/3/
-SEMVER_PATTERN = r"""
-    (?P<major>0|[1-9]\d*)\.
-    (?P<minor>0|[1-9]\d*)\.
-    (?P<patch>0|[1-9]\d*)
-    (?:
-        -                             # dash seperator for pre-release section
-        (?P<pre_l>[a-zA-Z-]+)         # pre-release label
-        (?P<pre_n>0|[1-9]\d*)         # pre-release version number
-    )?                                # pre-release section is optional
-    (?:
-        \+                            # plus seperator for build metadata section
-        (?P<buildmetadata>
-            [0-9a-zA-Z-]+
-            (?:\.[0-9a-zA-Z-]+)*
-        )
-    )?                                # build metadata section is optional
-"""
-
-# Adapted from https://packaging.python.org/en/latest/specifications/version-specifiers/
-PEP440_PATTERN = r"""
-    v?
-    (?:
-        (?:(?P<epoch>[0-9]+)!)?                           # Optional epoch
-        (?P<release>
-            (?P<major>0|[1-9]\d*)\.
-            (?P<minor>0|[1-9]\d*)\.
-            (?P<patch>0|[1-9]\d*)
-        )
-        (?P<pre>                                          # pre-release
-            [-_\.]?
-            (?P<pre_l>(a|b|c|rc|alpha|beta|pre|preview))
-            [-_\.]?
-            (?P<pre_n>[0-9]+)?
-        )?
-        (?P<post>                                         # post release
-            (?:-(?P<post_n1>[0-9]+))
-            |
-            (?:
-                [-_\.]?
-                (?P<post_l>post|rev|r)
-                [-_\.]?
-                (?P<post_n2>[0-9]+)?
-            )
-        )?
-        (?P<dev>                                          # dev release
-            [-_\.]?
-            (?P<dev_l>dev)
-            [-_\.]?
-            (?P<dev_n>[0-9]+)?
-        )?
-    )
-    (?:\+(?P<local>[a-z0-9]+(?:[-_\.][a-z0-9]+)*))?       # local version
-"""
-
 
 class VersionComponent:
     """
@@ -161,6 +106,7 @@ class VersionComponentConfig(BaseModel):
     first_value: Union[str, int, None] = None  # Optional. Defaults to first value in values
     independent: bool = False
     # source: Optional[str] = None  # Name of environment variable or context variable to use as the source for value
+    depends_on: Optional[str] = None  # The name of the component this component depends on
 
     def generate_component(self, value: Union[str, int, None] = None) -> VersionComponent:
         """Generate a version component from the configuration."""
@@ -192,7 +138,10 @@ class VersionSpec:
         for component in self.order[1:]:
             if self.component_configs[component].independent:
                 continue
-            self.dependency_map[previous_component].append(component)
+            elif self.component_configs[component].depends_on:
+                self.dependency_map[self.component_configs[component].depends_on].append(component)
+            else:
+                self.dependency_map[previous_component].append(component)
             previous_component = component
 
     def create_version(self, values: Dict[str, str]) -> "Version":
@@ -227,6 +176,10 @@ class Version:
         self.components = components
         self.original = original
 
+    def values(self) -> Dict[str, str]:
+        """Return the values of the parts."""
+        return {key: value.value for key, value in self.components.items()}
+
     def __getitem__(self, key: str) -> VersionComponent:
         return self.components[key]
 
@@ -245,6 +198,10 @@ class Version:
             if isinstance(other, Version)
             else False
         )
+
+    def required_components(self) -> List[str]:
+        """Return the names of the parts that are required."""
+        return [key for key, value in self.components.items() if value.value != value.func.optional_value]
 
     def bump(self, component_name: str) -> "Version":
         """Increase the value of the specified component, reset its dependents, and return a new Version."""

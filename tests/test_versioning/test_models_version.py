@@ -1,8 +1,9 @@
 """Tests for the Version class."""
 
-from versioning.models import VersionComponentConfig
-from bumpversion.versioning.models import VersionSpec, Version, VersionComponent
+from bumpversion.versioning.models import VersionComponentConfig
+from bumpversion.versioning.models import VersionSpec
 import pytest
+from pytest import param
 
 
 @pytest.fixture
@@ -112,3 +113,30 @@ class TestVersion:
             assert minor_version_str == "1.3.0.4"
             assert major_version_str == "2.0.0.4"
             assert build_version_str == "1.2.3.5"
+
+    class TestRequiredComponents:
+        """Tests of the required_keys function."""
+
+        @pytest.mark.parametrize(
+            ["values", "expected"],
+            [
+                param({"major": "1", "minor": "2", "patch": "3"}, ["major", "minor", "patch"], id="major-minor-patch"),
+                param(
+                    {"major": "0", "minor": "2", "patch": "3", "build": "4"},
+                    ["minor", "patch", "build"],
+                    id="minor-patch-build",
+                ),
+                param({"major": "1", "minor": "0", "patch": "3", "build": ""}, ["major", "patch"], id="major-patch"),
+                param({"major": "0", "minor": "0", "patch": "3", "build": ""}, ["patch"], id="patch"),
+            ],
+        )
+        def test_returns_required_component_names(self, version_spec: VersionSpec, values: dict, expected: list):
+            """The required_keys function returns all required keys."""
+            # Arrange
+            version = version_spec.create_version(values)
+
+            # Act
+            required_components = version.required_components()
+
+            # Assert
+            assert required_components == expected
