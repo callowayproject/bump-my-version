@@ -1,7 +1,8 @@
 """Tests for the serialization of versioned objects."""
-from bumpversion.versioning.serialization import parse_version
-from bumpversion.versioning.models import SEMVER_PATTERN
-from bumpversion.exceptions import BumpVersionError
+from bumpversion.versioning.serialization import parse_version, serialize
+from bumpversion.versioning.conventions import semver_spec, SEMVER_PATTERN
+from bumpversion.versioning.models import Version
+from bumpversion.exceptions import BumpVersionError, FormattingError, MissingValueError
 
 import pytest
 from pytest import param
@@ -60,3 +61,68 @@ class TestParseVersion:
         """If the parse pattern is not a valid regular expression, a ValueError should be raised."""
         with pytest.raises(BumpVersionError):
             parse_version("1.2.3", r"v(?P<major>\d+\.(?P<minor>\d+)\.(?P<patch>\d+)")
+
+    def test_parse_pattern_with_newlines(self):
+        """A parse pattern with newlines should be parsed correctly."""
+        pattern = r"MAJOR=(?P<major>\d+)\nMINOR=(?P<minor>\d+)\nPATCH=(?P<patch>\d+)\n"
+        assert parse_version("MAJOR=31\nMINOR=0\nPATCH=3\n", pattern) == {"major": "31", "minor": "0", "patch": "3"}
+
+
+class TestSerialize:
+    """Test the serialize function."""
+
+    @pytest.mark.parametrize(
+        ["version", "expected"],
+        [
+            param(
+                semver_spec().create_version({"major": "1", "minor": "2", "patch": "3"}),
+                "1.2.3",
+                id="major-minor-patch",
+            ),
+            param(
+                semver_spec().create_version({"major": "1", "minor": "2", "patch": "0"}),
+                "1.2",
+                id="major-minor-patch-zero",
+            ),
+            param(
+                semver_spec().create_version({"major": "1", "minor": "0", "patch": "0"}),
+                "1",
+                id="major-minor-zero-patch-zero",
+            ),
+        ],
+    )
+    def test_picks_string_with_least_labels(self, version: Version, expected: str):
+        patterns = ["{major}.{minor}.{patch}", "{major}.{minor}", "{major}"]
+        assert serialize(version, serialize_patterns=patterns, context=version.values()) == expected
+
+    def test_renders_a_format_with_newlines(self):
+        """A serialization format with newlines should be rendered correctly."""
+        version = semver_spec().create_version({"major": "31", "minor": "0", "patch": "3"})
+        assert (
+            serialize(
+                version, serialize_patterns=["MAJOR={major}\nMINOR={minor}\nPATCH={patch}\n"], context=version.values()
+            )
+            == "MAJOR=31\nMINOR=0\nPATCH=3\n"
+        )
+
+    def test_renders_a_format_with_additional_context(self):
+        """A serialization format with additional context should be rendered correctly."""
+        version = semver_spec().create_version({"major": "1", "minor": "2", "patch": "3"})
+        assert (
+            serialize(
+                version,
+                serialize_patterns=["{major}.{minor}.{patch}+{$BUILDMETADATA}"],
+                context={"$BUILDMETADATA": "build.1", "major": "1", "minor": "2", "patch": "3"},
+            )
+            == "1.2.3+build.1"
+        )
+
+    def test_raises_error_if_context_is_missing_values(self):
+        """An error is raised if not all parts required in the format have values."""
+        version = semver_spec().create_version({"major": "1", "minor": "2"})
+        with pytest.raises(FormattingError):
+            serialize(
+                version,
+                serialize_patterns=["{major}.{minor}.{patch}+{$BUILDMETADATA}"],
+                context={"major": "1", "minor": "2", "patch": "0"},
+            )
