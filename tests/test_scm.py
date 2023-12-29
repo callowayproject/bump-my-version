@@ -160,7 +160,7 @@ def test_commit_and_tag_from_below_scm_root(repo: str, scm_command: str, scm_cla
     [
         param(True, True, True, False, False, id="dry-run-stops-commit-and-tag"),
         param(True, False, False, True, False, id="commit-no-tag"),
-        param(False, True, False, False, False, id="no-commit-stops-tag"),
+        param(False, True, False, False, True, id="no-commit-will-tag"),
     ],
 )
 def test_commit_tag_dry_run_interactions(
