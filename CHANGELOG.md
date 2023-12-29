@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.15.4 (2023-12-29)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.15.3...0.15.4)
+
+### Fixes
+
+- Fix not being able to tag without also committing. [753c990](https://github.com/callowayproject/bump-my-version/commit/753c9904505794dd66b0cda0f29206865eeacb3d)
+    
+- Fixed testing automation. [19215f1](https://github.com/callowayproject/bump-my-version/commit/19215f1fc4eb6c51c26cf28c5aa7a36d7cd901a2)
+    
+  - The new commit/tag decoupling requires the `--no-tag` flag
+
 ## 0.15.3 (2023-12-18)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.15.2...0.15.3)
 
