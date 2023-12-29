@@ -460,9 +460,6 @@
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">tag_in_scm</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="s2">&quot;Config&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">dry_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Tag the current commit in the source code management system.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">commit</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Would not tag since we are not committing&quot;</span><span class="p">)</span>
-            <span class="k">return</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">tag</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Would not tag&quot;</span><span class="p">)</span>
             <span class="k">return</span>
