@@ -58,6 +58,8 @@ def read_ini_file(file_path: Path) -> Dict[str, Any]:  # noqa: C901
                 "filename": section_parts[2],
             }
             file_options.update(options)
+            if "search" in file_options and isinstance(file_options["search"], list):
+                file_options["search"] = "\n".join(file_options["search"])
             if "replace" in file_options and isinstance(file_options["replace"], list):
                 file_options["replace"] = "\n".join(file_options["replace"])
             bumpversion_options["files"].append(file_options)
@@ -66,6 +68,8 @@ def read_ini_file(file_path: Path) -> Dict[str, Any]:  # noqa: C901
                 "glob": section_parts[2],
             }
             file_options.update(options)
+            if "search" in file_options and isinstance(file_options["search"], list):
+                file_options["search"] = "\n".join(file_options["search"])
             if "replace" in file_options and isinstance(file_options["replace"], list):
                 file_options["replace"] = "\n".join(file_options["replace"])
             bumpversion_options["files"].append(file_options)
