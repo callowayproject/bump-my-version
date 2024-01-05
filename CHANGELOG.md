@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.16.0 (2024-01-05)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.15.4...0.16.0)
+
+### New
+
+- Add support for legacy multiline search options (refs #98). [278eae5](https://github.com/callowayproject/bump-my-version/commit/278eae578f283223742b7c55870ad58acc8dc1d9)
+    
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [2e9a400](https://github.com/callowayproject/bump-my-version/commit/2e9a4005f9b3f7d7ccbe443188e12d6217039342)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.1.7 → v0.1.9](https://github.com/astral-sh/ruff-pre-commit/compare/v0.1.7...v0.1.9)
+
+
 ## 0.15.4 (2023-12-29)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.15.3...0.15.4)
 
