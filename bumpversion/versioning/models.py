@@ -108,7 +108,7 @@ class VersionComponentConfig(BaseModel):
     # source: Optional[str] = None  # Name of environment variable or context variable to use as the source for value
     depends_on: Optional[str] = None  # The name of the component this component depends on
 
-    def generate_component(self, value: Union[str, int, None] = None) -> VersionComponent:
+    def create_component(self, value: Union[str, int, None] = None) -> VersionComponent:
         """Generate a version component from the configuration."""
         return VersionComponent(
             values=self.values,
@@ -147,7 +147,7 @@ class VersionSpec:
     def create_version(self, values: Dict[str, str]) -> "Version":
         """Generate a version from the given values."""
         components = {
-            key: comp_config.generate_component(value=values.get(key))
+            key: comp_config.create_component(value=values.get(key))
             for key, comp_config in self.component_configs.items()
         }
         return Version(version_spec=self, components=components)

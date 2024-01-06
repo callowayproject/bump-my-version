@@ -1,8 +1,8 @@
 """Tests for the serialization of versioned objects."""
 from bumpversion.versioning.serialization import parse_version, serialize
 from bumpversion.versioning.conventions import semver_spec, SEMVER_PATTERN
-from bumpversion.versioning.models import Version
-from bumpversion.exceptions import BumpVersionError, FormattingError, MissingValueError
+from bumpversion.versioning.models import Version, VersionSpec, VersionComponentConfig
+from bumpversion.exceptions import BumpVersionError, FormattingError
 
 import pytest
 from pytest import param
@@ -71,58 +71,125 @@ class TestParseVersion:
 class TestSerialize:
     """Test the serialize function."""
 
-    @pytest.mark.parametrize(
-        ["version", "expected"],
-        [
-            param(
-                semver_spec().create_version({"major": "1", "minor": "2", "patch": "3"}),
-                "1.2.3",
-                id="major-minor-patch",
-            ),
-            param(
-                semver_spec().create_version({"major": "1", "minor": "2", "patch": "0"}),
-                "1.2",
-                id="major-minor-patch-zero",
-            ),
-            param(
-                semver_spec().create_version({"major": "1", "minor": "0", "patch": "0"}),
-                "1",
-                id="major-minor-zero-patch-zero",
-            ),
-        ],
-    )
-    def test_picks_string_with_least_labels(self, version: Version, expected: str):
-        patterns = ["{major}.{minor}.{patch}", "{major}.{minor}", "{major}"]
-        assert serialize(version, serialize_patterns=patterns, context=version.values()) == expected
-
-    def test_renders_a_format_with_newlines(self):
-        """A serialization format with newlines should be rendered correctly."""
-        version = semver_spec().create_version({"major": "31", "minor": "0", "patch": "3"})
-        assert (
-            serialize(
-                version, serialize_patterns=["MAJOR={major}\nMINOR={minor}\nPATCH={patch}\n"], context=version.values()
-            )
-            == "MAJOR=31\nMINOR=0\nPATCH=3\n"
+    class TestFormatSelection:
+        @pytest.mark.parametrize(
+            ["version", "expected"],
+            [
+                param(
+                    semver_spec().create_version({"major": "1", "minor": "2", "patch": "3"}),
+                    "1.2.3",
+                    id="major-minor-patch",
+                ),
+                param(
+                    semver_spec().create_version({"major": "1", "minor": "2", "patch": "0"}),
+                    "1.2",
+                    id="major-minor-patch-zero",
+                ),
+                param(
+                    semver_spec().create_version({"major": "1", "minor": "0", "patch": "0"}),
+                    "1",
+                    id="major-minor-zero-patch-zero",
+                ),
+            ],
         )
+        def test_is_string_with_fewest_required_labels(self, version: Version, expected: str):
+            """The smallest pattern with all the required values should be picked."""
+            patterns = ["{major}.{minor}.{patch}", "{major}.{minor}", "{major}"]
+            assert serialize(version, serialize_patterns=patterns, context={}) == expected
 
-    def test_renders_a_format_with_additional_context(self):
-        """A serialization format with additional context should be rendered correctly."""
-        version = semver_spec().create_version({"major": "1", "minor": "2", "patch": "3"})
-        assert (
-            serialize(
-                version,
-                serialize_patterns=["{major}.{minor}.{patch}+{$BUILDMETADATA}"],
-                context={"$BUILDMETADATA": "build.1", "major": "1", "minor": "2", "patch": "3"},
+        def test_is_renderable_pattern_with_fewest_labels(self):
+            """The smallest renderable pattern should be picked if no pattern has all the required values."""
+            version = semver_spec().create_version(
+                {"major": "1", "minor": "2", "patch": "3", "pre_l": "a", "buildmetadata": "build.1"}
             )
-            == "1.2.3+build.1"
-        )
+            # None of the patterns have all the required values, so the smallest renderable pattern should be picked
+            assert (
+                serialize(
+                    version,
+                    serialize_patterns=["{major}.{minor}.{patch}+{buildmetadata}", "{major}.{minor}.{patch}"],
+                    context={},
+                )
+                == "1.2.3"
+            )
 
-    def test_raises_error_if_context_is_missing_values(self):
-        """An error is raised if not all parts required in the format have values."""
-        version = semver_spec().create_version({"major": "1", "minor": "2"})
-        with pytest.raises(FormattingError):
-            serialize(
-                version,
-                serialize_patterns=["{major}.{minor}.{patch}+{$BUILDMETADATA}"],
-                context={"major": "1", "minor": "2", "patch": "0"},
+        def test_is_first_pattern_with_fewest_labels(self):
+            """The first pattern with the fewest labels should be picked if multiple have the same number of labels."""
+            version = semver_spec().create_version(
+                {"major": "1", "minor": "2", "patch": "3", "buildmetadata": "build.1"}
             )
+            assert (
+                serialize(
+                    version,
+                    serialize_patterns=["{major}.{minor}.{buildmetadata}", "{major}.{minor}.{patch}"],
+                    context={},
+                )
+                == "1.2.build.1"
+            )
+
+        def test_includes_optional_component_when_dependent_is_not_optional(self):
+            """A format with an optional component should render when the dependent component is not optional."""
+            version_spec = VersionSpec(
+                components={
+                    "major": VersionComponentConfig(),
+                    "minor": VersionComponentConfig(),
+                    "patch": VersionComponentConfig(),
+                    "release": VersionComponentConfig(
+                        optional_value="g",
+                        first_value="g",
+                        values=[
+                            "dev",
+                            "a",
+                            "b",
+                            "g",
+                        ],
+                    ),
+                    "build": VersionComponentConfig(),
+                },
+            )
+            serialize_patterns = [
+                "{major}.{minor}.{patch}{release}{build}",
+                "{major}.{minor}.{patch}{release}",
+                "{major}.{minor}.{patch}",
+            ]
+
+            version = version_spec.create_version({"major": "0", "minor": "3", "patch": "1", "build": "1"})
+            assert (
+                serialize(
+                    version,
+                    serialize_patterns=serialize_patterns,
+                    context={},
+                )
+                == "0.3.1g1"
+            )
+
+    class TestRendersFormat:
+        def test_with_newlines(self):
+            """A serialization format with newlines should be rendered correctly."""
+            version = semver_spec().create_version({"major": "31", "minor": "0", "patch": "3"})
+            assert (
+                serialize(version, serialize_patterns=["MAJOR={major}\nMINOR={minor}\nPATCH={patch}\n"], context={})
+                == "MAJOR=31\nMINOR=0\nPATCH=3\n"
+            )
+
+        def test_with_additional_context(self):
+            """A serialization format with additional context should be rendered correctly."""
+            version = semver_spec().create_version({"major": "1", "minor": "2", "patch": "3"})
+            assert (
+                serialize(
+                    version,
+                    serialize_patterns=["{major}.{minor}.{patch}+{$BUILDMETADATA}"],
+                    context={"$BUILDMETADATA": "build.1"},
+                )
+                == "1.2.3+build.1"
+            )
+
+    class TestRaisesError:
+        def test_if_context_is_missing_values(self):
+            """An error is raised if not all parts required in the format have values."""
+            version = semver_spec().create_version({"major": "1", "minor": "2"})
+            with pytest.raises(FormattingError):
+                serialize(
+                    version,
+                    serialize_patterns=["{major}.{minor}.{patch}+{$BUILDMETADATA}"],
+                    context={},
+                )
