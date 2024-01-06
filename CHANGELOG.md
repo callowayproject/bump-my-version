@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.16.1 (2024-01-06)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.16.0...0.16.1)
+
+### Fixes
+
+- Fixed empty string replacement bug. [d9965ab](https://github.com/callowayproject/bump-my-version/commit/d9965abbcfb11b611ed032daebada0565809dff4)
+    
+  Only a missing replacement value will trigger one of the fallback options.
+
+  Fixes #117
+
+## 0.16.0 (2024-01-05)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.15.4...0.16.0)
+
+### New
+
+- Add support for legacy multiline search options (refs #98). [278eae5](https://github.com/callowayproject/bump-my-version/commit/278eae578f283223742b7c55870ad58acc8dc1d9)
+    
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [2e9a400](https://github.com/callowayproject/bump-my-version/commit/2e9a4005f9b3f7d7ccbe443188e12d6217039342)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.1.7 → v0.1.9](https://github.com/astral-sh/ruff-pre-commit/compare/v0.1.7...v0.1.9)
+
+
+## 0.15.4 (2023-12-29)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.15.3...0.15.4)
+
+### Fixes
+
+- Fix not being able to tag without also committing. [753c990](https://github.com/callowayproject/bump-my-version/commit/753c9904505794dd66b0cda0f29206865eeacb3d)
+    
+- Fixed testing automation. [19215f1](https://github.com/callowayproject/bump-my-version/commit/19215f1fc4eb6c51c26cf28c5aa7a36d7cd901a2)
+    
+  - The new commit/tag decoupling requires the `--no-tag` flag
+
 ## 0.15.3 (2023-12-18)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.15.2...0.15.3)
 

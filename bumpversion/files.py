@@ -75,11 +75,13 @@ class ConfiguredFile:
         search: Optional[str] = None,
         replace: Optional[str] = None,
     ) -> None:
+        replacements = [replace, file_change.replace, version_config.replace]
+        replacement = next((r for r in replacements if r is not None), "")
         self.file_change = FileChange(
             parse=file_change.parse or version_config.parse_regex.pattern,
             serialize=file_change.serialize or version_config.serialize_formats,
             search=search or file_change.search or version_config.search,
-            replace=replace or file_change.replace or version_config.replace,
+            replace=replacement,
             regex=file_change.regex or False,
             ignore_missing_version=file_change.ignore_missing_version or False,
             filename=file_change.filename,

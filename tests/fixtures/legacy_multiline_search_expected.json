@@ -1,0 +1,11 @@
+{
+  "current_version": "1.0.0",
+  "files": [
+    {
+      "filename": "MULTILINE_SEARCH.md",
+      "search": "**unreleased**\n**v{current_version}**",
+      "replace": "**unreleased**\n**v{new_version}**"
+    }
+  ],
+  "parts": {}
+}

@@ -576,6 +576,7 @@ def test_replace_with_empty_string(tmp_path, fixtures_path):
             cli.cli,
             [
                 "replace",
+                "--verbose",
                 "--no-configured-files",
                 "--allow-dirty",
                 "--search",
@@ -590,8 +591,8 @@ def test_replace_with_empty_string(tmp_path, fixtures_path):
         print("Here is the output:")
         print(result.output)
         print(traceback.print_exception(result.exc_info[1]))
-
     assert result.exit_code == 0
+    assert doc_path.read_text() == "We should censor \n\n"
 
 
 def test_valid_regex_not_ignoring_regex(tmp_path: Path, caplog) -> None:
