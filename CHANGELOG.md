@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.16.1 (2024-01-06)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.16.0...0.16.1)
+
+### Fixes
+
+- Fixed empty string replacement bug. [d9965ab](https://github.com/callowayproject/bump-my-version/commit/d9965abbcfb11b611ed032daebada0565809dff4)
+    
+  Only a missing replacement value will trigger one of the fallback options.
+
+  Fixes #117
+
 ## 0.16.0 (2024-01-05)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.15.4...0.16.0)
 
