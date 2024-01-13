@@ -74,3 +74,60 @@ def get_context(
 def get_overrides(**kwargs) -> dict:
     """Return a dictionary containing only the overridden key-values."""
     return {key: val for key, val in kwargs.items() if val is not None}
+
+
+def get_nested_value(d: dict, path: str) -> Any:
+    """
+    Retrieves the value of a nested key in a dictionary based on the given path.
+
+    Args:
+        d: The dictionary to search.
+        path: A string representing the path to the nested key, separated by periods.
+
+    Returns:
+        The value of the nested key.
+
+    Raises:
+        KeyError: If a key in the path does not exist.
+        ValueError: If an element in the path is not a dictionary.
+    """
+    keys = path.split(".")
+    current_element = d
+
+    for key in keys:
+        if not isinstance(current_element, dict):
+            raise ValueError(f"Element at '{'.'.join(keys[:keys.index(key)])}' is not a dictionary")
+
+        if key not in current_element:
+            raise KeyError(f"Key '{key}' not found at '{'.'.join(keys[:keys.index(key)])}'")
+
+        current_element = current_element[key]
+
+    return current_element
+
+
+def set_nested_value(d: dict, value: Any, path: str) -> None:
+    """
+    Sets the value of a nested key in a dictionary based on the given path.
+
+    Args:
+        d: The dictionary to search.
+        value: The value to set.
+        path: A string representing the path to the nested key, separated by periods.
+
+    Raises:
+        ValueError: If an element in the path is not a dictionary.
+    """
+    keys = path.split(".")
+    last_element = keys[-1]
+    current_element = d
+
+    for i, key in enumerate(keys):
+        if key == last_element:
+            current_element[key] = value
+        elif key not in current_element:
+            raise KeyError(f"Key '{key}' not found at '{'.'.join(keys[:keys.index(key)])}'")
+        elif not isinstance(current_element[key], dict):
+            raise ValueError(f"Path '{'.'.join(keys[:i+1])}' does not lead to a dictionary.")
+        else:
+            current_element = current_element[key]

@@ -199,19 +199,23 @@ def test_key_path_required_for_toml_change(tmp_path: Path, caplog):
     config_path.write_text(
         dedent(
             """
-        [project]
-        version = "0.1.26"
+            [project]
+            version = "0.1.26"
 
-        [tool.bumpversion]
-        current_version = "0.1.26"
-        allow_dirty = true
-        commit = true
+            [tool.bumpversion]
+            current_version = "0.1.26"
+            allow_dirty = true
+            commit = true
 
-        [[tool.bumpversion.files]]
-        filename = "pyproject.toml"
-        search = "version = \\"{current_version}\\""
-        replace = "version = \\"{new_version}\\""
-        """
+            [[tool.bumpversion.files]]
+            filename = "pyproject.toml"
+            search = "version = \\"{current_version}\\""
+            replace = "version = \\"{new_version}\\""
+
+            [tool.othertool]
+            bake_cookies = true
+            ignore-words-list = "sugar, salt, flour"
+            """
         )
     )
 
@@ -252,5 +256,9 @@ def test_key_path_required_for_toml_change(tmp_path: Path, caplog):
         filename = "pyproject.toml"
         search = "version = \\"{current_version}\\""
         replace = "version = \\"{new_version}\\""
+
+        [tool.othertool]
+        bake_cookies = true
+        ignore-words-list = "sugar, salt, flour"
         """
     )

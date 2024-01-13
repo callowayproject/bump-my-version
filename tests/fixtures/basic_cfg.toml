@@ -44,3 +44,7 @@ values =[
     "dev",
     "gamma",
 ]
+
+[tool.othertool]
+bake_cookies = true
+ignore-words-list = "sugar, salt, flour"
