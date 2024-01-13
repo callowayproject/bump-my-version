@@ -6,6 +6,8 @@ from difflib import context_diff
 from pathlib import Path
 from typing import Dict, List, MutableMapping, Optional
 
+from utils import get_nested_value, set_nested_value
+
 from bumpversion.config.models import FileChange, VersionPartConfig
 from bumpversion.exceptions import VersionNotFoundError
 from bumpversion.ui import get_indented_logger
@@ -327,11 +329,10 @@ class DataFileUpdater:
         self, search_for: re.Pattern, raw_search_pattern: str, replace_with: str, dry_run: bool = False
     ) -> None:
         """Update a TOML file."""
-        import dotted
         import tomlkit
 
         toml_data = tomlkit.parse(self.path.read_text())
-        value_before = dotted.get(toml_data, self.file_change.key_path)
+        value_before = get_nested_value(toml_data, self.file_change.key_path)
 
         if value_before is None:
             raise KeyError(f"Key path '{self.file_change.key_path}' does not exist in {self.path}")
@@ -347,5 +348,6 @@ class DataFileUpdater:
         if dry_run:
             return
 
-        dotted.update(toml_data, self.file_change.key_path, new_value)
+        set_nested_value(toml_data, new_value, self.file_change.key_path)
+
         self.path.write_text(tomlkit.dumps(toml_data))

@@ -5,7 +5,7 @@ from pathlib import Path
 
 from click.testing import CliRunner, Result
 import pytest
-from pytest import LogCaptureFixture, param
+from pytest import LogCaptureFixture, param, TempPathFactory
 
 from bumpversion.utils import get_context
 from bumpversion import config
@@ -70,11 +70,16 @@ class TestReadConfigFile:
     """Tests for reading the config file."""
 
     class TestWhenExplictConfigFileIsPassed:
-        def test_returns_empty_dict_when_missing_file(self, tmp_path: Path, caplog: LogCaptureFixture) -> None:
+        def test_returns_empty_dict_when_missing_file(
+            self, tmp_path_factory: TempPathFactory, caplog: LogCaptureFixture
+        ) -> None:
             """If an explicit config file is passed and doesn't exist, it returns an empty dict."""
+            caplog.set_level("INFO")
+            tmp_path = tmp_path_factory.mktemp("explicit-file-passed-")
             cfg_file = tmp_path / "bump.toml"
-            assert config.read_config_file(cfg_file) == {}
-            assert "Configuration file not found" in caplog.text
+            with inside_dir(tmp_path):
+                assert config.read_config_file(cfg_file) == {}
+                assert "Configuration file not found" in caplog.text
 
         def test_returns_dict_of_cfg_file(self, fixtures_path: Path) -> None:
             """Files with a .cfg suffix is parsed into a dict and returned."""
@@ -88,8 +93,12 @@ class TestReadConfigFile:
             expected = json.loads(fixtures_path.joinpath("basic_cfg_expected.json").read_text())
             assert config.read_config_file(cfg_file) == expected
 
-        def test_returns_empty_dict_with_unknown_suffix(self, tmp_path: Path, caplog: LogCaptureFixture) -> None:
+        def test_returns_empty_dict_with_unknown_suffix(
+            self, tmp_path_factory: TempPathFactory, caplog: LogCaptureFixture
+        ) -> None:
             """Files with an unknown suffix return an empty dict."""
+            caplog.set_level("INFO")
+            tmp_path = tmp_path_factory.mktemp("explicit-file-passed-")
             cfg_file = tmp_path / "basic_cfg.unknown"
             cfg_file.write_text('[tool.bumpversion]\ncurrent_version = "1.0.0"')
             with inside_dir(tmp_path):
@@ -101,6 +110,7 @@ class TestReadConfigFile:
 
         def test_returns_empty_dict(self, caplog: LogCaptureFixture) -> None:
             """If no explicit config file is passed, it returns an empty dict."""
+            caplog.set_level("INFO")
             assert config.read_config_file() == {}
             assert "No configuration file found." in caplog.text
 
@@ -275,7 +285,7 @@ def test_file_overrides_config(fixtures_path: Path):
     assert file_map["should_override_replace.txt"].regex == conf.regex
     assert file_map["should_override_replace.txt"].ignore_missing_version == conf.ignore_missing_version
 
-    assert file_map["should_override_parse.txt"].parse == "version(?P<major>\d+)"
+    assert file_map["should_override_parse.txt"].parse == r"version(?P<major>\d+)"
     assert file_map["should_override_parse.txt"].serialize == conf.serialize
     assert file_map["should_override_parse.txt"].search == conf.search
     assert file_map["should_override_parse.txt"].replace == conf.replace

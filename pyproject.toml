@@ -33,7 +33,6 @@ keywords = ["bumpversion", "version", "release"]
 dynamic = ["version"]
 dependencies = [
     "click",
-    "dotted-notation",
     "pydantic>=2.0.0",
     "pydantic-settings",
     "rich-click",
@@ -238,14 +237,6 @@ search = "Unreleased"
 filename = "CHANGELOG.md"
 search = "{current_version}...HEAD"
 replace = "{current_version}...{new_version}"
-
-
-
-
-
-
-
-
 
 [tool.pydoclint]
 style = "google"
