@@ -6,11 +6,10 @@ from difflib import context_diff
 from pathlib import Path
 from typing import Dict, List, MutableMapping, Optional
 
-from utils import get_nested_value, set_nested_value
-
 from bumpversion.config.models import FileChange, VersionPartConfig
 from bumpversion.exceptions import VersionNotFoundError
 from bumpversion.ui import get_indented_logger
+from bumpversion.utils import get_nested_value, set_nested_value
 from bumpversion.version_part import Version, VersionConfig
 
 logger = get_indented_logger(__name__)
