@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.16.2 (2024-01-13)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.16.1...0.16.2)
+
+### Fixes
+
+- Fixed a bad import. [46c9c48](https://github.com/callowayproject/bump-my-version/commit/46c9c48ccc02a9b2d0e81d70c15323de3e8a4ce8)
+    
+- Fixed extra whitespace added when updating pyproject.toml. [839f17f](https://github.com/callowayproject/bump-my-version/commit/839f17fbf7a0902fb15347a31778c55e9a91e7ab)
+    
+  - Removed dotted-notation from requirements. There is an issue on how dotted-notation sets values in the TOMLkit data structure.
+
+  - Added `get_nested_value` and `set_nested_value` as replacements for dotted-notation.
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [ee4d2f3](https://github.com/callowayproject/bump-my-version/commit/ee4d2f32af28c650651b9242c09e3b125e0101e2)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.1.9 → v0.1.11](https://github.com/astral-sh/ruff-pre-commit/compare/v0.1.9...v0.1.11)
+
+
 ## 0.16.1 (2024-01-06)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.16.0...0.16.1)
 
