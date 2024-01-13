@@ -43,6 +43,14 @@
   - ```{autodoc2-docstring} bumpversion.utils.get_overrides
     :summary:
     ```
+* - {py:obj}`get_nested_value <bumpversion.utils.get_nested_value>`
+  - ```{autodoc2-docstring} bumpversion.utils.get_nested_value
+    :summary:
+    ```
+* - {py:obj}`set_nested_value <bumpversion.utils.set_nested_value>`
+  - ```{autodoc2-docstring} bumpversion.utils.set_nested_value
+    :summary:
+    ```
 ````
 
 ### API
@@ -93,5 +101,19 @@
 :canonical: bumpversion.utils.get_overrides
 
 ```{autodoc2-docstring} bumpversion.utils.get_overrides
+```
+````
+
+````{py:function} get_nested_value(d: dict, path: str) -> typing.Any
+:canonical: bumpversion.utils.get_nested_value
+
+```{autodoc2-docstring} bumpversion.utils.get_nested_value
+```
+````
+
+````{py:function} set_nested_value(d: dict, value: typing.Any, path: str) -> None
+:canonical: bumpversion.utils.set_nested_value
+
+```{autodoc2-docstring} bumpversion.utils.set_nested_value
 ```
 ````
