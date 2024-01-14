@@ -35,6 +35,7 @@ dependencies = [
     "click",
     "pydantic>=2.0.0",
     "pydantic-settings",
+    "questionary",
     "rich-click",
     "rich",
     "tomlkit",
