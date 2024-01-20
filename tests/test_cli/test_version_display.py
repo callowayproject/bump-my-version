@@ -1,6 +1,6 @@
 from click.testing import CliRunner, Result
 
-import cli
+from bumpversion import cli
 from bumpversion import __version__
 
 

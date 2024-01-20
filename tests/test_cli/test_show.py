@@ -3,8 +3,8 @@ from pathlib import Path
 
 from click.testing import CliRunner, Result
 
-import cli
-from conftest import inside_dir
+from bumpversion import cli
+from tests.conftest import inside_dir
 
 
 def test_show(tmp_path: Path, fixtures_path: Path):

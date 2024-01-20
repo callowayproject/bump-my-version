@@ -10,7 +10,7 @@ from pytest import param
 from click.testing import CliRunner, Result
 
 from bumpversion import cli
-from conftest import inside_dir
+from tests.conftest import inside_dir
 
 
 class TestNoConfiguredFilesOption:
