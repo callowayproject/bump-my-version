@@ -2,13 +2,16 @@
 from pathlib import Path
 from typing import List, Optional
 
+import questionary
 import rich_click as click
 from click.core import Context
+from tomlkit import dumps
 
 from bumpversion import __version__
 from bumpversion.aliases import AliasedGroup
 from bumpversion.bump import do_bump
 from bumpversion.config import get_configuration
+from bumpversion.config.create import create_configuration
 from bumpversion.config.files import find_config_file
 from bumpversion.files import ConfiguredFile, modify_files
 from bumpversion.show import do_show, log_list
@@ -533,65 +536,14 @@ def replace(
 )
 def sample_config(prompt: bool, destination: str) -> None:
     """Print a sample configuration file."""
-    import questionary
-    from tomlkit import document, dumps, parse
-
-    from bumpversion.config import DEFAULTS
-
-    config = DEFAULTS.copy()
     if prompt:
         destination = questionary.select(
             "Destination", choices=["stdout", ".bumpversion.toml", "pyproject.toml"], default=destination
         ).ask()
-    destination_path = None
 
-    if destination != "stdout":
-        destination_path = Path(destination)
-        destination_path.touch(exist_ok=True)
-        destination_config = parse(destination_path.read_text())
-        existing_config = destination_config.get("tool", {}).get("bumpversion", {})
-        if existing_config:
-            logger.info("Found existing configuration in %s. Loading as defaults.", destination_path)
-            config.update(existing_config)
-    else:
-        destination_config = document()
-        destination_config.update({"tool": {"bumpversion": {}}})
+    destination_config = create_configuration(destination, prompt)
 
-    config["current_version"] = config["current_version"] or destination_config.get("project", {}).get(
-        "version", "0.1.0"
-    )
-    del config["scm_info"]
-    del config["parts"]
-    del config["files"]
-
-    if prompt:
-        allow_dirty_default = "(Y/n)" if config["allow_dirty"] else "(y/N)"
-        answers = questionary.form(
-            current_version=questionary.text("What is the current version?", default=config["current_version"]),
-            commit=questionary.confirm(
-                "Commit changes made when bumping to version control?", default=config["commit"]
-            ),
-            allow_dirty=questionary.confirm(
-                "Allow dirty working directory when bumping?",
-                default=config["allow_dirty"],
-                instruction=(
-                    "If you are also creating or modifying other files (e.g. a CHANGELOG), say Yes. "
-                    f"{allow_dirty_default} "
-                ),
-            ),
-            tag=questionary.confirm("Tag changes made when bumping in version control?", default=config["tag"]),
-            commit_args=questionary.text(
-                "Any extra arguments to pass to the commit command?",
-                default=config["commit_args"] or "",
-                instruction="For example, `--no-verify` is useful if you have a pre-commit hook. ",
-            ),
-        ).ask()
-        config.update(answers)
-
-    for key, val in config.items():
-        destination_config["tool"]["bumpversion"][key] = val
-
-    if destination_path:
-        destination_path.write_text(dumps(destination_config))
-    else:
+    if destination == "stdout":
         print_info(dumps(destination_config))
+    else:
+        Path(destination).write_text(dumps(destination_config))
