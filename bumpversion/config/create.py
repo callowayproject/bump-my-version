@@ -1,5 +1,6 @@
 """Module for creating a new config file."""
 from pathlib import Path
+from typing import Tuple
 
 import questionary
 from tomlkit import TOMLDocument
@@ -48,7 +49,7 @@ def create_configuration(destination: str, prompt: bool) -> TOMLDocument:
     return destination_config
 
 
-def get_defaults_from_dest(destination: str) -> tuple[dict, TOMLDocument]:
+def get_defaults_from_dest(destination: str) -> Tuple[dict, TOMLDocument]:
     """Get the default configuration and the configuration from the destination."""
     from tomlkit import document, parse
 
