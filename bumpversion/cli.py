@@ -17,6 +17,7 @@ from bumpversion.files import ConfiguredFile, modify_files
 from bumpversion.show import do_show, log_list
 from bumpversion.ui import get_indented_logger, print_info, print_warning, setup_logging
 from bumpversion.utils import get_context, get_overrides
+from bumpversion.visualize import visualize
 
 logger = get_indented_logger(__name__)
 
@@ -547,3 +548,24 @@ def sample_config(prompt: bool, destination: str) -> None:
         print_info(dumps(destination_config))
     else:
         Path(destination).write_text(dumps(destination_config))
+
+
+@cli.command()
+@click.argument("version", nargs=1, type=str, required=False, default="")
+@click.option(
+    "--config-file",
+    metavar="FILE",
+    required=False,
+    envvar="BUMPVERSION_CONFIG_FILE",
+    type=click.Path(exists=True),
+    help="Config file to read most of the variables from.",
+)
+@click.option("--ascii", is_flag=True, help="Use ASCII characters only.")
+def show_bump(version: str, config_file: Optional[str], ascii: bool) -> None:
+    """Show the possible versions resulting from the bump subcommand."""
+    found_config_file = find_config_file(config_file)
+    config = get_configuration(found_config_file)
+    if not version:
+        version = config.current_version
+    box_style = "ascii" if ascii else "light"
+    visualize(config=config, version_str=version, box_style=box_style)
