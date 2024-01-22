@@ -46,14 +46,14 @@
 ````{py:data} logger
 :canonical: bumpversion.version_part.logger
 :value: >
-   None
+   'get_indented_logger(...)'
 
 ```{autodoc2-docstring} bumpversion.version_part.logger
 ```
 
 ````
 
-`````{py:class} VersionPart(config: bumpversion.config.VersionPartConfig, value: typing.Optional[str] = None)
+`````{py:class} VersionPart(config: bumpversion.config.models.VersionPartConfig, value: typing.Union[str, int, None] = None)
 :canonical: bumpversion.version_part.VersionPart
 
 ```{autodoc2-docstring} bumpversion.version_part.VersionPart
@@ -189,7 +189,7 @@
 
 `````
 
-`````{py:class} VersionConfig(parse: str, serialize: typing.List[str], search: str, replace: str, part_configs: typing.Optional[typing.Dict[str, bumpversion.config.VersionPartConfig]] = None)
+`````{py:class} VersionConfig(parse: str, serialize: typing.Tuple[str], search: str, replace: str, part_configs: typing.Optional[typing.Dict[str, bumpversion.config.models.VersionPartConfig]] = None)
 :canonical: bumpversion.version_part.VersionConfig
 
 ```{autodoc2-docstring} bumpversion.version_part.VersionConfig
@@ -200,6 +200,16 @@
 
 ```{autodoc2-docstring} bumpversion.version_part.VersionConfig.__init__
 ```
+
+````{py:method} __repr__() -> str
+:canonical: bumpversion.version_part.VersionConfig.__repr__
+
+````
+
+````{py:method} __eq__(other: typing.Any) -> bool
+:canonical: bumpversion.version_part.VersionConfig.__eq__
+
+````
 
 ````{py:property} order
 :canonical: bumpversion.version_part.VersionConfig.order

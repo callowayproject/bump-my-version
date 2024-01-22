@@ -28,7 +28,8 @@ def test_show_bump_uses_current_version(tmp_path: Path, fixtures_path: Path):
             "1.0.0 ── bump ─┬─ major ─── 2.0.0-dev",
             "               ├─ minor ─── 1.1.0-dev",
             "               ├─ patch ─── 1.0.1-dev",
-            "               ╰─ release ─ invalid\n",
+            "               ╰─ release ─ invalid: The part has already the maximum value among "
+            "['dev', 'gamma'] and cannot be bumped.\n",
         ]
     )
 
@@ -54,6 +55,7 @@ def test_show_bump_uses_passed_version(tmp_path: Path, fixtures_path: Path):
             "1.2.3 ── bump ─┬─ major ─── 2.0.0-dev",
             "               ├─ minor ─── 1.3.0-dev",
             "               ├─ patch ─── 1.2.4-dev",
-            "               ╰─ release ─ invalid\n",
+            "               ╰─ release ─ invalid: The part has already the maximum value among ['dev', 'gamma'] "
+            "and cannot be bumped.\n",
         ]
     )

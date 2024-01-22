@@ -65,6 +65,6 @@ class TestVisualize:
                 "1.0.0 ── bump ─┬─ major ─── 2.0.0-dev",
                 "               ├─ minor ─── 1.1.0-dev",
                 "               ├─ patch ─── 1.0.1-dev",
-                "               ╰─ release ─ invalid\n",
+                "               ╰─ release ─ invalid: The part has already the maximum value among ['dev', 'gamma'] and cannot be bumped.\n",
             ]
         )

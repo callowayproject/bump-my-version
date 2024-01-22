@@ -19,6 +19,14 @@
   - ```{autodoc2-docstring} bumpversion.files.ConfiguredFile
     :summary:
     ```
+* - {py:obj}`FileUpdater <bumpversion.files.FileUpdater>`
+  - ```{autodoc2-docstring} bumpversion.files.FileUpdater
+    :summary:
+    ```
+* - {py:obj}`DataFileUpdater <bumpversion.files.DataFileUpdater>`
+  - ```{autodoc2-docstring} bumpversion.files.DataFileUpdater
+    :summary:
+    ```
 ````
 
 ### Functions
@@ -27,20 +35,20 @@
 :class: autosummary longtable
 :align: left
 
+* - {py:obj}`contains_pattern <bumpversion.files.contains_pattern>`
+  - ```{autodoc2-docstring} bumpversion.files.contains_pattern
+    :summary:
+    ```
+* - {py:obj}`log_changes <bumpversion.files.log_changes>`
+  - ```{autodoc2-docstring} bumpversion.files.log_changes
+    :summary:
+    ```
 * - {py:obj}`resolve_file_config <bumpversion.files.resolve_file_config>`
   - ```{autodoc2-docstring} bumpversion.files.resolve_file_config
     :summary:
     ```
 * - {py:obj}`modify_files <bumpversion.files.modify_files>`
   - ```{autodoc2-docstring} bumpversion.files.modify_files
-    :summary:
-    ```
-* - {py:obj}`get_glob_files <bumpversion.files.get_glob_files>`
-  - ```{autodoc2-docstring} bumpversion.files.get_glob_files
-    :summary:
-    ```
-* - {py:obj}`_check_files_contain_version <bumpversion.files._check_files_contain_version>`
-  - ```{autodoc2-docstring} bumpversion.files._check_files_contain_version
     :summary:
     ```
 ````
@@ -62,14 +70,28 @@
 ````{py:data} logger
 :canonical: bumpversion.files.logger
 :value: >
-   None
+   'get_indented_logger(...)'
 
 ```{autodoc2-docstring} bumpversion.files.logger
 ```
 
 ````
 
-`````{py:class} ConfiguredFile(file_cfg: bumpversion.config.FileConfig, version_config: bumpversion.version_part.VersionConfig, search: typing.Optional[str] = None, replace: typing.Optional[str] = None)
+````{py:function} contains_pattern(search: re.Pattern, contents: str) -> bool
+:canonical: bumpversion.files.contains_pattern
+
+```{autodoc2-docstring} bumpversion.files.contains_pattern
+```
+````
+
+````{py:function} log_changes(file_path: str, file_content_before: str, file_content_after: str, dry_run: bool = False) -> None
+:canonical: bumpversion.files.log_changes
+
+```{autodoc2-docstring} bumpversion.files.log_changes
+```
+````
+
+`````{py:class} ConfiguredFile(file_change: bumpversion.config.models.FileChange, version_config: bumpversion.version_part.VersionConfig, search: typing.Optional[str] = None, replace: typing.Optional[str] = None)
 :canonical: bumpversion.files.ConfiguredFile
 
 ```{autodoc2-docstring} bumpversion.files.ConfiguredFile
@@ -97,34 +119,18 @@
 
 ````
 
-````{py:method} contains_version(version: bumpversion.version_part.Version, context: typing.MutableMapping) -> bool
-:canonical: bumpversion.files.ConfiguredFile.contains_version
+````{py:method} _contains_change_pattern(search_expression: re.Pattern, raw_search_expression: str, version: bumpversion.version_part.Version, context: typing.MutableMapping) -> bool
+:canonical: bumpversion.files.ConfiguredFile._contains_change_pattern
 
-```{autodoc2-docstring} bumpversion.files.ConfiguredFile.contains_version
+```{autodoc2-docstring} bumpversion.files.ConfiguredFile._contains_change_pattern
 ```
 
 ````
 
-````{py:method} contains(search: re.Pattern) -> bool
-:canonical: bumpversion.files.ConfiguredFile.contains
+````{py:method} make_file_change(current_version: bumpversion.version_part.Version, new_version: bumpversion.version_part.Version, context: typing.MutableMapping, dry_run: bool = False) -> None
+:canonical: bumpversion.files.ConfiguredFile.make_file_change
 
-```{autodoc2-docstring} bumpversion.files.ConfiguredFile.contains
-```
-
-````
-
-````{py:method} replace_version(current_version: bumpversion.version_part.Version, new_version: bumpversion.version_part.Version, context: typing.MutableMapping, dry_run: bool = False) -> None
-:canonical: bumpversion.files.ConfiguredFile.replace_version
-
-```{autodoc2-docstring} bumpversion.files.ConfiguredFile.replace_version
-```
-
-````
-
-````{py:method} get_search_pattern(context: typing.MutableMapping) -> re.Pattern
-:canonical: bumpversion.files.ConfiguredFile.get_search_pattern
-
-```{autodoc2-docstring} bumpversion.files.ConfiguredFile.get_search_pattern
+```{autodoc2-docstring} bumpversion.files.ConfiguredFile.make_file_change
 ```
 
 ````
@@ -141,7 +147,7 @@
 
 `````
 
-````{py:function} resolve_file_config(files: typing.List[bumpversion.config.FileConfig], version_config: bumpversion.version_part.VersionConfig, search: typing.Optional[str] = None, replace: typing.Optional[str] = None) -> typing.List[bumpversion.files.ConfiguredFile]
+````{py:function} resolve_file_config(files: typing.List[bumpversion.config.models.FileChange], version_config: bumpversion.version_part.VersionConfig, search: typing.Optional[str] = None, replace: typing.Optional[str] = None) -> typing.List[bumpversion.files.ConfiguredFile]
 :canonical: bumpversion.files.resolve_file_config
 
 ```{autodoc2-docstring} bumpversion.files.resolve_file_config
@@ -155,16 +161,54 @@
 ```
 ````
 
-````{py:function} get_glob_files(file_cfg: bumpversion.config.FileConfig, version_config: bumpversion.version_part.VersionConfig, search: typing.Optional[str] = None, replace: typing.Optional[str] = None) -> typing.List[bumpversion.files.ConfiguredFile]
-:canonical: bumpversion.files.get_glob_files
+`````{py:class} FileUpdater(file_change: bumpversion.config.models.FileChange, version_config: bumpversion.version_part.VersionConfig, search: typing.Optional[str] = None, replace: typing.Optional[str] = None)
+:canonical: bumpversion.files.FileUpdater
 
-```{autodoc2-docstring} bumpversion.files.get_glob_files
+```{autodoc2-docstring} bumpversion.files.FileUpdater
 ```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} bumpversion.files.FileUpdater.__init__
+```
+
+````{py:method} update_file(current_version: bumpversion.version_part.Version, new_version: bumpversion.version_part.Version, context: typing.MutableMapping, dry_run: bool = False) -> None
+:canonical: bumpversion.files.FileUpdater.update_file
+
+```{autodoc2-docstring} bumpversion.files.FileUpdater.update_file
+```
+
 ````
 
-````{py:function} _check_files_contain_version(files: typing.List[bumpversion.files.ConfiguredFile], current_version: bumpversion.version_part.Version, context: typing.MutableMapping) -> None
-:canonical: bumpversion.files._check_files_contain_version
+`````
 
-```{autodoc2-docstring} bumpversion.files._check_files_contain_version
+`````{py:class} DataFileUpdater(file_change: bumpversion.config.models.FileChange, version_part_configs: typing.Dict[str, bumpversion.config.models.VersionPartConfig])
+:canonical: bumpversion.files.DataFileUpdater
+
+```{autodoc2-docstring} bumpversion.files.DataFileUpdater
 ```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} bumpversion.files.DataFileUpdater.__init__
+```
+
+````{py:method} update_file(current_version: bumpversion.version_part.Version, new_version: bumpversion.version_part.Version, context: typing.MutableMapping, dry_run: bool = False) -> None
+:canonical: bumpversion.files.DataFileUpdater.update_file
+
+```{autodoc2-docstring} bumpversion.files.DataFileUpdater.update_file
+```
+
 ````
+
+````{py:method} _update_toml_file(search_for: re.Pattern, raw_search_pattern: str, replace_with: str, dry_run: bool = False) -> None
+:canonical: bumpversion.files.DataFileUpdater._update_toml_file
+
+```{autodoc2-docstring} bumpversion.files.DataFileUpdater._update_toml_file
+```
+
+````
+
+`````

@@ -27,7 +27,6 @@ release-version: get-version do-release  ## Release a specific version: release-
 
 docs: ## generate Sphinx HTML documentation, including API docs
 	mkdir -p docs
-	rm -rf docsrc/_autosummary
 	ls -A1 docs | xargs -I {} rm -rf docs/{}
 	$(MAKE) -C docsrc clean html
 	cp -a docsrc/_build/html/. docs

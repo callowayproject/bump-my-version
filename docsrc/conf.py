@@ -22,7 +22,6 @@ release = bumpversion.__version__
 extensions = [
     "myst_parser",
     "autodoc2",
-    # "sphinx.ext.autodoc",
     "sphinx.ext.viewcode",
     "sphinx.ext.autosummary",
     "sphinx.ext.intersphinx",
@@ -41,16 +40,6 @@ autodoc2_packages = ["../bumpversion"]
 autodoc2_render_plugin = "myst"
 autodoc2_output_dir = "reference"
 autodoc2_index_template = None
-
-autodoc_default_flags = [
-    # Make sure that any autodoc declarations show the right members
-    "members",
-    "undoc-members",
-    "private-members",
-]
-autodoc_class_signature = "separated"
-autodoc_member_order = "bysource"
-autodoc_typehints = "description"
 
 autosummary_generate = True
 
@@ -72,6 +61,7 @@ myst_enable_extensions = [
     "tasklist",
     "fieldlist",
 ]
+myst_heading_anchors = 2
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
 }
