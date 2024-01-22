@@ -178,6 +178,7 @@
 <li class="toctree-l2"><a class="reference internal" href="reference/search-and-replace-config.html">Search and replace configuration</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="reference/bumpversion/bumpversion.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of bumpversion</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="reference/bumpversion/bumpversion.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of bumpversion.config</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference/bumpversion/bumpversion.config.create.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.create</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="reference/bumpversion/bumpversion.config.files_legacy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files_legacy</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="reference/bumpversion/bumpversion.config.files.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="reference/bumpversion/bumpversion.config.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.utils</span></code></a></li>
@@ -196,6 +197,7 @@
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.scm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.scm</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.indented_logger.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.indented_logger</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.visualize.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.visualize</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.version_part.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.version_part</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.__main__</span></code></a></li>
@@ -206,8 +208,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to Bump My Version</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
 </div>
@@ -333,9 +333,9 @@
 <p class="admonition-title">NOTE</p>
 <p>If you do not include the <code class="docutils literal notranslate"><span class="pre">--new-version</span></code> option, the <code class="docutils literal notranslate"><span class="pre">new_version</span></code> context variable will be <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </div>
-<p>One way of providing the <code class="docutils literal notranslate"><span class="pre">--new-version</span></code> option is to use the <code class="docutils literal notranslate"><span class="pre">bumpversion</span> <span class="pre">show</span></code> subcommand with an environment variable:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">BUMPVERSION_NEW_VERSION</span><span class="o">=</span><span class="k">$(</span>bumpversion<span class="w"> </span>show<span class="w"> </span>new_version<span class="w"> </span>--increment<span class="w"> </span>&lt;versionpart&gt;<span class="k">)</span>
-<span class="gp">$ </span>bumpversion<span class="w"> </span>replace
+<p>One way of providing the <code class="docutils literal notranslate"><span class="pre">--new-version</span></code> option is to use the <code class="docutils literal notranslate"><span class="pre">bump-my-version</span> <span class="pre">show</span></code> subcommand with an environment variable:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">BUMPVERSION_NEW_VERSION</span><span class="o">=</span><span class="k">$(</span>bump-my-version<span class="w"> </span>show<span class="w"> </span>new_version<span class="w"> </span>--increment<span class="w"> </span>&lt;versionpart&gt;<span class="k">)</span>
+<span class="gp">$ </span>bump-my-version<span class="w"> </span>replace
 </pre></div>
 </div>
 </section>

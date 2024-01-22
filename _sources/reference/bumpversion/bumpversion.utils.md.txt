@@ -35,6 +35,10 @@
   - ```{autodoc2-docstring} bumpversion.utils.labels_for_format
     :summary:
     ```
+* - {py:obj}`base_context <bumpversion.utils.base_context>`
+  - ```{autodoc2-docstring} bumpversion.utils.base_context
+    :summary:
+    ```
 * - {py:obj}`get_context <bumpversion.utils.get_context>`
   - ```{autodoc2-docstring} bumpversion.utils.get_context
     :summary:
@@ -87,6 +91,13 @@
 :canonical: bumpversion.utils.labels_for_format
 
 ```{autodoc2-docstring} bumpversion.utils.labels_for_format
+```
+````
+
+````{py:function} base_context(scm_info: typing.Optional[bumpversion.scm.SCMInfo] = None) -> collections.ChainMap
+:canonical: bumpversion.utils.base_context
+
+```{autodoc2-docstring} bumpversion.utils.base_context
 ```
 ````
 

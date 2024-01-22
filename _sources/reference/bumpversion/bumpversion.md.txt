@@ -34,6 +34,7 @@ bumpversion.cli
 bumpversion.scm
 bumpversion.show
 bumpversion.indented_logger
+bumpversion.visualize
 bumpversion.version_part
 bumpversion.functions
 bumpversion.__main__

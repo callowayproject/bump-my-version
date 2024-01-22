@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="bumpversion.config.utils" href="bumpversion.config.utils.html" /><link rel="prev" title="bumpversion.config.files_legacy" href="bumpversion.config.files_legacy.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="bumpversion.config.files_legacy" href="bumpversion.config.files_legacy.html" /><link rel="prev" title="bumpversion.config" href="bumpversion.config.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>bumpversion.config.files - Bump My Version 0.16.2</title>
+        <title>bumpversion.config.create - Bump My Version 0.16.2</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -178,9 +178,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../search-and-replace-config.html">Search and replace configuration</a></li>
 <li class="toctree-l2 current has-children"><a class="reference internal" href="bumpversion.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of bumpversion</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l3 current has-children"><a class="reference internal" href="bumpversion.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of bumpversion.config</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="bumpversion.config.create.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.create</span></code></a></li>
+<li class="toctree-l4 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.create</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="bumpversion.config.files_legacy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files_legacy</span></code></a></li>
-<li class="toctree-l4 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bumpversion.config.files.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="bumpversion.config.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="bumpversion.config.models.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.models</span></code></a></li>
 </ul>
@@ -242,9 +242,9 @@
           </label>
         </div>
         <article role="main">
-          <section class="tex2jax_ignore mathjax_ignore" id="module-bumpversion.config.files">
-<span id="bumpversion-config-files"></span><h1><a class="reference internal" href="#module-bumpversion.config.files" title="bumpversion.config.files"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files</span></code></a><a class="headerlink" href="#module-bumpversion.config.files" title="Link to this heading">#</a></h1>
-<p>Contains methods for finding and reading configuration files.</p>
+          <section class="tex2jax_ignore mathjax_ignore" id="module-bumpversion.config.create">
+<span id="bumpversion-config-create"></span><h1><a class="reference internal" href="#module-bumpversion.config.create" title="bumpversion.config.create"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.create</span></code></a><a class="headerlink" href="#module-bumpversion.config.create" title="Link to this heading">#</a></h1>
+<p>Module for creating a new config file.</p>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <section id="functions">
@@ -252,32 +252,11 @@
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-left">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.config.files.find_config_file" title="bumpversion.config.files.find_config_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_config_file</span></code></a></p></td>
-<td><p>Find the configuration file, if it exists.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.config.create.create_configuration" title="bumpversion.config.create.create_configuration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_configuration</span></code></a></p></td>
+<td><p>Create a new configuration as a TOMLDocument.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.config.files.read_config_file" title="bumpversion.config.files.read_config_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_config_file</span></code></a></p></td>
-<td><p>Read the configuration file, if it exists.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.config.files.read_toml_file" title="bumpversion.config.files.read_toml_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_toml_file</span></code></a></p></td>
-<td><p>Parse a TOML file and return the <code class="docutils literal notranslate"><span class="pre">bumpversion</span></code> section.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.config.files.update_config_file" title="bumpversion.config.files.update_config_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_config_file</span></code></a></p></td>
-<td><p>Update the current_version key in the configuration file.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="data">
-<h3>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h3>
-<div class="table-wrapper autosummary longtable docutils container">
-<table class="autosummary longtable docutils align-left">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.config.files.logger" title="bumpversion.config.files.logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logger</span></code></a></p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.config.files.CONFIG_FILE_SEARCH_ORDER" title="bumpversion.config.files.CONFIG_FILE_SEARCH_ORDER"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CONFIG_FILE_SEARCH_ORDER</span></code></a></p></td>
-<td></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.config.create.get_defaults_from_dest" title="bumpversion.config.create.get_defaults_from_dest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_defaults_from_dest</span></code></a></p></td>
+<td><p>Get the default configuration and the configuration from the destination.</p></td>
 </tr>
 </tbody>
 </table>
@@ -285,63 +264,21 @@
 </section>
 <section id="api">
 <h3>API<a class="headerlink" href="#api" title="Link to this heading">#</a></h3>
-<dl class="py data">
-<dt class="sig sig-object py" id="bumpversion.config.files.logger">
-<span class="sig-prename descclassname"><span class="pre">bumpversion.config.files.</span></span><span class="sig-name descname"><span class="pre">logger</span></span><a class="headerlink" href="#bumpversion.config.files.logger" title="Link to this definition">#</a></dt>
-<dd><p>‘get_indented_logger(…)’</p>
-</dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="bumpversion.config.files.CONFIG_FILE_SEARCH_ORDER">
-<span class="sig-prename descclassname"><span class="pre">bumpversion.config.files.</span></span><span class="sig-name descname"><span class="pre">CONFIG_FILE_SEARCH_ORDER</span></span><a class="headerlink" href="#bumpversion.config.files.CONFIG_FILE_SEARCH_ORDER" title="Link to this definition">#</a></dt>
-<dd><p>(‘.bumpversion.cfg’, ‘.bumpversion.toml’, ‘setup.cfg’, ‘pyproject.toml’)</p>
-</dd></dl>
-
 <dl class="py function">
-<dt class="sig sig-object py" id="bumpversion.config.files.find_config_file">
-<span class="sig-prename descclassname"><span class="pre">bumpversion.config.files.</span></span><span class="sig-name descname"><span class="pre">find_config_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">explicit_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">pathlib.Path</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">pathlib.Path</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/bumpversion/config/files.html#find_config_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.config.files.find_config_file" title="Link to this definition">#</a></dt>
-<dd><p>Find the configuration file, if it exists.</p>
-<p>If no explicit configuration file is passed, it will search in several files to
-find its configuration.</p>
+<dt class="sig sig-object py" id="bumpversion.config.create.create_configuration">
+<span class="sig-prename descclassname"><span class="pre">bumpversion.config.create.</span></span><span class="sig-name descname"><span class="pre">create_configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">destination</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tomlkit.TOMLDocument</span></span></span><a class="headerlink" href="#bumpversion.config.create.create_configuration" title="Link to this definition">#</a></dt>
+<dd><p>Create a new configuration as a TOMLDocument.</p>
 <p>Args:
-explicit_file: The configuration file to explicitly use.</p>
+destination: <code class="docutils literal notranslate"><span class="pre">stdout</span></code> or a path to a new or existing file.
+prompt: <code class="docutils literal notranslate"><span class="pre">True</span></code> if the user should be prompted for input.</p>
 <p>Returns:
-The configuration file path</p>
+The TOMLDocument structure with the updated configuration.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="bumpversion.config.files.read_config_file">
-<span class="sig-prename descclassname"><span class="pre">bumpversion.config.files.</span></span><span class="sig-name descname"><span class="pre">read_config_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">pathlib.Path</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/bumpversion/config/files.html#read_config_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.config.files.read_config_file" title="Link to this definition">#</a></dt>
-<dd><p>Read the configuration file, if it exists.</p>
-<p>If no explicit configuration file is passed, it will search in several files to
-find its configuration.</p>
-<p>Args:
-config_file: The configuration file to explicitly use.</p>
-<p>Returns:
-A dictionary of read key-values</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="bumpversion.config.files.read_toml_file">
-<span class="sig-prename descclassname"><span class="pre">bumpversion.config.files.</span></span><span class="sig-name descname"><span class="pre">read_toml_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">pathlib.Path</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/bumpversion/config/files.html#read_toml_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.config.files.read_toml_file" title="Link to this definition">#</a></dt>
-<dd><p>Parse a TOML file and return the <code class="docutils literal notranslate"><span class="pre">bumpversion</span></code> section.</p>
-<p>Args:
-file_path: The path to the TOML file.</p>
-<p>Returns:
-dict: A dictionary of the <code class="docutils literal notranslate"><span class="pre">bumpversion</span></code> section.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="bumpversion.config.files.update_config_file">
-<span class="sig-prename descclassname"><span class="pre">bumpversion.config.files.</span></span><span class="sig-name descname"><span class="pre">update_config_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">pathlib.Path</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="bumpversion.config.models.html#bumpversion.config.models.Config" title="bumpversion.config.models.Config"><span class="pre">bumpversion.config.models.Config</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="bumpversion.version_part.html#bumpversion.version_part.Version" title="bumpversion.version_part.Version"><span class="pre">bumpversion.version_part.Version</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="bumpversion.version_part.html#bumpversion.version_part.Version" title="bumpversion.version_part.Version"><span class="pre">bumpversion.version_part.Version</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.MutableMapping" title="(in Python v3.12)"><span class="pre">MutableMapping</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dry_run</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/bumpversion/config/files.html#update_config_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.config.files.update_config_file" title="Link to this definition">#</a></dt>
-<dd><p>Update the current_version key in the configuration file.</p>
-<p>Args:
-config_file: The configuration file to explicitly use.
-config: The configuration to use.
-current_version: The current version.
-new_version: The new version.
-context: The context to use for serialization.
-dry_run: True if the update should be a dry run.</p>
+<dt class="sig sig-object py" id="bumpversion.config.create.get_defaults_from_dest">
+<span class="sig-prename descclassname"><span class="pre">bumpversion.config.create.</span></span><span class="sig-name descname"><span class="pre">get_defaults_from_dest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">destination</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tomlkit.TOMLDocument</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#bumpversion.config.create.get_defaults_from_dest" title="Link to this definition">#</a></dt>
+<dd><p>Get the default configuration and the configuration from the destination.</p>
 </dd></dl>
 
 </section>
@@ -353,23 +290,23 @@ dry_run: True if the update should be a dry run.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="bumpversion.config.utils.html">
+          <a class="next-page" href="bumpversion.config.files_legacy.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.utils</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files_legacy</span></code></div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="bumpversion.config.files_legacy.html">
+          <a class="prev-page" href="bumpversion.config.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files_legacy</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config</span></code></div>
                 
               </div>
             </a>
@@ -410,17 +347,12 @@ dry_run: True if the update should be a dry run.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files</span></code></a><ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.create</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#functions">Functions</a></li>
-<li><a class="reference internal" href="#data">Data</a></li>
 <li><a class="reference internal" href="#api">API</a><ul>
-<li><a class="reference internal" href="#bumpversion.config.files.logger"><code class="docutils literal notranslate"><span class="pre">logger</span></code></a></li>
-<li><a class="reference internal" href="#bumpversion.config.files.CONFIG_FILE_SEARCH_ORDER"><code class="docutils literal notranslate"><span class="pre">CONFIG_FILE_SEARCH_ORDER</span></code></a></li>
-<li><a class="reference internal" href="#bumpversion.config.files.find_config_file"><code class="docutils literal notranslate"><span class="pre">find_config_file()</span></code></a></li>
-<li><a class="reference internal" href="#bumpversion.config.files.read_config_file"><code class="docutils literal notranslate"><span class="pre">read_config_file()</span></code></a></li>
-<li><a class="reference internal" href="#bumpversion.config.files.read_toml_file"><code class="docutils literal notranslate"><span class="pre">read_toml_file()</span></code></a></li>
-<li><a class="reference internal" href="#bumpversion.config.files.update_config_file"><code class="docutils literal notranslate"><span class="pre">update_config_file()</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.config.create.create_configuration"><code class="docutils literal notranslate"><span class="pre">create_configuration()</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.config.create.get_defaults_from_dest"><code class="docutils literal notranslate"><span class="pre">get_defaults_from_dest()</span></code></a></li>
 </ul>
 </li>
 </ul>

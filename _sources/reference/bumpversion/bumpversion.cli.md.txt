@@ -31,6 +31,14 @@
   - ```{autodoc2-docstring} bumpversion.cli.replace
     :summary:
     ```
+* - {py:obj}`sample_config <bumpversion.cli.sample_config>`
+  - ```{autodoc2-docstring} bumpversion.cli.sample_config
+    :summary:
+    ```
+* - {py:obj}`show_bump <bumpversion.cli.show_bump>`
+  - ```{autodoc2-docstring} bumpversion.cli.show_bump
+    :summary:
+    ```
 ````
 
 ### Data
@@ -82,5 +90,19 @@
 :canonical: bumpversion.cli.replace
 
 ```{autodoc2-docstring} bumpversion.cli.replace
+```
+````
+
+````{py:function} sample_config(prompt: bool, destination: str) -> None
+:canonical: bumpversion.cli.sample_config
+
+```{autodoc2-docstring} bumpversion.cli.sample_config
+```
+````
+
+````{py:function} show_bump(version: str, config_file: typing.Optional[str], ascii: bool) -> None
+:canonical: bumpversion.cli.show_bump
+
+```{autodoc2-docstring} bumpversion.cli.show_bump
 ```
 ````

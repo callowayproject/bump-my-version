@@ -176,6 +176,7 @@
 <li class="toctree-l2"><a class="reference internal" href="reference/search-and-replace-config.html">Search and replace configuration</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="reference/bumpversion/bumpversion.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of bumpversion</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="reference/bumpversion/bumpversion.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of bumpversion.config</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference/bumpversion/bumpversion.config.create.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.create</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="reference/bumpversion/bumpversion.config.files_legacy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files_legacy</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="reference/bumpversion/bumpversion.config.files.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="reference/bumpversion/bumpversion.config.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.utils</span></code></a></li>
@@ -194,6 +195,7 @@
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.scm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.scm</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.indented_logger.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.indented_logger</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.visualize.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.visualize</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.version_part.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.version_part</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.__main__</span></code></a></li>
@@ -204,8 +206,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to Bump My Version</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
 </div>
@@ -242,292 +242,8 @@
           
 <section class="genindex-section">
   <h1 id="index">Index</h1>
-  <div class="genindex-jumpbox"><a href="#Symbols"><strong>Symbols</strong></a> | <a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a> | <a href="#Y"><strong>Y</strong></a></div>
+  <div class="genindex-jumpbox"><a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a> | <a href="#Y"><strong>Y</strong></a></div>
 </section>
-<section id="Symbols" class="genindex-section">
-  <h2>Symbols</h2>
-  <table style="width: 100%" class="indextable genindextable"><tr>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li>
-    --allow-dirty
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-allow-dirty">bumpversion-bump command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-allow-dirty">bumpversion-replace command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --commit
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-commit">bumpversion-bump command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --commit-args
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-commit-args">bumpversion-bump command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --config-file
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-config-file">bumpversion-bump command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-config-file">bumpversion-replace command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-show-config-file">bumpversion-show command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --current-version
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-current-version">bumpversion-bump command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-current-version">bumpversion-replace command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --dry-run
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-n">bumpversion-bump command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-n">bumpversion-replace command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --format
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-show-f">bumpversion-show command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --ignore-missing-version
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-ignore-missing-version">bumpversion-bump command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-ignore-missing-version">bumpversion-replace command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --increment
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-show-i">bumpversion-show command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --list
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-list">bumpversion-bump command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --message
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-m">bumpversion-bump command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --new-version
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-new-version">bumpversion-bump command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-new-version">bumpversion-replace command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --no-allow-dirty
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-allow-dirty">bumpversion-bump command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-allow-dirty">bumpversion-replace command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --no-commit
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-commit">bumpversion-bump command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --no-configured-files
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-no-configured-files">bumpversion-bump command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-no-configured-files">bumpversion-replace command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --no-regex
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-regex">bumpversion-bump command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-regex">bumpversion-replace command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --no-sign-tags
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-sign-tags">bumpversion-bump command line option</a>
-</li>
-        </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li>
-    --no-tag
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-tag">bumpversion-bump command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --parse
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-parse">bumpversion-bump command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-parse">bumpversion-replace command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --regex
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-regex">bumpversion-bump command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-regex">bumpversion-replace command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --replace
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-replace">bumpversion-bump command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-replace">bumpversion-replace command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --search
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-search">bumpversion-bump command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-search">bumpversion-replace command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --serialize
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-serialize">bumpversion-bump command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-serialize">bumpversion-replace command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --sign-tags
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-sign-tags">bumpversion-bump command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --tag
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-tag">bumpversion-bump command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --tag-message
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-tag-message">bumpversion-bump command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --tag-name
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-tag-name">bumpversion-bump command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --verbose
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-v">bumpversion-bump command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-v">bumpversion-replace command line option</a>
-</li>
-        </ul></li>
-        <li>
-    --version
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-version">bumpversion command line option</a>
-</li>
-        </ul></li>
-        <li>
-    -f
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-show-f">bumpversion-show command line option</a>
-</li>
-        </ul></li>
-        <li>
-    -i
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-show-i">bumpversion-show command line option</a>
-</li>
-        </ul></li>
-        <li>
-    -m
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-m">bumpversion-bump command line option</a>
-</li>
-        </ul></li>
-        <li>
-    -n
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-n">bumpversion-bump command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-n">bumpversion-replace command line option</a>
-</li>
-        </ul></li>
-        <li>
-    -v
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-v">bumpversion-bump command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-v">bumpversion-replace command line option</a>
-</li>
-        </ul></li>
-    </ul></td>
-  </tr></table>
-</section>
-
 <section id="_" class="genindex-section">
   <h2>_</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
@@ -632,21 +348,12 @@
           <li><a href="reference/bumpversion/bumpversion.scm.html#bumpversion.scm.SourceCodeManager.add_path">(bumpversion.scm.SourceCodeManager class method)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="reference/bumpversion/bumpversion.aliases.html#bumpversion.aliases.AliasedGroup">AliasedGroup (class in bumpversion.aliases)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.config.models.html#bumpversion.config.models.Config.allow_dirty">allow_dirty (bumpversion.config.models.Config attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li>
-    ARGS
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-arg-ARGS">bumpversion-bump command line option</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-show-arg-ARGS">bumpversion-show command line option</a>
-</li>
-        </ul></li>
         <li><a href="reference/bumpversion/bumpversion.scm.html#bumpversion.scm.Git.assert_nondirty">assert_nondirty() (bumpversion.scm.Git class method)</a>
 
         <ul>
@@ -667,7 +374,13 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="reference/bumpversion/bumpversion.exceptions.html#bumpversion.exceptions.BadInputError">BadInputError</a>
 </li>
+        <li><a href="reference/bumpversion/bumpversion.utils.html#bumpversion.utils.base_context">base_context() (in module bumpversion.utils)</a>
+</li>
         <li><a href="reference/bumpversion/bumpversion.autocast.html#bumpversion.autocast.boolify">boolify() (in module bumpversion.autocast)</a>
+</li>
+        <li><a href="reference/bumpversion/bumpversion.visualize.html#bumpversion.visualize.Border">Border (class in bumpversion.visualize)</a>
+</li>
+        <li><a href="reference/bumpversion/bumpversion.visualize.html#bumpversion.visualize.BOX_CHARS">BOX_CHARS (in module bumpversion.visualize)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.scm.html#bumpversion.scm.SCMInfo.branch_name">branch_name (bumpversion.scm.SCMInfo attribute)</a>
 </li>
@@ -690,138 +403,6 @@
 
         <ul>
           <li><a href="reference/bumpversion/bumpversion.html#module-bumpversion">module</a>
-</li>
-        </ul></li>
-        <li>
-    bumpversion command line option
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-version">--version</a>
-</li>
-        </ul></li>
-        <li>
-    bumpversion-bump command line option
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-allow-dirty">--allow-dirty</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-commit">--commit</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-commit-args">--commit-args</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-config-file">--config-file</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-current-version">--current-version</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-n">--dry-run</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-ignore-missing-version">--ignore-missing-version</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-list">--list</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-m">--message</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-new-version">--new-version</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-allow-dirty">--no-allow-dirty</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-commit">--no-commit</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-no-configured-files">--no-configured-files</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-regex">--no-regex</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-sign-tags">--no-sign-tags</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-tag">--no-tag</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-parse">--parse</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-regex">--regex</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-replace">--replace</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-search">--search</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-serialize">--serialize</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-sign-tags">--sign-tags</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-tag">--tag</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-tag-message">--tag-message</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-tag-name">--tag-name</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-v">--verbose</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-m">-m</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-n">-n</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-v">-v</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-bump-arg-ARGS">ARGS</a>
-</li>
-        </ul></li>
-        <li>
-    bumpversion-replace command line option
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-allow-dirty">--allow-dirty</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-config-file">--config-file</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-current-version">--current-version</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-n">--dry-run</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-ignore-missing-version">--ignore-missing-version</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-new-version">--new-version</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-allow-dirty">--no-allow-dirty</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-no-configured-files">--no-configured-files</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-regex">--no-regex</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-parse">--parse</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-regex">--regex</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-replace">--replace</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-search">--search</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-serialize">--serialize</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-v">--verbose</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-n">-n</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-v">-v</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-arg-FILES">FILES</a>
-</li>
-        </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li>
-    bumpversion-show command line option
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-show-config-file">--config-file</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-show-f">--format</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-show-i">--increment</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-show-f">-f</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-show-i">-i</a>
-</li>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-show-arg-ARGS">ARGS</a>
 </li>
         </ul></li>
         <li>
@@ -867,12 +448,21 @@
 </li>
         </ul></li>
         <li>
+    bumpversion.config.create
+
+        <ul>
+          <li><a href="reference/bumpversion/bumpversion.config.create.html#module-bumpversion.config.create">module</a>
+</li>
+        </ul></li>
+        <li>
     bumpversion.config.files
 
         <ul>
           <li><a href="reference/bumpversion/bumpversion.config.files.html#module-bumpversion.config.files">module</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     bumpversion.config.files_legacy
 
@@ -958,6 +548,13 @@
 </li>
         </ul></li>
         <li>
+    bumpversion.visualize
+
+        <ul>
+          <li><a href="reference/bumpversion/bumpversion.visualize.html#module-bumpversion.visualize">module</a>
+</li>
+        </ul></li>
+        <li>
     bumpversion.yaml_dump
 
         <ul>
@@ -992,17 +589,31 @@
 </li>
         <li><a href="reference/bumpversion/bumpversion.config.models.html#bumpversion.config.models.Config">Config (class in bumpversion.config.models)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="reference/bumpversion/bumpversion.config.files.html#bumpversion.config.files.CONFIG_FILE_SEARCH_ORDER">CONFIG_FILE_SEARCH_ORDER (in module bumpversion.config.files)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.exceptions.html#bumpversion.exceptions.ConfigurationError">ConfigurationError</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.files.html#bumpversion.files.ConfiguredFile">ConfiguredFile (class in bumpversion.files)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/bumpversion/bumpversion.visualize.html#bumpversion.visualize.connection_str">connection_str() (in module bumpversion.visualize)</a>
+</li>
         <li><a href="reference/bumpversion/bumpversion.files.html#bumpversion.files.contains_pattern">contains_pattern() (in module bumpversion.files)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.VersionPart.copy">copy() (bumpversion.version_part.VersionPart method)</a>
+</li>
+        <li><a href="reference/bumpversion/bumpversion.visualize.html#bumpversion.visualize.Border.corner_bottom_left">corner_bottom_left (bumpversion.visualize.Border attribute)</a>
+</li>
+        <li><a href="reference/bumpversion/bumpversion.visualize.html#bumpversion.visualize.Border.corner_bottom_right">corner_bottom_right (bumpversion.visualize.Border attribute)</a>
+</li>
+        <li><a href="reference/bumpversion/bumpversion.visualize.html#bumpversion.visualize.Border.corner_top_left">corner_top_left (bumpversion.visualize.Border attribute)</a>
+</li>
+        <li><a href="reference/bumpversion/bumpversion.visualize.html#bumpversion.visualize.Border.corner_top_right">corner_top_right (bumpversion.visualize.Border attribute)</a>
+</li>
+        <li><a href="reference/bumpversion/bumpversion.config.create.html#bumpversion.config.create.create_configuration">create_configuration() (in module bumpversion.config.create)</a>
+</li>
+        <li><a href="reference/bumpversion/bumpversion.visualize.html#bumpversion.visualize.Border.cross">cross (bumpversion.visualize.Border attribute)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.indented_logger.html#bumpversion.indented_logger.IndentedLoggerAdapter.current_indent">current_indent (bumpversion.indented_logger.IndentedLoggerAdapter property)</a>
 </li>
@@ -1032,9 +643,17 @@
 </li>
         <li><a href="reference/bumpversion/bumpversion.exceptions.html#bumpversion.exceptions.DirtyWorkingDirectoryError">DirtyWorkingDirectoryError</a>
 </li>
+        <li><a href="reference/bumpversion/bumpversion.scm.html#bumpversion.scm.SCMInfo.distance_to_latest_tag">distance_to_latest_tag (bumpversion.scm.SCMInfo attribute)</a>
+</li>
+        <li><a href="reference/bumpversion/bumpversion.visualize.html#bumpversion.visualize.Border.divider_down">divider_down (bumpversion.visualize.Border attribute)</a>
+</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="reference/bumpversion/bumpversion.scm.html#bumpversion.scm.SCMInfo.distance_to_latest_tag">distance_to_latest_tag (bumpversion.scm.SCMInfo attribute)</a>
+        <li><a href="reference/bumpversion/bumpversion.visualize.html#bumpversion.visualize.Border.divider_left">divider_left (bumpversion.visualize.Border attribute)</a>
+</li>
+        <li><a href="reference/bumpversion/bumpversion.visualize.html#bumpversion.visualize.Border.divider_right">divider_right (bumpversion.visualize.Border attribute)</a>
+</li>
+        <li><a href="reference/bumpversion/bumpversion.visualize.html#bumpversion.visualize.Border.divider_up">divider_up (bumpversion.visualize.Border attribute)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.bump.html#bumpversion.bump.do_bump">do_bump() (in module bumpversion.bump)</a>
 </li>
@@ -1070,18 +689,13 @@
 </li>
         <li><a href="reference/bumpversion/bumpversion.config.models.html#bumpversion.config.models.FileChange.filename">filename (bumpversion.config.models.FileChange attribute)</a>
 </li>
-        <li>
-    FILES
-
-        <ul>
-          <li><a href="reference/cli.html#cmdoption-bumpversion-replace-arg-FILES">bumpversion-replace command line option</a>
-</li>
-        </ul></li>
         <li><a href="reference/bumpversion/bumpversion.config.models.html#bumpversion.config.models.Config.files">files (bumpversion.config.models.Config attribute)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.config.models.html#bumpversion.config.models.Config.files_to_modify">files_to_modify (bumpversion.config.models.Config property)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.files.html#bumpversion.files.FileUpdater">FileUpdater (class in bumpversion.files)</a>
+</li>
+        <li><a href="reference/bumpversion/bumpversion.visualize.html#bumpversion.visualize.filter_version_parts">filter_version_parts() (in module bumpversion.visualize)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.config.files.html#bumpversion.config.files.find_config_file">find_config_file() (in module bumpversion.config.files)</a>
 </li>
@@ -1135,12 +749,14 @@
 </li>
         <li><a href="reference/bumpversion/bumpversion.utils.html#bumpversion.utils.get_context">get_context() (in module bumpversion.utils)</a>
 </li>
-        <li><a href="reference/bumpversion/bumpversion.files.html#bumpversion.files.ConfiguredFile.get_file_contents">get_file_contents() (bumpversion.files.ConfiguredFile method)</a>
+        <li><a href="reference/bumpversion/bumpversion.config.create.html#bumpversion.config.create.get_defaults_from_dest">get_defaults_from_dest() (in module bumpversion.config.create)</a>
 </li>
-        <li><a href="reference/bumpversion/bumpversion.ui.html#bumpversion.ui.get_indented_logger">get_indented_logger() (in module bumpversion.ui)</a>
+        <li><a href="reference/bumpversion/bumpversion.files.html#bumpversion.files.ConfiguredFile.get_file_contents">get_file_contents() (bumpversion.files.ConfiguredFile method)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/bumpversion/bumpversion.ui.html#bumpversion.ui.get_indented_logger">get_indented_logger() (in module bumpversion.ui)</a>
+</li>
         <li><a href="reference/bumpversion/bumpversion.utils.html#bumpversion.utils.get_nested_value">get_nested_value() (in module bumpversion.utils)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.bump.html#bumpversion.bump.get_next_version">get_next_version() (in module bumpversion.bump)</a>
@@ -1219,6 +835,8 @@
   <h2>L</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/bumpversion/bumpversion.visualize.html#bumpversion.visualize.labeled_line">labeled_line() (in module bumpversion.visualize)</a>
+</li>
         <li><a href="reference/bumpversion/bumpversion.utils.html#bumpversion.utils.labels_for_format">labels_for_format() (in module bumpversion.utils)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.scm.html#bumpversion.scm.Git.latest_tag_info">latest_tag_info() (bumpversion.scm.Git class method)</a>
@@ -1229,12 +847,18 @@
           <li><a href="reference/bumpversion/bumpversion.scm.html#bumpversion.scm.SourceCodeManager.latest_tag_info">(bumpversion.scm.SourceCodeManager class method)</a>
 </li>
         </ul></li>
+        <li><a href="reference/bumpversion/bumpversion.visualize.html#bumpversion.visualize.lead_string">lead_string() (in module bumpversion.visualize)</a>
+</li>
+        <li><a href="reference/bumpversion/bumpversion.visualize.html#bumpversion.visualize.Border.line">line (bumpversion.visualize.Border attribute)</a>
+</li>
         <li><a href="reference/bumpversion/bumpversion.autocast.html#bumpversion.autocast.listify">listify() (in module bumpversion.autocast)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.files.html#bumpversion.files.log_changes">log_changes() (in module bumpversion.files)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.show.html#bumpversion.show.log_list">log_list() (in module bumpversion.show)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="reference/bumpversion/bumpversion.bump.html#bumpversion.bump.logger">logger (in module bumpversion.bump)</a>
 
         <ul>
@@ -1295,6 +919,8 @@
 </li>
           <li><a href="reference/bumpversion/bumpversion.config.html#module-bumpversion.config">bumpversion.config</a>
 </li>
+          <li><a href="reference/bumpversion/bumpversion.config.create.html#module-bumpversion.config.create">bumpversion.config.create</a>
+</li>
           <li><a href="reference/bumpversion/bumpversion.config.files.html#module-bumpversion.config.files">bumpversion.config.files</a>
 </li>
           <li><a href="reference/bumpversion/bumpversion.config.files_legacy.html#module-bumpversion.config.files_legacy">bumpversion.config.files_legacy</a>
@@ -1320,6 +946,8 @@
           <li><a href="reference/bumpversion/bumpversion.utils.html#module-bumpversion.utils">bumpversion.utils</a>
 </li>
           <li><a href="reference/bumpversion/bumpversion.version_part.html#module-bumpversion.version_part">bumpversion.version_part</a>
+</li>
+          <li><a href="reference/bumpversion/bumpversion.visualize.html#module-bumpversion.visualize">bumpversion.visualize</a>
 </li>
           <li><a href="reference/bumpversion/bumpversion.yaml_dump.html#module-bumpversion.yaml_dump">bumpversion.yaml_dump</a>
 </li>
@@ -1388,6 +1016,8 @@
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/bumpversion/bumpversion.visualize.html#bumpversion.visualize.Border.pipe">pipe (bumpversion.visualize.Border attribute)</a>
+</li>
         <li><a href="reference/bumpversion/bumpversion.utils.html#bumpversion.utils.prefixed_environ">prefixed_environ() (in module bumpversion.utils)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.ui.html#bumpversion.ui.print_error">print_error() (in module bumpversion.ui)</a>
@@ -1450,6 +1080,8 @@
   <h2>S</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/bumpversion/bumpversion.cli.html#bumpversion.cli.sample_config">sample_config() (in module bumpversion.cli)</a>
+</li>
         <li><a href="reference/bumpversion/bumpversion.config.models.html#bumpversion.config.models.Config.scm_info">scm_info (bumpversion.config.models.Config attribute)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.scm.html#bumpversion.scm.SCMInfo">SCMInfo (class in bumpversion.scm)</a>
@@ -1477,6 +1109,8 @@
         <li><a href="reference/bumpversion/bumpversion.scm.html#bumpversion.scm.SCMInfo.short_branch_name">short_branch_name (bumpversion.scm.SCMInfo attribute)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.cli.html#bumpversion.cli.show">show() (in module bumpversion.cli)</a>
+</li>
+        <li><a href="reference/bumpversion/bumpversion.cli.html#bumpversion.cli.show_bump">show_bump() (in module bumpversion.cli)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.config.models.html#bumpversion.config.models.Config.sign_tags">sign_tags (bumpversion.config.models.Config attribute)</a>
 </li>
@@ -1561,6 +1195,8 @@
         <li><a href="reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.VersionPart">VersionPart (class in bumpversion.version_part)</a>
 </li>
         <li><a href="reference/bumpversion/bumpversion.config.models.html#bumpversion.config.models.VersionPartConfig">VersionPartConfig (class in bumpversion.config.models)</a>
+</li>
+        <li><a href="reference/bumpversion/bumpversion.visualize.html#bumpversion.visualize.visualize">visualize() (in module bumpversion.visualize)</a>
 </li>
     </ul></td>
   </tr></table>

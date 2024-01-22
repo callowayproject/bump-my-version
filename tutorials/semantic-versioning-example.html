@@ -178,6 +178,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../reference/search-and-replace-config.html">Search and replace configuration</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../reference/bumpversion/bumpversion.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of bumpversion</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../reference/bumpversion/bumpversion.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of bumpversion.config</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../reference/bumpversion/bumpversion.config.create.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.create</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../reference/bumpversion/bumpversion.config.files_legacy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files_legacy</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../reference/bumpversion/bumpversion.config.files.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../reference/bumpversion/bumpversion.config.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.utils</span></code></a></li>
@@ -196,6 +197,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../reference/bumpversion/bumpversion.scm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.scm</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../reference/bumpversion/bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../reference/bumpversion/bumpversion.indented_logger.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.indented_logger</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/bumpversion/bumpversion.visualize.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.visualize</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../reference/bumpversion/bumpversion.version_part.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.version_part</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../reference/bumpversion/bumpversion.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../reference/bumpversion/bumpversion.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.__main__</span></code></a></li>
@@ -206,8 +208,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Bump My Version</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
 </ul>
 
 </div>
@@ -244,56 +244,199 @@
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="semantic-versioning-example">
 <h1>Semantic versioning example<a class="headerlink" href="#semantic-versioning-example" title="Link to this heading">#</a></h1>
-<p>bumpversion flow:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1.0.0 =&gt; 1.0.1-dev1 =&gt; 1.0.1-dev2 = &gt; 1.0.1-rc1 =&gt; 1.0.1-rc2 =&gt; 1.0.1
-         patch         build          release      build        release
+<section id="create-a-default-configuration">
+<h2>Create a default configuration<a class="headerlink" href="#create-a-default-configuration" title="Link to this heading">#</a></h2>
+<p>The default configuration uses a simplified version of <a class="reference external" href="https://semver.org/">semantic versioning</a>.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Generating a default configuration</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>bump-my-version<span class="w"> </span>sample-config<span class="w"> </span>--no-prompt<span class="w"> </span>--destination<span class="w"> </span>.bumpversion.toml
+<span class="gp">$ </span>cat<span class="w"> </span>.bumpversion.toml
+<span class="go">[tool.bumpversion]</span>
+<span class="go">current_version = &quot;0.1.0&quot;</span>
+<span class="go">parse = &quot;(?P&lt;major&gt;\\d+)\\.(?P&lt;minor&gt;\\d+)\\.(?P&lt;patch&gt;\\d+)&quot;</span>
+<span class="go">serialize = [&quot;{major}.{minor}.{patch}&quot;]</span>
+<span class="go">search = &quot;{current_version}&quot;</span>
+<span class="go">replace = &quot;{new_version}&quot;</span>
+<span class="go">regex = false</span>
+<span class="go">ignore_missing_version = false</span>
+<span class="go">tag = false</span>
+<span class="go">sign_tags = false</span>
+<span class="go">tag_name = &quot;v{new_version}&quot;</span>
+<span class="go">tag_message = &quot;Bump version: {current_version} → {new_version}&quot;</span>
+<span class="go">allow_dirty = false</span>
+<span class="go">commit = false</span>
+<span class="go">message = &quot;Bump version: {current_version} → {new_version}&quot;</span>
+<span class="go">commit_args = &quot;&quot;</span>
 </pre></div>
 </div>
-<section id="details">
-<h2>Details<a class="headerlink" href="#details" title="Link to this heading">#</a></h2>
-<p>Start with an initial release, say <code class="docutils literal notranslate"><span class="pre">1.0.0</span></code>.</p>
-<ol class="arabic">
-<li><p>Create a new release, starting with a development build.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> $ bumpversion patch
- =&gt; 1.0.1-dev1
+</div>
+<section id="visualizing-the-versioning-path">
+<h3>Visualizing the versioning path<a class="headerlink" href="#visualizing-the-versioning-path" title="Link to this heading">#</a></h3>
+<p>You can see the potential versioning paths with the <code class="docutils literal notranslate"><span class="pre">show-bump</span></code> subcommand.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Showing the potential versioning path</span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>bump-my-version<span class="w"> </span>show-bump
+<span class="go">0.1.0 ── bump ─┬─ major ─ 1.0.0</span>
+<span class="go">               ├─ minor ─ 0.2.0</span>
+<span class="go">               ╰─ patch ─ 0.1.1</span>
+<span class="gp">$ </span>bump-my-version<span class="w"> </span>show-bump<span class="w"> </span><span class="m">1</span>.2.3
+<span class="go">1.2.3 ── bump ─┬─ major ─ 2.0.0</span>
+<span class="go">               ├─ minor ─ 1.3.0</span>
+<span class="go">               ╰─ patch ─ 1.2.4</span>
 </pre></div>
 </div>
-</li>
-<li><p>Every time you build, bump <code class="docutils literal notranslate"><span class="pre">build</span></code>.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> $ bumpversion build
- =&gt; 1.0.1-dev2
+</div>
+<p>The default configuration only allows bumping the major, minor, or patch version. What if you wanted to support pre-release versions?</p>
+</section>
+</section>
+<section id="supporting-pre-release-versions">
+<h2>Supporting pre-release versions<a class="headerlink" href="#supporting-pre-release-versions" title="Link to this heading">#</a></h2>
+<p>Alter the <code class="docutils literal notranslate"><span class="pre">parse</span></code> configuration to support pre-release versions. This <code class="docutils literal notranslate"><span class="pre">parse</span></code> option uses an extended (or verbose) regular expression to extract the version parts from the current version.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">New parse configuration</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">parse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;(?x)</span>
+<span class="s2">    (?P&lt;major&gt;0|[1-9]</span><span class="se">\\</span><span class="s2">d*)</span><span class="se">\\</span><span class="s2">.</span>
+<span class="s2">    (?P&lt;minor&gt;0|[1-9]</span><span class="se">\\</span><span class="s2">d*)</span><span class="se">\\</span><span class="s2">.</span>
+<span class="s2">    (?P&lt;patch&gt;0|[1-9]</span><span class="se">\\</span><span class="s2">d*)</span>
+<span class="s2">    (?:</span>
+<span class="s2">        -                             # dash seperator for pre-release section</span>
+<span class="s2">        (?P&lt;pre_l&gt;[a-zA-Z-]+)         # pre-release label</span>
+<span class="s2">        (?P&lt;pre_n&gt;0|[1-9]</span><span class="se">\\</span><span class="s2">d*)        # pre-release version number</span>
+<span class="s2">    )?                                # pre-release section is optional</span>
+<span class="s2">&quot;&quot;&quot;</span>
 </pre></div>
 </div>
-</li>
-<li><p>Go to release candidate by bumping <code class="docutils literal notranslate"><span class="pre">release</span></code>.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> $ bumpversion release
- =&gt; 1.0.1-rc1
+</div>
+<p>Alter the <code class="docutils literal notranslate"><span class="pre">serialize</span></code> configuration to support pre-release versions.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">New serialize configuration</span><a class="headerlink" href="#id4" title="Link to this code">#</a></div>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">serialize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}-{pre_l}{pre_n}&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}&quot;</span><span class="p">,</span>
+<span class="p">]</span>
 </pre></div>
 </div>
-</li>
-<li><p>With every new build, bump <code class="docutils literal notranslate"><span class="pre">build</span></code>.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> $ bumpversion build
- =&gt; 1.0.1-rc2
+</div>
+<p>Add a new configuration section for the <code class="docutils literal notranslate"><span class="pre">pre_l</span></code> part.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">New pre_l configuration</span><a class="headerlink" href="#id5" title="Link to this code">#</a></div>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[tool.bumpversion.parts.pre_l]</span>
+<span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;dev&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;rc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;final&quot;</span><span class="p">]</span>
+<span class="n">optional_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;final&quot;</span>
 </pre></div>
 </div>
-</li>
-<li><p>Finally, bump <code class="docutils literal notranslate"><span class="pre">release</span></code> to generate a final release for the current
-<code class="docutils literal notranslate"><span class="pre">major</span></code> / <code class="docutils literal notranslate"><span class="pre">minor</span></code> / <code class="docutils literal notranslate"><span class="pre">patch</span></code> version.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> $ bumpversion release
- =&gt; 1.0.1
+</div>
+<section id="visualizing-the-new-versioning-path">
+<h3>Visualizing the new versioning path<a class="headerlink" href="#visualizing-the-new-versioning-path" title="Link to this heading">#</a></h3>
+<p>Now when you run <code class="docutils literal notranslate"><span class="pre">bump-my-version</span> <span class="pre">show-bump</span></code>, you can see the new pre-release versioning path.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">Showing the new versioning path</span><a class="headerlink" href="#id6" title="Link to this code">#</a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>bump-my-version<span class="w"> </span>show-bump
+<span class="go">0.1.0 ── bump ─┬─ major ─ 1.0.0-dev0</span>
+<span class="go">               ├─ minor ─ 0.2.0-dev0</span>
+<span class="go">               ├─ patch ─ 0.1.1-dev0</span>
+<span class="go">               ├─ pre_l ─ invalid: The part has already the maximum value among [&#39;dev&#39;, &#39;rc&#39;, &#39;final&#39;] and cannot be bumped.</span>
+<span class="go">               ╰─ pre_n ─ 0.1.0-final1</span>
 </pre></div>
 </div>
-</li>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">pre_l</span></code> is not bump-able because it is already at the maximum value. The <code class="docutils literal notranslate"><span class="pre">pre_n</span></code> is bump-able because it is not at the maximum value.</p>
+<p>If we run <code class="docutils literal notranslate"><span class="pre">bump-my-version</span> <span class="pre">show-bump</span> <span class="pre">1.0.0-dev0</span></code>, we can see the new versioning path for a <code class="docutils literal notranslate"><span class="pre">dev</span></code> starting version.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">Showing the new versioning path for a dev version</span><a class="headerlink" href="#id7" title="Link to this code">#</a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>bump-my-version<span class="w"> </span>show-bump<span class="w"> </span><span class="m">1</span>.0.0-dev0
+<span class="go">1.0.0-dev0 ── bump ─┬─ major ─ 2.0.0-dev0</span>
+<span class="go">                    ├─ minor ─ 1.1.0-dev0</span>
+<span class="go">                    ├─ patch ─ 1.0.1-dev0</span>
+<span class="go">                    ├─ pre_l ─ 1.0.0-rc0</span>
+<span class="go">                    ╰─ pre_n ─ 1.0.0-dev1</span>
+</pre></div>
+</div>
+</div>
+<p>Finally, we can see the new versioning path for a <code class="docutils literal notranslate"><span class="pre">rc</span></code> starting version.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">Showing the new versioning path for an rc version</span><a class="headerlink" href="#id8" title="Link to this code">#</a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>bump-my-version<span class="w"> </span>show-bump<span class="w"> </span><span class="m">1</span>.0.0-rc0<span class="w"> </span>
+<span class="go">1.0.0-rc0 ── bump ─┬─ major ─ 2.0.0-dev0</span>
+<span class="go">                   ├─ minor ─ 1.1.0-dev0</span>
+<span class="go">                   ├─ patch ─ 1.0.1-dev0</span>
+<span class="go">                   ├─ pre_l ─ 1.0.0</span>
+<span class="go">                   ╰─ pre_n ─ 1.0.0-rc1</span>
+</pre></div>
+</div>
+</div>
+<p>The full development and release path is:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">1.0.0</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bump</span> <span class="pre">patch</span></code> → <code class="docutils literal notranslate"><span class="pre">1.0.1-dev0</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bump</span> <span class="pre">pre_n</span></code> → <code class="docutils literal notranslate"><span class="pre">1.0.1-dev1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bump</span> <span class="pre">pre_l</span></code> → <code class="docutils literal notranslate"><span class="pre">1.0.1-rc0</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bump</span> <span class="pre">pre_n</span></code> → <code class="docutils literal notranslate"><span class="pre">1.0.1-rc1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bump</span> <span class="pre">pre_l</span></code> → <code class="docutils literal notranslate"><span class="pre">1.0.1</span></code></p></li>
+</ul>
+<ol class="arabic simple">
+<li><p>You must decide on the next version before you start developing.</p></li>
+<li><p>Development versions increase using <code class="docutils literal notranslate"><span class="pre">bump-my-version</span> <span class="pre">bump</span> <span class="pre">pre_n</span></code>.</p></li>
+<li><p>Switch from development to release candidate using <code class="docutils literal notranslate"><span class="pre">bump-my-version</span> <span class="pre">bump</span> <span class="pre">pre_l</span></code>.</p></li>
+<li><p>Release candidates increase using <code class="docutils literal notranslate"><span class="pre">bump-my-version</span> <span class="pre">bump</span> <span class="pre">pre_n</span></code>.</p></li>
+<li><p>Switch from the release candidate to the final release using <code class="docutils literal notranslate"><span class="pre">bump-my-version</span> <span class="pre">bump</span> <span class="pre">pre_l</span></code>.</p></li>
 </ol>
 </section>
-<section id="notes">
-<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading">#</a></h2>
+</section>
+<section id="automating-the-pre-release-numbering">
+<h2>Automating the pre-release numbering<a class="headerlink" href="#automating-the-pre-release-numbering" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">pre_n</span></code> or pre-release number is a number that increases with each pre-release. You can automate this my changing the serialization configuration.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">Serialize configuration with pre_n automation</span><a class="headerlink" href="#id9" title="Link to this code">#</a></div>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">serialize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}-{pre_l}{distance_to_latest_tag}&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">distance_to_latest_tag</span></code> is a special value that is replaced with the number of commits since the last tag. This is a good value to use for the <code class="docutils literal notranslate"><span class="pre">pre_n</span></code> because it will always increase with each commit.</p>
+<section id="visualizing-the-pre-n-versioning-path">
+<h3>Visualizing the pre_n versioning path<a class="headerlink" href="#visualizing-the-pre-n-versioning-path" title="Link to this heading">#</a></h3>
+<p>Now when you run <code class="docutils literal notranslate"><span class="pre">bump-my-version</span> <span class="pre">show-bump</span></code>, you can see the new pre-release versioning path.</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">Showing the new versioning path with pre_n automation</span><a class="headerlink" href="#id10" title="Link to this code">#</a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>bump-my-version<span class="w"> </span>show-bump
+<span class="go">0.1.0 ── bump ─┬─ major ─ 1.0.0-dev0</span>
+<span class="go">               ├─ minor ─ 0.2.0-dev0</span>
+<span class="go">               ├─ patch ─ 0.1.1-dev0</span>
+<span class="go">               ╰─ pre_l ─ invalid: The part has already the maximum value among [&#39;dev&#39;, &#39;rc&#39;, &#39;final&#39;] and cannot be bumped.</span>
+<span class="gp">$ </span>bump-my-version<span class="w"> </span>show-bump<span class="w"> </span><span class="m">1</span>.0.0-dev0
+<span class="go">1.0.0-dev0 ── bump ─┬─ major ─ 2.0.0-dev0</span>
+<span class="go">                    ├─ minor ─ 1.1.0-dev0</span>
+<span class="go">                    ├─ patch ─ 1.0.1-dev0</span>
+<span class="go">                    ╰─ pre_l ─ 1.0.0-rc0</span>
+<span class="gp">$ </span>bump-my-version<span class="w"> </span>show-bump<span class="w"> </span><span class="m">1</span>.0.0-rc0<span class="w"> </span>
+<span class="go">1.0.0-rc0 ── bump ─┬─ major ─ 2.0.0-dev0</span>
+<span class="go">                   ├─ minor ─ 1.1.0-dev0</span>
+<span class="go">                   ├─ patch ─ 1.0.1-dev0</span>
+<span class="go">                   ╰─ pre_l ─ 1.0.0</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">pre_n</span></code> path is now missing because it is automated.</p>
+<p>The full development and release path now is:</p>
 <ul class="simple">
-<li><p>Once the final release has been reached, it is not possible to bump
-the <code class="docutils literal notranslate"><span class="pre">release</span></code> before bumping <code class="docutils literal notranslate"><span class="pre">patch</span></code> again. Trying to bump the release
-while in final release state will issue
-<code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">The</span> <span class="pre">part</span> <span class="pre">has</span> <span class="pre">already</span> <span class="pre">the</span> <span class="pre">maximum</span> <span class="pre">value</span> <span class="pre">among</span> <span class="pre">['dev',</span> <span class="pre">'rc',</span> <span class="pre">'ga']</span> <span class="pre">and</span> <span class="pre">cannot</span> <span class="pre">be</span> <span class="pre">bumped</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1.0.0</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bump</span> <span class="pre">patch</span></code> → <code class="docutils literal notranslate"><span class="pre">1.0.1-dev0</span></code></p></li>
+<li><p>each commit will increase → <code class="docutils literal notranslate"><span class="pre">1.0.1-dev1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bump</span> <span class="pre">pre_l</span></code> → <code class="docutils literal notranslate"><span class="pre">1.0.1-rc0</span></code></p></li>
+<li><p>each commit will increase → <code class="docutils literal notranslate"><span class="pre">1.0.1-rc1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bump</span> <span class="pre">pre_l</span></code> → <code class="docutils literal notranslate"><span class="pre">1.0.1</span></code></p></li>
 </ul>
+<ol class="arabic simple">
+<li><p>You must decide on the next version before you start developing.</p></li>
+<li><p>Development versions increase automatically with each commit.</p></li>
+<li><p>Switch from development to release candidate using <code class="docutils literal notranslate"><span class="pre">bump-my-version</span> <span class="pre">bump</span> <span class="pre">pre_l</span></code>.</p></li>
+<li><p>Release candidate versions increase automatically with each commit.</p></li>
+<li><p>Switch from the release candidate to the final release using <code class="docutils literal notranslate"><span class="pre">bump-my-version</span> <span class="pre">bump</span> <span class="pre">pre_l</span></code>.</p></li>
+</ol>
+</section>
 </section>
 </section>
 
@@ -360,8 +503,18 @@ while in final release state will issue
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Semantic versioning example</a><ul>
-<li><a class="reference internal" href="#details">Details</a></li>
-<li><a class="reference internal" href="#notes">Notes</a></li>
+<li><a class="reference internal" href="#create-a-default-configuration">Create a default configuration</a><ul>
+<li><a class="reference internal" href="#visualizing-the-versioning-path">Visualizing the versioning path</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#supporting-pre-release-versions">Supporting pre-release versions</a><ul>
+<li><a class="reference internal" href="#visualizing-the-new-versioning-path">Visualizing the new versioning path</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#automating-the-pre-release-numbering">Automating the pre-release numbering</a><ul>
+<li><a class="reference internal" href="#visualizing-the-pre-n-versioning-path">Visualizing the pre_n versioning path</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

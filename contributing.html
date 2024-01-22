@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Changelog" href="changelog.html" /><link rel="prev" title="Explanation" href="explanation/index.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>Contributing to Bump My Version - Bump My Version 0.16.2</title>
@@ -157,7 +157,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="readme.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="tutorials/index.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Tutorials</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -178,6 +178,7 @@
 <li class="toctree-l2"><a class="reference internal" href="reference/search-and-replace-config.html">Search and replace configuration</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="reference/bumpversion/bumpversion.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of bumpversion</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="reference/bumpversion/bumpversion.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of bumpversion.config</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference/bumpversion/bumpversion.config.create.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.create</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="reference/bumpversion/bumpversion.config.files_legacy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files_legacy</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="reference/bumpversion/bumpversion.config.files.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="reference/bumpversion/bumpversion.config.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.utils</span></code></a></li>
@@ -196,6 +197,7 @@
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.scm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.scm</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.indented_logger.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.indented_logger</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.visualize.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.visualize</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.version_part.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.version_part</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/bumpversion/bumpversion.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.__main__</span></code></a></li>
@@ -206,8 +208,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Contributing to Bump My Version</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
 </div>
@@ -245,7 +245,7 @@
           <section class="tex2jax_ignore mathjax_ignore" id="contributing-to-bump-my-version">
 <h1>Contributing to Bump My Version<a class="headerlink" href="#contributing-to-bump-my-version" title="Link to this heading">#</a></h1>
 <p>First off, thanks for taking the time to contribute! ❤️</p>
-<p>All types of contributions are encouraged and valued. See the <a class="reference internal" href="#table-of-contents"><span class="xref myst">Table of Contents</span></a> for different ways to help and details about how this project handles them. Please make sure to read the relevant section before making your contribution. It will make it much easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions. 🎉</p>
+<p>All types of contributions are encouraged and valued. See the <a class="reference internal" href="#table-of-contents">Table of Contents</a> for different ways to help and details about how this project handles them. Please make sure to read the relevant section before making your contribution. It will make it much easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions. 🎉</p>
 <blockquote>
 <div><p>If you like the project but don’t have time to contribute, that’s fine. There are other easy ways to support the project and show your appreciation, which we would also be very happy about:</p>
 <ul class="simple">
@@ -258,15 +258,14 @@
 <section id="table-of-contents">
 <h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><a class="reference internal" href="#code-of-conduct"><span class="xref myst">Code of Conduct</span></a></p></li>
-<li><p><a class="reference internal" href="#i-have-a-question"><span class="xref myst">I Have a Question</span></a></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/bugs.html#reporting-bugs" title="Python 3.12"><span class="xref myst">Reporting Bugs</span></a></p></li>
-<li><p><a class="reference internal" href="#suggesting-enhancements"><span class="xref myst">Suggesting Enhancements</span></a></p></li>
-<li><p><a class="reference internal" href="#your-first-code-contribution"><span class="xref myst">Your First Code Contribution</span></a></p></li>
-<li><p><a class="reference internal" href="#improving-the-documentation"><span class="xref myst">Improving The Documentation</span></a></p></li>
-<li><p><a class="reference internal" href="#styleguides"><span class="xref myst">Styleguides</span></a></p></li>
-<li><p><a class="reference internal" href="#commit-messages"><span class="xref myst">Commit Messages</span></a></p></li>
-<li><p><a class="reference internal" href="#join-the-project-team"><span class="xref myst">Join The Project Team</span></a></p></li>
+<li><p><a class="reference internal" href="#code-of-conduct">Code of Conduct</a></p></li>
+<li><p><a class="reference internal" href="#i-have-a-question">I Have a Question</a></p></li>
+<li><p><a class="reference internal" href="#reporting-bugs">Reporting Bugs</a></p></li>
+<li><p><a class="reference internal" href="#suggesting-enhancements">Suggesting Enhancements</a></p></li>
+<li><p><a class="reference internal" href="#your-first-code-contribution">Your First Code Contribution</a></p></li>
+<li><p><a class="reference internal" href="#improving-the-documentation">Improving The Documentation</a></p></li>
+<li><p><a class="reference internal" href="#styleguides">Styleguides</a></p></li>
+<li><p><a class="reference internal" href="#join-the-project-team">Join The Project Team</a></p></li>
 </ul>
 </section>
 <section id="code-of-conduct">
@@ -296,7 +295,7 @@ to <a class="reference external" href="mailto:coreyoordt&#37;&#52;&#48;gmail&#46
 <p>A good bug report shouldn’t leave others needing to chase you up for more information. Therefore, we ask you to investigate carefully, collect information, and describe the issue in detail in your report. Please complete the following steps in advance to help us fix any potential bug as fast as possible.</p>
 <ul class="simple">
 <li><p>Make sure that you are using the latest version.</p></li>
-<li><p>Determine if your bug is really a bug and not an error on your side e.g. using incompatible environment components/versions (Make sure that you have read the <a class="reference external" href="https://callowayproject.github.io/bump-my-version/">documentation</a>. If you are looking for support, you might want to check <a class="reference internal" href="#i-have-a-question"><span class="xref myst">this section</span></a>).</p></li>
+<li><p>Determine if your bug is really a bug and not an error on your side e.g. using incompatible environment components/versions (Make sure that you have read the <a class="reference external" href="https://callowayproject.github.io/bump-my-version/">documentation</a>. If you are looking for support, you might want to check <a class="reference internal" href="#i-have-a-question">this section</a>).</p></li>
 <li><p>To see if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the <a class="reference external" href="https://github.com/callowayproject/bump-my-version/issues">bug tracker</a>.</p></li>
 <li><p>Also, make sure to search the internet (including Stack Overflow) to see if users outside of the GitHub community have discussed the issue.</p></li>
 <li><p>Collect information about the bug:</p>
@@ -326,7 +325,7 @@ to <a class="reference external" href="mailto:coreyoordt&#37;&#52;&#48;gmail&#46
 <ul class="simple">
 <li><p>The project team will label the issue accordingly.</p></li>
 <li><p>A team member will try to reproduce the issue with your provided steps. If there are no reproduction steps or no obvious way to reproduce the issue, the team will ask you for those steps and will not address them until they are included.</p></li>
-<li><p>If the team is able to reproduce the issue, the issue will be left to be <a class="reference internal" href="#your-first-code-contribution"><span class="xref myst">implemented by someone</span></a>.</p></li>
+<li><p>If the team is able to reproduce the issue, the issue will be left to be <a class="reference internal" href="#your-first-code-contribution">implemented by someone</a>.</p></li>
 </ul>
 </section>
 </section>
@@ -466,26 +465,8 @@ to <a class="reference external" href="mailto:coreyoordt&#37;&#52;&#48;gmail&#46
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="changelog.html">
-              <div class="page-info">
-                <div class="context">
-                  <span>Next</span>
-                </div>
-                <div class="title">Changelog</div>
-              </div>
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-            </a>
-          <a class="prev-page" href="explanation/index.html">
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-              <div class="page-info">
-                <div class="context">
-                  <span>Previous</span>
-                </div>
-                
-                <div class="title">Explanation</div>
-                
-              </div>
-            </a>
+          
+          
         </div>
         <div class="bottom-of-page">
           <div class="left-details">

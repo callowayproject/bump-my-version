@@ -99,9 +99,9 @@
 
 ````{py:attribute} distance_to_latest_tag
 :canonical: bumpversion.scm.SCMInfo.distance_to_latest_tag
-:type: typing.Optional[int]
+:type: int
 :value: >
-   None
+   0
 
 ```{autodoc2-docstring} bumpversion.scm.SCMInfo.distance_to_latest_tag
 ```

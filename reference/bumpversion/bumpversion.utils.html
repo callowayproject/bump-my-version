@@ -178,6 +178,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../search-and-replace-config.html">Search and replace configuration</a></li>
 <li class="toctree-l2 current has-children"><a class="reference internal" href="bumpversion.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of bumpversion</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l3 has-children"><a class="reference internal" href="bumpversion.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of bumpversion.config</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="bumpversion.config.create.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.create</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="bumpversion.config.files_legacy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files_legacy</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="bumpversion.config.files.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="bumpversion.config.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.utils</span></code></a></li>
@@ -196,6 +197,7 @@
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.scm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.scm</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.indented_logger.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.indented_logger</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bumpversion.visualize.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.visualize</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.version_part.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.version_part</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.__main__</span></code></a></li>
@@ -206,8 +208,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing to Bump My Version</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
 </ul>
 
 </div>
@@ -267,16 +267,19 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.utils.labels_for_format" title="bumpversion.utils.labels_for_format"><code class="xref py py-obj docutils literal notranslate"><span class="pre">labels_for_format</span></code></a></p></td>
 <td><p>Return a list of labels for the given serialize_format.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.utils.get_context" title="bumpversion.utils.get_context"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_context</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.utils.base_context" title="bumpversion.utils.base_context"><code class="xref py py-obj docutils literal notranslate"><span class="pre">base_context</span></code></a></p></td>
+<td><p>The default context for rendering messages and tags.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.utils.get_context" title="bumpversion.utils.get_context"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_context</span></code></a></p></td>
 <td><p>Return the context for rendering messages and tags.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.utils.get_overrides" title="bumpversion.utils.get_overrides"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_overrides</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.utils.get_overrides" title="bumpversion.utils.get_overrides"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_overrides</span></code></a></p></td>
 <td><p>Return a dictionary containing only the overridden key-values.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.utils.get_nested_value" title="bumpversion.utils.get_nested_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_nested_value</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.utils.get_nested_value" title="bumpversion.utils.get_nested_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_nested_value</span></code></a></p></td>
 <td><p>Retrieves the value of a nested key in a dictionary based on the given path.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.utils.set_nested_value" title="bumpversion.utils.set_nested_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_nested_value</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.utils.set_nested_value" title="bumpversion.utils.set_nested_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_nested_value</span></code></a></p></td>
 <td><p>Sets the value of a nested key in a dictionary based on the given path.</p></td>
 </tr>
 </tbody>
@@ -317,6 +320,12 @@ A tuple of the regex pattern without the flag string and regex flag string</p>
 <dt class="sig sig-object py" id="bumpversion.utils.labels_for_format">
 <span class="sig-prename descclassname"><span class="pre">bumpversion.utils.</span></span><span class="sig-name descname"><span class="pre">labels_for_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serialize_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/bumpversion/utils.html#labels_for_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.utils.labels_for_format" title="Link to this definition">#</a></dt>
 <dd><p>Return a list of labels for the given serialize_format.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bumpversion.utils.base_context">
+<span class="sig-prename descclassname"><span class="pre">bumpversion.utils.</span></span><span class="sig-name descname"><span class="pre">base_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scm_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="bumpversion.scm.html#bumpversion.scm.SCMInfo" title="bumpversion.scm.SCMInfo"><span class="pre">bumpversion.scm.SCMInfo</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.ChainMap" title="(in Python v3.12)"><span class="pre">collections.ChainMap</span></a></span></span><a class="reference internal" href="../../_modules/bumpversion/utils.html#base_context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.utils.base_context" title="Link to this definition">#</a></dt>
+<dd><p>The default context for rendering messages and tags.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -432,6 +441,7 @@ ValueError: If an element in the path is not a dictionary.</p>
 <li><a class="reference internal" href="#bumpversion.utils.key_val_string"><code class="docutils literal notranslate"><span class="pre">key_val_string()</span></code></a></li>
 <li><a class="reference internal" href="#bumpversion.utils.prefixed_environ"><code class="docutils literal notranslate"><span class="pre">prefixed_environ()</span></code></a></li>
 <li><a class="reference internal" href="#bumpversion.utils.labels_for_format"><code class="docutils literal notranslate"><span class="pre">labels_for_format()</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.utils.base_context"><code class="docutils literal notranslate"><span class="pre">base_context()</span></code></a></li>
 <li><a class="reference internal" href="#bumpversion.utils.get_context"><code class="docutils literal notranslate"><span class="pre">get_context()</span></code></a></li>
 <li><a class="reference internal" href="#bumpversion.utils.get_overrides"><code class="docutils literal notranslate"><span class="pre">get_overrides()</span></code></a></li>
 <li><a class="reference internal" href="#bumpversion.utils.get_nested_value"><code class="docutils literal notranslate"><span class="pre">get_nested_value()</span></code></a></li>
