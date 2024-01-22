@@ -46,7 +46,7 @@
 ````{py:data} logger
 :canonical: bumpversion.bump.logger
 :value: >
-   None
+   'get_indented_logger(...)'
 
 ```{autodoc2-docstring} bumpversion.bump.logger
 ```

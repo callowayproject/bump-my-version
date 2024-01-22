@@ -111,9 +111,9 @@ The `replace` sub-command works identically to the `bump` sub-command except for
 If you do not include the `--new-version` option, the `new_version` context variable will be `None`.
 ```
 
-One way of providing the `--new-version` option is to use the `bumpversion show` subcommand with an environment variable:
+One way of providing the `--new-version` option is to use the `bump-my-version show` subcommand with an environment variable:
 
 ```console
-$ export BUMPVERSION_NEW_VERSION=$(bumpversion show new_version --increment <versionpart>)
-$ bumpversion replace
+$ export BUMPVERSION_NEW_VERSION=$(bump-my-version show new_version --increment <versionpart>)
+$ bump-my-version replace
 ```

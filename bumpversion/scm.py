@@ -25,7 +25,7 @@ class SCMInfo:
 
     tool: Optional[Type["SourceCodeManager"]] = None
     commit_sha: Optional[str] = None
-    distance_to_latest_tag: Optional[int] = None
+    distance_to_latest_tag: int = 0
     current_version: Optional[str] = None
     branch_name: Optional[str] = None
     short_branch_name: Optional[str] = None

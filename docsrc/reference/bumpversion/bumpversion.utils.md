@@ -15,6 +15,14 @@
 :class: autosummary longtable
 :align: left
 
+* - {py:obj}`extract_regex_flags <bumpversion.utils.extract_regex_flags>`
+  - ```{autodoc2-docstring} bumpversion.utils.extract_regex_flags
+    :summary:
+    ```
+* - {py:obj}`recursive_sort_dict <bumpversion.utils.recursive_sort_dict>`
+  - ```{autodoc2-docstring} bumpversion.utils.recursive_sort_dict
+    :summary:
+    ```
 * - {py:obj}`key_val_string <bumpversion.utils.key_val_string>`
   - ```{autodoc2-docstring} bumpversion.utils.key_val_string
     :summary:
@@ -35,9 +43,31 @@
   - ```{autodoc2-docstring} bumpversion.utils.get_overrides
     :summary:
     ```
+* - {py:obj}`get_nested_value <bumpversion.utils.get_nested_value>`
+  - ```{autodoc2-docstring} bumpversion.utils.get_nested_value
+    :summary:
+    ```
+* - {py:obj}`set_nested_value <bumpversion.utils.set_nested_value>`
+  - ```{autodoc2-docstring} bumpversion.utils.set_nested_value
+    :summary:
+    ```
 ````
 
 ### API
+
+````{py:function} extract_regex_flags(regex_pattern: str) -> typing.Tuple[str, str]
+:canonical: bumpversion.utils.extract_regex_flags
+
+```{autodoc2-docstring} bumpversion.utils.extract_regex_flags
+```
+````
+
+````{py:function} recursive_sort_dict(input_value: typing.Any) -> typing.Any
+:canonical: bumpversion.utils.recursive_sort_dict
+
+```{autodoc2-docstring} bumpversion.utils.recursive_sort_dict
+```
+````
 
 ````{py:function} key_val_string(d: dict) -> str
 :canonical: bumpversion.utils.key_val_string
@@ -71,5 +101,19 @@
 :canonical: bumpversion.utils.get_overrides
 
 ```{autodoc2-docstring} bumpversion.utils.get_overrides
+```
+````
+
+````{py:function} get_nested_value(d: dict, path: str) -> typing.Any
+:canonical: bumpversion.utils.get_nested_value
+
+```{autodoc2-docstring} bumpversion.utils.get_nested_value
+```
+````
+
+````{py:function} set_nested_value(d: dict, value: typing.Any, path: str) -> None
+:canonical: bumpversion.utils.set_nested_value
+
+```{autodoc2-docstring} bumpversion.utils.set_nested_value
 ```
 ````

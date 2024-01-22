@@ -62,7 +62,7 @@
 ````{py:data} logger
 :canonical: bumpversion.scm.logger
 :value: >
-   None
+   'get_indented_logger(...)'
 
 ```{autodoc2-docstring} bumpversion.scm.logger
 ```
@@ -231,7 +231,7 @@
 
 ````
 
-````{py:method} latest_tag_info(tag_pattern: str) -> bumpversion.scm.SCMInfo
+````{py:method} latest_tag_info(tag_name: str, parse_pattern: str) -> bumpversion.scm.SCMInfo
 :canonical: bumpversion.scm.SourceCodeManager.latest_tag_info
 :abstractmethod:
 :classmethod:
@@ -266,6 +266,15 @@
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.SourceCodeManager.get_all_tags
+```
+
+````
+
+````{py:method} get_version_from_tag(tag: str, tag_name: str, parse_pattern: str) -> typing.Optional[str]
+:canonical: bumpversion.scm.SourceCodeManager.get_version_from_tag
+:classmethod:
+
+```{autodoc2-docstring} bumpversion.scm.SourceCodeManager.get_version_from_tag
 ```
 
 ````
@@ -350,7 +359,7 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
 
 ````
 
-````{py:method} latest_tag_info(tag_pattern: str) -> bumpversion.scm.SCMInfo
+````{py:method} latest_tag_info(tag_name: str, parse_pattern: str) -> bumpversion.scm.SCMInfo
 :canonical: bumpversion.scm.Git.latest_tag_info
 :classmethod:
 
@@ -420,7 +429,7 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
 
 ````
 
-````{py:method} latest_tag_info(tag_pattern: str) -> bumpversion.scm.SCMInfo
+````{py:method} latest_tag_info(tag_name: str, parse_pattern: str) -> bumpversion.scm.SCMInfo
 :canonical: bumpversion.scm.Mercurial.latest_tag_info
 :classmethod:
 
@@ -458,7 +467,7 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
 
 `````
 
-````{py:function} get_scm_info(tag_pattern: str) -> bumpversion.scm.SCMInfo
+````{py:function} get_scm_info(tag_name: str, parse_pattern: str) -> bumpversion.scm.SCMInfo
 :canonical: bumpversion.scm.get_scm_info
 
 ```{autodoc2-docstring} bumpversion.scm.get_scm_info

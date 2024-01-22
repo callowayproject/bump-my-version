@@ -11,8 +11,8 @@ tutorials/index
 howtos/index
 reference/index
 explanation/index
-contributing
-changelog
+CONTRIBUTING
+CHANGELOG
 ```
 
 ## Indices and tables

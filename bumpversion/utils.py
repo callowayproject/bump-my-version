@@ -1,4 +1,5 @@
 """General utilities."""
+import datetime
 import string
 from collections import ChainMap
 from dataclasses import asdict
@@ -6,6 +7,7 @@ from typing import TYPE_CHECKING, Any, List, Optional, Tuple
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
+    from bumpversion.scm import SCMInfo
     from bumpversion.version_part import Version
 
 
@@ -51,19 +53,29 @@ def labels_for_format(serialize_format: str) -> List[str]:
     return [item[1] for item in string.Formatter().parse(serialize_format) if item[1]]
 
 
+def base_context(scm_info: Optional["SCMInfo"] = None) -> ChainMap:
+    """The default context for rendering messages and tags."""
+    from bumpversion.scm import SCMInfo  # Including this here to avoid circular imports
+
+    scm = asdict(scm_info) if scm_info else asdict(SCMInfo())
+
+    return ChainMap(
+        {
+            "now": datetime.datetime.now(),
+            "utcnow": datetime.datetime.now(datetime.timezone.utc),
+        },
+        prefixed_environ(),
+        scm,
+        {c: c for c in ("#", ";")},
+    )
+
+
 def get_context(
     config: "Config", current_version: Optional["Version"] = None, new_version: Optional["Version"] = None
 ) -> ChainMap:
     """Return the context for rendering messages and tags."""
-    import datetime
-
-    ctx = ChainMap(
-        {"current_version": config.current_version},
-        {"now": datetime.datetime.now(), "utcnow": datetime.datetime.utcnow()},
-        prefixed_environ(),
-        asdict(config.scm_info),
-        {c: c for c in ("#", ";")},
-    )
+    ctx = base_context(config.scm_info)
+    ctx.new_child({"current_version": config.current_version})
     if current_version:
         ctx = ctx.new_child({f"current_{part}": current_version[part].value for part in current_version})
     if new_version:

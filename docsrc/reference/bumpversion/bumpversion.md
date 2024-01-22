@@ -7,6 +7,15 @@
 :allowtitles:
 ```
 
+## Subpackages
+
+```{toctree}
+:titlesonly:
+:maxdepth: 3
+
+bumpversion.config
+```
+
 ## Submodules
 
 ```{toctree}
@@ -15,12 +24,12 @@
 
 bumpversion.functions
 bumpversion.version_part
-bumpversion.logging
 bumpversion.files
 bumpversion.show
-bumpversion.config
+bumpversion.indented_logger
 bumpversion.ui
 bumpversion.autocast
+bumpversion.visualize
 bumpversion.aliases
 bumpversion.cli
 bumpversion.utils
