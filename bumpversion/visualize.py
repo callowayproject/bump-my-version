@@ -6,7 +6,7 @@ from bumpversion.bump import get_next_version
 from bumpversion.config import Config
 from bumpversion.exceptions import BumpVersionError
 from bumpversion.ui import print_info
-from bumpversion.utils import get_context
+from bumpversion.utils import base_context, get_context
 
 BOX_CHARS = {
     "ascii": ["+", "+", "+", "+", "+", "+", "+", "+", "-", "|", "+"],
@@ -92,10 +92,25 @@ def labeled_line(label: str, border: Border, fit_length: Optional[int] = None) -
     return f" {label} {border.line * (fit_length - len(label))}{border.line} "
 
 
+def filter_version_parts(config: Config) -> list[str]:
+    """
+    Return the version parts that are in the configuration.
+
+    Args:
+        config: The configuration to check against
+
+    Returns:
+        The version parts that are in the configuration
+    """
+    version_parts = [part for part in config.version_config.order if not part.startswith("$")]
+    default_context = base_context(config.scm_info)
+    return [part for part in version_parts if part not in default_context]
+
+
 def visualize(config: Config, version_str: str, box_style: str = "light") -> None:
     """Output a visualization of the bump-my-version bump process."""
     version = config.version_config.parse(version_str)
-    version_parts = config.version_config.order
+    version_parts = filter_version_parts(config)
     num_parts = len(version_parts)
 
     box_style = box_style if box_style in BOX_CHARS else "light"
@@ -111,8 +126,8 @@ def visualize(config: Config, version_str: str, box_style: str = "light") -> Non
         try:
             next_version = get_next_version(version, config, part, None)
             next_version_str = config.version_config.serialize(next_version, get_context(config))
-        except (BumpVersionError, ValueError):
-            next_version_str = "invalid"
+        except (BumpVersionError, ValueError) as e:
+            next_version_str = f"invalid: {e}"
 
         has_next = i < num_parts - 1
         has_previous = i > 0
