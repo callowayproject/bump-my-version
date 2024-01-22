@@ -1,6 +1,6 @@
 """Visualize the bumpversion process."""
 from dataclasses import dataclass
-from typing import Optional
+from typing import List, Optional
 
 from bumpversion.bump import get_next_version
 from bumpversion.config import Config
@@ -92,7 +92,7 @@ def labeled_line(label: str, border: Border, fit_length: Optional[int] = None) -
     return f" {label} {border.line * (fit_length - len(label))}{border.line} "
 
 
-def filter_version_parts(config: Config) -> list[str]:
+def filter_version_parts(config: Config) -> List[str]:
     """
     Return the version parts that are in the configuration.
 
