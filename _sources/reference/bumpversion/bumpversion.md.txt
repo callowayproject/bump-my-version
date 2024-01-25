@@ -22,22 +22,22 @@ bumpversion.config
 :titlesonly:
 :maxdepth: 1
 
-bumpversion.exceptions
-bumpversion.files
+bumpversion.yaml_dump
+bumpversion.show
 bumpversion.ui
 bumpversion.utils
-bumpversion.bump
-bumpversion.autocast
-bumpversion.yaml_dump
-bumpversion.aliases
-bumpversion.cli
-bumpversion.scm
-bumpversion.show
-bumpversion.indented_logger
-bumpversion.visualize
 bumpversion.version_part
+bumpversion.scm
+bumpversion.autocast
+bumpversion.files
+bumpversion.bump
+bumpversion.indented_logger
 bumpversion.functions
+bumpversion.exceptions
 bumpversion.__main__
+bumpversion.cli
+bumpversion.visualize
+bumpversion.aliases
 ```
 
 ## Package Contents
