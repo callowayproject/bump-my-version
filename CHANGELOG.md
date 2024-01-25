@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.17.1 (2024-01-25)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.17.0...0.17.1)
+
+### Fixes
+
+- Fixed bad error checking with SCM. [10e5d7d](https://github.com/callowayproject/bump-my-version/commit/10e5d7dceea97b1c26868d35978353f7d7595fd5)
+    
+- Fix missing current version within the context. [a5dca4c](https://github.com/callowayproject/bump-my-version/commit/a5dca4c210260c6dd395ef034db442d58b0342b1)
+    
+
 ## 0.17.0 (2024-01-22)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.16.2...0.17.0)
 
