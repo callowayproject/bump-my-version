@@ -75,7 +75,7 @@ def get_context(
 ) -> ChainMap:
     """Return the context for rendering messages and tags."""
     ctx = base_context(config.scm_info)
-    ctx.new_child({"current_version": config.current_version})
+    ctx = ctx.new_child({"current_version": config.current_version})
     if current_version:
         ctx = ctx.new_child({f"current_{part}": current_version[part].value for part in current_version})
     if new_version:
