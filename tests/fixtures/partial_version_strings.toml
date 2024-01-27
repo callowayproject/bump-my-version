@@ -26,3 +26,7 @@ build = [
 commit = false
 tag = false
 current_version = "0.0.2"
+
+[tool.othertool]
+bake_cookies = true
+ignore-words-list = "sugar, salt, flour"

@@ -81,7 +81,7 @@
 
 `````
 
-`````{py:class} NumericFunction(optional_value: typing.Optional[str] = None, first_value: typing.Optional[str] = None)
+`````{py:class} NumericFunction(optional_value: typing.Union[str, int, None] = None, first_value: typing.Union[str, int, None] = None)
 :canonical: bumpversion.functions.NumericFunction
 
 Bases: {py:obj}`bumpversion.functions.PartFunction`
@@ -98,7 +98,7 @@ Bases: {py:obj}`bumpversion.functions.PartFunction`
 ````{py:attribute} FIRST_NUMERIC
 :canonical: bumpversion.functions.NumericFunction.FIRST_NUMERIC
 :value: >
-   None
+   'compile(...)'
 
 ```{autodoc2-docstring} bumpversion.functions.NumericFunction.FIRST_NUMERIC
 ```

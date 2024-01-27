@@ -1,5 +1,63 @@
 # Changelog
 
+## 0.17.1 (2024-01-25)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.17.0...0.17.1)
+
+### Fixes
+
+- Fixed bad error checking with SCM. [10e5d7d](https://github.com/callowayproject/bump-my-version/commit/10e5d7dceea97b1c26868d35978353f7d7595fd5)
+    
+- Fix missing current version within the context. [a5dca4c](https://github.com/callowayproject/bump-my-version/commit/a5dca4c210260c6dd395ef034db442d58b0342b1)
+    
+
+## 0.17.0 (2024-01-22)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.16.2...0.17.0)
+
+### Fixes
+
+- Fixed Py3.8 type annotation. [c15b23b](https://github.com/callowayproject/bump-my-version/commit/c15b23b1f8505dc9d756acf5b7fb73b7d7b5892a)
+    
+- Fixed some output in visualizing. [406f97a](https://github.com/callowayproject/bump-my-version/commit/406f97a8c77f9c0fce7f436dffe247542c7b75a5)
+    
+- Fixed bad type annotation. [8f4bedf](https://github.com/callowayproject/bump-my-version/commit/8f4bedf7fb104a2a683acbaa02621589d9a9de27)
+    
+- Fixed bad test imports. [a74342b](https://github.com/callowayproject/bump-my-version/commit/a74342bfbdc556a7c5161c2c9cee12736c31ee8f)
+    
+- Refactored the create subcommand. [f529d28](https://github.com/callowayproject/bump-my-version/commit/f529d283fb3a32eddee9daf368f9ce17ba5efcf1)
+    
+  - Also organized the CLI tests
+### New
+
+- Added `show-bump` subcommand. [0bbd814](https://github.com/callowayproject/bump-my-version/commit/0bbd81489ea0484962e9b3c207e6c6860cab6c55)
+    
+  - Shows possible resulting versions of the `bump` command
+- Added sample-config feature. [3d0f67d](https://github.com/callowayproject/bump-my-version/commit/3d0f67dbf9f42ffad1583e1fe08bd0971262257c)
+    
+  - Initial implementation
+### Updates
+
+- Updated documentation. [4f90348](https://github.com/callowayproject/bump-my-version/commit/4f903486338af31557c3647fc0ae00d7cc8e4213)
+    
+
+## 0.16.2 (2024-01-13)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.16.1...0.16.2)
+
+### Fixes
+
+- Fixed a bad import. [46c9c48](https://github.com/callowayproject/bump-my-version/commit/46c9c48ccc02a9b2d0e81d70c15323de3e8a4ce8)
+    
+- Fixed extra whitespace added when updating pyproject.toml. [839f17f](https://github.com/callowayproject/bump-my-version/commit/839f17fbf7a0902fb15347a31778c55e9a91e7ab)
+    
+  - Removed dotted-notation from requirements. There is an issue on how dotted-notation sets values in the TOMLkit data structure.
+
+  - Added `get_nested_value` and `set_nested_value` as replacements for dotted-notation.
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [ee4d2f3](https://github.com/callowayproject/bump-my-version/commit/ee4d2f32af28c650651b9242c09e3b125e0101e2)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.1.9 → v0.1.11](https://github.com/astral-sh/ruff-pre-commit/compare/v0.1.9...v0.1.11)
+
+
 ## 0.16.1 (2024-01-06)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.16.0...0.16.1)
 

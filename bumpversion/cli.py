@@ -1,18 +1,23 @@
 """bump-my-version Command line interface."""
+from pathlib import Path
 from typing import List, Optional
 
+import questionary
 import rich_click as click
 from click.core import Context
+from tomlkit import dumps
 
 from bumpversion import __version__
 from bumpversion.aliases import AliasedGroup
 from bumpversion.bump import do_bump
 from bumpversion.config import get_configuration
+from bumpversion.config.create import create_configuration
 from bumpversion.config.files import find_config_file
 from bumpversion.files import ConfiguredFile, modify_files
 from bumpversion.show import do_show, log_list
-from bumpversion.ui import get_indented_logger, print_warning, setup_logging
+from bumpversion.ui import get_indented_logger, print_info, print_warning, setup_logging
 from bumpversion.utils import get_context, get_overrides
+from bumpversion.visualize import visualize
 
 logger = get_indented_logger(__name__)
 
@@ -516,3 +521,51 @@ def replace(
     ctx = get_context(config, version, next_version)
 
     modify_files(configured_files, version, next_version, ctx, dry_run)
+
+
+@cli.command()
+@click.option(
+    "--prompt/--no-prompt",
+    default=True,
+    help="Ask the user questions about the configuration.",
+)
+@click.option(
+    "--destination",
+    default="stdout",
+    help="Where to write the sample configuration.",
+    type=click.Choice(["stdout", ".bumpversion.toml", "pyproject.toml"]),
+)
+def sample_config(prompt: bool, destination: str) -> None:
+    """Print a sample configuration file."""
+    if prompt:
+        destination = questionary.select(
+            "Destination", choices=["stdout", ".bumpversion.toml", "pyproject.toml"], default=destination
+        ).ask()
+
+    destination_config = create_configuration(destination, prompt)
+
+    if destination == "stdout":
+        print_info(dumps(destination_config))
+    else:
+        Path(destination).write_text(dumps(destination_config))
+
+
+@cli.command()
+@click.argument("version", nargs=1, type=str, required=False, default="")
+@click.option(
+    "--config-file",
+    metavar="FILE",
+    required=False,
+    envvar="BUMPVERSION_CONFIG_FILE",
+    type=click.Path(exists=True),
+    help="Config file to read most of the variables from.",
+)
+@click.option("--ascii", is_flag=True, help="Use ASCII characters only.")
+def show_bump(version: str, config_file: Optional[str], ascii: bool) -> None:
+    """Show the possible versions resulting from the bump subcommand."""
+    found_config_file = find_config_file(config_file)
+    config = get_configuration(found_config_file)
+    if not version:
+        version = config.current_version
+    box_style = "ascii" if ascii else "light"
+    visualize(config=config, version_str=version, box_style=box_style)

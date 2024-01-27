@@ -1,4 +1,5 @@
 """General utilities."""
+import datetime
 import string
 from collections import ChainMap
 from dataclasses import asdict
@@ -6,6 +7,7 @@ from typing import TYPE_CHECKING, Any, List, Optional, Tuple
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
+    from bumpversion.scm import SCMInfo
     from bumpversion.versioning.models import Version
 
 
@@ -51,19 +53,29 @@ def labels_for_format(serialize_format: str) -> List[str]:
     return [item[1] for item in string.Formatter().parse(serialize_format) if item[1]]
 
 
+def base_context(scm_info: Optional["SCMInfo"] = None) -> ChainMap:
+    """The default context for rendering messages and tags."""
+    from bumpversion.scm import SCMInfo  # Including this here to avoid circular imports
+
+    scm = asdict(scm_info) if scm_info else asdict(SCMInfo())
+
+    return ChainMap(
+        {
+            "now": datetime.datetime.now(),
+            "utcnow": datetime.datetime.now(datetime.timezone.utc),
+        },
+        prefixed_environ(),
+        scm,
+        {c: c for c in ("#", ";")},
+    )
+
+
 def get_context(
     config: "Config", current_version: Optional["Version"] = None, new_version: Optional["Version"] = None
 ) -> ChainMap:
     """Return the context for rendering messages and tags."""
-    import datetime
-
-    ctx = ChainMap(
-        {"current_version": config.current_version},
-        {"now": datetime.datetime.now(), "utcnow": datetime.datetime.utcnow()},
-        prefixed_environ(),
-        asdict(config.scm_info),
-        {c: c for c in ("#", ";")},
-    )
+    ctx = base_context(config.scm_info)
+    ctx = ctx.new_child({"current_version": config.current_version})
     if current_version:
         ctx = ctx.new_child({f"current_{part}": current_version[part].value for part in current_version})
     if new_version:
@@ -74,3 +86,60 @@ def get_context(
 def get_overrides(**kwargs) -> dict:
     """Return a dictionary containing only the overridden key-values."""
     return {key: val for key, val in kwargs.items() if val is not None}
+
+
+def get_nested_value(d: dict, path: str) -> Any:
+    """
+    Retrieves the value of a nested key in a dictionary based on the given path.
+
+    Args:
+        d: The dictionary to search.
+        path: A string representing the path to the nested key, separated by periods.
+
+    Returns:
+        The value of the nested key.
+
+    Raises:
+        KeyError: If a key in the path does not exist.
+        ValueError: If an element in the path is not a dictionary.
+    """
+    keys = path.split(".")
+    current_element = d
+
+    for key in keys:
+        if not isinstance(current_element, dict):
+            raise ValueError(f"Element at '{'.'.join(keys[:keys.index(key)])}' is not a dictionary")
+
+        if key not in current_element:
+            raise KeyError(f"Key '{key}' not found at '{'.'.join(keys[:keys.index(key)])}'")
+
+        current_element = current_element[key]
+
+    return current_element
+
+
+def set_nested_value(d: dict, value: Any, path: str) -> None:
+    """
+    Sets the value of a nested key in a dictionary based on the given path.
+
+    Args:
+        d: The dictionary to search.
+        value: The value to set.
+        path: A string representing the path to the nested key, separated by periods.
+
+    Raises:
+        ValueError: If an element in the path is not a dictionary.
+    """
+    keys = path.split(".")
+    last_element = keys[-1]
+    current_element = d
+
+    for i, key in enumerate(keys):
+        if key == last_element:
+            current_element[key] = value
+        elif key not in current_element:
+            raise KeyError(f"Key '{key}' not found at '{'.'.join(keys[:keys.index(key)])}'")
+        elif not isinstance(current_element[key], dict):
+            raise ValueError(f"Path '{'.'.join(keys[:i+1])}' does not lead to a dictionary.")
+        else:
+            current_element = current_element[key]

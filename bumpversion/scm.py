@@ -14,7 +14,7 @@ from bumpversion.utils import extract_regex_flags
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
 
-from bumpversion.exceptions import DirtyWorkingDirectoryError, SignedTagsError
+from bumpversion.exceptions import BumpVersionError, DirtyWorkingDirectoryError, SignedTagsError
 
 logger = get_indented_logger(__name__)
 
@@ -25,7 +25,7 @@ class SCMInfo:
 
     tool: Optional[Type["SourceCodeManager"]] = None
     commit_sha: Optional[str] = None
-    distance_to_latest_tag: Optional[int] = None
+    distance_to_latest_tag: int = 0
     current_version: Optional[str] = None
     branch_name: Optional[str] = None
     short_branch_name: Optional[str] = None
@@ -54,6 +54,12 @@ class SourceCodeManager:
     def commit(cls, message: str, current_version: str, new_version: str, extra_args: Optional[list] = None) -> None:
         """Commit the changes."""
         extra_args = extra_args or []
+        if not current_version:
+            logger.warning("No current version given, using an empty string.")
+            current_version = ""
+        if not new_version:
+            logger.warning("No new version given, using an empty string.")
+            new_version = ""
 
         with NamedTemporaryFile("wb", delete=False) as f:
             f.write(message.encode("utf-8"))
@@ -66,10 +72,13 @@ class SourceCodeManager:
         try:
             cmd = [*cls._COMMIT_COMMAND, f.name, *extra_args]
             subprocess.run(cmd, env=env, capture_output=True, check=True)  # noqa: S603
-        except subprocess.CalledProcessError as exc:  # pragma: no-coverage
-            err_msg = f"Failed to run {exc.cmd}: return code {exc.returncode}, output: {exc.output}"
+        except (subprocess.CalledProcessError, TypeError) as exc:  # pragma: no-coverage
+            if isinstance(exc, TypeError):
+                err_msg = f"Failed to run {cls._COMMIT_COMMAND}: {exc}"
+            else:
+                err_msg = f"Failed to run {exc.cmd}: return code {exc.returncode}, output: {exc.output}"
             logger.exception(err_msg)
-            raise exc
+            raise BumpVersionError(err_msg) from exc
         finally:
             os.unlink(f.name)
 

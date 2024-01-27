@@ -15,6 +15,14 @@
 :class: autosummary longtable
 :align: left
 
+* - {py:obj}`get_indented_logger <bumpversion.ui.get_indented_logger>`
+  - ```{autodoc2-docstring} bumpversion.ui.get_indented_logger
+    :summary:
+    ```
+* - {py:obj}`setup_logging <bumpversion.ui.setup_logging>`
+  - ```{autodoc2-docstring} bumpversion.ui.setup_logging
+    :summary:
+    ```
 * - {py:obj}`print_info <bumpversion.ui.print_info>`
   - ```{autodoc2-docstring} bumpversion.ui.print_info
     :summary:
@@ -29,7 +37,57 @@
     ```
 ````
 
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`logger <bumpversion.ui.logger>`
+  - ```{autodoc2-docstring} bumpversion.ui.logger
+    :summary:
+    ```
+* - {py:obj}`VERBOSITY <bumpversion.ui.VERBOSITY>`
+  - ```{autodoc2-docstring} bumpversion.ui.VERBOSITY
+    :summary:
+    ```
+````
+
 ### API
+
+````{py:data} logger
+:canonical: bumpversion.ui.logger
+:value: >
+   'getLogger(...)'
+
+```{autodoc2-docstring} bumpversion.ui.logger
+```
+
+````
+
+````{py:data} VERBOSITY
+:canonical: bumpversion.ui.VERBOSITY
+:value: >
+   None
+
+```{autodoc2-docstring} bumpversion.ui.VERBOSITY
+```
+
+````
+
+````{py:function} get_indented_logger(name: str) -> bumpversion.indented_logger.IndentedLoggerAdapter
+:canonical: bumpversion.ui.get_indented_logger
+
+```{autodoc2-docstring} bumpversion.ui.get_indented_logger
+```
+````
+
+````{py:function} setup_logging(verbose: int = 0) -> None
+:canonical: bumpversion.ui.setup_logging
+
+```{autodoc2-docstring} bumpversion.ui.setup_logging
+```
+````
 
 ````{py:function} print_info(msg: str) -> None
 :canonical: bumpversion.ui.print_info

@@ -459,56 +459,87 @@ def test_bad_regex_search(tmp_path: Path, caplog) -> None:
     assert "Invalid regex" in caplog.text
 
 
-def test_datafileupdater_replaces_key(tmp_path: Path, fixtures_path: Path) -> None:
-    """A key specific key is replaced and nothing else is touched."""
-    # Arrange
-    config_path = tmp_path / "pyproject.toml"
-    fixture_path = fixtures_path / "partial_version_strings.toml"
-    shutil.copy(fixture_path, config_path)
+class TestDataFileUpdater:
+    """Tests for the DataFileUpdater class."""
 
-    contents_before = config_path.read_text()
-    conf = config.get_configuration(config_file=config_path, files=[{"filename": str(config_path)}])
-    version_config = VersionConfig(conf.parse, conf.serialize, conf.search, conf.replace, conf.parts)
-    current_version = version_config.parse(conf.current_version)
-    new_version = current_version.bump("minor")
-    datafile_config = FileChange(
-        filename=str(config_path),
-        key_path="tool.bumpversion.current_version",
-        search=conf.search,
-        replace=conf.replace,
-        regex=conf.regex,
-        ignore_missing_version=conf.ignore_missing_version,
-        serialize=conf.serialize,
-        parse=conf.parse,
-    )
+    def test_update_file_does_not_modify_non_toml_files(self, tmp_path: Path) -> None:
+        """A non-TOML file is not modified."""
+        # Arrange
+        version_path = tmp_path / "VERSION"
+        version_path.write_text("1.2.3")
 
-    # Act
-    files.DataFileUpdater(datafile_config, version_config.part_configs).update_file(
-        current_version, new_version, get_context(conf)
-    )
-
-    # Assert
-    contents_after = config_path.read_text()
-    toml_data = tomlkit.parse(config_path.read_text()).unwrap()
-    actual_difference = list(
-        context_diff(
-            contents_before.splitlines(),
-            contents_after.splitlines(),
-            fromfile="before",
-            tofile="after",
-            n=0,
-            lineterm="",
+        overrides = {"current_version": "1.2.3", "files": [{"filename": str(version_path)}]}
+        conf, version_config, current_version = get_config_data(overrides)
+        new_version = current_version.bump("patch", version_config.order)
+        datafile_config = FileChange(
+            filename=str(version_path),
+            key_path="",
+            search=conf.search,
+            replace=conf.replace,
+            regex=conf.regex,
+            ignore_missing_version=conf.ignore_missing_version,
+            serialize=conf.serialize,
+            parse=conf.parse,
         )
-    )
-    expected_difference = [
-        "*** before",
-        "--- after",
-        "***************",
-        "*** 28 ****",
-        '! current_version = "0.0.2"',
-        "--- 28 ----",
-        '! current_version = "0.1.0"',
-    ]
-    assert actual_difference == expected_difference
-    assert toml_data["tool"]["pdm"]["dev-dependencies"]["lint"] == ["ruff==0.0.292"]
-    assert toml_data["tool"]["bumpversion"]["current_version"] == "0.1.0"
+
+        # Act
+        files.DataFileUpdater(datafile_config, version_config.part_configs).update_file(
+            current_version, new_version, get_context(conf)
+        )
+
+        # Assert
+        assert version_path.read_text() == "1.2.3"
+
+    def test_update_replaces_key(self, tmp_path: Path, fixtures_path: Path) -> None:
+        """A key specific key is replaced and nothing else is touched."""
+        # Arrange
+        config_path = tmp_path / "pyproject.toml"
+        fixture_path = fixtures_path / "partial_version_strings.toml"
+        shutil.copy(fixture_path, config_path)
+
+        contents_before = config_path.read_text()
+        conf = config.get_configuration(config_file=config_path, files=[{"filename": str(config_path)}])
+        version_config = VersionConfig(conf.parse, conf.serialize, conf.search, conf.replace, conf.parts)
+        current_version = version_config.parse(conf.current_version)
+        new_version = current_version.bump("minor")
+        datafile_config = FileChange(
+            filename=str(config_path),
+            key_path="tool.bumpversion.current_version",
+            search=conf.search,
+            replace=conf.replace,
+            regex=conf.regex,
+            ignore_missing_version=conf.ignore_missing_version,
+            serialize=conf.serialize,
+            parse=conf.parse,
+        )
+
+        # Act
+        files.DataFileUpdater(datafile_config, version_config.part_configs).update_file(
+            current_version, new_version, get_context(conf)
+        )
+
+        # Assert
+        contents_after = config_path.read_text()
+        toml_data = tomlkit.parse(config_path.read_text()).unwrap()
+        actual_difference = list(
+            context_diff(
+                contents_before.splitlines(),
+                contents_after.splitlines(),
+                fromfile="before",
+                tofile="after",
+                n=0,
+                lineterm="",
+            )
+        )
+        expected_difference = [
+            "*** before",
+            "--- after",
+            "***************",
+            "*** 28 ****",
+            '! current_version = "0.0.2"',
+            "--- 28 ----",
+            '! current_version = "0.1.0"',
+        ]
+        assert actual_difference == expected_difference
+        assert toml_data["tool"]["pdm"]["dev-dependencies"]["lint"] == ["ruff==0.0.292"]
+        assert toml_data["tool"]["bumpversion"]["current_version"] == "0.1.0"

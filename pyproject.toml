@@ -33,9 +33,9 @@ keywords = ["bumpversion", "version", "release"]
 dynamic = ["version"]
 dependencies = [
     "click",
-    "dotted-notation",
     "pydantic>=2.0.0",
     "pydantic-settings",
+    "questionary",
     "rich-click",
     "rich",
     "tomlkit",
@@ -208,7 +208,7 @@ order-by-type = true
 convention = "google"
 
 [tool.bumpversion]
-current_version = "0.16.1"
+current_version = "0.17.1"
 commit = true
 commit_args = "--no-verify"
 tag = true
@@ -238,13 +238,6 @@ search = "Unreleased"
 filename = "CHANGELOG.md"
 search = "{current_version}...HEAD"
 replace = "{current_version}...{new_version}"
-
-
-
-
-
-
-
 
 
 [tool.pydoclint]
