@@ -2,6 +2,8 @@
 Automatically detect the true Python type of a string and cast it to the correct type.
 
 Based on https://github.com/cgreer/cgAutoCast/blob/master/cgAutoCast.py
+
+Only used by Legacy configuration file parser.
 """
 
 import contextlib

@@ -15,6 +15,25 @@ class PartFunction:
         raise NotImplementedError
 
 
+class IndependentFunction(PartFunction):
+    """
+    This is a class that provides an independent function for version parts.
+
+    It simply returns the optional value, which is equal to the first value.
+    """
+
+    def __init__(self, value: Union[str, int, None] = None):
+        if value is None:
+            value = ""
+        self.first_value = str(value)
+        self.optional_value = str(value)
+        self.independent = True
+
+    def bump(self, value: Optional[str] = None) -> str:
+        """Return the optional value."""
+        return value or self.optional_value
+
+
 class NumericFunction(PartFunction):
     """
     This is a class that provides a numeric function for version parts.
@@ -29,7 +48,7 @@ class NumericFunction(PartFunction):
     considered (e.g. 'r3-001' --> 'r4-001').
     """
 
-    FIRST_NUMERIC = re.compile(r"(\D*)(\d+)(.*)")
+    FIRST_NUMERIC = re.compile(r"(?P<prefix>[^-0-9]*)(?P<number>-?\d+)(?P<suffix>.*)")
 
     def __init__(self, optional_value: Union[str, int, None] = None, first_value: Union[str, int, None] = None):
         if first_value is not None and not self.FIRST_NUMERIC.search(str(first_value)):
@@ -37,13 +56,21 @@ class NumericFunction(PartFunction):
 
         self.first_value = str(first_value or 0)
         self.optional_value = str(optional_value or self.first_value)
+        self.independent = False
 
     def bump(self, value: Union[str, int]) -> str:
         """Increase the first numerical value by one."""
         match = self.FIRST_NUMERIC.search(str(value))
         if not match:
             raise ValueError(f"The given value {value} does not contain any digit")
+
         part_prefix, part_numeric, part_suffix = match.groups()
+
+        if int(part_numeric) < int(self.first_value):
+            raise ValueError(
+                f"The given value {value} is lower than the first value {self.first_value} and cannot be bumped."
+            )
+
         bumped_numeric = int(part_numeric) + 1
 
         return "".join([part_prefix, str(bumped_numeric), part_suffix])
@@ -73,6 +100,7 @@ class ValuesFunction(PartFunction):
             raise ValueError("Version part values cannot be empty")
 
         self._values = values
+        self.independent = False
 
         if optional_value is None:
             optional_value = values[0]

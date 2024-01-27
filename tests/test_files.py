@@ -47,7 +47,7 @@ def test_single_file_processed_twice(tmp_path: Path):
         ],
     }
     conf, version_config, current_version = get_config_data(overrides)
-    new_version = current_version.bump("patch", version_config.order)
+    new_version = current_version.bump("patch")
     ctx = get_context(conf)
 
     assert len(conf.files) == 2
@@ -96,7 +96,7 @@ def test_multi_file_configuration(tmp_path: Path):
         ],
     }
     conf, version_config, current_version = get_config_data(overrides)
-    major_version = current_version.bump("major", version_config.order)
+    major_version = current_version.bump("major")
 
     os.environ["BUILD_NUMBER"] = "38944"
     os.environ["USER"] = "bob"
@@ -120,7 +120,7 @@ def test_multi_file_configuration(tmp_path: Path):
     del os.environ["BUILD_NUMBER"]
     del os.environ["USER"]
     major_version = version_config.parse(conf.current_version)
-    major_patch_version = major_version.bump("patch", version_config.order)
+    major_patch_version = major_version.bump("patch")
     for file_cfg in conf.files:
         cfg_file = files.ConfiguredFile(file_cfg, version_config)
         cfg_file.make_file_change(major_version, major_patch_version, ctx)
@@ -142,7 +142,7 @@ def test_raises_correct_missing_version_string(tmp_path: Path, fixtures_path: Pa
         current_version = version_config.parse(conf.current_version)
         dst_path.joinpath("Version.csv").write_text("1;3-1;0;rc;build.1031")
 
-        major_version = current_version.bump("patch", version_config.order)
+        major_version = current_version.bump("patch")
         ctx = get_context(conf)
 
         configured_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
@@ -216,7 +216,7 @@ def test_search_replace_to_avoid_updating_unconcerned_lines(tmp_path: Path, capl
     }
 
     conf, version_config, current_version = get_config_data(overrides)
-    new_version = current_version.bump("minor", version_config.order)
+    new_version = current_version.bump("minor")
 
     for file_cfg in conf.files:
         cfg_file = files.ConfiguredFile(file_cfg, version_config)
@@ -269,7 +269,7 @@ def test_non_matching_search_does_not_modify_file(tmp_path: Path):
         ],
     }
     conf, version_config, current_version = get_config_data(overrides)
-    new_version = current_version.bump("patch", version_config.order)
+    new_version = current_version.bump("patch")
     configured_files = files.resolve_file_config(conf.files, version_config)
     with pytest.raises(exceptions.VersionNotFoundError, match="Did not find 'Not-yet-released' in file:"):
         files.modify_files(configured_files, current_version, new_version, get_context(conf))
@@ -286,7 +286,7 @@ def test_simple_replacement_in_utf8_file(tmp_path: Path):
     overrides = {"current_version": "1.3.0", "files": [{"filename": str(version_path)}]}
     with inside_dir(tmp_path):
         conf, version_config, current_version = get_config_data(overrides)
-        new_version = current_version.bump("patch", version_config.order)
+        new_version = current_version.bump("patch")
 
     # Act
     for file_cfg in conf.files:
@@ -312,7 +312,7 @@ def test_multi_line_search_is_found(tmp_path: Path) -> None:
     }
     with inside_dir(tmp_path):
         conf, version_config, current_version = get_config_data(overrides)
-        new_version = current_version.bump("major", version_config.order)
+        new_version = current_version.bump("major")
 
     # Act
     for file_cfg in conf.files:
@@ -345,7 +345,7 @@ def test_ignore_missing_version(global_value: bool, file_value: bool, should_rai
     }
     with inside_dir(tmp_path):
         conf, version_config, current_version = get_config_data(overrides)
-        new_version = current_version.bump("patch", version_config.order)
+        new_version = current_version.bump("patch")
         cfg_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
 
         # Act
@@ -373,7 +373,7 @@ def test_regex_search(tmp_path: Path) -> None:
         "files": [{"filename": str(version_path)}],
     }
     conf, version_config, current_version = get_config_data(overrides)
-    new_version = current_version.bump("patch", version_config.order)
+    new_version = current_version.bump("patch")
     cfg_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
 
     # Act
@@ -398,7 +398,7 @@ def test_regex_search_with_escaped_chars(tmp_path: Path) -> None:
         "files": [{"filename": str(version_path)}],
     }
     conf, version_config, current_version = get_config_data(overrides)
-    new_version = current_version.bump("patch", version_config.order)
+    new_version = current_version.bump("patch")
     cfg_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
 
     # Act
@@ -420,7 +420,7 @@ def test_regex_search_with_caret(tmp_path: Path, fixtures_path: Path) -> None:
     conf = config.get_configuration(config_file=config_path)
     version_config = VersionConfig(conf.parse, conf.serialize, conf.search, conf.replace, conf.parts)
     current_version = version_config.parse(conf.current_version)
-    new_version = current_version.bump("patch", version_config.order)
+    new_version = current_version.bump("patch")
 
     with inside_dir(tmp_path):
         cfg_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
@@ -448,7 +448,7 @@ def test_bad_regex_search(tmp_path: Path, caplog) -> None:
         "files": [{"filename": str(version_path)}],
     }
     conf, version_config, current_version = get_config_data(overrides)
-    new_version = current_version.bump("patch", version_config.order)
+    new_version = current_version.bump("patch")
     cfg_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
 
     # Act
@@ -470,7 +470,7 @@ class TestDataFileUpdater:
 
         overrides = {"current_version": "1.2.3", "files": [{"filename": str(version_path)}]}
         conf, version_config, current_version = get_config_data(overrides)
-        new_version = current_version.bump("patch", version_config.order)
+        new_version = current_version.bump("patch")
         datafile_config = FileChange(
             filename=str(version_path),
             key_path="",
@@ -501,7 +501,7 @@ class TestDataFileUpdater:
         conf = config.get_configuration(config_file=config_path, files=[{"filename": str(config_path)}])
         version_config = VersionConfig(conf.parse, conf.serialize, conf.search, conf.replace, conf.parts)
         current_version = version_config.parse(conf.current_version)
-        new_version = current_version.bump("minor", version_config.order)
+        new_version = current_version.bump("minor")
         datafile_config = FileChange(
             filename=str(config_path),
             key_path="tool.bumpversion.current_version",

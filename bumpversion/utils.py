@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Any, List, Optional, Tuple
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
     from bumpversion.scm import SCMInfo
-    from bumpversion.version_part import Version
+    from bumpversion.versioning.models import Version
 
 
 def extract_regex_flags(regex_pattern: str) -> Tuple[str, str]:
