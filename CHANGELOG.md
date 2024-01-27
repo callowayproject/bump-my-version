@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.17.2 (2024-01-27)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.17.1...0.17.2)
+
+### Fixes
+
+- Fixed some tests. [593a4ee](https://github.com/callowayproject/bump-my-version/commit/593a4ee376cac57cf6bd26e704f0f6c2a841b99a)
+    
+- Refactored serialization. [0ac2cd8](https://github.com/callowayproject/bump-my-version/commit/0ac2cd80925c352b72840c1d5707bb61a18248eb)
+    
+  - Moved serialization from VersionConfig to version.serialization
+- Fixed extra capture group in PEP440 parser. [384fd99](https://github.com/callowayproject/bump-my-version/commit/384fd994f67df1fe1a1d56c94e568a00d2c7176b)
+    
+- Refactored verioning models. [88e7f71](https://github.com/callowayproject/bump-my-version/commit/88e7f71e200ba0a7ef6f121205d634820a68c150)
+    
+  - created a "conventions" module for future release
+  - added an optional `depends_on` version component configuration
+  - The `depends_on` is required for PEP440 versioning
+- Fixed None as value for a function. [f8c4d05](https://github.com/callowayproject/bump-my-version/commit/f8c4d05d1b4d8df25335b84823a00888a43349f0)
+    
+  - Turns None into an empty string
+- Fixed bad imports. [5c86d51](https://github.com/callowayproject/bump-my-version/commit/5c86d512916b665f164de08b6c488aa6c3d2ee1e)
+    
+- Refactored versioning models and tests. [7d05414](https://github.com/callowayproject/bump-my-version/commit/7d05414ebd6deedd110f0333733a2db9cc0df6a8)
+    
+- Refactored version parsing. [5ed546b](https://github.com/callowayproject/bump-my-version/commit/5ed546bd20831136270cfa0264441faa042d4cd9)
+    
+- Refactored versioning functions and version parts. [be87721](https://github.com/callowayproject/bump-my-version/commit/be87721268a6ba4cc211fb8fb3fa07c85c4eb553)
+    
+- Fixed timezone of a test. [0e01253](https://github.com/callowayproject/bump-my-version/commit/0e01253b6262b4b583580c3be955984049df1208)
+    
+
 ## 0.17.1 (2024-01-25)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.17.0...0.17.1)
 
