@@ -1,0 +1,20 @@
+# {py:mod}`bumpversion.versioning`
+
+```{py:module} bumpversion.versioning
+```
+
+```{autodoc2-docstring} bumpversion.versioning
+:allowtitles:
+```
+
+## Submodules
+
+```{toctree}
+:titlesonly:
+:maxdepth: 1
+
+bumpversion.versioning.conventions
+bumpversion.versioning.functions
+bumpversion.versioning.models
+bumpversion.versioning.serialization
+```

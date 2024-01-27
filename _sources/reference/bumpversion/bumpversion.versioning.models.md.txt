@@ -1,0 +1,297 @@
+# {py:mod}`bumpversion.versioning.models`
+
+```{py:module} bumpversion.versioning.models
+```
+
+```{autodoc2-docstring} bumpversion.versioning.models
+:allowtitles:
+```
+
+## Module Contents
+
+### Classes
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`VersionComponent <bumpversion.versioning.models.VersionComponent>`
+  - ```{autodoc2-docstring} bumpversion.versioning.models.VersionComponent
+    :summary:
+    ```
+* - {py:obj}`VersionComponentConfig <bumpversion.versioning.models.VersionComponentConfig>`
+  - ```{autodoc2-docstring} bumpversion.versioning.models.VersionComponentConfig
+    :summary:
+    ```
+* - {py:obj}`VersionSpec <bumpversion.versioning.models.VersionSpec>`
+  - ```{autodoc2-docstring} bumpversion.versioning.models.VersionSpec
+    :summary:
+    ```
+* - {py:obj}`Version <bumpversion.versioning.models.Version>`
+  - ```{autodoc2-docstring} bumpversion.versioning.models.Version
+    :summary:
+    ```
+````
+
+### API
+
+`````{py:class} VersionComponent(values: typing.Optional[list] = None, optional_value: typing.Optional[str] = None, first_value: typing.Union[str, int, None] = None, independent: bool = False, source: typing.Optional[str] = None, value: typing.Union[str, int, None] = None)
+:canonical: bumpversion.versioning.models.VersionComponent
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionComponent
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionComponent.__init__
+```
+
+````{py:property} value
+:canonical: bumpversion.versioning.models.VersionComponent.value
+:type: str
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionComponent.value
+```
+
+````
+
+````{py:method} copy() -> bumpversion.versioning.models.VersionComponent
+:canonical: bumpversion.versioning.models.VersionComponent.copy
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionComponent.copy
+```
+
+````
+
+````{py:method} bump() -> bumpversion.versioning.models.VersionComponent
+:canonical: bumpversion.versioning.models.VersionComponent.bump
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionComponent.bump
+```
+
+````
+
+````{py:method} null() -> bumpversion.versioning.models.VersionComponent
+:canonical: bumpversion.versioning.models.VersionComponent.null
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionComponent.null
+```
+
+````
+
+````{py:property} is_optional
+:canonical: bumpversion.versioning.models.VersionComponent.is_optional
+:type: bool
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionComponent.is_optional
+```
+
+````
+
+````{py:property} is_independent
+:canonical: bumpversion.versioning.models.VersionComponent.is_independent
+:type: bool
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionComponent.is_independent
+```
+
+````
+
+````{py:method} __format__(format_spec: str) -> str
+:canonical: bumpversion.versioning.models.VersionComponent.__format__
+
+````
+
+````{py:method} __repr__() -> str
+:canonical: bumpversion.versioning.models.VersionComponent.__repr__
+
+````
+
+````{py:method} __eq__(other: typing.Any) -> bool
+:canonical: bumpversion.versioning.models.VersionComponent.__eq__
+
+````
+
+`````
+
+`````{py:class} VersionComponentConfig(**data: typing.Any)
+:canonical: bumpversion.versioning.models.VersionComponentConfig
+
+Bases: {py:obj}`pydantic.BaseModel`
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionComponentConfig
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionComponentConfig.__init__
+```
+
+````{py:attribute} values
+:canonical: bumpversion.versioning.models.VersionComponentConfig.values
+:type: typing.Optional[list]
+:value: >
+   None
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionComponentConfig.values
+```
+
+````
+
+````{py:attribute} optional_value
+:canonical: bumpversion.versioning.models.VersionComponentConfig.optional_value
+:type: typing.Optional[str]
+:value: >
+   None
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionComponentConfig.optional_value
+```
+
+````
+
+````{py:attribute} first_value
+:canonical: bumpversion.versioning.models.VersionComponentConfig.first_value
+:type: typing.Union[str, int, None]
+:value: >
+   None
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionComponentConfig.first_value
+```
+
+````
+
+````{py:attribute} independent
+:canonical: bumpversion.versioning.models.VersionComponentConfig.independent
+:type: bool
+:value: >
+   False
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionComponentConfig.independent
+```
+
+````
+
+````{py:attribute} depends_on
+:canonical: bumpversion.versioning.models.VersionComponentConfig.depends_on
+:type: typing.Optional[str]
+:value: >
+   None
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionComponentConfig.depends_on
+```
+
+````
+
+````{py:method} create_component(value: typing.Union[str, int, None] = None) -> bumpversion.versioning.models.VersionComponent
+:canonical: bumpversion.versioning.models.VersionComponentConfig.create_component
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionComponentConfig.create_component
+```
+
+````
+
+`````
+
+`````{py:class} VersionSpec(components: typing.Dict[str, bumpversion.versioning.models.VersionComponentConfig], order: typing.Optional[typing.List[str]] = None)
+:canonical: bumpversion.versioning.models.VersionSpec
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionSpec
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionSpec.__init__
+```
+
+````{py:method} create_version(values: typing.Dict[str, str]) -> bumpversion.versioning.models.Version
+:canonical: bumpversion.versioning.models.VersionSpec.create_version
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionSpec.create_version
+```
+
+````
+
+````{py:method} get_dependents(component_name: str) -> typing.List[str]
+:canonical: bumpversion.versioning.models.VersionSpec.get_dependents
+
+```{autodoc2-docstring} bumpversion.versioning.models.VersionSpec.get_dependents
+```
+
+````
+
+`````
+
+`````{py:class} Version(version_spec: bumpversion.versioning.models.VersionSpec, components: typing.Dict[str, bumpversion.versioning.models.VersionComponent], original: typing.Optional[str] = None)
+:canonical: bumpversion.versioning.models.Version
+
+```{autodoc2-docstring} bumpversion.versioning.models.Version
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} bumpversion.versioning.models.Version.__init__
+```
+
+````{py:method} values() -> typing.Dict[str, str]
+:canonical: bumpversion.versioning.models.Version.values
+
+```{autodoc2-docstring} bumpversion.versioning.models.Version.values
+```
+
+````
+
+````{py:method} __getitem__(key: str) -> bumpversion.versioning.models.VersionComponent
+:canonical: bumpversion.versioning.models.Version.__getitem__
+
+```{autodoc2-docstring} bumpversion.versioning.models.Version.__getitem__
+```
+
+````
+
+````{py:method} __len__() -> int
+:canonical: bumpversion.versioning.models.Version.__len__
+
+```{autodoc2-docstring} bumpversion.versioning.models.Version.__len__
+```
+
+````
+
+````{py:method} __iter__()
+:canonical: bumpversion.versioning.models.Version.__iter__
+
+```{autodoc2-docstring} bumpversion.versioning.models.Version.__iter__
+```
+
+````
+
+````{py:method} __repr__()
+:canonical: bumpversion.versioning.models.Version.__repr__
+
+````
+
+````{py:method} __eq__(other: typing.Any) -> bool
+:canonical: bumpversion.versioning.models.Version.__eq__
+
+````
+
+````{py:method} required_components() -> typing.List[str]
+:canonical: bumpversion.versioning.models.Version.required_components
+
+```{autodoc2-docstring} bumpversion.versioning.models.Version.required_components
+```
+
+````
+
+````{py:method} bump(component_name: str) -> bumpversion.versioning.models.Version
+:canonical: bumpversion.versioning.models.Version.bump
+
+```{autodoc2-docstring} bumpversion.versioning.models.Version.bump
+```
+
+````
+
+`````

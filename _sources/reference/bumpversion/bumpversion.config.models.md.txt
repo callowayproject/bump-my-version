@@ -15,10 +15,6 @@
 :class: autosummary longtable
 :align: left
 
-* - {py:obj}`VersionPartConfig <bumpversion.config.models.VersionPartConfig>`
-  - ```{autodoc2-docstring} bumpversion.config.models.VersionPartConfig
-    :summary:
-    ```
 * - {py:obj}`FileChange <bumpversion.config.models.FileChange>`
   - ```{autodoc2-docstring} bumpversion.config.models.FileChange
     :summary:
@@ -52,66 +48,6 @@
 ```
 
 ````
-
-`````{py:class} VersionPartConfig(**data: typing.Any)
-:canonical: bumpversion.config.models.VersionPartConfig
-
-Bases: {py:obj}`pydantic.BaseModel`
-
-```{autodoc2-docstring} bumpversion.config.models.VersionPartConfig
-```
-
-```{rubric} Initialization
-```
-
-```{autodoc2-docstring} bumpversion.config.models.VersionPartConfig.__init__
-```
-
-````{py:attribute} values
-:canonical: bumpversion.config.models.VersionPartConfig.values
-:type: typing.Optional[list]
-:value: >
-   None
-
-```{autodoc2-docstring} bumpversion.config.models.VersionPartConfig.values
-```
-
-````
-
-````{py:attribute} optional_value
-:canonical: bumpversion.config.models.VersionPartConfig.optional_value
-:type: typing.Optional[str]
-:value: >
-   None
-
-```{autodoc2-docstring} bumpversion.config.models.VersionPartConfig.optional_value
-```
-
-````
-
-````{py:attribute} first_value
-:canonical: bumpversion.config.models.VersionPartConfig.first_value
-:type: typing.Union[str, int, None]
-:value: >
-   None
-
-```{autodoc2-docstring} bumpversion.config.models.VersionPartConfig.first_value
-```
-
-````
-
-````{py:attribute} independent
-:canonical: bumpversion.config.models.VersionPartConfig.independent
-:type: bool
-:value: >
-   False
-
-```{autodoc2-docstring} bumpversion.config.models.VersionPartConfig.independent
-```
-
-````
-
-`````
 
 `````{py:class} FileChange(**data: typing.Any)
 :canonical: bumpversion.config.models.FileChange
@@ -436,7 +372,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
 
 ````{py:attribute} parts
 :canonical: bumpversion.config.models.Config.parts
-:type: typing.Dict[str, bumpversion.config.models.VersionPartConfig]
+:type: typing.Dict[str, bumpversion.versioning.models.VersionComponentConfig]
 :value: >
    None
 
@@ -538,6 +474,14 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
 :type: bumpversion.version_part.VersionConfig
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.version_config
+```
+
+````
+
+````{py:method} version_spec(version: typing.Optional[str] = None) -> bumpversion.versioning.models.VersionSpec
+:canonical: bumpversion.config.models.Config.version_spec
+
+```{autodoc2-docstring} bumpversion.config.models.Config.version_spec
 ```
 
 ````

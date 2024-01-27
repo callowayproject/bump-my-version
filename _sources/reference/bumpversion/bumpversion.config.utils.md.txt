@@ -38,7 +38,7 @@
 ```
 ````
 
-````{py:function} get_all_part_configs(config_dict: dict) -> typing.Dict[str, bumpversion.config.models.VersionPartConfig]
+````{py:function} get_all_part_configs(config_dict: dict) -> typing.Dict[str, bumpversion.versioning.models.VersionComponentConfig]
 :canonical: bumpversion.config.utils.get_all_part_configs
 
 ```{autodoc2-docstring} bumpversion.config.utils.get_all_part_configs

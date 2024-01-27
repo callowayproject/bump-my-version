@@ -101,7 +101,7 @@
 ```
 ````
 
-````{py:function} get_context(config: bumpversion.config.Config, current_version: typing.Optional[bumpversion.version_part.Version] = None, new_version: typing.Optional[bumpversion.version_part.Version] = None) -> collections.ChainMap
+````{py:function} get_context(config: bumpversion.config.Config, current_version: typing.Optional[bumpversion.versioning.models.Version] = None, new_version: typing.Optional[bumpversion.versioning.models.Version] = None) -> collections.ChainMap
 :canonical: bumpversion.utils.get_context
 
 ```{autodoc2-docstring} bumpversion.utils.get_context

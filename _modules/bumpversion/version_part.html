@@ -184,6 +184,13 @@
 <li class="toctree-l4"><a class="reference internal" href="../../reference/bumpversion/bumpversion.config.files_legacy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files_legacy</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../reference/bumpversion/bumpversion.versioning.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of bumpversion.versioning</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/bumpversion/bumpversion.versioning.conventions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning.conventions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/bumpversion/bumpversion.versioning.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning.functions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/bumpversion/bumpversion.versioning.models.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning.models</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/bumpversion/bumpversion.versioning.serialization.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning.serialization</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.yaml_dump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.yaml_dump</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.ui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.ui</span></code></a></li>
@@ -194,7 +201,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.files.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.files</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.bump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.bump</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.indented_logger.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.indented_logger</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.exceptions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.exceptions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.__main__</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/bumpversion/bumpversion.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.cli</span></code></a></li>
@@ -204,7 +210,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
 </ul>
@@ -243,172 +249,16 @@
           <h1>Source code for bumpversion.version_part</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Module for managing Versions and their internal parts.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">string</span>
-<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="kn">from</span> <span class="nn">click</span> <span class="kn">import</span> <span class="n">UsageError</span>
 
-<span class="kn">from</span> <span class="nn">bumpversion.config.models</span> <span class="kn">import</span> <span class="n">VersionPartConfig</span>
-<span class="kn">from</span> <span class="nn">bumpversion.exceptions</span> <span class="kn">import</span> <span class="n">FormattingError</span><span class="p">,</span> <span class="n">InvalidVersionPartError</span><span class="p">,</span> <span class="n">MissingValueError</span>
-<span class="kn">from</span> <span class="nn">bumpversion.functions</span> <span class="kn">import</span> <span class="n">NumericFunction</span><span class="p">,</span> <span class="n">PartFunction</span><span class="p">,</span> <span class="n">ValuesFunction</span>
 <span class="kn">from</span> <span class="nn">bumpversion.ui</span> <span class="kn">import</span> <span class="n">get_indented_logger</span>
-<span class="kn">from</span> <span class="nn">bumpversion.utils</span> <span class="kn">import</span> <span class="n">key_val_string</span><span class="p">,</span> <span class="n">labels_for_format</span>
+<span class="kn">from</span> <span class="nn">bumpversion.utils</span> <span class="kn">import</span> <span class="n">labels_for_format</span>
+<span class="kn">from</span> <span class="nn">bumpversion.versioning.models</span> <span class="kn">import</span> <span class="n">Version</span><span class="p">,</span> <span class="n">VersionComponentConfig</span><span class="p">,</span> <span class="n">VersionSpec</span>
+<span class="kn">from</span> <span class="nn">bumpversion.versioning.serialization</span> <span class="kn">import</span> <span class="n">parse_version</span><span class="p">,</span> <span class="n">serialize</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">get_indented_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="VersionPart">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.VersionPart">[docs]</a>
-<span class="k">class</span> <span class="nc">VersionPart</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Represent part of a version number.</span>
-
-<span class="sd">    Determines the PartFunction that rules how the part behaves when increased or reset</span>
-<span class="sd">    based on the configuration given.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">VersionPartConfig</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PartFunction</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
-            <span class="n">str_values</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
-            <span class="n">str_optional_value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">optional_value</span><span class="p">)</span> <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">optional_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
-            <span class="n">str_first_value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">first_value</span><span class="p">)</span> <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">first_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">ValuesFunction</span><span class="p">(</span><span class="n">str_values</span><span class="p">,</span> <span class="n">str_optional_value</span><span class="p">,</span> <span class="n">str_first_value</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">NumericFunction</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">optional_value</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">first_value</span> <span class="ow">or</span> <span class="s2">&quot;0&quot;</span><span class="p">)</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the value of the part.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">optional_value</span>
-
-<div class="viewcode-block" id="VersionPart.copy">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.VersionPart.copy">[docs]</a>
-    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;VersionPart&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a copy of the part.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">VersionPart</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="VersionPart.bump">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.VersionPart.bump">[docs]</a>
-    <span class="k">def</span> <span class="nf">bump</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;VersionPart&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a part with bumped value.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">VersionPart</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">bump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">))</span></div>
-
-
-<div class="viewcode-block" id="VersionPart.null">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.VersionPart.null">[docs]</a>
-    <span class="k">def</span> <span class="nf">null</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;VersionPart&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a part with first value.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">VersionPart</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">first_value</span><span class="p">)</span></div>
-
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_optional</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Is the part optional?&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">optional_value</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_independent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Is the part independent of the other parts?&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">independent</span>
-
-<div class="viewcode-block" id="VersionPart.__format__">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.VersionPart.__format__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__format__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">format_spec</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">int</span><span class="o">.</span><span class="fm">__format__</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">format_spec</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="VersionPart.__repr__">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.VersionPart.__repr__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;bumpversion.VersionPart:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">&gt;&quot;</span></div>
-
-
-<div class="viewcode-block" id="VersionPart.__eq__">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.VersionPart.__eq__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">VersionPart</span><span class="p">)</span> <span class="k">else</span> <span class="kc">False</span></div>
-</div>
-
-
-
-<div class="viewcode-block" id="Version">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.Version">[docs]</a>
-<span class="k">class</span> <span class="nc">Version</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The specification of a version and its parts.&quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VersionPart</span><span class="p">],</span> <span class="n">original</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="n">values</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">original</span> <span class="o">=</span> <span class="n">original</span>
-
-<div class="viewcode-block" id="Version.__getitem__">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.Version.__getitem__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VersionPart</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
-
-
-<div class="viewcode-block" id="Version.__len__">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.Version.__len__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="Version.__iter__">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.Version.__iter__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="Version.__repr__">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.Version.__repr__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;bumpversion.Version:</span><span class="si">{</span><span class="n">key_val_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="si">}</span><span class="s2">&gt;&quot;</span></div>
-
-
-<div class="viewcode-block" id="Version.__eq__">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.Version.__eq__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="nb">all</span><span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Version</span><span class="p">)</span>
-            <span class="k">else</span> <span class="kc">False</span>
-        <span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="Version.bump">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.Version.bump">[docs]</a>
-    <span class="k">def</span> <span class="nf">bump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">part_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;Version&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Increase the value of the given part.&quot;&quot;&quot;</span>
-        <span class="n">bumped</span> <span class="o">=</span> <span class="kc">False</span>
-
-        <span class="n">new_values</span> <span class="o">=</span> <span class="p">{}</span>
-
-        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">order</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
-                <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="n">part_name</span><span class="p">:</span>
-                <span class="n">new_values</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">bump</span><span class="p">()</span>
-                <span class="n">bumped</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">elif</span> <span class="n">bumped</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">is_independent</span><span class="p">:</span>
-                <span class="n">new_values</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">null</span><span class="p">()</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">new_values</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">bumped</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">InvalidVersionPartError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No part named </span><span class="si">{</span><span class="n">part_name</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">Version</span><span class="p">(</span><span class="n">new_values</span><span class="p">)</span></div>
-</div>
-
 
 
 <div class="viewcode-block" id="VersionConfig">
@@ -424,7 +274,7 @@
         <span class="n">serialize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
         <span class="n">search</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">replace</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">part_configs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VersionPartConfig</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">part_configs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VersionComponentConfig</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">parse_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">parse</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
@@ -433,6 +283,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">serialize_formats</span> <span class="o">=</span> <span class="n">serialize</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">part_configs</span> <span class="o">=</span> <span class="n">part_configs</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">version_spec</span> <span class="o">=</span> <span class="n">VersionSpec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">part_configs</span><span class="p">)</span>
         <span class="c1"># TODO: I think these two should be removed from the config object</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">search</span> <span class="o">=</span> <span class="n">search</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">replace</span> <span class="o">=</span> <span class="n">replace</span>
@@ -480,136 +331,14 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            A Version object representing the string.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">version_string</span><span class="p">:</span>
+        <span class="n">parsed</span> <span class="o">=</span> <span class="n">parse_version</span><span class="p">(</span><span class="n">version_string</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_regex</span><span class="o">.</span><span class="n">pattern</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parsed</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="n">regexp_one_line</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_regex</span><span class="o">.</span><span class="n">pattern</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()])</span>
-
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-            <span class="s2">&quot;Parsing version &#39;</span><span class="si">%s</span><span class="s2">&#39; using regexp &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span>
-            <span class="n">version_string</span><span class="p">,</span>
-            <span class="n">regexp_one_line</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">indent</span><span class="p">()</span>
-
-        <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">version_string</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="s2">&quot;Evaluating &#39;parse&#39; option: &#39;</span><span class="si">%s</span><span class="s2">&#39; does not parse current version &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">parse_regex</span><span class="o">.</span><span class="n">pattern</span><span class="p">,</span>
-                <span class="n">version_string</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="k">return</span> <span class="kc">None</span>
-
-        <span class="n">_parsed</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="n">key</span><span class="p">:</span> <span class="n">VersionPart</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">part_configs</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">value</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">part_configs</span>
-        <span class="p">}</span>
-        <span class="n">v</span> <span class="o">=</span> <span class="n">Version</span><span class="p">(</span><span class="n">_parsed</span><span class="p">,</span> <span class="n">version_string</span><span class="p">)</span>
-
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Parsed the following values: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">key_val_string</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">dedent</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="n">v</span></div>
-
-
-<div class="viewcode-block" id="VersionConfig._serialize">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.VersionConfig._serialize">[docs]</a>
-    <span class="k">def</span> <span class="nf">_serialize</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span> <span class="n">serialize_format</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">raise_if_incomplete</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Attempts to serialize a version with the given serialization format.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            version: The version to serialize</span>
-<span class="sd">            serialize_format: The serialization format to use, using Python&#39;s format string syntax</span>
-<span class="sd">            context: The context to use when serializing the version</span>
-<span class="sd">            raise_if_incomplete: Whether to raise an error if the version is incomplete</span>
-
-<span class="sd">        Raises:</span>
-<span class="sd">            FormattingError: if not serializable</span>
-<span class="sd">            MissingValueError: if not all parts required in the format have values</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            The serialized version as a string</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">values</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">version</span><span class="p">:</span>
-            <span class="n">values</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">version</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
-
-        <span class="c1"># TODO dump complete context on debug level</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="c1"># test whether all parts required in the format have values</span>
-            <span class="n">serialized</span> <span class="o">=</span> <span class="n">serialize_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">values</span><span class="p">)</span>
-
-        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">missing_key</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="k">raise</span> <span class="n">MissingValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Did not find key </span><span class="si">{</span><span class="n">missing_key</span><span class="si">!r}</span><span class="s2"> in </span><span class="si">{</span><span class="n">version</span><span class="si">!r}</span><span class="s2"> when serializing version number&quot;</span>
-            <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
-
-        <span class="n">keys_needing_representation</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-
-        <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">order</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">keys</span><span class="p">):</span>
-            <span class="n">v</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
-
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">VersionPart</span><span class="p">):</span>
-                <span class="c1"># values coming from environment variables don&#39;t need</span>
-                <span class="c1"># representation</span>
-                <span class="k">continue</span>
-
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="o">.</span><span class="n">is_optional</span><span class="p">:</span>
-                <span class="n">keys_needing_representation</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">keys</span><span class="p">[:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
-
-        <span class="n">required_by_format</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">labels_for_format</span><span class="p">(</span><span class="n">serialize_format</span><span class="p">))</span>
-
-        <span class="c1"># try whether all parsed keys are represented</span>
-        <span class="k">if</span> <span class="n">raise_if_incomplete</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">keys_needing_representation</span> <span class="o">&lt;=</span> <span class="n">required_by_format</span><span class="p">:</span>
-            <span class="n">missing_keys</span> <span class="o">=</span> <span class="n">keys_needing_representation</span> <span class="o">^</span> <span class="n">required_by_format</span>
-            <span class="k">raise</span> <span class="n">FormattingError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Could not represent &#39;</span><span class="si">{</span><span class="s2">&quot;&#39;, &#39;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">missing_keys</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39; in format &#39;</span><span class="si">{</span><span class="n">serialize_format</span><span class="si">}</span><span class="s2">&#39;&quot;&quot;&quot;</span>
-            <span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">serialized</span></div>
-
-
-<div class="viewcode-block" id="VersionConfig._choose_serialize_format">
-<a class="viewcode-back" href="../../reference/bumpversion/bumpversion.version_part.html#bumpversion.version_part.VersionConfig._choose_serialize_format">[docs]</a>
-    <span class="k">def</span> <span class="nf">_choose_serialize_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="n">chosen</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Evaluating serialization formats&quot;</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">indent</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">serialize_format</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">serialize_formats</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_serialize</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">serialize_format</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">raise_if_incomplete</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                <span class="c1"># Prefer shorter or first search expression.</span>
-                <span class="n">chosen_part_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">Formatter</span><span class="p">()</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">chosen</span><span class="p">)))</span> <span class="k">if</span> <span class="n">chosen</span> <span class="k">else</span> <span class="kc">None</span>
-                <span class="n">serialize_part_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">Formatter</span><span class="p">()</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">serialize_format</span><span class="p">)))</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">chosen</span> <span class="ow">or</span> <span class="n">chosen_part_count</span> <span class="o">&gt;</span> <span class="n">serialize_part_count</span><span class="p">:</span>
-                    <span class="n">chosen</span> <span class="o">=</span> <span class="n">serialize_format</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Found &#39;</span><span class="si">%s</span><span class="s2">&#39; to be a usable serialization format&quot;</span><span class="p">,</span> <span class="n">chosen</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Found &#39;</span><span class="si">%s</span><span class="s2">&#39; usable serialization format, but it&#39;s longer&quot;</span><span class="p">,</span> <span class="n">serialize_format</span><span class="p">)</span>
-            <span class="k">except</span> <span class="n">FormattingError</span><span class="p">:</span>
-                <span class="c1"># If chosen, prefer shorter</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">chosen</span><span class="p">:</span>
-                    <span class="n">chosen</span> <span class="o">=</span> <span class="n">serialize_format</span>
-            <span class="k">except</span> <span class="n">MissingValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
-                <span class="k">raise</span> <span class="n">e</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">chosen</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;Did not find suitable serialization format&quot;</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">dedent</span><span class="p">()</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Selected serialization format &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">chosen</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">chosen</span></div>
+        <span class="n">version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">version_spec</span><span class="o">.</span><span class="n">create_version</span><span class="p">(</span><span class="n">parsed</span><span class="p">)</span>
+        <span class="n">version</span><span class="o">.</span><span class="n">original</span> <span class="o">=</span> <span class="n">version_string</span>
+        <span class="k">return</span> <span class="n">version</span></div>
 
 
 <div class="viewcode-block" id="VersionConfig.serialize">
@@ -625,12 +354,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            The serialized version as a string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Serializing version &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">indent</span><span class="p">()</span>
-        <span class="n">serialized</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serialize</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_choose_serialize_format</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">context</span><span class="p">),</span> <span class="n">context</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Serialized to &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">serialized</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">dedent</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">serialized</span></div>
+        <span class="k">return</span> <span class="n">serialize</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">serialize_formats</span><span class="p">),</span> <span class="n">context</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

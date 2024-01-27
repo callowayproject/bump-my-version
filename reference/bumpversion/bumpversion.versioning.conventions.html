@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="bumpversion.exceptions" href="bumpversion.exceptions.html" /><link rel="prev" title="bumpversion.indented_logger" href="bumpversion.indented_logger.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="bumpversion.versioning.functions" href="bumpversion.versioning.functions.html" /><link rel="prev" title="bumpversion.versioning" href="bumpversion.versioning.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>bumpversion.functions - Bump My Version 0.17.1</title>
+        <title>bumpversion.versioning.conventions - Bump My Version 0.17.1</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -185,6 +185,13 @@
 <li class="toctree-l4"><a class="reference internal" href="bumpversion.config.files_legacy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files_legacy</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3 current has-children"><a class="reference internal" href="bumpversion.versioning.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of bumpversion.versioning</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l4 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning.conventions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bumpversion.versioning.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning.functions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bumpversion.versioning.models.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning.models</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bumpversion.versioning.serialization.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning.serialization</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.yaml_dump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.yaml_dump</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.ui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.ui</span></code></a></li>
@@ -195,7 +202,6 @@
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.files.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.files</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.bump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.bump</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.indented_logger.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.indented_logger</span></code></a></li>
-<li class="toctree-l3 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.exceptions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.exceptions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.__main__</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.cli</span></code></a></li>
@@ -205,7 +211,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
 </ul>
@@ -242,24 +248,48 @@
           </label>
         </div>
         <article role="main">
-          <section class="tex2jax_ignore mathjax_ignore" id="module-bumpversion.functions">
-<span id="bumpversion-functions"></span><h1><a class="reference internal" href="#module-bumpversion.functions" title="bumpversion.functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a><a class="headerlink" href="#module-bumpversion.functions" title="Link to this heading">#</a></h1>
-<p>Generators for version parts.</p>
+          <section class="tex2jax_ignore mathjax_ignore" id="module-bumpversion.versioning.conventions">
+<span id="bumpversion-versioning-conventions"></span><h1><a class="reference internal" href="#module-bumpversion.versioning.conventions" title="bumpversion.versioning.conventions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning.conventions</span></code></a><a class="headerlink" href="#module-bumpversion.versioning.conventions" title="Link to this heading">#</a></h1>
+<p>Standard version conventions.</p>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
-<section id="classes">
-<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h3>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h3>
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-left">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.functions.PartFunction" title="bumpversion.functions.PartFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PartFunction</span></code></a></p></td>
-<td><p>Base class for a version part function.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.versioning.conventions.pep440_version_spec" title="bumpversion.versioning.conventions.pep440_version_spec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pep440_version_spec</span></code></a></p></td>
+<td><p>Return a VersionSpec for PEP 440.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.functions.NumericFunction" title="bumpversion.functions.NumericFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NumericFunction</span></code></a></p></td>
-<td><p>This is a class that provides a numeric function for version parts.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.versioning.conventions.semver_spec" title="bumpversion.versioning.conventions.semver_spec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">semver_spec</span></code></a></p></td>
+<td><p>Return a VersionSpec for SEMVER.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.functions.ValuesFunction" title="bumpversion.functions.ValuesFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ValuesFunction</span></code></a></p></td>
-<td><p>This is a class that provides a values list based function for version parts.</p></td>
+</tbody>
+</table>
+</div>
+</section>
+<section id="data">
+<h3>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h3>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-left">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.versioning.conventions.PEP440_PATTERN" title="bumpversion.versioning.conventions.PEP440_PATTERN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PEP440_PATTERN</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.versioning.conventions.PEP440_SERIALIZE_PATTERNS" title="bumpversion.versioning.conventions.PEP440_SERIALIZE_PATTERNS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PEP440_SERIALIZE_PATTERNS</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.versioning.conventions.PEP440_COMPONENT_CONFIGS" title="bumpversion.versioning.conventions.PEP440_COMPONENT_CONFIGS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PEP440_COMPONENT_CONFIGS</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.versioning.conventions.SEMVER_PATTERN" title="bumpversion.versioning.conventions.SEMVER_PATTERN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SEMVER_PATTERN</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.versioning.conventions.SEMVER_SERIALIZE_PATTERNS" title="bumpversion.versioning.conventions.SEMVER_SERIALIZE_PATTERNS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SEMVER_SERIALIZE_PATTERNS</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.versioning.conventions.SEMVER_COMPONENT_CONFIGS" title="bumpversion.versioning.conventions.SEMVER_COMPONENT_CONFIGS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SEMVER_COMPONENT_CONFIGS</span></code></a></p></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -267,80 +297,50 @@
 </section>
 <section id="api">
 <h3>API<a class="headerlink" href="#api" title="Link to this heading">#</a></h3>
-<dl class="py class">
-<dt class="sig sig-object py" id="bumpversion.functions.PartFunction">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bumpversion.functions.</span></span><span class="sig-name descname"><span class="pre">PartFunction</span></span><a class="reference internal" href="../../_modules/bumpversion/functions.html#PartFunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.functions.PartFunction" title="Link to this definition">#</a></dt>
-<dd><p>Base class for a version part function.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="bumpversion.functions.PartFunction.first_value">
-<span class="sig-name descname"><span class="pre">first_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#bumpversion.functions.PartFunction.first_value" title="Link to this definition">#</a></dt>
+<dl class="py data">
+<dt class="sig sig-object py" id="bumpversion.versioning.conventions.PEP440_PATTERN">
+<span class="sig-prename descclassname"><span class="pre">bumpversion.versioning.conventions.</span></span><span class="sig-name descname"><span class="pre">PEP440_PATTERN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Multiline-String&gt;</span></em><a class="headerlink" href="#bumpversion.versioning.conventions.PEP440_PATTERN" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="bumpversion.versioning.conventions.PEP440_SERIALIZE_PATTERNS">
+<span class="sig-prename descclassname"><span class="pre">bumpversion.versioning.conventions.</span></span><span class="sig-name descname"><span class="pre">PEP440_SERIALIZE_PATTERNS</span></span><a class="headerlink" href="#bumpversion.versioning.conventions.PEP440_SERIALIZE_PATTERNS" title="Link to this definition">#</a></dt>
+<dd><p>[‘{major}.{minor}.{patch}{pre_l}{pre_n}.{post}.{dev}+{local}’, ‘{major}.{minor}.{patch}{pre_l}{pre_n…</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="bumpversion.versioning.conventions.PEP440_COMPONENT_CONFIGS">
+<span class="sig-prename descclassname"><span class="pre">bumpversion.versioning.conventions.</span></span><span class="sig-name descname"><span class="pre">PEP440_COMPONENT_CONFIGS</span></span><a class="headerlink" href="#bumpversion.versioning.conventions.PEP440_COMPONENT_CONFIGS" title="Link to this definition">#</a></dt>
 <dd><p>None</p>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="bumpversion.functions.PartFunction.optional_value">
-<span class="sig-name descname"><span class="pre">optional_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#bumpversion.functions.PartFunction.optional_value" title="Link to this definition">#</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="bumpversion.versioning.conventions.pep440_version_spec">
+<span class="sig-prename descclassname"><span class="pre">bumpversion.versioning.conventions.</span></span><span class="sig-name descname"><span class="pre">pep440_version_spec</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="bumpversion.versioning.models.html#bumpversion.versioning.models.VersionSpec" title="bumpversion.versioning.models.VersionSpec"><span class="pre">bumpversion.versioning.models.VersionSpec</span></a></span></span><a class="reference internal" href="../../_modules/bumpversion/versioning/conventions.html#pep440_version_spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.versioning.conventions.pep440_version_spec" title="Link to this definition">#</a></dt>
+<dd><p>Return a VersionSpec for PEP 440.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="bumpversion.versioning.conventions.SEMVER_PATTERN">
+<span class="sig-prename descclassname"><span class="pre">bumpversion.versioning.conventions.</span></span><span class="sig-name descname"><span class="pre">SEMVER_PATTERN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Multiline-String&gt;</span></em><a class="headerlink" href="#bumpversion.versioning.conventions.SEMVER_PATTERN" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="bumpversion.versioning.conventions.SEMVER_SERIALIZE_PATTERNS">
+<span class="sig-prename descclassname"><span class="pre">bumpversion.versioning.conventions.</span></span><span class="sig-name descname"><span class="pre">SEMVER_SERIALIZE_PATTERNS</span></span><a class="headerlink" href="#bumpversion.versioning.conventions.SEMVER_SERIALIZE_PATTERNS" title="Link to this definition">#</a></dt>
+<dd><p>[‘{major}.{minor}.{patch}-{pre_l}{pre_n}+{buildmetadata}’, ‘{major}.{minor}.{patch}-{pre_l}{pre_n}’,…</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="bumpversion.versioning.conventions.SEMVER_COMPONENT_CONFIGS">
+<span class="sig-prename descclassname"><span class="pre">bumpversion.versioning.conventions.</span></span><span class="sig-name descname"><span class="pre">SEMVER_COMPONENT_CONFIGS</span></span><a class="headerlink" href="#bumpversion.versioning.conventions.SEMVER_COMPONENT_CONFIGS" title="Link to this definition">#</a></dt>
 <dd><p>None</p>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="bumpversion.functions.PartFunction.independent">
-<span class="sig-name descname"><span class="pre">independent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#bumpversion.functions.PartFunction.independent" title="Link to this definition">#</a></dt>
-<dd><p>None</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="bumpversion.functions.PartFunction.bump">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/bumpversion/functions.html#PartFunction.bump"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.functions.PartFunction.bump" title="Link to this definition">#</a></dt>
-<dd><p>Increase the value.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="bumpversion.functions.NumericFunction">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bumpversion.functions.</span></span><span class="sig-name descname"><span class="pre">NumericFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optional_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/bumpversion/functions.html#NumericFunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.functions.NumericFunction" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#bumpversion.functions.PartFunction" title="bumpversion.functions.PartFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bumpversion.functions.PartFunction</span></code></a></p>
-<p>This is a class that provides a numeric function for version parts.</p>
-<p>It simply starts with the provided first_value (0 by default) and
-increases it following the sequence of integer numbers.</p>
-<p>The optional value of this function is equal to the first value.</p>
-<p>This function also supports alphanumeric parts, altering just the numeric
-part (e.g. ‘r3’ –&gt; ‘r4’). Only the first numeric group found in the part is
-considered (e.g. ‘r3-001’ –&gt; ‘r4-001’).</p>
-<p class="rubric">Initialization</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="bumpversion.functions.NumericFunction.FIRST_NUMERIC">
-<span class="sig-name descname"><span class="pre">FIRST_NUMERIC</span></span><a class="headerlink" href="#bumpversion.functions.NumericFunction.FIRST_NUMERIC" title="Link to this definition">#</a></dt>
-<dd><p>‘compile(…)’</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="bumpversion.functions.NumericFunction.bump">
-<span class="sig-name descname"><span class="pre">bump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/bumpversion/functions.html#NumericFunction.bump"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.functions.NumericFunction.bump" title="Link to this definition">#</a></dt>
-<dd><p>Increase the first numerical value by one.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="bumpversion.functions.ValuesFunction">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bumpversion.functions.</span></span><span class="sig-name descname"><span class="pre">ValuesFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optional_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/bumpversion/functions.html#ValuesFunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.functions.ValuesFunction" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#bumpversion.functions.PartFunction" title="bumpversion.functions.PartFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bumpversion.functions.PartFunction</span></code></a></p>
-<p>This is a class that provides a values list based function for version parts.</p>
-<p>It is initialized with a list of values and iterates through them when
-bumping the part.</p>
-<p>The default optional value of this function is equal to the first value,
-but may be otherwise specified.</p>
-<p>When trying to bump a part which has already the maximum value in the list
-you get a ValueError exception.</p>
-<p class="rubric">Initialization</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="bumpversion.functions.ValuesFunction.bump">
-<span class="sig-name descname"><span class="pre">bump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/bumpversion/functions.html#ValuesFunction.bump"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.functions.ValuesFunction.bump" title="Link to this definition">#</a></dt>
-<dd><p>Return the item after <code class="docutils literal notranslate"><span class="pre">value</span></code> in the list.</p>
-</dd></dl>
-
+<dl class="py function">
+<dt class="sig sig-object py" id="bumpversion.versioning.conventions.semver_spec">
+<span class="sig-prename descclassname"><span class="pre">bumpversion.versioning.conventions.</span></span><span class="sig-name descname"><span class="pre">semver_spec</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="bumpversion.versioning.models.html#bumpversion.versioning.models.VersionSpec" title="bumpversion.versioning.models.VersionSpec"><span class="pre">bumpversion.versioning.models.VersionSpec</span></a></span></span><a class="reference internal" href="../../_modules/bumpversion/versioning/conventions.html#semver_spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.versioning.conventions.semver_spec" title="Link to this definition">#</a></dt>
+<dd><p>Return a VersionSpec for SEMVER.</p>
 </dd></dl>
 
 </section>
@@ -352,23 +352,23 @@ you get a ValueError exception.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="bumpversion.exceptions.html">
+          <a class="next-page" href="bumpversion.versioning.functions.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.exceptions</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning.functions</span></code></div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="bumpversion.indented_logger.html">
+          <a class="prev-page" href="bumpversion.versioning.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.indented_logger</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning</span></code></div>
                 
               </div>
             </a>
@@ -409,26 +409,19 @@ you get a ValueError exception.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a><ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning.conventions</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
-<li><a class="reference internal" href="#classes">Classes</a></li>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#data">Data</a></li>
 <li><a class="reference internal" href="#api">API</a><ul>
-<li><a class="reference internal" href="#bumpversion.functions.PartFunction"><code class="docutils literal notranslate"><span class="pre">PartFunction</span></code></a><ul>
-<li><a class="reference internal" href="#bumpversion.functions.PartFunction.first_value"><code class="docutils literal notranslate"><span class="pre">PartFunction.first_value</span></code></a></li>
-<li><a class="reference internal" href="#bumpversion.functions.PartFunction.optional_value"><code class="docutils literal notranslate"><span class="pre">PartFunction.optional_value</span></code></a></li>
-<li><a class="reference internal" href="#bumpversion.functions.PartFunction.independent"><code class="docutils literal notranslate"><span class="pre">PartFunction.independent</span></code></a></li>
-<li><a class="reference internal" href="#bumpversion.functions.PartFunction.bump"><code class="docutils literal notranslate"><span class="pre">PartFunction.bump()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#bumpversion.functions.NumericFunction"><code class="docutils literal notranslate"><span class="pre">NumericFunction</span></code></a><ul>
-<li><a class="reference internal" href="#bumpversion.functions.NumericFunction.FIRST_NUMERIC"><code class="docutils literal notranslate"><span class="pre">NumericFunction.FIRST_NUMERIC</span></code></a></li>
-<li><a class="reference internal" href="#bumpversion.functions.NumericFunction.bump"><code class="docutils literal notranslate"><span class="pre">NumericFunction.bump()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#bumpversion.functions.ValuesFunction"><code class="docutils literal notranslate"><span class="pre">ValuesFunction</span></code></a><ul>
-<li><a class="reference internal" href="#bumpversion.functions.ValuesFunction.bump"><code class="docutils literal notranslate"><span class="pre">ValuesFunction.bump()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#bumpversion.versioning.conventions.PEP440_PATTERN"><code class="docutils literal notranslate"><span class="pre">PEP440_PATTERN</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.versioning.conventions.PEP440_SERIALIZE_PATTERNS"><code class="docutils literal notranslate"><span class="pre">PEP440_SERIALIZE_PATTERNS</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.versioning.conventions.PEP440_COMPONENT_CONFIGS"><code class="docutils literal notranslate"><span class="pre">PEP440_COMPONENT_CONFIGS</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.versioning.conventions.pep440_version_spec"><code class="docutils literal notranslate"><span class="pre">pep440_version_spec()</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.versioning.conventions.SEMVER_PATTERN"><code class="docutils literal notranslate"><span class="pre">SEMVER_PATTERN</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.versioning.conventions.SEMVER_SERIALIZE_PATTERNS"><code class="docutils literal notranslate"><span class="pre">SEMVER_SERIALIZE_PATTERNS</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.versioning.conventions.SEMVER_COMPONENT_CONFIGS"><code class="docutils literal notranslate"><span class="pre">SEMVER_COMPONENT_CONFIGS</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.versioning.conventions.semver_spec"><code class="docutils literal notranslate"><span class="pre">semver_spec()</span></code></a></li>
 </ul>
 </li>
 </ul>

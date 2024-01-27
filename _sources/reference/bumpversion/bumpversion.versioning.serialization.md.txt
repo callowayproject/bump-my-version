@@ -1,0 +1,75 @@
+# {py:mod}`bumpversion.versioning.serialization`
+
+```{py:module} bumpversion.versioning.serialization
+```
+
+```{autodoc2-docstring} bumpversion.versioning.serialization
+:allowtitles:
+```
+
+## Module Contents
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`parse_version <bumpversion.versioning.serialization.parse_version>`
+  - ```{autodoc2-docstring} bumpversion.versioning.serialization.parse_version
+    :summary:
+    ```
+* - {py:obj}`multisort <bumpversion.versioning.serialization.multisort>`
+  - ```{autodoc2-docstring} bumpversion.versioning.serialization.multisort
+    :summary:
+    ```
+* - {py:obj}`serialize <bumpversion.versioning.serialization.serialize>`
+  - ```{autodoc2-docstring} bumpversion.versioning.serialization.serialize
+    :summary:
+    ```
+````
+
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`logger <bumpversion.versioning.serialization.logger>`
+  - ```{autodoc2-docstring} bumpversion.versioning.serialization.logger
+    :summary:
+    ```
+````
+
+### API
+
+````{py:data} logger
+:canonical: bumpversion.versioning.serialization.logger
+:value: >
+   'get_indented_logger(...)'
+
+```{autodoc2-docstring} bumpversion.versioning.serialization.logger
+```
+
+````
+
+````{py:function} parse_version(version_string: str, parse_pattern: str) -> typing.Dict[str, str]
+:canonical: bumpversion.versioning.serialization.parse_version
+
+```{autodoc2-docstring} bumpversion.versioning.serialization.parse_version
+```
+````
+
+````{py:function} multisort(xs: list, specs: tuple) -> list
+:canonical: bumpversion.versioning.serialization.multisort
+
+```{autodoc2-docstring} bumpversion.versioning.serialization.multisort
+```
+````
+
+````{py:function} serialize(version: bumpversion.versioning.models.Version, serialize_patterns: typing.List[str], context: typing.MutableMapping) -> str
+:canonical: bumpversion.versioning.serialization.serialize
+
+```{autodoc2-docstring} bumpversion.versioning.serialization.serialize
+```
+````

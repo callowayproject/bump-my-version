@@ -53,7 +53,7 @@
 
 ````
 
-````{py:function} get_next_version(current_version: bumpversion.version_part.Version, config: bumpversion.config.Config, version_part: typing.Optional[str], new_version: typing.Optional[str]) -> bumpversion.version_part.Version
+````{py:function} get_next_version(current_version: bumpversion.versioning.models.Version, config: bumpversion.config.Config, version_part: typing.Optional[str], new_version: typing.Optional[str]) -> bumpversion.versioning.models.Version
 :canonical: bumpversion.bump.get_next_version
 
 ```{autodoc2-docstring} bumpversion.bump.get_next_version

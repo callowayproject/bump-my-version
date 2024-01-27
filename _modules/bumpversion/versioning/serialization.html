@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>bumpversion.config.utils - Bump My Version 0.17.1</title>
+        <title>bumpversion.versioning.serialization - Bump My Version 0.17.1</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -246,80 +246,152 @@
           </label>
         </div>
         <article role="main">
-          <h1>Source code for bumpversion.config.utils</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Helper functions for the config module.&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+          <h1>Source code for bumpversion.versioning.serialization</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Functions for serializing and deserializing version objects.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">MutableMapping</span>
 
-<span class="kn">import</span> <span class="nn">glob</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">bumpversion.exceptions</span> <span class="kn">import</span> <span class="n">BumpVersionError</span><span class="p">,</span> <span class="n">FormattingError</span>
+<span class="kn">from</span> <span class="nn">bumpversion.ui</span> <span class="kn">import</span> <span class="n">get_indented_logger</span>
+<span class="kn">from</span> <span class="nn">bumpversion.utils</span> <span class="kn">import</span> <span class="n">key_val_string</span><span class="p">,</span> <span class="n">labels_for_format</span>
+<span class="kn">from</span> <span class="nn">bumpversion.versioning.models</span> <span class="kn">import</span> <span class="n">Version</span>
 
-<span class="kn">from</span> <span class="nn">bumpversion.config.models</span> <span class="kn">import</span> <span class="n">FileChange</span>
-<span class="kn">from</span> <span class="nn">bumpversion.exceptions</span> <span class="kn">import</span> <span class="n">BumpVersionError</span>
-<span class="kn">from</span> <span class="nn">bumpversion.versioning.models</span> <span class="kn">import</span> <span class="n">VersionComponentConfig</span>
-
-
-<div class="viewcode-block" id="get_all_file_configs">
-<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.config.utils.html#bumpversion.config.utils.get_all_file_configs">[docs]</a>
-<span class="k">def</span> <span class="nf">get_all_file_configs</span><span class="p">(</span><span class="n">config_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">FileChange</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Make sure all version parts are included.&quot;&quot;&quot;</span>
-    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;parse&quot;</span><span class="p">:</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;parse&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;serialize&quot;</span><span class="p">:</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;serialize&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;search&quot;</span><span class="p">:</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;search&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;replace&quot;</span><span class="p">:</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;replace&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;ignore_missing_version&quot;</span><span class="p">:</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;ignore_missing_version&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;regex&quot;</span><span class="p">:</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;regex&quot;</span><span class="p">],</span>
-    <span class="p">}</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="p">[{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">filecfg</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span> <span class="k">for</span> <span class="n">filecfg</span> <span class="ow">in</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]]</span>
-    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">f</span><span class="p">})</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">FileChange</span><span class="p">(</span><span class="o">**</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span></div>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_indented_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-
-<div class="viewcode-block" id="get_all_part_configs">
-<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.config.utils.html#bumpversion.config.utils.get_all_part_configs">[docs]</a>
-<span class="k">def</span> <span class="nf">get_all_part_configs</span><span class="p">(</span><span class="n">config_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VersionComponentConfig</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Make sure all version parts are included.&quot;&quot;&quot;</span>
-    <span class="kn">import</span> <span class="nn">re</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">parsing_groups</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;parse&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">groupindex</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-    <span class="k">except</span> <span class="n">re</span><span class="o">.</span><span class="n">error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">BumpVersionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not parse regex &#39;</span><span class="si">{</span><span class="n">config_dict</span><span class="p">[</span><span class="s1">&#39;parse&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
-    <span class="n">parts</span> <span class="o">=</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;parts&quot;</span><span class="p">]</span>
-
-    <span class="n">part_configs</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">parsing_groups</span><span class="p">:</span>
-        <span class="n">is_independent</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;$&quot;</span><span class="p">)</span>
-        <span class="n">part_configs</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">VersionComponentConfig</span><span class="p">(</span><span class="o">**</span><span class="n">parts</span><span class="p">[</span><span class="n">label</span><span class="p">])</span>
-            <span class="k">if</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">parts</span>
-            <span class="k">else</span> <span class="n">VersionComponentConfig</span><span class="p">(</span><span class="n">independent</span><span class="o">=</span><span class="n">is_independent</span><span class="p">)</span>
-        <span class="p">)</span>
-    <span class="k">return</span> <span class="n">part_configs</span></div>
-
-
-
-<div class="viewcode-block" id="resolve_glob_files">
-<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.config.utils.html#bumpversion.config.utils.resolve_glob_files">[docs]</a>
-<span class="k">def</span> <span class="nf">resolve_glob_files</span><span class="p">(</span><span class="n">file_cfg</span><span class="p">:</span> <span class="n">FileChange</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">FileChange</span><span class="p">]:</span>
+<div class="viewcode-block" id="parse_version">
+<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.versioning.serialization.html#bumpversion.versioning.serialization.parse_version">[docs]</a>
+<span class="k">def</span> <span class="nf">parse_version</span><span class="p">(</span><span class="n">version_string</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parse_pattern</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return a list of file configurations that match the glob pattern.</span>
+<span class="sd">    Parse a version string into a dictionary of the parts and values using a regular expression.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        file_cfg: The file configuration containing the glob pattern</span>
+<span class="sd">        version_string: Version string to parse</span>
+<span class="sd">        parse_pattern: The regular expression pattern to use for parsing</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        A list of resolved file configurations according to the pattern.</span>
+<span class="sd">        A dictionary of version part labels and their values, or an empty dictionary</span>
+<span class="sd">        if the version string doesn&#39;t match.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        BumpVersionError: If the parse_pattern is not a valid regular expression</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">filename_glob</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">file_cfg</span><span class="o">.</span><span class="n">glob</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="n">new_file_cfg</span> <span class="o">=</span> <span class="n">file_cfg</span><span class="o">.</span><span class="n">model_copy</span><span class="p">()</span>
-        <span class="n">new_file_cfg</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename_glob</span>
-        <span class="n">new_file_cfg</span><span class="o">.</span><span class="n">glob</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_file_cfg</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">files</span></div>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">version_string</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version string is empty, returning empty dict&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{}</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">parse_pattern</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Parse pattern is empty, returning empty dict&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{}</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Parsing version &#39;</span><span class="si">%s</span><span class="s2">&#39; using regexp &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">version_string</span><span class="p">,</span> <span class="n">parse_pattern</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">indent</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">parse_pattern</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">re</span><span class="o">.</span><span class="n">error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">BumpVersionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">parse_pattern</span><span class="si">}</span><span class="s2">&#39; is not a valid regular expression.&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+
+    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">version_string</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; does not parse current version &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span>
+            <span class="n">parse_pattern</span><span class="p">,</span>
+            <span class="n">version_string</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="p">{}</span>
+
+    <span class="n">parsed</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Parsed the following values: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">key_val_string</span><span class="p">(</span><span class="n">parsed</span><span class="p">))</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">dedent</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">parsed</span></div>
+
+
+
+<div class="viewcode-block" id="multisort">
+<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.versioning.serialization.html#bumpversion.versioning.serialization.multisort">[docs]</a>
+<span class="k">def</span> <span class="nf">multisort</span><span class="p">(</span><span class="n">xs</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">specs</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sort a list of dictionaries by multiple keys.</span>
+
+<span class="sd">    From https://docs.python.org/3/howto/sorting.html#sort-stability-and-complex-sorts</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        xs: The list of dictionaries to sort</span>
+<span class="sd">        specs: A tuple of (key, reverse) pairs</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The sorted list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">reverse</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">specs</span><span class="p">):</span>
+        <span class="n">xs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">xs</span></div>
+
+
+
+<div class="viewcode-block" id="serialize">
+<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.versioning.serialization.html#bumpversion.versioning.serialization.serialize">[docs]</a>
+<span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="n">version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span> <span class="n">serialize_patterns</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">context</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Attempts to serialize a version with the given serialization format.</span>
+
+<span class="sd">    - valid serialization patterns are those that are renderable with the given context</span>
+<span class="sd">    - formats that contain all required components are preferred</span>
+<span class="sd">    - the shortest valid serialization pattern is used</span>
+<span class="sd">    - if two patterns are equally short, the first one is used</span>
+<span class="sd">    - if no valid serialization pattern is found, an error is raised</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        version: The version to serialize</span>
+<span class="sd">        serialize_patterns: The serialization format to use, using Python&#39;s format string syntax</span>
+<span class="sd">        context: The context to use when serializing the version</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        FormattingError: if a serialization pattern</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The serialized version as a string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Serializing version &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">indent</span><span class="p">()</span>
+
+    <span class="n">local_context</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+    <span class="n">local_context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">version</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">local_context_keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">local_context</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">required_component_labels</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">version</span><span class="o">.</span><span class="n">required_components</span><span class="p">())</span>
+
+    <span class="n">patterns</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">serialize_patterns</span><span class="p">):</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">labels_for_format</span><span class="p">(</span><span class="n">pattern</span><span class="p">))</span>
+        <span class="n">patterns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;pattern&quot;</span><span class="p">:</span> <span class="n">pattern</span><span class="p">,</span>
+                <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="n">labels</span><span class="p">,</span>
+                <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="n">index</span><span class="p">,</span>
+                <span class="s2">&quot;num_labels&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">),</span>
+                <span class="s2">&quot;renderable&quot;</span><span class="p">:</span> <span class="n">local_context_keys</span> <span class="o">&gt;=</span> <span class="n">labels</span><span class="p">,</span>
+                <span class="s2">&quot;has_required_components&quot;</span><span class="p">:</span> <span class="n">required_component_labels</span> <span class="o">&lt;=</span> <span class="n">labels</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+    <span class="n">valid_patterns</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="n">itemgetter</span><span class="p">(</span><span class="s2">&quot;renderable&quot;</span><span class="p">),</span> <span class="n">patterns</span><span class="p">)</span>
+    <span class="n">sorted_patterns</span> <span class="o">=</span> <span class="n">multisort</span><span class="p">(</span>
+        <span class="nb">list</span><span class="p">(</span><span class="n">valid_patterns</span><span class="p">),</span> <span class="p">((</span><span class="s2">&quot;has_required_components&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;num_labels&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;order&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">sorted_patterns</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">FormattingError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not find a valid serialization format in </span><span class="si">{</span><span class="n">serialize_patterns</span><span class="si">!r}</span><span class="s2"> for </span><span class="si">{</span><span class="n">version</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">chosen_pattern</span> <span class="o">=</span> <span class="n">sorted_patterns</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;pattern&quot;</span><span class="p">]</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Using serialization format &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">chosen_pattern</span><span class="p">)</span>
+    <span class="n">serialized</span> <span class="o">=</span> <span class="n">chosen_pattern</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">local_context</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Serialized to &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">serialized</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">dedent</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">serialized</span></div>
 
 </pre></div>
         </article>

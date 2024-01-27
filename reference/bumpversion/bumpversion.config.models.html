@@ -185,6 +185,13 @@
 <li class="toctree-l4"><a class="reference internal" href="bumpversion.config.files_legacy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.config.files_legacy</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="bumpversion.versioning.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of bumpversion.versioning</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="bumpversion.versioning.conventions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning.conventions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bumpversion.versioning.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning.functions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bumpversion.versioning.models.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning.models</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bumpversion.versioning.serialization.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.versioning.serialization</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.yaml_dump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.yaml_dump</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.show.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.show</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.ui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.ui</span></code></a></li>
@@ -195,7 +202,6 @@
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.files.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.files</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.bump.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.bump</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.indented_logger.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.indented_logger</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="bumpversion.functions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.functions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.exceptions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.exceptions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.__main__</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="bumpversion.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bumpversion.cli</span></code></a></li>
@@ -205,7 +211,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
 </ul>
@@ -252,13 +258,10 @@
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-left">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.config.models.VersionPartConfig" title="bumpversion.config.models.VersionPartConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VersionPartConfig</span></code></a></p></td>
-<td><p>Configuration of a part of the version.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.config.models.FileChange" title="bumpversion.config.models.FileChange"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileChange</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.config.models.FileChange" title="bumpversion.config.models.FileChange"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileChange</span></code></a></p></td>
 <td><p>A change to make to a file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bumpversion.config.models.Config" title="bumpversion.config.models.Config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Config</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bumpversion.config.models.Config" title="bumpversion.config.models.Config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Config</span></code></a></p></td>
 <td><p>Bump Version configuration.</p></td>
 </tr>
 </tbody>
@@ -283,43 +286,6 @@
 <dt class="sig sig-object py" id="bumpversion.config.models.logger">
 <span class="sig-prename descclassname"><span class="pre">bumpversion.config.models.</span></span><span class="sig-name descname"><span class="pre">logger</span></span><a class="headerlink" href="#bumpversion.config.models.logger" title="Link to this definition">#</a></dt>
 <dd><p>‘get_indented_logger(…)’</p>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="bumpversion.config.models.VersionPartConfig">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bumpversion.config.models.</span></span><span class="sig-name descname"><span class="pre">VersionPartConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/bumpversion/config/models.html#VersionPartConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.config.models.VersionPartConfig" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pydantic.BaseModel</span></code></p>
-<p>Configuration of a part of the version.</p>
-<p class="rubric">Initialization</p>
-<p>Create a new model by parsing and validating input data from keyword arguments.</p>
-<p>Raises [<code class="docutils literal notranslate"><span class="pre">ValidationError</span></code>][pydantic_core.ValidationError] if the input data cannot be
-validated to form a valid model.</p>
-<p><code class="docutils literal notranslate"><span class="pre">__init__</span></code> uses <code class="docutils literal notranslate"><span class="pre">__pydantic_self__</span></code> instead of the more common <code class="docutils literal notranslate"><span class="pre">self</span></code> for the first arg to
-allow <code class="docutils literal notranslate"><span class="pre">self</span></code> as a field name.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="bumpversion.config.models.VersionPartConfig.values">
-<span class="sig-name descname"><span class="pre">values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bumpversion.config.models.VersionPartConfig.values" title="Link to this definition">#</a></dt>
-<dd><p>None</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="bumpversion.config.models.VersionPartConfig.optional_value">
-<span class="sig-name descname"><span class="pre">optional_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bumpversion.config.models.VersionPartConfig.optional_value" title="Link to this definition">#</a></dt>
-<dd><p>None</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="bumpversion.config.models.VersionPartConfig.first_value">
-<span class="sig-name descname"><span class="pre">first_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bumpversion.config.models.VersionPartConfig.first_value" title="Link to this definition">#</a></dt>
-<dd><p>None</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="bumpversion.config.models.VersionPartConfig.independent">
-<span class="sig-name descname"><span class="pre">independent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#bumpversion.config.models.VersionPartConfig.independent" title="Link to this definition">#</a></dt>
-<dd><p>False</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -514,7 +480,7 @@ allow <code class="docutils literal notranslate"><span class="pre">self</span></
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bumpversion.config.models.Config.parts">
-<span class="sig-name descname"><span class="pre">parts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#bumpversion.config.models.VersionPartConfig" title="bumpversion.config.models.VersionPartConfig"><span class="pre">bumpversion.config.models.VersionPartConfig</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bumpversion.config.models.Config.parts" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">parts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="bumpversion.versioning.models.html#bumpversion.versioning.models.VersionComponentConfig" title="bumpversion.versioning.models.VersionComponentConfig"><span class="pre">bumpversion.versioning.models.VersionComponentConfig</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bumpversion.config.models.Config.parts" title="Link to this definition">#</a></dt>
 <dd><p>None</p>
 </dd></dl>
 
@@ -576,6 +542,12 @@ allow <code class="docutils literal notranslate"><span class="pre">self</span></
 <dt class="sig sig-object py" id="bumpversion.config.models.Config.version_config">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">version_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="bumpversion.version_part.html#bumpversion.version_part.VersionConfig" title="bumpversion.version_part.VersionConfig"><span class="pre">bumpversion.version_part.VersionConfig</span></a></em><a class="headerlink" href="#bumpversion.config.models.Config.version_config" title="Link to this definition">#</a></dt>
 <dd><p>Return the version configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bumpversion.config.models.Config.version_spec">
+<span class="sig-name descname"><span class="pre">version_spec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="bumpversion.versioning.models.html#bumpversion.versioning.models.VersionSpec" title="bumpversion.versioning.models.VersionSpec"><span class="pre">bumpversion.versioning.models.VersionSpec</span></a></span></span><a class="reference internal" href="../../_modules/bumpversion/config/models.html#Config.version_spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bumpversion.config.models.Config.version_spec" title="Link to this definition">#</a></dt>
+<dd><p>Return the version specification.</p>
 </dd></dl>
 
 </dd></dl>
@@ -652,13 +624,6 @@ allow <code class="docutils literal notranslate"><span class="pre">self</span></
 <li><a class="reference internal" href="#data">Data</a></li>
 <li><a class="reference internal" href="#api">API</a><ul>
 <li><a class="reference internal" href="#bumpversion.config.models.logger"><code class="docutils literal notranslate"><span class="pre">logger</span></code></a></li>
-<li><a class="reference internal" href="#bumpversion.config.models.VersionPartConfig"><code class="docutils literal notranslate"><span class="pre">VersionPartConfig</span></code></a><ul>
-<li><a class="reference internal" href="#bumpversion.config.models.VersionPartConfig.values"><code class="docutils literal notranslate"><span class="pre">VersionPartConfig.values</span></code></a></li>
-<li><a class="reference internal" href="#bumpversion.config.models.VersionPartConfig.optional_value"><code class="docutils literal notranslate"><span class="pre">VersionPartConfig.optional_value</span></code></a></li>
-<li><a class="reference internal" href="#bumpversion.config.models.VersionPartConfig.first_value"><code class="docutils literal notranslate"><span class="pre">VersionPartConfig.first_value</span></code></a></li>
-<li><a class="reference internal" href="#bumpversion.config.models.VersionPartConfig.independent"><code class="docutils literal notranslate"><span class="pre">VersionPartConfig.independent</span></code></a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#bumpversion.config.models.FileChange"><code class="docutils literal notranslate"><span class="pre">FileChange</span></code></a><ul>
 <li><a class="reference internal" href="#bumpversion.config.models.FileChange.parse"><code class="docutils literal notranslate"><span class="pre">FileChange.parse</span></code></a></li>
 <li><a class="reference internal" href="#bumpversion.config.models.FileChange.serialize"><code class="docutils literal notranslate"><span class="pre">FileChange.serialize</span></code></a></li>
@@ -701,6 +666,7 @@ allow <code class="docutils literal notranslate"><span class="pre">self</span></
 <li><a class="reference internal" href="#bumpversion.config.models.Config._resolve_filemap"><code class="docutils literal notranslate"><span class="pre">Config._resolve_filemap()</span></code></a></li>
 <li><a class="reference internal" href="#bumpversion.config.models.Config.files_to_modify"><code class="docutils literal notranslate"><span class="pre">Config.files_to_modify</span></code></a></li>
 <li><a class="reference internal" href="#bumpversion.config.models.Config.version_config"><code class="docutils literal notranslate"><span class="pre">Config.version_config</span></code></a></li>
+<li><a class="reference internal" href="#bumpversion.config.models.Config.version_spec"><code class="docutils literal notranslate"><span class="pre">Config.version_spec()</span></code></a></li>
 </ul>
 </li>
 </ul>

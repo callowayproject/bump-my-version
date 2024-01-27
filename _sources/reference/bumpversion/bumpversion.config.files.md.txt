@@ -92,7 +92,7 @@
 ```
 ````
 
-````{py:function} update_config_file(config_file: typing.Union[str, pathlib.Path], config: bumpversion.config.models.Config, current_version: bumpversion.version_part.Version, new_version: bumpversion.version_part.Version, context: typing.MutableMapping, dry_run: bool = False) -> None
+````{py:function} update_config_file(config_file: typing.Union[str, pathlib.Path], config: bumpversion.config.models.Config, current_version: bumpversion.versioning.models.Version, new_version: bumpversion.versioning.models.Version, context: typing.MutableMapping, dry_run: bool = False) -> None
 :canonical: bumpversion.config.files.update_config_file
 
 ```{autodoc2-docstring} bumpversion.config.files.update_config_file

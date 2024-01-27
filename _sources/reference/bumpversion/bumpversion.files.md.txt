@@ -119,7 +119,7 @@
 
 ````
 
-````{py:method} _contains_change_pattern(search_expression: re.Pattern, raw_search_expression: str, version: bumpversion.version_part.Version, context: typing.MutableMapping) -> bool
+````{py:method} _contains_change_pattern(search_expression: re.Pattern, raw_search_expression: str, version: bumpversion.versioning.models.Version, context: typing.MutableMapping) -> bool
 :canonical: bumpversion.files.ConfiguredFile._contains_change_pattern
 
 ```{autodoc2-docstring} bumpversion.files.ConfiguredFile._contains_change_pattern
@@ -127,7 +127,7 @@
 
 ````
 
-````{py:method} make_file_change(current_version: bumpversion.version_part.Version, new_version: bumpversion.version_part.Version, context: typing.MutableMapping, dry_run: bool = False) -> None
+````{py:method} make_file_change(current_version: bumpversion.versioning.models.Version, new_version: bumpversion.versioning.models.Version, context: typing.MutableMapping, dry_run: bool = False) -> None
 :canonical: bumpversion.files.ConfiguredFile.make_file_change
 
 ```{autodoc2-docstring} bumpversion.files.ConfiguredFile.make_file_change
@@ -154,7 +154,7 @@
 ```
 ````
 
-````{py:function} modify_files(files: typing.List[bumpversion.files.ConfiguredFile], current_version: bumpversion.version_part.Version, new_version: bumpversion.version_part.Version, context: typing.MutableMapping, dry_run: bool = False) -> None
+````{py:function} modify_files(files: typing.List[bumpversion.files.ConfiguredFile], current_version: bumpversion.versioning.models.Version, new_version: bumpversion.versioning.models.Version, context: typing.MutableMapping, dry_run: bool = False) -> None
 :canonical: bumpversion.files.modify_files
 
 ```{autodoc2-docstring} bumpversion.files.modify_files
@@ -173,7 +173,7 @@
 ```{autodoc2-docstring} bumpversion.files.FileUpdater.__init__
 ```
 
-````{py:method} update_file(current_version: bumpversion.version_part.Version, new_version: bumpversion.version_part.Version, context: typing.MutableMapping, dry_run: bool = False) -> None
+````{py:method} update_file(current_version: bumpversion.versioning.models.Version, new_version: bumpversion.versioning.models.Version, context: typing.MutableMapping, dry_run: bool = False) -> None
 :canonical: bumpversion.files.FileUpdater.update_file
 
 ```{autodoc2-docstring} bumpversion.files.FileUpdater.update_file
@@ -183,7 +183,7 @@
 
 `````
 
-`````{py:class} DataFileUpdater(file_change: bumpversion.config.models.FileChange, version_part_configs: typing.Dict[str, bumpversion.config.models.VersionPartConfig])
+`````{py:class} DataFileUpdater(file_change: bumpversion.config.models.FileChange, version_part_configs: typing.Dict[str, bumpversion.versioning.models.VersionComponentConfig])
 :canonical: bumpversion.files.DataFileUpdater
 
 ```{autodoc2-docstring} bumpversion.files.DataFileUpdater
@@ -195,7 +195,7 @@
 ```{autodoc2-docstring} bumpversion.files.DataFileUpdater.__init__
 ```
 
-````{py:method} update_file(current_version: bumpversion.version_part.Version, new_version: bumpversion.version_part.Version, context: typing.MutableMapping, dry_run: bool = False) -> None
+````{py:method} update_file(current_version: bumpversion.versioning.models.Version, new_version: bumpversion.versioning.models.Version, context: typing.MutableMapping, dry_run: bool = False) -> None
 :canonical: bumpversion.files.DataFileUpdater.update_file
 
 ```{autodoc2-docstring} bumpversion.files.DataFileUpdater.update_file

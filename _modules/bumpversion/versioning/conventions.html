@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>bumpversion.config.utils - Bump My Version 0.17.1</title>
+        <title>bumpversion.versioning.conventions - Bump My Version 0.17.1</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -246,80 +246,121 @@
           </label>
         </div>
         <article role="main">
-          <h1>Source code for bumpversion.config.utils</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Helper functions for the config module.&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+          <h1>Source code for bumpversion.versioning.conventions</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Standard version conventions.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">bumpversion.versioning.models</span> <span class="kn">import</span> <span class="n">VersionComponentConfig</span><span class="p">,</span> <span class="n">VersionSpec</span>
 
-<span class="kn">import</span> <span class="nn">glob</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
+<span class="c1"># Adapted from https://packaging.python.org/en/latest/specifications/version-specifiers/</span>
+<span class="n">PEP440_PATTERN</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    v?</span>
+<span class="s2">    (?:</span>
+<span class="s2">        (?P&lt;major&gt;0|[1-9]\d*)\.</span>
+<span class="s2">        (?P&lt;minor&gt;0|[1-9]\d*)\.</span>
+<span class="s2">        (?P&lt;patch&gt;0|[1-9]\d*)</span>
+<span class="s2">        (?:                                          # pre-release</span>
+<span class="s2">            [-_\.]?</span>
+<span class="s2">            (?P&lt;pre&gt;</span>
+<span class="s2">                (?P&lt;pre_l&gt;a|b|c|rc|alpha|beta|pre|preview)</span>
+<span class="s2">                [-_\.]?</span>
+<span class="s2">                (?P&lt;pre_n&gt;[0-9]+)?</span>
+<span class="s2">            )</span>
+<span class="s2">        )?</span>
+<span class="s2">        (?:                                          # post release</span>
+<span class="s2">            [-_\.]?</span>
+<span class="s2">            (?P&lt;post&gt;</span>
+<span class="s2">                post</span>
+<span class="s2">                [-_\.]?</span>
+<span class="s2">                [0-9]+</span>
+<span class="s2">            )</span>
+<span class="s2">        )?</span>
+<span class="s2">        (?:                                          # dev release</span>
+<span class="s2">            [-_\.]?</span>
+<span class="s2">            (?P&lt;dev&gt;</span>
+<span class="s2">                dev</span>
+<span class="s2">                [-_\.]?</span>
+<span class="s2">                [0-9]+</span>
+<span class="s2">            )</span>
+<span class="s2">        )?</span>
+<span class="s2">    )</span>
+<span class="s2">    (?:\+(?P&lt;local&gt;[a-z0-9]+(?:[-_\.][a-z0-9]+)*))?   # local version</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">PEP440_SERIALIZE_PATTERNS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}{pre_l}{pre_n}</span><span class="s2">.</span><span class="si">{post}</span><span class="s2">.</span><span class="si">{dev}</span><span class="s2">+</span><span class="si">{local}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}{pre_l}{pre_n}</span><span class="s2">.</span><span class="si">{post}</span><span class="s2">.</span><span class="si">{dev}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}{pre_l}{pre_n}</span><span class="s2">.</span><span class="si">{post}</span><span class="s2">+</span><span class="si">{local}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}{pre_l}{pre_n}</span><span class="s2">.</span><span class="si">{dev}</span><span class="s2">+</span><span class="si">{local}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}</span><span class="s2">.</span><span class="si">{post}</span><span class="s2">.</span><span class="si">{dev}</span><span class="s2">+</span><span class="si">{local}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}{pre_l}{pre_n}</span><span class="s2">.</span><span class="si">{post}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}{pre_l}{pre_n}</span><span class="s2">.</span><span class="si">{dev}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}{pre_l}{pre_n}</span><span class="s2">+</span><span class="si">{local}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}</span><span class="s2">.</span><span class="si">{post}</span><span class="s2">.</span><span class="si">{dev}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}</span><span class="s2">.</span><span class="si">{post}</span><span class="s2">+</span><span class="si">{local}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}</span><span class="s2">.</span><span class="si">{dev}</span><span class="s2">+</span><span class="si">{local}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}</span><span class="s2">.</span><span class="si">{pre_l}{pre_n}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}</span><span class="s2">.</span><span class="si">{post}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}</span><span class="s2">.</span><span class="si">{dev}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}</span><span class="s2">+</span><span class="si">{local}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">PEP440_COMPONENT_CONFIGS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;major&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(),</span>
+    <span class="s2">&quot;minor&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(),</span>
+    <span class="s2">&quot;patch&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(),</span>
+    <span class="s2">&quot;pre_l&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;rc&quot;</span><span class="p">]),</span>
+    <span class="s2">&quot;pre_n&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(),</span>
+    <span class="s2">&quot;post&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(</span><span class="n">depends_on</span><span class="o">=</span><span class="s2">&quot;patch&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;dev&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(</span><span class="n">depends_on</span><span class="o">=</span><span class="s2">&quot;patch&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;local&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(</span><span class="n">depends_on</span><span class="o">=</span><span class="s2">&quot;patch&quot;</span><span class="p">,</span> <span class="n">optional_value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">),</span>
+<span class="p">}</span>
 
-<span class="kn">from</span> <span class="nn">bumpversion.config.models</span> <span class="kn">import</span> <span class="n">FileChange</span>
-<span class="kn">from</span> <span class="nn">bumpversion.exceptions</span> <span class="kn">import</span> <span class="n">BumpVersionError</span>
-<span class="kn">from</span> <span class="nn">bumpversion.versioning.models</span> <span class="kn">import</span> <span class="n">VersionComponentConfig</span>
 
-
-<div class="viewcode-block" id="get_all_file_configs">
-<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.config.utils.html#bumpversion.config.utils.get_all_file_configs">[docs]</a>
-<span class="k">def</span> <span class="nf">get_all_file_configs</span><span class="p">(</span><span class="n">config_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">FileChange</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Make sure all version parts are included.&quot;&quot;&quot;</span>
-    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;parse&quot;</span><span class="p">:</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;parse&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;serialize&quot;</span><span class="p">:</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;serialize&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;search&quot;</span><span class="p">:</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;search&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;replace&quot;</span><span class="p">:</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;replace&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;ignore_missing_version&quot;</span><span class="p">:</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;ignore_missing_version&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;regex&quot;</span><span class="p">:</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;regex&quot;</span><span class="p">],</span>
-    <span class="p">}</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="p">[{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">filecfg</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span> <span class="k">for</span> <span class="n">filecfg</span> <span class="ow">in</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]]</span>
-    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">f</span><span class="p">})</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">FileChange</span><span class="p">(</span><span class="o">**</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span></div>
+<div class="viewcode-block" id="pep440_version_spec">
+<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.versioning.conventions.html#bumpversion.versioning.conventions.pep440_version_spec">[docs]</a>
+<span class="k">def</span> <span class="nf">pep440_version_spec</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">VersionSpec</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a VersionSpec for PEP 440.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">VersionSpec</span><span class="p">(</span><span class="n">components</span><span class="o">=</span><span class="n">PEP440_COMPONENT_CONFIGS</span><span class="p">)</span></div>
 
 
 
-<div class="viewcode-block" id="get_all_part_configs">
-<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.config.utils.html#bumpversion.config.utils.get_all_part_configs">[docs]</a>
-<span class="k">def</span> <span class="nf">get_all_part_configs</span><span class="p">(</span><span class="n">config_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VersionComponentConfig</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Make sure all version parts are included.&quot;&quot;&quot;</span>
-    <span class="kn">import</span> <span class="nn">re</span>
+<span class="c1"># Adapted from https://regex101.com/r/Ly7O1x/3/</span>
+<span class="n">SEMVER_PATTERN</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    (?P&lt;major&gt;0|[1-9]\d*)\.</span>
+<span class="s2">    (?P&lt;minor&gt;0|[1-9]\d*)\.</span>
+<span class="s2">    (?P&lt;patch&gt;0|[1-9]\d*)</span>
+<span class="s2">    (?:</span>
+<span class="s2">        -                             # dash seperator for pre-release section</span>
+<span class="s2">        (?P&lt;pre_l&gt;[a-zA-Z-]+)         # pre-release label</span>
+<span class="s2">        (?P&lt;pre_n&gt;0|[1-9]\d*)         # pre-release version number</span>
+<span class="s2">    )?                                # pre-release section is optional</span>
+<span class="s2">    (?:</span>
+<span class="s2">        \+                            # plus seperator for build metadata section</span>
+<span class="s2">        (?P&lt;buildmetadata&gt;</span>
+<span class="s2">            [0-9a-zA-Z-]+</span>
+<span class="s2">            (?:\.[0-9a-zA-Z-]+)*</span>
+<span class="s2">        )</span>
+<span class="s2">    )?                                # build metadata section is optional</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">SEMVER_SERIALIZE_PATTERNS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}</span><span class="s2">-</span><span class="si">{pre_l}{pre_n}</span><span class="s2">+</span><span class="si">{buildmetadata}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}</span><span class="s2">-</span><span class="si">{pre_l}{pre_n}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}</span><span class="s2">+</span><span class="si">{buildmetadata}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">SEMVER_COMPONENT_CONFIGS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;major&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(),</span>
+    <span class="s2">&quot;minor&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(),</span>
+    <span class="s2">&quot;patch&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(),</span>
+    <span class="s2">&quot;pre_l&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;rc&quot;</span><span class="p">]),</span>
+    <span class="s2">&quot;pre_n&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(),</span>
+    <span class="s2">&quot;buildmetadata&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(</span><span class="n">independent</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<span class="p">}</span>
 
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">parsing_groups</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;parse&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">groupindex</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-    <span class="k">except</span> <span class="n">re</span><span class="o">.</span><span class="n">error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">BumpVersionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not parse regex &#39;</span><span class="si">{</span><span class="n">config_dict</span><span class="p">[</span><span class="s1">&#39;parse&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
-    <span class="n">parts</span> <span class="o">=</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;parts&quot;</span><span class="p">]</span>
 
-    <span class="n">part_configs</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">parsing_groups</span><span class="p">:</span>
-        <span class="n">is_independent</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;$&quot;</span><span class="p">)</span>
-        <span class="n">part_configs</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">VersionComponentConfig</span><span class="p">(</span><span class="o">**</span><span class="n">parts</span><span class="p">[</span><span class="n">label</span><span class="p">])</span>
-            <span class="k">if</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">parts</span>
-            <span class="k">else</span> <span class="n">VersionComponentConfig</span><span class="p">(</span><span class="n">independent</span><span class="o">=</span><span class="n">is_independent</span><span class="p">)</span>
-        <span class="p">)</span>
-    <span class="k">return</span> <span class="n">part_configs</span></div>
-
-
-
-<div class="viewcode-block" id="resolve_glob_files">
-<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.config.utils.html#bumpversion.config.utils.resolve_glob_files">[docs]</a>
-<span class="k">def</span> <span class="nf">resolve_glob_files</span><span class="p">(</span><span class="n">file_cfg</span><span class="p">:</span> <span class="n">FileChange</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">FileChange</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return a list of file configurations that match the glob pattern.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        file_cfg: The file configuration containing the glob pattern</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        A list of resolved file configurations according to the pattern.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">filename_glob</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">file_cfg</span><span class="o">.</span><span class="n">glob</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="n">new_file_cfg</span> <span class="o">=</span> <span class="n">file_cfg</span><span class="o">.</span><span class="n">model_copy</span><span class="p">()</span>
-        <span class="n">new_file_cfg</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename_glob</span>
-        <span class="n">new_file_cfg</span><span class="o">.</span><span class="n">glob</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_file_cfg</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">files</span></div>
+<div class="viewcode-block" id="semver_spec">
+<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.versioning.conventions.html#bumpversion.versioning.conventions.semver_spec">[docs]</a>
+<span class="k">def</span> <span class="nf">semver_spec</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">VersionSpec</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a VersionSpec for SEMVER.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">VersionSpec</span><span class="p">(</span><span class="n">components</span><span class="o">=</span><span class="n">SEMVER_COMPONENT_CONFIGS</span><span class="p">)</span></div>
 
 </pre></div>
         </article>
