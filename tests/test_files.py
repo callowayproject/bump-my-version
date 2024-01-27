@@ -470,7 +470,7 @@ class TestDataFileUpdater:
 
         overrides = {"current_version": "1.2.3", "files": [{"filename": str(version_path)}]}
         conf, version_config, current_version = get_config_data(overrides)
-        new_version = current_version.bump("patch", version_config.order)
+        new_version = current_version.bump("patch")
         datafile_config = FileChange(
             filename=str(version_path),
             key_path="",

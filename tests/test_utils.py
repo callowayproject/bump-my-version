@@ -1,4 +1,6 @@
 """Tests for the utils module."""
+from itertools import combinations
+
 import pytest
 from bumpversion import utils
 
@@ -78,3 +80,53 @@ class TestSetNestedValue:
         # Act/Assert
         with pytest.raises(ValueError):
             utils.set_nested_value(d, value, path)
+
+
+def pytest_generate_tests(metafunc):
+    if "flag_permutation" in metafunc.fixturenames:
+        flags = [
+            "a",
+            "i",
+            "L",
+            "m",
+            "s",
+            "u",
+            "x",
+        ]
+        permutes = flags[:]
+        permutes.extend(["".join(p) for p in combinations(flags, 2)])
+        permutes.extend(["".join(p) for p in combinations(flags, 3)])
+        permutes.extend(["".join(p) for p in combinations(flags, 4)])
+        permutes.extend(["".join(p) for p in combinations(flags, 5)])
+        permutes.extend(["".join(p) for p in combinations(flags, 6)])
+        permutes.extend(["".join(p) for p in combinations(flags, 7)])
+        metafunc.parametrize(
+            "flag_permutation",
+            permutes,
+        )
+
+
+class TestExtractRegexFlags:
+    def test_returns_flags_when_available(self, flag_permutation):
+        """It should return the flags when available."""
+        # Arrange
+        regex = f"(?{flag_permutation})abc"
+        expected = ("abc", f"(?{flag_permutation})")
+
+        # Act
+        actual_flags = utils.extract_regex_flags(regex)
+
+        # Assert
+        assert actual_flags == expected
+
+    def test_returns_empty_string_when_no_flags(self):
+        """It should return an empty string when no flags are present."""
+        # Arrange
+        regex = "abc"
+        expected = ("abc", "")
+
+        # Act
+        actual_flags = utils.extract_regex_flags(regex)
+
+        # Assert
+        assert actual_flags == expected
