@@ -62,7 +62,7 @@ bumpversion.aliases
 :canonical: bumpversion.__version__
 :type: str
 :value: >
-   '0.17.2'
+   '0.17.3'
 
 ```{autodoc2-docstring} bumpversion.__version__
 :parser: myst
