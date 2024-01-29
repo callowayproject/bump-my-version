@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.config.models
+:parser: myst
 :allowtitles:
 ```
 
@@ -15,16 +16,14 @@
 :class: autosummary longtable
 :align: left
 
-* - {py:obj}`VersionPartConfig <bumpversion.config.models.VersionPartConfig>`
-  - ```{autodoc2-docstring} bumpversion.config.models.VersionPartConfig
-    :summary:
-    ```
 * - {py:obj}`FileChange <bumpversion.config.models.FileChange>`
   - ```{autodoc2-docstring} bumpversion.config.models.FileChange
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`Config <bumpversion.config.models.Config>`
   - ```{autodoc2-docstring} bumpversion.config.models.Config
+    :parser: myst
     :summary:
     ```
 ````
@@ -37,6 +36,7 @@
 
 * - {py:obj}`logger <bumpversion.config.models.logger>`
   - ```{autodoc2-docstring} bumpversion.config.models.logger
+    :parser: myst
     :summary:
     ```
 ````
@@ -49,69 +49,10 @@
    'get_indented_logger(...)'
 
 ```{autodoc2-docstring} bumpversion.config.models.logger
+:parser: myst
 ```
 
 ````
-
-`````{py:class} VersionPartConfig(**data: typing.Any)
-:canonical: bumpversion.config.models.VersionPartConfig
-
-Bases: {py:obj}`pydantic.BaseModel`
-
-```{autodoc2-docstring} bumpversion.config.models.VersionPartConfig
-```
-
-```{rubric} Initialization
-```
-
-```{autodoc2-docstring} bumpversion.config.models.VersionPartConfig.__init__
-```
-
-````{py:attribute} values
-:canonical: bumpversion.config.models.VersionPartConfig.values
-:type: typing.Optional[list]
-:value: >
-   None
-
-```{autodoc2-docstring} bumpversion.config.models.VersionPartConfig.values
-```
-
-````
-
-````{py:attribute} optional_value
-:canonical: bumpversion.config.models.VersionPartConfig.optional_value
-:type: typing.Optional[str]
-:value: >
-   None
-
-```{autodoc2-docstring} bumpversion.config.models.VersionPartConfig.optional_value
-```
-
-````
-
-````{py:attribute} first_value
-:canonical: bumpversion.config.models.VersionPartConfig.first_value
-:type: typing.Union[str, int, None]
-:value: >
-   None
-
-```{autodoc2-docstring} bumpversion.config.models.VersionPartConfig.first_value
-```
-
-````
-
-````{py:attribute} independent
-:canonical: bumpversion.config.models.VersionPartConfig.independent
-:type: bool
-:value: >
-   False
-
-```{autodoc2-docstring} bumpversion.config.models.VersionPartConfig.independent
-```
-
-````
-
-`````
 
 `````{py:class} FileChange(**data: typing.Any)
 :canonical: bumpversion.config.models.FileChange
@@ -119,12 +60,14 @@ Bases: {py:obj}`pydantic.BaseModel`
 Bases: {py:obj}`pydantic.BaseModel`
 
 ```{autodoc2-docstring} bumpversion.config.models.FileChange
+:parser: myst
 ```
 
 ```{rubric} Initialization
 ```
 
 ```{autodoc2-docstring} bumpversion.config.models.FileChange.__init__
+:parser: myst
 ```
 
 ````{py:attribute} parse
@@ -134,6 +77,7 @@ Bases: {py:obj}`pydantic.BaseModel`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.FileChange.parse
+:parser: myst
 ```
 
 ````
@@ -145,6 +89,7 @@ Bases: {py:obj}`pydantic.BaseModel`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.FileChange.serialize
+:parser: myst
 ```
 
 ````
@@ -156,6 +101,7 @@ Bases: {py:obj}`pydantic.BaseModel`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.FileChange.search
+:parser: myst
 ```
 
 ````
@@ -167,6 +113,7 @@ Bases: {py:obj}`pydantic.BaseModel`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.FileChange.replace
+:parser: myst
 ```
 
 ````
@@ -178,6 +125,7 @@ Bases: {py:obj}`pydantic.BaseModel`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.FileChange.regex
+:parser: myst
 ```
 
 ````
@@ -189,6 +137,7 @@ Bases: {py:obj}`pydantic.BaseModel`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.FileChange.ignore_missing_version
+:parser: myst
 ```
 
 ````
@@ -200,6 +149,7 @@ Bases: {py:obj}`pydantic.BaseModel`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.FileChange.filename
+:parser: myst
 ```
 
 ````
@@ -211,6 +161,7 @@ Bases: {py:obj}`pydantic.BaseModel`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.FileChange.glob
+:parser: myst
 ```
 
 ````
@@ -222,6 +173,7 @@ Bases: {py:obj}`pydantic.BaseModel`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.FileChange.key_path
+:parser: myst
 ```
 
 ````
@@ -230,6 +182,7 @@ Bases: {py:obj}`pydantic.BaseModel`
 :canonical: bumpversion.config.models.FileChange.__hash__
 
 ```{autodoc2-docstring} bumpversion.config.models.FileChange.__hash__
+:parser: myst
 ```
 
 ````
@@ -238,6 +191,7 @@ Bases: {py:obj}`pydantic.BaseModel`
 :canonical: bumpversion.config.models.FileChange.get_search_pattern
 
 ```{autodoc2-docstring} bumpversion.config.models.FileChange.get_search_pattern
+:parser: myst
 ```
 
 ````
@@ -250,12 +204,14 @@ Bases: {py:obj}`pydantic.BaseModel`
 Bases: {py:obj}`pydantic_settings.BaseSettings`
 
 ```{autodoc2-docstring} bumpversion.config.models.Config
+:parser: myst
 ```
 
 ```{rubric} Initialization
 ```
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.__init__
+:parser: myst
 ```
 
 ````{py:attribute} current_version
@@ -265,6 +221,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.current_version
+:parser: myst
 ```
 
 ````
@@ -276,6 +233,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.parse
+:parser: myst
 ```
 
 ````
@@ -287,6 +245,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    'Field(...)'
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.serialize
+:parser: myst
 ```
 
 ````
@@ -298,6 +257,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.search
+:parser: myst
 ```
 
 ````
@@ -309,6 +269,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.replace
+:parser: myst
 ```
 
 ````
@@ -320,6 +281,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.regex
+:parser: myst
 ```
 
 ````
@@ -331,6 +293,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.ignore_missing_version
+:parser: myst
 ```
 
 ````
@@ -342,6 +305,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.tag
+:parser: myst
 ```
 
 ````
@@ -353,6 +317,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.sign_tags
+:parser: myst
 ```
 
 ````
@@ -364,6 +329,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.tag_name
+:parser: myst
 ```
 
 ````
@@ -375,6 +341,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.tag_message
+:parser: myst
 ```
 
 ````
@@ -386,6 +353,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.allow_dirty
+:parser: myst
 ```
 
 ````
@@ -397,6 +365,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.commit
+:parser: myst
 ```
 
 ````
@@ -408,6 +377,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.message
+:parser: myst
 ```
 
 ````
@@ -419,6 +389,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.commit_args
+:parser: myst
 ```
 
 ````
@@ -430,17 +401,19 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.scm_info
+:parser: myst
 ```
 
 ````
 
 ````{py:attribute} parts
 :canonical: bumpversion.config.models.Config.parts
-:type: typing.Dict[str, bumpversion.config.models.VersionPartConfig]
+:type: typing.Dict[str, bumpversion.versioning.models.VersionComponentSpec]
 :value: >
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.parts
+:parser: myst
 ```
 
 ````
@@ -452,6 +425,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    'Field(...)'
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.files
+:parser: myst
 ```
 
 ````
@@ -463,6 +437,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    'Field(...)'
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.included_paths
+:parser: myst
 ```
 
 ````
@@ -474,6 +449,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    'Field(...)'
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.excluded_paths
+:parser: myst
 ```
 
 ````
@@ -484,6 +460,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    'SettingsConfigDict(...)'
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.model_config
+:parser: myst
 ```
 
 ````
@@ -495,6 +472,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
    None
 
 ```{autodoc2-docstring} bumpversion.config.models.Config._resolved_filemap
+:parser: myst
 ```
 
 ````
@@ -503,6 +481,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
 :canonical: bumpversion.config.models.Config.add_files
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.add_files
+:parser: myst
 ```
 
 ````
@@ -512,6 +491,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
 :type: typing.Dict[str, typing.List[bumpversion.config.models.FileChange]]
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.resolved_filemap
+:parser: myst
 ```
 
 ````
@@ -520,6 +500,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
 :canonical: bumpversion.config.models.Config._resolve_filemap
 
 ```{autodoc2-docstring} bumpversion.config.models.Config._resolve_filemap
+:parser: myst
 ```
 
 ````
@@ -529,6 +510,7 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
 :type: typing.List[bumpversion.config.models.FileChange]
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.files_to_modify
+:parser: myst
 ```
 
 ````
@@ -538,6 +520,16 @@ Bases: {py:obj}`pydantic_settings.BaseSettings`
 :type: bumpversion.version_part.VersionConfig
 
 ```{autodoc2-docstring} bumpversion.config.models.Config.version_config
+:parser: myst
+```
+
+````
+
+````{py:method} version_spec(version: typing.Optional[str] = None) -> bumpversion.versioning.models.VersionSpec
+:canonical: bumpversion.config.models.Config.version_spec
+
+```{autodoc2-docstring} bumpversion.config.models.Config.version_spec
+:parser: myst
 ```
 
 ````

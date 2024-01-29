@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.cli
+:parser: myst
 :allowtitles:
 ```
 
@@ -17,26 +18,32 @@
 
 * - {py:obj}`cli <bumpversion.cli.cli>`
   - ```{autodoc2-docstring} bumpversion.cli.cli
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`bump <bumpversion.cli.bump>`
   - ```{autodoc2-docstring} bumpversion.cli.bump
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`show <bumpversion.cli.show>`
   - ```{autodoc2-docstring} bumpversion.cli.show
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`replace <bumpversion.cli.replace>`
   - ```{autodoc2-docstring} bumpversion.cli.replace
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`sample_config <bumpversion.cli.sample_config>`
   - ```{autodoc2-docstring} bumpversion.cli.sample_config
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`show_bump <bumpversion.cli.show_bump>`
   - ```{autodoc2-docstring} bumpversion.cli.show_bump
+    :parser: myst
     :summary:
     ```
 ````
@@ -49,6 +56,7 @@
 
 * - {py:obj}`logger <bumpversion.cli.logger>`
   - ```{autodoc2-docstring} bumpversion.cli.logger
+    :parser: myst
     :summary:
     ```
 ````
@@ -61,6 +69,7 @@
    'get_indented_logger(...)'
 
 ```{autodoc2-docstring} bumpversion.cli.logger
+:parser: myst
 ```
 
 ````
@@ -69,6 +78,7 @@
 :canonical: bumpversion.cli.cli
 
 ```{autodoc2-docstring} bumpversion.cli.cli
+:parser: myst
 ```
 ````
 
@@ -76,6 +86,7 @@
 :canonical: bumpversion.cli.bump
 
 ```{autodoc2-docstring} bumpversion.cli.bump
+:parser: myst
 ```
 ````
 
@@ -83,6 +94,7 @@
 :canonical: bumpversion.cli.show
 
 ```{autodoc2-docstring} bumpversion.cli.show
+:parser: myst
 ```
 ````
 
@@ -90,6 +102,7 @@
 :canonical: bumpversion.cli.replace
 
 ```{autodoc2-docstring} bumpversion.cli.replace
+:parser: myst
 ```
 ````
 
@@ -97,6 +110,7 @@
 :canonical: bumpversion.cli.sample_config
 
 ```{autodoc2-docstring} bumpversion.cli.sample_config
+:parser: myst
 ```
 ````
 
@@ -104,5 +118,6 @@
 :canonical: bumpversion.cli.show_bump
 
 ```{autodoc2-docstring} bumpversion.cli.show_bump
+:parser: myst
 ```
 ````

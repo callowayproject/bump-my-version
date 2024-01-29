@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion
+:parser: myst
 :allowtitles:
 ```
 
@@ -14,6 +15,7 @@
 :maxdepth: 3
 
 bumpversion.config
+bumpversion.versioning
 ```
 
 ## Submodules
@@ -22,7 +24,6 @@ bumpversion.config
 :titlesonly:
 :maxdepth: 1
 
-bumpversion.functions
 bumpversion.version_part
 bumpversion.files
 bumpversion.show
@@ -50,6 +51,7 @@ bumpversion.__main__
 
 * - {py:obj}`__version__ <bumpversion.__version__>`
   - ```{autodoc2-docstring} bumpversion.__version__
+    :parser: myst
     :summary:
     ```
 ````
@@ -63,6 +65,7 @@ bumpversion.__main__
    '0.17.2'
 
 ```{autodoc2-docstring} bumpversion.__version__
+:parser: myst
 ```
 
 ````

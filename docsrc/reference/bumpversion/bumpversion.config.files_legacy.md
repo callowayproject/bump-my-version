@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.config.files_legacy
+:parser: myst
 :allowtitles:
 ```
 
@@ -17,10 +18,12 @@
 
 * - {py:obj}`read_ini_file <bumpversion.config.files_legacy.read_ini_file>`
   - ```{autodoc2-docstring} bumpversion.config.files_legacy.read_ini_file
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`update_ini_config_file <bumpversion.config.files_legacy.update_ini_config_file>`
   - ```{autodoc2-docstring} bumpversion.config.files_legacy.update_ini_config_file
+    :parser: myst
     :summary:
     ```
 ````
@@ -33,6 +36,7 @@
 
 * - {py:obj}`logger <bumpversion.config.files_legacy.logger>`
   - ```{autodoc2-docstring} bumpversion.config.files_legacy.logger
+    :parser: myst
     :summary:
     ```
 ````
@@ -45,6 +49,7 @@
    'get_indented_logger(...)'
 
 ```{autodoc2-docstring} bumpversion.config.files_legacy.logger
+:parser: myst
 ```
 
 ````
@@ -53,6 +58,7 @@
 :canonical: bumpversion.config.files_legacy.read_ini_file
 
 ```{autodoc2-docstring} bumpversion.config.files_legacy.read_ini_file
+:parser: myst
 ```
 ````
 
@@ -60,5 +66,6 @@
 :canonical: bumpversion.config.files_legacy.update_ini_config_file
 
 ```{autodoc2-docstring} bumpversion.config.files_legacy.update_ini_config_file
+:parser: myst
 ```
 ````

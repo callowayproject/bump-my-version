@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.exceptions
+:parser: myst
 :allowtitles:
 ```
 
@@ -17,12 +18,14 @@
 Bases: {py:obj}`click.UsageError`
 
 ```{autodoc2-docstring} bumpversion.exceptions.BumpVersionError
+:parser: myst
 ```
 
 ```{rubric} Initialization
 ```
 
 ```{autodoc2-docstring} bumpversion.exceptions.BumpVersionError.__init__
+:parser: myst
 ```
 
 ````
@@ -33,12 +36,14 @@ Bases: {py:obj}`click.UsageError`
 Bases: {py:obj}`bumpversion.exceptions.BumpVersionError`
 
 ```{autodoc2-docstring} bumpversion.exceptions.FormattingError
+:parser: myst
 ```
 
 ```{rubric} Initialization
 ```
 
 ```{autodoc2-docstring} bumpversion.exceptions.FormattingError.__init__
+:parser: myst
 ```
 
 ````
@@ -49,12 +54,14 @@ Bases: {py:obj}`bumpversion.exceptions.BumpVersionError`
 Bases: {py:obj}`bumpversion.exceptions.BumpVersionError`
 
 ```{autodoc2-docstring} bumpversion.exceptions.MissingValueError
+:parser: myst
 ```
 
 ```{rubric} Initialization
 ```
 
 ```{autodoc2-docstring} bumpversion.exceptions.MissingValueError.__init__
+:parser: myst
 ```
 
 ````
@@ -65,12 +72,14 @@ Bases: {py:obj}`bumpversion.exceptions.BumpVersionError`
 Bases: {py:obj}`bumpversion.exceptions.BumpVersionError`
 
 ```{autodoc2-docstring} bumpversion.exceptions.DirtyWorkingDirectoryError
+:parser: myst
 ```
 
 ```{rubric} Initialization
 ```
 
 ```{autodoc2-docstring} bumpversion.exceptions.DirtyWorkingDirectoryError.__init__
+:parser: myst
 ```
 
 ````
@@ -81,12 +90,14 @@ Bases: {py:obj}`bumpversion.exceptions.BumpVersionError`
 Bases: {py:obj}`bumpversion.exceptions.BumpVersionError`
 
 ```{autodoc2-docstring} bumpversion.exceptions.SignedTagsError
+:parser: myst
 ```
 
 ```{rubric} Initialization
 ```
 
 ```{autodoc2-docstring} bumpversion.exceptions.SignedTagsError.__init__
+:parser: myst
 ```
 
 ````
@@ -97,12 +108,14 @@ Bases: {py:obj}`bumpversion.exceptions.BumpVersionError`
 Bases: {py:obj}`bumpversion.exceptions.BumpVersionError`
 
 ```{autodoc2-docstring} bumpversion.exceptions.VersionNotFoundError
+:parser: myst
 ```
 
 ```{rubric} Initialization
 ```
 
 ```{autodoc2-docstring} bumpversion.exceptions.VersionNotFoundError.__init__
+:parser: myst
 ```
 
 ````
@@ -113,12 +126,14 @@ Bases: {py:obj}`bumpversion.exceptions.BumpVersionError`
 Bases: {py:obj}`bumpversion.exceptions.BumpVersionError`
 
 ```{autodoc2-docstring} bumpversion.exceptions.InvalidVersionPartError
+:parser: myst
 ```
 
 ```{rubric} Initialization
 ```
 
 ```{autodoc2-docstring} bumpversion.exceptions.InvalidVersionPartError.__init__
+:parser: myst
 ```
 
 ````
@@ -129,12 +144,14 @@ Bases: {py:obj}`bumpversion.exceptions.BumpVersionError`
 Bases: {py:obj}`bumpversion.exceptions.BumpVersionError`
 
 ```{autodoc2-docstring} bumpversion.exceptions.ConfigurationError
+:parser: myst
 ```
 
 ```{rubric} Initialization
 ```
 
 ```{autodoc2-docstring} bumpversion.exceptions.ConfigurationError.__init__
+:parser: myst
 ```
 
 ````
@@ -145,12 +162,14 @@ Bases: {py:obj}`bumpversion.exceptions.BumpVersionError`
 Bases: {py:obj}`bumpversion.exceptions.BumpVersionError`
 
 ```{autodoc2-docstring} bumpversion.exceptions.BadInputError
+:parser: myst
 ```
 
 ```{rubric} Initialization
 ```
 
 ```{autodoc2-docstring} bumpversion.exceptions.BadInputError.__init__
+:parser: myst
 ```
 
 ````

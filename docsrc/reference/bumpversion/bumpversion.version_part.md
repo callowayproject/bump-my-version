@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.version_part
+:parser: myst
 :allowtitles:
 ```
 
@@ -15,16 +16,9 @@
 :class: autosummary longtable
 :align: left
 
-* - {py:obj}`VersionPart <bumpversion.version_part.VersionPart>`
-  - ```{autodoc2-docstring} bumpversion.version_part.VersionPart
-    :summary:
-    ```
-* - {py:obj}`Version <bumpversion.version_part.Version>`
-  - ```{autodoc2-docstring} bumpversion.version_part.Version
-    :summary:
-    ```
 * - {py:obj}`VersionConfig <bumpversion.version_part.VersionConfig>`
   - ```{autodoc2-docstring} bumpversion.version_part.VersionConfig
+    :parser: myst
     :summary:
     ```
 ````
@@ -37,6 +31,7 @@
 
 * - {py:obj}`logger <bumpversion.version_part.logger>`
   - ```{autodoc2-docstring} bumpversion.version_part.logger
+    :parser: myst
     :summary:
     ```
 ````
@@ -49,156 +44,23 @@
    'get_indented_logger(...)'
 
 ```{autodoc2-docstring} bumpversion.version_part.logger
+:parser: myst
 ```
 
 ````
 
-`````{py:class} VersionPart(config: bumpversion.config.models.VersionPartConfig, value: typing.Union[str, int, None] = None)
-:canonical: bumpversion.version_part.VersionPart
-
-```{autodoc2-docstring} bumpversion.version_part.VersionPart
-```
-
-```{rubric} Initialization
-```
-
-```{autodoc2-docstring} bumpversion.version_part.VersionPart.__init__
-```
-
-````{py:property} value
-:canonical: bumpversion.version_part.VersionPart.value
-:type: str
-
-```{autodoc2-docstring} bumpversion.version_part.VersionPart.value
-```
-
-````
-
-````{py:method} copy() -> bumpversion.version_part.VersionPart
-:canonical: bumpversion.version_part.VersionPart.copy
-
-```{autodoc2-docstring} bumpversion.version_part.VersionPart.copy
-```
-
-````
-
-````{py:method} bump() -> bumpversion.version_part.VersionPart
-:canonical: bumpversion.version_part.VersionPart.bump
-
-```{autodoc2-docstring} bumpversion.version_part.VersionPart.bump
-```
-
-````
-
-````{py:method} null() -> bumpversion.version_part.VersionPart
-:canonical: bumpversion.version_part.VersionPart.null
-
-```{autodoc2-docstring} bumpversion.version_part.VersionPart.null
-```
-
-````
-
-````{py:property} is_optional
-:canonical: bumpversion.version_part.VersionPart.is_optional
-:type: bool
-
-```{autodoc2-docstring} bumpversion.version_part.VersionPart.is_optional
-```
-
-````
-
-````{py:property} is_independent
-:canonical: bumpversion.version_part.VersionPart.is_independent
-:type: bool
-
-```{autodoc2-docstring} bumpversion.version_part.VersionPart.is_independent
-```
-
-````
-
-````{py:method} __format__(format_spec: str) -> str
-:canonical: bumpversion.version_part.VersionPart.__format__
-
-````
-
-````{py:method} __repr__() -> str
-:canonical: bumpversion.version_part.VersionPart.__repr__
-
-````
-
-````{py:method} __eq__(other: typing.Any) -> bool
-:canonical: bumpversion.version_part.VersionPart.__eq__
-
-````
-
-`````
-
-`````{py:class} Version(values: typing.Dict[str, bumpversion.version_part.VersionPart], original: typing.Optional[str] = None)
-:canonical: bumpversion.version_part.Version
-
-```{autodoc2-docstring} bumpversion.version_part.Version
-```
-
-```{rubric} Initialization
-```
-
-```{autodoc2-docstring} bumpversion.version_part.Version.__init__
-```
-
-````{py:method} __getitem__(key: str) -> bumpversion.version_part.VersionPart
-:canonical: bumpversion.version_part.Version.__getitem__
-
-```{autodoc2-docstring} bumpversion.version_part.Version.__getitem__
-```
-
-````
-
-````{py:method} __len__() -> int
-:canonical: bumpversion.version_part.Version.__len__
-
-```{autodoc2-docstring} bumpversion.version_part.Version.__len__
-```
-
-````
-
-````{py:method} __iter__()
-:canonical: bumpversion.version_part.Version.__iter__
-
-```{autodoc2-docstring} bumpversion.version_part.Version.__iter__
-```
-
-````
-
-````{py:method} __repr__()
-:canonical: bumpversion.version_part.Version.__repr__
-
-````
-
-````{py:method} __eq__(other: typing.Any) -> bool
-:canonical: bumpversion.version_part.Version.__eq__
-
-````
-
-````{py:method} bump(part_name: str, order: typing.List[str]) -> bumpversion.version_part.Version
-:canonical: bumpversion.version_part.Version.bump
-
-```{autodoc2-docstring} bumpversion.version_part.Version.bump
-```
-
-````
-
-`````
-
-`````{py:class} VersionConfig(parse: str, serialize: typing.Tuple[str], search: str, replace: str, part_configs: typing.Optional[typing.Dict[str, bumpversion.config.models.VersionPartConfig]] = None)
+`````{py:class} VersionConfig(parse: str, serialize: typing.Tuple[str], search: str, replace: str, part_configs: typing.Optional[typing.Dict[str, bumpversion.versioning.models.VersionComponentSpec]] = None)
 :canonical: bumpversion.version_part.VersionConfig
 
 ```{autodoc2-docstring} bumpversion.version_part.VersionConfig
+:parser: myst
 ```
 
 ```{rubric} Initialization
 ```
 
 ```{autodoc2-docstring} bumpversion.version_part.VersionConfig.__init__
+:parser: myst
 ```
 
 ````{py:method} __repr__() -> str
@@ -216,38 +78,25 @@
 :type: typing.List[str]
 
 ```{autodoc2-docstring} bumpversion.version_part.VersionConfig.order
+:parser: myst
 ```
 
 ````
 
-````{py:method} parse(version_string: typing.Optional[str] = None) -> typing.Optional[bumpversion.version_part.Version]
+````{py:method} parse(version_string: typing.Optional[str] = None) -> typing.Optional[bumpversion.versioning.models.Version]
 :canonical: bumpversion.version_part.VersionConfig.parse
 
 ```{autodoc2-docstring} bumpversion.version_part.VersionConfig.parse
+:parser: myst
 ```
 
 ````
 
-````{py:method} _serialize(version: bumpversion.version_part.Version, serialize_format: str, context: typing.MutableMapping, raise_if_incomplete: bool = False) -> str
-:canonical: bumpversion.version_part.VersionConfig._serialize
-
-```{autodoc2-docstring} bumpversion.version_part.VersionConfig._serialize
-```
-
-````
-
-````{py:method} _choose_serialize_format(version: bumpversion.version_part.Version, context: typing.MutableMapping) -> str
-:canonical: bumpversion.version_part.VersionConfig._choose_serialize_format
-
-```{autodoc2-docstring} bumpversion.version_part.VersionConfig._choose_serialize_format
-```
-
-````
-
-````{py:method} serialize(version: bumpversion.version_part.Version, context: typing.MutableMapping) -> str
+````{py:method} serialize(version: bumpversion.versioning.models.Version, context: typing.MutableMapping) -> str
 :canonical: bumpversion.version_part.VersionConfig.serialize
 
 ```{autodoc2-docstring} bumpversion.version_part.VersionConfig.serialize
+:parser: myst
 ```
 
 ````

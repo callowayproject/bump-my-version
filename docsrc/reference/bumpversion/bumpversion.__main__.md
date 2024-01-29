@@ -4,5 +4,6 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.__main__
+:parser: myst
 :allowtitles:
 ```
