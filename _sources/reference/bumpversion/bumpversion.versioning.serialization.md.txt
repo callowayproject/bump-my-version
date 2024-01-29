@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.versioning.serialization
+:parser: myst
 :allowtitles:
 ```
 
@@ -17,14 +18,17 @@
 
 * - {py:obj}`parse_version <bumpversion.versioning.serialization.parse_version>`
   - ```{autodoc2-docstring} bumpversion.versioning.serialization.parse_version
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`multisort <bumpversion.versioning.serialization.multisort>`
   - ```{autodoc2-docstring} bumpversion.versioning.serialization.multisort
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`serialize <bumpversion.versioning.serialization.serialize>`
   - ```{autodoc2-docstring} bumpversion.versioning.serialization.serialize
+    :parser: myst
     :summary:
     ```
 ````
@@ -37,6 +41,7 @@
 
 * - {py:obj}`logger <bumpversion.versioning.serialization.logger>`
   - ```{autodoc2-docstring} bumpversion.versioning.serialization.logger
+    :parser: myst
     :summary:
     ```
 ````
@@ -49,6 +54,7 @@
    'get_indented_logger(...)'
 
 ```{autodoc2-docstring} bumpversion.versioning.serialization.logger
+:parser: myst
 ```
 
 ````
@@ -57,6 +63,7 @@
 :canonical: bumpversion.versioning.serialization.parse_version
 
 ```{autodoc2-docstring} bumpversion.versioning.serialization.parse_version
+:parser: myst
 ```
 ````
 
@@ -64,6 +71,7 @@
 :canonical: bumpversion.versioning.serialization.multisort
 
 ```{autodoc2-docstring} bumpversion.versioning.serialization.multisort
+:parser: myst
 ```
 ````
 
@@ -71,5 +79,6 @@
 :canonical: bumpversion.versioning.serialization.serialize
 
 ```{autodoc2-docstring} bumpversion.versioning.serialization.serialize
+:parser: myst
 ```
 ````

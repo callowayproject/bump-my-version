@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.yaml_dump
+:parser: myst
 :allowtitles:
 ```
 
@@ -17,6 +18,7 @@
 
 * - {py:obj}`YAMLDumpers <bumpversion.yaml_dump.YAMLDumpers>`
   - ```{autodoc2-docstring} bumpversion.yaml_dump.YAMLDumpers
+    :parser: myst
     :summary:
     ```
 ````
@@ -29,42 +31,52 @@
 
 * - {py:obj}`dump <bumpversion.yaml_dump.dump>`
   - ```{autodoc2-docstring} bumpversion.yaml_dump.dump
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`format_str <bumpversion.yaml_dump.format_str>`
   - ```{autodoc2-docstring} bumpversion.yaml_dump.format_str
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`format_int <bumpversion.yaml_dump.format_int>`
   - ```{autodoc2-docstring} bumpversion.yaml_dump.format_int
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`format_float <bumpversion.yaml_dump.format_float>`
   - ```{autodoc2-docstring} bumpversion.yaml_dump.format_float
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`format_bool <bumpversion.yaml_dump.format_bool>`
   - ```{autodoc2-docstring} bumpversion.yaml_dump.format_bool
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`format_dict <bumpversion.yaml_dump.format_dict>`
   - ```{autodoc2-docstring} bumpversion.yaml_dump.format_dict
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`format_sequence <bumpversion.yaml_dump.format_sequence>`
   - ```{autodoc2-docstring} bumpversion.yaml_dump.format_sequence
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`format_none <bumpversion.yaml_dump.format_none>`
   - ```{autodoc2-docstring} bumpversion.yaml_dump.format_none
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`format_date <bumpversion.yaml_dump.format_date>`
   - ```{autodoc2-docstring} bumpversion.yaml_dump.format_date
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`format_datetime <bumpversion.yaml_dump.format_datetime>`
   - ```{autodoc2-docstring} bumpversion.yaml_dump.format_datetime
+    :parser: myst
     :summary:
     ```
 ````
@@ -77,14 +89,17 @@
 
 * - {py:obj}`DumperFunc <bumpversion.yaml_dump.DumperFunc>`
   - ```{autodoc2-docstring} bumpversion.yaml_dump.DumperFunc
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`YAML_DUMPERS <bumpversion.yaml_dump.YAML_DUMPERS>`
   - ```{autodoc2-docstring} bumpversion.yaml_dump.YAML_DUMPERS
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`INDENT <bumpversion.yaml_dump.INDENT>`
   - ```{autodoc2-docstring} bumpversion.yaml_dump.INDENT
+    :parser: myst
     :summary:
     ```
 ````
@@ -97,6 +112,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.yaml_dump.DumperFunc
+:parser: myst
 ```
 
 ````
@@ -107,18 +123,21 @@
 Bases: {py:obj}`collections.UserDict`
 
 ```{autodoc2-docstring} bumpversion.yaml_dump.YAMLDumpers
+:parser: myst
 ```
 
 ```{rubric} Initialization
 ```
 
 ```{autodoc2-docstring} bumpversion.yaml_dump.YAMLDumpers.__init__
+:parser: myst
 ```
 
 ````{py:method} add_dumper(data_type: type, dumper: bumpversion.yaml_dump.DumperFunc) -> None
 :canonical: bumpversion.yaml_dump.YAMLDumpers.add_dumper
 
 ```{autodoc2-docstring} bumpversion.yaml_dump.YAMLDumpers.add_dumper
+:parser: myst
 ```
 
 ````
@@ -131,6 +150,7 @@ Bases: {py:obj}`collections.UserDict`
    'YAMLDumpers(...)'
 
 ```{autodoc2-docstring} bumpversion.yaml_dump.YAML_DUMPERS
+:parser: myst
 ```
 
 ````
@@ -141,6 +161,7 @@ Bases: {py:obj}`collections.UserDict`
    '  '
 
 ```{autodoc2-docstring} bumpversion.yaml_dump.INDENT
+:parser: myst
 ```
 
 ````
@@ -149,6 +170,7 @@ Bases: {py:obj}`collections.UserDict`
 :canonical: bumpversion.yaml_dump.dump
 
 ```{autodoc2-docstring} bumpversion.yaml_dump.dump
+:parser: myst
 ```
 ````
 
@@ -156,6 +178,7 @@ Bases: {py:obj}`collections.UserDict`
 :canonical: bumpversion.yaml_dump.format_str
 
 ```{autodoc2-docstring} bumpversion.yaml_dump.format_str
+:parser: myst
 ```
 ````
 
@@ -163,6 +186,7 @@ Bases: {py:obj}`collections.UserDict`
 :canonical: bumpversion.yaml_dump.format_int
 
 ```{autodoc2-docstring} bumpversion.yaml_dump.format_int
+:parser: myst
 ```
 ````
 
@@ -170,6 +194,7 @@ Bases: {py:obj}`collections.UserDict`
 :canonical: bumpversion.yaml_dump.format_float
 
 ```{autodoc2-docstring} bumpversion.yaml_dump.format_float
+:parser: myst
 ```
 ````
 
@@ -177,6 +202,7 @@ Bases: {py:obj}`collections.UserDict`
 :canonical: bumpversion.yaml_dump.format_bool
 
 ```{autodoc2-docstring} bumpversion.yaml_dump.format_bool
+:parser: myst
 ```
 ````
 
@@ -184,6 +210,7 @@ Bases: {py:obj}`collections.UserDict`
 :canonical: bumpversion.yaml_dump.format_dict
 
 ```{autodoc2-docstring} bumpversion.yaml_dump.format_dict
+:parser: myst
 ```
 ````
 
@@ -191,6 +218,7 @@ Bases: {py:obj}`collections.UserDict`
 :canonical: bumpversion.yaml_dump.format_sequence
 
 ```{autodoc2-docstring} bumpversion.yaml_dump.format_sequence
+:parser: myst
 ```
 ````
 
@@ -198,6 +226,7 @@ Bases: {py:obj}`collections.UserDict`
 :canonical: bumpversion.yaml_dump.format_none
 
 ```{autodoc2-docstring} bumpversion.yaml_dump.format_none
+:parser: myst
 ```
 ````
 
@@ -205,6 +234,7 @@ Bases: {py:obj}`collections.UserDict`
 :canonical: bumpversion.yaml_dump.format_date
 
 ```{autodoc2-docstring} bumpversion.yaml_dump.format_date
+:parser: myst
 ```
 ````
 
@@ -212,5 +242,6 @@ Bases: {py:obj}`collections.UserDict`
 :canonical: bumpversion.yaml_dump.format_datetime
 
 ```{autodoc2-docstring} bumpversion.yaml_dump.format_datetime
+:parser: myst
 ```
 ````

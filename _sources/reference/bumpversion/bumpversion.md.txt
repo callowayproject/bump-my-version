@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion
+:parser: myst
 :allowtitles:
 ```
 
@@ -50,6 +51,7 @@ bumpversion.aliases
 
 * - {py:obj}`__version__ <bumpversion.__version__>`
   - ```{autodoc2-docstring} bumpversion.__version__
+    :parser: myst
     :summary:
     ```
 ````
@@ -63,6 +65,7 @@ bumpversion.aliases
    '0.17.2'
 
 ```{autodoc2-docstring} bumpversion.__version__
+:parser: myst
 ```
 
 ````

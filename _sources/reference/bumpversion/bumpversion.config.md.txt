@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.config
+:parser: myst
 :allowtitles:
 ```
 
@@ -30,10 +31,12 @@ bumpversion.config.files_legacy
 
 * - {py:obj}`get_configuration <bumpversion.config.get_configuration>`
   - ```{autodoc2-docstring} bumpversion.config.get_configuration
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`check_current_version <bumpversion.config.check_current_version>`
   - ```{autodoc2-docstring} bumpversion.config.check_current_version
+    :parser: myst
     :summary:
     ```
 ````
@@ -46,10 +49,12 @@ bumpversion.config.files_legacy
 
 * - {py:obj}`logger <bumpversion.config.logger>`
   - ```{autodoc2-docstring} bumpversion.config.logger
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`DEFAULTS <bumpversion.config.DEFAULTS>`
   - ```{autodoc2-docstring} bumpversion.config.DEFAULTS
+    :parser: myst
     :summary:
     ```
 ````
@@ -62,6 +67,7 @@ bumpversion.config.files_legacy
    'get_indented_logger(...)'
 
 ```{autodoc2-docstring} bumpversion.config.logger
+:parser: myst
 ```
 
 ````
@@ -72,6 +78,7 @@ bumpversion.config.files_legacy
    None
 
 ```{autodoc2-docstring} bumpversion.config.DEFAULTS
+:parser: myst
 ```
 
 ````
@@ -80,6 +87,7 @@ bumpversion.config.files_legacy
 :canonical: bumpversion.config.get_configuration
 
 ```{autodoc2-docstring} bumpversion.config.get_configuration
+:parser: myst
 ```
 ````
 
@@ -87,5 +95,6 @@ bumpversion.config.files_legacy
 :canonical: bumpversion.config.check_current_version
 
 ```{autodoc2-docstring} bumpversion.config.check_current_version
+:parser: myst
 ```
 ````

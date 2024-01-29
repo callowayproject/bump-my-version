@@ -35,3 +35,8 @@ dl.field-list > dd {
   margin-left: 0;
   margin-bottom: 0;
 }
+
+figure {
+  padding-bottom: .75rem;
+  padding-top: .5rem;
+}

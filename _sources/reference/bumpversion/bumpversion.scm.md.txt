@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.scm
+:parser: myst
 :allowtitles:
 ```
 
@@ -17,18 +18,22 @@
 
 * - {py:obj}`SCMInfo <bumpversion.scm.SCMInfo>`
   - ```{autodoc2-docstring} bumpversion.scm.SCMInfo
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`SourceCodeManager <bumpversion.scm.SourceCodeManager>`
   - ```{autodoc2-docstring} bumpversion.scm.SourceCodeManager
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`Git <bumpversion.scm.Git>`
   - ```{autodoc2-docstring} bumpversion.scm.Git
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`Mercurial <bumpversion.scm.Mercurial>`
   - ```{autodoc2-docstring} bumpversion.scm.Mercurial
+    :parser: myst
     :summary:
     ```
 ````
@@ -41,6 +46,7 @@
 
 * - {py:obj}`get_scm_info <bumpversion.scm.get_scm_info>`
   - ```{autodoc2-docstring} bumpversion.scm.get_scm_info
+    :parser: myst
     :summary:
     ```
 ````
@@ -53,6 +59,7 @@
 
 * - {py:obj}`logger <bumpversion.scm.logger>`
   - ```{autodoc2-docstring} bumpversion.scm.logger
+    :parser: myst
     :summary:
     ```
 ````
@@ -65,6 +72,7 @@
    'get_indented_logger(...)'
 
 ```{autodoc2-docstring} bumpversion.scm.logger
+:parser: myst
 ```
 
 ````
@@ -73,6 +81,7 @@
 :canonical: bumpversion.scm.SCMInfo
 
 ```{autodoc2-docstring} bumpversion.scm.SCMInfo
+:parser: myst
 ```
 
 ````{py:attribute} tool
@@ -82,6 +91,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.scm.SCMInfo.tool
+:parser: myst
 ```
 
 ````
@@ -93,6 +103,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.scm.SCMInfo.commit_sha
+:parser: myst
 ```
 
 ````
@@ -104,6 +115,7 @@
    0
 
 ```{autodoc2-docstring} bumpversion.scm.SCMInfo.distance_to_latest_tag
+:parser: myst
 ```
 
 ````
@@ -115,6 +127,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.scm.SCMInfo.current_version
+:parser: myst
 ```
 
 ````
@@ -126,6 +139,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.scm.SCMInfo.branch_name
+:parser: myst
 ```
 
 ````
@@ -137,6 +151,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.scm.SCMInfo.short_branch_name
+:parser: myst
 ```
 
 ````
@@ -148,6 +163,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.scm.SCMInfo.dirty
+:parser: myst
 ```
 
 ````
@@ -168,6 +184,7 @@
 :canonical: bumpversion.scm.SourceCodeManager
 
 ```{autodoc2-docstring} bumpversion.scm.SourceCodeManager
+:parser: myst
 ```
 
 ````{py:attribute} _TEST_USABLE_COMMAND
@@ -177,6 +194,7 @@
    []
 
 ```{autodoc2-docstring} bumpversion.scm.SourceCodeManager._TEST_USABLE_COMMAND
+:parser: myst
 ```
 
 ````
@@ -188,6 +206,7 @@
    []
 
 ```{autodoc2-docstring} bumpversion.scm.SourceCodeManager._COMMIT_COMMAND
+:parser: myst
 ```
 
 ````
@@ -199,6 +218,7 @@
    []
 
 ```{autodoc2-docstring} bumpversion.scm.SourceCodeManager._ALL_TAGS_COMMAND
+:parser: myst
 ```
 
 ````
@@ -208,6 +228,7 @@
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.SourceCodeManager.commit
+:parser: myst
 ```
 
 ````
@@ -217,6 +238,7 @@
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.SourceCodeManager.is_usable
+:parser: myst
 ```
 
 ````
@@ -227,6 +249,7 @@
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.SourceCodeManager.assert_nondirty
+:parser: myst
 ```
 
 ````
@@ -237,6 +260,7 @@
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.SourceCodeManager.latest_tag_info
+:parser: myst
 ```
 
 ````
@@ -247,6 +271,7 @@
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.SourceCodeManager.add_path
+:parser: myst
 ```
 
 ````
@@ -257,6 +282,7 @@
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.SourceCodeManager.tag
+:parser: myst
 ```
 
 ````
@@ -266,6 +292,7 @@
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.SourceCodeManager.get_all_tags
+:parser: myst
 ```
 
 ````
@@ -275,6 +302,7 @@
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.SourceCodeManager.get_version_from_tag
+:parser: myst
 ```
 
 ````
@@ -284,6 +312,7 @@
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.SourceCodeManager.commit_to_scm
+:parser: myst
 ```
 
 ````
@@ -293,6 +322,7 @@
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.SourceCodeManager.tag_in_scm
+:parser: myst
 ```
 
 ````
@@ -315,6 +345,7 @@
 Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
 
 ```{autodoc2-docstring} bumpversion.scm.Git
+:parser: myst
 ```
 
 ````{py:attribute} _TEST_USABLE_COMMAND
@@ -324,6 +355,7 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
    ['git', 'rev-parse', '--git-dir']
 
 ```{autodoc2-docstring} bumpversion.scm.Git._TEST_USABLE_COMMAND
+:parser: myst
 ```
 
 ````
@@ -335,6 +367,7 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
    ['git', 'commit', '-F']
 
 ```{autodoc2-docstring} bumpversion.scm.Git._COMMIT_COMMAND
+:parser: myst
 ```
 
 ````
@@ -346,6 +379,7 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
    ['git', 'tag', '--list']
 
 ```{autodoc2-docstring} bumpversion.scm.Git._ALL_TAGS_COMMAND
+:parser: myst
 ```
 
 ````
@@ -355,6 +389,7 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.Git.assert_nondirty
+:parser: myst
 ```
 
 ````
@@ -364,6 +399,7 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.Git.latest_tag_info
+:parser: myst
 ```
 
 ````
@@ -373,6 +409,7 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.Git.add_path
+:parser: myst
 ```
 
 ````
@@ -382,6 +419,7 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.Git.tag
+:parser: myst
 ```
 
 ````
@@ -394,6 +432,7 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
 Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
 
 ```{autodoc2-docstring} bumpversion.scm.Mercurial
+:parser: myst
 ```
 
 ````{py:attribute} _TEST_USABLE_COMMAND
@@ -403,6 +442,7 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
    ['hg', 'root']
 
 ```{autodoc2-docstring} bumpversion.scm.Mercurial._TEST_USABLE_COMMAND
+:parser: myst
 ```
 
 ````
@@ -414,6 +454,7 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
    ['hg', 'commit', '--logfile']
 
 ```{autodoc2-docstring} bumpversion.scm.Mercurial._COMMIT_COMMAND
+:parser: myst
 ```
 
 ````
@@ -425,6 +466,7 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
    ['hg', 'log', '--rev="tag()"', '--template="{tags}\n"']
 
 ```{autodoc2-docstring} bumpversion.scm.Mercurial._ALL_TAGS_COMMAND
+:parser: myst
 ```
 
 ````
@@ -434,6 +476,7 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.Mercurial.latest_tag_info
+:parser: myst
 ```
 
 ````
@@ -443,6 +486,7 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.Mercurial.assert_nondirty
+:parser: myst
 ```
 
 ````
@@ -452,6 +496,7 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.Mercurial.add_path
+:parser: myst
 ```
 
 ````
@@ -461,6 +506,7 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
 :classmethod:
 
 ```{autodoc2-docstring} bumpversion.scm.Mercurial.tag
+:parser: myst
 ```
 
 ````
@@ -471,5 +517,6 @@ Bases: {py:obj}`bumpversion.scm.SourceCodeManager`
 :canonical: bumpversion.scm.get_scm_info
 
 ```{autodoc2-docstring} bumpversion.scm.get_scm_info
+:parser: myst
 ```
 ````

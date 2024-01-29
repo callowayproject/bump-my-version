@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.config.files
+:parser: myst
 :allowtitles:
 ```
 
@@ -17,18 +18,22 @@
 
 * - {py:obj}`find_config_file <bumpversion.config.files.find_config_file>`
   - ```{autodoc2-docstring} bumpversion.config.files.find_config_file
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`read_config_file <bumpversion.config.files.read_config_file>`
   - ```{autodoc2-docstring} bumpversion.config.files.read_config_file
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`read_toml_file <bumpversion.config.files.read_toml_file>`
   - ```{autodoc2-docstring} bumpversion.config.files.read_toml_file
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`update_config_file <bumpversion.config.files.update_config_file>`
   - ```{autodoc2-docstring} bumpversion.config.files.update_config_file
+    :parser: myst
     :summary:
     ```
 ````
@@ -41,10 +46,12 @@
 
 * - {py:obj}`logger <bumpversion.config.files.logger>`
   - ```{autodoc2-docstring} bumpversion.config.files.logger
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`CONFIG_FILE_SEARCH_ORDER <bumpversion.config.files.CONFIG_FILE_SEARCH_ORDER>`
   - ```{autodoc2-docstring} bumpversion.config.files.CONFIG_FILE_SEARCH_ORDER
+    :parser: myst
     :summary:
     ```
 ````
@@ -57,6 +64,7 @@
    'get_indented_logger(...)'
 
 ```{autodoc2-docstring} bumpversion.config.files.logger
+:parser: myst
 ```
 
 ````
@@ -67,6 +75,7 @@
    ('.bumpversion.cfg', '.bumpversion.toml', 'setup.cfg', 'pyproject.toml')
 
 ```{autodoc2-docstring} bumpversion.config.files.CONFIG_FILE_SEARCH_ORDER
+:parser: myst
 ```
 
 ````
@@ -75,6 +84,7 @@
 :canonical: bumpversion.config.files.find_config_file
 
 ```{autodoc2-docstring} bumpversion.config.files.find_config_file
+:parser: myst
 ```
 ````
 
@@ -82,6 +92,7 @@
 :canonical: bumpversion.config.files.read_config_file
 
 ```{autodoc2-docstring} bumpversion.config.files.read_config_file
+:parser: myst
 ```
 ````
 
@@ -89,6 +100,7 @@
 :canonical: bumpversion.config.files.read_toml_file
 
 ```{autodoc2-docstring} bumpversion.config.files.read_toml_file
+:parser: myst
 ```
 ````
 
@@ -96,5 +108,6 @@
 :canonical: bumpversion.config.files.update_config_file
 
 ```{autodoc2-docstring} bumpversion.config.files.update_config_file
+:parser: myst
 ```
 ````

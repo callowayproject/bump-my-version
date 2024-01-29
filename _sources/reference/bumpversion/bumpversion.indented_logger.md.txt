@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.indented_logger
+:parser: myst
 :allowtitles:
 ```
 
@@ -17,6 +18,7 @@
 
 * - {py:obj}`IndentedLoggerAdapter <bumpversion.indented_logger.IndentedLoggerAdapter>`
   - ```{autodoc2-docstring} bumpversion.indented_logger.IndentedLoggerAdapter
+    :parser: myst
     :summary:
     ```
 ````
@@ -29,6 +31,7 @@
 
 * - {py:obj}`CURRENT_INDENT <bumpversion.indented_logger.CURRENT_INDENT>`
   - ```{autodoc2-docstring} bumpversion.indented_logger.CURRENT_INDENT
+    :parser: myst
     :summary:
     ```
 ````
@@ -41,6 +44,7 @@
    'ContextVar(...)'
 
 ```{autodoc2-docstring} bumpversion.indented_logger.CURRENT_INDENT
+:parser: myst
 ```
 
 ````
@@ -51,12 +55,14 @@
 Bases: {py:obj}`logging.LoggerAdapter`
 
 ```{autodoc2-docstring} bumpversion.indented_logger.IndentedLoggerAdapter
+:parser: myst
 ```
 
 ```{rubric} Initialization
 ```
 
 ```{autodoc2-docstring} bumpversion.indented_logger.IndentedLoggerAdapter.__init__
+:parser: myst
 ```
 
 ````{py:property} current_indent
@@ -64,6 +70,7 @@ Bases: {py:obj}`logging.LoggerAdapter`
 :type: int
 
 ```{autodoc2-docstring} bumpversion.indented_logger.IndentedLoggerAdapter.current_indent
+:parser: myst
 ```
 
 ````
@@ -72,6 +79,7 @@ Bases: {py:obj}`logging.LoggerAdapter`
 :canonical: bumpversion.indented_logger.IndentedLoggerAdapter.indent
 
 ```{autodoc2-docstring} bumpversion.indented_logger.IndentedLoggerAdapter.indent
+:parser: myst
 ```
 
 ````
@@ -80,6 +88,7 @@ Bases: {py:obj}`logging.LoggerAdapter`
 :canonical: bumpversion.indented_logger.IndentedLoggerAdapter.dedent
 
 ```{autodoc2-docstring} bumpversion.indented_logger.IndentedLoggerAdapter.dedent
+:parser: myst
 ```
 
 ````
@@ -88,6 +97,7 @@ Bases: {py:obj}`logging.LoggerAdapter`
 :canonical: bumpversion.indented_logger.IndentedLoggerAdapter.reset
 
 ```{autodoc2-docstring} bumpversion.indented_logger.IndentedLoggerAdapter.reset
+:parser: myst
 ```
 
 ````
@@ -97,6 +107,7 @@ Bases: {py:obj}`logging.LoggerAdapter`
 :type: str
 
 ```{autodoc2-docstring} bumpversion.indented_logger.IndentedLoggerAdapter.indent_str
+:parser: myst
 ```
 
 ````
@@ -105,6 +116,7 @@ Bases: {py:obj}`logging.LoggerAdapter`
 :canonical: bumpversion.indented_logger.IndentedLoggerAdapter.process
 
 ```{autodoc2-docstring} bumpversion.indented_logger.IndentedLoggerAdapter.process
+:parser: myst
 ```
 
 ````

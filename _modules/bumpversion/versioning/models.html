@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=36a5483c" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=6bfd58c2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=018230a5" />
     
     
 
@@ -210,7 +210,8 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../explanation/mental-model.html">The mental model used by bump-my-version</a></li>
 </ul>
 </li>
 </ul>
@@ -363,9 +364,9 @@
 
 
 
-<div class="viewcode-block" id="VersionComponentConfig">
-<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.versioning.models.html#bumpversion.versioning.models.VersionComponentConfig">[docs]</a>
-<span class="k">class</span> <span class="nc">VersionComponentConfig</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="VersionComponentSpec">
+<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.versioning.models.html#bumpversion.versioning.models.VersionComponentSpec">[docs]</a>
+<span class="k">class</span> <span class="nc">VersionComponentSpec</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Configuration of a version component.</span>
 
@@ -380,8 +381,8 @@
     <span class="c1"># source: Optional[str] = None  # Name of environment variable or context variable to use as the source for value</span>
     <span class="n">depends_on</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># The name of the component this component depends on</span>
 
-<div class="viewcode-block" id="VersionComponentConfig.create_component">
-<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.versioning.models.html#bumpversion.versioning.models.VersionComponentConfig.create_component">[docs]</a>
+<div class="viewcode-block" id="VersionComponentSpec.create_component">
+<a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.versioning.models.html#bumpversion.versioning.models.VersionComponentSpec.create_component">[docs]</a>
     <span class="k">def</span> <span class="nf">create_component</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VersionComponent</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a version component from the configuration.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">VersionComponent</span><span class="p">(</span>
@@ -401,7 +402,7 @@
 <span class="k">class</span> <span class="nc">VersionSpec</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The specification of a version&#39;s components and their relationships.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">components</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VersionComponentConfig</span><span class="p">],</span> <span class="n">order</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">components</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VersionComponentSpec</span><span class="p">],</span> <span class="n">order</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">components</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;A VersionSpec must have at least one component.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">order</span><span class="p">:</span>

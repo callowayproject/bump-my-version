@@ -2,5 +2,5 @@ Command-line Interface
 ======================
 
 .. click:: bumpversion.cli:cli
-   :prog: bumpversion
+   :prog: bump-my-version
    :nested: full

@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
-    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=6bfd58c2" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=018230a5" />
     
     
 
@@ -211,7 +211,8 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="explanation/mental-model.html">The mental model used by bump-my-version</a></li>
 </ul>
 </li>
 </ul>
@@ -267,24 +268,31 @@
 </div></blockquote>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
-<p>Version-bump your software with a single command!</p>
-<p>A small command line tool to simplify releasing software by updating all version strings in your source code by the correct increment and optionally commit and tag the changes.</p>
+<p>Bump My Version’s purpose is to:</p>
 <ul class="simple">
-<li><p>version formats are highly configurable</p></li>
-<li><p>works without any source code manager, but happily reads tag information from and writes
-commits and tags to Git and Mercurial if available</p></li>
-<li><p>just handles text files, so it’s not specific to any programming language</p></li>
-<li><p>supports Python 3.8+ and PyPy3.</p></li>
+<li><p>Work as a part of an automated build system</p></li>
+<li><p>Manage project versioning through the project’s development life cycle</p>
+<ul>
+<li><p>Incrementing version numbers</p></li>
+<li><p>serializing version numbers</p></li>
+<li><p>parsing version numbers</p></li>
+</ul>
+</li>
+<li><p>Modify project files as part of the project’s development life cycle</p></li>
+<li><p>Work with the project’s source control system</p>
+<ul>
+<li><p>Committing changes</p></li>
+<li><p>Tagging releases</p></li>
+<li><p>Reading version numbers from tags</p></li>
+</ul>
+</li>
 </ul>
 </section>
 <section id="future-direction">
 <h2>Future Direction<a class="headerlink" href="#future-direction" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Make it easier to get the current version</p></li>
 <li><p>Switch having both the version part and files to change as arguments on the command line.</p></li>
-<li><p>Make the version part argument <em>truly</em> optional when <code class="docutils literal notranslate"><span class="pre">--new-version</span></code> is specified</p></li>
 <li><p>Allow for multiple tags, including one that moves for having a <code class="docutils literal notranslate"><span class="pre">v2</span></code> that always points to the latest version of version 2. <a class="reference external" href="https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#recommendations">For example</a></p></li>
-<li><p>Better UI with <a class="reference external" href="https://rich.readthedocs.io/en/stable/index.html">Rich</a></p></li>
 </ul>
 </section>
 <section id="installation">

@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.version_part
+:parser: myst
 :allowtitles:
 ```
 
@@ -17,6 +18,7 @@
 
 * - {py:obj}`VersionConfig <bumpversion.version_part.VersionConfig>`
   - ```{autodoc2-docstring} bumpversion.version_part.VersionConfig
+    :parser: myst
     :summary:
     ```
 ````
@@ -29,6 +31,7 @@
 
 * - {py:obj}`logger <bumpversion.version_part.logger>`
   - ```{autodoc2-docstring} bumpversion.version_part.logger
+    :parser: myst
     :summary:
     ```
 ````
@@ -41,20 +44,23 @@
    'get_indented_logger(...)'
 
 ```{autodoc2-docstring} bumpversion.version_part.logger
+:parser: myst
 ```
 
 ````
 
-`````{py:class} VersionConfig(parse: str, serialize: typing.Tuple[str], search: str, replace: str, part_configs: typing.Optional[typing.Dict[str, bumpversion.versioning.models.VersionComponentConfig]] = None)
+`````{py:class} VersionConfig(parse: str, serialize: typing.Tuple[str], search: str, replace: str, part_configs: typing.Optional[typing.Dict[str, bumpversion.versioning.models.VersionComponentSpec]] = None)
 :canonical: bumpversion.version_part.VersionConfig
 
 ```{autodoc2-docstring} bumpversion.version_part.VersionConfig
+:parser: myst
 ```
 
 ```{rubric} Initialization
 ```
 
 ```{autodoc2-docstring} bumpversion.version_part.VersionConfig.__init__
+:parser: myst
 ```
 
 ````{py:method} __repr__() -> str
@@ -72,6 +78,7 @@
 :type: typing.List[str]
 
 ```{autodoc2-docstring} bumpversion.version_part.VersionConfig.order
+:parser: myst
 ```
 
 ````
@@ -80,6 +87,7 @@
 :canonical: bumpversion.version_part.VersionConfig.parse
 
 ```{autodoc2-docstring} bumpversion.version_part.VersionConfig.parse
+:parser: myst
 ```
 
 ````
@@ -88,6 +96,7 @@
 :canonical: bumpversion.version_part.VersionConfig.serialize
 
 ```{autodoc2-docstring} bumpversion.version_part.VersionConfig.serialize
+:parser: myst
 ```
 
 ````

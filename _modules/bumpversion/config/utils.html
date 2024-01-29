@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=36a5483c" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=6bfd58c2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=018230a5" />
     
     
 
@@ -210,7 +210,8 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../explanation/mental-model.html">The mental model used by bump-my-version</a></li>
 </ul>
 </li>
 </ul>
@@ -255,7 +256,7 @@
 
 <span class="kn">from</span> <span class="nn">bumpversion.config.models</span> <span class="kn">import</span> <span class="n">FileChange</span>
 <span class="kn">from</span> <span class="nn">bumpversion.exceptions</span> <span class="kn">import</span> <span class="n">BumpVersionError</span>
-<span class="kn">from</span> <span class="nn">bumpversion.versioning.models</span> <span class="kn">import</span> <span class="n">VersionComponentConfig</span>
+<span class="kn">from</span> <span class="nn">bumpversion.versioning.models</span> <span class="kn">import</span> <span class="n">VersionComponentSpec</span>
 
 
 <div class="viewcode-block" id="get_all_file_configs">
@@ -279,7 +280,7 @@
 
 <div class="viewcode-block" id="get_all_part_configs">
 <a class="viewcode-back" href="../../../reference/bumpversion/bumpversion.config.utils.html#bumpversion.config.utils.get_all_part_configs">[docs]</a>
-<span class="k">def</span> <span class="nf">get_all_part_configs</span><span class="p">(</span><span class="n">config_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VersionComponentConfig</span><span class="p">]:</span>
+<span class="k">def</span> <span class="nf">get_all_part_configs</span><span class="p">(</span><span class="n">config_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VersionComponentSpec</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Make sure all version parts are included.&quot;&quot;&quot;</span>
     <span class="kn">import</span> <span class="nn">re</span>
 
@@ -293,9 +294,9 @@
     <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">parsing_groups</span><span class="p">:</span>
         <span class="n">is_independent</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;$&quot;</span><span class="p">)</span>
         <span class="n">part_configs</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">VersionComponentConfig</span><span class="p">(</span><span class="o">**</span><span class="n">parts</span><span class="p">[</span><span class="n">label</span><span class="p">])</span>
+            <span class="n">VersionComponentSpec</span><span class="p">(</span><span class="o">**</span><span class="n">parts</span><span class="p">[</span><span class="n">label</span><span class="p">])</span>
             <span class="k">if</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">parts</span>
-            <span class="k">else</span> <span class="n">VersionComponentConfig</span><span class="p">(</span><span class="n">independent</span><span class="o">=</span><span class="n">is_independent</span><span class="p">)</span>
+            <span class="k">else</span> <span class="n">VersionComponentSpec</span><span class="p">(</span><span class="n">independent</span><span class="o">=</span><span class="n">is_independent</span><span class="p">)</span>
         <span class="p">)</span>
     <span class="k">return</span> <span class="n">part_configs</span></div>
 

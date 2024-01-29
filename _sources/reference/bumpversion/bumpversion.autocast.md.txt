@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.autocast
+:parser: myst
 :allowtitles:
 ```
 
@@ -17,18 +18,22 @@
 
 * - {py:obj}`boolify <bumpversion.autocast.boolify>`
   - ```{autodoc2-docstring} bumpversion.autocast.boolify
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`noneify <bumpversion.autocast.noneify>`
   - ```{autodoc2-docstring} bumpversion.autocast.noneify
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`listify <bumpversion.autocast.listify>`
   - ```{autodoc2-docstring} bumpversion.autocast.listify
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`autocast_value <bumpversion.autocast.autocast_value>`
   - ```{autodoc2-docstring} bumpversion.autocast.autocast_value
+    :parser: myst
     :summary:
     ```
 ````
@@ -39,6 +44,7 @@
 :canonical: bumpversion.autocast.boolify
 
 ```{autodoc2-docstring} bumpversion.autocast.boolify
+:parser: myst
 ```
 ````
 
@@ -46,6 +52,7 @@
 :canonical: bumpversion.autocast.noneify
 
 ```{autodoc2-docstring} bumpversion.autocast.noneify
+:parser: myst
 ```
 ````
 
@@ -53,6 +60,7 @@
 :canonical: bumpversion.autocast.listify
 
 ```{autodoc2-docstring} bumpversion.autocast.listify
+:parser: myst
 ```
 ````
 
@@ -60,5 +68,6 @@
 :canonical: bumpversion.autocast.autocast_value
 
 ```{autodoc2-docstring} bumpversion.autocast.autocast_value
+:parser: myst
 ```
 ````

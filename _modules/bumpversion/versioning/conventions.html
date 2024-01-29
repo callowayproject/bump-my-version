@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=36a5483c" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=6bfd58c2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=018230a5" />
     
     
 
@@ -210,7 +210,8 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../explanation/index.html">Explanation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Explanation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../explanation/mental-model.html">The mental model used by bump-my-version</a></li>
 </ul>
 </li>
 </ul>
@@ -248,7 +249,7 @@
         <article role="main">
           <h1>Source code for bumpversion.versioning.conventions</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Standard version conventions.&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">bumpversion.versioning.models</span> <span class="kn">import</span> <span class="n">VersionComponentConfig</span><span class="p">,</span> <span class="n">VersionSpec</span>
+<span class="kn">from</span> <span class="nn">bumpversion.versioning.models</span> <span class="kn">import</span> <span class="n">VersionComponentSpec</span><span class="p">,</span> <span class="n">VersionSpec</span>
 
 <span class="c1"># Adapted from https://packaging.python.org/en/latest/specifications/version-specifiers/</span>
 <span class="n">PEP440_PATTERN</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
@@ -303,14 +304,14 @@
     <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}</span><span class="s2">&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 <span class="n">PEP440_COMPONENT_CONFIGS</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;major&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(),</span>
-    <span class="s2">&quot;minor&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(),</span>
-    <span class="s2">&quot;patch&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(),</span>
-    <span class="s2">&quot;pre_l&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;rc&quot;</span><span class="p">]),</span>
-    <span class="s2">&quot;pre_n&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(),</span>
-    <span class="s2">&quot;post&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(</span><span class="n">depends_on</span><span class="o">=</span><span class="s2">&quot;patch&quot;</span><span class="p">),</span>
-    <span class="s2">&quot;dev&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(</span><span class="n">depends_on</span><span class="o">=</span><span class="s2">&quot;patch&quot;</span><span class="p">),</span>
-    <span class="s2">&quot;local&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(</span><span class="n">depends_on</span><span class="o">=</span><span class="s2">&quot;patch&quot;</span><span class="p">,</span> <span class="n">optional_value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;major&quot;</span><span class="p">:</span> <span class="n">VersionComponentSpec</span><span class="p">(),</span>
+    <span class="s2">&quot;minor&quot;</span><span class="p">:</span> <span class="n">VersionComponentSpec</span><span class="p">(),</span>
+    <span class="s2">&quot;patch&quot;</span><span class="p">:</span> <span class="n">VersionComponentSpec</span><span class="p">(),</span>
+    <span class="s2">&quot;pre_l&quot;</span><span class="p">:</span> <span class="n">VersionComponentSpec</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;rc&quot;</span><span class="p">]),</span>
+    <span class="s2">&quot;pre_n&quot;</span><span class="p">:</span> <span class="n">VersionComponentSpec</span><span class="p">(),</span>
+    <span class="s2">&quot;post&quot;</span><span class="p">:</span> <span class="n">VersionComponentSpec</span><span class="p">(</span><span class="n">depends_on</span><span class="o">=</span><span class="s2">&quot;patch&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;dev&quot;</span><span class="p">:</span> <span class="n">VersionComponentSpec</span><span class="p">(</span><span class="n">depends_on</span><span class="o">=</span><span class="s2">&quot;patch&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;local&quot;</span><span class="p">:</span> <span class="n">VersionComponentSpec</span><span class="p">(</span><span class="n">depends_on</span><span class="o">=</span><span class="s2">&quot;patch&quot;</span><span class="p">,</span> <span class="n">optional_value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">),</span>
 <span class="p">}</span>
 
 
@@ -347,12 +348,12 @@
     <span class="s2">&quot;</span><span class="si">{major}</span><span class="s2">.</span><span class="si">{minor}</span><span class="s2">.</span><span class="si">{patch}</span><span class="s2">&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 <span class="n">SEMVER_COMPONENT_CONFIGS</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;major&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(),</span>
-    <span class="s2">&quot;minor&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(),</span>
-    <span class="s2">&quot;patch&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(),</span>
-    <span class="s2">&quot;pre_l&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;rc&quot;</span><span class="p">]),</span>
-    <span class="s2">&quot;pre_n&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(),</span>
-    <span class="s2">&quot;buildmetadata&quot;</span><span class="p">:</span> <span class="n">VersionComponentConfig</span><span class="p">(</span><span class="n">independent</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="s2">&quot;major&quot;</span><span class="p">:</span> <span class="n">VersionComponentSpec</span><span class="p">(),</span>
+    <span class="s2">&quot;minor&quot;</span><span class="p">:</span> <span class="n">VersionComponentSpec</span><span class="p">(),</span>
+    <span class="s2">&quot;patch&quot;</span><span class="p">:</span> <span class="n">VersionComponentSpec</span><span class="p">(),</span>
+    <span class="s2">&quot;pre_l&quot;</span><span class="p">:</span> <span class="n">VersionComponentSpec</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;rc&quot;</span><span class="p">]),</span>
+    <span class="s2">&quot;pre_n&quot;</span><span class="p">:</span> <span class="n">VersionComponentSpec</span><span class="p">(),</span>
+    <span class="s2">&quot;buildmetadata&quot;</span><span class="p">:</span> <span class="n">VersionComponentSpec</span><span class="p">(</span><span class="n">independent</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
 <span class="p">}</span>
 
 

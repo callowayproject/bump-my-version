@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.ui
+:parser: myst
 :allowtitles:
 ```
 
@@ -17,22 +18,27 @@
 
 * - {py:obj}`get_indented_logger <bumpversion.ui.get_indented_logger>`
   - ```{autodoc2-docstring} bumpversion.ui.get_indented_logger
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`setup_logging <bumpversion.ui.setup_logging>`
   - ```{autodoc2-docstring} bumpversion.ui.setup_logging
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`print_info <bumpversion.ui.print_info>`
   - ```{autodoc2-docstring} bumpversion.ui.print_info
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`print_error <bumpversion.ui.print_error>`
   - ```{autodoc2-docstring} bumpversion.ui.print_error
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`print_warning <bumpversion.ui.print_warning>`
   - ```{autodoc2-docstring} bumpversion.ui.print_warning
+    :parser: myst
     :summary:
     ```
 ````
@@ -45,10 +51,12 @@
 
 * - {py:obj}`logger <bumpversion.ui.logger>`
   - ```{autodoc2-docstring} bumpversion.ui.logger
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`VERBOSITY <bumpversion.ui.VERBOSITY>`
   - ```{autodoc2-docstring} bumpversion.ui.VERBOSITY
+    :parser: myst
     :summary:
     ```
 ````
@@ -61,6 +69,7 @@
    'getLogger(...)'
 
 ```{autodoc2-docstring} bumpversion.ui.logger
+:parser: myst
 ```
 
 ````
@@ -71,6 +80,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.ui.VERBOSITY
+:parser: myst
 ```
 
 ````
@@ -79,6 +89,7 @@
 :canonical: bumpversion.ui.get_indented_logger
 
 ```{autodoc2-docstring} bumpversion.ui.get_indented_logger
+:parser: myst
 ```
 ````
 
@@ -86,6 +97,7 @@
 :canonical: bumpversion.ui.setup_logging
 
 ```{autodoc2-docstring} bumpversion.ui.setup_logging
+:parser: myst
 ```
 ````
 
@@ -93,6 +105,7 @@
 :canonical: bumpversion.ui.print_info
 
 ```{autodoc2-docstring} bumpversion.ui.print_info
+:parser: myst
 ```
 ````
 
@@ -100,6 +113,7 @@
 :canonical: bumpversion.ui.print_error
 
 ```{autodoc2-docstring} bumpversion.ui.print_error
+:parser: myst
 ```
 ````
 
@@ -107,5 +121,6 @@
 :canonical: bumpversion.ui.print_warning
 
 ```{autodoc2-docstring} bumpversion.ui.print_warning
+:parser: myst
 ```
 ````
