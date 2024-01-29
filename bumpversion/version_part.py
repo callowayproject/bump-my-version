@@ -6,7 +6,7 @@ from click import UsageError
 
 from bumpversion.ui import get_indented_logger
 from bumpversion.utils import labels_for_format
-from bumpversion.versioning.models import Version, VersionComponentConfig, VersionSpec
+from bumpversion.versioning.models import Version, VersionComponentSpec, VersionSpec
 from bumpversion.versioning.serialization import parse_version, serialize
 
 logger = get_indented_logger(__name__)
@@ -23,7 +23,7 @@ class VersionConfig:
         serialize: Tuple[str],
         search: str,
         replace: str,
-        part_configs: Optional[Dict[str, VersionComponentConfig]] = None,
+        part_configs: Optional[Dict[str, VersionComponentSpec]] = None,
     ):
         try:
             self.parse_regex = re.compile(parse, re.VERBOSE)

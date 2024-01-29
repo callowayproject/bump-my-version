@@ -11,7 +11,7 @@ from bumpversion.exceptions import VersionNotFoundError
 from bumpversion.ui import get_indented_logger
 from bumpversion.utils import get_nested_value, set_nested_value
 from bumpversion.version_part import VersionConfig
-from bumpversion.versioning.models import Version, VersionComponentConfig
+from bumpversion.versioning.models import Version, VersionComponentSpec
 
 logger = get_indented_logger(__name__)
 
@@ -300,7 +300,7 @@ class DataFileUpdater:
     def __init__(
         self,
         file_change: FileChange,
-        version_part_configs: Dict[str, VersionComponentConfig],
+        version_part_configs: Dict[str, VersionComponentSpec],
     ) -> None:
         self.file_change = file_change
         self.version_config = VersionConfig(

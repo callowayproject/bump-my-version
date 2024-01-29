@@ -6,7 +6,7 @@ from typing import Dict, List
 
 from bumpversion.config.models import FileChange
 from bumpversion.exceptions import BumpVersionError
-from bumpversion.versioning.models import VersionComponentConfig
+from bumpversion.versioning.models import VersionComponentSpec
 
 
 def get_all_file_configs(config_dict: dict) -> List[FileChange]:
@@ -25,7 +25,7 @@ def get_all_file_configs(config_dict: dict) -> List[FileChange]:
     return [FileChange(**f) for f in files]
 
 
-def get_all_part_configs(config_dict: dict) -> Dict[str, VersionComponentConfig]:
+def get_all_part_configs(config_dict: dict) -> Dict[str, VersionComponentSpec]:
     """Make sure all version parts are included."""
     import re
 
@@ -39,9 +39,9 @@ def get_all_part_configs(config_dict: dict) -> Dict[str, VersionComponentConfig]
     for label in parsing_groups:
         is_independent = label.startswith("$")
         part_configs[label] = (
-            VersionComponentConfig(**parts[label])
+            VersionComponentSpec(**parts[label])
             if label in parts
-            else VersionComponentConfig(independent=is_independent)
+            else VersionComponentSpec(independent=is_independent)
         )
     return part_configs
 

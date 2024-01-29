@@ -1,7 +1,7 @@
 """Tests for the serialization of versioned objects."""
 from bumpversion.versioning.serialization import parse_version, serialize
 from bumpversion.versioning.conventions import semver_spec, SEMVER_PATTERN
-from bumpversion.versioning.models import Version, VersionSpec, VersionComponentConfig
+from bumpversion.versioning.models import Version, VersionSpec, VersionComponentSpec
 from bumpversion.exceptions import BumpVersionError, FormattingError
 
 import pytest
@@ -130,10 +130,10 @@ class TestSerialize:
             """A format with an optional component should render when the dependent component is not optional."""
             version_spec = VersionSpec(
                 components={
-                    "major": VersionComponentConfig(),
-                    "minor": VersionComponentConfig(),
-                    "patch": VersionComponentConfig(),
-                    "release": VersionComponentConfig(
+                    "major": VersionComponentSpec(),
+                    "minor": VersionComponentSpec(),
+                    "patch": VersionComponentSpec(),
+                    "release": VersionComponentSpec(
                         optional_value="g",
                         first_value="g",
                         values=[
@@ -143,7 +143,7 @@ class TestSerialize:
                             "g",
                         ],
                     ),
-                    "build": VersionComponentConfig(),
+                    "build": VersionComponentSpec(),
                 },
             )
             serialize_patterns = [
@@ -160,6 +160,18 @@ class TestSerialize:
                     context={},
                 )
                 == "0.3.1g1"
+            )
+
+        def test_selects_first_pattern_when_all_are_invalid(self):
+            """If all patterns are invalid, the first pattern should be selected."""
+            version = semver_spec().create_version({"major": "1", "minor": "2", "patch": "3"})
+            assert (
+                serialize(
+                    version,
+                    serialize_patterns=["{major}", "{major}.{minor}"],
+                    context={},
+                )
+                == "1"
             )
 
     class TestRendersFormat:

@@ -1,7 +1,7 @@
 """Tests for the ConfiguredFile class."""
 from bumpversion.files import ConfiguredFile, FileChange
 from bumpversion.version_part import VersionConfig
-from bumpversion.versioning.models import VersionComponentConfig
+from bumpversion.versioning.models import VersionComponentSpec
 
 
 class TestConfiguredFile:
@@ -27,9 +27,9 @@ class TestConfiguredFile:
                 search="{current_version}",
                 replace="{new_version}",
                 part_configs={
-                    "major": VersionComponentConfig(),
-                    "minor": VersionComponentConfig(),
-                    "patch": VersionComponentConfig(),
+                    "major": VersionComponentSpec(),
+                    "minor": VersionComponentSpec(),
+                    "patch": VersionComponentSpec(),
                 },
             )
             cfg_file = ConfiguredFile(change, version_config)
@@ -53,9 +53,9 @@ class TestConfiguredFile:
                 search="{current_version}",
                 replace="{new_version}",
                 part_configs={
-                    "major": VersionComponentConfig(),
-                    "minor": VersionComponentConfig(),
-                    "patch": VersionComponentConfig(),
+                    "major": VersionComponentSpec(),
+                    "minor": VersionComponentSpec(),
+                    "patch": VersionComponentSpec(),
                 },
             )
             expected = VersionConfig(

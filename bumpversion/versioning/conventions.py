@@ -1,5 +1,5 @@
 """Standard version conventions."""
-from bumpversion.versioning.models import VersionComponentConfig, VersionSpec
+from bumpversion.versioning.models import VersionComponentSpec, VersionSpec
 
 # Adapted from https://packaging.python.org/en/latest/specifications/version-specifiers/
 PEP440_PATTERN = r"""
@@ -54,14 +54,14 @@ PEP440_SERIALIZE_PATTERNS = [
     "{major}.{minor}.{patch}",
 ]
 PEP440_COMPONENT_CONFIGS = {
-    "major": VersionComponentConfig(),
-    "minor": VersionComponentConfig(),
-    "patch": VersionComponentConfig(),
-    "pre_l": VersionComponentConfig(values=["", "a", "b", "rc"]),
-    "pre_n": VersionComponentConfig(),
-    "post": VersionComponentConfig(depends_on="patch"),
-    "dev": VersionComponentConfig(depends_on="patch"),
-    "local": VersionComponentConfig(depends_on="patch", optional_value=""),
+    "major": VersionComponentSpec(),
+    "minor": VersionComponentSpec(),
+    "patch": VersionComponentSpec(),
+    "pre_l": VersionComponentSpec(values=["", "a", "b", "rc"]),
+    "pre_n": VersionComponentSpec(),
+    "post": VersionComponentSpec(depends_on="patch"),
+    "dev": VersionComponentSpec(depends_on="patch"),
+    "local": VersionComponentSpec(depends_on="patch", optional_value=""),
 }
 
 
@@ -95,12 +95,12 @@ SEMVER_SERIALIZE_PATTERNS = [
     "{major}.{minor}.{patch}",
 ]
 SEMVER_COMPONENT_CONFIGS = {
-    "major": VersionComponentConfig(),
-    "minor": VersionComponentConfig(),
-    "patch": VersionComponentConfig(),
-    "pre_l": VersionComponentConfig(values=["", "a", "b", "rc"]),
-    "pre_n": VersionComponentConfig(),
-    "buildmetadata": VersionComponentConfig(independent=True),
+    "major": VersionComponentSpec(),
+    "minor": VersionComponentSpec(),
+    "patch": VersionComponentSpec(),
+    "pre_l": VersionComponentSpec(values=["", "a", "b", "rc"]),
+    "pre_n": VersionComponentSpec(),
+    "buildmetadata": VersionComponentSpec(independent=True),
 }
 
 
