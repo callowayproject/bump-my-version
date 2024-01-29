@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.visualize
+:parser: myst
 :allowtitles:
 ```
 
@@ -17,6 +18,7 @@
 
 * - {py:obj}`Border <bumpversion.visualize.Border>`
   - ```{autodoc2-docstring} bumpversion.visualize.Border
+    :parser: myst
     :summary:
     ```
 ````
@@ -29,18 +31,27 @@
 
 * - {py:obj}`lead_string <bumpversion.visualize.lead_string>`
   - ```{autodoc2-docstring} bumpversion.visualize.lead_string
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`connection_str <bumpversion.visualize.connection_str>`
   - ```{autodoc2-docstring} bumpversion.visualize.connection_str
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`labeled_line <bumpversion.visualize.labeled_line>`
   - ```{autodoc2-docstring} bumpversion.visualize.labeled_line
+    :parser: myst
+    :summary:
+    ```
+* - {py:obj}`filter_version_parts <bumpversion.visualize.filter_version_parts>`
+  - ```{autodoc2-docstring} bumpversion.visualize.filter_version_parts
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`visualize <bumpversion.visualize.visualize>`
   - ```{autodoc2-docstring} bumpversion.visualize.visualize
+    :parser: myst
     :summary:
     ```
 ````
@@ -53,6 +64,7 @@
 
 * - {py:obj}`BOX_CHARS <bumpversion.visualize.BOX_CHARS>`
   - ```{autodoc2-docstring} bumpversion.visualize.BOX_CHARS
+    :parser: myst
     :summary:
     ```
 ````
@@ -65,6 +77,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.visualize.BOX_CHARS
+:parser: myst
 ```
 
 ````
@@ -73,6 +86,7 @@
 :canonical: bumpversion.visualize.Border
 
 ```{autodoc2-docstring} bumpversion.visualize.Border
+:parser: myst
 ```
 
 ````{py:attribute} corner_bottom_right
@@ -82,6 +96,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.visualize.Border.corner_bottom_right
+:parser: myst
 ```
 
 ````
@@ -93,6 +108,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.visualize.Border.corner_top_right
+:parser: myst
 ```
 
 ````
@@ -104,6 +120,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.visualize.Border.corner_top_left
+:parser: myst
 ```
 
 ````
@@ -115,6 +132,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.visualize.Border.corner_bottom_left
+:parser: myst
 ```
 
 ````
@@ -126,6 +144,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.visualize.Border.divider_left
+:parser: myst
 ```
 
 ````
@@ -137,6 +156,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.visualize.Border.divider_up
+:parser: myst
 ```
 
 ````
@@ -148,6 +168,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.visualize.Border.divider_down
+:parser: myst
 ```
 
 ````
@@ -159,6 +180,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.visualize.Border.divider_right
+:parser: myst
 ```
 
 ````
@@ -170,6 +192,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.visualize.Border.line
+:parser: myst
 ```
 
 ````
@@ -181,6 +204,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.visualize.Border.pipe
+:parser: myst
 ```
 
 ````
@@ -192,6 +216,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.visualize.Border.cross
+:parser: myst
 ```
 
 ````
@@ -202,6 +227,7 @@
 :canonical: bumpversion.visualize.lead_string
 
 ```{autodoc2-docstring} bumpversion.visualize.lead_string
+:parser: myst
 ```
 ````
 
@@ -209,6 +235,7 @@
 :canonical: bumpversion.visualize.connection_str
 
 ```{autodoc2-docstring} bumpversion.visualize.connection_str
+:parser: myst
 ```
 ````
 
@@ -216,6 +243,15 @@
 :canonical: bumpversion.visualize.labeled_line
 
 ```{autodoc2-docstring} bumpversion.visualize.labeled_line
+:parser: myst
+```
+````
+
+````{py:function} filter_version_parts(config: bumpversion.config.Config) -> typing.List[str]
+:canonical: bumpversion.visualize.filter_version_parts
+
+```{autodoc2-docstring} bumpversion.visualize.filter_version_parts
+:parser: myst
 ```
 ````
 
@@ -223,5 +259,6 @@
 :canonical: bumpversion.visualize.visualize
 
 ```{autodoc2-docstring} bumpversion.visualize.visualize
+:parser: myst
 ```
 ````

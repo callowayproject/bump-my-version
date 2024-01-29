@@ -1,6 +1,6 @@
 """Tests of the VersionPart model."""
 
-from bumpversion.versioning.models import VersionComponentConfig
+from bumpversion.versioning.models import VersionComponentSpec
 from bumpversion.versioning.functions import ValuesFunction, NumericFunction
 import pytest
 
@@ -15,7 +15,7 @@ import pytest
 )
 def version_component_config(request):
     """Return a three-part and a two-part version part configuration."""
-    return VersionComponentConfig(**request.param)
+    return VersionComponentSpec(**request.param)
 
 
 class TestVersionComponent:
@@ -27,11 +27,11 @@ class TestVersionComponent:
 
         def test_config_with_values_selects_values_function(self):
             values = ["0", "1", "2"]
-            vp = VersionComponentConfig(values=values).create_component()
+            vp = VersionComponentSpec(values=values).create_component()
             assert isinstance(vp.func, ValuesFunction)
 
         def test_config_without_values_selects_numeric_function(self):
-            vp = VersionComponentConfig().create_component()
+            vp = VersionComponentSpec().create_component()
             assert isinstance(vp.func, NumericFunction)
 
     def test_copy_returns_new_version_part(self, version_component_config):

@@ -1,6 +1,6 @@
 """Tests for the Version class."""
 
-from bumpversion.versioning.models import VersionComponentConfig
+from bumpversion.versioning.models import VersionComponentSpec
 from bumpversion.versioning.models import VersionSpec
 import pytest
 from pytest import param
@@ -10,10 +10,10 @@ from pytest import param
 def version_spec():
     """Return a version spec."""
     config = {
-        "major": VersionComponentConfig(),
-        "minor": VersionComponentConfig(),
-        "patch": VersionComponentConfig(),
-        "build": VersionComponentConfig(optional_value="0", independent=True),
+        "major": VersionComponentSpec(),
+        "minor": VersionComponentSpec(),
+        "patch": VersionComponentSpec(),
+        "build": VersionComponentSpec(optional_value="0", independent=True),
     }
 
     return VersionSpec(config)

@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.aliases
+:parser: myst
 :allowtitles:
 ```
 
@@ -17,6 +18,7 @@
 
 * - {py:obj}`AliasedGroup <bumpversion.aliases.AliasedGroup>`
   - ```{autodoc2-docstring} bumpversion.aliases.AliasedGroup
+    :parser: myst
     :summary:
     ```
 ````
@@ -29,18 +31,21 @@
 Bases: {py:obj}`rich_click.rich_group.RichGroup`
 
 ```{autodoc2-docstring} bumpversion.aliases.AliasedGroup
+:parser: myst
 ```
 
 ```{rubric} Initialization
 ```
 
 ```{autodoc2-docstring} bumpversion.aliases.AliasedGroup.__init__
+:parser: myst
 ```
 
 ````{py:method} get_command(ctx: click.Context, cmd_name: str) -> typing.Optional[rich_click.Command]
 :canonical: bumpversion.aliases.AliasedGroup.get_command
 
 ```{autodoc2-docstring} bumpversion.aliases.AliasedGroup.get_command
+:parser: myst
 ```
 
 ````
@@ -49,6 +54,7 @@ Bases: {py:obj}`rich_click.rich_group.RichGroup`
 :canonical: bumpversion.aliases.AliasedGroup.resolve_command
 
 ```{autodoc2-docstring} bumpversion.aliases.AliasedGroup.resolve_command
+:parser: myst
 ```
 
 ````

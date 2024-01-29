@@ -23,7 +23,6 @@ extensions = [
     "myst_parser",
     "autodoc2",
     "sphinx.ext.viewcode",
-    "sphinx.ext.autosummary",
     "sphinx.ext.intersphinx",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.napoleon",
@@ -40,8 +39,10 @@ autodoc2_packages = ["../bumpversion"]
 autodoc2_render_plugin = "myst"
 autodoc2_output_dir = "reference"
 autodoc2_index_template = None
-
-autosummary_generate = True
+autodoc2_docstring_parser_regexes = [
+    # this will render all docstrings as Markdown
+    (r".*", "myst"),
+]
 
 napoleon_attr_annotations = True
 napoleon_include_special_with_doc = True

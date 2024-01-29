@@ -2,7 +2,7 @@
 
 import pytest
 from bumpversion.versioning.models import VersionSpec
-from bumpversion.versioning.models import VersionComponentConfig
+from bumpversion.versioning.models import VersionComponentSpec
 
 
 class TestVersionSpec:
@@ -21,9 +21,9 @@ class TestVersionSpec:
                 """If the order is empty, it uses the component order."""
                 # Arrange
                 config = {
-                    "major": VersionComponentConfig(),
-                    "minor": VersionComponentConfig(),
-                    "patch": VersionComponentConfig(),
+                    "major": VersionComponentSpec(),
+                    "minor": VersionComponentSpec(),
+                    "patch": VersionComponentSpec(),
                 }
 
                 # Act
@@ -36,9 +36,9 @@ class TestVersionSpec:
                 """If the order contains component names that do not exist, it raises and error."""
                 # Arrange
                 config = {
-                    "major": VersionComponentConfig(),
-                    "minor": VersionComponentConfig(),
-                    "patch": VersionComponentConfig(),
+                    "major": VersionComponentSpec(),
+                    "minor": VersionComponentSpec(),
+                    "patch": VersionComponentSpec(),
                 }
 
                 # Act
@@ -49,9 +49,9 @@ class TestVersionSpec:
                 """An order containing a subset of component names works fine."""
                 # Arrange
                 config = {
-                    "major": VersionComponentConfig(),
-                    "minor": VersionComponentConfig(),
-                    "patch": VersionComponentConfig(),
+                    "major": VersionComponentSpec(),
+                    "minor": VersionComponentSpec(),
+                    "patch": VersionComponentSpec(),
                 }
 
                 # Act
@@ -64,9 +64,9 @@ class TestVersionSpec:
             """The order of components correctly creates the dependency map."""
             # Arrange
             config = {
-                "major": VersionComponentConfig(),
-                "minor": VersionComponentConfig(),
-                "patch": VersionComponentConfig(),
+                "major": VersionComponentSpec(),
+                "minor": VersionComponentSpec(),
+                "patch": VersionComponentSpec(),
             }
 
             # Act
@@ -81,9 +81,9 @@ class TestVersionSpec:
             """Independent components are not in the dependency map."""
             # Arrange
             config = {
-                "major": VersionComponentConfig(),
-                "minor": VersionComponentConfig(independent=True),
-                "patch": VersionComponentConfig(),
+                "major": VersionComponentSpec(),
+                "minor": VersionComponentSpec(independent=True),
+                "patch": VersionComponentSpec(),
             }
 
             # Act
@@ -99,10 +99,10 @@ class TestVersionSpec:
             """An empty values dict raises an error."""
             # Arrange
             config = {
-                "major": VersionComponentConfig(),
-                "minor": VersionComponentConfig(),
-                "patch": VersionComponentConfig(),
-                "build": VersionComponentConfig(independent=True),
+                "major": VersionComponentSpec(),
+                "minor": VersionComponentSpec(),
+                "patch": VersionComponentSpec(),
+                "build": VersionComponentSpec(independent=True),
             }
             version_spec = VersionSpec(config)
 
@@ -119,10 +119,10 @@ class TestVersionSpec:
             """A missing value raises an error."""
             # Arrange
             config = {
-                "major": VersionComponentConfig(),
-                "minor": VersionComponentConfig(),
-                "patch": VersionComponentConfig(),
-                "build": VersionComponentConfig(independent=True),
+                "major": VersionComponentSpec(),
+                "minor": VersionComponentSpec(),
+                "patch": VersionComponentSpec(),
+                "build": VersionComponentSpec(independent=True),
             }
             version_spec = VersionSpec(config)
 
@@ -139,9 +139,9 @@ class TestVersionSpec:
             """Extra values are ignored."""
             # Arrange
             config = {
-                "major": VersionComponentConfig(),
-                "minor": VersionComponentConfig(),
-                "patch": VersionComponentConfig(),
+                "major": VersionComponentSpec(),
+                "minor": VersionComponentSpec(),
+                "patch": VersionComponentSpec(),
             }
             version_spec = VersionSpec(config)
 
@@ -161,9 +161,9 @@ class TestVersionSpec:
             """Getting the dependents of a non-existing component returns an empty list."""
             # Arrange
             config = {
-                "major": VersionComponentConfig(),
-                "minor": VersionComponentConfig(),
-                "patch": VersionComponentConfig(),
+                "major": VersionComponentSpec(),
+                "minor": VersionComponentSpec(),
+                "patch": VersionComponentSpec(),
             }
             version_spec = VersionSpec(config)
 
@@ -177,9 +177,9 @@ class TestVersionSpec:
             """Extra values are ignored."""
             # Arrange
             config = {
-                "major": VersionComponentConfig(),
-                "minor": VersionComponentConfig(),
-                "patch": VersionComponentConfig(),
+                "major": VersionComponentSpec(),
+                "minor": VersionComponentSpec(),
+                "patch": VersionComponentSpec(),
             }
             version_spec = VersionSpec(config)
 

@@ -18,23 +18,24 @@
 
 ## Overview
 
-Version-bump your software with a single command!
+Bump My Version's purpose is to:
 
-A small command line tool to simplify releasing software by updating all version strings in your source code by the correct increment and optionally commit and tag the changes.
+- Work as a part of an automated build system
+- Manage project versioning through the project's development life cycle
+    - Incrementing version numbers
+    - serializing version numbers
+    - parsing version numbers
+- Modify project files as part of the project's development life cycle
+- Work with the project's source control system
+    - Committing changes
+    - Tagging releases
+    - Reading version numbers from tags
 
-* version formats are highly configurable
-* works without any source code manager, but happily reads tag information from and writes
-  commits and tags to Git and Mercurial if available
-* just handles text files, so it's not specific to any programming language
-* supports Python 3.8+ and PyPy3.
 
 ## Future Direction
 
-- Make it easier to get the current version
 - Switch having both the version part and files to change as arguments on the command line.
-- Make the version part argument _truly_ optional when `--new-version` is specified
 - Allow for multiple tags, including one that moves for having a `v2` that always points to the latest version of version 2. [For example](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#recommendations)
-- Better UI with [Rich](https://rich.readthedocs.io/en/stable/index.html)
 
 ## Installation
 

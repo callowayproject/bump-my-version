@@ -93,7 +93,7 @@ class VersionComponent:
         return self.value == other.value if isinstance(other, VersionComponent) else False
 
 
-class VersionComponentConfig(BaseModel):
+class VersionComponentSpec(BaseModel):
     """
     Configuration of a version component.
 
@@ -123,7 +123,7 @@ class VersionComponentConfig(BaseModel):
 class VersionSpec:
     """The specification of a version's components and their relationships."""
 
-    def __init__(self, components: Dict[str, VersionComponentConfig], order: Optional[List[str]] = None):
+    def __init__(self, components: Dict[str, VersionComponentSpec], order: Optional[List[str]] = None):
         if not components:
             raise ValueError("A VersionSpec must have at least one component.")
         if not order:

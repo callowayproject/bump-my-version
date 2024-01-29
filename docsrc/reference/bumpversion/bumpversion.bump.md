@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.bump
+:parser: myst
 :allowtitles:
 ```
 
@@ -17,14 +18,17 @@
 
 * - {py:obj}`get_next_version <bumpversion.bump.get_next_version>`
   - ```{autodoc2-docstring} bumpversion.bump.get_next_version
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`do_bump <bumpversion.bump.do_bump>`
   - ```{autodoc2-docstring} bumpversion.bump.do_bump
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`commit_and_tag <bumpversion.bump.commit_and_tag>`
   - ```{autodoc2-docstring} bumpversion.bump.commit_and_tag
+    :parser: myst
     :summary:
     ```
 ````
@@ -37,6 +41,7 @@
 
 * - {py:obj}`logger <bumpversion.bump.logger>`
   - ```{autodoc2-docstring} bumpversion.bump.logger
+    :parser: myst
     :summary:
     ```
 ````
@@ -49,14 +54,16 @@
    'get_indented_logger(...)'
 
 ```{autodoc2-docstring} bumpversion.bump.logger
+:parser: myst
 ```
 
 ````
 
-````{py:function} get_next_version(current_version: bumpversion.version_part.Version, config: bumpversion.config.Config, version_part: typing.Optional[str], new_version: typing.Optional[str]) -> bumpversion.version_part.Version
+````{py:function} get_next_version(current_version: bumpversion.versioning.models.Version, config: bumpversion.config.Config, version_part: typing.Optional[str], new_version: typing.Optional[str]) -> bumpversion.versioning.models.Version
 :canonical: bumpversion.bump.get_next_version
 
 ```{autodoc2-docstring} bumpversion.bump.get_next_version
+:parser: myst
 ```
 ````
 
@@ -64,6 +71,7 @@
 :canonical: bumpversion.bump.do_bump
 
 ```{autodoc2-docstring} bumpversion.bump.do_bump
+:parser: myst
 ```
 ````
 
@@ -71,5 +79,6 @@
 :canonical: bumpversion.bump.commit_and_tag
 
 ```{autodoc2-docstring} bumpversion.bump.commit_and_tag
+:parser: myst
 ```
 ````

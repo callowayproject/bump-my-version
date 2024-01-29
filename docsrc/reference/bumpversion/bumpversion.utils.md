@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.utils
+:parser: myst
 :allowtitles:
 ```
 
@@ -17,38 +18,52 @@
 
 * - {py:obj}`extract_regex_flags <bumpversion.utils.extract_regex_flags>`
   - ```{autodoc2-docstring} bumpversion.utils.extract_regex_flags
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`recursive_sort_dict <bumpversion.utils.recursive_sort_dict>`
   - ```{autodoc2-docstring} bumpversion.utils.recursive_sort_dict
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`key_val_string <bumpversion.utils.key_val_string>`
   - ```{autodoc2-docstring} bumpversion.utils.key_val_string
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`prefixed_environ <bumpversion.utils.prefixed_environ>`
   - ```{autodoc2-docstring} bumpversion.utils.prefixed_environ
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`labels_for_format <bumpversion.utils.labels_for_format>`
   - ```{autodoc2-docstring} bumpversion.utils.labels_for_format
+    :parser: myst
+    :summary:
+    ```
+* - {py:obj}`base_context <bumpversion.utils.base_context>`
+  - ```{autodoc2-docstring} bumpversion.utils.base_context
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`get_context <bumpversion.utils.get_context>`
   - ```{autodoc2-docstring} bumpversion.utils.get_context
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`get_overrides <bumpversion.utils.get_overrides>`
   - ```{autodoc2-docstring} bumpversion.utils.get_overrides
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`get_nested_value <bumpversion.utils.get_nested_value>`
   - ```{autodoc2-docstring} bumpversion.utils.get_nested_value
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`set_nested_value <bumpversion.utils.set_nested_value>`
   - ```{autodoc2-docstring} bumpversion.utils.set_nested_value
+    :parser: myst
     :summary:
     ```
 ````
@@ -59,6 +74,7 @@
 :canonical: bumpversion.utils.extract_regex_flags
 
 ```{autodoc2-docstring} bumpversion.utils.extract_regex_flags
+:parser: myst
 ```
 ````
 
@@ -66,6 +82,7 @@
 :canonical: bumpversion.utils.recursive_sort_dict
 
 ```{autodoc2-docstring} bumpversion.utils.recursive_sort_dict
+:parser: myst
 ```
 ````
 
@@ -73,6 +90,7 @@
 :canonical: bumpversion.utils.key_val_string
 
 ```{autodoc2-docstring} bumpversion.utils.key_val_string
+:parser: myst
 ```
 ````
 
@@ -80,6 +98,7 @@
 :canonical: bumpversion.utils.prefixed_environ
 
 ```{autodoc2-docstring} bumpversion.utils.prefixed_environ
+:parser: myst
 ```
 ````
 
@@ -87,13 +106,23 @@
 :canonical: bumpversion.utils.labels_for_format
 
 ```{autodoc2-docstring} bumpversion.utils.labels_for_format
+:parser: myst
 ```
 ````
 
-````{py:function} get_context(config: bumpversion.config.Config, current_version: typing.Optional[bumpversion.version_part.Version] = None, new_version: typing.Optional[bumpversion.version_part.Version] = None) -> collections.ChainMap
+````{py:function} base_context(scm_info: typing.Optional[bumpversion.scm.SCMInfo] = None) -> collections.ChainMap
+:canonical: bumpversion.utils.base_context
+
+```{autodoc2-docstring} bumpversion.utils.base_context
+:parser: myst
+```
+````
+
+````{py:function} get_context(config: bumpversion.config.Config, current_version: typing.Optional[bumpversion.versioning.models.Version] = None, new_version: typing.Optional[bumpversion.versioning.models.Version] = None) -> collections.ChainMap
 :canonical: bumpversion.utils.get_context
 
 ```{autodoc2-docstring} bumpversion.utils.get_context
+:parser: myst
 ```
 ````
 
@@ -101,6 +130,7 @@
 :canonical: bumpversion.utils.get_overrides
 
 ```{autodoc2-docstring} bumpversion.utils.get_overrides
+:parser: myst
 ```
 ````
 
@@ -108,6 +138,7 @@
 :canonical: bumpversion.utils.get_nested_value
 
 ```{autodoc2-docstring} bumpversion.utils.get_nested_value
+:parser: myst
 ```
 ````
 
@@ -115,5 +146,6 @@
 :canonical: bumpversion.utils.set_nested_value
 
 ```{autodoc2-docstring} bumpversion.utils.set_nested_value
+:parser: myst
 ```
 ````

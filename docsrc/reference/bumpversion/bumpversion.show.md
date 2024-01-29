@@ -4,6 +4,7 @@
 ```
 
 ```{autodoc2-docstring} bumpversion.show
+:parser: myst
 :allowtitles:
 ```
 
@@ -17,26 +18,32 @@
 
 * - {py:obj}`output_default <bumpversion.show.output_default>`
   - ```{autodoc2-docstring} bumpversion.show.output_default
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`output_yaml <bumpversion.show.output_yaml>`
   - ```{autodoc2-docstring} bumpversion.show.output_yaml
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`output_json <bumpversion.show.output_json>`
   - ```{autodoc2-docstring} bumpversion.show.output_json
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`resolve_name <bumpversion.show.resolve_name>`
   - ```{autodoc2-docstring} bumpversion.show.resolve_name
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`log_list <bumpversion.show.log_list>`
   - ```{autodoc2-docstring} bumpversion.show.log_list
+    :parser: myst
     :summary:
     ```
 * - {py:obj}`do_show <bumpversion.show.do_show>`
   - ```{autodoc2-docstring} bumpversion.show.do_show
+    :parser: myst
     :summary:
     ```
 ````
@@ -49,6 +56,7 @@
 
 * - {py:obj}`OUTPUTTERS <bumpversion.show.OUTPUTTERS>`
   - ```{autodoc2-docstring} bumpversion.show.OUTPUTTERS
+    :parser: myst
     :summary:
     ```
 ````
@@ -59,6 +67,7 @@
 :canonical: bumpversion.show.output_default
 
 ```{autodoc2-docstring} bumpversion.show.output_default
+:parser: myst
 ```
 ````
 
@@ -66,6 +75,7 @@
 :canonical: bumpversion.show.output_yaml
 
 ```{autodoc2-docstring} bumpversion.show.output_yaml
+:parser: myst
 ```
 ````
 
@@ -73,6 +83,7 @@
 :canonical: bumpversion.show.output_json
 
 ```{autodoc2-docstring} bumpversion.show.output_json
+:parser: myst
 ```
 ````
 
@@ -82,6 +93,7 @@
    None
 
 ```{autodoc2-docstring} bumpversion.show.OUTPUTTERS
+:parser: myst
 ```
 
 ````
@@ -90,6 +102,7 @@
 :canonical: bumpversion.show.resolve_name
 
 ```{autodoc2-docstring} bumpversion.show.resolve_name
+:parser: myst
 ```
 ````
 
@@ -97,6 +110,7 @@
 :canonical: bumpversion.show.log_list
 
 ```{autodoc2-docstring} bumpversion.show.log_list
+:parser: myst
 ```
 ````
 
@@ -104,5 +118,6 @@
 :canonical: bumpversion.show.do_show
 
 ```{autodoc2-docstring} bumpversion.show.do_show
+:parser: myst
 ```
 ````

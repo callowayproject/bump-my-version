@@ -10,7 +10,7 @@ from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from bumpversion.ui import get_indented_logger
-from bumpversion.versioning.models import VersionComponentConfig  # NOQA: TCH001
+from bumpversion.versioning.models import VersionComponentSpec  # NOQA: TCH001
 
 if TYPE_CHECKING:
     from bumpversion.scm import SCMInfo
@@ -92,7 +92,7 @@ class Config(BaseSettings):
     message: str
     commit_args: Optional[str]
     scm_info: Optional["SCMInfo"]
-    parts: Dict[str, VersionComponentConfig]
+    parts: Dict[str, VersionComponentSpec]
     files: List[FileChange] = Field(default_factory=list)
     included_paths: List[str] = Field(default_factory=list)
     excluded_paths: List[str] = Field(default_factory=list)
