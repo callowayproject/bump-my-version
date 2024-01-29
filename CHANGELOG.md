@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.17.3 (2024-01-29)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.17.2...0.17.3)
+
+### Fixes
+
+- Refactored VersionComponentConfig to VersionComponentSpec. [b538308](https://github.com/callowayproject/bump-my-version/commit/b53830826c81446576b3979080b05930d71c34e2)
+    
+  More consistent with VersionSpec
+### New
+
+- Added mental model documentation. [5cbd250](https://github.com/callowayproject/bump-my-version/commit/5cbd250ab412f0f56af14a0fcc450cb31643e3e4)
+    
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [a2a3fe6](https://github.com/callowayproject/bump-my-version/commit/a2a3fe65fceaae2eb1aa2ab0137e00bb3565709b)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.1.11 → v0.1.14](https://github.com/astral-sh/ruff-pre-commit/compare/v0.1.11...v0.1.14)
+
+### Updates
+
+- Updated more documentation. [779c84c](https://github.com/callowayproject/bump-my-version/commit/779c84c22bde4f96bc44e13ab1834ab3cbb63ee9)
+    
+
 ## 0.17.2 (2024-01-27)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.17.1...0.17.2)
 
