@@ -1,4 +1,5 @@
 """Standard version conventions."""
+
 from bumpversion.versioning.models import VersionComponentSpec, VersionSpec
 
 # Adapted from https://packaging.python.org/en/latest/specifications/version-specifiers/

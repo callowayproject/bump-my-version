@@ -1,4 +1,5 @@
 """A simple YAML dumper to avoid extra dependencies."""
+
 import datetime
 from collections import UserDict
 from io import StringIO

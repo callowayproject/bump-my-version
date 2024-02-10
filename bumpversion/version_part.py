@@ -1,4 +1,5 @@
 """Module for managing Versions and their internal parts."""
+
 import re
 from typing import Any, Dict, List, MutableMapping, Optional, Tuple
 

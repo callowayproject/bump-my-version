@@ -1,4 +1,5 @@
 """Visualize the bumpversion process."""
+
 from dataclasses import dataclass
 from typing import List, Optional
 

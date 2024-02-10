@@ -1,4 +1,5 @@
 """Tests the bump CLI subcommand."""
+
 import shutil
 import subprocess
 from datetime import datetime

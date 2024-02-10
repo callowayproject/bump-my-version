@@ -1,4 +1,5 @@
 """Custom exceptions for BumpVersion."""
+
 from typing import Optional
 
 from click import Context, UsageError

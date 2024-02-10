@@ -1,4 +1,5 @@
 """Utilities for handling command aliases."""
+
 from typing import List, Optional
 
 import rich_click as click

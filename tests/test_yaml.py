@@ -1,4 +1,5 @@
 """Tests for the yaml serialization module."""
+
 from pathlib import Path
 
 from bumpversion import yaml_dump

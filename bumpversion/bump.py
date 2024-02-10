@@ -1,4 +1,5 @@
 """Version changing methods."""
+
 import shlex
 from pathlib import Path
 from typing import TYPE_CHECKING, ChainMap, List, Optional

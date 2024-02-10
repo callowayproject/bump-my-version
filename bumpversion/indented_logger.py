@@ -1,4 +1,5 @@
 """A logger adapter that adds an indent to the beginning of each message."""
+
 import logging
 from contextvars import ContextVar
 from typing import Any, MutableMapping, Optional, Tuple

@@ -1,4 +1,5 @@
 """Test configuration parsing."""
+
 import difflib
 import json
 from pathlib import Path

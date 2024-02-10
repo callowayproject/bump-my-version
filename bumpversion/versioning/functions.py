@@ -1,4 +1,5 @@
 """Generators for version parts."""
+
 import re
 from typing import List, Optional, Union
 

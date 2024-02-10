@@ -1,4 +1,5 @@
 """Tests for the serialization of versioned objects."""
+
 from bumpversion.versioning.serialization import parse_version, serialize
 from bumpversion.versioning.conventions import semver_spec, SEMVER_PATTERN
 from bumpversion.versioning.models import Version, VersionSpec, VersionComponentSpec

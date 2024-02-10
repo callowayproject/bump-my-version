@@ -1,4 +1,5 @@
 """Tests of the VCS module."""
+
 import subprocess
 from pathlib import Path
 

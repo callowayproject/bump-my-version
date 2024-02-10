@@ -1,4 +1,5 @@
 """Tests for the bump module."""
+
 from pathlib import Path
 from textwrap import dedent
 from unittest.mock import MagicMock, patch
