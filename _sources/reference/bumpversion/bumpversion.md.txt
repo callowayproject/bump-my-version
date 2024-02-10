@@ -14,8 +14,8 @@
 :titlesonly:
 :maxdepth: 3
 
-bumpversion.config
 bumpversion.versioning
+bumpversion.config
 ```
 
 ## Submodules
@@ -25,20 +25,20 @@ bumpversion.versioning
 :maxdepth: 1
 
 bumpversion.yaml_dump
-bumpversion.show
-bumpversion.ui
-bumpversion.utils
+bumpversion.bump
+bumpversion.__main__
+bumpversion.visualize
 bumpversion.version_part
-bumpversion.scm
+bumpversion.aliases
 bumpversion.autocast
 bumpversion.files
-bumpversion.bump
+bumpversion.utils
 bumpversion.indented_logger
-bumpversion.exceptions
-bumpversion.__main__
 bumpversion.cli
-bumpversion.visualize
-bumpversion.aliases
+bumpversion.ui
+bumpversion.scm
+bumpversion.exceptions
+bumpversion.show
 ```
 
 ## Package Contents

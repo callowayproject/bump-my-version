@@ -15,7 +15,7 @@
 :maxdepth: 1
 
 bumpversion.versioning.conventions
-bumpversion.versioning.functions
 bumpversion.versioning.models
 bumpversion.versioning.serialization
+bumpversion.versioning.functions
 ```

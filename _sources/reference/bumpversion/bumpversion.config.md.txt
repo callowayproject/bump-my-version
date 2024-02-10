@@ -14,10 +14,10 @@
 :titlesonly:
 :maxdepth: 1
 
-bumpversion.config.create
-bumpversion.config.utils
-bumpversion.config.files
 bumpversion.config.models
+bumpversion.config.files
+bumpversion.config.utils
+bumpversion.config.create
 bumpversion.config.files_legacy
 ```
 
