@@ -1,4 +1,5 @@
 """Tests for the autocast module."""
+
 import pytest
 from pytest import param
 

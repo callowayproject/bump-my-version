@@ -1,4 +1,5 @@
 """Test the create function in the config module."""
+
 from pathlib import Path
 import pytest
 

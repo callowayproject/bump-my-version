@@ -1,4 +1,5 @@
 """Functions for serializing and deserializing version objects."""
+
 import re
 from copy import copy
 from operator import itemgetter

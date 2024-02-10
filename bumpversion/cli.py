@@ -1,4 +1,5 @@
 """bump-my-version Command line interface."""
+
 from pathlib import Path
 from typing import List, Optional
 

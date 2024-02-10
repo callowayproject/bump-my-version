@@ -1,4 +1,5 @@
 """Tests of the visualize module."""
+
 from pathlib import Path
 
 from bumpversion.visualize import Border, BOX_CHARS, connection_str, lead_string, labeled_line, visualize

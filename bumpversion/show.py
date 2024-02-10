@@ -1,4 +1,5 @@
 """Functions for displaying information about the version."""
+
 import dataclasses
 from io import StringIO
 from pprint import pprint

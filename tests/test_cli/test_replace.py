@@ -1,4 +1,5 @@
 """Tests for `bumpversion` package."""
+
 import shutil
 import traceback
 from pathlib import Path

@@ -1,4 +1,5 @@
 """Tests for the utils module."""
+
 from itertools import combinations
 
 import pytest

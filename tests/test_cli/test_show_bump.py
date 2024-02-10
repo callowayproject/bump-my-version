@@ -1,4 +1,5 @@
 """Tests the show_bump command."""
+
 import shutil
 from pathlib import Path
 
