@@ -1,3 +1,3 @@
 """Top-level package for bump-my-version."""
 
-__version__: str = "0.17.3"
+__version__: str = "0.17.4"

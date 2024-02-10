@@ -207,7 +207,7 @@ order-by-type = true
 convention = "google"
 
 [tool.bumpversion]
-current_version = "0.17.3"
+current_version = "0.17.4"
 commit = true
 commit_args = "--no-verify"
 tag = true

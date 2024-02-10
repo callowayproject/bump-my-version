@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.17.4 (2024-02-10)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.17.3...0.17.4)
+
+### Fixes
+
+- Fixed linting errors. [9515afc](https://github.com/callowayproject/bump-my-version/commit/9515afcde882e3e5a9cdb51cd91d43ef5d711485)
+    
+- Fix encoding when reading text. [c03476a](https://github.com/callowayproject/bump-my-version/commit/c03476ac51b94cd136c39bb9c48fee4f1a815b42)
+    
+  Fixes #68
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [491b4aa](https://github.com/callowayproject/bump-my-version/commit/491b4aa4edc0241edbf5d77cfcf609c6de56f301)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.1.14 → v0.2.0](https://github.com/astral-sh/ruff-pre-commit/compare/v0.1.14...v0.2.0)
+
+
 ## 0.17.3 (2024-01-29)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.17.2...0.17.3)
 
