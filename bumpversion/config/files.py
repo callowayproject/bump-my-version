@@ -39,7 +39,11 @@ def find_config_file(explicit_file: Union[str, Path, None] = None) -> Union[Path
         [Path(explicit_file)] if explicit_file else [Path.cwd().joinpath(path) for path in CONFIG_FILE_SEARCH_ORDER]
     )
     return next(
-        (cfg_file for cfg_file in search_paths if cfg_file.exists() and "bumpversion]" in cfg_file.read_text()),
+        (
+            cfg_file
+            for cfg_file in search_paths
+            if cfg_file.exists() and "bumpversion]" in cfg_file.read_text(encoding="utf-8")
+        ),
         None,
     )
 
@@ -91,7 +95,7 @@ def read_toml_file(file_path: Path) -> Dict[str, Any]:
     import tomlkit
 
     # Load the TOML file
-    toml_data = tomlkit.parse(file_path.read_text()).unwrap()
+    toml_data = tomlkit.parse(file_path.read_text(encoding="utf-8")).unwrap()
 
     return toml_data.get("tool", {}).get("bumpversion", {})
 

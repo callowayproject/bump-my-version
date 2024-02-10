@@ -1,4 +1,5 @@
 """This module handles the legacy config file format."""
+
 from __future__ import annotations
 
 import re
@@ -102,7 +103,7 @@ def update_ini_config_file(
     )
 
     config_path = Path(config_file)
-    existing_config = config_path.read_text()
+    existing_config = config_path.read_text(encoding="utf-8")
     if config_path.suffix == ".cfg" and cfg_current_version_regex.search(existing_config):
         sub_str = f"\\g<section_prefix>{new_version}"
         new_config = cfg_current_version_regex.sub(sub_str, existing_config)

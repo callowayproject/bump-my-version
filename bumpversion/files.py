@@ -1,4 +1,5 @@
 """Methods for changing files."""
+
 import os.path
 import re
 from copy import deepcopy
@@ -331,7 +332,7 @@ class DataFileUpdater:
         """Update a TOML file."""
         import tomlkit
 
-        toml_data = tomlkit.parse(self.path.read_text())
+        toml_data = tomlkit.parse(self.path.read_text(encoding="utf-8"))
         value_before = get_nested_value(toml_data, self.file_change.key_path)
 
         if value_before is None:
