@@ -1,4 +1,5 @@
 """Module for creating a new config file."""
+
 from pathlib import Path
 from typing import Tuple
 
@@ -57,7 +58,7 @@ def get_defaults_from_dest(destination: str) -> Tuple[dict, TOMLDocument]:
 
     config = DEFAULTS.copy()
     if Path(destination).exists():
-        destination_config = parse(Path(destination).read_text())
+        destination_config = parse(Path(destination).read_text(encoding="utf-8"))
     else:
         destination_config = document()
 
