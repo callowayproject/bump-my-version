@@ -89,6 +89,7 @@ class TestListOption:
             "search={current_version}",
             "replace={new_version}",
             "regex=False",
+            "ignore_missing_files=False",
             "ignore_missing_version=False",
             "included_paths=[]",
             "tag=True",
@@ -105,19 +106,19 @@ class TestListOption:
                 "'serialize': ('{major}.{minor}.{patch}-{release}', "
                 "'{major}.{minor}.{patch}'), 'search': '{current_version}', 'replace': "
                 "'{new_version}', 'regex': False, 'ignore_missing_version': False, "
-                "'filename': 'setup.py', 'glob': None, 'key_path': None}, {'parse': "
+                "'ignore_missing_file': False, 'filename': 'setup.py', 'glob': None, 'key_path': None}, {'parse': "
                 "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', "
                 "'serialize': ('{major}.{minor}.{patch}-{release}', "
                 "'{major}.{minor}.{patch}'), 'search': '{current_version}', 'replace': "
                 "'{new_version}', 'regex': False, 'ignore_missing_version': False, "
-                "'filename': 'bumpversion/__init__.py', 'glob': None, 'key_path': None}, "
+                "'ignore_missing_file': False, 'filename': 'bumpversion/__init__.py', 'glob': None, 'key_path': None}, "
                 "{'parse': "
                 "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', "
                 "'serialize': ('{major}.{minor}.{patch}-{release}', "
                 "'{major}.{minor}.{patch}'), 'search': '**unreleased**', 'replace': "
                 "'**unreleased**\\n**v{new_version}**', 'regex': False, "
-                "'ignore_missing_version': False, 'filename': 'CHANGELOG.md', 'glob': None, "
-                "'key_path': None}]"
+                "'ignore_missing_version': False, 'ignore_missing_file': False, 'filename': 'CHANGELOG.md', "
+                "'glob': None, 'key_path': None}]"
             ),
         }
 
@@ -148,6 +149,7 @@ class TestListOption:
             "search={current_version}",
             "replace={new_version}",
             "regex=False",
+            "ignore_missing_files=False",
             "ignore_missing_version=False",
             "included_paths=[]",
             "tag=True",
@@ -164,19 +166,19 @@ class TestListOption:
                 "'serialize': ('{major}.{minor}.{patch}-{release}', "
                 "'{major}.{minor}.{patch}'), 'search': '{current_version}', 'replace': "
                 "'{new_version}', 'regex': False, 'ignore_missing_version': False, "
-                "'filename': 'setup.py', 'glob': None, 'key_path': None}, {'parse': "
+                "'ignore_missing_file': False, 'filename': 'setup.py', 'glob': None, 'key_path': None}, {'parse': "
                 "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', "
                 "'serialize': ('{major}.{minor}.{patch}-{release}', "
                 "'{major}.{minor}.{patch}'), 'search': '{current_version}', 'replace': "
                 "'{new_version}', 'regex': False, 'ignore_missing_version': False, "
-                "'filename': 'bumpversion/__init__.py', 'glob': None, 'key_path': None}, "
+                "'ignore_missing_file': False, 'filename': 'bumpversion/__init__.py', 'glob': None, 'key_path': None}, "
                 "{'parse': "
                 "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', "
                 "'serialize': ('{major}.{minor}.{patch}-{release}', "
                 "'{major}.{minor}.{patch}'), 'search': '**unreleased**', 'replace': "
                 "'**unreleased**\\n**v{new_version}**', 'regex': False, "
-                "'ignore_missing_version': False, 'filename': 'CHANGELOG.md', 'glob': None, "
-                "'key_path': None}]"
+                "'ignore_missing_version': False, 'ignore_missing_file': False, 'filename': 'CHANGELOG.md', "
+                "'glob': None, 'key_path': None}]"
             ),
         }
 

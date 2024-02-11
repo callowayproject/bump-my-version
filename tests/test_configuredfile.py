@@ -21,6 +21,7 @@ class TestConfiguredFile:
                 serialize=("{major}-{minor}-{patch}",),
                 regex=True,
                 ignore_missing_version=False,
+                ignore_missing_file=False,
             )
             version_config = VersionConfig(
                 parse="(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?",
@@ -47,6 +48,7 @@ class TestConfiguredFile:
                 serialize=("{major}-{minor}-{patch}",),
                 regex=True,
                 ignore_missing_version=False,
+                ignore_missing_file=False,
             )
             version_config = VersionConfig(
                 parse="(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?",

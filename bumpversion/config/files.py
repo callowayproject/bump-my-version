@@ -141,6 +141,7 @@ def update_config_file(
         replace=config.replace,
         regex=config.regex,
         ignore_missing_version=True,
+        ignore_missing_file=True,
         serialize=config.serialize,
         parse=config.parse,
     )

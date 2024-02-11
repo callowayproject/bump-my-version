@@ -445,6 +445,12 @@ def show(args: List[str], config_file: Optional[str], format_: str, increment: O
     help="Ignore any Version Not Found errors when searching and replacing in files.",
 )
 @click.option(
+    "--ignore-missing-files",
+    is_flag=True,
+    envvar="BUMPVERSION_IGNORE_MISSING_FILES",
+    help="Ignore any missing files when searching and replacing in files.",
+)
+@click.option(
     "--dry-run",
     "-n",
     is_flag=True,
@@ -465,6 +471,7 @@ def replace(
     regex: bool,
     no_configured_files: bool,
     ignore_missing_version: bool,
+    ignore_missing_files: bool,
     dry_run: bool,
 ) -> None:
     """
@@ -492,6 +499,7 @@ def replace(
         message=None,
         commit_args=None,
         ignore_missing_version=ignore_missing_version,
+        ignore_missing_files=ignore_missing_files,
         regex=regex,
     )
 

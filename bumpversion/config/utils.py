@@ -18,6 +18,7 @@ def get_all_file_configs(config_dict: dict) -> List[FileChange]:
         "search": config_dict["search"],
         "replace": config_dict["replace"],
         "ignore_missing_version": config_dict["ignore_missing_version"],
+        "ignore_missing_file": config_dict["ignore_missing_files"],
         "regex": config_dict["regex"],
     }
     files = [{k: v for k, v in filecfg.items() if v is not None} for filecfg in config_dict["files"]]
