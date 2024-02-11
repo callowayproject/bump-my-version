@@ -2,6 +2,7 @@
 
 import shutil
 import subprocess
+import traceback
 from datetime import datetime
 from pathlib import Path
 
@@ -350,3 +351,41 @@ def test_detects_bad_or_missing_version_part(version_part: str, tmp_path: Path, 
     # Assert
     assert result.exception is not None
     assert "Unknown version part:" in result.stdout
+
+
+def test_ignores_missing_files_with_option(tmp_path, fixtures_path):
+    """The replace subcommand should ignore missing."""
+
+    config_file = tmp_path / ".bumpversion.toml"
+    config_file.write_text(
+        "[tool.bumpversion]\n"
+        'current_version = "0.0.1"\n'
+        "allow_dirty = true\n\n"
+        "[[tool.bumpversion.files]]\n"
+        'filename = "VERSION"\n'
+        "regex = false\n"
+    )
+
+    # Act
+    runner: CliRunner = CliRunner()
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(
+            cli.cli,
+            [
+                "bump",
+                "--verbose",
+                "--no-regex",
+                "--no-configured-files",
+                "--ignore-missing-files",
+                "minor",
+                "VERSION",
+            ],
+        )
+
+    # Assert
+    if result.exit_code != 0:
+        print("Here is the output:")
+        print(result.output)
+        print(traceback.print_exception(result.exc_info[1]))
+
+    assert result.exit_code == 0
