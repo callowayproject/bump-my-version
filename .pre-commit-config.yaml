@@ -23,7 +23,11 @@ repos:
       - id: check-symlinks
       - id: check-toml
       - id: check-yaml
-        exclude: test.*
+        exclude: |
+          (?x)^(
+            test.*|
+            mkdocs.yml
+          )$
         args: [--allow-multiple-documents]
       - id: debug-statements
       - id: end-of-file-fixer

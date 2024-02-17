@@ -15,6 +15,7 @@
 > - Add better configuration validation using [Pydantic](https://docs.pydantic.dev)
 > - Make the code and tests easier to read and maintain
 
+<!--start-->
 
 ## Overview
 
@@ -31,12 +32,6 @@ Bump My Version's purpose is to:
     - Tagging releases
     - Reading version numbers from tags
 
-
-## Future Direction
-
-- Switch having both the version part and files to change as arguments on the command line.
-- Allow for multiple tags, including one that moves for having a `v2` that always points to the latest version of version 2. [For example](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#recommendations)
-
 ## Installation
 
 You can download and install the latest version of this software from the Python package index (PyPI) as follows:
@@ -50,10 +45,6 @@ pip install --upgrade bump-my-version
 Please find the changelog here: [CHANGELOG.md](CHANGELOG.md)
 
 ## Usage for version incrementing
-
-> **NOTE:** 
->
-> Throughout this document, you can use `bumpversion` or `bump-my-version` interchangeably.
 
 There are two modes of operation: On the command line for single-file operation and using a configuration file (`pyproject.toml` or `.bumpversion.toml`) for more complex multi-file operations.
 
@@ -161,3 +152,5 @@ workflow, as it is intended to be very versatile.
 ## License
 
 bump-my-version is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+<!--end-->

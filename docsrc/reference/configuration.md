@@ -29,29 +29,42 @@ The general configuration is grouped in a `[tool.bumpversion]` or  `[bumpversion
 
 ### `allow_dirty`
 
-:required: No
+::: field-list
+    required
+    :   No
+    
+    default
+    :   `False` 
+    
+    type
+    :   boolean
+    
+    command line option
+    :   `--allow-dirty | --no-allow-dirty`
+    
+    environment var
+    :   `BUMPVERSION_ALLOW_DIRTY`
 
-:default: `False` (Don't do anything if there are uncommitted changes)
 
-:type: boolean
-
-:command line option: `--allow-dirty | --no-allow-dirty`
-
-:environment var: `BUMPVERSION_ALLOW_DIRTY`
-
-Bump-my-version's default behavior is to abort if the working directory is dirty. This is to protect you from releasing unversioned files and/or overwriting unsaved changes.
+Bump-my-version's default behavior is to abort if the working directory has uncommitted changes. This is to protect you from releasing unversioned files and/or overwriting unsaved changes.
 
 ### `commit`
 
-:required: No
-
-:default: `False` (Don't create a commit)
-
-:type: boolean
-
-:command line option: `--commit | --no-commit`
-
-:environment var: `BUMPVERSION_COMMIT`
+::: field-list
+    required
+    :   No
+    
+    default
+    :   `False` (Don't create a commit)
+    
+    type
+    :   boolean
+    
+    command line option
+    :   `--commit | --no-commit`
+    
+    environment var
+    :   `BUMPVERSION_COMMIT`
 
 Whether to create a commit using git or Mercurial.
 
@@ -59,15 +72,22 @@ If you have pre-commit hooks, you might also want to add an option to [`commit_a
 
 ### `message`
 
-:required: No
+::: field-list
 
-:default: `Bump version: {current_version} → {new_version}`
-
-:type: string
-
-:command line option: `--message`
-
-:environment var: `BUMPVERSION_MESSAGE`
+    required
+    :   No
+    
+    default
+    :   `Bump version: {current_version} → {new_version}`
+    
+    type
+    :   string
+    
+    command line option
+    :   `--message`
+    
+    environment var
+    :   `BUMPVERSION_MESSAGE`
 
 The commit message template to use when creating a commit. This is only used when the [`commit`](configuration.md#commit) option is set to `True`.
 
@@ -75,15 +95,22 @@ This string is templated using the [Python Format String Syntax](https://docs.py
 
 ### `commit_args`
 
-:required: No
+::: field-list
 
-:default: `""`
+    required
+    : No
 
-:type: string
+    default
+    : `""`
 
-:command line option: `--commit-args`
+    type
+    : string
 
-:environment var: `BUMPVERSION_COMMIT_ARGS`
+    command line option
+    : `--commit-args`
+
+    environment var
+    : `BUMPVERSION_COMMIT_ARGS`
 
 Extra arguments to pass to commit command. This is only used when the [`commit`](configuration.md#commit) option is set to `True`.
 
@@ -91,30 +118,45 @@ If you have pre-commit hooks, you might also want to add an option to disable yo
 
 ### `tag`
 
-:required: No
+::: field-list
 
-:default: `False` (Don't create a tag)
+    required
+    : No
 
-:type: boolean
+    default
+    : `False` (Don't create a tag)
 
-:command line option: `(--tag | --no-tag)`
+    type
+    : boolean
 
-:environment var: `BUMPVERSION_TAG`
+    command line option
+    : `(--tag | --no-tag)`
+
+    environment var
+    : `BUMPVERSION_TAG`
 
 If `True`, create a tag after committing the changes. The tag is named using the [`tag_name`](configuration.md#tag-name) option. 
 
 If you are using `git`, don't forget to `git-push` with the `--tags` flag when you are done.
 
 ### `sign_tags`
-:required: No
 
-:default: `False` (Don't sign tags)
+::: field-list
 
-:type: boolean
-
-:command line option: `(--sign-tags | --no-sign-tags)`
-
-:environment var: `BUMPVERSION_SIGN_TAGS`
+    required
+    : No
+    
+    default
+    : `False` (Don't sign tags)
+    
+    type
+    : boolean
+    
+    command line option
+    : `(--sign-tags | --no-sign-tags)`
+    
+    environment var
+    : `BUMPVERSION_SIGN_TAGS`
 
 If `True`, sign the created tag, when [`tag`](configuration.md#tag) is `True`.
 

@@ -58,15 +58,16 @@ dev = [
     "pre-commit",
 ]
 docs = [
-    "ghp-import",
-    "linkify-it-py",
-    "myst-parser",
-    "furo",
-    "Sphinx>=4.3.0",
-    "sphinx-autodoc2",
-    "sphinx-autodoc-typehints",
-    "sphinx-click",
-    "sphinx-copybutton",
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "mkdocs-include-markdown-plugin",
+    "mkdocs-click",
+    "markdown-customblocks",
+    "mkdocs-git-revision-date-localized-plugin",
+    "mkdocs-git-authors-plugin",
+    "mkdocs-git-committers-plugin",
+    "mdx-truly-sane-lists",
 ]
 test = [
     "coverage",

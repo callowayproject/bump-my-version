@@ -1,0 +1,71 @@
+site_name: Bump My Version
+repo_url: https://github.com/callowayproject/bump-my-version
+edit_uri: edit/master/docs/
+copyright: Calloway Project
+docs_dir: docsrc
+theme:
+  name: material
+  logo: _static/bump-my-version-logo.svg
+  favicon: _static/favicon.png
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.path
+    - navigation.indexes
+    - toc.integrate
+    - content.action.edit
+    - content.action.view
+    - content.code.annotate
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+use_directory_urls: false
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - customblocks
+  - footnotes
+  - md_in_html
+  - mdx_truly_sane_lists
+  - mkdocs-click
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight
+  - pymdownx.snippets
+  - pymdownx.tabbed
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - tables
+
+plugins:
+  - search
+  - git-revision-date-localized
+  - git-authors:
+      show_email_address: false
+  - include-markdown
+
+extra_javascript:
+  - "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"
+
+extra_css:
+  - _static/css/custom.css
+
+#nav:
+#  - General: "general/"
+#  - Provisioning LLMs for Applications: "provisioning-llms/"
+#  - Tutorials: "tutorials/"
+#  - Security & Privacy: "security-and-privacy/"
+#  - Guilds: "guilds/"
