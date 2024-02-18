@@ -231,9 +231,6 @@ values = ["release", "post"]
 filename = "bumpversion/__init__.py"
 
 [[tool.bumpversion.files]]
-filename = "docsrc/reference/bumpversion/bumpversion.md"
-
-[[tool.bumpversion.files]]
 filename = "CHANGELOG.md"
 search = "Unreleased"
 

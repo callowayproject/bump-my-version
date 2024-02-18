@@ -111,7 +111,7 @@ class ConfiguredFile:
             The contents of the file
         """
         if not os.path.exists(self.file_change.filename):
-            raise FileNotFoundError(f"File not found: '{self.file_change.filename}'")
+            raise FileNotFoundError(f"File not found: '{self.file_change.filename}'")  # pragma: no-coverage
 
         with open(self.file_change.filename, "rt", encoding="utf-8") as f:
             contents = f.read()
