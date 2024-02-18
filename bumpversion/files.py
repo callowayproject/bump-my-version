@@ -182,7 +182,7 @@ class ConfiguredFile:
                 logger.info("File not found, but ignoring")
                 logger.dedent()
                 return
-            raise FileNotFoundError(f"File not found: '{self.file_change.filename}'")
+            raise FileNotFoundError(f"File not found: '{self.file_change.filename}'")  # pragma: no-coverage
         logger.debug("Serializing the current version")
         logger.indent()
         context["current_version"] = self.version_config.serialize(current_version, context)
