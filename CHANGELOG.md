@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.18.0 (2024-02-18)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.17.4...0.18.0)
+
+### New
+
+- Added `--ignore-missing-files` option to bump. [fcfaac7](https://github.com/callowayproject/bump-my-version/commit/fcfaac707a79533814008effabd4a05aafc04c57)
+    
+- Added configuration option `ignore_missing_files`. [b473a19](https://github.com/callowayproject/bump-my-version/commit/b473a195cd16c6dc8bc49d9574feb948fb0408f8)
+    
+### Other
+
+- Convert docs to MkDocs. [f805c33](https://github.com/callowayproject/bump-my-version/commit/f805c33fb3e5c7064a84761659fc5d43a0de2975)
+    
+- Converted documentation to use MkDocs. [1b8c6b3](https://github.com/callowayproject/bump-my-version/commit/1b8c6b3b61904998ec8bb055b65235c3d3b2b96f)
+    
+
 ## 0.17.4 (2024-02-10)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.17.3...0.17.4)
 
