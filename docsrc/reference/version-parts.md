@@ -1,7 +1,7 @@
 # Version parts
 
 - The version string is the rendering of some or all version parts.
-- While the version string may be rendered differently in various places, the value for all parts is maintained in bump-my-version's configuration.
+- While the version string may be rendered differently in various places, the value for all parts is maintained in Bump My Version's configuration.
 - The version parts are typically dependent on each other. Incrementing one part might change other elements.
 - You can compare two version strings (of the same project) and know which is more recent.
 
@@ -25,7 +25,7 @@ serialize = [
 ]
 ```
 
-Bump-my-version will serialize using the first format if the `patch` value is not `0`. If the `patch` value *is* `0`, bump-my-version will use the second format.
+Bump-my-version will serialize using the first format if the `patch` value is not `0`. If the `patch` value *is* `0`, Bump My Version will use the second format.
 
 ## Version part configuration
 

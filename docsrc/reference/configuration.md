@@ -1,6 +1,6 @@
 # Configuration
 
-`bump-my-version` looks in three places for configuration information (in order of precedence):
+Bump My Version looks in three places for configuration information (in order of precedence):
 
 1. command line
 2. configuration file
@@ -9,7 +9,7 @@
 
 ## Configuration files
 
-`bump-my-version` looks in four places for the configuration file to parse (in order of precedence):
+Bump My Version looks in four places for the configuration file to parse (in order of precedence):
 
 1. `--config-file <FILE>` _(command line argument)_
 2. `BUMPVERSION_CONFIG_FILE=file` _(environment variable)_
@@ -29,166 +29,213 @@ The general configuration is grouped in a `[tool.bumpversion]` or  `[bumpversion
 
 ### `allow_dirty`
 
-:required: No
+::: field-list
+    required
+    :   No
+    
+    default
+    :   `False` 
+    
+    type
+    :   boolean
+    
+    command line option
+    :   `--allow-dirty | --no-allow-dirty`
+    
+    environment var
+    :   `BUMPVERSION_ALLOW_DIRTY`
 
-:default: `False` (Don't do anything if there are uncommitted changes)
 
-:type: boolean
-
-:command line option: `--allow-dirty | --no-allow-dirty`
-
-:environment var: `BUMPVERSION_ALLOW_DIRTY`
-
-Bump-my-version's default behavior is to abort if the working directory is dirty. This is to protect you from releasing unversioned files and/or overwriting unsaved changes.
+Bump-my-version's default behavior is to abort if the working directory has uncommitted changes. This is to protect you from releasing unversioned files and/or overwriting unsaved changes.
 
 ### `commit`
 
-:required: No
-
-:default: `False` (Don't create a commit)
-
-:type: boolean
-
-:command line option: `--commit | --no-commit`
-
-:environment var: `BUMPVERSION_COMMIT`
+::: field-list
+    required
+    :   No
+    
+    default
+    :   `False` (Don't create a commit)
+    
+    type
+    :   boolean
+    
+    command line option
+    :   `--commit | --no-commit`
+    
+    environment var
+    :   `BUMPVERSION_COMMIT`
 
 Whether to create a commit using git or Mercurial.
 
 If you have pre-commit hooks, you might also want to add an option to [`commit_args`](configuration.md#commit-args) to disable your pre-commit hooks. For Git use `--no-verify` and use `--config hooks.pre-commit=` for Mercurial.
 
-### `message`
-
-:required: No
-
-:default: `Bump version: {current_version} → {new_version}`
-
-:type: string
-
-:command line option: `--message`
-
-:environment var: `BUMPVERSION_MESSAGE`
-
-The commit message template to use when creating a commit. This is only used when the [`commit`](configuration.md#commit) option is set to `True`.
-
-This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](formatting-context.md) describes the available variables.
-
 ### `commit_args`
 
-:required: No
+::: field-list
 
-:default: `""`
+    required
+    : No
 
-:type: string
+    default
+    : `""`
 
-:command line option: `--commit-args`
+    type
+    : string
 
-:environment var: `BUMPVERSION_COMMIT_ARGS`
+    command line option
+    : `--commit-args`
+
+    environment var
+    : `BUMPVERSION_COMMIT_ARGS`
 
 Extra arguments to pass to commit command. This is only used when the [`commit`](configuration.md#commit) option is set to `True`.
 
 If you have pre-commit hooks, you might also want to add an option to disable your pre-commit hooks. For Git use `--no-verify` and use `--config hooks.pre-commit=` for Mercurial.
 
-### `tag`
-
-:required: No
-
-:default: `False` (Don't create a tag)
-
-:type: boolean
-
-:command line option: `(--tag | --no-tag)`
-
-:environment var: `BUMPVERSION_TAG`
-
-If `True`, create a tag after committing the changes. The tag is named using the [`tag_name`](configuration.md#tag-name) option. 
-
-If you are using `git`, don't forget to `git-push` with the `--tags` flag when you are done.
-
-### `sign_tags`
-:required: No
-
-:default: `False` (Don't sign tags)
-
-:type: boolean
-
-:command line option: `(--sign-tags | --no-sign-tags)`
-
-:environment var: `BUMPVERSION_SIGN_TAGS`
-
-If `True`, sign the created tag, when [`tag`](configuration.md#tag) is `True`.
-
-### `tag_name`
-:required: No
-
-:default: `v{new_version}`
-
-:type: string
-
-:command line option: `--tag-name`
-
-:environment var: `BUMPVERSION_TAG_NAME`
-
-The name template used to render the tag, when [`tag`](configuration.md#tag) is `True`.
-
-This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](formatting-context.md) describes the available variables.
-
-### `tag_message`
-:required: No
-
-:default: `Bump version: {current_version} → {new_version}`
-
-:type: string
-
-:command line option: `--tag-message`
-
-:environment var: `BUMPVERSION_TAG_MESSAGE`
-
-The tag message template to use when creating a tag, when [`tag`](configuration.md#tag) is `True`
-
-This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](formatting-context.md) describes the available variables.
-
-`bump-my-version` creates an *annotated* tag in Git by default. To disable this and create a *lightweight* tag, you must explicitly set an empty `tag_message` value.
-
 ### `current_version`
 
-:required: **Yes**
+::: field-list
 
-:default: `""`
+    required
+    : **Yes**
 
-:type: string
+    default
+    : `""`
 
-:command line option: `--current-version`
+    type
+    : string
 
-:environment var: `BUMPVERSION_CURRENT_VERSION`
+    command line option
+    : `--current-version`
+
+    environment var
+    : `BUMPVERSION_CURRENT_VERSION`
 
 The current version of the software package before bumping. A value for this is required.
 
+### `ignore_missing_version`
+
+::: field-list
+    required
+    : No
+    
+    default
+    : `False`
+    
+    type
+    : boolean
+    
+    command line option
+    : `--ignore-missing-version`
+    
+    environment var
+    : `BUMPVERSION_IGNORE_MISSING_VERSION`
+
+If `True`, don't fail if the version string to be replaced is not found in the file.
+
+### `message`
+
+::: field-list
+
+    required
+    :   No
+    
+    default
+    :   `Bump version: {current_version} → {new_version}`
+    
+    type
+    :   string
+    
+    command line option
+    :   `--message`
+    
+    environment var
+    :   `BUMPVERSION_MESSAGE`
+
+The commit message template to use when creating a commit. This is only used when the [`commit`](configuration.md#commit) option is set to `True`.
+
+This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](formatting-context.md) describes the available variables.
+
 ### `parse`
-:required: No
-
-:default: `(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)`
-
-:type: string
-
-:command line option: `--parse`
-
-:environment var: `BUMPVERSION_PARSE`
+::: field-list
+    required
+    : No
+    
+    default
+    : `(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)`
+    
+    type
+    : string
+    
+    command line option
+    : `--parse`
+    
+    environment var
+    : `BUMPVERSION_PARSE`
 
 This is the default regular expression (using [Python regular expression syntax](https://docs.python.org/3/library/re.html#regular-expression-syntax)) for finding and parsing the version string into its components. Individual part or file configurations may override this.
 
 The regular expression must be able to parse all strings produced by the configured [`serialize`](configuration.md#serialize) value. Named matching groups ("`(?P<name>...)`") indicate the version part the matched value belongs to.
 
+### `replace`
+::: field-list
+    required
+    : No
+    
+    default
+    : `{new_version}`
+    
+    type
+    : string
+    
+    command line option
+    : `--replace`
+    
+    environment var
+    : `BUMPVERSION_REPLACE`
+
+This is the template to create the string that will replace the current version number in the file.
+
+### `search`
+
+::: field-list
+    required
+    : No
+    
+    default
+    : `{current_version}`
+    
+    type
+    : string
+    
+    command line option
+    : `--search`
+    
+    environment var
+    : `BUMPVERSION_SEARCH`
+
+This is the template string how to search for the string to be replaced in the file. Individual file configurations may override this. This can span multiple lines, and is templated using [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](formatting-context.md) describes the available variables.
+
+This is useful if there is the remotest possibility that the current version number might be present multiple times in the file and you mean to only bump one of the occurrences. 
+
 ### `serialize`
-:required: No
 
-:default: `["{major}.{minor}.{patch}"]`
-
-:type: an array of strings
-
-:command line option: `--serialize`
-
-:environment var: `BUMPVERSION_SERIALIZE`
+::: field-list
+    required
+    : No
+    
+    default
+    : `["{major}.{minor}.{patch}"]`
+    
+    type
+    : an array of strings
+    
+    command line option
+    : `--serialize`
+    
+    environment var
+    : `BUMPVERSION_SERIALIZE`
 
 This is the default list of templates specifying how to serialize the version parts back to a version string. Individual part or file configurations may override this.
 
@@ -208,87 +255,139 @@ Since `0` is optional by default, Version `1.8.9` will serialize to  `1.8.9`, `1
 
 Each string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](formatting-context.md) describes the available variables.
 
-### `search`
-:required: No
+### `sign_tags`
 
-:default: `{current_version}`
+::: field-list
 
-:type: string
+    required
+    : No
+    
+    default
+    : `False` (Don't sign tags)
+    
+    type
+    : boolean
+    
+    command line option
+    : `(--sign-tags | --no-sign-tags)`
+    
+    environment var
+    : `BUMPVERSION_SIGN_TAGS`
 
-:command line option: `--search`
+If `True`, sign the created tag, when [`tag`](configuration.md#tag) is `True`.
 
-:environment var: `BUMPVERSION_SEARCH`
+### `tag`
 
-This is the template string how to search for the string to be replaced in the file. Individual file configurations may override this. This can span multiple lines, and is templated using [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](formatting-context.md) describes the available variables.
+::: field-list
 
-This is useful if there is the remotest possibility that the current version number might be present multiple times in the file and you mean to only bump one of the occurrences. 
+    required
+    : No
 
-### `replace`
-:required: No
+    default
+    : `False` (Don't create a tag)
 
-:default: `{new_version}`
+    type
+    : boolean
 
-:type: string
+    command line option
+    : `(--tag | --no-tag)`
 
-:command line option: `--replace`
+    environment var
+    : `BUMPVERSION_TAG`
 
-:environment var: `BUMPVERSION_REPLACE`
+If `True`, create a tag after committing the changes. The tag is named using the [`tag_name`](configuration.md#tag-name) option. 
 
-This is the template to create the string that will replace the current version number in the file.
+If you are using `git`, don't forget to `git-push` with the `--tags` flag when you are done.
 
-### `ignore_missing_version`
-:required: No
+### `tag_name`
 
-:default: `False`
+::: field-list
 
-:type: boolean
+    required
+    : No
 
-:command line option: `--ignore-missing-version`
+    default
+    : `v{new_version}`
 
-:environment var: `BUMPVERSION_IGNORE_MISSING_VERSION`
+    type
+    : string
 
-If `True`, don't fail if the version string to be replaced is not found in the file.
+    command line option
+    : `--tag-name`
 
-### TOML example
+    environment var
+    : `BUMPVERSION_TAG_NAME`
 
-```toml
-[tool.bumpversion]
-allow_dirty = false
-commit = false
-message = "Bump version: {current_version} → {new_version}"
-commit_args = ""
-tag = false
-sign_tags = false
-tag_name = "v{new_version}"
-tag_message = "Bump version: {current_version} → {new_version}"
-current_version = "1.0.0"
-parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
-serialize = [
-    "{major}.{minor}.{patch}"
-]
-search = "{current_version}"
-replace = "{new_version}"
-```
+The name template used to render the tag, when [`tag`](configuration.md#tag) is `True`.
 
-### INI-style example
+This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](formatting-context.md) describes the available variables.
 
-```ini
-[bumpversion]
-allow_dirty = False
-commit = False
-message = Bump version: {current_version} → {new_version}
-commit_args = 
-tag = False
-sign_tags = False
-tag_name = v{new_version}
-tag_message = Bump version: {current_version} → {new_version}
-current_version = 1.0.0
-parse = (?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)
-serialize =
-	{major}.{minor}.{patch}
-search = {current_version}
-replace = {new_version}
-```
+### `tag_message`
+
+::: field-list
+    required
+    : No
+    
+    default
+    : `Bump version: {current_version} → {new_version}`
+    
+    type
+    : string
+    
+    command line option
+    : `--tag-message`
+    
+    environment var
+    : `BUMPVERSION_TAG_MESSAGE`
+
+The tag message template to use when creating a tag, when [`tag`](configuration.md#tag) is `True`
+
+This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](formatting-context.md) describes the available variables.
+
+Bump My Version creates an *annotated* tag in Git by default. To disable this and create a *lightweight* tag, you must explicitly set an empty `tag_message` value.
+
+### Examples
+
+=== "TOML"
+
+    ```toml
+    [tool.bumpversion]
+    allow_dirty = false
+    commit = false
+    message = "Bump version: {current_version} → {new_version}"
+    commit_args = ""
+    tag = false
+    sign_tags = false
+    tag_name = "v{new_version}"
+    tag_message = "Bump version: {current_version} → {new_version}"
+    current_version = "1.0.0"
+    parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
+    serialize = [
+        "{major}.{minor}.{patch}"
+    ]
+    search = "{current_version}"
+    replace = "{new_version}"
+    ```
+
+=== "CFG"
+
+    ```ini
+    [bumpversion]
+    allow_dirty = False
+    commit = False
+    message = Bump version: {current_version} → {new_version}
+    commit_args = 
+    tag = False
+    sign_tags = False
+    tag_name = v{new_version}
+    tag_message = Bump version: {current_version} → {new_version}
+    current_version = 1.0.0
+    parse = (?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)
+    serialize =
+        {major}.{minor}.{patch}
+    search = {current_version}
+    replace = {new_version}
+    ```
 
 ## Version part-specific configuration
 
@@ -298,161 +397,211 @@ You only need to configure version parts if they deviate from the default, and t
 
 ### `values`
 
-:required: No
+::: field-list
+    required
+    : No
+    
+    default
+    : numeric (i.e. `0`, `1`, `2`, …)
+    
+    type
+    : array of strings
 
-:default: numeric (i.e. `0`, `1`, `2`, …)
-
-:type: an array of strings. An empty array is treated as indicating `numeric` values.
-
-An explicit list of all values to iterate through when bumping this part.
+An explicit list of all values to iterate through when bumping this part. An empty array is treated as indicating `numeric` values.
 
 ### `optional_value`
-:required: No
 
-:default: The first entry in `values`, `0` when using numeric values
-
-:type: string
+::: field-list
+    required
+    : No
+    
+    default
+    : The first entry in `values`, `0` when using numeric values
+    
+    type
+    : string
 
 When the version part matches this value it is considered optional when serializing the final version string.
 
-:::{note}
+!!! note
 
-Numeric values are still treated as strings internally, so when specifying an optional value, you must use a string.
+    Numeric values are still treated as strings internally, so when specifying an optional value, you must use a string.
 
-:::
 
 ### `first_value`
-:required: No
 
-:default: The first entry in `values`, `0` when using numeric values
+::: field-list
+    required
+    : No
 
-:type: string
+    default
+    : The first entry in `values`, `0` when using numeric values
+
+    type
+    : string
 
 When the part is reset, the value will be set to the value specified here.
 
-:::{note}
+!!! note
 
-Numeric values are still treated as strings internally, so when specifying a first value, you must use a string.
-
-:::
+    Numeric values are still treated as strings internally, so when specifying a first value, you must use a string.
 
 
 ### `independent`
-:required: No
 
-:default: `False`
-
-:type: boolean
+::: field-list
+    required
+    : No
+    
+    default
+    : `False`
+    
+    type
+    : boolean
 
 When this value is set to `True`, the part is not reset when other parts are incremented. Its incrementation is
 independent of the other parts. It is useful when you have a build number in your version that is incremented independently of the actual version.
 
-### TOML example
+### Examples
 
-```toml
-[tool.bumpversion.parts.release]
-values = [
-    "alpha",
-    "beta",
-    "gamma"
-]
-optional_value = "gamma"
-```
+=== "TOML"
 
-### INI-style example
+    ```toml
+    [tool.bumpversion.parts.release]
+    values = [
+        "alpha",
+        "beta",
+        "gamma"
+    ]
+    optional_value = "gamma"
+    ```
 
-```ini
-[bumpversion:part:release]
-optional_value = gamma
-values =
-	alpha
-	beta
-	gamma
-```
+=== "CFG"
+
+    ```ini
+    [bumpversion:part:release]
+    optional_value = gamma
+    values =
+        alpha
+        beta
+        gamma
+    ```
 
 
 ## File-specific configuration
 
-This section configures which files bump-my-version should update by replacing their current version with the newly bumped version.
+This section configures which files Bump My Version should update by replacing their current version with the newly bumped version.
 
 ### `filename`
 
-:required: **Yes‡**
-
-:default: empty
-
-:type: string
+::: field-list
+    required
+    : **Yes‡**
+    
+    default
+    : empty
+    
+    type
+    : string
 
 The name of the file to modify.
 
-:::{Note}
+!!! note
 
-‡ This is only used with TOML configuration, and is only required if [`glob`](#glob) is _not_ specified. INI-style configuration files specify the file name as part of the grouping.
+    ‡ This is only used with TOML configuration, and is only required if [`glob`](#glob) is _not_ specified. INI-style configuration files specify the file name as part of the grouping.
 
-:::
 
 ### `glob`
 
-:required: **Yes‡**
-
-:default: empty
-
-:type: string
+::: field-list
+    required
+    : **Yes‡**
+    
+    default
+    : empty
+    
+    type
+    : string
 
 The glob pattern specifying the files to modify.
 
-:::{Note}
+!!! note
 
-‡ This is only used with TOML configuration, and is only required if [`filename`](#filename) is _not_ specified. INI-style configuration files specify the glob pattern as part of the grouping.
+    ‡ This is only used with TOML configuration, and is only required if [`filename`](#filename) is _not_ specified. INI-style configuration files specify the glob pattern as part of the grouping.
 
-:::
 
 ### `parse`
 
-:required: No
+::: field-list
 
-:default: the value configured in the global `parse` field
-
-:type: string
+    required
+    : No
+    
+    default
+    : the value configured in the global `parse` field
+    
+    type
+    : string
 
 This is an override to the default pattern to parse the version number from this file.
 
 ### `serialize`
 
-:required: No
+::: field-list
 
-:default: The value configured in the global `serialize` field
-
-:type: an array of strings
+    required
+    : No
+    
+    default
+    : the value configured in the global `serialize` field
+    
+    type
+    : an array of strings
 
 This is an override to the default templates to serialize the new version number in this file.
 
 ### `search`
 
-:required: No
+::: field-list
 
-:default: The value configured in the global `search` field
-
-:type: string
+    required
+    : No
+    
+    default
+    : the value configured in the global `search` field
+    
+    type
+    : string
 
 This is an override to the default template string how to search for the string to be replaced in the file.
 
 ### `replace`
 
-:required: No
+::: field-list
 
-:default: The value configured in the global `replace` field
-
-:type: string
+    required
+    : No
+    
+    default
+    : the value configured in the global `replace` field
+    
+    type
+    : string
 
 This is an override to the template to create the string that will replace the current version number in the file.
 
 ### `ignore_missing_version`
-:required: No
 
-:default: The value configured in the global `ignore_missing_version` field
+::: field-list
 
-:type: boolean
+    required
+    : No
+    
+    default
+    : The value configured in the global `ignore_missing_version` field
+    
+    type
+    : boolean
 
 If `True`, don't fail if the version string to be replaced is not found in the file.
 
@@ -462,11 +611,10 @@ INI-style configuration is in the section: `[bumpversion:file:<filename>]` or `[
 
 Both, `file:` and `glob:` are configured the same. Their difference is that file will match file names directly like `requirements.txt`. While glob also matches multiple files via wildcards like `**/pom.xml`.
 
-:::{note}
+!!! note
 
-The configuration file format requires each section header to be unique. If you want to process a certain file multiple times, you may append a description between parens to the `file` keyword: `[bumpversion:file (special one):…]`.
+    The configuration file format requires each section header to be unique. If you want to process a certain file multiple times, you may append a description between parens to the `file` keyword: `[bumpversion:file (special one):…]`.
 
-:::
 
 For example, to change `coolapp/__init__.py` with the defaults, and alter `CHANGELOG.md` in twice:
 

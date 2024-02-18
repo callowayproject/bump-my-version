@@ -86,6 +86,7 @@ class ConfiguredFile:
             replace=replacement,
             regex=file_change.regex or False,
             ignore_missing_version=file_change.ignore_missing_version or False,
+            ignore_missing_file=file_change.ignore_missing_file or False,
             filename=file_change.filename,
             glob=file_change.glob,
             key_path=file_change.key_path,
@@ -110,7 +111,7 @@ class ConfiguredFile:
             The contents of the file
         """
         if not os.path.exists(self.file_change.filename):
-            raise FileNotFoundError(f"File not found: '{self.file_change.filename}'")
+            raise FileNotFoundError(f"File not found: '{self.file_change.filename}'")  # pragma: no-coverage
 
         with open(self.file_change.filename, "rt", encoding="utf-8") as f:
             contents = f.read()
@@ -176,6 +177,12 @@ class ConfiguredFile:
             self.file_change.replace,
         )
         logger.indent()
+        if not os.path.exists(self.file_change.filename):
+            if self.file_change.ignore_missing_file:
+                logger.info("File not found, but ignoring")
+                logger.dedent()
+                return
+            raise FileNotFoundError(f"File not found: '{self.file_change.filename}'")  # pragma: no-coverage
         logger.debug("Serializing the current version")
         logger.indent()
         context["current_version"] = self.version_config.serialize(current_version, context)
@@ -273,6 +280,7 @@ class FileUpdater:
             search=search or file_change.search or version_config.search,
             replace=replace or file_change.replace or version_config.replace,
             regex=file_change.regex or False,
+            ignore_missing_file=file_change.ignore_missing_file or False,
             ignore_missing_version=file_change.ignore_missing_version or False,
             filename=file_change.filename,
             glob=file_change.glob,

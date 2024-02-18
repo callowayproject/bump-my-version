@@ -30,6 +30,7 @@ class FileChange(BaseModel):
     replace: str
     regex: bool
     ignore_missing_version: bool
+    ignore_missing_file: bool
     filename: Optional[str] = None
     glob: Optional[str] = None  # Conflicts with filename. If both are specified, glob wins
     key_path: Optional[str] = None  # If specified, and has an appropriate extension, will be treated as a data file
@@ -84,6 +85,7 @@ class Config(BaseSettings):
     replace: str
     regex: bool
     ignore_missing_version: bool
+    ignore_missing_files: bool
     tag: bool
     sign_tags: bool
     tag_name: str
@@ -116,6 +118,7 @@ class Config(BaseSettings):
                     replace=self.replace,
                     regex=self.regex,
                     ignore_missing_version=self.ignore_missing_version,
+                    ignore_missing_file=self.ignore_missing_files,
                 )
             )
         self.files = list(files)

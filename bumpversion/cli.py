@@ -54,6 +54,7 @@ click.rich_click.OPTION_GROUPS = {
                 "--search",
                 "--replace",
                 "--no-configured-files",
+                "--ignore-missing-files",
                 "--ignore-missing-version",
             ],
         },
@@ -161,6 +162,12 @@ click.rich_click.OPTION_GROUPS = {
     ),
 )
 @click.option(
+    "--ignore-missing-files",
+    is_flag=True,
+    envvar="BUMPVERSION_IGNORE_MISSING_FILES",
+    help="Ignore any missing files when searching and replacing in files.",
+)
+@click.option(
     "--ignore-missing-version",
     is_flag=True,
     envvar="BUMPVERSION_IGNORE_MISSING_VERSION",
@@ -240,6 +247,7 @@ def bump(
     replace: Optional[str],
     regex: Optional[bool],
     no_configured_files: bool,
+    ignore_missing_files: bool,
     ignore_missing_version: bool,
     dry_run: bool,
     commit: Optional[bool],
@@ -256,7 +264,7 @@ def bump(
 
     ARGS may contain any of the following:
 
-    VERSION_PART is the part of the version to increase, e.g. `minor` .
+    VERSION_PART is the part of the version to increase, e.g. `minor`.
     Valid values include those given in the `--serialize` / `--parse` option.
 
     FILES are additional file(s) to modify.
@@ -281,6 +289,7 @@ def bump(
         tag_message=tag_message,
         message=message,
         commit_args=commit_args,
+        ignore_missing_files=ignore_missing_files,
         ignore_missing_version=ignore_missing_version,
         regex=regex,
     )
@@ -445,6 +454,12 @@ def show(args: List[str], config_file: Optional[str], format_: str, increment: O
     help="Ignore any Version Not Found errors when searching and replacing in files.",
 )
 @click.option(
+    "--ignore-missing-files",
+    is_flag=True,
+    envvar="BUMPVERSION_IGNORE_MISSING_FILES",
+    help="Ignore any missing files when searching and replacing in files.",
+)
+@click.option(
     "--dry-run",
     "-n",
     is_flag=True,
@@ -465,6 +480,7 @@ def replace(
     regex: bool,
     no_configured_files: bool,
     ignore_missing_version: bool,
+    ignore_missing_files: bool,
     dry_run: bool,
 ) -> None:
     """
@@ -492,6 +508,7 @@ def replace(
         message=None,
         commit_args=None,
         ignore_missing_version=ignore_missing_version,
+        ignore_missing_files=ignore_missing_files,
         regex=regex,
     )
 

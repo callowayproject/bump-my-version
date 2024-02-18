@@ -479,6 +479,7 @@ class TestDataFileUpdater:
             replace=conf.replace,
             regex=conf.regex,
             ignore_missing_version=conf.ignore_missing_version,
+            ignore_missing_file=conf.ignore_missing_files,
             serialize=conf.serialize,
             parse=conf.parse,
         )
@@ -510,6 +511,7 @@ class TestDataFileUpdater:
             replace=conf.replace,
             regex=conf.regex,
             ignore_missing_version=conf.ignore_missing_version,
+            ignore_missing_file=conf.ignore_missing_files,
             serialize=conf.serialize,
             parse=conf.parse,
         )

@@ -1,6 +1,6 @@
 # Avoiding incorrect replacements
 
-In files that have multiple version strings, bump-my-version may find the wrong string and replace it. Given this `requirements.txt` for `MyProject`:
+In files that have multiple version strings, Bump My Version may find the wrong string and replace it. Given this `requirements.txt` for `MyProject`:
 
 ```text
 Django>=1.5.6,<1.6

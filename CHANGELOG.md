@@ -10,6 +10,7 @@
 - Fix encoding when reading text. [c03476a](https://github.com/callowayproject/bump-my-version/commit/c03476ac51b94cd136c39bb9c48fee4f1a815b42)
     
   Fixes #68
+
 ### Other
 
 - [pre-commit.ci] pre-commit autoupdate. [491b4aa](https://github.com/callowayproject/bump-my-version/commit/491b4aa4edc0241edbf5d77cfcf609c6de56f301)
@@ -25,6 +26,7 @@
 - Refactored VersionComponentConfig to VersionComponentSpec. [b538308](https://github.com/callowayproject/bump-my-version/commit/b53830826c81446576b3979080b05930d71c34e2)
     
   More consistent with VersionSpec
+
 ### New
 
 - Added mental model documentation. [5cbd250](https://github.com/callowayproject/bump-my-version/commit/5cbd250ab412f0f56af14a0fcc450cb31643e3e4)
@@ -97,6 +99,7 @@
 - Refactored the create subcommand. [f529d28](https://github.com/callowayproject/bump-my-version/commit/f529d283fb3a32eddee9daf368f9ce17ba5efcf1)
     
   - Also organized the CLI tests
+
 ### New
 
 - Added `show-bump` subcommand. [0bbd814](https://github.com/callowayproject/bump-my-version/commit/0bbd81489ea0484962e9b3c207e6c6860cab6c55)
@@ -105,6 +108,7 @@
 - Added sample-config feature. [3d0f67d](https://github.com/callowayproject/bump-my-version/commit/3d0f67dbf9f42ffad1583e1fe08bd0971262257c)
     
   - Initial implementation
+
 ### Updates
 
 - Updated documentation. [4f90348](https://github.com/callowayproject/bump-my-version/commit/4f903486338af31557c3647fc0ae00d7cc8e4213)
@@ -122,6 +126,7 @@
   - Removed dotted-notation from requirements. There is an issue on how dotted-notation sets values in the TOMLkit data structure.
 
   - Added `get_nested_value` and `set_nested_value` as replacements for dotted-notation.
+
 ### Other
 
 - [pre-commit.ci] pre-commit autoupdate. [ee4d2f3](https://github.com/callowayproject/bump-my-version/commit/ee4d2f32af28c650651b9242c09e3b125e0101e2)
@@ -184,6 +189,7 @@
 - Fixed regression in config update. [2bbbd74](https://github.com/callowayproject/bump-my-version/commit/2bbbd74fe4b80895b3719692d1fe0023cc388bbb)
     
   Fixes #108
+
 ### New
 
 - Added a test case for line-start regexes. [ef4823c](https://github.com/callowayproject/bump-my-version/commit/ef4823c0cdb92660439095aacdbac6801953e4ae)
@@ -297,6 +303,7 @@
 - Added key_path to FileConfig. [e160b40](https://github.com/callowayproject/bump-my-version/commit/e160b401b0d14cef77255bbd87748721db4e2e3d)
     
   - Also made all attributes required except `filename`, `glob`, and `key_path`
+
 ### Other
 
 - [pre-commit.ci] auto fixes from pre-commit.com hooks. [8188a42](https://github.com/callowayproject/bump-my-version/commit/8188a42d1e25efab1f45499b448f2c007738cbbe)
@@ -343,6 +350,7 @@
 - Add -h for help option. [fda71b0](https://github.com/callowayproject/bump-my-version/commit/fda71b0fce4115514fa85cf1d627e5f3673dba66)
     
   Fixes #67
+
 ### Other
 
 - Drop Python3.7 as compatible version. [890edc8](https://github.com/callowayproject/bump-my-version/commit/890edc8a0c0911ad3696a9bc0ddca7a9a72c5afd)
@@ -373,6 +381,7 @@
 
   - Changed the flags to --regex/--no-regex
   - updated tests and docs
+
 ## 0.11.0 (2023-09-26)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.10.0...0.11.0)
 
@@ -516,6 +525,7 @@
   - The `--search` and `--replace` options now completely override any other search and replace logic.
 
   Fixes #34
+
 ### Other
 
 - [pre-commit.ci] pre-commit autoupdate. [531738d](https://github.com/callowayproject/bump-my-version/commit/531738d62d3a2583c7831d17151cb8ae7b14677c)
@@ -540,6 +550,7 @@
     
   - Declared SourceCodeManager attributes as `ClassVar[List[str]]`
   - `_TEST_USABLE_COMMAND`, `_COMMIT_COMMAND`, and `_ALL_TAGS_COMMAND` affected
+
 ### New
 
 - Added tests for CLI replace command. [a53cddc](https://github.com/callowayproject/bump-my-version/commit/a53cddc3c13bb21f5432d1cd331a51027a25981f)
@@ -559,6 +570,7 @@
   - `short_branch_name` is the branch name, lower case, containing only a-z and 0-9, and truncated to 20 characters.
 
   Fixes #28
+
 ### Other
 
 - Check config before tagging. [3a6e3ee](https://github.com/callowayproject/bump-my-version/commit/3a6e3eebdbc16ae509754fd977625a4c9b19d82a)
@@ -586,6 +598,7 @@
     
   - `tomlkit.parse()` returns a `TOMLDocument`.
   - `unwrap()` converts it into a `dict`
+
 ### New
 
 - Adds `branch_name` to SCM information. [173be1a](https://github.com/callowayproject/bump-my-version/commit/173be1a7a107639be912d0fb76149accb54b0332)
@@ -602,6 +615,7 @@
   - Can output in YAML, JSON, and default
   - Can specify one or more items to display
   - Can use dotted-notation to pull items from nested data structures.
+
 ### Updates
 
 - Changes bump-my-version into subcommands. [31ffbcf](https://github.com/callowayproject/bump-my-version/commit/31ffbcf839e2491c31d90b51041d1e840371108f)
@@ -619,6 +633,7 @@
     
   - Fixes issue #20
   - Renders the correct `current_version` for each file being modified.
+
 ### Other
 
 - [pre-commit.ci] auto fixes from pre-commit.com hooks. [5476cdf](https://github.com/callowayproject/bump-my-version/commit/5476cdf8b66666e06e9bfd4d71eaf2610103079a)
@@ -646,12 +661,14 @@
 - Added documentation for replacing strings in different files. [893ec03](https://github.com/callowayproject/bump-my-version/commit/893ec03f6ceaf2a050c31f10006aa63c0411af4e)
     
   Fixes #6
+
 ### Other
 
 - Made `VERSION_PART` optional. [f236b7d](https://github.com/callowayproject/bump-my-version/commit/f236b7de94d9f58e493c617848e3eb02e85a24c7)
     
   - Fixes #16
   - `VERSION_PART` is detected from the arguments based on the configuration
+
 ### Updates
 
 - Updated docs indicated VERSION_PART is optional. [22edeac](https://github.com/callowayproject/bump-my-version/commit/22edeac9018e75f79d7167fbfc6ca56cda4d3b07)
@@ -673,6 +690,7 @@
 - Fixes release.yaml. [01870d5](https://github.com/callowayproject/bump-my-version/commit/01870d5878b5f0a6e601863c4b9c25572db6cbb0)
     
   Outputs the notes to a file instead of an environment variable.
+
 ### Other
 
 - [pre-commit.ci] auto fixes from pre-commit.com hooks. [266002f](https://github.com/callowayproject/bump-my-version/commit/266002f4d60ed6fe3623ba5f713318dc6220ec00)
@@ -708,6 +726,7 @@
 - Fixes test package. [7c12072](https://github.com/callowayproject/bump-my-version/commit/7c12072b11938385ec81c5e9cd285d91ac1c00d7)
     
   - The build-and-inspect action didn't save the dist packages
+
 ### New
 
 - Added tests for logging branches. [f8f0278](https://github.com/callowayproject/bump-my-version/commit/f8f027846349df4c66377c2cf4cc6903cd1f9bf7)
@@ -757,6 +776,7 @@
     
   - changed name to bump-my-version in setup.cfg
   - added PAT in release pipeline to (hopefully) allow committing and tagging to master without issue.
+
 ### New
 
 - Added codecov to workflow. [a5009e0](https://github.com/callowayproject/bump-my-version/commit/a5009e04068787bb98363c3e6803f84a338ee798)
@@ -804,10 +824,12 @@
     
   - Added bumpversion.yaml to increase the version when a PR is closed
 
-  - Added release.yaml to create a github relase and upload things to PyPI
+  - Added release.yaml to create a github release and upload things to PyPI
+
 - Added PYTHONUTF8 mode. [91a73e2](https://github.com/callowayproject/bump-my-version/commit/91a73e26af94185194aea1ddb803ac621c0ae84a)
     
   - see https://docs.python.org/3/using/windows.html#utf-8-mode
+
 - Added explicit environment variable declarations. [80fe7ef](https://github.com/callowayproject/bump-my-version/commit/80fe7ef0cf1005333143cce38835dbc9ad811884)
     
 - Added a github CI workflow. [2b3b358](https://github.com/callowayproject/bump-my-version/commit/2b3b3585afe3fdcf13ff47a229b4e3d3b5dacdc9)
@@ -816,6 +838,7 @@
     
   - __main__.py
   - aliases.py
+
 - Added LICENSE. [34a9be5](https://github.com/callowayproject/bump-my-version/commit/34a9be5617a24b9d7eb042dc12e657ef1eb4258c)
     
 - Added tests for version parsing errors. [71a204b](https://github.com/callowayproject/bump-my-version/commit/71a204b0eb1ea2e7ae291055f26f5c499d429f1b)

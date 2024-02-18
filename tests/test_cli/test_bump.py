@@ -2,6 +2,7 @@
 
 import shutil
 import subprocess
+import traceback
 from datetime import datetime
 from pathlib import Path
 
@@ -89,6 +90,7 @@ class TestListOption:
             "search={current_version}",
             "replace={new_version}",
             "regex=False",
+            "ignore_missing_files=False",
             "ignore_missing_version=False",
             "included_paths=[]",
             "tag=True",
@@ -105,19 +107,19 @@ class TestListOption:
                 "'serialize': ('{major}.{minor}.{patch}-{release}', "
                 "'{major}.{minor}.{patch}'), 'search': '{current_version}', 'replace': "
                 "'{new_version}', 'regex': False, 'ignore_missing_version': False, "
-                "'filename': 'setup.py', 'glob': None, 'key_path': None}, {'parse': "
+                "'ignore_missing_file': False, 'filename': 'setup.py', 'glob': None, 'key_path': None}, {'parse': "
                 "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', "
                 "'serialize': ('{major}.{minor}.{patch}-{release}', "
                 "'{major}.{minor}.{patch}'), 'search': '{current_version}', 'replace': "
                 "'{new_version}', 'regex': False, 'ignore_missing_version': False, "
-                "'filename': 'bumpversion/__init__.py', 'glob': None, 'key_path': None}, "
+                "'ignore_missing_file': False, 'filename': 'bumpversion/__init__.py', 'glob': None, 'key_path': None}, "
                 "{'parse': "
                 "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', "
                 "'serialize': ('{major}.{minor}.{patch}-{release}', "
                 "'{major}.{minor}.{patch}'), 'search': '**unreleased**', 'replace': "
                 "'**unreleased**\\n**v{new_version}**', 'regex': False, "
-                "'ignore_missing_version': False, 'filename': 'CHANGELOG.md', 'glob': None, "
-                "'key_path': None}]"
+                "'ignore_missing_version': False, 'ignore_missing_file': False, 'filename': 'CHANGELOG.md', "
+                "'glob': None, 'key_path': None}]"
             ),
         }
 
@@ -148,6 +150,7 @@ class TestListOption:
             "search={current_version}",
             "replace={new_version}",
             "regex=False",
+            "ignore_missing_files=False",
             "ignore_missing_version=False",
             "included_paths=[]",
             "tag=True",
@@ -164,19 +167,19 @@ class TestListOption:
                 "'serialize': ('{major}.{minor}.{patch}-{release}', "
                 "'{major}.{minor}.{patch}'), 'search': '{current_version}', 'replace': "
                 "'{new_version}', 'regex': False, 'ignore_missing_version': False, "
-                "'filename': 'setup.py', 'glob': None, 'key_path': None}, {'parse': "
+                "'ignore_missing_file': False, 'filename': 'setup.py', 'glob': None, 'key_path': None}, {'parse': "
                 "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', "
                 "'serialize': ('{major}.{minor}.{patch}-{release}', "
                 "'{major}.{minor}.{patch}'), 'search': '{current_version}', 'replace': "
                 "'{new_version}', 'regex': False, 'ignore_missing_version': False, "
-                "'filename': 'bumpversion/__init__.py', 'glob': None, 'key_path': None}, "
+                "'ignore_missing_file': False, 'filename': 'bumpversion/__init__.py', 'glob': None, 'key_path': None}, "
                 "{'parse': "
                 "'(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?', "
                 "'serialize': ('{major}.{minor}.{patch}-{release}', "
                 "'{major}.{minor}.{patch}'), 'search': '**unreleased**', 'replace': "
                 "'**unreleased**\\n**v{new_version}**', 'regex': False, "
-                "'ignore_missing_version': False, 'filename': 'CHANGELOG.md', 'glob': None, "
-                "'key_path': None}]"
+                "'ignore_missing_version': False, 'ignore_missing_file': False, 'filename': 'CHANGELOG.md', "
+                "'glob': None, 'key_path': None}]"
             ),
         }
 
@@ -348,3 +351,41 @@ def test_detects_bad_or_missing_version_part(version_part: str, tmp_path: Path, 
     # Assert
     assert result.exception is not None
     assert "Unknown version part:" in result.stdout
+
+
+def test_ignores_missing_files_with_option(tmp_path, fixtures_path):
+    """The replace subcommand should ignore missing."""
+
+    config_file = tmp_path / ".bumpversion.toml"
+    config_file.write_text(
+        "[tool.bumpversion]\n"
+        'current_version = "0.0.1"\n'
+        "allow_dirty = true\n\n"
+        "[[tool.bumpversion.files]]\n"
+        'filename = "VERSION"\n'
+        "regex = false\n"
+    )
+
+    # Act
+    runner: CliRunner = CliRunner()
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(
+            cli.cli,
+            [
+                "bump",
+                "--verbose",
+                "--no-regex",
+                "--no-configured-files",
+                "--ignore-missing-files",
+                "minor",
+                "VERSION",
+            ],
+        )
+
+    # Assert
+    if result.exit_code != 0:
+        print("Here is the output:")
+        print(result.output)
+        print(traceback.print_exception(result.exc_info[1]))
+
+    assert result.exit_code == 0

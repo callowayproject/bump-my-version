@@ -1,22 +1,18 @@
 # Usage
 
-```{admonition} NOTE
-
-You can use `bumpversion` or `bump-my-version` throughout this document  interchangeably.
-```
 There are two modes of operation: On the command line for single-file operation and using a configuration file (`pyproject.toml` or `.bumpversion.toml`) for more complex multi-file processes. We recommend using a configuration file for all but the simplest of projects.
 
-```{admonition} WARNING
+!!! Warning
 
-The invocation of `bump-my-version` changed in version 0.6.0. It splits functionality into sub-commands. It remains backward-compatible with previous versions. Previous usage is discouraged and may be removed in a 1.0 release.
-```
+    The invocation of `bump-my-version` changed in version 0.6.0. It splits functionality into sub-commands. It remains backward-compatible with previous versions. Previous usage is discouraged and may be removed in a 1.0 release.
+
 ## Incrementing a version
 
 ```console
 bump-my-version bump [OPTIONS] [ARGS]...
 ```
 
-The `bump` sub-command triggers a version increment. The [complete list of options](reference/cli.rst#bumpversion-bump) is available. The `ARGS` may contain a `VERSION_PART` or `FILES`
+The `bump` sub-command triggers a version increment. The [complete list of options](../reference/cli.md#bump-my-version-bump) is available. The `ARGS` may contain a `VERSION_PART` or `FILES`
 
 
 ### `VERSION_PART`
@@ -25,7 +21,7 @@ _**[optional]**_
 
 The part of the version to increase, e.g., `minor`.
 
-Valid values include those given in the [`--serialize`](reference/configuration.md#serialize) / [`--parse`](reference/configuration.md#parse) option.
+Valid values include those given in the [`--serialize`](../reference/configuration.md#serialize) / [`--parse`](../reference/configuration.md#parse) option.
 
 For example, if the current version is `0.5.1` and you want to bump it to `0.6.0`:
 

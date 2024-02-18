@@ -22,6 +22,7 @@ DEFAULTS = {
     "replace": "{new_version}",
     "regex": False,
     "ignore_missing_version": False,
+    "ignore_missing_files": False,
     "tag": False,
     "sign_tags": False,
     "tag_name": "v{new_version}",
