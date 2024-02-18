@@ -1,7 +1,5 @@
 # Tutorials
 
 
-
-```{toctree}
-semantic-versioning-example
-```
+- [Versioning using semantic versioning](semantic-versioning-example.md)
+- [Basic usage](usage.md)

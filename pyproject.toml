@@ -58,16 +58,19 @@ dev = [
     "pre-commit",
 ]
 docs = [
-    "mkdocs",
-    "mkdocs-material",
-    "mkdocstrings[python]",
-    "mkdocs-include-markdown-plugin",
-    "mkdocs-click",
     "markdown-customblocks",
-    "mkdocs-git-revision-date-localized-plugin",
+    "mdx-truly-sane-lists",
+    "mkdocs",
+    "mkdocs-click",
+    "mkdocs-gen-files",
     "mkdocs-git-authors-plugin",
     "mkdocs-git-committers-plugin",
-    "mdx-truly-sane-lists",
+    "mkdocs-git-revision-date-localized-plugin",
+    "mkdocs-include-markdown-plugin",
+    "mkdocs-literate-nav",
+    "mkdocs-material",
+    "mkdocstrings",
+    "mkdocstrings[python]",
 ]
 test = [
     "coverage",

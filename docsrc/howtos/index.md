@@ -1,9 +1,6 @@
 # How-To Guides
 
 
-
-```{toctree}
-avoid-incorrect-replacements
-custom-version-formats-by-file
-multiple-replacements
-```
+- [Avoid incorrect replacements](avoid-incorrect-replacements.md)
+- [Custom version formats by file](custom-version-formats-by-file.md)
+- [Multiple replacements](multiple-replacements.md)

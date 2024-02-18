@@ -22,7 +22,7 @@ require (
 stable: "v2.21.4"
 ```
 
-You can use bump-my-version to maintain the major version number within the `go.mod` file by using the `parse` and `serialize` options, as in this example:
+You can use Bump My Version to maintain the major version number within the `go.mod` file by using the `parse` and `serialize` options, as in this example:
 
  `.bumpversion.toml` file:
 

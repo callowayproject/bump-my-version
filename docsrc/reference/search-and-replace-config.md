@@ -53,17 +53,17 @@ If you are using a TOML-formatted configuration file, you must also escape backs
 
 The following template:
 
-```toml
-# TOML-formatted configuration file
-search = "{current_version} date-released: \\d{{4}}-\\d{{2}}-\\d{{2}}"
-```
+=== "TOML"
 
-or 
+    ```toml
+    search = "{current_version} date-released: \\d{{4}}-\\d{{2}}-\\d{{2}}"
+    ```
 
-```ini
-# INI-formatted configuration file
-search = "{current_version} date-released: \d{{4}}-\d{{2}}-\d{{2}}"
-```
+=== "CFG"
+
+    ```ini
+    search = "{current_version} date-released: \d{{4}}-\d{{2}}-\d{{2}}"
+    ```
 
 Gets rendered to:
 
