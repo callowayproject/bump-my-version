@@ -86,7 +86,7 @@ test = [
 version = {attr = "bumpversion.__version__"}
 
 [tool.setuptools.packages.find]
-exclude = ["example*", "tests*", "docs*", "build"]
+exclude = ["example*", "tests*", "docs*", "build", "tools", "site"]
 
 [tool.coverage.run]
 branch = true
