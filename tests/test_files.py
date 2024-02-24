@@ -410,6 +410,29 @@ def test_regex_search_with_escaped_chars(tmp_path: Path) -> None:
     assert version_path.read_text() == f"## [Release] 1.2.4 {now}"
 
 
+def test_regex_search_in_toml(tmp_path: Path, fixtures_path: Path) -> None:
+    """Tests how-to doc 'update-a-date.md'."""
+    # Arrange
+    version_path = tmp_path / "VERSION"
+    version_path.write_text("__date__ = '1234-56-78'\n__version__ = '1.2.3'")
+    config_path = tmp_path / ".bumpversion.toml"
+    shutil.copyfile(fixtures_path / "replace-date-config.toml", config_path)
+    with inside_dir(tmp_path):
+        conf = config.get_configuration(config_file=config_path)
+        version_config = VersionConfig(conf.parse, conf.serialize, conf.search, conf.replace, conf.parts)
+        current_version = version_config.parse(conf.current_version)
+
+        new_version = current_version.bump("patch")
+        cfg_files = [files.ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
+
+        # Act
+        files.modify_files(cfg_files, current_version, new_version, get_context(conf))
+
+    # Assert
+    now = datetime.now().isoformat()[:10]
+    assert version_path.read_text() == f"__date__ = '{now}'\n__version__ = '1.2.4'"
+
+
 def test_regex_search_with_caret(tmp_path: Path, fixtures_path: Path) -> None:
     """A search that uses a caret to indicate the beginning of the line works correctly."""
     # Arrange
