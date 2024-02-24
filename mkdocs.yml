@@ -23,6 +23,7 @@ theme:
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
+      primary: blue grey
       toggle:
         icon: material/toggle-switch-off-outline
         name: Switch to dark mode
@@ -31,13 +32,13 @@ theme:
       toggle:
         icon: material/toggle-switch
         name: Switch to light mode
-use_directory_urls: false
+use_directory_urls: true
 markdown_extensions:
   - abbr
   - admonition
   - attr_list
-  - def_list
   - customblocks
+  - def_list
   - footnotes
   - md_in_html
   - mdx_truly_sane_lists
@@ -48,12 +49,17 @@ markdown_extensions:
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.highlight
   - pymdownx.snippets
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_div_format
   - pymdownx.tabbed:
       alternate_style: true
       slugify: !!python/object/apply:pymdownx.slugs.slugify
         kwds:
           case: lower
+  - smarty
   - toc:
       permalink: true
       toc_depth: 3
@@ -105,6 +111,7 @@ extra_css:
   - _static/css/custom.css
   - _static/css/mkdocstrings.css
   - _static/css/cards.css
+  - _static/css/field-list.css
 
 #nav:
 #  - General: "general/"

@@ -1,3 +1,8 @@
+---
+comments: true
+title: Bump My Version
+---
+
 # Bump My Version
 
 {% 

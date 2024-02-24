@@ -1,0 +1,30 @@
+name: Deploy final documentation
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          git pull --all
+          python -m pip install ".[docs]"
+
+      - name: Build and deploy documentation
+        run: |
+          mkdocs gh-deploy --strict -v

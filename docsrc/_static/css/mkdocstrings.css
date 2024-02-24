@@ -25,3 +25,15 @@ a.external:hover::after,
 a.autorefs-external:hover::after {
   background-color: var(--md-accent-fg-color);
 }
+
+.doc-param-key, .doc-field-term, .doc-section-head {
+  font-weight: bold;
+}
+
+.doc.doc-heading {
+  text-transform: none;
+}
+
+h5.doc-heading, h6.doc-heading {
+  font-size: 1em;
+}

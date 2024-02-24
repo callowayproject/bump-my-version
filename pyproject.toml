@@ -71,6 +71,7 @@ docs = [
     "mkdocs-material",
     "mkdocstrings",
     "mkdocstrings[python]",
+    "python-frontmatter",
 ]
 test = [
     "coverage",
