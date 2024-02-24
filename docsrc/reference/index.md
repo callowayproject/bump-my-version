@@ -6,4 +6,4 @@
 - [Formatting context](formatting-context.md)
 - [Version parts](version-parts.md)
 - [Search and replace configuration](search-and-replace-config.md)
-- [API](api/bumpversion.md)
+- [API](api/bumpversion/index.md)

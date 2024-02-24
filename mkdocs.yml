@@ -70,6 +70,8 @@ plugins:
   - git-revision-date-localized
   - git-authors:
       show_email_address: false
+      exclude:
+        - reference/api/*
   - include-markdown
   - drawio
   - literate-nav:
@@ -98,6 +100,7 @@ plugins:
             merge_init_into_class: true
             separate_signature: true
             show_docstring_parameters: true
+            show_root_toc_entry: true
             show_signature_annotations: true
             show_source: false
             show_symbol_type_heading: true
