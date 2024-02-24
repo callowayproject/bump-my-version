@@ -1,70 +1,12 @@
-.class .sig-prename.descclassname {
-  display: none;
+/* Indentation. */
+div.doc-contents:not(.first) {
+  padding-left: 25px;
+  border-left: .05rem solid var(--md-typeset-table-color);
 }
 
-.subheading {
-  line-height: 1.25;
-  margin-bottom: 0;
-  color: #646776;
-}
-
-.subheading + section > h1 {
-  margin-top: 0;
-}
-
-.field-list p {
-  margin: 0;
-}
-
-.field-list > dl {
-  --gap: 1rem;
-  --line-offset: calc(var(--gap) / 2);
-  --line-thickness: 1px;
-  --line-color: #e0e0e0;
-
-  display: grid;
-  grid-template-columns: fit-content(30%) auto;
-  grid-gap: var(--gap);
-  margin-bottom: 1rem;
-  overflow: hidden;
-}
-
-.field-list > dl > dt {
-  text-align: right;
-  font-weight: bold;
-  word-break: break-word;
-  position: relative;
-}
-
-[dir=ltr] .field-list > dl > dd {
-  margin-top: 0;
-  margin-left: 0;
-  margin-bottom: 0;
-  position: relative;
-}
-
-/* Pseudo Element Shared Styling */
-.field-list > dl > dt::before,
-.field-list > dl > dt::after,
-.field-list > dl > dd::before,
-.field-list > dl > dd::after {
-   content: '';
-   position: absolute;
-   background-color: var(--line-color);
-   z-index: 1;
-}
-
-/* Row Borders */
-.field-list > dl > dt::after,
-.field-list > dl > dd::after {
-  inline-size: 100vw;
-  block-size: var(--line-thickness);
-  inset-inline-start: 0;
-  inset-block-start: calc(var(--line-offset) * -1);
-}
-
-
-figure {
-  padding-bottom: .75rem;
-  padding-top: .5rem;
+/* Normal size fonts on parameter tables */
+.md-typeset div.doc-contents table {
+  font-size: 1em;
+  width: 100%;
+  display: table;
 }
