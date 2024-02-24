@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Union
+from typing import TYPE_CHECKING, Any, Union
 
 from bumpversion.config.files import read_config_file
 from bumpversion.config.models import Config
@@ -37,7 +37,7 @@ DEFAULTS = {
 }
 
 
-def get_configuration(config_file: Union[str, Path, None] = None, **overrides) -> Config:
+def get_configuration(config_file: Union[str, Path, None] = None, **overrides: Any) -> Config:
     """
     Return the configuration based on any configuration files and overrides.
 
