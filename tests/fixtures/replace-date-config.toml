@@ -1,0 +1,11 @@
+[tool.bumpversion]
+current_version = '1.2.3'
+
+[[tool.bumpversion.files]]
+filename = 'VERSION'
+search = "__date__ = '\\d{{4}}-\\d{{2}}-\\d{{2}}'"
+replace = "__date__ = '{now:%Y-%m-%d}'"
+regex = true
+
+[[tool.bumpversion.files]]
+filename = 'VERSION'
