@@ -63,6 +63,7 @@ docs = [
     "mdx-truly-sane-lists",
     "mkdocs",
     "mkdocs-click",
+    "mkdocs-drawio",
     "mkdocs-gen-files",
     "mkdocs-git-authors-plugin",
     "mkdocs-git-committers-plugin",
