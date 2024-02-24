@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.18.1 (2024-02-24)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.18.0...0.18.1)
+
+### Fixes
+
+- Fixed type annotation in config. [2988ede](https://github.com/callowayproject/bump-my-version/commit/2988ede7d1610d42e2249fb8bdbd5a327a85e307)
+    
+- Fixed naming issue for docs. [2850aa7](https://github.com/callowayproject/bump-my-version/commit/2850aa7f5a804c554d304e45c56a757f55cc5940)
+    
+  - renamed changelog.md and contributing.md
+### New
+
+- Added how-to doc. [68643a9](https://github.com/callowayproject/bump-my-version/commit/68643a9a4945eee20f5b7c4d8fb2f0bc4dd8e7b7)
+    
+  - "How to update a date in a file"
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [c495d3d](https://github.com/callowayproject/bump-my-version/commit/c495d3d183a729a2eeb32262a6c164666103873a)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.2.1 → v0.2.2](https://github.com/astral-sh/ruff-pre-commit/compare/v0.2.1...v0.2.2)
+
+### Updates
+
+- Updated docs and styles. [f4f75fa](https://github.com/callowayproject/bump-my-version/commit/f4f75fa50f447366f4fa0209c6ebd709a38bdf90)
+    
+
 ## 0.18.0 (2024-02-18)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.17.4...0.18.0)
 
