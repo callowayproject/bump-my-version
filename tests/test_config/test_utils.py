@@ -10,7 +10,7 @@ from pytest import param
 from bumpversion.config.utils import get_all_file_configs, get_all_part_configs, resolve_glob_files
 from bumpversion.config.models import FileChange
 from bumpversion.config import DEFAULTS
-from conftest import inside_dir
+from tests.conftest import inside_dir
 
 
 def write_config(tmp_path: Path, overrides: dict) -> Path:
