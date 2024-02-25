@@ -105,7 +105,27 @@ class TestCreateConfiguration:
         default_config["current_version"] = "0.1.0"
         default_config["commit_args"] = ""
 
-        assert destination_config["tool"]["bumpversion"] == default_config
+        assert destination_config["tool"]["bumpversion"]["allow_dirty"] == default_config["allow_dirty"]
+        assert destination_config["tool"]["bumpversion"]["commit"] == default_config["commit"]
+        assert destination_config["tool"]["bumpversion"]["commit_args"] == default_config["commit_args"]
+        assert destination_config["tool"]["bumpversion"]["current_version"] == default_config["current_version"]
+        assert (
+            destination_config["tool"]["bumpversion"]["ignore_missing_files"] == default_config["ignore_missing_files"]
+        )
+        assert (
+            destination_config["tool"]["bumpversion"]["ignore_missing_version"]
+            == default_config["ignore_missing_version"]
+        )
+        assert destination_config["tool"]["bumpversion"]["message"] == default_config["message"]
+        assert destination_config["tool"]["bumpversion"]["parse"] == default_config["parse"]
+        assert destination_config["tool"]["bumpversion"]["regex"] == default_config["regex"]
+        assert destination_config["tool"]["bumpversion"]["replace"] == default_config["replace"]
+        assert destination_config["tool"]["bumpversion"]["search"] == default_config["search"]
+        assert destination_config["tool"]["bumpversion"]["serialize"] == list(default_config["serialize"])
+        assert destination_config["tool"]["bumpversion"]["sign_tags"] == default_config["sign_tags"]
+        assert destination_config["tool"]["bumpversion"]["tag"] == default_config["tag"]
+        assert destination_config["tool"]["bumpversion"]["tag_message"] == default_config["tag_message"]
+        assert destination_config["tool"]["bumpversion"]["tag_name"] == default_config["tag_name"]
 
     def test_prompt_true_asks_questions_and_updates_result(self, tmp_path: Path, default_config: dict, mocker):
         """If prompt is True, the user should be prompted for the configuration."""
@@ -123,5 +143,25 @@ class TestCreateConfiguration:
 
         default_config.update(answer)
 
-        assert destination_config["tool"]["bumpversion"] == default_config
+        assert destination_config["tool"]["bumpversion"]["allow_dirty"] == default_config["allow_dirty"]
+        assert destination_config["tool"]["bumpversion"]["commit"] == default_config["commit"]
+        assert destination_config["tool"]["bumpversion"]["commit_args"] == default_config["commit_args"]
+        assert destination_config["tool"]["bumpversion"]["current_version"] == default_config["current_version"]
+        assert (
+            destination_config["tool"]["bumpversion"]["ignore_missing_files"] == default_config["ignore_missing_files"]
+        )
+        assert (
+            destination_config["tool"]["bumpversion"]["ignore_missing_version"]
+            == default_config["ignore_missing_version"]
+        )
+        assert destination_config["tool"]["bumpversion"]["message"] == default_config["message"]
+        assert destination_config["tool"]["bumpversion"]["parse"] == default_config["parse"]
+        assert destination_config["tool"]["bumpversion"]["regex"] == default_config["regex"]
+        assert destination_config["tool"]["bumpversion"]["replace"] == default_config["replace"]
+        assert destination_config["tool"]["bumpversion"]["search"] == default_config["search"]
+        assert destination_config["tool"]["bumpversion"]["serialize"] == list(default_config["serialize"])
+        assert destination_config["tool"]["bumpversion"]["sign_tags"] == default_config["sign_tags"]
+        assert destination_config["tool"]["bumpversion"]["tag"] == default_config["tag"]
+        assert destination_config["tool"]["bumpversion"]["tag_message"] == default_config["tag_message"]
+        assert destination_config["tool"]["bumpversion"]["tag_name"] == default_config["tag_name"]
         assert mocked_questionary.form.return_value.ask.call_count == 1

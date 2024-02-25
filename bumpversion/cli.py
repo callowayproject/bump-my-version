@@ -163,14 +163,14 @@ click.rich_click.OPTION_GROUPS = {
     ),
 )
 @click.option(
-    "--ignore-missing-files",
-    is_flag=True,
+    "--ignore-missing-files/--no-ignore-missing-files",
+    default=None,
     envvar="BUMPVERSION_IGNORE_MISSING_FILES",
     help="Ignore any missing files when searching and replacing in files.",
 )
 @click.option(
-    "--ignore-missing-version",
-    is_flag=True,
+    "--ignore-missing-version/--no-ignore-missing-version",
+    default=None,
     envvar="BUMPVERSION_IGNORE_MISSING_VERSION",
     help="Ignore any Version Not Found errors when searching and replacing in files.",
 )

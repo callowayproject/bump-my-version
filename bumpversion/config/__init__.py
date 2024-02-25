@@ -17,7 +17,7 @@ logger = get_indented_logger(__name__)
 DEFAULTS = {
     "current_version": None,
     "parse": r"(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)",
-    "serialize": ["{major}.{minor}.{patch}"],
+    "serialize": ("{major}.{minor}.{patch}",),
     "search": "{current_version}",
     "replace": "{new_version}",
     "regex": False,
