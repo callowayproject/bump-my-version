@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.18.2 (2024-02-25)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.18.1...0.18.2)
+
+### Fixes
+
+- Fixed docs and cli help. [8ac1087](https://github.com/callowayproject/bump-my-version/commit/8ac10871135a1c71c9244901b419f3ab95103d1a)
+    
+
 ## 0.18.1 (2024-02-24)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.18.0...0.18.1)
 
