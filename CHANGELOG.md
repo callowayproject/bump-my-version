@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.18.3 (2024-02-25)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.18.2...0.18.3)
+
+### Fixes
+
+- Fixed --ignore-missing-version and --ignore-missing-files options. [7635873](https://github.com/callowayproject/bump-my-version/commit/7635873d67c71141e181e2bfffe0a353bb1b6288)
+    
+  The CLI options were defaulting to `False` when missing. This overrode the configuration.
+
+  Fixes #140
+
 ## 0.18.2 (2024-02-25)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.18.1...0.18.2)
 
