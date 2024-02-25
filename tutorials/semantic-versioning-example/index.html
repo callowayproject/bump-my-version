@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#semantic-versioning-example" class="md-skip">
+        <a href="#create-a-default-configuration" class="md-skip">
           Skip to content
         </a>
       
@@ -1732,8 +1732,6 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
-      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -1762,8 +1760,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1781,35 +1777,47 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#supporting-pre-release-versions" class="md-nav__link">
+  <a href="#visualize-the-versioning-path" class="md-nav__link">
     <span class="md-ellipsis">
-      Supporting pre-release versions
+      Visualize the versioning path
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#automating-the-pre-release-numbering" class="md-nav__link">
+  <a href="#add-support-for-pre-release-versions" class="md-nav__link">
     <span class="md-ellipsis">
-      Automating the pre-release numbering
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Automating the pre-release numbering">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#visualizing-the-pre_n-versioning-path" class="md-nav__link">
-    <span class="md-ellipsis">
-      Visualizing the pre_n versioning path
+      Add support for pre-release versions
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#visualize-the-new-versioning-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      Visualize the new versioning path
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automate-the-pre-release-numbering" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automate the pre-release numbering
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualize-the-pre_n-versioning-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      Visualize the pre_n versioning path
+    </span>
+  </a>
   
 </li>
       
@@ -1881,112 +1889,93 @@
   
 
 
-<h1 id="semantic-versioning-example">Semantic versioning example<a class="headerlink" href="#semantic-versioning-example" title="Permanent link">&para;</a></h1>
-<h2 id="create-a-default-configuration">Create a default configuration<a class="headerlink" href="#create-a-default-configuration" title="Permanent link">&para;</a></h2>
+  <h1>Semantic versioning example</h1>
+
+<!-- BEGIN INCLUDE ../../README.md '&lt;!--tutorial start--&gt;' '&lt;!--tutorial end--&gt;' -->
+
+<h3 id="create-a-default-configuration">Create a default configuration<a class="headerlink" href="#create-a-default-configuration" title="Permanent link">&para;</a></h3>
 <p>The default configuration uses a simplified version of <a href="https://semver.org/">semantic versioning</a>.</p>
-<p>```{code-block} console
-:caption: Generating a default configuration</p>
-<p>$ bump-my-version sample-config &ndash;no-prompt &ndash;destination .bumpversion.toml
-$ cat .bumpversion.toml
-[tool.bumpversion]
-current_version = &ldquo;0.1.0&rdquo;
-parse = &ldquo;(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)&rdquo;
-serialize = [&ldquo;{major}.{minor}.{patch}&rdquo;]
-search = &ldquo;{current_version}&rdquo;
-replace = &ldquo;{new_version}&rdquo;
-regex = false
-ignore_missing_version = false
-tag = false
-sign_tags = false
-tag_name = &ldquo;v{new_version}&rdquo;
-tag_message = &ldquo;Bump version: {current_version} → {new_version}&rdquo;
-allow_dirty = false
-commit = false
-message = &ldquo;Bump version: {current_version} → {new_version}&rdquo;
-commit_args = &ldquo;&rdquo;
-<div class="highlight"><pre><span></span><code>### Visualizing the versioning path
-
-You can see the potential versioning paths with the `show-bump` subcommand.
-
-```{code-block} console
-:caption: Showing the potential versioning path
-
-$ bump-my-version show-bump
-0.1.0 ── bump ─┬─ major ─ 1.0.0
-               ├─ minor ─ 0.2.0
-               ╰─ patch ─ 0.1.1
-$ bump-my-version show-bump 1.2.3
-1.2.3 ── bump ─┬─ major ─ 2.0.0
-               ├─ minor ─ 1.3.0
-               ╰─ patch ─ 1.2.4
-</code></pre></div></p>
+<div class="highlight"><span class="filename">Generating a default configuration</span><pre><span></span><code><span class="gp">$ </span>bump-my-version<span class="w"> </span>sample-config<span class="w"> </span>--no-prompt<span class="w"> </span>--destination<span class="w"> </span>.bumpversion.toml
+<span class="gp">$ </span>cat<span class="w"> </span>.bumpversion.toml
+<span class="go">[tool.bumpversion]</span>
+<span class="go">current_version = &quot;0.1.0&quot;</span>
+<span class="go">parse = &quot;(?P&lt;major&gt;\\d+)\\.(?P&lt;minor&gt;\\d+)\\.(?P&lt;patch&gt;\\d+)&quot;</span>
+<span class="go">serialize = [&quot;{major}.{minor}.{patch}&quot;]</span>
+<span class="go">search = &quot;{current_version}&quot;</span>
+<span class="go">replace = &quot;{new_version}&quot;</span>
+<span class="go">regex = false</span>
+<span class="go">ignore_missing_version = false</span>
+<span class="go">tag = false</span>
+<span class="go">sign_tags = false</span>
+<span class="go">tag_name = &quot;v{new_version}&quot;</span>
+<span class="go">tag_message = &quot;Bump version: {current_version} → {new_version}&quot;</span>
+<span class="go">allow_dirty = false</span>
+<span class="go">commit = false</span>
+<span class="go">message = &quot;Bump version: {current_version} → {new_version}&quot;</span>
+<span class="go">commit_args = &quot;&quot;</span>
+</code></pre></div>
+<h3 id="visualize-the-versioning-path">Visualize the versioning path<a class="headerlink" href="#visualize-the-versioning-path" title="Permanent link">&para;</a></h3>
+<p>You can see the potential versioning paths with the <code>show-bump</code> subcommand.</p>
+<div class="highlight"><span class="filename">Showing the potential versioning path</span><pre><span></span><code><span class="gp">$ </span>bump-my-version<span class="w"> </span>show-bump
+<span class="go">0.1.0 ── bump ─┬─ major ─ 1.0.0</span>
+<span class="go">               ├─ minor ─ 0.2.0</span>
+<span class="go">               ╰─ patch ─ 0.1.1</span>
+<span class="gp">$ </span>bump-my-version<span class="w"> </span>show-bump<span class="w"> </span><span class="m">1</span>.2.3
+<span class="go">1.2.3 ── bump ─┬─ major ─ 2.0.0</span>
+<span class="go">               ├─ minor ─ 1.3.0</span>
+<span class="go">               ╰─ patch ─ 1.2.4</span>
+</code></pre></div>
 <p>The default configuration only allows bumping the major, minor, or patch version. What if you wanted to support pre-release versions?</p>
-<h2 id="supporting-pre-release-versions">Supporting pre-release versions<a class="headerlink" href="#supporting-pre-release-versions" title="Permanent link">&para;</a></h2>
+<h3 id="add-support-for-pre-release-versions">Add support for pre-release versions<a class="headerlink" href="#add-support-for-pre-release-versions" title="Permanent link">&para;</a></h3>
 <p>Alter the <code>parse</code> configuration to support pre-release versions. This <code>parse</code> option uses an extended (or verbose) regular expression to extract the version parts from the current version. </p>
-<p>```{code-block} toml
-:caption: New parse configuration</p>
-<p>parse = &ldquo;&rdquo;&ldquo;(?x)
-    (?P<major>0|[1-9]\d<em>)\.
-    (?P<minor>0|[1-9]\d</em>)\.
-    (?P<patch>0|[1-9]\d<em>)
-    (?:
-        -                             # dash seperator for pre-release section
-        (?P<pre_l>[a-zA-Z-]+)         # pre-release label
-        (?P<pre_n>0|[1-9]\d</em>)        # pre-release version number
-    )?                                # pre-release section is optional
-&ldquo;&rdquo;&rdquo;
-<div class="highlight"><pre><span></span><code>Alter the `serialize` configuration to support pre-release versions.
-
-```{code-block} toml
-:caption: New serialize configuration
-
-serialize = [
-    &quot;{major}.{minor}.{patch}-{pre_l}{pre_n}&quot;,
-    &quot;{major}.{minor}.{patch}&quot;,
-]
-</code></pre></div></p>
+<div class="highlight"><span class="filename">New parse configuration</span><pre><span></span><code><span class="n">parse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;(?x)</span>
+<span class="s2">    (?P&lt;major&gt;0|[1-9]</span><span class="se">\\</span><span class="s2">d*)</span><span class="se">\\</span><span class="s2">.</span>
+<span class="s2">    (?P&lt;minor&gt;0|[1-9]</span><span class="se">\\</span><span class="s2">d*)</span><span class="se">\\</span><span class="s2">.</span>
+<span class="s2">    (?P&lt;patch&gt;0|[1-9]</span><span class="se">\\</span><span class="s2">d*)</span>
+<span class="s2">    (?:</span>
+<span class="s2">        -                             # dash seperator for pre-release section</span>
+<span class="s2">        (?P&lt;pre_l&gt;[a-zA-Z-]+)         # pre-release label</span>
+<span class="s2">        (?P&lt;pre_n&gt;0|[1-9]</span><span class="se">\\</span><span class="s2">d*)        # pre-release version number</span>
+<span class="s2">    )?                                # pre-release section is optional</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</code></pre></div>
+<p>Alter the <code>serialize</code> configuration to support pre-release versions.</p>
+<div class="highlight"><span class="filename">New serialize configuration</span><pre><span></span><code><span class="n">serialize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}-{pre_l}{pre_n}&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</code></pre></div>
 <p>Add a new configuration section for the <code>pre_l</code> part.</p>
-<p>```{code-block} toml
-:caption: New pre_l configuration</p>
-<p>[tool.bumpversion.parts.pre_l]
-values = [&ldquo;dev&rdquo;, &ldquo;rc&rdquo;, &ldquo;final&rdquo;]
-optional_value = &ldquo;final&rdquo;
-<div class="highlight"><pre><span></span><code>### Visualizing the new versioning path
-
-Now when you run `bump-my-version show-bump`, you can see the new pre-release versioning path.
-
-```{code-block} console
-:caption: Showing the new versioning path
-
-$ bump-my-version show-bump
-0.1.0 ── bump ─┬─ major ─ 1.0.0-dev0
-               ├─ minor ─ 0.2.0-dev0
-               ├─ patch ─ 0.1.1-dev0
-               ├─ pre_l ─ invalid: The part has already the maximum value among [&#39;dev&#39;, &#39;rc&#39;, &#39;final&#39;] and cannot be bumped.
-               ╰─ pre_n ─ 0.1.0-final1
-</code></pre></div></p>
+<div class="highlight"><span class="filename">New pre_l configuration</span><pre><span></span><code><span class="k">[tool.bumpversion.parts.pre_l]</span>
+<span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;dev&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;rc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;final&quot;</span><span class="p">]</span>
+<span class="n">optional_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;final&quot;</span>
+</code></pre></div>
+<h3 id="visualize-the-new-versioning-path">Visualize the new versioning path<a class="headerlink" href="#visualize-the-new-versioning-path" title="Permanent link">&para;</a></h3>
+<p>Now when you run <code>bump-my-version show-bump</code>, you can see the new pre-release versioning path.</p>
+<div class="highlight"><span class="filename">Showing the new versioning path</span><pre><span></span><code><span class="gp">$ </span>bump-my-version<span class="w"> </span>show-bump
+<span class="go">0.1.0 ── bump ─┬─ major ─ 1.0.0-dev0</span>
+<span class="go">               ├─ minor ─ 0.2.0-dev0</span>
+<span class="go">               ├─ patch ─ 0.1.1-dev0</span>
+<span class="go">               ├─ pre_l ─ invalid: The part has already the maximum value among [&#39;dev&#39;, &#39;rc&#39;, &#39;final&#39;] and cannot be bumped.</span>
+<span class="go">               ╰─ pre_n ─ 0.1.0-final1</span>
+</code></pre></div>
 <p>The <code>pre_l</code> is not bump-able because it is already at the maximum value. The <code>pre_n</code> is bump-able because it is not at the maximum value.</p>
 <p>If we run <code>bump-my-version show-bump 1.0.0-dev0</code>, we can see the new versioning path for a <code>dev</code> starting version.</p>
-<p>```{code-block} console
-:caption: Showing the new versioning path for a dev version</p>
-<p>$ bump-my-version show-bump 1.0.0-dev0
-1.0.0-dev0 ── bump ─┬─ major ─ 2.0.0-dev0
-                    ├─ minor ─ 1.1.0-dev0
-                    ├─ patch ─ 1.0.1-dev0
-                    ├─ pre_l ─ 1.0.0-rc0
-                    ╰─ pre_n ─ 1.0.0-dev1
-<div class="highlight"><pre><span></span><code>Finally, we can see the new versioning path for a `rc` starting version.
-
-```{code-block} console
-:caption: Showing the new versioning path for an rc version
-
-$ bump-my-version show-bump 1.0.0-rc0 
-1.0.0-rc0 ── bump ─┬─ major ─ 2.0.0-dev0
-                   ├─ minor ─ 1.1.0-dev0
-                   ├─ patch ─ 1.0.1-dev0
-                   ├─ pre_l ─ 1.0.0
-                   ╰─ pre_n ─ 1.0.0-rc1
-</code></pre></div></p>
+<div class="highlight"><span class="filename">Showing the new versioning path for a dev version</span><pre><span></span><code><span class="gp">$ </span>bump-my-version<span class="w"> </span>show-bump<span class="w"> </span><span class="m">1</span>.0.0-dev0
+<span class="go">1.0.0-dev0 ── bump ─┬─ major ─ 2.0.0-dev0</span>
+<span class="go">                    ├─ minor ─ 1.1.0-dev0</span>
+<span class="go">                    ├─ patch ─ 1.0.1-dev0</span>
+<span class="go">                    ├─ pre_l ─ 1.0.0-rc0</span>
+<span class="go">                    ╰─ pre_n ─ 1.0.0-dev1</span>
+</code></pre></div>
+<p>Finally, we can see the new versioning path for a <code>rc</code> starting version.</p>
+<div class="highlight"><span class="filename">Showing the new versioning path for an rc version</span><pre><span></span><code><span class="gp">$ </span>bump-my-version<span class="w"> </span>show-bump<span class="w"> </span><span class="m">1</span>.0.0-rc0<span class="w"> </span>
+<span class="go">1.0.0-rc0 ── bump ─┬─ major ─ 2.0.0-dev0</span>
+<span class="go">                   ├─ minor ─ 1.1.0-dev0</span>
+<span class="go">                   ├─ patch ─ 1.0.1-dev0</span>
+<span class="go">                   ├─ pre_l ─ 1.0.0</span>
+<span class="go">                   ╰─ pre_n ─ 1.0.0-rc1</span>
+</code></pre></div>
 <p>The full development and release path is:</p>
 <ul>
 <li><code>1.0.0</code></li>
@@ -2003,20 +1992,17 @@ $ bump-my-version show-bump 1.0.0-rc0
 <li>Release candidates increase using <code>bump-my-version bump pre_n</code>.</li>
 <li>Switch from the release candidate to the final release using <code>bump-my-version bump pre_l</code>.</li>
 </ol>
-<h2 id="automating-the-pre-release-numbering">Automating the pre-release numbering<a class="headerlink" href="#automating-the-pre-release-numbering" title="Permanent link">&para;</a></h2>
+<h3 id="automate-the-pre-release-numbering">Automate the pre-release numbering<a class="headerlink" href="#automate-the-pre-release-numbering" title="Permanent link">&para;</a></h3>
 <p>The <code>pre_n</code> or pre-release number is a number that increases with each pre-release. You can automate this my changing the serialization configuration.</p>
-<p>```{code-block} toml
-:caption: Serialize configuration with pre_n automation</p>
-<p>serialize = [
-    &ldquo;{major}.{minor}.{patch}-{pre_l}{distance_to_latest_tag}&rdquo;,
-    &ldquo;{major}.{minor}.{patch}&rdquo;,
-]
-```</p>
+<div class="highlight"><span class="filename">Serialize configuration with pre_n automation</span><pre><span></span><code><span class="n">serialize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}-{pre_l}{distance_to_latest_tag}&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</code></pre></div>
 <p>The <code>distance_to_latest_tag</code> is a special value that is replaced with the number of commits since the last tag. This is a good value to use for the <code>pre_n</code> because it will always increase with each commit.</p>
-<h3 id="visualizing-the-pre_n-versioning-path">Visualizing the pre_n versioning path<a class="headerlink" href="#visualizing-the-pre_n-versioning-path" title="Permanent link">&para;</a></h3>
+<h3 id="visualize-the-pre_n-versioning-path">Visualize the pre_n versioning path<a class="headerlink" href="#visualize-the-pre_n-versioning-path" title="Permanent link">&para;</a></h3>
 <p>Now when you run <code>bump-my-version show-bump</code>, you can see the new pre-release versioning path.</p>
-<p>```{code-block} console
-:caption: Showing the new versioning path with pre_n automation</p>
+<p>```console title=&rdquo;Showing the new versioning path with pre_n automation&rdquo;</p>
 <p>$ bump-my-version show-bump
 0.1.0 ── bump ─┬─ major ─ 1.0.0-dev0
                ├─ minor ─ 0.2.0-dev0
@@ -2050,6 +2036,7 @@ $ bump-my-version show-bump 1.0.0-rc0
 <li>Release candidate versions increase automatically with each commit.</li>
 <li>Switch from the release candidate to the final release using <code>bump-my-version bump pre_l</code>.</li>
 </ol>
+<!-- END INCLUDE -->
 
 
 
@@ -2070,7 +2057,7 @@ $ bump-my-version show-bump 1.0.0-rc0
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 22, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 25, 2024</span>
   </span>
 
     

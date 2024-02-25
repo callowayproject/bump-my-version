@@ -899,6 +899,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#ignore_missing_files" class="md-nav__link">
+    <span class="md-ellipsis">
+      ignore_missing_files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#ignore_missing_version" class="md-nav__link">
     <span class="md-ellipsis">
       ignore_missing_version
@@ -920,6 +929,15 @@
   <a href="#parse" class="md-nav__link">
     <span class="md-ellipsis">
       parse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regex" class="md-nav__link">
+    <span class="md-ellipsis">
+      regex
     </span>
   </a>
   
@@ -971,18 +989,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#tag_name" class="md-nav__link">
+  <a href="#tag_message" class="md-nav__link">
     <span class="md-ellipsis">
-      tag_name
+      tag_message
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#tag_message" class="md-nav__link">
+  <a href="#tag_name" class="md-nav__link">
     <span class="md-ellipsis">
-      tag_message
+      tag_name
     </span>
   </a>
   
@@ -1118,6 +1136,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#regex_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      regex
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#replace_1" class="md-nav__link">
     <span class="md-ellipsis">
       replace
@@ -1136,18 +1163,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ini-style-configuration-files" class="md-nav__link">
+  <a href="#ignore_missing_file" class="md-nav__link">
     <span class="md-ellipsis">
-      INI-style configuration files
+      ignore_missing_file
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#toml-configuration-files" class="md-nav__link">
+  <a href="#examples_2" class="md-nav__link">
     <span class="md-ellipsis">
-      TOML configuration files
+      Examples
     </span>
   </a>
   
@@ -2178,7 +2205,7 @@
 <p>By using a configuration file, you no longer need to specify those options on the command line. The configuration file also allows greater flexibility in specifying how files are modified.</p>
 <h2 id="global-configuration">Global Configuration<a class="headerlink" href="#global-configuration" title="Permanent link">&para;</a></h2>
 <p>The general configuration is grouped in a <code>[tool.bumpversion]</code> or  <code>[bumpversion]</code> section, depending on if it is a TOML or INI file respectfully.</p>
-<h3 id="allow_dirty"><code>allow_dirty</code><a class="headerlink" href="#allow_dirty" title="Permanent link">&para;</a></h3>
+<h3 id="allow_dirty">allow_dirty<a class="headerlink" href="#allow_dirty" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2194,7 +2221,7 @@
 </dl>
 </div>
 <p>Bump-my-version&rsquo;s default behavior is to abort if the working directory has uncommitted changes. This is to protect you from releasing unversioned files and/or overwriting unsaved changes.</p>
-<h3 id="commit"><code>commit</code><a class="headerlink" href="#commit" title="Permanent link">&para;</a></h3>
+<h3 id="commit">commit<a class="headerlink" href="#commit" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2211,7 +2238,7 @@
 </div>
 <p>Whether to create a commit using git or Mercurial.</p>
 <p>If you have pre-commit hooks, you might also want to add an option to <a href="./#commit-args"><code>commit_args</code></a> to disable your pre-commit hooks. For Git use <code>--no-verify</code> and use <code>--config hooks.pre-commit=</code> for Mercurial.</p>
-<h3 id="commit_args"><code>commit_args</code><a class="headerlink" href="#commit_args" title="Permanent link">&para;</a></h3>
+<h3 id="commit_args">commit_args<a class="headerlink" href="#commit_args" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2228,7 +2255,7 @@
 </div>
 <p>Extra arguments to pass to commit command. This is only used when the <a href="./#commit"><code>commit</code></a> option is set to <code>True</code>.</p>
 <p>If you have pre-commit hooks, you might also want to add an option to disable your pre-commit hooks. For Git use <code>--no-verify</code> and use <code>--config hooks.pre-commit=</code> for Mercurial.</p>
-<h3 id="current_version"><code>current_version</code><a class="headerlink" href="#current_version" title="Permanent link">&para;</a></h3>
+<h3 id="current_version">current_version<a class="headerlink" href="#current_version" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2244,7 +2271,23 @@
 </dl>
 </div>
 <p>The current version of the software package before bumping. A value for this is required.</p>
-<h3 id="ignore_missing_version"><code>ignore_missing_version</code><a class="headerlink" href="#ignore_missing_version" title="Permanent link">&para;</a></h3>
+<h3 id="ignore_missing_files">ignore_missing_files<a class="headerlink" href="#ignore_missing_files" title="Permanent link">&para;</a></h3>
+<div class="field-list">
+<dl>
+<dt>required</dt>
+<dd>No</dd>
+<dt>default</dt>
+<dd><code>False</code></dd>
+<dt>type</dt>
+<dd>boolean</dd>
+<dt>command line option</dt>
+<dd><code>--ignore-missing-files</code></dd>
+<dt>environment var</dt>
+<dd><code>BUMPVERSION_IGNORE_MISSING_FILES</code></dd>
+</dl>
+</div>
+<p>If <code>True</code>, don&rsquo;t fail if the configured file is missing.</p>
+<h3 id="ignore_missing_version">ignore_missing_version<a class="headerlink" href="#ignore_missing_version" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2260,7 +2303,7 @@
 </dl>
 </div>
 <p>If <code>True</code>, don&rsquo;t fail if the version string to be replaced is not found in the file.</p>
-<h3 id="message"><code>message</code><a class="headerlink" href="#message" title="Permanent link">&para;</a></h3>
+<h3 id="message">message<a class="headerlink" href="#message" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2277,7 +2320,7 @@
 </div>
 <p>The commit message template to use when creating a commit. This is only used when the <a href="./#commit"><code>commit</code></a> option is set to <code>True</code>.</p>
 <p>This string is templated using the <a href="https://docs.python.org/3/library/string.html#format-string-syntax">Python Format String Syntax</a>. The <a href="../formatting-context/">formatting context reference</a> describes the available variables.</p>
-<h3 id="parse"><code>parse</code><a class="headerlink" href="#parse" title="Permanent link">&para;</a></h3>
+<h3 id="parse">parse<a class="headerlink" href="#parse" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2294,7 +2337,23 @@
 </div>
 <p>This is the default regular expression (using <a href="https://docs.python.org/3/library/re.html#regular-expression-syntax">Python regular expression syntax</a>) for finding and parsing the version string into its components. Individual part or file configurations may override this.</p>
 <p>The regular expression must be able to parse all strings produced by the configured <a href="./#serialize"><code>serialize</code></a> value. Named matching groups (&ldquo;<code>(?P&lt;name&gt;...)</code>&rdquo;) indicate the version part the matched value belongs to.</p>
-<h3 id="replace"><code>replace</code><a class="headerlink" href="#replace" title="Permanent link">&para;</a></h3>
+<h3 id="regex">regex<a class="headerlink" href="#regex" title="Permanent link">&para;</a></h3>
+<div class="field-list">
+<dl>
+<dt>required</dt>
+<dd>No</dd>
+<dt>default</dt>
+<dd><code>False</code></dd>
+<dt>type</dt>
+<dd>boolean</dd>
+<dt>command line option</dt>
+<dd><code>--regex | --no-regex</code></dd>
+<dt>environment var</dt>
+<dd><code>BUMPVERSION_REGEX</code></dd>
+</dl>
+</div>
+<p>Treat the <code>search</code> string as a regular expression.</p>
+<h3 id="replace">replace<a class="headerlink" href="#replace" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2310,7 +2369,7 @@
 </dl>
 </div>
 <p>This is the template to create the string that will replace the current version number in the file.</p>
-<h3 id="search"><code>search</code><a class="headerlink" href="#search" title="Permanent link">&para;</a></h3>
+<h3 id="search">search<a class="headerlink" href="#search" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2327,7 +2386,7 @@
 </div>
 <p>This is the template string how to search for the string to be replaced in the file. Individual file configurations may override this. This can span multiple lines, and is templated using <a href="https://docs.python.org/3/library/string.html#format-string-syntax">Python Format String Syntax</a>. The <a href="../formatting-context/">formatting context reference</a> describes the available variables.</p>
 <p>This is useful if there is the remotest possibility that the current version number might be present multiple times in the file and you mean to only bump one of the occurrences. </p>
-<h3 id="serialize"><code>serialize</code><a class="headerlink" href="#serialize" title="Permanent link">&para;</a></h3>
+<h3 id="serialize">serialize<a class="headerlink" href="#serialize" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2353,7 +2412,7 @@
 </code></pre></div>
 <p>Since <code>0</code> is optional by default, Version <code>1.8.9</code> will serialize to  <code>1.8.9</code>, <code>1.9.0</code> will serialize to <code>1.9</code>, and version <code>2.0.0</code> will serialize as <code>2</code>. </p>
 <p>Each string is templated using the <a href="https://docs.python.org/3/library/string.html#format-string-syntax">Python Format String Syntax</a>. The <a href="../formatting-context/">formatting context reference</a> describes the available variables.</p>
-<h3 id="sign_tags"><code>sign_tags</code><a class="headerlink" href="#sign_tags" title="Permanent link">&para;</a></h3>
+<h3 id="sign_tags">sign_tags<a class="headerlink" href="#sign_tags" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2363,13 +2422,13 @@
 <dt>type</dt>
 <dd>boolean</dd>
 <dt>command line option</dt>
-<dd><code>(--sign-tags | --no-sign-tags)</code></dd>
+<dd><code>--sign-tags | --no-sign-tags</code></dd>
 <dt>environment var</dt>
 <dd><code>BUMPVERSION_SIGN_TAGS</code></dd>
 </dl>
 </div>
 <p>If <code>True</code>, sign the created tag, when <a href="./#tag"><code>tag</code></a> is <code>True</code>.</p>
-<h3 id="tag"><code>tag</code><a class="headerlink" href="#tag" title="Permanent link">&para;</a></h3>
+<h3 id="tag">tag<a class="headerlink" href="#tag" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2379,31 +2438,14 @@
 <dt>type</dt>
 <dd>boolean</dd>
 <dt>command line option</dt>
-<dd><code>(--tag | --no-tag)</code></dd>
+<dd><code>--tag | --no-tag</code></dd>
 <dt>environment var</dt>
 <dd><code>BUMPVERSION_TAG</code></dd>
 </dl>
 </div>
 <p>If <code>True</code>, create a tag after committing the changes. The tag is named using the <a href="./#tag-name"><code>tag_name</code></a> option. </p>
 <p>If you are using <code>git</code>, don&rsquo;t forget to <code>git-push</code> with the <code>--tags</code> flag when you are done.</p>
-<h3 id="tag_name"><code>tag_name</code><a class="headerlink" href="#tag_name" title="Permanent link">&para;</a></h3>
-<div class="field-list">
-<dl>
-<dt>required</dt>
-<dd>No</dd>
-<dt>default</dt>
-<dd><code>v{new_version}</code></dd>
-<dt>type</dt>
-<dd>string</dd>
-<dt>command line option</dt>
-<dd><code>--tag-name</code></dd>
-<dt>environment var</dt>
-<dd><code>BUMPVERSION_TAG_NAME</code></dd>
-</dl>
-</div>
-<p>The name template used to render the tag, when <a href="./#tag"><code>tag</code></a> is <code>True</code>.</p>
-<p>This string is templated using the <a href="https://docs.python.org/3/library/string.html#format-string-syntax">Python Format String Syntax</a>. The <a href="../formatting-context/">formatting context reference</a> describes the available variables.</p>
-<h3 id="tag_message"><code>tag_message</code><a class="headerlink" href="#tag_message" title="Permanent link">&para;</a></h3>
+<h3 id="tag_message">tag_message<a class="headerlink" href="#tag_message" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2421,6 +2463,23 @@
 <p>The tag message template to use when creating a tag, when <a href="./#tag"><code>tag</code></a> is <code>True</code></p>
 <p>This string is templated using the <a href="https://docs.python.org/3/library/string.html#format-string-syntax">Python Format String Syntax</a>. The <a href="../formatting-context/">formatting context reference</a> describes the available variables.</p>
 <p>Bump My Version creates an <em>annotated</em> tag in Git by default. To disable this and create a <em>lightweight</em> tag, you must explicitly set an empty <code>tag_message</code> value.</p>
+<h3 id="tag_name">tag_name<a class="headerlink" href="#tag_name" title="Permanent link">&para;</a></h3>
+<div class="field-list">
+<dl>
+<dt>required</dt>
+<dd>No</dd>
+<dt>default</dt>
+<dd><code>v{new_version}</code></dd>
+<dt>type</dt>
+<dd>string</dd>
+<dt>command line option</dt>
+<dd><code>--tag-name</code></dd>
+<dt>environment var</dt>
+<dd><code>BUMPVERSION_TAG_NAME</code></dd>
+</dl>
+</div>
+<p>The name template used to render the tag, when <a href="./#tag"><code>tag</code></a> is <code>True</code>.</p>
+<p>This string is templated using the <a href="https://docs.python.org/3/library/string.html#format-string-syntax">Python Format String Syntax</a>. The <a href="../formatting-context/">formatting context reference</a> describes the available variables.</p>
 <h3 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h3>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="toml" name="__tabbed_1" type="radio" /><input id="cfg" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="toml">TOML</label><label for="cfg">CFG</label></div>
 <div class="tabbed-content">
@@ -2464,9 +2523,9 @@
 </div>
 </div>
 <h2 id="version-part-specific-configuration">Version part-specific configuration<a class="headerlink" href="#version-part-specific-configuration" title="Permanent link">&para;</a></h2>
-<p>Version part configuration is grouped in a <code>[tool.bumpversion.parts.&lt;partname&gt;]</code> or  <code>[bumpversion:part:&lt;partname&gt;]</code> section, depending on if it is a TOML or INI file respectfully.</p>
-<p>You only need to configure version parts if they deviate from the default, and then you only need to specify the options that are different.</p>
-<h3 id="values"><code>values</code><a class="headerlink" href="#values" title="Permanent link">&para;</a></h3>
+<p>Version part configuration is grouped in a <code>[tool.bumpversion.parts.&lt;partname&gt;]</code> or  <code>[bumpversion:part:&lt;partname&gt;]</code> section, depending on if it is a TOML or INI file, respectfully.</p>
+<p>You only need to configure version parts if they deviate from the default, and then you only need to specify the overridden options.</p>
+<h3 id="values">values<a class="headerlink" href="#values" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2478,7 +2537,7 @@
 </dl>
 </div>
 <p>An explicit list of all values to iterate through when bumping this part. An empty array is treated as indicating <code>numeric</code> values.</p>
-<h3 id="optional_value"><code>optional_value</code><a class="headerlink" href="#optional_value" title="Permanent link">&para;</a></h3>
+<h3 id="optional_value">optional_value<a class="headerlink" href="#optional_value" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2494,7 +2553,7 @@
 <p class="admonition-title">Note</p>
 <p>Numeric values are still treated as strings internally, so when specifying an optional value, you must use a string.</p>
 </div>
-<h3 id="first_value"><code>first_value</code><a class="headerlink" href="#first_value" title="Permanent link">&para;</a></h3>
+<h3 id="first_value">first_value<a class="headerlink" href="#first_value" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2510,7 +2569,7 @@
 <p class="admonition-title">Note</p>
 <p>Numeric values are still treated as strings internally, so when specifying a first value, you must use a string.</p>
 </div>
-<h3 id="independent"><code>independent</code><a class="headerlink" href="#independent" title="Permanent link">&para;</a></h3>
+<h3 id="independent">independent<a class="headerlink" href="#independent" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2549,7 +2608,7 @@ independent of the other parts. It is useful when you have a build number in you
 </div>
 <h2 id="file-specific-configuration">File-specific configuration<a class="headerlink" href="#file-specific-configuration" title="Permanent link">&para;</a></h2>
 <p>This section configures which files Bump My Version should update by replacing their current version with the newly bumped version.</p>
-<h3 id="filename"><code>filename</code><a class="headerlink" href="#filename" title="Permanent link">&para;</a></h3>
+<h3 id="filename">filename<a class="headerlink" href="#filename" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2565,7 +2624,7 @@ independent of the other parts. It is useful when you have a build number in you
 <p class="admonition-title">Note</p>
 <p>‡ This is only used with TOML configuration, and is only required if <a href="#glob"><code>glob</code></a> is <em>not</em> specified. INI-style configuration files specify the file name as part of the grouping.</p>
 </div>
-<h3 id="glob"><code>glob</code><a class="headerlink" href="#glob" title="Permanent link">&para;</a></h3>
+<h3 id="glob">glob<a class="headerlink" href="#glob" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2581,7 +2640,7 @@ independent of the other parts. It is useful when you have a build number in you
 <p class="admonition-title">Note</p>
 <p>‡ This is only used with TOML configuration, and is only required if <a href="#filename"><code>filename</code></a> is <em>not</em> specified. INI-style configuration files specify the glob pattern as part of the grouping.</p>
 </div>
-<h3 id="parse_1"><code>parse</code><a class="headerlink" href="#parse_1" title="Permanent link">&para;</a></h3>
+<h3 id="parse_1">parse<a class="headerlink" href="#parse_1" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2593,7 +2652,7 @@ independent of the other parts. It is useful when you have a build number in you
 </dl>
 </div>
 <p>This is an override to the default pattern to parse the version number from this file.</p>
-<h3 id="serialize_1"><code>serialize</code><a class="headerlink" href="#serialize_1" title="Permanent link">&para;</a></h3>
+<h3 id="serialize_1">serialize<a class="headerlink" href="#serialize_1" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2605,7 +2664,7 @@ independent of the other parts. It is useful when you have a build number in you
 </dl>
 </div>
 <p>This is an override to the default templates to serialize the new version number in this file.</p>
-<h3 id="search_1"><code>search</code><a class="headerlink" href="#search_1" title="Permanent link">&para;</a></h3>
+<h3 id="search_1">search<a class="headerlink" href="#search_1" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2617,7 +2676,19 @@ independent of the other parts. It is useful when you have a build number in you
 </dl>
 </div>
 <p>This is an override to the default template string how to search for the string to be replaced in the file.</p>
-<h3 id="replace_1"><code>replace</code><a class="headerlink" href="#replace_1" title="Permanent link">&para;</a></h3>
+<h3 id="regex_1">regex<a class="headerlink" href="#regex_1" title="Permanent link">&para;</a></h3>
+<div class="field-list">
+<dl>
+<dt>required</dt>
+<dd>No</dd>
+<dt>default</dt>
+<dd>the valued configured in the global <code>regex</code> field</dd>
+<dt>type</dt>
+<dd>boolean</dd>
+</dl>
+</div>
+<p>If <code>True</code>, treat the <code>search</code> parameter as a regular expression.</p>
+<h3 id="replace_1">replace<a class="headerlink" href="#replace_1" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2629,7 +2700,7 @@ independent of the other parts. It is useful when you have a build number in you
 </dl>
 </div>
 <p>This is an override to the template to create the string that will replace the current version number in the file.</p>
-<h3 id="ignore_missing_version_1"><code>ignore_missing_version</code><a class="headerlink" href="#ignore_missing_version_1" title="Permanent link">&para;</a></h3>
+<h3 id="ignore_missing_version_1">ignore_missing_version<a class="headerlink" href="#ignore_missing_version_1" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -2641,7 +2712,38 @@ independent of the other parts. It is useful when you have a build number in you
 </dl>
 </div>
 <p>If <code>True</code>, don&rsquo;t fail if the version string to be replaced is not found in the file.</p>
-<h3 id="ini-style-configuration-files">INI-style configuration files<a class="headerlink" href="#ini-style-configuration-files" title="Permanent link">&para;</a></h3>
+<h3 id="ignore_missing_file">ignore_missing_file<a class="headerlink" href="#ignore_missing_file" title="Permanent link">&para;</a></h3>
+<div class="field-list">
+<dl>
+<dt>required</dt>
+<dd>No</dd>
+<dt>default</dt>
+<dd>The value configured in the global <code>ignore_missing_file</code> field</dd>
+<dt>type</dt>
+<dd>boolean</dd>
+</dl>
+</div>
+<p>if <code>True</code>, don&rsquo;t fail if the configured file is missing.</p>
+<h3 id="examples_2">Examples<a class="headerlink" href="#examples_2" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="toml_2" name="__tabbed_3" type="radio" /><input id="cfg_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="toml_2">TOML</label><label for="cfg_2">CFG</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>TOML allows us to specify the files using an <a href="https://toml.io/en/v1.0.0#array-of-tables">array of tables.</a> TOML configuration files add two configuration fields to each file configuration: <code>filename</code> and <code>glob</code>. These fields are mutually exclusive: if you specify a value for both, only the <code>glob</code> value is used.</p>
+<p>For example, to change <code>coolapp/__init__.py</code> with the defaults, and alter <code>CHANGELOG.md</code> in twice:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[[tool.bumpversion.files]]</span>
+<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;coolapp/__init__.py&quot;</span>
+
+<span class="k">[[tool.bumpversion.files]]</span>
+<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;CHANGELOG.md&quot;</span>
+<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Unreleased&quot;</span>
+
+<span class="k">[[tool.bumpversion.files]]</span>
+<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;CHANGELOG.md&quot;</span>
+<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;{current_version}...HEAD&quot;</span>
+<span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;{current_version}...{new_version}&quot;</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
 <p>INI-style configuration is in the section: <code>[bumpversion:file:&lt;filename&gt;]</code> or <code>[bumpversion:glob:&lt;glob pattern&gt;]</code>.</p>
 <p>Both, <code>file:</code> and <code>glob:</code> are configured the same. Their difference is that file will match file names directly like <code>requirements.txt</code>. While glob also matches multiple files via wildcards like <code>**/pom.xml</code>.</p>
 <div class="admonition note">
@@ -2658,21 +2760,9 @@ independent of the other parts. It is useful when you have a build number in you
 <span class="na">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">{current_version}...HEAD</span>
 <span class="na">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">{current_version}...{new_version}</span>
 </code></pre></div>
-<h3 id="toml-configuration-files">TOML configuration files<a class="headerlink" href="#toml-configuration-files" title="Permanent link">&para;</a></h3>
-<p>TOML allows us to specify the files using an <a href="https://toml.io/en/v1.0.0#array-of-tables">array of tables.</a> TOML configuration files add two configuration fields to each file configuration: <code>filename</code> and <code>glob</code>. These fields are mutually exclusive: if you specify a value for both, only the <code>glob</code> value is used.</p>
-<p>For example, to change <code>coolapp/__init__.py</code> with the defaults, and alter <code>CHANGELOG.md</code> in twice:</p>
-<div class="highlight"><pre><span></span><code><span class="k">[[tool.bumpversion.files]]</span>
-<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;coolapp/__init__.py&quot;</span>
-
-<span class="k">[[tool.bumpversion.files]]</span>
-<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;CHANGELOG.md&quot;</span>
-<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Unreleased&quot;</span>
-
-<span class="k">[[tool.bumpversion.files]]</span>
-<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;CHANGELOG.md&quot;</span>
-<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;{current_version}...HEAD&quot;</span>
-<span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;{current_version}...{new_version}&quot;</span>
-</code></pre></div>
+</div>
+</div>
+</div>
 
 
 
@@ -2693,7 +2783,7 @@ independent of the other parts. It is useful when you have a build number in you
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 18, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 25, 2024</span>
   </span>
 
     

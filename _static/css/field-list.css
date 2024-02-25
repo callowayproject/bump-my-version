@@ -2,18 +2,13 @@ dl.field-list .doc-param-default, dl.doc-field-list .doc-param-default {
   float: none;
 }
 
-dd.doc-field-def > p:last-child {
-  padding-bottom: 0;
-  margin-bottom: 0;
-}
-
-dl.field-list, dl.doc-field-list {
+.field-list > dl, dl.field-list, dl.doc-field-list {
   display: flex;
   flex-flow: row wrap;
   padding-left: 10px;
 }
 
-dl.field-list > dt, dl.doc-field-list > dt {
+.field-list > dl > dt, dl.field-list > dt, dl.doc-field-list > dt {
   flex-basis: 20%;
   font-weight: bold;
   word-break: break-word;
@@ -21,11 +16,11 @@ dl.field-list > dt, dl.doc-field-list > dt {
   border-bottom: 1px solid #e5e5e5;
 }
 
-dl.field-list > dt:after {
+.field-list > dl > dt:after, dl.field-list > dt:after {
   content: ":";
 }
 
-dl.field-list > dd.doc-field-def, dl.doc-field-list > dd.doc-field-def {
+[dir=ltr] .field-list > dl > dd, dl.field-list > dd.doc-field-def, dl.doc-field-list > dd.doc-field-def {
   flex-basis: 70%;
   flex-grow: 1;
   margin: 0;
@@ -33,29 +28,7 @@ dl.field-list > dd.doc-field-def, dl.doc-field-list > dd.doc-field-def {
   border-bottom: 1px solid #e5e5e5;
 }
 
-dl {
-  margin-bottom: 15px;
-}
-
-dd > :first-child {
-  margin-top: 0;
-}
-
-dd ul, dd table {
-  margin-bottom: 10px;
-}
-
-dd {
-  margin-top: 3px;
-  margin-bottom: 10px;
-  margin-left: 30px;
-}
-
-dl > dd:last-child,
-dl > dd:last-child > :last-child {
+dd.doc-field-def > p:last-child {
+  padding-bottom: 0;
   margin-bottom: 0;
-}
-
-dt:target, span.highlighted {
-  background-color: #fbe54e;
 }
