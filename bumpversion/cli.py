@@ -65,7 +65,8 @@ click.rich_click.OPTION_GROUPS = {
         {
             "name": "Committing and tagging",
             "options": [
-                "--allow-dirty" "--commit",
+                "--allow-dirty",
+                "--commit",
                 "--commit-args",
                 "--message",
                 "--tag",
