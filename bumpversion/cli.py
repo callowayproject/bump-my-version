@@ -9,14 +9,13 @@ from click.core import Context
 from tomlkit import dumps
 
 from bumpversion import __version__
-from bumpversion.aliases import AliasedGroup
 from bumpversion.bump import do_bump
 from bumpversion.config import get_configuration
 from bumpversion.config.create import create_configuration
 from bumpversion.config.files import find_config_file
 from bumpversion.files import ConfiguredFile, modify_files
-from bumpversion.show import do_show, log_list
-from bumpversion.ui import get_indented_logger, print_info, print_warning, setup_logging
+from bumpversion.show import do_show
+from bumpversion.ui import get_indented_logger, print_info, setup_logging
 from bumpversion.utils import get_context, get_overrides
 from bumpversion.visualize import visualize
 
@@ -24,8 +23,6 @@ logger = get_indented_logger(__name__)
 
 
 @click.group(
-    cls=AliasedGroup,
-    invoke_without_command=True,
     context_settings={
         "ignore_unknown_options": True,
         "allow_interspersed_args": True,
@@ -37,8 +34,7 @@ logger = get_indented_logger(__name__)
 @click.pass_context
 def cli(ctx: Context) -> None:
     """Version bump your Python project."""
-    if ctx.invoked_subcommand is None:
-        ctx.invoke(bump, *ctx.args)
+    pass
 
 
 click.rich_click.OPTION_GROUPS = {
@@ -228,12 +224,6 @@ click.rich_click.OPTION_GROUPS = {
     envvar="BUMPVERSION_COMMIT_ARGS",
     help="Extra arguments to commit command",
 )
-@click.option(
-    "--list",
-    "show_list",
-    is_flag=True,
-    help="List machine readable information",
-)
 def bump(
     # version_part: str,
     args: list,
@@ -258,7 +248,6 @@ def bump(
     tag_message: Optional[str],
     message: Optional[str],
     commit_args: Optional[str],
-    show_list: bool,
 ) -> None:
     """
     Change the version.
@@ -305,11 +294,6 @@ def bump(
     else:
         version_part = None
         files = args
-
-    if show_list:
-        print_warning("DEPRECATED: The --list option is deprecated and will be removed in a future version.")
-        log_list(config, version_part, new_version)
-        return
 
     config.allow_dirty = allow_dirty if allow_dirty is not None else config.allow_dirty
     if not config.allow_dirty and config.scm_info.tool:
