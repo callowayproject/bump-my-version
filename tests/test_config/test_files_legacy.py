@@ -35,6 +35,11 @@ def cfg_file(request) -> str:
     [
         param("basic_cfg.cfg", "basic_cfg_expected.json", id="ini basic cfg"),
         param("legacy_multiline_search.cfg", "legacy_multiline_search_expected.json", id="multiline search cfg"),
+        param(
+            "legacy_multiline_search_comma.cfg",
+            "legacy_multiline_search_comma_expected.json",
+            id="multiline search comma cfg",
+        ),
     ],
 )
 def test_read_ini_file(conf_file: str, expected_file: str, fixtures_path: Path) -> None:
