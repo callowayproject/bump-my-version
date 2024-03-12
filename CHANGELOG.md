@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased (2024-03-12)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.18.3...HEAD)
+
+### Updates
+
+- Removes ability to call the CLI without subcommand. [e56c944](https://github.com/callowayproject/bump-my-version/commit/e56c944699151d589cec2b16a52f15cf56d151e6)
+    
+  BREAKING CHANGE: You must use bump-my-version bump
+
 ## 0.18.3 (2024-02-25)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.18.2...0.18.3)
 
