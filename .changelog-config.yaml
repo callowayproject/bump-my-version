@@ -73,6 +73,12 @@ ignore_patterns:
 
 # Set the commit's category metadata to the first classifier that returns ``True``.
 commit_classifiers:
+  - action: MetadataMatch
+    category: Breaking Changes
+    kwargs:
+      attribute: has_breaking_change
+      operator: is
+      value: True
   - action: SummaryRegexMatch
     category: New
     kwargs:
