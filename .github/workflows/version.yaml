@@ -50,7 +50,7 @@ jobs:
           echo "PACKAGE=false" >> $GITHUB_ENV
 
       - name: Override release kind on manual
-        if: ${{ github.event.inputs.releaseType  != 'auto' }}
+        if: ${{ github.event_name == "workflow_dispatch" && github.event.inputs.releaseType  != 'auto' }}
         id: override-release-kind
         run: |
           echo "::notice::Overriding release type to ${{ github.event.inputs.releaseType }} since this was a manual trigger"
