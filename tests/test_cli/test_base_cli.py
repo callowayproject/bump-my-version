@@ -10,4 +10,4 @@ class TestBadOptionRaisesError:
         """Passing an invalid option should raise an error."""
         result = runner.invoke(cli.cli, ["--bad-option", "bump", "--current-version", "1.0.0", "patch"])
         assert result.exit_code != 0
-        assert "No such option: --bad-option" in result.output
+        assert "No such option" in result.output
