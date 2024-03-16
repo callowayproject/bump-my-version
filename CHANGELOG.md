@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.19.2 (2024-03-16)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.19.1...0.19.2)
+
+### Fixes
+
+- Fixed bad options not returning an error code. [e88f0a9](https://github.com/callowayproject/bump-my-version/commit/e88f0a96ea82a2be84ad2781c0d82efcc5188963)
+    
+  Fixes #153
+- Fix issue on version.yaml. [7d14065](https://github.com/callowayproject/bump-my-version/commit/7d1406595e8d2fc6be440012497a8c077c2d6592)
+    
+
 ## 0.19.1 (2024-03-16)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.19.0...0.19.1)
 
