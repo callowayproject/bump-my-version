@@ -108,21 +108,6 @@ def resolve_name(obj: Any, name: str, default: Any = None, err_on_missing: bool 
             return default
 
 
-def log_list(config: Config, version_part: Optional[str], new_version: Optional[str]) -> None:
-    """Output configuration with new version."""
-    ctx = get_context(config)
-    if version_part:
-        version = config.version_config.parse(config.current_version)
-        next_version = get_next_version(version, config, version_part, new_version)
-        next_version_str = config.version_config.serialize(next_version, ctx)
-
-        print_info(f"new_version={next_version_str}")
-
-    config_dict = recursive_sort_dict(config.model_dump(exclude={"scm_info", "parts"}))
-    for key, value in config_dict.items():
-        print_info(f"{key}={value}")
-
-
 def do_show(*args, config: Config, format_: str = "default", increment: Optional[str] = None) -> None:
     """Show current version or configuration information."""
     config_dict = config.model_dump()

@@ -3,6 +3,19 @@ on:
   pull_request:
     types: [closed]
     branches: [master]
+  workflow_dispatch:
+    inputs:
+      releaseType:
+        description: 'What kind of release is this?'
+        required: false
+        default: 'auto'
+        type: choice
+        options:
+          - 'auto'
+          - 'major'
+          - 'minor'
+          - 'patch'
+          - 'dev'
 
 jobs:
   version:
@@ -36,6 +49,14 @@ jobs:
           echo "release-kind=$RELEASE_KIND" >> $GITHUB_OUTPUT
           echo "PACKAGE=false" >> $GITHUB_ENV
 
+      - name: Override release kind on manual
+        if: ${{ github.event.inputs.releaseType  != 'auto' }}
+        id: override-release-kind
+        run: |
+          echo "::notice::Overriding release type to ${{ github.event.inputs.releaseType }} since this was a manual trigger"
+          echo "RELEASE_KIND=${{ github.event.inputs.releaseType }}" >> $GITHUB_ENV
+          echo "release-kind=${{ github.event.inputs.releaseType }}" >> $GITHUB_OUTPUT
+
       - name: Get Pull Request Number
         id: pr
         run: |
@@ -59,7 +80,7 @@ jobs:
               echo "PACKAGE=true" >> $GITHUB_ENV
               ;;
             dev)
-              echo "Intentionally not bumping version for dev release"
+              bump-my-version bump --allow-dirty --verbose --no-commit --no-tag "$RELEASE_KIND"
               ;;
           esac
 
