@@ -43,11 +43,14 @@ def listify(s: str) -> list:
     Returns:
         List of homogenous basic types.
     """
-    if "," not in s and "\n" not in s:
+    if "\n" in s:
+        str_list = s.strip().split("\n")
+    elif "," in s:
+        str_list = s.strip().split(",")
+    else:
         raise ValueError("Not a List")
 
     # derive the type of the variable
-    str_list = s.strip().split(",") if "," in s else s.strip().split("\n")
     element_caster = str
     for caster in (boolify, int, float, noneify, element_caster):
         with contextlib.suppress(ValueError):
