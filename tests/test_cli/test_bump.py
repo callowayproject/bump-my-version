@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 from pytest import param
 
-from click.testing import CliRunner, Result
+from click.testing import Result
 
 from bumpversion import cli
 from tests.conftest import inside_dir
@@ -18,12 +18,11 @@ from tests.conftest import inside_dir
 class TestNoConfiguredFilesOption:
     """Tests around the behavior of the --no-configured-files option."""
 
-    def test_no_files_marked_to_modify(self, mocker, tmp_path: Path):
+    def test_no_files_marked_to_modify(self, mocker, tmp_path: Path, runner):
         """
         No files are sent to the `do_bump` function if the --no-configured-files option is used.
         """
         mocked_do_bump = mocker.patch("bumpversion.cli.do_bump")
-        runner: CliRunner = CliRunner()
         with inside_dir(tmp_path):
             result: Result = runner.invoke(
                 cli.cli, ["bump", "--current-version", "1.0.0", "--no-configured-files", "patch"]
@@ -38,10 +37,9 @@ class TestNoConfiguredFilesOption:
         passed_config = call_args[2]
         assert len(passed_config.files) == 0
 
-    def test_file_args_marked_to_modify(self, mocker, tmp_path: Path):
+    def test_file_args_marked_to_modify(self, mocker, tmp_path: Path, runner):
         """File paths marked in the command-line arguments are sent to the `do_bump` function."""
         mocked_do_bump = mocker.patch("bumpversion.cli.do_bump")
-        runner: CliRunner = CliRunner()
         with inside_dir(tmp_path):
             result: Result = runner.invoke(
                 cli.cli,
@@ -59,7 +57,7 @@ class TestNoConfiguredFilesOption:
         assert passed_config.files[0].filename == "do-this-file.txt"
 
 
-def test_bump_nested_regex(tmp_path: Path, fixtures_path: Path, caplog):
+def test_bump_nested_regex(tmp_path: Path, fixtures_path: Path, caplog, runner):
     """
     Arrange/Act: Run the `bump` subcommand with --no-configured-files.
 
@@ -71,7 +69,6 @@ def test_bump_nested_regex(tmp_path: Path, fixtures_path: Path, caplog):
     config_path = tmp_path / ".bumpversion.toml"
     config_path.write_text(content)
 
-    runner: CliRunner = CliRunner()
     with inside_dir(tmp_path):
         result: Result = runner.invoke(cli.cli, ["bump", "-vv", "patch"])
 
@@ -85,23 +82,21 @@ def test_bump_nested_regex(tmp_path: Path, fixtures_path: Path, caplog):
     assert cff_path.read_text() == f"cff-version: 1.2.0\ndate-released: {now}\n"
 
 
-def test_missing_explicit_config_file(tmp_path: Path):
+def test_missing_explicit_config_file(tmp_path: Path, runner):
     """The command-line processor should raise an exception if the config file is missing."""
     with inside_dir(tmp_path):
-        runner: CliRunner = CliRunner()
         with inside_dir(tmp_path):
             result: Result = runner.invoke(cli.cli, ["bump", "--config-file", "missing-file.cfg"])
         assert result.exit_code != 0
         assert "'missing-file.cfg' does not exist." in result.output
 
 
-def test_cli_options_override_config(tmp_path: Path, fixtures_path: Path, mocker):
+def test_cli_options_override_config(tmp_path: Path, fixtures_path: Path, mocker, runner):
     """The command-line processor should override the config file."""
     # Arrange
     config_path = tmp_path / "this_config.toml"
     fixture_toml = fixtures_path / "basic_cfg.toml"
     shutil.copy(fixture_toml, config_path)
-    runner: CliRunner = CliRunner()
     mocked_do_bump = mocker.patch("bumpversion.cli.do_bump")
 
     # Act
@@ -163,13 +158,12 @@ def test_cli_options_override_config(tmp_path: Path, fixtures_path: Path, mocker
         param("hg_repo", "hg", id="hg"),
     ],
 )
-def test_dirty_work_dir_raises_error(repo: str, scm_command: str, request):
+def test_dirty_work_dir_raises_error(repo: str, scm_command: str, request, runner):
     repo_path: Path = request.getfixturevalue(repo)
     with inside_dir(repo_path):
         # Arrange
         repo_path.joinpath("dirty2").write_text("i'm dirty! 1.1.1")
         subprocess.run([scm_command, "add", "dirty2"], check=True)
-        runner: CliRunner = CliRunner()
 
         # Act
         result: Result = runner.invoke(
@@ -181,7 +175,7 @@ def test_dirty_work_dir_raises_error(repo: str, scm_command: str, request):
     assert "working directory is not clean" in result.output
 
 
-def test_non_scm_operations_if_scm_not_installed(tmp_path: Path, monkeypatch):
+def test_non_scm_operations_if_scm_not_installed(tmp_path: Path, monkeypatch, runner):
     """Everything works except SCM commands if the SCM is unusable."""
     # Arrange
     monkeypatch.setenv("PATH", "")
@@ -189,8 +183,6 @@ def test_non_scm_operations_if_scm_not_installed(tmp_path: Path, monkeypatch):
     with inside_dir(tmp_path):
         version_path = tmp_path / "VERSION"
         version_path.write_text("31.0.3")
-
-        runner: CliRunner = CliRunner()
 
         # Act
         runner.invoke(cli.cli, ["bump", "major", "--current-version", "31.0.3", "VERSION"])
@@ -206,7 +198,7 @@ def test_non_scm_operations_if_scm_not_installed(tmp_path: Path, monkeypatch):
         param("", id="missing_version_part"),
     ],
 )
-def test_detects_bad_or_missing_version_part(version_part: str, tmp_path: Path, monkeypatch):
+def test_detects_bad_or_missing_version_part(version_part: str, tmp_path: Path, monkeypatch, runner):
     """It properly detects bad or missing version part."""
     # Arrange
     monkeypatch.setenv("PATH", "")
@@ -215,7 +207,6 @@ def test_detects_bad_or_missing_version_part(version_part: str, tmp_path: Path, 
         version_path = tmp_path / "VERSION"
         version_path.write_text("31.0.3")
 
-        runner: CliRunner = CliRunner()
         args = ["bump", "--current-version", "31.0.3"]
         if version_part:
             args.append(version_part)
@@ -228,7 +219,7 @@ def test_detects_bad_or_missing_version_part(version_part: str, tmp_path: Path, 
     assert "Unknown version part:" in result.stdout
 
 
-def test_ignores_missing_files_with_option(tmp_path, fixtures_path):
+def test_ignores_missing_files_with_option(tmp_path, fixtures_path, runner):
     """The replace subcommand should ignore missing."""
 
     config_file = tmp_path / ".bumpversion.toml"
@@ -242,7 +233,6 @@ def test_ignores_missing_files_with_option(tmp_path, fixtures_path):
     )
 
     # Act
-    runner: CliRunner = CliRunner()
     with inside_dir(tmp_path):
         result: Result = runner.invoke(
             cli.cli,

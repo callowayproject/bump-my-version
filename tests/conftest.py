@@ -2,6 +2,7 @@
 
 import subprocess
 from contextlib import contextmanager
+from click.testing import CliRunner
 from pathlib import Path
 from typing import Generator
 
@@ -62,3 +63,10 @@ def hg_repo(tmp_path: Path) -> Path:
     """Generate a simple temporary mercurial repo and return the path."""
     subprocess.run(["hg", "init"], cwd=tmp_path, check=True, capture_output=True)
     return tmp_path
+
+
+@pytest.fixture
+def runner() -> CliRunner:
+    """Return a CliRunner instance."""
+
+    return CliRunner()

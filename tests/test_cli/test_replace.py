@@ -4,7 +4,7 @@ import shutil
 import traceback
 from pathlib import Path
 
-from click.testing import CliRunner, Result
+from click.testing import Result
 
 from bumpversion import cli
 from tests.conftest import inside_dir
@@ -41,7 +41,7 @@ class TestReplaceCLI:
     class TestDefaultReplacesVersion:
         """Test the default behavior of the replace subcommand."""
 
-        def test_default_affects_all_configured_files(self, mocker, tmp_path, fixtures_path):
+        def test_default_affects_all_configured_files(self, mocker, tmp_path, fixtures_path, runner):
             """The replace subcommand should replace the version in all configured files."""
             # Arrange
             toml_path = fixtures_path / "basic_cfg.toml"
@@ -49,7 +49,6 @@ class TestReplaceCLI:
             shutil.copy(toml_path, config_path)
 
             mocked_modify_files = mocker.patch("bumpversion.cli.modify_files")
-            runner: CliRunner = CliRunner()
             with inside_dir(tmp_path):
                 result: Result = runner.invoke(cli.cli, ["replace", "--new-version", "1.1.0"])
 
@@ -66,7 +65,7 @@ class TestReplaceCLI:
             actual_filenames = {f.file_change.filename for f in configured_files}
             assert actual_filenames == {"setup.py", "CHANGELOG.md", "bumpversion/__init__.py"}
 
-        def test_can_limit_to_specific_files(self, mocker, git_repo, fixtures_path):
+        def test_can_limit_to_specific_files(self, mocker, git_repo, fixtures_path, runner):
             """The replace subcommand should set the files to only the specified files."""
             # Arrange
             toml_path = fixtures_path / "basic_cfg.toml"
@@ -74,7 +73,6 @@ class TestReplaceCLI:
             shutil.copy(toml_path, config_path)
 
             mocked_modify_files = mocker.patch("bumpversion.cli.modify_files")
-            runner: CliRunner = CliRunner()
             with inside_dir(git_repo):
                 result: Result = runner.invoke(cli.cli, ["replace", "--no-configured-files", "VERSION"])
 
@@ -93,7 +91,7 @@ class TestReplaceCLI:
     class TestOptions:
         """Test the options of the replace subcommand."""
 
-        def test_missing_newversion_is_set_to_none(self, mocker, tmp_path, fixtures_path):
+        def test_missing_newversion_is_set_to_none(self, mocker, tmp_path, fixtures_path, runner):
             """The replace subcommand should set new_version to None in the context."""
             # Arrange
             toml_path = fixtures_path / "basic_cfg.toml"
@@ -101,7 +99,6 @@ class TestReplaceCLI:
             shutil.copy(toml_path, config_path)
 
             mocked_modify_files = mocker.patch("bumpversion.cli.modify_files")
-            runner: CliRunner = CliRunner()
             with inside_dir(tmp_path):
                 result: Result = runner.invoke(cli.cli, ["replace"])
 
@@ -115,7 +112,7 @@ class TestReplaceCLI:
             call_args = mocked_modify_files.call_args[0]
             assert call_args[2] is None
 
-        def test_ignores_missing_files_with_option(self, mocker, tmp_path, fixtures_path):
+        def test_ignores_missing_files_with_option(self, mocker, tmp_path, fixtures_path, runner):
             """The replace subcommand should ignore missing."""
 
             config_file = tmp_path / ".bumpversion.toml"
@@ -129,7 +126,6 @@ class TestReplaceCLI:
             )
 
             # Act
-            runner: CliRunner = CliRunner()
             with inside_dir(tmp_path):
                 result: Result = runner.invoke(
                     cli.cli,
@@ -154,7 +150,7 @@ class TestReplaceCLI:
     class TestSearchInputs:
         """Test the search inputs of the replace subcommand."""
 
-        def test_accepts_plain_string(self, tmp_path, fixtures_path):
+        def test_accepts_plain_string(self, tmp_path, fixtures_path, runner):
             """Replace should not worry if the search values have version info."""
             from tomlkit import dumps
 
@@ -164,7 +160,6 @@ class TestReplaceCLI:
             doc_path = tmp_path / "docs.yaml"
             doc_path.write_text("url: https://github.com/sampleuser/workflows/main/.github/update_mailmap.py")
 
-            runner: CliRunner = CliRunner()
             with inside_dir(tmp_path):
                 result: Result = runner.invoke(
                     cli.cli,
@@ -186,7 +181,7 @@ class TestReplaceCLI:
 
             assert result.exit_code == 0
 
-        def test_unintentional_valid_regex_still_found(self, tmp_path: Path, caplog) -> None:
+        def test_unintentional_valid_regex_still_found(self, tmp_path: Path, caplog, runner) -> None:
             """A search string not meant to be a regex (but is) is still found and replaced correctly."""
             # Arrange
             search = "(unreleased)"
@@ -209,7 +204,6 @@ class TestReplaceCLI:
             )
 
             # Act
-            runner: CliRunner = CliRunner()
             with inside_dir(tmp_path):
                 result: Result = runner.invoke(
                     cli.cli,
@@ -241,7 +235,7 @@ class TestReplaceCLI:
     class TestReplaceInputs:
         """Test the replace inputs of the replace subcommand."""
 
-        def test_accepts_empty_string(self, tmp_path, fixtures_path):
+        def test_accepts_empty_string(self, tmp_path, fixtures_path, runner):
             """Replace should be able to replace strings with an empty string."""
             from tomlkit import dumps
 
@@ -251,7 +245,6 @@ class TestReplaceCLI:
             doc_path = tmp_path / "docs.yaml"
             doc_path.write_text("We should censor profanity\n\n")
 
-            runner: CliRunner = CliRunner()
             with inside_dir(tmp_path):
                 result: Result = runner.invoke(
                     cli.cli,
@@ -275,7 +268,7 @@ class TestReplaceCLI:
             assert result.exit_code == 0
             assert doc_path.read_text() == "We should censor \n\n"
 
-        def test_accepts_plain_string(self, tmp_path, fixtures_path):
+        def test_accepts_plain_string(self, tmp_path, fixtures_path, runner):
             """Replace should not worry if the replace values have version info."""
             from tomlkit import dumps
 
@@ -285,7 +278,6 @@ class TestReplaceCLI:
             doc_path = tmp_path / "docs.yaml"
             doc_path.write_text("url: https://github.com/sampleuser/workflows/v2.17.7/.github/update_mailmap.py")
 
-            runner: CliRunner = CliRunner()
             with inside_dir(tmp_path):
                 result: Result = runner.invoke(
                     cli.cli,
