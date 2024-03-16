@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.19.1 (2024-03-16)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.19.0...0.19.1)
+
+### Fixes
+
+- Fix commas in legacy multiline options. [62dfe8e](https://github.com/callowayproject/bump-my-version/commit/62dfe8e2d6ed5c8d93f92f5d6128ff5aedadc24f)
+    
+### New
+
+- Added manual version bumping in the GitHub action. [c9d67b5](https://github.com/callowayproject/bump-my-version/commit/c9d67b5dad3a0f93abe35cd4854ee88677f07e8c)
+    
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [be1a568](https://github.com/callowayproject/bump-my-version/commit/be1a568edfa0e714859423b62a00fd08bfadb583)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.2.2 → v0.3.2](https://github.com/astral-sh/ruff-pre-commit/compare/v0.2.2...v0.3.2)
+
+
 ## 0.19.0 (2024-03-12)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.18.3...0.19.0)
 
