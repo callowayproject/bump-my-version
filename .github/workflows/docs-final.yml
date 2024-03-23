@@ -4,6 +4,11 @@ on:
   push:
     branches: [ "master" ]
 
+permissions:
+  contents: read
+  pull-requests: write
+  pages: write
+
 jobs:
   build:
 
