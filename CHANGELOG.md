@@ -1,5 +1,55 @@
 # Changelog
 
+## 0.19.3 (2024-03-23)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.19.2...0.19.3)
+
+### Fixes
+
+- Fixed packaging of dev releases. [84254e0](https://github.com/callowayproject/bump-my-version/commit/84254e0535f553a17a78ca879c7e73c1c2aa0db8)
+    
+- Fixed platform-dependent encoding. [f8b4d65](https://github.com/callowayproject/bump-my-version/commit/f8b4d65fbc10e9e758114546de3d9c490bbdcb82)
+    
+  - Added `encoding="utf-8"` to all writes.
+- Fixed version.yaml workflow. [10b007c](https://github.com/callowayproject/bump-my-version/commit/10b007c9434a2fed293a6867310f962f3f22a79b)
+    
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [e92000a](https://github.com/callowayproject/bump-my-version/commit/e92000abea994fbf3db7997c00cacb1da6082236)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.3.2 → v0.3.3](https://github.com/astral-sh/ruff-pre-commit/compare/v0.3.2...v0.3.3)
+
+- Bump the github-actions group with 3 updates. [a422c58](https://github.com/callowayproject/bump-my-version/commit/a422c588f40723ac0f441883bbeca29c0f6e406b)
+    
+  Bumps the github-actions group with 3 updates: [actions/checkout](https://github.com/actions/checkout), [actions/setup-python](https://github.com/actions/setup-python) and [codecov/codecov-action](https://github.com/codecov/codecov-action).
+
+
+  Updates `actions/checkout` from 3 to 4
+  - [Release notes](https://github.com/actions/checkout/releases)
+  - [Changelog](https://github.com/actions/checkout/blob/main/CHANGELOG.md)
+  - [Commits](https://github.com/actions/checkout/compare/v3...v4)
+
+  Updates `actions/setup-python` from 4 to 5
+  - [Release notes](https://github.com/actions/setup-python/releases)
+  - [Commits](https://github.com/actions/setup-python/compare/v4...v5)
+
+  Updates `codecov/codecov-action` from 3 to 4
+  - [Release notes](https://github.com/codecov/codecov-action/releases)
+  - [Changelog](https://github.com/codecov/codecov-action/blob/main/CHANGELOG.md)
+  - [Commits](https://github.com/codecov/codecov-action/compare/v3...v4)
+
+  ---
+  **updated-dependencies:** - dependency-name: actions/checkout
+dependency-type: direct:production
+update-type: version-update:semver-major
+dependency-group: github-actions
+
+  **signed-off-by:** dependabot[bot] <support@github.com>
+
+- Keep GitHub Actions up to date with GitHub's Dependabot. [2e55fa1](https://github.com/callowayproject/bump-my-version/commit/2e55fa1956012fa8e36c3f91afc6e3825d809779)
+    
+  * https://docs.github.com/en/code-security/dependabot/working-with-dependabot/keeping-your-actions-up-to-date-with-dependabot
+  * https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem
+
 ## 0.19.2 (2024-03-16)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.19.1...0.19.2)
 
