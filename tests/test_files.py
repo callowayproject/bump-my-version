@@ -29,7 +29,7 @@ def test_single_file_processed_twice(tmp_path: Path):
     to verify correct interpretation.
     """
     filepath = tmp_path.joinpath("file2")
-    filepath.write_text("dots: 0.10.2\ndashes: 0-10-2")
+    filepath.write_text("dots: 0.10.2\ndashes: 0-10-2", encoding="utf-8")
     overrides = {
         "current_version": "0.10.2",
         "files": [
@@ -61,13 +61,13 @@ def test_single_file_processed_twice(tmp_path: Path):
 
 def test_multi_file_configuration(tmp_path: Path):
     full_vers_path = tmp_path / "FULL_VERSION.txt"
-    full_vers_path.write_text("1.0.3")
+    full_vers_path.write_text("1.0.3", encoding="utf-8")
     maj_vers_path = tmp_path / "MAJOR_VERSION.txt"
-    maj_vers_path.write_text("1")
+    maj_vers_path.write_text("1", encoding="utf-8")
     readme_path = tmp_path / "README.txt"
-    readme_path.write_text("MyAwesomeSoftware(TM) v1.0")
+    readme_path.write_text("MyAwesomeSoftware(TM) v1.0", encoding="utf-8")
     build_num_path = tmp_path / "BUILD_NUMBER"
-    build_num_path.write_text("1.0.3+joe+38943")
+    build_num_path.write_text("1.0.3+joe+38943", encoding="utf-8")
 
     overrides = {
         "current_version": "1.0.3+joe+38943",
@@ -141,7 +141,7 @@ def test_raises_correct_missing_version_string(tmp_path: Path, fixtures_path: Pa
         conf = config.get_configuration(config_file=dst_path.joinpath(".bumpversion.toml"))
         version_config = VersionConfig(conf.parse, conf.serialize, conf.search, conf.replace, conf.parts)
         current_version = version_config.parse(conf.current_version)
-        dst_path.joinpath("Version.csv").write_text("1;3-1;0;rc;build.1031")
+        dst_path.joinpath("Version.csv").write_text("1;3-1;0;rc;build.1031", encoding="utf-8")
 
         major_version = current_version.bump("patch")
         ctx = get_context(conf)
@@ -179,7 +179,7 @@ def test_search_replace_to_avoid_updating_unconcerned_lines(tmp_path: Path, capl
 
     caplog.set_level(logging.DEBUG)
     req_path = tmp_path / "requirements.txt"
-    req_path.write_text("Django>=1.5.6,<1.6\nMyProject==1.5.6")
+    req_path.write_text("Django>=1.5.6,<1.6\nMyProject==1.5.6", encoding="utf-8")
 
     changelog_path = tmp_path / "CHANGELOG.md"
     changelog_path.write_text(
@@ -196,7 +196,8 @@ def test_search_replace_to_avoid_updating_unconcerned_lines(tmp_path: Path, capl
     - This CHANGELOG file to hopefully serve as an evolving example of a
       standardized open source project CHANGELOG.
     """
-        )
+        ),
+        encoding="utf-8",
     )
 
     overrides = {
@@ -257,7 +258,7 @@ def test_non_matching_search_does_not_modify_file(tmp_path: Path):
     * bullet point B
     """
     )
-    changelog_path.write_text(changelog_content)
+    changelog_path.write_text(changelog_content, encoding="utf-8")
 
     overrides = {
         "current_version": "1.0.3",
@@ -303,7 +304,7 @@ def test_multi_line_search_is_found(tmp_path: Path) -> None:
     """A multiline search string is found and replaced."""
     # Arrange
     alphabet_path = tmp_path / "the_alphabet.txt"
-    alphabet_path.write_text("A\nB\nC\n")
+    alphabet_path.write_text("A\nB\nC\n", encoding="utf-8")
 
     overrides = {
         "current_version": "9.8.7",
@@ -337,7 +338,7 @@ def test_ignore_missing_version(global_value: bool, file_value: bool, should_rai
     """If the version is not found in the file, do nothing."""
     # Arrange
     version_path = tmp_path / Path("VERSION")
-    version_path.write_text("1.2.3")
+    version_path.write_text("1.2.3", encoding="utf-8")
 
     overrides = {
         "current_version": "1.2.5",
@@ -364,7 +365,7 @@ def test_regex_search(tmp_path: Path) -> None:
     """A regex search string is found and replaced."""
     # Arrange
     version_path = tmp_path / "VERSION"
-    version_path.write_text("Release: 1234-56-78 '1.2.3'")
+    version_path.write_text("Release: 1234-56-78 '1.2.3'", encoding="utf-8")
 
     overrides = {
         "regex": True,
@@ -389,7 +390,7 @@ def test_regex_search_with_escaped_chars(tmp_path: Path) -> None:
     """A search that uses special characters is not treated as a regex."""
     # Arrange
     version_path = tmp_path / "VERSION"
-    version_path.write_text("## [Release] 1.2.3 1234-56-78")
+    version_path.write_text("## [Release] 1.2.3 1234-56-78", encoding="utf-8")
 
     overrides = {
         "regex": True,
@@ -414,7 +415,7 @@ def test_regex_search_in_toml(tmp_path: Path, fixtures_path: Path) -> None:
     """Tests how-to doc 'update-a-date.md'."""
     # Arrange
     version_path = tmp_path / "VERSION"
-    version_path.write_text("__date__ = '1234-56-78'\n__version__ = '1.2.3'")
+    version_path.write_text("__date__ = '1234-56-78'\n__version__ = '1.2.3'", encoding="utf-8")
     config_path = tmp_path / ".bumpversion.toml"
     shutil.copyfile(fixtures_path / "replace-date-config.toml", config_path)
     with inside_dir(tmp_path):
@@ -462,7 +463,7 @@ def test_bad_regex_search(tmp_path: Path, caplog) -> None:
     """A search string not meant to be a regex is still found and replaced."""
     # Arrange
     version_path = tmp_path / "VERSION"
-    version_path.write_text("Score: A+ ( '1.2.3'")
+    version_path.write_text("Score: A+ ( '1.2.3'", encoding="utf-8")
 
     overrides = {
         "regex": True,
@@ -490,7 +491,7 @@ class TestDataFileUpdater:
         """A non-TOML file is not modified."""
         # Arrange
         version_path = tmp_path / "VERSION"
-        version_path.write_text("1.2.3")
+        version_path.write_text("1.2.3", encoding="utf-8")
 
         overrides = {"current_version": "1.2.3", "files": [{"filename": str(version_path)}]}
         conf, version_config, current_version = get_config_data(overrides)

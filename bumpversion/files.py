@@ -359,4 +359,4 @@ class DataFileUpdater:
 
         set_nested_value(toml_data, new_value, self.file_change.key_path)
 
-        self.path.write_text(tomlkit.dumps(toml_data))
+        self.path.write_text(tomlkit.dumps(toml_data), encoding="utf-8")

@@ -25,7 +25,7 @@ class TestFindConfigFile:
         def test_returns_path_to_existing_file(self, tmp_path: Path) -> None:
             """If an explicit config file is passed, it should be returned."""
             cfg_file = tmp_path / "bump.toml"
-            cfg_file.write_text('[tool.bumpversion]\ncurrent_version = "1.0.0"')
+            cfg_file.write_text('[tool.bumpversion]\ncurrent_version = "1.0.0"', encoding="utf-8")
             assert find_config_file(cfg_file) == cfg_file
 
         def test_returns_none_when_missing_file(self, tmp_path: Path) -> None:
@@ -43,7 +43,7 @@ class TestFindConfigFile:
         def test_returns_path_to_existing_default_file(self, tmp_path: Path, cfg_file_name: str) -> None:
             """If no explicit config file is passed, it returns the path to an existing expected file."""
             cfg_file = tmp_path / cfg_file_name
-            cfg_file.write_text('[tool.bumpversion]\ncurrent_version = "1.0.0"')
+            cfg_file.write_text('[tool.bumpversion]\ncurrent_version = "1.0.0"', encoding="utf-8")
             with inside_dir(tmp_path):
                 assert find_config_file() == cfg_file
 
@@ -57,7 +57,7 @@ class TestFindConfigFile:
             expected_order = list(CONFIG_FILE_SEARCH_ORDER)[:]  # make a copy so we can mutate it
             cfg_file_paths = [tmp_path / cfg_file_name for cfg_file_name in expected_order]
             for cfg_file in cfg_file_paths:  # create all the files
-                cfg_file.write_text('[tool.bumpversion]\ncurrent_version = "1.0.0"')
+                cfg_file.write_text('[tool.bumpversion]\ncurrent_version = "1.0.0"', encoding="utf-8")
 
             with inside_dir(tmp_path):
                 while expected_order:
@@ -101,7 +101,7 @@ class TestReadConfigFile:
             caplog.set_level("INFO")
             tmp_path = tmp_path_factory.mktemp("explicit-file-passed-")
             cfg_file = tmp_path / "basic_cfg.unknown"
-            cfg_file.write_text('[tool.bumpversion]\ncurrent_version = "1.0.0"')
+            cfg_file.write_text('[tool.bumpversion]\ncurrent_version = "1.0.0"', encoding="utf-8")
             with inside_dir(tmp_path):
                 assert config.read_config_file(cfg_file) == {}
             assert "Unknown config file suffix" in caplog.text
@@ -132,9 +132,9 @@ def test_read_toml_file(conf_file: str, expected_file: str, fixtures_path: Path)
 def test_multiple_config_files(tmp_path: Path):
     """If there are multiple config files, the first one with content wins."""
     setup_cfg = tmp_path / "setup.cfg"
-    setup_cfg.write_text("[metadata]\nname: just-a-name\n")
+    setup_cfg.write_text("[metadata]\nname: just-a-name\n", encoding="utf-8")
     bumpversion_cfg = tmp_path / ".bumpversion.cfg"
-    bumpversion_cfg.write_text("\n")
+    bumpversion_cfg.write_text("\n", encoding="utf-8")
     pyproject_toml = tmp_path / "pyproject.toml"
     pyproject_toml.write_text(
         "[tool.bumpversion]\n"
@@ -143,7 +143,8 @@ def test_multiple_config_files(tmp_path: Path):
         "serialize = [\n"
         '    "{major}.{minor}.{patch}-{release}",\n'
         '    "{major}.{minor}.{patch}"\n'
-        "]\n"
+        "]\n",
+        encoding="utf-8",
     )
     with inside_dir(tmp_path):
         cfg_file = bumpversion.config.files.find_config_file()
@@ -180,7 +181,7 @@ def test_update_config_file(tmp_path: Path, cfg_file_name: str, fixtures_path: P
     expected_diff = TOML_EXPECTED_DIFF
     cfg_path = tmp_path / cfg_file_name
     orig_path = fixtures_path / f"basic_cfg{cfg_path.suffix}"
-    cfg_path.write_text(orig_path.read_text())
+    cfg_path.write_text(orig_path.read_text(), encoding="utf-8")
     original_content = orig_path.read_text().splitlines(keepends=True)
     with inside_dir(tmp_path):
         cfg = config.get_configuration(cfg_path)
@@ -206,9 +207,9 @@ def test_pep440_config(git_repo: Path, fixtures_path: Path):
 
     cfg_path = git_repo / "pyproject.toml"
     orig_path = fixtures_path / "pep440.toml"
-    cfg_path.write_text(orig_path.read_text())
+    cfg_path.write_text(orig_path.read_text(), encoding="utf-8")
     version_path = git_repo / "VERSION"
-    version_path.write_text("1.0.0")
+    version_path.write_text("1.0.0", encoding="utf-8")
     readme_path = git_repo / "README.md"
     runner: CliRunner = CliRunner()
 
@@ -225,7 +226,7 @@ def test_pep440_config(git_repo: Path, fixtures_path: Path):
         assert next_version_str == "1.0.1"
 
         subprocess.run(["git", "checkout", "-b", "my-really-LONG-branch_name"], check=True, capture_output=True)
-        readme_path.write_text("This is my branch!")
+        readme_path.write_text("This is my branch!", encoding="utf-8")
         result: Result = runner.invoke(cli.cli, ["bump", "dev_label", "--no-tag"])
         assert result.exit_code == 0
         cfg = config.get_configuration(cfg_path)

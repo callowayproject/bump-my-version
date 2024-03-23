@@ -217,7 +217,8 @@ def test_key_path_required_for_toml_change(tmp_path: Path, caplog):
             bake_cookies = true
             ignore-words-list = "sugar, salt, flour"
             """
-        )
+        ),
+        encoding="utf-8",
     )
 
     conf = config.get_configuration(config_file=config_path)

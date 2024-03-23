@@ -50,7 +50,7 @@ class TestGetDefaultsFromDest:
     def test_existing_path_returns_existing_config(self, tmp_path: Path, default_config: dict):
         """If the destination exists, the existing config should be returned."""
         dest_path = tmp_path / "pyproject-1.toml"
-        dest_path.write_text(dumps(BASIC_CONFIG))
+        dest_path.write_text(dumps(BASIC_CONFIG), encoding="utf-8")
 
         with inside_dir(tmp_path):
             config, destination_config = get_defaults_from_dest("pyproject-1.toml")
@@ -73,7 +73,7 @@ class TestGetDefaultsFromDest:
     def test_existing_path_with_no_config_returns_default_config(self, tmp_path: Path, default_config: dict):
         """If the destination exists but has no config, the default config should be returned."""
         dest_path = tmp_path / "pyproject-3.toml"
-        dest_path.write_text(dumps({"tool": {"poetry": {}}}))
+        dest_path.write_text(dumps({"tool": {"poetry": {}}}), encoding="utf-8")
 
         with inside_dir(tmp_path):
             config, destination_config = get_defaults_from_dest("pyproject-3.toml")
@@ -85,7 +85,7 @@ class TestGetDefaultsFromDest:
     def test_existing_path_with_project_version_uses_project_version(self, tmp_path: Path, default_config: dict):
         """If the destination exists and has a project version, the project version should be used as current_version."""
         dest_path = tmp_path / "pyproject-4.toml"
-        dest_path.write_text(dumps({"tool": {"poetry": {}}, "project": {"version": "1.2.3"}}))
+        dest_path.write_text(dumps({"tool": {"poetry": {}}, "project": {"version": "1.2.3"}}), encoding="utf-8")
 
         with inside_dir(tmp_path):
             config, destination_config = get_defaults_from_dest("pyproject-4.toml")

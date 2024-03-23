@@ -64,10 +64,10 @@ def test_bump_nested_regex(tmp_path: Path, fixtures_path: Path, caplog, runner):
     Assert: There is no configured files specified to modify
     """
     cff_path = tmp_path / "citation.cff"
-    cff_path.write_text("cff-version: 1.2.0\ndate-released: 2023-09-19\n")
+    cff_path.write_text("cff-version: 1.2.0\ndate-released: 2023-09-19\n", encoding="utf-8")
     content = fixtures_path.joinpath("regex_test_config.toml").read_text()
     config_path = tmp_path / ".bumpversion.toml"
-    config_path.write_text(content)
+    config_path.write_text(content, encoding="utf-8")
 
     with inside_dir(tmp_path):
         result: Result = runner.invoke(cli.cli, ["bump", "-vv", "patch"])
@@ -162,7 +162,7 @@ def test_dirty_work_dir_raises_error(repo: str, scm_command: str, request, runne
     repo_path: Path = request.getfixturevalue(repo)
     with inside_dir(repo_path):
         # Arrange
-        repo_path.joinpath("dirty2").write_text("i'm dirty! 1.1.1")
+        repo_path.joinpath("dirty2").write_text("i'm dirty! 1.1.1", encoding="utf-8")
         subprocess.run([scm_command, "add", "dirty2"], check=True)
 
         # Act
@@ -182,7 +182,7 @@ def test_non_scm_operations_if_scm_not_installed(tmp_path: Path, monkeypatch, ru
 
     with inside_dir(tmp_path):
         version_path = tmp_path / "VERSION"
-        version_path.write_text("31.0.3")
+        version_path.write_text("31.0.3", encoding="utf-8")
 
         # Act
         runner.invoke(cli.cli, ["bump", "major", "--current-version", "31.0.3", "VERSION"])
@@ -205,7 +205,7 @@ def test_detects_bad_or_missing_version_part(version_part: str, tmp_path: Path, 
 
     with inside_dir(tmp_path):
         version_path = tmp_path / "VERSION"
-        version_path.write_text("31.0.3")
+        version_path.write_text("31.0.3", encoding="utf-8")
 
         args = ["bump", "--current-version", "31.0.3"]
         if version_part:
@@ -229,7 +229,8 @@ def test_ignores_missing_files_with_option(tmp_path, fixtures_path, runner):
         "allow_dirty = true\n\n"
         "[[tool.bumpversion.files]]\n"
         'filename = "VERSION"\n'
-        "regex = false\n"
+        "regex = false\n",
+        encoding="utf-8",
     )
 
     # Act

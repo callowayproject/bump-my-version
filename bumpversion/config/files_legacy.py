@@ -132,4 +132,4 @@ def update_ini_config_file(
     )
 
     if not dry_run:
-        config_path.write_text(new_config)
+        config_path.write_text(new_config, encoding="utf-8")

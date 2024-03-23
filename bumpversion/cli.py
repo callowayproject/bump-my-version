@@ -548,7 +548,7 @@ def sample_config(prompt: bool, destination: str) -> None:
     if destination == "stdout":
         print_info(dumps(destination_config))
     else:
-        Path(destination).write_text(dumps(destination_config))
+        Path(destination).write_text(dumps(destination_config), encoding="utf-8")
 
 
 @cli.command()

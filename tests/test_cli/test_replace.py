@@ -122,7 +122,8 @@ class TestReplaceCLI:
                 "allow_dirty = true\n\n"
                 "[[tool.bumpversion.files]]\n"
                 'filename = "VERSION"\n'
-                "regex = false\n"
+                "regex = false\n",
+                encoding="utf-8",
             )
 
             # Act
@@ -156,9 +157,11 @@ class TestReplaceCLI:
 
             # Arrange
             config_path = tmp_path / "pyproject.toml"
-            config_path.write_text(dumps(TEST_REPLACE_CONFIG))
+            config_path.write_text(dumps(TEST_REPLACE_CONFIG), encoding="utf-8")
             doc_path = tmp_path / "docs.yaml"
-            doc_path.write_text("url: https://github.com/sampleuser/workflows/main/.github/update_mailmap.py")
+            doc_path.write_text(
+                "url: https://github.com/sampleuser/workflows/main/.github/update_mailmap.py", encoding="utf-8"
+            )
 
             with inside_dir(tmp_path):
                 result: Result = runner.invoke(
@@ -189,7 +192,8 @@ class TestReplaceCLI:
 
             version_path = tmp_path / "VERSION"
             version_path.write_text(
-                "# Changelog\n\n## [0.0.1 (unreleased)](https://cool.url)\n\n- Test unreleased package.\n"
+                "# Changelog\n\n## [0.0.1 (unreleased)](https://cool.url)\n\n- Test unreleased package.\n",
+                encoding="utf-8",
             )
             config_file = tmp_path / ".bumpversion.toml"
             config_file.write_text(
@@ -200,7 +204,8 @@ class TestReplaceCLI:
                 'filename = "VERSION"\n'
                 "regex = false\n"
                 f'search = "{search}"\n'
-                f'replace = "{replace}"\n'
+                f'replace = "{replace}"\n',
+                encoding="utf-8",
             )
 
             # Act
@@ -241,9 +246,9 @@ class TestReplaceCLI:
 
             # Arrange
             config_path = tmp_path / "pyproject.toml"
-            config_path.write_text(dumps(TEST_REPLACE_CONFIG))
+            config_path.write_text(dumps(TEST_REPLACE_CONFIG), encoding="utf-8")
             doc_path = tmp_path / "docs.yaml"
-            doc_path.write_text("We should censor profanity\n\n")
+            doc_path.write_text("We should censor profanity\n\n", encoding="utf-8")
 
             with inside_dir(tmp_path):
                 result: Result = runner.invoke(
@@ -274,9 +279,11 @@ class TestReplaceCLI:
 
             # Arrange
             config_path = tmp_path / "pyproject.toml"
-            config_path.write_text(dumps(TEST_REPLACE_CONFIG))
+            config_path.write_text(dumps(TEST_REPLACE_CONFIG), encoding="utf-8")
             doc_path = tmp_path / "docs.yaml"
-            doc_path.write_text("url: https://github.com/sampleuser/workflows/v2.17.7/.github/update_mailmap.py")
+            doc_path.write_text(
+                "url: https://github.com/sampleuser/workflows/v2.17.7/.github/update_mailmap.py", encoding="utf-8"
+            )
 
             with inside_dir(tmp_path):
                 result: Result = runner.invoke(
