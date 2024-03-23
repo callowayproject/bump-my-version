@@ -65,7 +65,8 @@ def test_independent_falsy_value_in_config_does_not_bump_independently(tmp_path:
         [bumpversion:part:build]
         independent = 0
         """
-        )
+        ),
+        encoding="utf-8",
     )
 
     conf = config.get_configuration(config_file)
@@ -113,7 +114,7 @@ def test_update_ini_config_file(tmp_path: Path, cfg_file_name: str, fixtures_pat
     expected_diff = CFG_EXPECTED_DIFF
     cfg_path = tmp_path / cfg_file_name
     orig_path = fixtures_path / f"basic_cfg{cfg_path.suffix}"
-    cfg_path.write_text(orig_path.read_text())
+    cfg_path.write_text(orig_path.read_text(), encoding="utf-8")
     original_content = orig_path.read_text().splitlines(keepends=True)
 
     update_ini_config_file(cfg_path, "1.0.0", "1.0.1")
@@ -133,7 +134,8 @@ def test_file_keyword_with_suffix_is_accepted(tmp_path: Path, cfg_file: str, cfg
         "replace = version {new_version}\n"
         f"[bumpversion:{cfg_file_keyword}:file2]\n"
         "search = The current version is {current_version}\n"
-        "replace = The current version is {new_version}\n"
+        "replace = The current version is {new_version}\n",
+        encoding="utf-8",
     )
     setup_cfg = config.get_configuration(cfg_file_path)
     assert len(setup_cfg.files) == 2

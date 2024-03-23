@@ -57,7 +57,7 @@ class TestVisualize:
         """Test that the correct string is returned."""
         config_content = fixtures_path.joinpath("basic_cfg.toml").read_text()
         config_path = tmp_path.joinpath(".bumpversion-1.toml")
-        config_path.write_text(config_content)
+        config_path.write_text(config_content, encoding="utf-8")
         config = get_configuration(config_path)
         visualize(config, "1.0.0")
         captured = capsys.readouterr()

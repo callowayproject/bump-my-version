@@ -22,7 +22,7 @@ def write_config(tmp_path: Path, overrides: dict) -> Path:
     defaults["current_version"] = defaults["current_version"] or "1.2.3"
     defaults["commit_args"] = ""
     config = {"tool": {"bumpversion": {**defaults, **overrides}}}
-    config_file.write_text(tomlkit.dumps(config))
+    config_file.write_text(tomlkit.dumps(config), encoding="utf-8")
     return config_file
 
 

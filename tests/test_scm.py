@@ -119,7 +119,7 @@ def test_commit_and_tag_from_below_scm_root(repo: str, scm_command: str, scm_cla
     # Arrange
     repo_path: Path = request.getfixturevalue(repo)
     version_path = repo_path / "VERSION"
-    version_path.write_text("30.0.3")
+    version_path.write_text("30.0.3", encoding="utf-8")
     sub_dir_path = repo_path / "subdir"
     sub_dir_path.mkdir(exist_ok=True)
 
@@ -133,7 +133,7 @@ def test_commit_and_tag_from_below_scm_root(repo: str, scm_command: str, scm_cla
         subprocess.run([scm_command, "add", "VERSION"], check=True, capture_output=True)
         subprocess.run([scm_command, "commit", "-m", "initial commit"], check=True, capture_output=True)
         with inside_dir(sub_dir_path):
-            version_path.write_text("30.1.0")
+            version_path.write_text("30.1.0", encoding="utf-8")
 
             # Act
             scm_class.commit_to_scm(files=[version_path], config=conf, context=context)
@@ -180,7 +180,7 @@ def test_commit_tag_dry_run_interactions(
     # Arrange
     repo_path: Path = request.getfixturevalue(repo)
     version_path = repo_path / "VERSION"
-    version_path.write_text("30.0.3")
+    version_path.write_text("30.0.3", encoding="utf-8")
 
     overrides = {"current_version": "30.0.3", "commit": commit, "tag": tag, "files": [{"filename": str(version_path)}]}
     context = {
@@ -191,7 +191,7 @@ def test_commit_tag_dry_run_interactions(
         conf, version_config, current_version = get_config_data(overrides)
         subprocess.run([scm_command, "add", "VERSION"], check=True, capture_output=True)
         subprocess.run([scm_command, "commit", "-m", "initial commit"], check=True, capture_output=True)
-        version_path.write_text("30.1.0")
+        version_path.write_text("30.1.0", encoding="utf-8")
         # Act
         scm_class.commit_to_scm(files=[version_path], config=conf, context=context, dry_run=dry_run)
         scm_class.tag_in_scm(config=conf, context=context, dry_run=dry_run)
