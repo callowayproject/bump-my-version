@@ -81,6 +81,7 @@ jobs:
               ;;
             dev)
               bump-my-version bump --allow-dirty --verbose --no-commit --no-tag "$RELEASE_KIND"
+              echo "PACKAGE=true" >> $GITHUB_ENV
               ;;
           esac
 
