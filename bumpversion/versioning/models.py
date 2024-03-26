@@ -9,7 +9,7 @@ from pydantic import BaseModel
 
 from bumpversion.exceptions import InvalidVersionPartError
 from bumpversion.utils import key_val_string
-from bumpversion.versioning.functions import NumericFunction, PartFunction, ValuesFunction
+from bumpversion.versioning.functions import CalVerFunction, NumericFunction, PartFunction, ValuesFunction
 
 
 class VersionComponent:
@@ -26,6 +26,7 @@ class VersionComponent:
         optional_value: Optional[str] = None,
         first_value: Union[str, int, None] = None,
         independent: bool = False,
+        calver_format: Optional[str] = None,
         source: Optional[str] = None,
         value: Union[str, int, None] = None,
     ):
@@ -33,11 +34,15 @@ class VersionComponent:
         self.func: Optional[PartFunction] = None
         self.independent = independent
         self.source = source
+        self.calver_format = calver_format
         if values:
             str_values = [str(v) for v in values]
             str_optional_value = str(optional_value) if optional_value is not None else None
             str_first_value = str(first_value) if first_value is not None else None
             self.func = ValuesFunction(str_values, str_optional_value, str_first_value)
+        elif calver_format:
+            self.func = CalVerFunction(calver_format)
+            self._value = self._value or self.func.first_value
         else:
             self.func = NumericFunction(optional_value, first_value or "0")
 
@@ -53,6 +58,7 @@ class VersionComponent:
             optional_value=self.func.optional_value,
             first_value=self.func.first_value,
             independent=self.independent,
+            calver_format=self.calver_format,
             source=self.source,
             value=self._value,
         )
@@ -101,13 +107,28 @@ class VersionComponentSpec(BaseModel):
     This is used to read in the configuration from the bumpversion config file.
     """
 
-    values: Optional[list] = None  # Optional. Numeric is used if missing or no items in list
+    values: Optional[list] = None
+    """The possible values for the component. If it and `calver_format` is None, the component is numeric."""
+
     optional_value: Optional[str] = None  # Optional.
-    # Defaults to first value. 0 in the case of numeric. Empty string means nothing is optional.
-    first_value: Union[str, int, None] = None  # Optional. Defaults to first value in values
+    """The value that is optional to include in the version.
+
+    - Defaults to first value in values or 0 in the case of numeric.
+    - Empty string means nothing is optional.
+    - CalVer components ignore this."""
+
+    first_value: Union[str, int, None] = None
+    """The first value to increment from."""
+
     independent: bool = False
+    """Is the component independent of the other components?"""
+
+    calver_format: Optional[str] = None
+    """The format string for a CalVer component."""
+
     # source: Optional[str] = None  # Name of environment variable or context variable to use as the source for value
-    depends_on: Optional[str] = None  # The name of the component this component depends on
+    depends_on: Optional[str] = None
+    """The name of the component this component depends on."""
 
     def create_component(self, value: Union[str, int, None] = None) -> VersionComponent:
         """Generate a version component from the configuration."""
@@ -116,6 +137,7 @@ class VersionComponentSpec(BaseModel):
             optional_value=self.optional_value,
             first_value=self.first_value,
             independent=self.independent,
+            calver_format=self.calver_format,
             # source=self.source,
             value=value,
         )

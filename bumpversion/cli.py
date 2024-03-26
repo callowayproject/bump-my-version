@@ -26,7 +26,7 @@ logger = get_indented_logger(__name__)
     context_settings={
         "help_option_names": ["-h", "--help"],
     },
-    add_help_option=False,
+    add_help_option=True,
 )
 @click.version_option(version=__version__)
 @click.pass_context

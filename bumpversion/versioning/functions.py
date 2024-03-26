@@ -1,7 +1,34 @@
 """Generators for version parts."""
 
+import datetime
 import re
 from typing import List, Optional, Union
+
+
+def get_datetime_info(current_dt: datetime.datetime) -> dict:
+    """Return the full structure of the given datetime for formatting."""
+    return {
+        "YYYY": current_dt.strftime("%Y"),
+        "YY": current_dt.strftime("%y").lstrip("0") or "0",
+        "0Y": current_dt.strftime("%y"),
+        "MMM": current_dt.strftime("%b"),
+        "MM": str(current_dt.month),
+        "0M": current_dt.strftime("%m"),
+        "DD": str(current_dt.day),
+        "0D": current_dt.strftime("%d"),
+        "JJJ": current_dt.strftime("%j").lstrip("0"),
+        "00J": current_dt.strftime("%j"),
+        "Q": str((current_dt.month - 1) // 3 + 1),
+        "WW": current_dt.strftime("%W").lstrip("0") or "0",
+        "0W": current_dt.strftime("%W"),
+        "UU": current_dt.strftime("%U").lstrip("0") or "0",
+        "0U": current_dt.strftime("%U"),
+        "VV": current_dt.strftime("%V").lstrip("0") or "0",
+        "0V": current_dt.strftime("%V"),
+        "GGGG": current_dt.strftime("%G"),
+        "GG": current_dt.strftime("%G")[2:].lstrip("0") or "0",
+        "0G": current_dt.strftime("%G")[2:],
+    }
 
 
 class PartFunction:
@@ -33,6 +60,20 @@ class IndependentFunction(PartFunction):
     def bump(self, value: Optional[str] = None) -> str:
         """Return the optional value."""
         return value or self.optional_value
+
+
+class CalVerFunction(PartFunction):
+    """This is a class that provides a CalVer function for version parts."""
+
+    def __init__(self, calver_format: str):
+        self.independent = False
+        self.calver_format = calver_format
+        self.first_value = self.bump()
+        self.optional_value = "There isn't an optional value for CalVer."
+
+    def bump(self, value: Optional[str] = None) -> str:
+        """Return the optional value."""
+        return self.calver_format.format(**get_datetime_info(datetime.datetime.now()))
 
 
 class NumericFunction(PartFunction):
