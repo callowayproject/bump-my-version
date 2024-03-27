@@ -1,7 +1,10 @@
 """Generators for version parts."""
 
+import datetime
 import re
 from typing import List, Optional, Union
+
+from bumpversion.context import get_datetime_info
 
 
 class PartFunction:
@@ -10,6 +13,7 @@ class PartFunction:
     first_value: str
     optional_value: str
     independent: bool
+    always_increment: bool
 
     def bump(self, value: str) -> str:
         """Increase the value."""
@@ -29,10 +33,27 @@ class IndependentFunction(PartFunction):
         self.first_value = str(value)
         self.optional_value = str(value)
         self.independent = True
+        self.always_increment = False
 
     def bump(self, value: Optional[str] = None) -> str:
         """Return the optional value."""
         return value or self.optional_value
+
+
+class CalVerFunction(PartFunction):
+    """This is a class that provides a CalVer function for version parts."""
+
+    def __init__(self, calver_format: str):
+        self.independent = False
+        self.calver_format = calver_format
+        self.first_value = self.bump()
+        self.optional_value = "There isn't an optional value for CalVer."
+        self.independent = False
+        self.always_increment = True
+
+    def bump(self, value: Optional[str] = None) -> str:
+        """Return the optional value."""
+        return self.calver_format.format(**get_datetime_info(datetime.datetime.now()))
 
 
 class NumericFunction(PartFunction):
@@ -58,6 +79,7 @@ class NumericFunction(PartFunction):
         self.first_value = str(first_value or 0)
         self.optional_value = str(optional_value or self.first_value)
         self.independent = False
+        self.always_increment = False
 
     def bump(self, value: Union[str, int]) -> str:
         """Increase the first numerical value by one."""

@@ -13,10 +13,11 @@ from bumpversion.bump import do_bump
 from bumpversion.config import get_configuration
 from bumpversion.config.create import create_configuration
 from bumpversion.config.files import find_config_file
+from bumpversion.context import get_context
 from bumpversion.files import ConfiguredFile, modify_files
 from bumpversion.show import do_show
 from bumpversion.ui import get_indented_logger, print_info, setup_logging
-from bumpversion.utils import get_context, get_overrides
+from bumpversion.utils import get_overrides
 from bumpversion.visualize import visualize
 
 logger = get_indented_logger(__name__)
@@ -26,7 +27,7 @@ logger = get_indented_logger(__name__)
     context_settings={
         "help_option_names": ["-h", "--help"],
     },
-    add_help_option=False,
+    add_help_option=True,
 )
 @click.version_option(version=__version__)
 @click.pass_context

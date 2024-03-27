@@ -7,9 +7,10 @@ from typing import Any, Optional
 
 from bumpversion.bump import get_next_version
 from bumpversion.config import Config
+from bumpversion.context import get_context
 from bumpversion.exceptions import BadInputError
 from bumpversion.ui import print_error, print_info
-from bumpversion.utils import get_context, recursive_sort_dict
+from bumpversion.utils import recursive_sort_dict
 
 
 def output_default(value: dict) -> None:

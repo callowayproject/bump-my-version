@@ -1,7 +1,7 @@
 import pytest
 from pytest import param
-
-from bumpversion.versioning.functions import NumericFunction, ValuesFunction, IndependentFunction
+from freezegun import freeze_time
+from bumpversion.versioning.functions import NumericFunction, ValuesFunction, IndependentFunction, CalVerFunction
 
 
 # NumericFunction
@@ -145,3 +145,66 @@ class TestIndependentFunction:
         def test_bump_with_no_value_returns_initial_value(self):
             func = IndependentFunction("1")
             assert func.bump() == "1"
+
+
+class TestCalVerFunction:
+    """The calver function manages incrementing and resetting calver version parts."""
+
+    @freeze_time("2020-05-01")
+    def test_creation_sets_first_value_and_optional_value(self):
+        func = CalVerFunction("{YYYY}.{MM}")
+        assert func.optional_value == "There isn't an optional value for CalVer."
+        assert func.first_value == "2020.5"
+        assert func.calver_format == "{YYYY}.{MM}"
+
+    @freeze_time("2020-05-01")
+    def test_bump_with_value_ignores_value(self):
+        func = CalVerFunction("{YYYY}.{MM}.{DD}")
+        assert func.bump("123456") == "2020.5.1"
+
+    @pytest.mark.parametrize(
+        ["calver", "expected"],
+        [
+            param("{YYYY}", "2002", id="{YYYY}"),
+            param("{YY}", "2", id="{YY}"),
+            param("{0Y}", "02", id="{0Y}"),
+            param("{MMM}", "May", id="{MMM}"),
+            param("{MM}", "5", id="{MM}"),
+            param("{0M}", "05", id="{0M}"),
+            param("{DD}", "1", id="{DD}"),
+            param("{0D}", "01", id="{0D}"),
+            param("{JJJ}", "121", id="{JJJ}"),
+            param("{00J}", "121", id="{00J}"),
+            param("{Q}", "2", id="{Q}"),
+            param("{WW}", "17", id="{WW}"),
+            param("{0W}", "17", id="{0W}"),
+            param("{UU}", "17", id="{UU}"),
+            param("{0U}", "17", id="{0U}"),
+            param("{VV}", "18", id="{VV}"),
+            param("{0V}", "18", id="{0V}"),
+            param("{GGGG}", "2002", id="{GGGG}"),
+            param("{GG}", "2", id="{GG}"),
+            param("{0G}", "02", id="{0G}"),
+        ],
+    )
+    @freeze_time("2002-05-01")
+    def test_calver_formatting_renders_correctly(self, calver: str, expected: str):
+        """Test that the calver is formatted correctly."""
+        func = CalVerFunction(calver)
+        assert func.bump() == expected
+
+    @pytest.mark.parametrize(
+        ["calver", "expected"],
+        [
+            param("{YYYY}", "2000", id="{YYYY}"),
+            param("{YY}", "0", id="{YY}"),
+            param("{0Y}", "00", id="{0Y}"),
+            param("{GGGG}", "1999", id="{GGGG}"),
+            param("{GG}", "99", id="{GG}"),
+            param("{0G}", "99", id="{0G}"),
+        ],
+    )
+    @freeze_time("2000-01-01")
+    def test_century_years_return_zeros(self, calver: str, expected: str):
+        func = CalVerFunction(calver)
+        assert func.bump() == expected

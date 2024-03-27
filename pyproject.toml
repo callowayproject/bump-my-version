@@ -76,10 +76,12 @@ docs = [
 ]
 test = [
     "coverage",
+    "freezegun",
     "pre-commit",
     "pytest-cov",
     "pytest",
     "pytest-mock",
+    "pytest-sugar",
 ]
 
 [tool.setuptools.dynamic]

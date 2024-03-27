@@ -8,7 +8,7 @@ from click.testing import CliRunner, Result
 import pytest
 from pytest import LogCaptureFixture, param, TempPathFactory
 
-from bumpversion.utils import get_context
+from bumpversion.context import get_context
 from bumpversion import config
 from bumpversion.config.files import find_config_file, CONFIG_FILE_SEARCH_ORDER
 import bumpversion.config.utils
@@ -198,7 +198,7 @@ def test_pep440_config(git_repo: Path, fixtures_path: Path):
     """
     Check the PEP440 config file.
     """
-    from bumpversion.utils import get_context
+    from bumpversion.context import get_context
     from bumpversion.bump import get_next_version
     from bumpversion import cli
     import subprocess
