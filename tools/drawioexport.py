@@ -128,8 +128,8 @@ if __name__ == "__main__":
         "serializing-a-version-1-2-0.svg",
         "serializing-a-version-1-2-3.svg",
     ]
-    source_path = Path(__file__).parent.parent.joinpath("docsrc/_static/bump-my-version-model.drawio")
-    dest_path = Path(__file__).parent.parent.joinpath("docsrc/_static/")
+    source_path = Path(__file__).parent.parent.joinpath("docs/assets/bump-my-version-model.drawio")
+    dest_path = Path(__file__).parent.parent.joinpath("docs/assets/")
     for index, filename in enumerate(output_files):
         filepath = dest_path.joinpath(filename)
         export_file_if_needed(source_path, index, filepath)

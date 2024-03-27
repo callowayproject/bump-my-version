@@ -34,7 +34,7 @@ A **version serialization format** is a list of format strings used to serialize
 ### How a version spec is generated
 
 <figure markdown="span" style="width: 50%; float: right;padding-left: .75rem">
-    [![How a version spec is generated](../_static/creating-a-version-spec.svg)](../_static/creating-a-version-spec.svg)
+    [![How a version spec is generated](../assets/creating-a-version-spec.svg)](../assets/creating-a-version-spec.svg)
     <figcaption>How a configuration file is used to generate a version spec.</figcaption>
 </figure>
 
@@ -54,7 +54,7 @@ The _component dependency_ graph determines the order in which the _version comp
 ### How a version is generated
 
 <figure markdown="span" style="width: 50%; float: right;padding-left: .75rem">
-    [![How a version is generated](../_static/creating-a-version.svg)](../_static/creating-a-version.svg)
+    [![How a version is generated](../assets/creating-a-version.svg)](../assets/creating-a-version.svg)
     <figcaption>How a version spec is used to generate a version.</figcaption>
 </figure>
 
@@ -84,7 +84,7 @@ The `serialize` method of the _version spec_ returns either the optimal serializ
 
     ::: card-container depth-0
         ::: card-media
-            [![How a version is serialized with values major=1, minor=2, and patch=3](../_static/serializing-a-version-1-2-3.svg)](../_static/serializing-a-version-1-2-3.svg)
+            [![How a version is serialized with values major=1, minor=2, and patch=3](../assets/serializing-a-version-1-2-3.svg)](../assets/serializing-a-version-1-2-3.svg)
 
         ::: card-content
             No optional values
@@ -94,7 +94,7 @@ The `serialize` method of the _version spec_ returns either the optimal serializ
 
     ::: card-container depth-0
         ::: card-media
-            [![How a version is serialized with values major=1, minor=2, and patch=0](../_static/serializing-a-version-1-2-0.svg)](../_static/serializing-a-version-1-2-0.svg)
+            [![How a version is serialized with values major=1, minor=2, and patch=0](../assets/serializing-a-version-1-2-0.svg)](../assets/serializing-a-version-1-2-0.svg)
             
         ::: card-content
         
@@ -105,7 +105,7 @@ The `serialize` method of the _version spec_ returns either the optimal serializ
 
     ::: card-container depth-0
         ::: card-media
-            [![How a version is serialized with values major=1, minor=0, and patch=0](../_static/serializing-a-version-1-0-0.svg)](../_static/serializing-a-version-1-0-0.svg)
+            [![How a version is serialized with values major=1, minor=0, and patch=0](../assets/serializing-a-version-1-0-0.svg)](../assets/serializing-a-version-1-0-0.svg)
 
         ::: card-content
             Two optional values
@@ -115,7 +115,7 @@ The `serialize` method of the _version spec_ returns either the optimal serializ
 
     ::: card-container depth-0
         ::: card-media
-            [![How a version is serialized with invalid serialization formats](../_static/serializing-a-version-1.svg)](../_static/serializing-a-version-1.svg)
+            [![How a version is serialized with invalid serialization formats](../assets/serializing-a-version-1.svg)](../assets/serializing-a-version-1.svg)
 
         ::: card-content
             No valid serialization options
