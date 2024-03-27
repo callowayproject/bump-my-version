@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.20.0 (2024-03-27)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.19.3...0.20.0)
+
+### Fixes
+
+- Refactored context into its own module. [5a3e05d](https://github.com/callowayproject/bump-my-version/commit/5a3e05d82e7560455ec8332230020c9055aab122)
+    
+### New
+
+- Added `always_increment` attribute for parts. [53ee848](https://github.com/callowayproject/bump-my-version/commit/53ee848988d3dae0665e47aa29d8fa02e604b87f)
+    
+  This is a requirement for CalVer to ensure they always increment with each bump, but it will work for any type.
+- Added CalVer function and formatting. [7a0e639](https://github.com/callowayproject/bump-my-version/commit/7a0e639da8d372e1960dc3dd1cd0620424a228d1)
+    
+  - Version parts now have a `calver_format` attribute for CalVer parts.
+### Updates
+
+- Updated the documentation. [607609d](https://github.com/callowayproject/bump-my-version/commit/607609d1600fb795443998656229ed4a177f9d96)
+    
+
 ## 0.19.3 (2024-03-23)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.19.2...0.19.3)
 
