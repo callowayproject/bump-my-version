@@ -16,6 +16,7 @@ def semver_version_spec():
         "minor": VersionComponentSpec(),
         "patch": VersionComponentSpec(),
         "build": VersionComponentSpec(optional_value="0", independent=True),
+        "auto": VersionComponentSpec(optional_value="0", independent=True, always_increment=True),
     }
 
     return VersionSpec(config)
@@ -46,6 +47,7 @@ class TestSemVerVersion:
         assert version["minor"].value == "2"
         assert version["patch"].value == "3"
         assert version["build"].value == "0"
+        assert version["auto"].value == "0"
 
         with pytest.raises(KeyError):
             version["invalid"]
@@ -55,21 +57,21 @@ class TestSemVerVersion:
         version = semver_version_spec.create_version({"major": "1"})
 
         # Assert
-        assert len(version) == 4
+        assert len(version) == 5
 
     def test_is_iterable(self, semver_version_spec: VersionSpec):
         # Arrange
         version = semver_version_spec.create_version({"major": "1"})
 
         # Assert
-        assert list(version) == ["major", "minor", "patch", "build"]
+        assert list(version) == ["major", "minor", "patch", "build", "auto"]
 
     def test_has_a_string_representation(self, semver_version_spec: VersionSpec):
         # Arrange
         version = semver_version_spec.create_version({"major": "1", "minor": "2", "patch": "3"})
 
         # Assert
-        assert repr(version) == "<bumpversion.Version:build=0, major=1, minor=2, patch=3>"
+        assert repr(version) == "<bumpversion.Version:auto=0, build=0, major=1, minor=2, patch=3>"
 
     def test_has_an_equality_comparison(self, semver_version_spec: VersionSpec):
         # Arrange
@@ -110,7 +112,9 @@ class TestSemVerVersion:
         def test_changes_component_and_dependents(self, semver_version_spec: VersionSpec):
             """Bumping a version bumps the specified component and changes its dependents."""
             # Arrange
-            version1 = semver_version_spec.create_version({"major": "1", "minor": "2", "patch": "3", "build": "4"})
+            version1 = semver_version_spec.create_version(
+                {"major": "1", "minor": "2", "patch": "3", "build": "4", "auto": "5"}
+            )
 
             # Act
             patch_version = version1.bump("patch")
@@ -123,10 +127,10 @@ class TestSemVerVersion:
             minor_version_str = ".".join([item.value for item in minor_version.components.values()])
             major_version_str = ".".join([item.value for item in major_version.components.values()])
             build_version_str = ".".join([item.value for item in build_version.components.values()])
-            assert patch_version_str == "1.2.4.4"
-            assert minor_version_str == "1.3.0.4"
-            assert major_version_str == "2.0.0.4"
-            assert build_version_str == "1.2.3.5"
+            assert patch_version_str == "1.2.4.4.6"
+            assert minor_version_str == "1.3.0.4.6"
+            assert major_version_str == "2.0.0.4.6"
+            assert build_version_str == "1.2.3.5.6"
 
     class TestRequiredComponents:
         """Tests of the required_keys function."""
@@ -221,8 +225,8 @@ class TestCalVerVersion:
             # Assert
             assert version1["patch"].value == "3"
             assert version1["release"].value == "2020.4.1"
-            assert version2["patch"].value == "4"
-            assert version2["release"].value == "2020.4.1"
+            assert version2["patch"].value == "0"
+            assert version2["release"].value == "2020.5.1"
 
         @freeze_time("2020-05-01")
         def test_bump_returns_a_new_version(self, calver_version_spec: VersionSpec):
@@ -233,14 +237,30 @@ class TestCalVerVersion:
             # Act
             version2 = version1.bump("patch")
 
+            assert version2["release"].value == "2020.5.1"
+            assert version2["patch"].value == "0"
+
             # Assert
             assert version1 is not version2
+
+        @freeze_time("2020-05-01")
+        def test_bump_always_increments_calver(self, calver_version_spec: VersionSpec):
+            """Bumping a version always increments the calver."""
+            # Arrange
+            version1 = calver_version_spec.create_version({"release": "2020.4.1", "patch": "3", "build": "10"})
+
+            # Act
+            version2 = version1.bump("patch")
+
+            # Assert
+            assert version2["release"].value == "2020.5.1"
+            assert version2["patch"].value == "0"
 
         @freeze_time("2020-05-01")
         def test_bump_changes_component_and_dependents(self, calver_version_spec: VersionSpec):
             """Bumping a version bumps the specified component and changes its dependents."""
             # Arrange
-            version1 = calver_version_spec.create_version({"release": "2020.4.1", "patch": "3", "build": "4"})
+            version1 = calver_version_spec.create_version({"release": "2020.5.1", "patch": "3", "build": "4"})
 
             # Act
             patch_version = version1.bump("patch")
@@ -251,9 +271,9 @@ class TestCalVerVersion:
             patch_version_str = ".".join([item.value for item in patch_version.components.values()])
             release_version_str = ".".join([item.value for item in release_version.components.values()])
             build_version_str = ".".join([item.value for item in build_version.components.values()])
-            assert patch_version_str == "2020.4.1.4.4"
+            assert patch_version_str == "2020.5.1.4.4"
             assert release_version_str == "2020.5.1.0.4"
-            assert build_version_str == "2020.4.1.3.5"
+            assert build_version_str == "2020.5.1.3.5"
 
     class TestRequiredComponents:
         """Tests of the required_keys function."""
@@ -262,11 +282,7 @@ class TestCalVerVersion:
             ["values", "expected"],
             [
                 param({"release": "2020.4.1", "patch": "3"}, ["release", "patch"], id="release-patch"),
-                param(
-                    {"release": "2020.4.1", "build": "4"},
-                    ["release", "build"],
-                    id="release-build",
-                ),
+                param({"release": "2020.4.1", "build": "4"}, ["release", "build"], id="release-build"),
                 param({"release": "2020.4.1"}, ["release"], id="release"),
             ],
         )

@@ -13,6 +13,7 @@ class PartFunction:
     first_value: str
     optional_value: str
     independent: bool
+    always_increment: bool
 
     def bump(self, value: str) -> str:
         """Increase the value."""
@@ -32,6 +33,7 @@ class IndependentFunction(PartFunction):
         self.first_value = str(value)
         self.optional_value = str(value)
         self.independent = True
+        self.always_increment = False
 
     def bump(self, value: Optional[str] = None) -> str:
         """Return the optional value."""
@@ -46,6 +48,8 @@ class CalVerFunction(PartFunction):
         self.calver_format = calver_format
         self.first_value = self.bump()
         self.optional_value = "There isn't an optional value for CalVer."
+        self.independent = False
+        self.always_increment = True
 
     def bump(self, value: Optional[str] = None) -> str:
         """Return the optional value."""
@@ -75,6 +79,7 @@ class NumericFunction(PartFunction):
         self.first_value = str(first_value or 0)
         self.optional_value = str(optional_value or self.first_value)
         self.independent = False
+        self.always_increment = False
 
     def bump(self, value: Union[str, int]) -> str:
         """Increase the first numerical value by one."""

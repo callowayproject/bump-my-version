@@ -58,6 +58,7 @@
   "parse": "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?",
   "parts": {
     "major": {
+      "always_increment": false,
       "calver_format": null,
       "depends_on": null,
       "first_value": null,
@@ -66,6 +67,7 @@
       "values": null
     },
     "minor": {
+      "always_increment": false,
       "calver_format": null,
       "depends_on": null,
       "first_value": null,
@@ -74,6 +76,7 @@
       "values": null
     },
     "patch": {
+      "always_increment": false,
       "calver_format": null,
       "depends_on": null,
       "first_value": null,
@@ -82,6 +85,7 @@
       "values": null
     },
     "release": {
+      "always_increment": false,
       "calver_format": null,
       "depends_on": null,
       "first_value": null,
