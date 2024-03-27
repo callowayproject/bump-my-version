@@ -26,6 +26,7 @@ Bump My Version's purpose is to:
     - Incrementing version numbers
     - serializing version numbers
     - parsing version numbers
+    - supporting SemVer, CalVer, and other versioning schemes
 - Modify project files as part of the project's development life cycle
 - Work with the project's source control system
     - Committing changes

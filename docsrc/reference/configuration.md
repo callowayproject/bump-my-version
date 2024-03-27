@@ -506,6 +506,35 @@ When the part is reset, the value will be set to the value specified here.
 When this value is set to `True`, the part is not reset when other parts are incremented. Its incrementation is
 independent of the other parts. It is useful when you have a build number in your version that is incremented independently of the actual version.
 
+### always_increment
+
+::: field-list
+    required
+    : No
+
+    default
+    : `False` (`True` if `calver_format` is set)
+
+    type
+    : boolean
+
+When this value is set to `True`, the part is always incremented when the version is bumped, regardless of the target part.
+
+
+### calver_format
+
+::: field-list
+    required
+    : No
+    
+    default
+    : empty
+    
+    type
+    : string
+
+The `calver_format` is a string that specifies the format of the version part. It is used to determine the next value when bumping the version. The format is a string that uses the placeholders defined in the [CalVer reference](calver_reference.md#calver-format).
+
 ### Examples
 
 === "TOML"
