@@ -77,12 +77,12 @@ SEMVER_PATTERN = r"""
     (?P<minor>0|[1-9]\d*)\.
     (?P<patch>0|[1-9]\d*)
     (?:
-        -                             # dash seperator for pre-release section
+        -                             # dash separator for pre-release section
         (?P<pre_l>[a-zA-Z-]+)         # pre-release label
         (?P<pre_n>0|[1-9]\d*)         # pre-release version number
     )?                                # pre-release section is optional
     (?:
-        \+                            # plus seperator for build metadata section
+        \+                            # plus separator for build metadata section
         (?P<buildmetadata>
             [0-9a-zA-Z-]+
             (?:\.[0-9a-zA-Z-]+)*

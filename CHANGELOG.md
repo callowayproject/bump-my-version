@@ -580,7 +580,7 @@ dependency-group: github-actions
     
   - Fixes #61
   - Config now includes `resolved_filemap` property
-  - resolved filemap exapands all globs
+  - resolved filemap expands all globs
   - Config now includes `files_to_modify` property
   - files to modify resolves inclusions and exclutions
   - Improved Config.add_files property
@@ -826,7 +826,7 @@ dependency-group: github-actions
     
 - Fixed issue with formatting. [da7544f](https://github.com/callowayproject/bump-my-version/commit/da7544f18780d5f289381d33a87b331c3eaf4d6b)
     
-  There is an underlying edge case where the deriving previous environment variables with multple ways of formatting version numbers will fail.
+  There is an underlying edge case where the deriving previous environment variables with multiple ways of formatting version numbers will fail.
 ### New
 
 - Add test to reproduce issue #14. [d78ff46](https://github.com/callowayproject/bump-my-version/commit/d78ff46d65ce75b7651e5697eef59dbcb71c935e)
