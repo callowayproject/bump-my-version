@@ -5,9 +5,9 @@ from typing import List, Optional
 
 from bumpversion.bump import get_next_version
 from bumpversion.config import Config
+from bumpversion.context import base_context, get_context
 from bumpversion.exceptions import BumpVersionError
 from bumpversion.ui import print_info
-from bumpversion.utils import base_context, get_context
 
 BOX_CHARS = {
     "ascii": ["+", "+", "+", "+", "+", "+", "+", "+", "-", "|", "+"],

@@ -4,7 +4,7 @@ import pytest
 from click import UsageError
 
 from bumpversion import exceptions
-from bumpversion.utils import get_context
+from bumpversion.context import get_context
 from tests.conftest import get_config_data, inside_dir
 
 

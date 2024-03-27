@@ -13,7 +13,7 @@ from pytest import param
 
 from bumpversion import exceptions, files, config, bump
 from bumpversion.config.models import FileChange
-from bumpversion.utils import get_context
+from bumpversion.context import get_context
 from bumpversion.exceptions import VersionNotFoundError
 from bumpversion.version_part import VersionConfig
 from tests.conftest import get_config_data, inside_dir

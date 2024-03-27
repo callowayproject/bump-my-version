@@ -11,9 +11,10 @@ if TYPE_CHECKING:  # pragma: no-coverage
 from bumpversion.config import Config
 from bumpversion.config.files import update_config_file
 from bumpversion.config.files_legacy import update_ini_config_file
+from bumpversion.context import get_context
 from bumpversion.exceptions import ConfigurationError
 from bumpversion.ui import get_indented_logger
-from bumpversion.utils import get_context, key_val_string
+from bumpversion.utils import key_val_string
 
 logger = get_indented_logger(__name__)
 
@@ -96,7 +97,7 @@ def do_bump(
     configured_files = resolve_file_config(config.files_to_modify, config.version_config)
     modify_files(configured_files, version, next_version, ctx, dry_run)
     if config_file and config_file.suffix in {".cfg", ".ini"}:
-        update_ini_config_file(config_file, config.current_version, next_version_str, dry_run)
+        update_ini_config_file(config_file, config.current_version, next_version_str, dry_run)  # pragma: no-coverage
     else:
         update_config_file(config_file, config, version, next_version, ctx, dry_run)
 
