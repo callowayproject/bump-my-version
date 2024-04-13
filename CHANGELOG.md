@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.20.1 (2024-04-13)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.20.0...0.20.1)
+
+### Fixes
+
+- Fix typos discovered by codespell. [d5c33a3](https://github.com/callowayproject/bump-my-version/commit/d5c33a3e5fe8b7127f7f8473e388c5470e397a82)
+    
+- Fixed relative references. [2aa1011](https://github.com/callowayproject/bump-my-version/commit/2aa10118e22bced8cc7a1f4a1172c1fbf1aa51d9)
+    
+- Refactored the docs. [b63a9e7](https://github.com/callowayproject/bump-my-version/commit/b63a9e780ac84e5d1604b6e7ec1bb6205c64ab43)
+    
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [f438bc6](https://github.com/callowayproject/bump-my-version/commit/f438bc677fc6bd3df71dd6c39ef0dfb95e9fc7d3)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.3.4 → v0.3.5](https://github.com/astral-sh/ruff-pre-commit/compare/v0.3.4...v0.3.5)
+
+- Pre-commit: Discover typos with codespell. [2509fc7](https://github.com/callowayproject/bump-my-version/commit/2509fc7690406f95dfc34a6d5e3eeb41205f8569)
+    
+  Related to:
+  * #168
+- [pre-commit.ci] pre-commit autoupdate. [be5cb79](https://github.com/callowayproject/bump-my-version/commit/be5cb79b3bb962c4118a77e9c5688e9eaa8b1b4f)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.3.3 → v0.3.4](https://github.com/astral-sh/ruff-pre-commit/compare/v0.3.3...v0.3.4)
+
+
 ## 0.20.0 (2024-03-27)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.19.3...0.20.0)
 
