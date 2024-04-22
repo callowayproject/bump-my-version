@@ -195,7 +195,6 @@ The `distance_to_latest_tag` is a special value that is replaced with the number
 Now when you run `bump-my-version show-bump`, you can see the new pre-release versioning path.
 
 ```console title="Showing the new versioning path with pre_n automation"
-
 $ bump-my-version show-bump
 0.1.0 ── bump ─┬─ major ─ 1.0.0-dev0
                ├─ minor ─ 0.2.0-dev0
@@ -211,7 +210,7 @@ $ bump-my-version show-bump 1.0.0-rc0
                    ├─ minor ─ 1.1.0-dev0
                    ├─ patch ─ 1.0.1-dev0
                    ╰─ pre_l ─ 1.0.0
- ```
+```
 
 The `pre_n` path is now missing because it is automated.
 
@@ -219,9 +218,9 @@ The full development and release path now is:
 
 - `1.0.0`
 - `bump patch` → `1.0.1-dev0`
-- each commit will increase → `1.0.1-dev1`
+  - each commit will increase → `1.0.1-dev1`
 - `bump pre_l` → `1.0.1-rc0`
-- each commit will increase → `1.0.1-rc1`
+  - each commit will increase → `1.0.1-rc1`
 - `bump pre_l` → `1.0.1`
 
 1. You must decide on the next version before you start developing.
