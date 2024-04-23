@@ -216,9 +216,9 @@ class Version:
         self.components = components
         self.original = original
 
-    def values(self) -> Dict[str, str]:
+    def values(self) -> Dict[str, VersionComponent]:
         """Return the values of the parts."""
-        return {key: value.value for key, value in self.components.items()}
+        return dict(self.components.items())
 
     def __getitem__(self, key: str) -> VersionComponent:
         return self.components[key]
