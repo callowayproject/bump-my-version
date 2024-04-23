@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.20.2 (2024-04-23)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.20.1...0.20.2)
+
+### Fixes
+
+- Fixed the rendering of numeric version components. [c522c75](https://github.com/callowayproject/bump-my-version/commit/c522c75e9b51cbcf09e7a1a41a0b6d210a3b44be)
+    
+  - Numeric version components now will attempt to render its value as an integer and fall back to the parsed value.
+- Fixed code block in the README. [b4ff9f3](https://github.com/callowayproject/bump-my-version/commit/b4ff9f31557cf39ab3fdf4199c4fbddd03a78bbd)
+    
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [9b09da8](https://github.com/callowayproject/bump-my-version/commit/9b09da8f93d50886f60a63a01ae10a1336ac766e)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.3.5 → v0.3.7](https://github.com/astral-sh/ruff-pre-commit/compare/v0.3.5...v0.3.7)
+
+
 ## 0.20.1 (2024-04-13)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.20.0...0.20.1)
 
