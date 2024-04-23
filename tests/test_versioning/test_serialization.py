@@ -68,6 +68,11 @@ class TestParseVersion:
         pattern = r"MAJOR=(?P<major>\d+)\nMINOR=(?P<minor>\d+)\nPATCH=(?P<patch>\d+)\n"
         assert parse_version("MAJOR=31\nMINOR=0\nPATCH=3\n", pattern) == {"major": "31", "minor": "0", "patch": "3"}
 
+    def test_parse_pattern_with_zero_padding(self):
+        """A parse pattern with zero padding should be parsed correctly."""
+        pattern = r"(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)"
+        assert parse_version("5.06.0", pattern) == {"major": "5", "minor": "06", "patch": "0"}
+
 
 class TestSerialize:
     """Test the serialize function."""
@@ -195,6 +200,11 @@ class TestSerialize:
                 )
                 == "1.2.3+build.1"
             )
+
+        def test_zero_padding(self):
+            """A numeric component with zero-padding notation should be rendered correctly."""
+            version = semver_spec().create_version({"major": "1", "minor": "2", "patch": "3"})
+            assert serialize(version, serialize_patterns=["{major}.{minor:02}.{patch}"], context={}) == "1.02.3"
 
     class TestRaisesError:
         def test_if_context_is_missing_values(self):
