@@ -5,8 +5,11 @@ from contextlib import contextmanager
 from click.testing import CliRunner
 from pathlib import Path
 from typing import Generator
+from bumpversion.ui import setup_logging
 
 import pytest
+
+setup_logging(1)
 
 
 @pytest.fixture
