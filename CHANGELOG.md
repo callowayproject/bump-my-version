@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.20.3 (2024-04-26)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.20.2...0.20.3)
+
+### Fixes
+
+- Fixed test logging setup. [3777f27](https://github.com/callowayproject/bump-my-version/commit/3777f2750a146a698ed0d15edd88c82f73e35354)
+    
+- Fixed the indentation problem. [ec3cd99](https://github.com/callowayproject/bump-my-version/commit/ec3cd998dfa7eaff678262163629abac73640c86)
+    
+  - Added a dedent when a file does not match the change pattern.
+  - Fixes #181
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [e916f87](https://github.com/callowayproject/bump-my-version/commit/e916f87b519266f62e4b504752bb51bb40fe3a08)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.3.7 → v0.4.1](https://github.com/astral-sh/ruff-pre-commit/compare/v0.3.7...v0.4.1)
+
+
 ## 0.20.2 (2024-04-23)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.20.1...0.20.2)
 
