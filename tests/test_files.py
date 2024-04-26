@@ -1,5 +1,6 @@
 """File processing tests."""
 
+import logging
 import os
 import shutil
 from datetime import datetime, timezone
@@ -15,8 +16,137 @@ from bumpversion import exceptions, files, config, bump
 from bumpversion.config.models import FileChange
 from bumpversion.context import get_context
 from bumpversion.exceptions import VersionNotFoundError
+from bumpversion.ui import setup_logging, get_indented_logger
 from bumpversion.version_part import VersionConfig
 from tests.conftest import get_config_data, inside_dir
+
+
+class TestConfiguredFile:
+    """Tests of the ConfiguredFile class."""
+
+    class TestGetFileContents:
+        """Tests of the get_file_content method."""
+
+        def test_returns_contents_of_existing_file(self, tmp_path: Path) -> None:
+            """The get_file_content method returns the contents of an existing file."""
+            # Arrange
+            filepath = tmp_path / "file.md"
+            expected_data = "My current version is 1.2.3"
+            filepath.write_text(expected_data, encoding="utf-8")
+            overrides = {
+                "current_version": "1.2.3",
+                "files": [{"filename": str(filepath)}],
+            }
+            conf, version_config, current_version = get_config_data(overrides)
+            assert len(conf.files_to_modify) == 1
+            assert conf.files_to_modify[0].filename == str(filepath)
+
+            # Act
+            configured_file = files.ConfiguredFile(conf.files_to_modify[0], version_config)
+
+            # Assert
+            assert configured_file.get_file_contents() == expected_data
+
+        def test_raises_exception_if_file_not_found(self, tmp_path: Path) -> None:
+            """The get_file_content method raises an exception if the file does not exist."""
+            filepath = tmp_path / "file.md"
+            overrides = {
+                "current_version": "1.2.3",
+                "files": [{"filename": str(filepath)}],
+            }
+            conf, version_config, current_version = get_config_data(overrides)
+            assert len(conf.files_to_modify) == 1
+            assert conf.files_to_modify[0].filename == str(filepath)
+            configured_file = files.ConfiguredFile(conf.files_to_modify[0], version_config)
+
+            # Act
+            with pytest.raises(FileNotFoundError):
+                configured_file.get_file_contents()
+
+    class TestMakeFileChange:
+        """Tests of the make_file_change function."""
+
+        def test_raises_exception_if_file_not_found(self, tmp_path: Path) -> None:
+            """The make_file_change method raises an exception if the file does not exist."""
+            # Assemble
+            filepath = tmp_path / "file.md"
+            overrides = {
+                "current_version": "1.2.3",
+                "files": [{"filename": str(filepath)}],
+            }
+            conf, version_config, current_version = get_config_data(overrides)
+            configured_file = files.ConfiguredFile(conf.files_to_modify[0], version_config)
+            new_version = current_version.bump("patch")
+            ctx = get_context(conf)
+
+            # Act
+            with pytest.raises(FileNotFoundError):
+                configured_file.make_file_change(current_version, new_version, ctx, dry_run=True)
+
+        def test_logs_missing_file_when_ignore_missing_file_set(self, tmp_path: Path, caplog) -> None:
+            """The make_file_change method logs missing file when ignore_missing_file set to True."""
+            # Assemble
+            setup_logging(1)
+            caplog.set_level(logging.INFO)
+            logger = get_indented_logger(__name__)
+            logger.reset()
+            filepath = tmp_path / "file.md"
+            overrides = {
+                "current_version": "1.2.3",
+                "files": [{"filename": str(filepath), "ignore_missing_file": True}],
+            }
+            conf, version_config, current_version = get_config_data(overrides)
+            configured_file = files.ConfiguredFile(conf.files_to_modify[0], version_config)
+            new_version = current_version.bump("patch")
+            ctx = get_context(conf)
+
+            # Act
+            configured_file.make_file_change(current_version, new_version, ctx, dry_run=True)
+
+            # Assert
+            logs = caplog.messages
+            assert logs[0] == "Reading configuration"
+            assert logs[1] == "  Configuration file not found: missing."
+            assert logs[2] == f"\nFile {filepath}: replace `{{current_version}}` with `{{new_version}}`"
+            assert logs[3] == "  File not found, but ignoring"
+
+        def test_dedents_properly_when_file_does_not_contain_pattern(self, fixtures_path: Path, caplog) -> None:
+            """The make_file_change method dedents the logging context when it does not contain a pattern."""
+            # Assemble
+            setup_logging(1)
+            caplog.set_level(logging.INFO)
+            logger = get_indented_logger(__name__)
+            logger.reset()
+            globs = fixtures_path / "glob" / "**/*.txt"
+            overrides = {
+                "current_version": "1.2.3",
+                "files": [{"glob": str(globs), "ignore_missing_file": True, "ignore_missing_version": True}],
+            }
+            conf, version_config, current_version = get_config_data(overrides)
+            configured_file1 = files.ConfiguredFile(conf.files_to_modify[0], version_config)
+            configured_file2 = files.ConfiguredFile(conf.files_to_modify[1], version_config)
+            configured_file3 = files.ConfiguredFile(conf.files_to_modify[2], version_config)
+            new_version = current_version.bump("patch")
+            ctx = get_context(conf)
+
+            # Act
+            configured_file1.make_file_change(current_version, new_version, ctx, dry_run=True)
+            configured_file2.make_file_change(current_version, new_version, ctx, dry_run=True)
+            configured_file3.make_file_change(current_version, new_version, ctx, dry_run=True)
+
+            # Assert
+            logs = caplog.messages
+            assert logs[0] == "Reading configuration"
+            assert logs[1] == "  Configuration file not found: missing."
+            assert logs[2] == (
+                f"\nFile {configured_file1.file_change.filename}: replace `{{current_version}}` with `{{new_version}}`"
+            )
+            assert logs[3] == (
+                f"\nFile {configured_file2.file_change.filename}: replace `{{current_version}}` with `{{new_version}}`"
+            )
+            assert logs[4] == (
+                f"\nFile {configured_file3.file_change.filename}: replace `{{current_version}}` with `{{new_version}}`"
+            )
 
 
 def test_single_file_processed_twice(tmp_path: Path):

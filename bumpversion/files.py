@@ -183,15 +183,9 @@ class ConfiguredFile:
                 logger.dedent()
                 return
             raise FileNotFoundError(f"File not found: '{self.file_change.filename}'")  # pragma: no-coverage
-        logger.debug("Serializing the current version")
-        logger.indent()
-        context["current_version"] = self.version_config.serialize(current_version, context)
-        logger.dedent()
+        context["current_version"] = self._get_serialized_version("current_version", current_version, context)
         if new_version:
-            logger.debug("Serializing the new version")
-            logger.indent()
-            context["new_version"] = self.version_config.serialize(new_version, context)
-            logger.dedent()
+            context["new_version"] = self._get_serialized_version("new_version", new_version, context)
         else:
             logger.debug("No new version, using current version as new version")
             context["new_version"] = context["current_version"]
@@ -200,6 +194,7 @@ class ConfiguredFile:
         replace_with = self.version_config.replace.format(**context)
 
         if not self._contains_change_pattern(search_for, raw_search_pattern, current_version, context):
+            logger.dedent()
             return
 
         file_content_before = self.get_file_contents()
@@ -216,6 +211,14 @@ class ConfiguredFile:
         logger.dedent()
         if not dry_run:  # pragma: no-coverage
             self.write_file_contents(file_content_after)
+
+    def _get_serialized_version(self, context_key: str, version: Version, context: MutableMapping) -> str:
+        """Get the serialized version."""
+        logger.debug("Serializing the %s", context_key.replace("_", " "))
+        logger.indent()
+        serialized_version = self.version_config.serialize(version, context)
+        logger.dedent()
+        return serialized_version
 
     def __str__(self) -> str:  # pragma: no-coverage
         return self.file_change.filename
