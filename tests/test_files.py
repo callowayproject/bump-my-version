@@ -1,5 +1,6 @@
 """File processing tests."""
 
+import logging
 import os
 import shutil
 from datetime import datetime, timezone
@@ -15,6 +16,7 @@ from bumpversion import exceptions, files, config, bump
 from bumpversion.config.models import FileChange
 from bumpversion.context import get_context
 from bumpversion.exceptions import VersionNotFoundError
+from bumpversion.ui import setup_logging, get_indented_logger
 from bumpversion.version_part import VersionConfig
 from tests.conftest import get_config_data, inside_dir
 
@@ -84,6 +86,10 @@ class TestConfiguredFile:
         def test_logs_missing_file_when_ignore_missing_file_set(self, tmp_path: Path, caplog) -> None:
             """The make_file_change method logs missing file when ignore_missing_file set to True."""
             # Assemble
+            setup_logging(1)
+            caplog.set_level(logging.INFO)
+            logger = get_indented_logger(__name__)
+            logger.reset()
             filepath = tmp_path / "file.md"
             overrides = {
                 "current_version": "1.2.3",
@@ -99,14 +105,18 @@ class TestConfiguredFile:
 
             # Assert
             logs = caplog.messages
-            assert logs[0] == "  Reading configuration"
-            assert logs[1] == "    Configuration file not found: missing."
-            assert logs[2].endswith("file.md: replace `{current_version}` with `{new_version}`")
-            assert logs[3] == "    File not found, but ignoring"
+            assert logs[0] == "Reading configuration"
+            assert logs[1] == "  Configuration file not found: missing."
+            assert logs[2] == f"\nFile {filepath}: replace `{{current_version}}` with `{{new_version}}`"
+            assert logs[3] == "  File not found, but ignoring"
 
         def test_dedents_properly_when_file_does_not_contain_pattern(self, fixtures_path: Path, caplog) -> None:
             """The make_file_change method dedents the logging context when it does not contain a pattern."""
             # Assemble
+            setup_logging(1)
+            caplog.set_level(logging.INFO)
+            logger = get_indented_logger(__name__)
+            logger.reset()
             globs = fixtures_path / "glob" / "**/*.txt"
             overrides = {
                 "current_version": "1.2.3",
@@ -126,16 +136,16 @@ class TestConfiguredFile:
 
             # Assert
             logs = caplog.messages
-            assert logs[0] == "  Reading configuration"
-            assert logs[1] == "    Configuration file not found: missing."
+            assert logs[0] == "Reading configuration"
+            assert logs[1] == "  Configuration file not found: missing."
             assert logs[2] == (
-                f"  \n  File {configured_file1.file_change.filename}: replace `{{current_version}}` with `{{new_version}}`"
+                f"\nFile {configured_file1.file_change.filename}: replace `{{current_version}}` with `{{new_version}}`"
             )
             assert logs[3] == (
-                f"  \n  File {configured_file2.file_change.filename}: replace `{{current_version}}` with `{{new_version}}`"
+                f"\nFile {configured_file2.file_change.filename}: replace `{{current_version}}` with `{{new_version}}`"
             )
             assert logs[4] == (
-                f"  \n  File {configured_file3.file_change.filename}: replace `{{current_version}}` with `{{new_version}}`"
+                f"\nFile {configured_file3.file_change.filename}: replace `{{current_version}}` with `{{new_version}}`"
             )
 
 
