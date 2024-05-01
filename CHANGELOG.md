@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.21.0 (2024-05-01)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.20.3...0.21.0)
+
+### Fixes
+
+- Fixed a bug in the glob tests. [1041fe9](https://github.com/callowayproject/bump-my-version/commit/1041fe9b363fc79cb0bb95c301c1c9badb5da9cc)
+    
+  Was not properly looking in the correct relative directories.
+- Fixed test for Windows glob paths. [ea45c4c](https://github.com/callowayproject/bump-my-version/commit/ea45c4c4d156c1b0807a019f4b04982fda195e8f)
+    
+- Fixed exclusion logic with wcmatch. [1c391be](https://github.com/callowayproject/bump-my-version/commit/1c391beca888797ce669a947373bca907c78dbfa)
+    
+- Refactored glob matching to use the wcmatch library. [bbf4ae0](https://github.com/callowayproject/bump-my-version/commit/bbf4ae0c9b4c77d78fb534f166c0165dffcb8c76)
+    
+### New
+
+- Adds `glob_exclude` file specification parameter. [420e3bd](https://github.com/callowayproject/bump-my-version/commit/420e3bd42bf01c3c540ef72c67b55354fd8780e7)
+    
+  User can prune the files resolved via the `glob` parameter.
+
+  Fixes #184
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [ce02aa7](https://github.com/callowayproject/bump-my-version/commit/ce02aa759e69ee823b6844626ed2db3dd858d54c)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.4.1 → v0.4.2](https://github.com/astral-sh/ruff-pre-commit/compare/v0.4.1...v0.4.2)
+
+
 ## 0.20.3 (2024-04-26)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.20.2...0.20.3)
 
