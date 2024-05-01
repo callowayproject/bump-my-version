@@ -10,7 +10,7 @@ from pytest import param
 from bumpversion.config.utils import get_all_file_configs, resolve_glob_files
 from bumpversion.config.models import FileChange
 from bumpversion.config import DEFAULTS
-from tests.conftest import inside_dir
+from tests.conftest import inside_dir, get_config_data
 
 
 def write_config(tmp_path: Path, overrides: dict) -> Path:
@@ -113,6 +113,16 @@ class TestResolveGlobFiles:
             assert resolved_file.ignore_missing_version is True
             assert resolved_file.ignore_missing_file is True
             assert resolved_file.regex is True
+
+    def test_finds_all_files(self, fixtures_path: Path):
+        """Test that all files are found."""
+        overrides = {
+            "current_version": "1.2.3",
+            "files": [{"glob": "glob/**/*.txt", "ignore_missing_file": True, "ignore_missing_version": True}],
+        }
+        with inside_dir(fixtures_path):
+            conf, version_config, current_version = get_config_data(overrides)
+            assert len(conf.files_to_modify) == 3
 
     @pytest.mark.parametrize(
         ["glob_exclude", "expected_number"],

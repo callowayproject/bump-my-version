@@ -117,15 +117,15 @@ class TestConfiguredFile:
             caplog.set_level(logging.INFO)
             logger = get_indented_logger(__name__)
             logger.reset()
-            globs = f"{fixtures_path}/glob/**/*.txt"
             overrides = {
                 "current_version": "1.2.3",
-                "files": [{"glob": str(globs), "ignore_missing_file": True, "ignore_missing_version": True}],
+                "files": [{"glob": "glob/**/*.txt", "ignore_missing_file": True, "ignore_missing_version": True}],
             }
-            conf, version_config, current_version = get_config_data(overrides)
-            configured_file1 = files.ConfiguredFile(conf.files_to_modify[0], version_config)
-            configured_file2 = files.ConfiguredFile(conf.files_to_modify[1], version_config)
-            configured_file3 = files.ConfiguredFile(conf.files_to_modify[2], version_config)
+            with inside_dir(fixtures_path):
+                conf, version_config, current_version = get_config_data(overrides)
+                configured_file1 = files.ConfiguredFile(conf.files_to_modify[0], version_config)
+                configured_file2 = files.ConfiguredFile(conf.files_to_modify[1], version_config)
+                configured_file3 = files.ConfiguredFile(conf.files_to_modify[2], version_config)
             new_version = current_version.bump("patch")
             ctx = get_context(conf)
 
@@ -141,12 +141,15 @@ class TestConfiguredFile:
             assert logs[2] == (
                 f"\nFile {configured_file1.file_change.filename}: replace `{{current_version}}` with `{{new_version}}`"
             )
-            assert logs[3] == (
+            assert logs[3] == "  File not found, but ignoring"
+            assert logs[4] == (
                 f"\nFile {configured_file2.file_change.filename}: replace `{{current_version}}` with `{{new_version}}`"
             )
-            assert logs[4] == (
+            assert logs[5] == "  File not found, but ignoring"
+            assert logs[6] == (
                 f"\nFile {configured_file3.file_change.filename}: replace `{{current_version}}` with `{{new_version}}`"
             )
+            assert logs[7] == "  File not found, but ignoring"
 
 
 def test_single_file_processed_twice(tmp_path: Path):
