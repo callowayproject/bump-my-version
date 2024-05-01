@@ -7,7 +7,7 @@ import tomlkit
 import pytest
 from pytest import param
 
-from bumpversion.config.utils import get_all_file_configs, resolve_glob_files, glob_exclude_pattern
+from bumpversion.config.utils import get_all_file_configs, resolve_glob_files
 from bumpversion.config.models import FileChange
 from bumpversion.config import DEFAULTS
 from tests.conftest import inside_dir
@@ -114,7 +114,18 @@ class TestResolveGlobFiles:
             assert resolved_file.ignore_missing_file is True
             assert resolved_file.regex is True
 
-    def test_excludes_configured_patterns(self, tmp_path: Path):
+    @pytest.mark.parametrize(
+        ["glob_exclude", "expected_number"],
+        [
+            param(["**/*.cfg"], 0, id="recursive cfg excludes all"),
+            param(["*.cfg"], 1, id="top level cfg excludes 1"),
+            param(["subdir/*.cfg"], 1, id="subdir cfg excludes 1"),
+            param(["subdir/adir/*.cfg"], 2, id="non-matching excludes 0"),
+            param(["subdir/"], 2, id="raw subdir excludes 0"),
+            param(["*.cfg", "subdir/*.cfg"], 0, id="combined top level and subdir cfg excludes all"),
+        ],
+    )
+    def test_excludes_configured_patterns(self, tmp_path: Path, glob_exclude: List[str], expected_number: int):
         """Test that excludes configured patterns work."""
         file1 = tmp_path.joinpath("setup.cfg")
         file2 = tmp_path.joinpath("subdir/setup.cfg")
@@ -125,7 +136,7 @@ class TestResolveGlobFiles:
         file_cfg = FileChange(
             filename=None,
             glob="**/*.cfg",
-            glob_exclude=["subdir/**"],
+            glob_exclude=glob_exclude,
             key_path=None,
             parse=r"v(?P<major>\d+)",
             serialize=("v{major}",),
@@ -138,50 +149,41 @@ class TestResolveGlobFiles:
         with inside_dir(tmp_path):
             resolved_files = resolve_glob_files(file_cfg)
 
-        assert len(resolved_files) == 1
-
-
-class TestGlobExcludePattern:
-    """Tests for the glob_exclude_pattern function."""
-
-    @pytest.mark.parametrize(["empty_pattern"], [param([], id="empty list"), param(None, id="None")])
-    def test_empty_list_returns_empty_string_pattern(self, empty_pattern: Any):
-        """When passed an empty list, it should return a pattern that only matches an empty string."""
-        assert glob_exclude_pattern(empty_pattern).pattern == r"^$"
+        assert len(resolved_files) == expected_number
 
     @pytest.mark.parametrize(
-        ["patterns", "expected"],
+        ["glob_pattern", "expected_number"],
         [
-            param(["foo.txt", ""], "(?s:foo\\.txt)\\Z", id="empty string"),
-            param(["foo.txt", None], "(?s:foo\\.txt)\\Z", id="None value"),
-            param(["foo.txt", "", "bar.txt"], "(?s:foo\\.txt)\\Z|(?s:bar\\.txt)\\Z", id="Empty string in the middle"),
+            param("**/*.cfg|*.txt", 3, id="recursive cfg and text finds 3"),
+            param("*.cfg|*.txt", 2, id="top level cfg and txt finds 2"),
+            param("subdir/adir/*.cfg|*.toml", 0, id="non-matching finds 0"),
+            param("subdir/|*.txt", 2, id="raw subdir and text finds 2"),
         ],
     )
-    def test_empty_values_are_excluded(self, patterns: List, expected: str):
-        """Empty values are excluded from the compiled pattern."""
-        assert glob_exclude_pattern(patterns).pattern == expected
+    def test_combination_glob_patterns(self, tmp_path: Path, glob_pattern: str, expected_number: int):
+        """Test that excludes configured patterns work."""
+        file1 = tmp_path.joinpath("setup.cfg")
+        file2 = tmp_path.joinpath("subdir/setup.cfg")
+        file3 = tmp_path.joinpath("config.txt")
+        file1.touch()
+        file2.parent.mkdir()
+        file2.touch()
+        file3.touch()
 
-    def test_list_of_empty_patterns_return_empty_string_pattern(self):
-        """When passed a list of empty strings, it should return a pattern that only matches an empty string."""
-        assert glob_exclude_pattern(["", "", None]).pattern == r"^$"
-
-    def test_trailing_slash_appends_stars(self):
-        """
-        When a string has a trailing slash, two asterisks are appended.
-
-        `fnmatch.translate` converts `**` to `.*`
-        """
-        assert glob_exclude_pattern(["foo/"]).pattern == "(?s:foo/.*)\\Z"
-
-    @pytest.mark.parametrize(
-        ["file_path", "excluded"],
-        [param("node_modules/foo/file.js", True), param("build/foo/file.js", True), param("code/file.js", False)],
-    )
-    def test_output_pattern_matches_files(self, file_path: str, excluded: bool):
-        """The output pattern should match file paths appropriately."""
-        exclude_matcher = glob_exclude_pattern(["node_modules/", "build/"])
-
-        if excluded:
-            assert exclude_matcher.match(file_path)
-        else:
-            assert not exclude_matcher.match(file_path)
+        file_cfg = FileChange(
+            filename=None,
+            glob=glob_pattern,
+            glob_exclude=[],
+            key_path=None,
+            parse=r"v(?P<major>\d+)",
+            serialize=("v{major}",),
+            search="v{current_version}",
+            replace="v{new_version}",
+            ignore_missing_version=True,
+            ignore_missing_file=True,
+            regex=True,
+        )
+        with inside_dir(tmp_path):
+            resolved_files = resolve_glob_files(file_cfg)
+        print([x.filename for x in resolved_files])
+        assert len(resolved_files) == expected_number

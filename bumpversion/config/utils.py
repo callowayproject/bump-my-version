@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-import fnmatch
 import re
-from typing import Dict, List, Pattern
+from typing import Dict, List
 
 from wcmatch import glob
 
@@ -32,8 +31,6 @@ def get_all_file_configs(config_dict: dict) -> List[FileChange]:
 
 def get_all_part_configs(config_dict: dict) -> Dict[str, VersionComponentSpec]:
     """Make sure all version parts are included."""
-    import re
-
     try:
         parsing_groups = list(re.compile(config_dict["parse"]).groupindex.keys())
     except re.error as e:
@@ -51,21 +48,6 @@ def get_all_part_configs(config_dict: dict) -> Dict[str, VersionComponentSpec]:
     return part_configs
 
 
-def glob_exclude_pattern(glob_excludes: List[str]) -> Pattern:
-    """Convert a list of glob patterns to a regular expression that matches excluded files."""
-    glob_excludes = glob_excludes or []
-    patterns = []
-
-    for pat in glob_excludes:
-        if not pat:
-            continue
-        elif pat.endswith("/"):
-            patterns.append(f"{pat}**")  # assume they mean exclude every file in that directory
-        else:
-            patterns.append(pat)
-    return re.compile("|".join([fnmatch.translate(pat) for pat in patterns])) if patterns else re.compile(r"^$")
-
-
 def resolve_glob_files(file_cfg: FileChange) -> List[FileChange]:
     """
     Return a list of file configurations that match the glob pattern.
@@ -78,7 +60,7 @@ def resolve_glob_files(file_cfg: FileChange) -> List[FileChange]:
     """
     files: List[FileChange] = []
     exclude = file_cfg.glob_exclude or []
-    glob_flags = glob.GLOBSTAR | glob.FORCEUNIX
+    glob_flags = glob.GLOBSTAR | glob.FORCEUNIX | glob.SPLIT
     for filename_glob in glob.glob(file_cfg.glob, flags=glob_flags, exclude=exclude):
         new_file_cfg = file_cfg.model_copy()
         new_file_cfg.filename = filename_glob
