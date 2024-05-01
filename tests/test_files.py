@@ -117,7 +117,7 @@ class TestConfiguredFile:
             caplog.set_level(logging.INFO)
             logger = get_indented_logger(__name__)
             logger.reset()
-            globs = fixtures_path / "glob" / "**/*.txt"
+            globs = f"{fixtures_path}/glob/**/*.txt"
             overrides = {
                 "current_version": "1.2.3",
                 "files": [{"glob": str(globs), "ignore_missing_file": True, "ignore_missing_version": True}],
