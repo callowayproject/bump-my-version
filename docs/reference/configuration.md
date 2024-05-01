@@ -602,6 +602,20 @@ The glob pattern specifying the files to modify.
 
     ‡ This is only used with TOML configuration, and is only required if [`filename`](#filename) is _not_ specified. INI-style configuration files specify the glob pattern as part of the grouping.
 
+### glob_exclude
+
+::: field-list
+    required
+    : No
+    
+    default
+    : empty
+    
+    type
+    : list of string
+    
+A list of glob patterns to exclude from the files found via the `glob` parameter. Does nothing if `filename` is specified.
+
 
 ### parse
 

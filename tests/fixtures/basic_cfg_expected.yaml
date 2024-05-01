@@ -7,6 +7,7 @@ excluded_paths:
 files:
   - filename: "setup.py"
     glob: null
+    glob_exclude: null
     ignore_missing_file: false
     ignore_missing_version: false
     key_path: null
@@ -19,6 +20,7 @@ files:
       - "{major}.{minor}.{patch}"
   - filename: "bumpversion/__init__.py"
     glob: null
+    glob_exclude: null
     ignore_missing_file: false
     ignore_missing_version: false
     key_path: null
@@ -31,6 +33,7 @@ files:
       - "{major}.{minor}.{patch}"
   - filename: "CHANGELOG.md"
     glob: null
+    glob_exclude: null
     ignore_missing_file: false
     ignore_missing_version: false
     key_path: null

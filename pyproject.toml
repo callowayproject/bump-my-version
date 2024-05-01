@@ -39,6 +39,7 @@ dependencies = [
     "rich-click",
     "rich",
     "tomlkit",
+    "wcmatch>=8.5.1",
 ]
 
 [project.scripts]

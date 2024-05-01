@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
-import glob
+import re
 from typing import Dict, List
+
+from wcmatch import glob
 
 from bumpversion.config.models import FileChange
 from bumpversion.exceptions import BumpVersionError
@@ -29,8 +31,6 @@ def get_all_file_configs(config_dict: dict) -> List[FileChange]:
 
 def get_all_part_configs(config_dict: dict) -> Dict[str, VersionComponentSpec]:
     """Make sure all version parts are included."""
-    import re
-
     try:
         parsing_groups = list(re.compile(config_dict["parse"]).groupindex.keys())
     except re.error as e:
@@ -58,8 +58,10 @@ def resolve_glob_files(file_cfg: FileChange) -> List[FileChange]:
     Returns:
         A list of resolved file configurations according to the pattern.
     """
-    files = []
-    for filename_glob in glob.glob(file_cfg.glob, recursive=True):
+    files: List[FileChange] = []
+    exclude = file_cfg.glob_exclude or []
+    glob_flags = glob.GLOBSTAR | glob.FORCEUNIX | glob.SPLIT
+    for filename_glob in glob.glob(file_cfg.glob, flags=glob_flags, exclude=exclude):
         new_file_cfg = file_cfg.model_copy()
         new_file_cfg.filename = filename_glob
         new_file_cfg.glob = None
