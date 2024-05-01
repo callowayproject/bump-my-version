@@ -1,7 +1,7 @@
 # Bump My Version
 
 [![image](https://img.shields.io/pypi/v/bump-my-version.svg)](https://pypi.org/project/bump-my-version/)
-[![image](https://img.shields.io/pypi/l/bump-my-version.svg)](https://pypi.org/project/bump-my-version/)
+[![image](https://img.shields.io/pypi/l/bump-my-version.svg)](https://github.com/callowayproject/bump-my-version/blob/master/LICENSE)
 [![image](https://img.shields.io/pypi/pyversions/bump-my-version.svg)](https://pypi.org/project/bump-my-version/)
 [![codecov](https://codecov.io/gh/callowayproject/bump-my-version/branch/master/graph/badge.svg?token=D1GSOtWEPU)](https://codecov.io/gh/callowayproject/bump-my-version)
 [![GitHub Actions](https://github.com/callowayproject/bump-my-version/workflows/CI/badge.svg)](https://github.com/callowayproject/bump-my-version/actions)
@@ -43,7 +43,7 @@ pip install --upgrade bump-my-version
 
 ## Changelog
 
-Please find the changelog here: [CHANGELOG.md](CHANGELOG.md)
+Please find the changelog here: [CHANGELOG.md](https://github.com/callowayproject/bump-my-version/blob/master/CHANGELOG.md)
 
 ## Semantic versioning example
 <!--tutorial start-->
@@ -235,13 +235,13 @@ The full development and release path now is:
 
 Thank you, contributors! You can find a full list here: https://github.com/callowayproject/bump-my-version/graphs/contributors
 
-See also our [CONTRIBUTING.md](CONTRIBUTING.md)
+See also our [CONTRIBUTING.md](https://github.com/callowayproject/bump-my-version/blob/master/CONTRIBUTING.md)
 
 Development of this happens on GitHub, patches including tests, and documentation are very welcome, as well as bug reports! Please open an issue if this tool does not support every aspect of bumping versions in your development
 workflow, as it is intended to be very versatile.
 
 ## License
 
-Bump My Version is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+Bump My Version is licensed under the MIT License - see the [LICENSE](https://github.com/callowayproject/bump-my-version/blob/master/LICENSE) file for details
 
 <!--end-->
