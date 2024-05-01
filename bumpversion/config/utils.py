@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import fnmatch
 import glob
-from typing import Dict, List
+import re
+from typing import Dict, List, Pattern
 
 from bumpversion.config.models import FileChange
 from bumpversion.exceptions import BumpVersionError
@@ -48,6 +50,21 @@ def get_all_part_configs(config_dict: dict) -> Dict[str, VersionComponentSpec]:
     return part_configs
 
 
+def glob_exclude_pattern(glob_excludes: List[str]) -> Pattern:
+    """Convert a list of glob patterns to a regular expression that matches excluded files."""
+    glob_excludes = glob_excludes or []
+    patterns = []
+
+    for pat in glob_excludes:
+        if not pat:
+            continue
+        elif pat.endswith("/"):
+            patterns.append(f"{pat}**")  # assume they mean exclude every file in that directory
+        else:
+            patterns.append(pat)
+    return re.compile("|".join([fnmatch.translate(pat) for pat in patterns])) if patterns else re.compile(r"^$")
+
+
 def resolve_glob_files(file_cfg: FileChange) -> List[FileChange]:
     """
     Return a list of file configurations that match the glob pattern.
@@ -58,8 +75,11 @@ def resolve_glob_files(file_cfg: FileChange) -> List[FileChange]:
     Returns:
         A list of resolved file configurations according to the pattern.
     """
-    files = []
+    files: List[FileChange] = []
+    exclude_matcher = glob_exclude_pattern(file_cfg.glob_exclude or [])
     for filename_glob in glob.glob(file_cfg.glob, recursive=True):
+        if exclude_matcher.match(filename_glob):
+            continue
         new_file_cfg = file_cfg.model_copy()
         new_file_cfg.filename = filename_glob
         new_file_cfg.glob = None

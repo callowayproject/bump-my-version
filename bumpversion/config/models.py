@@ -33,6 +33,7 @@ class FileChange(BaseModel):
     ignore_missing_file: bool
     filename: Optional[str] = None
     glob: Optional[str] = None  # Conflicts with filename. If both are specified, glob wins
+    glob_exclude: Optional[List[str]] = None
     key_path: Optional[str] = None  # If specified, and has an appropriate extension, will be treated as a data file
 
     def __hash__(self):
