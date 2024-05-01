@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import fnmatch
-import glob
 import re
 from typing import Dict, List, Pattern
+
+from wcmatch import glob
 
 from bumpversion.config.models import FileChange
 from bumpversion.exceptions import BumpVersionError
@@ -76,10 +77,9 @@ def resolve_glob_files(file_cfg: FileChange) -> List[FileChange]:
         A list of resolved file configurations according to the pattern.
     """
     files: List[FileChange] = []
-    exclude_matcher = glob_exclude_pattern(file_cfg.glob_exclude or [])
-    for filename_glob in glob.glob(file_cfg.glob, recursive=True):
-        if exclude_matcher.match(filename_glob):
-            continue
+    exclude = file_cfg.glob_exclude or []
+    glob_flags = glob.GLOBSTAR | glob.FORCEUNIX
+    for filename_glob in glob.glob(file_cfg.glob, flags=glob_flags, exclude=exclude):
         new_file_cfg = file_cfg.model_copy()
         new_file_cfg.filename = filename_glob
         new_file_cfg.glob = None
