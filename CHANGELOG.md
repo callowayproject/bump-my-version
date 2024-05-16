@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.21.1 (2024-05-16)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.21.0...0.21.1)
+
+### Other
+
+- [pre-commit.ci] auto fixes from pre-commit.com hooks. [1b57c2b](https://github.com/callowayproject/bump-my-version/commit/1b57c2b3e5b687e541d611b88b3d5fae4ce8826b)
+    
+  for more information, see https://pre-commit.ci
+- [pre-commit.ci] pre-commit autoupdate. [e813eda](https://github.com/callowayproject/bump-my-version/commit/e813edad628803cd4c9f59ff2b8303b4d779756a)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.4.3 → v0.4.4](https://github.com/astral-sh/ruff-pre-commit/compare/v0.4.3...v0.4.4)
+
+- [pre-commit.ci] pre-commit autoupdate. [05a0dd6](https://github.com/callowayproject/bump-my-version/commit/05a0dd65f31f3962e1ff4d2ee03ee99b2062ea5f)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.4.2 → v0.4.3](https://github.com/astral-sh/ruff-pre-commit/compare/v0.4.2...v0.4.3)
+
+### Updates
+
+- Update README.md. [cad7096](https://github.com/callowayproject/bump-my-version/commit/cad7096c615f646a75c5d23bae745cd1a8e0adb5)
+    
+
 ## 0.21.0 (2024-05-01)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.20.3...0.21.0)
 
