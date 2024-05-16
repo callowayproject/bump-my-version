@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../../../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.21">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.23">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.66ac8b77.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.6543a935.min.css">
       
         
         <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
@@ -1989,11 +1989,11 @@
 
 
 <a id="bumpversion.versioning.models"></a>
-  <div class="doc doc-contents first">
-  
+    <div class="doc doc-contents first">
+
       <p>Models for managing versioning of software projects.</p>
 
-  
+
 
   <div class="doc doc-children">
 
@@ -2009,7 +2009,7 @@
 
 
 <h3 id="bumpversion.versioning.models.Version" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>          <span class="doc doc-object-name doc-class-name">Version</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">Version</span>
 
 
 <a href="#bumpversion.versioning.models.Version" class="headerlink" title="Permanent link">&para;</a></h3>
@@ -2020,13 +2020,13 @@
 <span class="p">)</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
+    <div class="doc doc-contents ">
 
-  
+
       <p>The specification of a version and its parts.</p>
 
 
-  
+
 
   <div class="doc doc-children">
 
@@ -2038,66 +2038,60 @@
 
 <h4 id="bumpversion.versioning.models.Version-functions">Functions<a href="#bumpversion.versioning.models.Version-functions" class="headerlink" title="Permanent link">&para;</a></h4>
 
-
 <div class="doc doc-object doc-function">
 
 
-
 <h5 id="bumpversion.versioning.models.Version.bump" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">bump</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">bump</span>
 
 
 <a href="#bumpversion.versioning.models.Version.bump" class="headerlink" title="Permanent link">&para;</a></h5>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">bump</span><span class="p">(</span><span class="n">component_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Version&#39;</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Increase the value of the specified component, reset its dependents, and return a new Version.</p>
 
-  </div>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
 <h5 id="bumpversion.versioning.models.Version.required_components" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">required_components</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">required_components</span>
 
 
 <a href="#bumpversion.versioning.models.Version.required_components" class="headerlink" title="Permanent link">&para;</a></h5>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">required_components</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Return the names of the parts that are required.</p>
 
-  </div>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
 <h5 id="bumpversion.versioning.models.Version.values" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">values</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">values</span>
 
 
 <a href="#bumpversion.versioning.models.Version.values" class="headerlink" title="Permanent link">&para;</a></h5>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">values</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VersionComponent</span><span class="p">]</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Return the values of the parts.</p>
 
-  </div>
+    </div>
 
 </div>
 
@@ -2105,8 +2099,7 @@
 
   </div>
 
-  </div>
-
+    </div>
 
 </div>
 
@@ -2115,7 +2108,7 @@
 
 
 <h3 id="bumpversion.versioning.models.VersionComponent" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>          <span class="doc doc-object-name doc-class-name">VersionComponent</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">VersionComponent</span>
 
 
 <a href="#bumpversion.versioning.models.VersionComponent" class="headerlink" title="Permanent link">&para;</a></h3>
@@ -2131,15 +2124,15 @@
 <span class="p">)</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
+    <div class="doc doc-contents ">
 
-  
+
       <p>Represent part of a version number.</p>
 <p>Determines the PartFunction that rules how the part behaves when increased or reset
 based on the configuration given.</p>
 
 
-  
+
 
   <div class="doc doc-children">
 
@@ -2154,9 +2147,9 @@ based on the configuration given.</p>
 
 
 <h5 id="bumpversion.versioning.models.VersionComponent.is_independent" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">is_independent</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">is_independent</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -2165,10 +2158,10 @@ based on the configuration given.</p>
 <div class="doc-signature highlight"><pre><span></span><code><span class="n">is_independent</span><span class="p">:</span> <span class="nb">bool</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Is the part independent of the other parts?</p>
-  </div>
+    </div>
 
 </div>
 
@@ -2177,9 +2170,9 @@ based on the configuration given.</p>
 
 
 <h5 id="bumpversion.versioning.models.VersionComponent.is_optional" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">is_optional</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">is_optional</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -2188,10 +2181,10 @@ based on the configuration given.</p>
 <div class="doc-signature highlight"><pre><span></span><code><span class="n">is_optional</span><span class="p">:</span> <span class="nb">bool</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Is the part optional?</p>
-  </div>
+    </div>
 
 </div>
 
@@ -2200,9 +2193,9 @@ based on the configuration given.</p>
 
 
 <h5 id="bumpversion.versioning.models.VersionComponent.value" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">value</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">value</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -2211,75 +2204,69 @@ based on the configuration given.</p>
 <div class="doc-signature highlight"><pre><span></span><code><span class="n">value</span><span class="p">:</span> <span class="nb">str</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Return the value of the part.</p>
-  </div>
+    </div>
 
 </div>
 
 <h4 id="bumpversion.versioning.models.VersionComponent-functions">Functions<a href="#bumpversion.versioning.models.VersionComponent-functions" class="headerlink" title="Permanent link">&para;</a></h4>
 
-
 <div class="doc doc-object doc-function">
 
 
-
 <h5 id="bumpversion.versioning.models.VersionComponent.bump" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">bump</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">bump</span>
 
 
 <a href="#bumpversion.versioning.models.VersionComponent.bump" class="headerlink" title="Permanent link">&para;</a></h5>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">bump</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="s1">&#39;VersionComponent&#39;</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Return a part with bumped value.</p>
 
-  </div>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
 <h5 id="bumpversion.versioning.models.VersionComponent.copy" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">copy</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">copy</span>
 
 
 <a href="#bumpversion.versioning.models.VersionComponent.copy" class="headerlink" title="Permanent link">&para;</a></h5>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">copy</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="s1">&#39;VersionComponent&#39;</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Return a copy of the part.</p>
 
-  </div>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
 <h5 id="bumpversion.versioning.models.VersionComponent.null" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">null</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">null</span>
 
 
 <a href="#bumpversion.versioning.models.VersionComponent.null" class="headerlink" title="Permanent link">&para;</a></h5>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">null</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="s1">&#39;VersionComponent&#39;</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Return a part with first value.</p>
 
-  </div>
+    </div>
 
 </div>
 
@@ -2287,8 +2274,7 @@ based on the configuration given.</p>
 
   </div>
 
-  </div>
-
+    </div>
 
 </div>
 
@@ -2297,22 +2283,22 @@ based on the configuration given.</p>
 
 
 <h3 id="bumpversion.versioning.models.VersionComponentSpec" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>          <span class="doc doc-object-name doc-class-name">VersionComponentSpec</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">VersionComponentSpec</span>
 
 
 <a href="#bumpversion.versioning.models.VersionComponentSpec" class="headerlink" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-contents ">
-          <p class="doc doc-class-bases">
-            Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
 
-  
+
       <p>Configuration of a version component.</p>
 <p>This is used to read in the configuration from the bumpversion config file.</p>
 
 
-  
+
 
   <div class="doc doc-children">
 
@@ -2327,9 +2313,9 @@ based on the configuration given.</p>
 
 
 <h5 id="bumpversion.versioning.models.VersionComponentSpec.always_increment" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">always_increment</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">always_increment</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
       <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
@@ -2339,10 +2325,10 @@ based on the configuration given.</p>
 <div class="doc-signature highlight"><pre><span></span><code><span class="n">always_increment</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Should the component always increment, even if it is not necessary?</p>
-  </div>
+    </div>
 
 </div>
 
@@ -2351,9 +2337,9 @@ based on the configuration given.</p>
 
 
 <h5 id="bumpversion.versioning.models.VersionComponentSpec.calver_format" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">calver_format</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">calver_format</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
       <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
@@ -2363,10 +2349,10 @@ based on the configuration given.</p>
 <div class="doc-signature highlight"><pre><span></span><code><span class="n">calver_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>The format string for a CalVer component.</p>
-  </div>
+    </div>
 
 </div>
 
@@ -2375,9 +2361,9 @@ based on the configuration given.</p>
 
 
 <h5 id="bumpversion.versioning.models.VersionComponentSpec.depends_on" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">depends_on</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">depends_on</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
       <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
@@ -2387,10 +2373,10 @@ based on the configuration given.</p>
 <div class="doc-signature highlight"><pre><span></span><code><span class="n">depends_on</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>The name of the component this component depends on.</p>
-  </div>
+    </div>
 
 </div>
 
@@ -2399,9 +2385,9 @@ based on the configuration given.</p>
 
 
 <h5 id="bumpversion.versioning.models.VersionComponentSpec.first_value" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">first_value</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">first_value</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
       <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
@@ -2411,10 +2397,10 @@ based on the configuration given.</p>
 <div class="doc-signature highlight"><pre><span></span><code><span class="n">first_value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>The first value to increment from.</p>
-  </div>
+    </div>
 
 </div>
 
@@ -2423,9 +2409,9 @@ based on the configuration given.</p>
 
 
 <h5 id="bumpversion.versioning.models.VersionComponentSpec.independent" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">independent</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">independent</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
       <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
@@ -2435,10 +2421,10 @@ based on the configuration given.</p>
 <div class="doc-signature highlight"><pre><span></span><code><span class="n">independent</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Is the component independent of the other components?</p>
-  </div>
+    </div>
 
 </div>
 
@@ -2447,9 +2433,9 @@ based on the configuration given.</p>
 
 
 <h5 id="bumpversion.versioning.models.VersionComponentSpec.optional_value" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">optional_value</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">optional_value</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
       <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
@@ -2459,15 +2445,15 @@ based on the configuration given.</p>
 <div class="doc-signature highlight"><pre><span></span><code><span class="n">optional_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>The value that is optional to include in the version.</p>
 <ul>
 <li>Defaults to first value in values or 0 in the case of numeric.</li>
 <li>Empty string means nothing is optional.</li>
 <li>CalVer components ignore this.</li>
 </ul>
-  </div>
+    </div>
 
 </div>
 
@@ -2476,9 +2462,9 @@ based on the configuration given.</p>
 
 
 <h5 id="bumpversion.versioning.models.VersionComponentSpec.values" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">values</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">values</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
       <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
@@ -2488,22 +2474,20 @@ based on the configuration given.</p>
 <div class="doc-signature highlight"><pre><span></span><code><span class="n">values</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>The possible values for the component. If it and <code>calver_format</code> is None, the component is numeric.</p>
-  </div>
+    </div>
 
 </div>
 
 <h4 id="bumpversion.versioning.models.VersionComponentSpec-functions">Functions<a href="#bumpversion.versioning.models.VersionComponentSpec-functions" class="headerlink" title="Permanent link">&para;</a></h4>
 
-
 <div class="doc doc-object doc-function">
 
 
-
 <h5 id="bumpversion.versioning.models.VersionComponentSpec.create_component" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">create_component</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">create_component</span>
 
 
 <a href="#bumpversion.versioning.models.VersionComponentSpec.create_component" class="headerlink" title="Permanent link">&para;</a></h5>
@@ -2512,23 +2496,21 @@ based on the configuration given.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VersionComponent</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Generate a version component from the configuration.</p>
 
-  </div>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
 <h5 id="bumpversion.versioning.models.VersionComponentSpec.set_always_increment_with_calver" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">set_always_increment_with_calver</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_always_increment_with_calver</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
   </span>
@@ -2537,11 +2519,11 @@ based on the configuration given.</p>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">set_always_increment_with_calver</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Set always_increment to True if calver_format is present.</p>
 
-  </div>
+    </div>
 
 </div>
 
@@ -2549,8 +2531,7 @@ based on the configuration given.</p>
 
   </div>
 
-  </div>
-
+    </div>
 
 </div>
 
@@ -2559,7 +2540,7 @@ based on the configuration given.</p>
 
 
 <h3 id="bumpversion.versioning.models.VersionSpec" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>          <span class="doc doc-object-name doc-class-name">VersionSpec</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">VersionSpec</span>
 
 
 <a href="#bumpversion.versioning.models.VersionSpec" class="headerlink" title="Permanent link">&para;</a></h3>
@@ -2569,13 +2550,13 @@ based on the configuration given.</p>
 <span class="p">)</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
+    <div class="doc doc-contents ">
 
-  
+
       <p>The specification of a version&rsquo;s components and their relationships.</p>
 
 
-  
+
 
   <div class="doc doc-children">
 
@@ -2587,45 +2568,41 @@ based on the configuration given.</p>
 
 <h4 id="bumpversion.versioning.models.VersionSpec-functions">Functions<a href="#bumpversion.versioning.models.VersionSpec-functions" class="headerlink" title="Permanent link">&para;</a></h4>
 
-
 <div class="doc doc-object doc-function">
 
 
-
 <h5 id="bumpversion.versioning.models.VersionSpec.create_version" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">create_version</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">create_version</span>
 
 
 <a href="#bumpversion.versioning.models.VersionSpec.create_version" class="headerlink" title="Permanent link">&para;</a></h5>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">create_version</span><span class="p">(</span><span class="n">values</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;Version&#39;</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Generate a version from the given values.</p>
 
-  </div>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
 <h5 id="bumpversion.versioning.models.VersionSpec.get_dependents" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">get_dependents</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">get_dependents</span>
 
 
 <a href="#bumpversion.versioning.models.VersionSpec.get_dependents" class="headerlink" title="Permanent link">&para;</a></h5>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">get_dependents</span><span class="p">(</span><span class="n">component_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 </code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Return the parts that depend on the given part.</p>
 
-  </div>
+    </div>
 
 </div>
 
@@ -2633,8 +2610,7 @@ based on the configuration given.</p>
 
   </div>
 
-  </div>
-
+    </div>
 
 </div>
 <h2 id="bumpversion.versioning.models-functions">Functions<a href="#bumpversion.versioning.models-functions" class="headerlink" title="Permanent link">&para;</a></h2>
@@ -2643,7 +2619,7 @@ based on the configuration given.</p>
 
   </div>
 
-  </div>
+    </div>
 
 </div>
 
@@ -2666,7 +2642,7 @@ based on the configuration given.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">May 7, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">May 16, 2024</span>
   </span>
 
     
@@ -2722,7 +2698,7 @@ based on the configuration given.</p>
     <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.path", "navigation.indexes", "toc.integrate", "content.action.edit", "content.action.view", "content.code.annotate", "content.tabs.link"], "search": "../../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.a7c05c9e.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.ebd0bdb7.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
       
