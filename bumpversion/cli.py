@@ -338,7 +338,19 @@ def bump(
     help="Increment the version part and add `new_version` to the configuration.",
 )
 def show(args: List[str], config_file: Optional[str], format_: str, increment: Optional[str]) -> None:
-    """Show current configuration information."""
+    """
+    Show current configuration information.
+
+    ARGS may contain one or more configuration attributes. For example:
+
+    - `bump-my-version show current_version`
+
+    - `bump-my-version show files.0.filename`
+
+    - `bump-my-version show scm_info.branch_name`
+
+    - `bump-my-version show current_version scm_info.distance_to_latest_tag`
+    """
     found_config_file = find_config_file(config_file)
     config = get_configuration(found_config_file)
 
