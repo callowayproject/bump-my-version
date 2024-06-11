@@ -102,7 +102,7 @@ def resolve_name(obj: Any, name: str, default: Any = None, err_on_missing: bool 
                     ):  # un-subscript-able object
                         return default
         return current
-    except Exception as e:  # noqa: BLE001 # pragma: no cover
+    except Exception as e:  # pragma: no cover
         if err_on_missing:
             raise BadInputError(f"Could not resolve '{name}'") from e
         else:
