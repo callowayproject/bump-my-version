@@ -25,7 +25,7 @@ By using a configuration file, you no longer need to specify those options on th
 
 ## Global Configuration
 
-The general configuration is grouped in a `[tool.bumpversion]` or  `[bumpversion]` section, depending on if it is a TOML or INI file respectfully.
+The general configuration is grouped in a `[tool.bumpversion]` or  `[bumpversion]` section, depending on if it is a TOML or INI file, respectfully.
 
 ### allow_dirty
 
@@ -46,7 +46,7 @@ The general configuration is grouped in a `[tool.bumpversion]` or  `[bumpversion
     :   `BUMPVERSION_ALLOW_DIRTY`
 
 
-Bump-my-version's default behavior is to abort if the working directory has uncommitted changes. This is to protect you from releasing unversioned files and/or overwriting unsaved changes.
+Bump-my-version's default behavior is to abort if the working directory has uncommitted changes. This protects you from releasing unversioned files and overwriting unsaved changes.
 
 ### commit
 
@@ -68,7 +68,7 @@ Bump-my-version's default behavior is to abort if the working directory has unco
 
 Whether to create a commit using git or Mercurial.
 
-If you have pre-commit hooks, you might also want to add an option to [`commit_args`](configuration.md#commit_args) to disable your pre-commit hooks. For Git use `--no-verify` and use `--config hooks.pre-commit=` for Mercurial.
+If you have pre-commit hooks, add an option to [`commit_args`](configuration.md#commit_args) to turn off your pre-commit hooks. For Git, use `--no-verify` and use `--config hooks.pre-commit=` for Mercurial.
 
 ### commit_args
 
@@ -91,7 +91,7 @@ If you have pre-commit hooks, you might also want to add an option to [`commit_a
 
 Extra arguments to pass to commit command. This is only used when the [`commit`](configuration.md#commit) option is set to `True`.
 
-If you have pre-commit hooks, you might also want to add an option to disable your pre-commit hooks. For Git use `--no-verify` and use `--config hooks.pre-commit=` for Mercurial.
+If you have pre-commit hooks, add an option to turn off your pre-commit hooks. For Git, use `--no-verify` and use `--config hooks.pre-commit=` for Mercurial.
 
 ### current_version
 
@@ -196,7 +196,7 @@ This string is templated using the [Python Format String Syntax](https://docs.py
     environment var
     : `BUMPVERSION_PARSE`
 
-This is the default regular expression (using [Python regular expression syntax](https://docs.python.org/3/library/re.html#regular-expression-syntax)) for finding and parsing the version string into its components. Individual part or file configurations may override this.
+This is the default regular expression (Python regular expression syntax](https://docs.python.org/3/library/re.html#regular-expression-syntax)) for finding and parsing the version string into its components. Individual part or file configurations may override this.
 
 The regular expression must be able to parse all strings produced by the configured [`serialize`](configuration.md#serialize) value. Named matching groups ("`(?P<name>...)`") indicate the version part the matched value belongs to.
 
@@ -259,9 +259,9 @@ This is the template to create the string that will replace the current version 
     environment var
     : `BUMPVERSION_SEARCH`
 
-This is the template string how to search for the string to be replaced in the file. Individual file configurations may override this. This can span multiple lines, and is templated using [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](formatting-context.md) describes the available variables.
+This is the template string for searching. It is rendered using the [formatting context](formatting-context.md) for searching in the file. Individual file configurations may override this. This can span multiple lines and is templated using [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](formatting-context.md) describes the available variables.
 
-This is useful if there is the remotest possibility that the current version number might be present multiple times in the file and you mean to only bump one of the occurrences. 
+This is useful if there is the remotest possibility that the current version number might be present multiple times in the file and you mean to bump only one of the occurrences.
 
 ### serialize
 
@@ -361,11 +361,11 @@ If you are using `git`, don't forget to `git-push` with the `--tags` flag when y
     environment var
     : `BUMPVERSION_TAG_MESSAGE`
 
-The tag message template to use when creating a tag, when [`tag`](configuration.md#tag) is `True`
+The tag message template to use when creating a tag when [`tag`](configuration.md#tag) is `True`
 
 This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](formatting-context.md) describes the available variables.
 
-Bump My Version creates an *annotated* tag in Git by default. To disable this and create a *lightweight* tag, you must explicitly set an empty `tag_message` value.
+Bump My Version creates an *annotated* tag in Git by default. To turn this off and create a *lightweight* tag, you must explicitly set an empty `tag_message` value.
 
 ### tag_name
 
@@ -386,7 +386,7 @@ Bump My Version creates an *annotated* tag in Git by default. To disable this an
     environment var
     : `BUMPVERSION_TAG_NAME`
 
-The name template used to render the tag, when [`tag`](configuration.md#tag) is `True`.
+The template used to render the tag when [`tag`](configuration.md#tag) is `True`.
 
 This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](formatting-context.md) describes the available variables.
 
@@ -465,7 +465,7 @@ An explicit list of all values to iterate through when bumping this part. An emp
     type
     : string
 
-When the version part matches this value it is considered optional when serializing the final version string.
+When the version part matches this value, it is considered optional when serializing the final version string.
 
 !!! note
 
@@ -514,7 +514,7 @@ independent of the other parts. It is useful when you have a build number in you
 
     default
     : `False` (`True` if `calver_format` is set)
-
+    
     type
     : boolean
 
@@ -581,7 +581,7 @@ The name of the file to modify.
 
 !!! note
 
-    ‡ This is only used with TOML configuration, and is only required if [`glob`](#glob) is _not_ specified. INI-style configuration files specify the file name as part of the grouping.
+    ‡ This is only used with TOML configuration and is only required if [`glob`](#glob) is _not_ specified. INI-style configuration files specify the file name as part of the grouping.
 
 
 ### glob
@@ -590,6 +590,7 @@ The name of the file to modify.
     required
     : **Yes‡**
     
+
     default
     : empty
     
@@ -613,7 +614,7 @@ The glob pattern specifying the files to modify.
     
     type
     : list of string
-    
+
 A list of glob patterns to exclude from the files found via the `glob` parameter. Does nothing if `filename` is specified.
 
 
@@ -670,7 +671,7 @@ This is an override to the default template string how to search for the string 
     : No
     
     default
-    : the valued configured in the global `regex` field
+    : the value configured in the global `regex` field
     
     type
     : boolean
@@ -722,6 +723,40 @@ If `True`, don't fail if the version string to be replaced is not found in the f
 
 if `True`, don't fail if the configured file is missing.
 
+### valid_bumps
+
+::: field-list
+
+    required
+    : No
+    
+    default
+    : all version parts
+    
+    type
+    : list of strings
+
+The `valid_bumps` file configuration allows you to control when this file is changed. When a `bump <version component>` command is issued, this file is changed only if the version component is in this list and not in [`invalid_bumps`](#invalid_bumps). The [parse](#parse) configuration defines version components.
+
+The default value, or an empty list, includes all version components.
+
+### invalid_bumps
+
+::: field-list
+
+     required
+     : No
+     
+     default
+     : `[]`
+     
+     type
+     : list of strings
+
+The `invalid_bumps` file configuration allows you to control when this file is changed by exclusion. When a `bump <version component>` command is issued, this file is only changed if the version component is *not in this list.* The [parse](#parse) configuration defines version components.
+
+The default value does not exclude anything.
+
 ### Examples
 
 === "TOML"
@@ -753,10 +788,11 @@ if `True`, don't fail if the configured file is missing.
     !!! note
     
         The configuration file format requires each section header to be unique. If you want to process a certain file multiple times, you may append a description between parens to the `file` keyword: `[bumpversion:file (special one):…]`.
-    
-    
-    For example, to change `coolapp/__init__.py` with the defaults, and alter `CHANGELOG.md` in twice:
-    
+
+
+​    
+​    For example, to change `coolapp/__init__.py` with the defaults, and alter `CHANGELOG.md` in twice:
+​    
     ```ini
     [bumpversion:file:coolapp/__init__.py]
     

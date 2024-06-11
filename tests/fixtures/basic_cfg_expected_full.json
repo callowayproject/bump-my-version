@@ -11,6 +11,7 @@
       "glob_exclude": null,
       "ignore_missing_file": false,
       "ignore_missing_version": false,
+      "invalid_bumps": [],
       "key_path": null,
       "parse": "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?",
       "regex": false,
@@ -19,6 +20,12 @@
       "serialize": [
         "{major}.{minor}.{patch}-{release}",
         "{major}.{minor}.{patch}"
+      ],
+      "valid_bumps": [
+        "major",
+        "minor",
+        "patch",
+        "release"
       ]
     },
     {
@@ -27,6 +34,7 @@
       "glob_exclude": null,
       "ignore_missing_file": false,
       "ignore_missing_version": false,
+      "invalid_bumps": [],
       "key_path": null,
       "parse": "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?",
       "regex": false,
@@ -35,6 +43,12 @@
       "serialize": [
         "{major}.{minor}.{patch}-{release}",
         "{major}.{minor}.{patch}"
+      ],
+      "valid_bumps": [
+        "major",
+        "minor",
+        "patch",
+        "release"
       ]
     },
     {
@@ -43,6 +57,7 @@
       "glob_exclude": null,
       "ignore_missing_file": false,
       "ignore_missing_version": false,
+      "invalid_bumps": [],
       "key_path": null,
       "parse": "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?",
       "regex": false,
@@ -51,6 +66,12 @@
       "serialize": [
         "{major}.{minor}.{patch}-{release}",
         "{major}.{minor}.{patch}"
+      ],
+      "valid_bumps": [
+        "major",
+        "minor",
+        "patch",
+        "release"
       ]
     }
   ],

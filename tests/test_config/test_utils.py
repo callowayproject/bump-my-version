@@ -7,9 +7,9 @@ import tomlkit
 import pytest
 from pytest import param
 
-from bumpversion.config.utils import get_all_file_configs, resolve_glob_files
+from bumpversion.config.utils import get_all_file_configs, resolve_glob_files, get_all_part_configs
 from bumpversion.config.models import FileChange
-from bumpversion.config import DEFAULTS
+from bumpversion.config import DEFAULTS, set_config_defaults
 from tests.conftest import inside_dir, get_config_data
 
 
@@ -32,12 +32,21 @@ class TestGetAllFileConfigs:
     def test_uses_defaults_for_missing_keys(self, tmp_path: Path):
         """Test the get_all_file_configs function."""
         config_file = write_config(tmp_path, {"files": [{"filename": "setup.cfg"}]})
-        config_dict = tomlkit.loads(config_file.read_text())["tool"]["bumpversion"]
+        parsed_config = dict(tomlkit.loads(config_file.read_text())["tool"]["bumpversion"])
+        config_dict = set_config_defaults(parsed_config)
+
+        config_dict.update({key: val for key, val in parsed_config.items() if key in DEFAULTS.keys()})
+
+        # Set any missing version parts
+        config_dict["parts"] = get_all_part_configs(config_dict)
+
         file_configs = get_all_file_configs(config_dict)
 
         for key in FileChange.model_fields.keys():
             global_key = key if key != "ignore_missing_file" else "ignore_missing_files"
-            if key not in ["filename", "glob", "key_path", "glob_exclude"]:
+            variable_fields = ["filename", "glob", "key_path", "glob_exclude", "valid_bumps", "invalid_bumps"]
+
+            if key not in variable_fields:
                 file_val = getattr(file_configs[0], key)
                 assert file_val == DEFAULTS[global_key]
 
@@ -68,7 +77,8 @@ class TestGetAllFileConfigs:
                 ],
             },
         )
-        config_dict = tomlkit.loads(config_file.read_text())["tool"]["bumpversion"]
+        parsed_config = tomlkit.loads(config_file.read_text())["tool"]["bumpversion"]
+        config_dict = set_config_defaults(parsed_config)
         file_configs = get_all_file_configs(config_dict)
         assert len(file_configs) == 1
         assert file_configs[0].filename == "setup.cfg"
@@ -146,7 +156,7 @@ class TestResolveGlobFiles:
         file_cfg = FileChange(
             filename=None,
             glob="**/*.cfg",
-            glob_exclude=glob_exclude,
+            glob_exclude=tuple(glob_exclude),
             key_path=None,
             parse=r"v(?P<major>\d+)",
             serialize=("v{major}",),
@@ -183,7 +193,7 @@ class TestResolveGlobFiles:
         file_cfg = FileChange(
             filename=None,
             glob=glob_pattern,
-            glob_exclude=[],
+            glob_exclude=(),
             key_path=None,
             parse=r"v(?P<major>\d+)",
             serialize=("v{major}",),

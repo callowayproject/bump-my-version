@@ -22,6 +22,8 @@ def get_all_file_configs(config_dict: dict) -> List[FileChange]:
         "ignore_missing_version": config_dict["ignore_missing_version"],
         "ignore_missing_file": config_dict["ignore_missing_files"],
         "regex": config_dict["regex"],
+        "valid_bumps": tuple(config_dict["parts"]),
+        "invalid_bumps": (),
     }
     files = [{k: v for k, v in filecfg.items() if v is not None} for filecfg in config_dict["files"]]
     for f in files:
@@ -59,7 +61,7 @@ def resolve_glob_files(file_cfg: FileChange) -> List[FileChange]:
         A list of resolved file configurations according to the pattern.
     """
     files: List[FileChange] = []
-    exclude = file_cfg.glob_exclude or []
+    exclude = file_cfg.glob_exclude or ()
     glob_flags = glob.GLOBSTAR | glob.FORCEUNIX | glob.SPLIT
     for filename_glob in glob.glob(file_cfg.glob, flags=glob_flags, exclude=exclude):
         new_file_cfg = file_cfg.model_copy()
