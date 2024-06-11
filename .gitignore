@@ -167,3 +167,7 @@ reports
 *.env
 todo.txt
 temp.*
+
+.python-version
+requirements-dev.lock
+requirements.lock
