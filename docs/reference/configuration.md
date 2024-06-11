@@ -68,7 +68,7 @@ Bump-my-version's default behavior is to abort if the working directory has unco
 
 Whether to create a commit using git or Mercurial.
 
-If you have pre-commit hooks, you might also want to add an option to [`commit_args`](configuration.md#commit-args) to disable your pre-commit hooks. For Git use `--no-verify` and use `--config hooks.pre-commit=` for Mercurial.
+If you have pre-commit hooks, you might also want to add an option to [`commit_args`](configuration.md#commit_args) to disable your pre-commit hooks. For Git use `--no-verify` and use `--config hooks.pre-commit=` for Mercurial.
 
 ### commit_args
 
@@ -339,7 +339,7 @@ If `True`, sign the created tag, when [`tag`](configuration.md#tag) is `True`.
     environment var
     : `BUMPVERSION_TAG`
 
-If `True`, create a tag after committing the changes. The tag is named using the [`tag_name`](configuration.md#tag-name) option. 
+If `True`, create a tag after committing the changes. The tag is named using the [`tag_name`](configuration.md#tag_name) option. 
 
 If you are using `git`, don't forget to `git-push` with the `--tags` flag when you are done.
 
@@ -533,7 +533,7 @@ When this value is set to `True`, the part is always incremented when the versio
     type
     : string
 
-The `calver_format` is a string that specifies the format of the version part. It is used to determine the next value when bumping the version. The format is a string that uses the placeholders defined in the [CalVer reference](calver_reference.md#calver-format).
+The `calver_format` is a string that specifies the format of the version part. It is used to determine the next value when bumping the version. The format is a string that uses the placeholders defined in the [CalVer reference](calver_reference.md#calver_format).
 
 ### Examples
 

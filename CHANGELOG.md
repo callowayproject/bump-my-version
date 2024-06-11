@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.22.0 (2024-06-11)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.21.1...0.22.0)
+
+### New
+
+- Add extensive documentation for the 'show' subcommand. [91409d8](https://github.com/callowayproject/bump-my-version/commit/91409d81d647a6dc1e39d3cfbc1e0e95a5c67a82)
+    
+  This commit adds extensive documentation for the `show` subcommand in the program's reference. It also includes smaller updates and corrections to other parts of the documentation. An in-depth example usage of `show` is added both to the dedicated `show.md` file and in the function's docstring.
+### Updates
+
+- Renamed version workflow to release. [68f9eee](https://github.com/callowayproject/bump-my-version/commit/68f9eee8f953c23d30b8ef77a3cedf9355ce55a0)
+    
+
 ## 0.21.1 (2024-05-16)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.21.0...0.21.1)
 

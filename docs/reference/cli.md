@@ -1,3 +1,5 @@
+# CLI Reference
+
 ::: mkdocs-click
     :module: bumpversion.cli
     :command: cli
