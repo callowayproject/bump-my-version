@@ -44,7 +44,7 @@ class TestGetAllFileConfigs:
 
         for key in FileChange.model_fields.keys():
             global_key = key if key != "ignore_missing_file" else "ignore_missing_files"
-            variable_fields = ["filename", "glob", "key_path", "glob_exclude", "valid_bumps", "invalid_bumps"]
+            variable_fields = ["filename", "glob", "key_path", "glob_exclude", "include_bumps", "exclude_bumps"]
 
             if key not in variable_fields:
                 file_val = getattr(file_configs[0], key)

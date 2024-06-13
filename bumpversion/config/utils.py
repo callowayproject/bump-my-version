@@ -22,8 +22,7 @@ def get_all_file_configs(config_dict: dict) -> List[FileChange]:
         "ignore_missing_version": config_dict["ignore_missing_version"],
         "ignore_missing_file": config_dict["ignore_missing_files"],
         "regex": config_dict["regex"],
-        "valid_bumps": tuple(config_dict["parts"]),
-        "invalid_bumps": (),
+        "include_bumps": tuple(config_dict["parts"]),
     }
     files = [{k: v for k, v in filecfg.items() if v is not None} for filecfg in config_dict["files"]]
     for f in files:

@@ -157,14 +157,14 @@ class TestDoBump:
 
     @patch("bumpversion.files.modify_files")
     @patch("bumpversion.bump.update_config_file")
-    def test_includes_files_with_valid_bumps(self, mock_update_config_file, mock_modify_files):
-        """Files that have valid_bumps are included when those bumps happen."""
+    def test_includes_files_with_include_bumps(self, mock_update_config_file, mock_modify_files):
+        """Files that have include_bumps are included when those bumps happen."""
         # Arrange
         new_version = None
         config, version_config, current_version = get_config_data(
             {
                 "current_version": "1.2.3",
-                "files": [{"filename": "foo.txt", "valid_bumps": ["major", "minor"]}, {"filename": "bar.txt"}],
+                "files": [{"filename": "foo.txt", "include_bumps": ["major", "minor"]}, {"filename": "bar.txt"}],
             }
         )
         config.scm_info = SCMInfo()
@@ -184,14 +184,14 @@ class TestDoBump:
 
     @patch("bumpversion.files.modify_files")
     @patch("bumpversion.bump.update_config_file")
-    def test_excludes_files_with_invalid_bumps(self, mock_update_config_file, mock_modify_files):
-        """Files that have invalid_bumps are excluded when those bumps happen."""
+    def test_excludes_files_with_exclude_bumps(self, mock_update_config_file, mock_modify_files):
+        """Files that have exclude_bumps are excluded when those bumps happen."""
         # Arrange
         new_version = None
         config, version_config, current_version = get_config_data(
             {
                 "current_version": "1.2.3",
-                "files": [{"filename": "foo.txt", "invalid_bumps": ["patch"]}, {"filename": "bar.txt"}],
+                "files": [{"filename": "foo.txt", "exclude_bumps": ["patch"]}, {"filename": "bar.txt"}],
             }
         )
         config.scm_info = SCMInfo()

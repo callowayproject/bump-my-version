@@ -723,7 +723,7 @@ If `True`, don't fail if the version string to be replaced is not found in the f
 
 if `True`, don't fail if the configured file is missing.
 
-### valid_bumps
+### include_bumps
 
 ::: field-list
 
@@ -731,16 +731,16 @@ if `True`, don't fail if the configured file is missing.
     : No
     
     default
-    : all version parts
+    : all version components
     
     type
     : list of strings
 
-The `valid_bumps` file configuration allows you to control when this file is changed. When a `bump <version component>` command is issued, this file is changed only if the version component is in this list and not in [`invalid_bumps`](#invalid_bumps). The [parse](#parse) configuration defines version components.
+The `include_bumps` file configuration allows you to control when this file is changed by inclusion. Its alternative is the `exclude_bumps` configuration. When a `bump <version component>` command is issued, this file is changed only if the version component is in this list and not in [`exclude_bumps`](#exclude_bumps). The [parse](#parse) configuration defines version components.
 
-The default value, or an empty list, includes all version components.
+The default value, or an empty list, includes all version components. 
 
-### invalid_bumps
+### exclude_bumps
 
 ::: field-list
 
@@ -753,7 +753,7 @@ The default value, or an empty list, includes all version components.
      type
      : list of strings
 
-The `invalid_bumps` file configuration allows you to control when this file is changed by exclusion. When a `bump <version component>` command is issued, this file is only changed if the version component is *not in this list.* The [parse](#parse) configuration defines version components.
+The `exclude_bumps` file configuration allows you to control when this file is changed by exclusion. Its alternative is the `include_bumps` configuration.When a `bump <version component>` command is issued, this file is only changed if the version component is *not in this list.* The [parse](#parse) configuration defines version components.
 
 The default value does not exclude anything.
 

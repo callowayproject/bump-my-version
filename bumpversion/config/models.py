@@ -35,8 +35,8 @@ class FileChange(BaseModel):
     glob: Optional[str] = None  # Conflicts with filename. If both are specified, glob wins
     glob_exclude: Optional[tuple] = None
     key_path: Optional[str] = None  # If specified, and has an appropriate extension, will be treated as a data file
-    valid_bumps: Optional[tuple] = None
-    invalid_bumps: Optional[tuple] = None
+    include_bumps: Optional[tuple] = None
+    exclude_bumps: tuple = Field(default_factory=tuple)
 
     def __hash__(self):
         """Return a hash of the model."""
@@ -122,8 +122,7 @@ class Config(BaseSettings):
                     regex=self.regex,
                     ignore_missing_version=self.ignore_missing_version,
                     ignore_missing_file=self.ignore_missing_files,
-                    valid_bumps=tuple(self.parts.keys()),
-                    invalid_bumps=(),
+                    include_bumps=tuple(self.parts.keys()),
                 )
             )
         self.files = list(files)

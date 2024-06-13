@@ -98,8 +98,8 @@ def do_bump(
 
     if version_part:
         # filter the files that are not valid for this bump
-        configured_files = [file for file in configured_files if version_part in file.file_change.valid_bumps]
-        configured_files = [file for file in configured_files if version_part not in file.file_change.invalid_bumps]
+        configured_files = [file for file in configured_files if version_part in file.file_change.include_bumps]
+        configured_files = [file for file in configured_files if version_part not in file.file_change.exclude_bumps]
 
     modify_files(configured_files, version, next_version, ctx, dry_run)
     if config_file and config_file.suffix in {".cfg", ".ini"}:
