@@ -736,9 +736,9 @@ if `True`, don't fail if the configured file is missing.
     type
     : list of strings
 
-The `include_bumps` file configuration allows you to control when this file is changed by inclusion. Its alternative is the `exclude_bumps` configuration. When a `bump <version component>` command is issued, this file is changed only if the version component is in this list and not in [`exclude_bumps`](#exclude_bumps). The [parse](#parse) configuration defines version components.
+The `include_bumps` file configuration allows you to control when bump-my-version includes this file for changes. Its alternative is the `exclude_bumps` configuration. When a `bump <version component>` command is issued, this file is changed only if the version component is in this list and not in [`exclude_bumps`](#exclude_bumps). The [parse](#parse) configuration defines version components.
 
-The default value, or an empty list, includes all version components. 
+The default value, or an empty list, includes all version components.
 
 ### exclude_bumps
 
@@ -753,7 +753,7 @@ The default value, or an empty list, includes all version components.
      type
      : list of strings
 
-The `exclude_bumps` file configuration allows you to control when this file is changed by exclusion. Its alternative is the `include_bumps` configuration.When a `bump <version component>` command is issued, this file is only changed if the version component is *not in this list.* The [parse](#parse) configuration defines version components.
+The `exclude_bumps` file configuration allows you to control when bump-my-version excludes this file for changes. Its alternative is the `include_bumps` configuration. When a `bump <version component>` command is issued, this file is only changed if the version component is *not in this list.* The [parse](#parse) configuration defines version components.
 
 The default value does not exclude anything.
 
@@ -761,9 +761,9 @@ The default value does not exclude anything.
 
 === "TOML"
 
-    TOML allows us to specify the files using an [array of tables.](https://toml.io/en/v1.0.0#array-of-tables) TOML configuration files add two configuration fields to each file configuration: `filename` and `glob`. These fields are mutually exclusive: if you specify a value for both, only the `glob` value is used.
+    TOML allows us to specify the files using an [array of tables.](https://toml.io/en/v1.0.0#array-of-tables) TOML configuration adds two fields to each file configuration: `filename` and `glob`. These fields are mutually exclusive: if you specify a value for both, only the `glob` value is used.
     
-    For example, to change `coolapp/__init__.py` with the defaults, and alter `CHANGELOG.md` in twice:
+    For example, to change `coolapp/__init__.py` with the defaults and alter `CHANGELOG.md` twice:
     
     ```toml
     [[tool.bumpversion.files]]
@@ -790,9 +790,9 @@ The default value does not exclude anything.
         The configuration file format requires each section header to be unique. If you want to process a certain file multiple times, you may append a description between parens to the `file` keyword: `[bumpversion:file (special one):…]`.
 
 
-​    
-​    For example, to change `coolapp/__init__.py` with the defaults, and alter `CHANGELOG.md` in twice:
-​    
+    
+    For example, to change `coolapp/__init__.py` with the defaults and alter `CHANGELOG.md` twice:
+    
     ```ini
     [bumpversion:file:coolapp/__init__.py]
     
