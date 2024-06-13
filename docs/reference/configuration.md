@@ -196,7 +196,7 @@ This string is templated using the [Python Format String Syntax](https://docs.py
     environment var
     : `BUMPVERSION_PARSE`
 
-This is the default regular expression (Python regular expression syntax](https://docs.python.org/3/library/re.html#regular-expression-syntax)) for finding and parsing the version string into its components. Individual part or file configurations may override this.
+This is the default regular expression ([Python regular expression syntax](https://docs.python.org/3/library/re.html#regular-expression-syntax)) for finding and parsing the version string into its components. Individual part or file configurations may override this.
 
 The regular expression must be able to parse all strings produced by the configured [`serialize`](configuration.md#serialize) value. Named matching groups ("`(?P<name>...)`") indicate the version part the matched value belongs to.
 
