@@ -18,138 +18,196 @@ def mock_context():
     return {"current_version": "1.2.3", "new_version": "1.2.4"}
 
 
-def test_get_next_version_with_new_version():
-    """Passing a new version should return that version."""
-    # Arrange
-    config, version_config, current_version = get_config_data({"current_version": "0.1.0"})
-    version_part = "patch"
-    new_version = "1.2.3"
-    expected_next_version = version_config.parse("1.2.3")
+class TestGetNextVersion:
+    """Tests for the get_next_version function."""
 
-    # Act
-    actual_next_version = bump.get_next_version(current_version, config, version_part, new_version)
+    def test_passing_a_new_version_should_override_a_version_part(self):
+        """Passing a new version should return that version."""
+        # Arrange
+        config, version_config, current_version = get_config_data({"current_version": "0.1.0"})
+        version_part = "patch"
+        new_version = "1.2.3"
+        expected_next_version = version_config.parse("1.2.3")
 
-    # Assert
-    assert actual_next_version == expected_next_version
-
-
-def test_get_next_version_with_version_part():
-    """If a version part is provided, it should return the increment of that part."""
-    # Arrange
-    config, version_config, current_version = get_config_data({"current_version": "0.1.0"})
-    version_part = "major"
-    new_version = None
-    expected_next_version = version_config.parse("1.0.0")
-
-    # Act
-    actual_next_version = bump.get_next_version(current_version, config, version_part, new_version)
-
-    # Assert
-    assert actual_next_version == expected_next_version
-
-
-def test_get_next_version_with_no_arguments():
-    # Arrange
-    current_version = MagicMock()
-    config = MagicMock()
-    version_part = None
-    new_version = None
-
-    # Act/Assert
-    with pytest.raises(ConfigurationError):
-        bump.get_next_version(current_version, config, version_part, new_version)
-
-
-@patch("bumpversion.files.modify_files")
-@patch("bumpversion.bump.update_config_file")
-def test_do_bump_with_version_part(mock_update_config_file, mock_modify_files):
-    # Arrange
-    version_part = "major"
-    new_version = None
-    config, version_config, current_version = get_config_data(
-        {"current_version": "1.2.3", "files": [{"filename": "foo.txt"}, {"filename": "bar.txt"}]}
-    )
-    config.scm_info = SCMInfo()
-    dry_run = False
-
-    # Act
-    bump.do_bump(version_part, new_version, config, dry_run=dry_run)
-
-    # Assert
-    mock_modify_files.assert_called_once()
-    mock_update_config_file.assert_called_once()
-    assert {f.file_change.filename for f in mock_modify_files.call_args[0][0]} == {
-        "foo.txt",
-        "bar.txt",
-    }
-    assert mock_update_config_file.call_args[0][0] is None
-    assert mock_update_config_file.call_args[0][1] == config
-    assert mock_update_config_file.call_args[0][2] == current_version
-    assert mock_update_config_file.call_args[0][3] == current_version.bump(version_part)
-    assert mock_update_config_file.call_args[0][5] is False
-
-
-@patch("bumpversion.files.modify_files")
-@patch("bumpversion.bump.update_config_file")
-def test_do_bump_with_new_version(mock_update_config_file, mock_modify_files):
-    # Arrange
-    version_part = None
-    new_version = "2.0.0"
-    config, version_config, current_version = get_config_data(
-        {
-            "current_version": "1.2.3",
-        }
-    )
-    config.scm_info = SCMInfo()
-    dry_run = True
-
-    # Act
-    bump.do_bump(version_part, new_version, config, dry_run=dry_run)
-
-    # Assert
-    mock_modify_files.assert_called_once()
-    assert mock_modify_files.call_args[0][0] == []
-    assert mock_modify_files.call_args[0][1] == current_version
-    assert mock_modify_files.call_args[0][2] == version_config.parse(new_version)
-
-    mock_update_config_file.assert_called_once()
-    assert mock_update_config_file.call_args[0][0] is None
-    assert mock_update_config_file.call_args[0][1] == config
-    assert mock_update_config_file.call_args[0][2] == current_version
-    assert mock_update_config_file.call_args[0][3] == version_config.parse(new_version)
-    assert mock_update_config_file.call_args[0][5] is dry_run
-
-
-@patch("bumpversion.files.modify_files")
-@patch("bumpversion.bump.update_config_file")
-def test_do_bump_when_new_equals_current(mock_update_config_file, mock_modify_files, tmp_path: Path):
-    """When the new version is the same as the current version, nothing should happen."""
-
-    # Arrange
-    version_part = None
-    new_version = "1.2.3"
-
-    with inside_dir(tmp_path):
-        config, version_config, current_version = get_config_data({"current_version": "1.2.3"})
         # Act
-        bump.do_bump(version_part, new_version, config)
+        actual_next_version = bump.get_next_version(current_version, config, version_part, new_version)
 
-    # Assert
-    mock_modify_files.assert_not_called()
-    mock_update_config_file.assert_not_called()
+        # Assert
+        assert actual_next_version == expected_next_version
+
+    def test_passing_version_part_should_increment_part(self):
+        """If a version part is provided, it should return the increment of that part."""
+        # Arrange
+        config, version_config, current_version = get_config_data({"current_version": "0.1.0"})
+        version_part = "major"
+        new_version = None
+        expected_next_version = version_config.parse("1.0.0")
+
+        # Act
+        actual_next_version = bump.get_next_version(current_version, config, version_part, new_version)
+
+        # Assert
+        assert actual_next_version == expected_next_version
+
+    def test_passing_no_arguments_raises_error(self):
+        # Arrange
+        current_version = MagicMock()
+        config = MagicMock()
+        version_part = None
+        new_version = None
+
+        # Act/Assert
+        with pytest.raises(ConfigurationError):
+            bump.get_next_version(current_version, config, version_part, new_version)
 
 
-def test_do_bump_with_no_arguments():
-    # Arrange
-    version_part = None
-    new_version = None
-    config, version_config, current_version = get_config_data({"current_version": "1.2.3"})
-    config.scm_info = SCMInfo()
-    dry_run = False
+class TestDoBump:
+    """Tests for the do_bump function."""
 
-    # Act/Assert
-    with pytest.raises(ConfigurationError):
+    @patch("bumpversion.files.modify_files")
+    @patch("bumpversion.bump.update_config_file")
+    def test_passing_version_part_increments_part(self, mock_update_config_file, mock_modify_files):
+        # Arrange
+        version_part = "major"
+        new_version = None
+        config, version_config, current_version = get_config_data(
+            {
+                "current_version": "1.2.3",
+                "files": [{"filename": "foo.txt"}, {"filename": "bar.txt"}],
+            }
+        )
+        config.scm_info = SCMInfo()
+        dry_run = False
+
+        # Act
         bump.do_bump(version_part, new_version, config, dry_run=dry_run)
+
+        # Assert
+        mock_modify_files.assert_called_once()
+        mock_update_config_file.assert_called_once()
+        assert {f.file_change.filename for f in mock_modify_files.call_args[0][0]} == {
+            "foo.txt",
+            "bar.txt",
+        }
+        assert mock_update_config_file.call_args[0][0] is None
+        assert mock_update_config_file.call_args[0][1] == config
+        assert mock_update_config_file.call_args[0][2] == current_version
+        assert mock_update_config_file.call_args[0][3] == current_version.bump(version_part)
+        assert mock_update_config_file.call_args[0][5] is False
+
+    @patch("bumpversion.files.modify_files")
+    @patch("bumpversion.bump.update_config_file")
+    def test_passing_new_version_sets_version(self, mock_update_config_file, mock_modify_files):
+        # Arrange
+        version_part = None
+        new_version = "2.0.0"
+        config, version_config, current_version = get_config_data(
+            {
+                "current_version": "1.2.3",
+            }
+        )
+        config.scm_info = SCMInfo()
+        dry_run = True
+
+        # Act
+        bump.do_bump(version_part, new_version, config, dry_run=dry_run)
+
+        # Assert
+        mock_modify_files.assert_called_once()
+        assert mock_modify_files.call_args[0][0] == []
+        assert mock_modify_files.call_args[0][1] == current_version
+        assert mock_modify_files.call_args[0][2] == version_config.parse(new_version)
+
+        mock_update_config_file.assert_called_once()
+        assert mock_update_config_file.call_args[0][0] is None
+        assert mock_update_config_file.call_args[0][1] == config
+        assert mock_update_config_file.call_args[0][2] == current_version
+        assert mock_update_config_file.call_args[0][3] == version_config.parse(new_version)
+        assert mock_update_config_file.call_args[0][5] is dry_run
+
+    @patch("bumpversion.files.modify_files")
+    @patch("bumpversion.bump.update_config_file")
+    def test_when_new_equals_current_nothing_happens(self, mock_update_config_file, mock_modify_files, tmp_path: Path):
+        """When the new version is the same as the current version, nothing should happen."""
+
+        # Arrange
+        version_part = None
+        new_version = "1.2.3"
+
+        with inside_dir(tmp_path):
+            config, version_config, current_version = get_config_data({"current_version": "1.2.3"})
+            # Act
+            bump.do_bump(version_part, new_version, config)
+
+        # Assert
+        mock_modify_files.assert_not_called()
+        mock_update_config_file.assert_not_called()
+
+    def test_passing_no_arguments_raises_error(self):
+        # Arrange
+        version_part = None
+        new_version = None
+        config, version_config, current_version = get_config_data({"current_version": "1.2.3"})
+        config.scm_info = SCMInfo()
+        dry_run = False
+
+        # Act/Assert
+        with pytest.raises(ConfigurationError):
+            bump.do_bump(version_part, new_version, config, dry_run=dry_run)
+
+    @patch("bumpversion.files.modify_files")
+    @patch("bumpversion.bump.update_config_file")
+    def test_includes_files_with_include_bumps(self, mock_update_config_file, mock_modify_files):
+        """Files that have include_bumps are included when those bumps happen."""
+        # Arrange
+        new_version = None
+        config, version_config, current_version = get_config_data(
+            {
+                "current_version": "1.2.3",
+                "files": [{"filename": "foo.txt", "include_bumps": ["major", "minor"]}, {"filename": "bar.txt"}],
+            }
+        )
+        config.scm_info = SCMInfo()
+        dry_run = False
+
+        # Act
+        bump.do_bump("patch", new_version, config, dry_run=dry_run)
+
+        # Assert
+        assert {f.file_change.filename for f in mock_modify_files.call_args[0][0]} == {"bar.txt"}
+
+        # Act
+        bump.do_bump("minor", new_version, config, dry_run=dry_run)
+
+        # Assert
+        assert {f.file_change.filename for f in mock_modify_files.call_args[0][0]} == {"foo.txt", "bar.txt"}
+
+    @patch("bumpversion.files.modify_files")
+    @patch("bumpversion.bump.update_config_file")
+    def test_excludes_files_with_exclude_bumps(self, mock_update_config_file, mock_modify_files):
+        """Files that have exclude_bumps are excluded when those bumps happen."""
+        # Arrange
+        new_version = None
+        config, version_config, current_version = get_config_data(
+            {
+                "current_version": "1.2.3",
+                "files": [{"filename": "foo.txt", "exclude_bumps": ["patch"]}, {"filename": "bar.txt"}],
+            }
+        )
+        config.scm_info = SCMInfo()
+        dry_run = False
+
+        # Act
+        bump.do_bump("patch", new_version, config, dry_run=dry_run)
+
+        # Assert
+        assert {f.file_change.filename for f in mock_modify_files.call_args[0][0]} == {"bar.txt"}
+
+        # Act
+        bump.do_bump("minor", new_version, config, dry_run=dry_run)
+
+        # Assert
+        assert {f.file_change.filename for f in mock_modify_files.call_args[0][0]} == {"foo.txt", "bar.txt"}
 
 
 def test_commit_and_tag_with_no_tool():

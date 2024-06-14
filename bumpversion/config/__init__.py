@@ -37,6 +37,19 @@ DEFAULTS = {
 }
 
 
+def set_config_defaults(parsed_config: dict[str, Any], **overrides: Any) -> dict[str, Any]:
+    """Apply the defaults to the parsed config."""
+    config_dict = DEFAULTS.copy()
+
+    # We want to strip out unrecognized key-values to avoid inadvertent issues
+    config_dict.update({key: val for key, val in parsed_config.items() if key in DEFAULTS.keys()})
+
+    allowed_overrides = set(DEFAULTS.keys())
+    config_dict.update({key: val for key, val in overrides.items() if key in allowed_overrides})
+
+    return config_dict
+
+
 def get_configuration(config_file: Union[str, Path, None] = None, **overrides: Any) -> Config:
     """
     Return the configuration based on any configuration files and overrides.
@@ -54,14 +67,8 @@ def get_configuration(config_file: Union[str, Path, None] = None, **overrides: A
     logger.info("Reading configuration")
     logger.indent()
 
-    config_dict = DEFAULTS.copy()
     parsed_config = read_config_file(config_file) if config_file else {}
-
-    # We want to strip out unrecognized key-values to avoid inadvertent issues
-    config_dict.update({key: val for key, val in parsed_config.items() if key in DEFAULTS.keys()})
-
-    allowed_overrides = set(DEFAULTS.keys())
-    config_dict.update({key: val for key, val in overrides.items() if key in allowed_overrides})
+    config_dict = set_config_defaults(parsed_config, **overrides)
 
     # Set any missing version parts
     config_dict["parts"] = get_all_part_configs(config_dict)

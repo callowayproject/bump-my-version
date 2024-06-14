@@ -90,6 +90,8 @@ class ConfiguredFile:
             filename=file_change.filename,
             glob=file_change.glob,
             key_path=file_change.key_path,
+            include_bumps=file_change.include_bumps,
+            exclude_bumps=file_change.exclude_bumps,
         )
         self.version_config = VersionConfig(
             self.file_change.parse,

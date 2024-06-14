@@ -115,44 +115,30 @@ class TestReadConfigFile:
             assert config.read_config_file() == {}
             assert "No configuration file found." in caplog.text
 
+        def test_finds_correct_file_from_multiple_options(self, tmp_path: Path):
+            """If there are multiple config files, the first one with content wins."""
+            setup_cfg = tmp_path / "setup.cfg"
+            setup_cfg.write_text("[metadata]\nname: just-a-name\n", encoding="utf-8")
+            bumpversion_cfg = tmp_path / ".bumpversion.cfg"
+            bumpversion_cfg.write_text("\n", encoding="utf-8")
+            pyproject_toml = tmp_path / "pyproject.toml"
+            pyproject_toml.write_text(
+                "[tool.bumpversion]\n"
+                'current_version = "0.10.5"\n'
+                'parse = "(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?"\n'
+                "serialize = [\n"
+                '    "{major}.{minor}.{patch}-{release}",\n'
+                '    "{major}.{minor}.{patch}"\n'
+                "]\n",
+                encoding="utf-8",
+            )
+            with inside_dir(tmp_path):
+                cfg_file = bumpversion.config.files.find_config_file()
+                cfg = config.get_configuration(cfg_file)
 
-@pytest.mark.parametrize(
-    ["conf_file", "expected_file"],
-    [
-        param("basic_cfg.toml", "basic_cfg_expected.json", id="toml basic cfg"),
-    ],
-)
-def test_read_toml_file(conf_file: str, expected_file: str, fixtures_path: Path) -> None:
-    """Parsing the config file should match the expected results."""
-    result = bumpversion.config.files.read_toml_file(fixtures_path.joinpath(conf_file))
-    expected = json.loads(fixtures_path.joinpath(expected_file).read_text())
-    assert result == expected
-
-
-def test_multiple_config_files(tmp_path: Path):
-    """If there are multiple config files, the first one with content wins."""
-    setup_cfg = tmp_path / "setup.cfg"
-    setup_cfg.write_text("[metadata]\nname: just-a-name\n", encoding="utf-8")
-    bumpversion_cfg = tmp_path / ".bumpversion.cfg"
-    bumpversion_cfg.write_text("\n", encoding="utf-8")
-    pyproject_toml = tmp_path / "pyproject.toml"
-    pyproject_toml.write_text(
-        "[tool.bumpversion]\n"
-        'current_version = "0.10.5"\n'
-        'parse = "(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(\\\\-(?P<release>[a-z]+))?"\n'
-        "serialize = [\n"
-        '    "{major}.{minor}.{patch}-{release}",\n'
-        '    "{major}.{minor}.{patch}"\n'
-        "]\n",
-        encoding="utf-8",
-    )
-    with inside_dir(tmp_path):
-        cfg_file = bumpversion.config.files.find_config_file()
-        cfg = config.get_configuration(cfg_file)
-
-    assert cfg.current_version == "0.10.5"
-    assert cfg.parse == "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?"
-    assert cfg.serialize == ("{major}.{minor}.{patch}-{release}", "{major}.{minor}.{patch}")
+            assert cfg.current_version == "0.10.5"
+            assert cfg.parse == "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?"
+            assert cfg.serialize == ("{major}.{minor}.{patch}-{release}", "{major}.{minor}.{patch}")
 
 
 TOML_EXPECTED_DIFF = (
