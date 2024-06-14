@@ -1,5 +1,42 @@
 # Changelog
 
+## 0.23.0 (2024-06-14)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.22.0...0.23.0)
+
+### Fixes
+
+- Refactor valid_bumps and invalid_bumps to include_bumps and exclude_bumps. [2df57cc](https://github.com/callowayproject/bump-my-version/commit/2df57cc05433c3d2698afa6a76028af6bea7d7fc)
+    
+  The configuration parameters `valid_bumps` and `invalid_bumps` were renamed to `include_bumps` and `exclude_bumps` respectively. This new naming better denotes their function, and the changes were consistently applied across all related files and tests. Numerous fixture outputs were also updated to reflect these changes.
+- Fixed spelling in CODE_OF_CONDUCT.md. [254ea44](https://github.com/callowayproject/bump-my-version/commit/254ea44c963352a74965eb602e0c4dd56eea665a)
+    
+### New
+
+- Add file filtering based on valid and invalid bumps. [f9f7f96](https://github.com/callowayproject/bump-my-version/commit/f9f7f96bd5e467666b9a59e3fa8a6dedfaca838a)
+    
+  This commit introduces the ability to filter files based on whether the specified bump type is valid or not. It adds `valid_bumps` and `invalid_bumps` lists in the file configurations and adjusts the bumping process to consider these configurations. Tests are updated to reflect these new handling of valid and invalid bumps.
+- Add new files to .gitignore. [34e4dc1](https://github.com/callowayproject/bump-my-version/commit/34e4dc14b3948a01552685402c0ca71ae23d5975)
+    
+  Several new file types have been added to .gitignore for ignoring during commits. These include '.python-version', 'requirements-dev.lock', and 'requirements.lock' files.
+- Add valid_bumps and invalid_bumps to file configuration. [9458851](https://github.com/callowayproject/bump-my-version/commit/94588518ae96b3c1bdc996d61cf6cdc1c684ac1d)
+    
+  Updated the configuration file model to support valid_bumps and invalid_bumps. This feature provides control over which version section updates can trigger file changes. Adjusted various test fixtures and cleaned up tests to match these changes. Also, some updates were made to the documentation accordingly.
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [e44f6af](https://github.com/callowayproject/bump-my-version/commit/e44f6af91dd68c563b2974f21c8d00dc78e42896)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.4.4 → v0.4.8](https://github.com/astral-sh/ruff-pre-commit/compare/v0.4.4...v0.4.8)
+
+### Updates
+
+- Update documentation for clarification. [2224808](https://github.com/callowayproject/bump-my-version/commit/2224808b652143c5179c49848cf2ce91d26ecdbe)
+    
+  The changes made update the wording in the documentation to clarify the roles of `include_bumps` and `exclude_bumps` in the bump-my-version configuration. Additionally, unnecessary repetition was removed and overlapping examples were also corrected.
+- Update docs/reference/configuration.md. [7c801c0](https://github.com/callowayproject/bump-my-version/commit/7c801c0be10f8031cbf04814bc0ead407bb9477c)
+    
+  **co-authored-by:** wkoot <3715211+wkoot@users.noreply.github.com>
+
+
 ## 0.22.0 (2024-06-11)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.21.1...0.22.0)
 
