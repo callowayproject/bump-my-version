@@ -8,7 +8,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from bumpversion import bump
-from bumpversion.exceptions import ConfigurationError
+from bumpversion.exceptions import ConfigurationError, VersionNotFoundError
 from bumpversion.files import ConfiguredFile
 from bumpversion.scm import Git, SCMInfo
 from tests.conftest import get_config_data, inside_dir
@@ -147,7 +147,8 @@ class TestDoBump:
         # Act
         with inside_dir(tmp_path):
             config = config.get_configuration(config_file=dest_config_path)
-            bump.do_bump(version_part, None, config)
+            with pytest.raises(VersionNotFoundError):
+                bump.do_bump(version_part, None, config)
 
         # Assert
         mock_commit_and_tag.assert_not_called()
