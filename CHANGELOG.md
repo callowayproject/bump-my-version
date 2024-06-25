@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.24.0 (2024-06-25)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.23.0...0.24.0)
+
+### New
+
+- Add VersionNotFoundError test in test_bump.py. [cb050a8](https://github.com/callowayproject/bump-my-version/commit/cb050a87ae26421024025010a38d9e9a0cdd6f44)
+    
+  The code in test_bump.py file has been modified to include a test for VersionNotFoundError exception. This ensures that the implementation properly handles cases where a specified version could not be found.
+- Add test for no commit on modification error. [7527029](https://github.com/callowayproject/bump-my-version/commit/75270290e412dacf8ce30586059f919d0cf53838)
+    
+  A test has been added to the bumpversion library to ensure that no commit and tag is made if there is an error modification. Specifically, the test checks the "do_bump" function and asserts that "mock_commit_and_tag" and "mock_update_config_file" are not called under these conditions.
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [0e3a154](https://github.com/callowayproject/bump-my-version/commit/0e3a154b71b40bb4cae31ec72e35156fef423919)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.4.8 → v0.4.9](https://github.com/astral-sh/ruff-pre-commit/compare/v0.4.8...v0.4.9)
+
+### Updates
+
+- Improve error message for SCM command failures. [8f72f86](https://github.com/callowayproject/bump-my-version/commit/8f72f868045d5f715e11404ed82455c8d5de6eca)
+    
+  The error message for failures in the SCM command execution has been enhanced. Now it displays not only the command's return code but also the standard output and error, improving the debugging process.
+
 ## 0.23.0 (2024-06-14)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.22.0...0.23.0)
 
