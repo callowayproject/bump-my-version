@@ -76,7 +76,8 @@ class SourceCodeManager:
             if isinstance(exc, TypeError):
                 err_msg = f"Failed to run {cls._COMMIT_COMMAND}: {exc}"
             else:
-                err_msg = f"Failed to run {exc.cmd}: return code {exc.returncode}, output: {exc.output}"
+                output = "\n".join([x for x in [exc.stdout, exc.stderr] if x])
+                err_msg = f"Failed to run {exc.cmd}: return code {exc.returncode}, output: {output}"
             logger.exception(err_msg)
             raise BumpVersionError(err_msg) from exc
         finally:
