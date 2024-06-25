@@ -1,13 +1,14 @@
 """Tests for the bump module."""
 
 from pathlib import Path
+import shutil
 from textwrap import dedent
 from unittest.mock import MagicMock, patch
 
 import pytest
 
 from bumpversion import bump
-from bumpversion.exceptions import ConfigurationError
+from bumpversion.exceptions import ConfigurationError, VersionNotFoundError
 from bumpversion.files import ConfiguredFile
 from bumpversion.scm import Git, SCMInfo
 from tests.conftest import get_config_data, inside_dir
@@ -124,6 +125,35 @@ class TestDoBump:
         assert mock_update_config_file.call_args[0][2] == current_version
         assert mock_update_config_file.call_args[0][3] == version_config.parse(new_version)
         assert mock_update_config_file.call_args[0][5] is dry_run
+
+    @patch("bumpversion.bump.commit_and_tag")
+    @patch("bumpversion.bump.update_config_file")
+    def test_doesnt_commit_if_modify_error(
+        self, mock_update_config_file, mock_commit_and_tag, tmp_path: Path, fixtures_path: Path
+    ):
+        from bumpversion import config
+
+        # Arrange
+        setup_py_path = tmp_path / "setup.py"
+        setup_py_path.touch()
+        init_path = tmp_path / "bumpversion/__init__.py"
+        init_path.parent.mkdir(parents=True)
+        init_path.touch()
+        orig_config_path = fixtures_path / "basic_cfg.toml"
+        dest_config_path = tmp_path / "pyproject.toml"
+        shutil.copyfile(orig_config_path, dest_config_path)
+        version_part = "patch"
+
+        # Act
+        with inside_dir(tmp_path):
+            config = config.get_configuration(config_file=dest_config_path)
+            with pytest.raises(VersionNotFoundError):
+                bump.do_bump(version_part, None, config)
+
+        # Assert
+        mock_commit_and_tag.assert_not_called()
+
+        mock_update_config_file.assert_not_called()
 
     @patch("bumpversion.files.modify_files")
     @patch("bumpversion.bump.update_config_file")
