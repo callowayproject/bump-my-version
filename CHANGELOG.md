@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.24.1 (2024-06-26)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.24.0...0.24.1)
+
+### Fixes
+
+- Refactor error handling in SCM and add error handling test. [7ca6356](https://github.com/callowayproject/bump-my-version/commit/7ca63568ef1db9bb7ac3508d02f897c2415b5a5c)
+    
+  This commit includes a new test in test_scm.py to verify the correct formatting and raising of subprocess errors in the SCM module. Additionally, the subprocess error handling has been refactored in the SCM module to include a new method, format_and_raise_error, for improved code readability and reusability.
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [60acc2d](https://github.com/callowayproject/bump-my-version/commit/60acc2d42b0acd1f7e6222b27ecdb349346784cf)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.4.9 → v0.4.10](https://github.com/astral-sh/ruff-pre-commit/compare/v0.4.9...v0.4.10)
+
+
 ## 0.24.0 (2024-06-25)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.23.0...0.24.0)
 
