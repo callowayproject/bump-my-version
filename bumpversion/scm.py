@@ -73,15 +73,21 @@ class SourceCodeManager:
             cmd = [*cls._COMMIT_COMMAND, f.name, *extra_args]
             subprocess.run(cmd, env=env, capture_output=True, check=True)  # noqa: S603
         except (subprocess.CalledProcessError, TypeError) as exc:  # pragma: no-coverage
-            if isinstance(exc, TypeError):
-                err_msg = f"Failed to run {cls._COMMIT_COMMAND}: {exc}"
-            else:
-                output = "\n".join([x for x in [exc.stdout, exc.stderr] if x])
-                err_msg = f"Failed to run {exc.cmd}: return code {exc.returncode}, output: {output}"
-            logger.exception(err_msg)
-            raise BumpVersionError(err_msg) from exc
+            cls.format_and_raise_error(exc)
         finally:
             os.unlink(f.name)
+
+    @classmethod
+    def format_and_raise_error(cls, exc: Union[TypeError, subprocess.CalledProcessError]) -> None:
+        """Format the error message from an exception and re-raise it as a BumpVersionError."""
+        if isinstance(exc, subprocess.CalledProcessError):
+            output = "\n".join([x for x in [exc.stdout.decode("utf8"), exc.stderr.decode("utf8")] if x])
+            cmd = " ".join(exc.cmd)
+            err_msg = f"Failed to run `{cmd}`: return code {exc.returncode}, output: {output}"
+        else:  # pragma: no-coverage
+            err_msg = f"Failed to run {cls._COMMIT_COMMAND}: {exc}"
+        logger.exception(err_msg)
+        raise BumpVersionError(err_msg) from exc
 
     @classmethod
     def is_usable(cls) -> bool:

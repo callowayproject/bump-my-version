@@ -7,9 +7,23 @@ import pytest
 from pytest import param, LogCaptureFixture
 
 from bumpversion import scm
-from bumpversion.exceptions import DirtyWorkingDirectoryError
+from bumpversion.exceptions import DirtyWorkingDirectoryError, BumpVersionError
 from bumpversion.ui import setup_logging
 from tests.conftest import get_config_data, inside_dir
+
+
+def test_format_and_raise_error(git_repo: Path) -> None:
+    """The output formatting from called process error string works as expected."""
+    with inside_dir(git_repo):
+        try:
+            subprocess.run(["git", "add", "newfile.txt"], capture_output=True, check=True)  # noqa: S603
+        except subprocess.CalledProcessError as e:
+            with pytest.raises(BumpVersionError) as bump_error:
+                scm.Git.format_and_raise_error(e)
+            assert bump_error.value.message == (
+                "Failed to run `git add newfile.txt`: return code 128, output: "
+                "fatal: pathspec 'newfile.txt' did not match any files\n"
+            )
 
 
 def test_git_is_usable(git_repo: Path) -> None:
