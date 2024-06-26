@@ -16,7 +16,7 @@ def test_format_and_raise_error(git_repo: Path) -> None:
     """The output formatting from called process error string works as expected."""
     with inside_dir(git_repo):
         try:
-            subprocess.run(["git", "add", "newfile.txt"], capture_output=True, check=True)
+            subprocess.run(["git", "add", "newfile.txt"], capture_output=True, check=True)  # noqa: S603
         except subprocess.CalledProcessError as e:
             with pytest.raises(BumpVersionError) as bump_error:
                 scm.Git.format_and_raise_error(e)
