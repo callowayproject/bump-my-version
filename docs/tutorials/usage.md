@@ -102,10 +102,10 @@ The `replace` sub-command works identically to the `bump` sub-command except for
 - It will not increment the version
 - It will not change the configuration file
 
-```{admonition} NOTE
+!!! NOTE
 
-If you do not include the `--new-version` option, the `new_version` context variable will be `None`.
-```
+    If you do not include the `--new-version` option, the `new_version` context variable will be `None`.
+
 
 One way of providing the `--new-version` option is to use the `bump-my-version show` subcommand with an environment variable:
 
