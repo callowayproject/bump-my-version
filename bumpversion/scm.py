@@ -132,10 +132,12 @@ class SourceCodeManager:
         """Return the version from a tag."""
         version_pattern = parse_pattern.replace("\\\\", "\\")
         version_pattern, regex_flags = extract_regex_flags(version_pattern)
-        rep = tag_name.replace("{new_version}", f"(?P<current_version>{version_pattern})")
-        rep = f"{regex_flags}{rep}"
+        parts = tag_name.split("{new_version}", maxsplit=1)
+        prefix = parts[0]
+        suffix = parts[1]
+        rep = f"{regex_flags}{re.escape(prefix)}(?P<current_version>{version_pattern}){re.escape(suffix)}"
         tag_regex = re.compile(rep)
-        return match["current_version"] if (match := tag_regex.match(tag)) else None
+        return match["current_version"] if (match := tag_regex.search(tag)) else None
 
     @classmethod
     def commit_to_scm(
@@ -286,7 +288,7 @@ class Git(SourceCodeManager):
 
         info.commit_sha = describe_out.pop().lstrip("g")
         info.distance_to_latest_tag = int(describe_out.pop())
-        version = cls.get_version_from_tag(describe_out[-1], tag_name, parse_pattern)
+        version = cls.get_version_from_tag("-".join(describe_out), tag_name, parse_pattern)
         info.current_version = version or "-".join(describe_out).lstrip("v")
 
         return info

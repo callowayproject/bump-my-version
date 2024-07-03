@@ -12,6 +12,40 @@ from bumpversion.ui import setup_logging
 from tests.conftest import get_config_data, inside_dir
 
 
+class TestpSourceCodeManager:
+    """Tests related to SourceCodeManager."""
+
+    class TestGetVersionFromTag:
+        """Tests for the get_version_from_tag classmethod."""
+
+        simple_pattern = r"(?P<major>\\d+)\\.(?P<minor>\\d+)\.(?P<patch>\\d+)"
+        complex_pattern = r"(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(-(?P<release>[0-9A-Za-z]+))?(\\+build\\.(?P<build>.[0-9A-Za-z]+))?"
+
+        @pytest.mark.parametrize(
+            ["tag", "tag_name", "parse_pattern", "expected"],
+            [
+                param("1.2.3", "{new_version}", simple_pattern, "1.2.3", id="no-prefix, no-suffix"),
+                param("v/1.2.3", "v/{new_version}", simple_pattern, "1.2.3", id="prefix, no-suffix"),
+                param("v/1.2.3/12345", "v/{new_version}/{something}", simple_pattern, "1.2.3", id="prefix, suffix"),
+                param("1.2.3/2024-01-01", "{new_version}/{today}", simple_pattern, "1.2.3", id="no-prefix, suffix"),
+                param(
+                    "app/4.0.3-beta+build.1047",
+                    "app/{new_version}",
+                    complex_pattern,
+                    "4.0.3-beta+build.1047",
+                    id="complex",
+                ),
+            ],
+        )
+        def returns_version_from_pattern(self, tag: str, tag_name: str, parse_pattern: str, expected: str) -> None:
+            """It properly returns the version from the tag."""
+            # Act
+            version = scm.SourceCodeManager.get_version_from_tag(tag, tag_name, parse_pattern)
+
+            # Assert
+            assert version == expected
+
+
 def test_format_and_raise_error(git_repo: Path) -> None:
     """The output formatting from called process error string works as expected."""
     with inside_dir(git_repo):
