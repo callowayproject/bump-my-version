@@ -5,6 +5,7 @@ import subprocess
 import traceback
 from datetime import datetime
 from pathlib import Path
+from textwrap import dedent
 
 import pytest
 from pytest import param
@@ -252,6 +253,62 @@ def test_ignores_missing_files_with_option(tmp_path, fixtures_path, runner):
     if result.exit_code != 0:
         print("Here is the output:")
         print(result.output)
+        print(traceback.print_exception(result.exc_info[1]))
+
+    assert result.exit_code == 0
+
+
+def test_dash_in_tag_matches_current_version(git_repo, runner, caplog):
+    import logging
+
+    caplog.set_level(logging.DEBUG, logger="bumpversion")
+
+    repo_path: Path = git_repo
+    with inside_dir(repo_path):
+        # Arrange
+        config_toml = dedent(
+            """
+            [tool.bumpversion]
+            current_version = "4.0.3-beta+build.1047"
+            parse = "(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)\\\\.(?P<patch>\\\\d+)(-(?P<release>[0-9A-Za-z]+))?(\\\\+build\\\\.(?P<build>.[0-9A-Za-z]+))?"
+            serialize = [
+                "{major}.{minor}.{patch}-{release}+build.{build}",
+                "{major}.{minor}.{patch}+build.{build}"
+            ]
+            commit = true
+            message = "Bump version: {current_version} -> {new_version}"
+            tag = false
+            tag_name = "app/{new_version}"
+            tag_message = "Version app/{new_version}"
+            allow_dirty = false
+
+            [tool.bumpversion.parts.release]
+            values = [
+                "beta",
+                "rc",
+                "final"
+            ]
+            optional_value = "final"
+
+            [tool.bumpversion.parts.build]
+            first_value = 1000
+            independent = true
+            always_increment = true
+        """
+        )
+        repo_path.joinpath(".bumpversion.toml").write_text(config_toml, encoding="utf-8")
+        subprocess.run(["git", "add", ".bumpversion.toml"], check=True)
+        subprocess.run(["git", "commit", "-m", "added file"], check=True)
+        subprocess.run(["git", "tag", "-a", "app/4.0.3-beta+build.1047", "-m", "added tag"], check=True)
+
+        # Act
+        result: Result = runner.invoke(cli.cli, ["bump", "-vv", "--tag", "--commit", "patch"])
+
+    # Assert
+    if result.exit_code != 0:
+        import traceback
+
+        print(caplog.text)
         print(traceback.print_exception(result.exc_info[1]))
 
     assert result.exit_code == 0
