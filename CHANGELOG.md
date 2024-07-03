@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.24.2 (2024-07-03)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.24.1...0.24.2)
+
+### Fixes
+
+- Fixed tag version extraction. [67eea3d](https://github.com/callowayproject/bump-my-version/commit/67eea3ddd1dbf0f64d610bc46cf22e638925c26f)
+    
+  The output of `git describe` uses `-` as a delimiter. Parsing tags caused splits in the parsing of version numbers.
+
+  This joins all the remaining parts of the `git describe` with a `-`.
+- Fixed pydoclint configuration. [0386073](https://github.com/callowayproject/bump-my-version/commit/0386073d7c298a2bd159fc2c59d08689557e9224)
+    
+
 ## 0.24.1 (2024-06-26)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.24.0...0.24.1)
 
