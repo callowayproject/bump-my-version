@@ -337,7 +337,13 @@ class DataFileUpdater:
         search_for, raw_search_pattern = self.file_change.get_search_pattern(new_context)
         replace_with = self.file_change.replace.format(**new_context)
         if self.path.suffix == ".toml":
-            self._update_toml_file(search_for, raw_search_pattern, replace_with, dry_run)
+            try:
+                self._update_toml_file(search_for, raw_search_pattern, replace_with, dry_run)
+            except KeyError as e:
+                if self.file_change.ignore_missing_file or self.file_change.ignore_missing_version:
+                    pass
+                else:
+                    raise e
 
     def _update_toml_file(
         self, search_for: re.Pattern, raw_search_pattern: str, replace_with: str, dry_run: bool = False
@@ -348,9 +354,7 @@ class DataFileUpdater:
         toml_data = tomlkit.parse(self.path.read_text(encoding="utf-8"))
         value_before = get_nested_value(toml_data, self.file_change.key_path)
 
-        if value_before is None:
-            raise KeyError(f"Key path '{self.file_change.key_path}' does not exist in {self.path}")
-        elif not contains_pattern(search_for, value_before) and not self.file_change.ignore_missing_version:
+        if not contains_pattern(search_for, value_before) and not self.file_change.ignore_missing_version:
             raise ValueError(
                 f"Key '{self.file_change.key_path}' in {self.path} does not contain the correct contents: "
                 f"{raw_search_pattern}"
