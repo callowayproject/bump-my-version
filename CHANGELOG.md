@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.24.3 (2024-07-17)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.24.2...0.24.3)
+
+### Fixes
+
+- Fix KeyError in TOML file handling. [f3c328a](https://github.com/callowayproject/bump-my-version/commit/f3c328a6b11c5be2e285453714d4e7a3148b1078)
+    
+  The code has been updated to handle KeyErrors when updating TOML files. If a KeyError is raised, it's now caught and managed depending on the file_change attributes 'ignore_missing_file' or 'ignore_missing_version'. This aims to provide more robust handling of edge cases in TOML files. In addition, a new test case has been added to ensure current version is not required in the configuration.
+
+  Fixes #212
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [536c7b1](https://github.com/callowayproject/bump-my-version/commit/536c7b122aa57576fa770b59ca093fc4444bd402)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.4.10 → v0.5.2](https://github.com/astral-sh/ruff-pre-commit/compare/v0.4.10...v0.5.2)
+
+
 ## 0.24.2 (2024-07-03)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.24.1...0.24.2)
 
