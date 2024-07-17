@@ -312,3 +312,37 @@ def test_dash_in_tag_matches_current_version(git_repo, runner, caplog):
         print(traceback.print_exception(result.exc_info[1]))
 
     assert result.exit_code == 0
+
+
+def test_current_version_not_required_in_config(tmp_path, fixtures_path, runner):
+    """The current version is not required in the configuration."""
+
+    config_file = tmp_path / ".bumpversion.toml"
+    config_contents = "[tool.bumpversion]\nallow_dirty = true\n\n"
+    config_file.write_text(
+        config_contents,
+        encoding="utf-8",
+    )
+
+    # Act
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(
+            cli.cli,
+            [
+                "bump",
+                "-vv",
+                "--current-version",
+                "1.0.0",
+                "--dry-run",
+                "minor",
+            ],
+        )
+
+    # Assert
+    if result.exit_code != 0:
+        print("Here is the output:")
+        print(result.output)
+        print(traceback.print_exception(result.exc_info[1]))
+
+    assert result.exit_code == 0
+    assert config_file.read_text() == config_contents
