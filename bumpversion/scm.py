@@ -9,7 +9,7 @@ from tempfile import NamedTemporaryFile
 from typing import TYPE_CHECKING, ClassVar, List, MutableMapping, Optional, Type, Union
 
 from bumpversion.ui import get_indented_logger
-from bumpversion.utils import extract_regex_flags
+from bumpversion.utils import extract_regex_flags, run_command
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
@@ -29,6 +29,7 @@ class SCMInfo:
     current_version: Optional[str] = None
     branch_name: Optional[str] = None
     short_branch_name: Optional[str] = None
+    repository_root: Optional[Path] = None
     dirty: Optional[bool] = None
 
     def __str__(self):
@@ -37,10 +38,22 @@ class SCMInfo:
     def __repr__(self):
         tool_name = self.tool.__name__ if self.tool else "No SCM tool"
         return (
-            f"SCMInfo(tool={tool_name}, commit_sha={self.commit_sha}, "
-            f"distance_to_latest_tag={self.distance_to_latest_tag}, current_version={self.current_version}, "
+            f"SCMInfo(tool={tool_name}, "
+            f"commit_sha={self.commit_sha}, "
+            f"distance_to_latest_tag={self.distance_to_latest_tag}, "
+            f"current_version={self.current_version}, "
+            f"branch_name={self.branch_name}, "
+            f"short_branch_name={self.short_branch_name}, "
+            f"repository_root={self.repository_root}, "
             f"dirty={self.dirty})"
         )
+
+    def path_in_repo(self, path: Union[Path, str]) -> bool:
+        """Return whether a path is inside this repository."""
+        if self.repository_root is None:
+            return False
+
+        return Path(path).is_relative_to(self.repository_root)
 
 
 class SourceCodeManager:
@@ -71,7 +84,7 @@ class SourceCodeManager:
 
         try:
             cmd = [*cls._COMMIT_COMMAND, f.name, *extra_args]
-            subprocess.run(cmd, env=env, capture_output=True, check=True)  # noqa: S603
+            run_command(cmd, env=env)
         except (subprocess.CalledProcessError, TypeError) as exc:  # pragma: no-coverage
             cls.format_and_raise_error(exc)
         finally:
@@ -93,7 +106,7 @@ class SourceCodeManager:
     def is_usable(cls) -> bool:
         """Is the VCS implementation usable."""
         try:
-            result = subprocess.run(cls._TEST_USABLE_COMMAND, check=True, capture_output=True)  # noqa: S603
+            result = run_command(cls._TEST_USABLE_COMMAND)
             return result.returncode == 0
         except (FileNotFoundError, PermissionError, NotADirectoryError, subprocess.CalledProcessError):
             return False
@@ -122,7 +135,7 @@ class SourceCodeManager:
     def get_all_tags(cls) -> List[str]:
         """Return all tags in VCS."""
         try:
-            result = subprocess.run(cls._ALL_TAGS_COMMAND, text=True, check=True, capture_output=True)  # noqa: S603
+            result = run_command(cls._ALL_TAGS_COMMAND)
             return result.stdout.splitlines()
         except (FileNotFoundError, PermissionError, NotADirectoryError, subprocess.CalledProcessError):
             return []
@@ -238,23 +251,26 @@ class Git(SourceCodeManager):
         """Assert that the working directory is not dirty."""
         lines = [
             line.strip()
-            for line in subprocess.check_output(["git", "status", "--porcelain"]).splitlines()  # noqa: S603, S607
-            if not line.strip().startswith(b"??")
+            for line in run_command(["git", "status", "--porcelain"]).stdout.splitlines()
+            if not line.strip().startswith("??")
         ]
-
-        if lines:
-            joined_lines = b"\n".join(lines).decode()
+        if joined_lines := "\n".join(lines):
             raise DirtyWorkingDirectoryError(f"Git working directory is not clean:\n\n{joined_lines}")
 
     @classmethod
     def latest_tag_info(cls, tag_name: str, parse_pattern: str) -> SCMInfo:
         """Return information about the latest tag."""
+        if not cls.is_usable():
+            return SCMInfo()
+
+        info = SCMInfo(tool=cls)
+
         try:
             # git-describe doesn't update the git-index, so we do that
-            subprocess.run(["git", "update-index", "--refresh", "-q"], capture_output=True)  # noqa: S603, S607
+            run_command(["git", "update-index", "--refresh", "-q"])
         except subprocess.CalledProcessError as e:
             logger.debug("Error when running git update-index: %s", e.stderr)
-            return SCMInfo(tool=cls)
+
         tag_pattern = tag_name.replace("{new_version}", "*")
         try:
             # get info about the latest tag in git
@@ -267,36 +283,40 @@ class Git(SourceCodeManager):
                 "--abbrev=40",
                 f"--match={tag_pattern}",
             ]
-            result = subprocess.run(git_cmd, text=True, check=True, capture_output=True)  # noqa: S603
+            result = run_command(git_cmd)
             describe_out = result.stdout.strip().split("-")
+            if describe_out[-1].strip() == "dirty":
+                info.dirty = True
+                describe_out.pop()
+            else:
+                info.dirty = False
 
-            git_cmd = ["git", "rev-parse", "--abbrev-ref", "HEAD"]
-            result = subprocess.run(git_cmd, text=True, check=True, capture_output=True)  # noqa: S603
-            branch_name = result.stdout.strip()
-            short_branch_name = re.sub(r"([^a-zA-Z0-9]*)", "", branch_name).lower()[:20]
+            info.commit_sha = describe_out.pop().lstrip("g")
+            info.distance_to_latest_tag = int(describe_out.pop())
+            version = cls.get_version_from_tag("-".join(describe_out), tag_name, parse_pattern)
+            info.current_version = version or "-".join(describe_out).lstrip("v")
         except subprocess.CalledProcessError as e:
             logger.debug("Error when running git describe: %s", e.stderr)
-            return SCMInfo(tool=cls)
 
-        info = SCMInfo(tool=cls, branch_name=branch_name, short_branch_name=short_branch_name)
-
-        if describe_out[-1].strip() == "dirty":
-            info.dirty = True
-            describe_out.pop()
-        else:
-            info.dirty = False
-
-        info.commit_sha = describe_out.pop().lstrip("g")
-        info.distance_to_latest_tag = int(describe_out.pop())
-        version = cls.get_version_from_tag("-".join(describe_out), tag_name, parse_pattern)
-        info.current_version = version or "-".join(describe_out).lstrip("v")
+        try:
+            git_cmd = ["git", "rev-parse", "--show-toplevel", "--abbrev-ref", "HEAD"]
+            result = run_command(git_cmd)
+            lines = [line.strip() for line in result.stdout.split("\n")]
+            repository_root = Path(lines[0])
+            branch_name = lines[1]
+            short_branch_name = re.sub(r"([^a-zA-Z0-9]*)", "", branch_name).lower()[:20]
+            info.branch_name = branch_name
+            info.short_branch_name = short_branch_name
+            info.repository_root = repository_root
+        except subprocess.CalledProcessError as e:
+            logger.debug("Error when running git rev-parse: %s", e.stderr)
 
         return info
 
     @classmethod
     def add_path(cls, path: Union[str, Path]) -> None:
         """Add a path to the VCS."""
-        subprocess.check_output(["git", "add", "--update", str(path)])  # noqa: S603, S607
+        run_command(["git", "add", "--update", str(path)])
 
     @classmethod
     def tag(cls, name: str, sign: bool = False, message: Optional[str] = None) -> None:
@@ -304,7 +324,7 @@ class Git(SourceCodeManager):
         Create a tag of the new_version in VCS.
 
         If only name is given, bumpversion uses a lightweight tag.
-        Otherwise, it utilizes an annotated tag.
+        Otherwise, it uses an annotated tag.
 
         Args:
             name: The name of the tag
@@ -316,7 +336,7 @@ class Git(SourceCodeManager):
             command += ["--sign"]
         if message:
             command += ["--message", message]
-        subprocess.check_output(command)  # noqa: S603
+        run_command(command)
 
 
 class Mercurial(SourceCodeManager):
@@ -331,19 +351,14 @@ class Mercurial(SourceCodeManager):
         """Return information about the latest tag."""
         current_version = None
         re_pattern = tag_name.replace("{new_version}", ".*")
-        result = subprocess.run(
-            ["hg", "log", "-r", f"tag('re:{re_pattern}')", "--template", "{latesttag}\n"],  # noqa: S603, S607
-            text=True,
-            check=True,
-            capture_output=True,
-        )
+        result = run_command(["hg", "log", "-r", f"tag('re:{re_pattern}')", "--template", "{latesttag}\n"])
         result.check_returncode()
         if result.stdout:
             tag_string = result.stdout.splitlines(keepends=False)[-1]
             current_version = cls.get_version_from_tag(tag_string, tag_name, parse_pattern)
         else:
             logger.debug("No tags found")
-        is_dirty = len(subprocess.check_output(["hg", "status", "-mard"])) != 0  # noqa: S603, S607
+        is_dirty = len(run_command(["hg", "status", "-mard"]).stdout) != 0
         return SCMInfo(tool=cls, current_version=current_version, dirty=is_dirty)
 
     @classmethod
@@ -351,12 +366,12 @@ class Mercurial(SourceCodeManager):
         """Assert that the working directory is clean."""
         lines = [
             line.strip()
-            for line in subprocess.check_output(["hg", "status", "-mard"]).splitlines()  # noqa: S603, S607
-            if not line.strip().startswith(b"??")
+            for line in run_command(["hg", "status", "-mard"]).stdout.splitlines()
+            if not line.strip().startswith("??")
         ]
 
         if lines:
-            joined_lines = b"\n".join(lines).decode()
+            joined_lines = "\n".join(lines)
             raise DirtyWorkingDirectoryError(f"Mercurial working directory is not clean:\n{joined_lines}")
 
     @classmethod
@@ -370,7 +385,7 @@ class Mercurial(SourceCodeManager):
         Create a tag of the new_version in VCS.
 
         If only name is given, bumpversion uses a lightweight tag.
-        Otherwise, it utilizes an annotated tag.
+        Otherwise, it uses an annotated tag.
 
         Args:
             name: The name of the tag
@@ -385,7 +400,7 @@ class Mercurial(SourceCodeManager):
             raise SignedTagsError("Mercurial does not support signed tags.")
         if message:
             command += ["--message", message]
-        subprocess.check_output(command)  # noqa: S603
+        run_command(command)
 
 
 def get_scm_info(tag_name: str, parse_pattern: str) -> SCMInfo:

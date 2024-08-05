@@ -1,7 +1,9 @@
 """General utilities."""
 
 import string
-from typing import Any, List, Tuple
+import subprocess
+from subprocess import CompletedProcess
+from typing import Any, List, Optional, Tuple
 
 
 def extract_regex_flags(regex_pattern: str) -> Tuple[str, str]:
@@ -99,3 +101,10 @@ def set_nested_value(d: dict, value: Any, path: str) -> None:
             raise ValueError(f"Path '{'.'.join(keys[:i+1])}' does not lead to a dictionary.")
         else:
             current_element = current_element[key]
+
+
+def run_command(command: list, env: Optional[dict] = None) -> CompletedProcess[str]:
+    """Run a shell command and return its output."""
+    result = subprocess.run(command, text=True, check=True, capture_output=True, env=env)  # NOQA: S603
+    result.check_returncode()
+    return result

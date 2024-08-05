@@ -85,6 +85,7 @@
               'current_version': None,
               'dirty': None,
               'distance_to_latest_tag': 0,
+              'repository_root': None,
               'short_branch_name': None,
               'tool': None},
  'search': '{current_version}',
