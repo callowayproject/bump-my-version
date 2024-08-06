@@ -273,8 +273,8 @@ class Git(SourceCodeManager):
 
         commit_info = cls._commit_info(parse_pattern, tag_name)
         rev_info = cls._revision_info()
-        info |= commit_info
-        info |= rev_info
+        info.update(commit_info)
+        info.update(rev_info)
 
         return SCMInfo(**info)
 
