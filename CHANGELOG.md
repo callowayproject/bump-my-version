@@ -1,5 +1,34 @@
 # Changelog
 
+## 0.25.0 (2024-08-06)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.24.3...0.25.0)
+
+### Fixes
+
+- Refactor error handling and improve logging in utils. [890b692](https://github.com/callowayproject/bump-my-version/commit/890b6922eb13cf36049029e3afe6778cfe0116f9)
+    
+  Extracted error formatting to a dedicated function and applied it across the codebase. Improved command path handling in `add_path` and enhanced test coverage with necessary imports and logging configurations.
+- Fix dictionary merging in SCMInfo. [5fb5ef2](https://github.com/callowayproject/bump-my-version/commit/5fb5ef2337eb12af7c561d834fb6fd33dd053ce4)
+    
+  Replaced the bitwise OR operator with the update method for merging dictionaries for 3.8 support
+- Refactor SCM info retrieval and config file update checks. [500ecd3](https://github.com/callowayproject/bump-my-version/commit/500ecd37e8603ee70253295140ba25d2b28c505d)
+    
+  Replaced ChainMap with MutableMapping in function signatures and types. Enhanced SCM info handling by splitting code into dedicated methods for commit and revision info retrieval. Added logic to prevent config file updates when the file is outside the repo and implemented corresponding test.
+### New
+
+- Add repository_root field and refactor subprocess handling. [25670d0](https://github.com/callowayproject/bump-my-version/commit/25670d0ecfd0b6dc7f7228af157e3a6361a0f9d9)
+    
+  Introduced the `repository_root` field to store the root path of the repository in the data classes. Refactored subprocess handling to use a new `run_command` utility for improved readability and error handling consistency. Removed unnecessary dependency from `.pre-commit-config.yaml` to streamline dependencies.
+### Other
+
+- Simplify run_command return type. [b91224e](https://github.com/callowayproject/bump-my-version/commit/b91224e1bf3628d42d2ab5c26929c274b7e7884e)
+    
+  Changed the return type of run_command from CompletedProcess[str] to CompletedProcess. This was done to remove unnecessary type specificity and ensure compatibility with different Python versions. The update maintains functionality and improves code readability.
+- [pre-commit.ci] pre-commit autoupdate. [e0ba544](https://github.com/callowayproject/bump-my-version/commit/e0ba54435e6ffe1714d4b24f1a483c9e64b7c3c7)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.5.2 → v0.5.5](https://github.com/astral-sh/ruff-pre-commit/compare/v0.5.2...v0.5.5)
+
+
 ## 0.24.3 (2024-07-17)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.24.2...0.24.3)
 
