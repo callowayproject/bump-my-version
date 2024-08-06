@@ -3,7 +3,12 @@
 import string
 import subprocess
 from subprocess import CompletedProcess
-from typing import Any, List, Optional, Tuple
+from typing import Any, List, Optional, Tuple, Union
+
+from bumpversion.exceptions import BumpVersionError
+from bumpversion.ui import get_indented_logger
+
+logger = get_indented_logger(__name__)
 
 
 def extract_regex_flags(regex_pattern: str) -> Tuple[str, str]:
@@ -101,6 +106,18 @@ def set_nested_value(d: dict, value: Any, path: str) -> None:
             raise ValueError(f"Path '{'.'.join(keys[:i+1])}' does not lead to a dictionary.")
         else:
             current_element = current_element[key]
+
+
+def format_and_raise_error(exc: Union[TypeError, subprocess.CalledProcessError]) -> None:
+    """Format the error message from an exception and re-raise it as a BumpVersionError."""
+    if isinstance(exc, subprocess.CalledProcessError):
+        output = "\n".join([x for x in [exc.stdout, exc.stderr] if x])
+        cmd = " ".join(exc.cmd)
+        err_msg = f"Failed to run `{cmd}`: return code {exc.returncode}, output: {output}"
+    else:  # pragma: no-coverage
+        err_msg = f"Failed to run a command: {exc}"
+    logger.exception(err_msg)
+    raise BumpVersionError(err_msg) from exc
 
 
 def run_command(command: list, env: Optional[dict] = None) -> CompletedProcess:

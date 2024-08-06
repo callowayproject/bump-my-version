@@ -9,12 +9,12 @@ from tempfile import NamedTemporaryFile
 from typing import TYPE_CHECKING, Any, ClassVar, Dict, List, MutableMapping, Optional, Type, Union
 
 from bumpversion.ui import get_indented_logger
-from bumpversion.utils import extract_regex_flags, run_command
+from bumpversion.utils import extract_regex_flags, format_and_raise_error, run_command
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
 
-from bumpversion.exceptions import BumpVersionError, DirtyWorkingDirectoryError, SignedTagsError
+from bumpversion.exceptions import DirtyWorkingDirectoryError, SignedTagsError
 
 logger = get_indented_logger(__name__)
 
@@ -53,7 +53,7 @@ class SCMInfo:
         if self.repository_root is None:
             return True
 
-        return Path(path).is_relative_to(self.repository_root)
+        return str(path).startswith(str(self.repository_root))
 
 
 class SourceCodeManager:
@@ -93,14 +93,7 @@ class SourceCodeManager:
     @classmethod
     def format_and_raise_error(cls, exc: Union[TypeError, subprocess.CalledProcessError]) -> None:
         """Format the error message from an exception and re-raise it as a BumpVersionError."""
-        if isinstance(exc, subprocess.CalledProcessError):
-            output = "\n".join([x for x in [exc.stdout.decode("utf8"), exc.stderr.decode("utf8")] if x])
-            cmd = " ".join(exc.cmd)
-            err_msg = f"Failed to run `{cmd}`: return code {exc.returncode}, output: {output}"
-        else:  # pragma: no-coverage
-            err_msg = f"Failed to run {cls._COMMIT_COMMAND}: {exc}"
-        logger.exception(err_msg)
-        raise BumpVersionError(err_msg) from exc
+        format_and_raise_error(exc)
 
     @classmethod
     def is_usable(cls) -> bool:
@@ -355,8 +348,14 @@ class Git(SourceCodeManager):
     def add_path(cls, path: Union[str, Path]) -> None:
         """Add a path to the VCS."""
         info = SCMInfo(**cls._revision_info())
-        if info.path_in_repo(path):
-            run_command(["git", "add", "--update", str(path)])
+        if not info.path_in_repo(path):
+            return
+        cwd = Path.cwd()
+        temp_path = os.path.relpath(path, cwd)
+        try:
+            run_command(["git", "add", "--update", str(temp_path)])
+        except subprocess.CalledProcessError as e:
+            format_and_raise_error(e)
 
     @classmethod
     def tag(cls, name: str, sign: bool = False, message: Optional[str] = None) -> None:

@@ -1,5 +1,6 @@
 """Tests of the VCS module."""
 
+import logging
 import subprocess
 from pathlib import Path
 
@@ -9,6 +10,7 @@ from pytest import param, LogCaptureFixture
 from bumpversion import scm
 from bumpversion.exceptions import DirtyWorkingDirectoryError, BumpVersionError
 from bumpversion.ui import setup_logging
+from bumpversion.utils import run_command
 from tests.conftest import get_config_data, inside_dir
 
 
@@ -49,7 +51,7 @@ class TestSourceCodeManager:
         """The output formatting from called process error string includes the underlying scm error."""
         with inside_dir(git_repo):
             try:
-                subprocess.run(["git", "add", "newfile.txt"], capture_output=True, check=True)  # noqa: S603
+                run_command(["git", "add", "newfile.txt"])
             except subprocess.CalledProcessError as e:
                 with pytest.raises(BumpVersionError) as bump_error:
                     scm.Git.format_and_raise_error(e)
@@ -274,6 +276,7 @@ def test_commit_tag_dry_run_interactions(
 ):
     """Combinations of commit, tag, dry-run and should produce the expected results."""
     # Arrange
+    caplog.set_level(logging.INFO)
     repo_path: Path = request.getfixturevalue(repo)
     version_path = repo_path / "VERSION"
     version_path.write_text("30.0.3", encoding="utf-8")
