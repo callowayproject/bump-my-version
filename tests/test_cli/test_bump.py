@@ -346,3 +346,40 @@ def test_current_version_not_required_in_config(tmp_path, fixtures_path, runner)
 
     assert result.exit_code == 0
     assert config_file.read_text() == config_contents
+
+
+def test_remote_config_doesnt_update(tmp_path, git_repo, runner):
+    """The current version is not required in the configuration."""
+
+    config_file = tmp_path / ".bumpversion.toml"
+    config_contents = '[tool.bumpversion]\nallow_dirty = true\n\n[[tool.bumpversion.files]]\nfilename = "readme.md"\n'
+    config_file.write_text(
+        config_contents,
+        encoding="utf-8",
+    )
+    myfile = git_repo / "readme.md"
+    myfile.write_text("version = 1.0.0\n", encoding="utf-8")
+
+    # Act
+    with inside_dir(git_repo):
+        result: Result = runner.invoke(
+            cli.cli,
+            [
+                "bump",
+                "-vv",
+                "--current-version",
+                "1.0.0",
+                f"--config-file={config_file}",
+                "minor",
+            ],
+        )
+
+    # Assert
+    if result.exit_code != 0:
+        print("Here is the output:")
+        print(result.output)
+        print(traceback.print_exception(result.exc_info[1]))
+
+    assert result.exit_code == 0
+    assert config_file.read_text() == config_contents
+    assert myfile.read_text() == "version = 1.1.0\n"

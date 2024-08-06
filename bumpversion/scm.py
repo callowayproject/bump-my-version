@@ -6,15 +6,15 @@ import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from typing import TYPE_CHECKING, ClassVar, List, MutableMapping, Optional, Type, Union
+from typing import TYPE_CHECKING, Any, ClassVar, Dict, List, MutableMapping, Optional, Type, Union
 
 from bumpversion.ui import get_indented_logger
-from bumpversion.utils import extract_regex_flags
+from bumpversion.utils import extract_regex_flags, format_and_raise_error, run_command
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
 
-from bumpversion.exceptions import BumpVersionError, DirtyWorkingDirectoryError, SignedTagsError
+from bumpversion.exceptions import DirtyWorkingDirectoryError, SignedTagsError
 
 logger = get_indented_logger(__name__)
 
@@ -29,6 +29,7 @@ class SCMInfo:
     current_version: Optional[str] = None
     branch_name: Optional[str] = None
     short_branch_name: Optional[str] = None
+    repository_root: Optional[Path] = None
     dirty: Optional[bool] = None
 
     def __str__(self):
@@ -37,10 +38,22 @@ class SCMInfo:
     def __repr__(self):
         tool_name = self.tool.__name__ if self.tool else "No SCM tool"
         return (
-            f"SCMInfo(tool={tool_name}, commit_sha={self.commit_sha}, "
-            f"distance_to_latest_tag={self.distance_to_latest_tag}, current_version={self.current_version}, "
+            f"SCMInfo(tool={tool_name}, "
+            f"commit_sha={self.commit_sha}, "
+            f"distance_to_latest_tag={self.distance_to_latest_tag}, "
+            f"current_version={self.current_version}, "
+            f"branch_name={self.branch_name}, "
+            f"short_branch_name={self.short_branch_name}, "
+            f"repository_root={self.repository_root}, "
             f"dirty={self.dirty})"
         )
+
+    def path_in_repo(self, path: Union[Path, str]) -> bool:
+        """Return whether a path is inside this repository."""
+        if self.repository_root is None:
+            return True
+
+        return str(path).startswith(str(self.repository_root))
 
 
 class SourceCodeManager:
@@ -71,7 +84,7 @@ class SourceCodeManager:
 
         try:
             cmd = [*cls._COMMIT_COMMAND, f.name, *extra_args]
-            subprocess.run(cmd, env=env, capture_output=True, check=True)  # noqa: S603
+            run_command(cmd, env=env)
         except (subprocess.CalledProcessError, TypeError) as exc:  # pragma: no-coverage
             cls.format_and_raise_error(exc)
         finally:
@@ -80,20 +93,13 @@ class SourceCodeManager:
     @classmethod
     def format_and_raise_error(cls, exc: Union[TypeError, subprocess.CalledProcessError]) -> None:
         """Format the error message from an exception and re-raise it as a BumpVersionError."""
-        if isinstance(exc, subprocess.CalledProcessError):
-            output = "\n".join([x for x in [exc.stdout.decode("utf8"), exc.stderr.decode("utf8")] if x])
-            cmd = " ".join(exc.cmd)
-            err_msg = f"Failed to run `{cmd}`: return code {exc.returncode}, output: {output}"
-        else:  # pragma: no-coverage
-            err_msg = f"Failed to run {cls._COMMIT_COMMAND}: {exc}"
-        logger.exception(err_msg)
-        raise BumpVersionError(err_msg) from exc
+        format_and_raise_error(exc)
 
     @classmethod
     def is_usable(cls) -> bool:
         """Is the VCS implementation usable."""
         try:
-            result = subprocess.run(cls._TEST_USABLE_COMMAND, check=True, capture_output=True)  # noqa: S603
+            result = run_command(cls._TEST_USABLE_COMMAND)
             return result.returncode == 0
         except (FileNotFoundError, PermissionError, NotADirectoryError, subprocess.CalledProcessError):
             return False
@@ -122,7 +128,7 @@ class SourceCodeManager:
     def get_all_tags(cls) -> List[str]:
         """Return all tags in VCS."""
         try:
-            result = subprocess.run(cls._ALL_TAGS_COMMAND, text=True, check=True, capture_output=True)  # noqa: S603
+            result = run_command(cls._ALL_TAGS_COMMAND)
             return result.stdout.splitlines()
         except (FileNotFoundError, PermissionError, NotADirectoryError, subprocess.CalledProcessError):
             return []
@@ -238,24 +244,48 @@ class Git(SourceCodeManager):
         """Assert that the working directory is not dirty."""
         lines = [
             line.strip()
-            for line in subprocess.check_output(["git", "status", "--porcelain"]).splitlines()  # noqa: S603, S607
-            if not line.strip().startswith(b"??")
+            for line in run_command(["git", "status", "--porcelain"]).stdout.splitlines()
+            if not line.strip().startswith("??")
         ]
-
-        if lines:
-            joined_lines = b"\n".join(lines).decode()
+        if joined_lines := "\n".join(lines):
             raise DirtyWorkingDirectoryError(f"Git working directory is not clean:\n\n{joined_lines}")
 
     @classmethod
     def latest_tag_info(cls, tag_name: str, parse_pattern: str) -> SCMInfo:
         """Return information about the latest tag."""
+        if not cls.is_usable():
+            return SCMInfo()
+
+        info: Dict[str, Any] = {"tool": cls}
+
         try:
             # git-describe doesn't update the git-index, so we do that
-            subprocess.run(["git", "update-index", "--refresh", "-q"], capture_output=True)  # noqa: S603, S607
+            run_command(["git", "update-index", "--refresh", "-q"])
         except subprocess.CalledProcessError as e:
             logger.debug("Error when running git update-index: %s", e.stderr)
-            return SCMInfo(tool=cls)
+
+        commit_info = cls._commit_info(parse_pattern, tag_name)
+        rev_info = cls._revision_info()
+        info.update(commit_info)
+        info.update(rev_info)
+
+        return SCMInfo(**info)
+
+    @classmethod
+    def _commit_info(cls, parse_pattern: str, tag_name: str) -> dict:
+        """
+        Get the commit info for the repo.
+
+        Args:
+            parse_pattern: The regular expression pattern used to parse the version from the tag.
+            tag_name: The tag name format used to locate the latest tag.
+
+        Returns:
+            A dictionary containing information about the latest commit.
+        """
         tag_pattern = tag_name.replace("{new_version}", "*")
+        info = dict.fromkeys(["dirty", "commit_sha", "distance_to_latest_tag", "current_version"])
+        info["distance_to_latest_tag"] = 0
         try:
             # get info about the latest tag in git
             git_cmd = [
@@ -267,36 +297,65 @@ class Git(SourceCodeManager):
                 "--abbrev=40",
                 f"--match={tag_pattern}",
             ]
-            result = subprocess.run(git_cmd, text=True, check=True, capture_output=True)  # noqa: S603
+            result = run_command(git_cmd)
             describe_out = result.stdout.strip().split("-")
+            if describe_out[-1].strip() == "dirty":
+                info["dirty"] = True
+                describe_out.pop()
+            else:
+                info["dirty"] = False
 
-            git_cmd = ["git", "rev-parse", "--abbrev-ref", "HEAD"]
-            result = subprocess.run(git_cmd, text=True, check=True, capture_output=True)  # noqa: S603
-            branch_name = result.stdout.strip()
-            short_branch_name = re.sub(r"([^a-zA-Z0-9]*)", "", branch_name).lower()[:20]
+            info["commit_sha"] = describe_out.pop().lstrip("g")
+            info["distance_to_latest_tag"] = int(describe_out.pop())
+            version = cls.get_version_from_tag("-".join(describe_out), tag_name, parse_pattern)
+            info["current_version"] = version or "-".join(describe_out).lstrip("v")
         except subprocess.CalledProcessError as e:
             logger.debug("Error when running git describe: %s", e.stderr)
-            return SCMInfo(tool=cls)
 
-        info = SCMInfo(tool=cls, branch_name=branch_name, short_branch_name=short_branch_name)
+        return info
 
-        if describe_out[-1].strip() == "dirty":
-            info.dirty = True
-            describe_out.pop()
-        else:
-            info.dirty = False
+    @classmethod
+    def _revision_info(cls) -> dict:
+        """
+        Returns a dictionary containing revision information.
 
-        info.commit_sha = describe_out.pop().lstrip("g")
-        info.distance_to_latest_tag = int(describe_out.pop())
-        version = cls.get_version_from_tag("-".join(describe_out), tag_name, parse_pattern)
-        info.current_version = version or "-".join(describe_out).lstrip("v")
+        If an error occurs while running the git command, the dictionary values will be set to None.
+
+        Returns:
+            A dictionary with the following keys:
+                - branch_name: The name of the current branch.
+                - short_branch_name: A 20 lowercase characters of the branch name with special characters removed.
+                - repository_root: The root directory of the Git repository.
+        """
+        info = dict.fromkeys(["branch_name", "short_branch_name", "repository_root"])
+
+        try:
+            git_cmd = ["git", "rev-parse", "--show-toplevel", "--abbrev-ref", "HEAD"]
+            result = run_command(git_cmd)
+            lines = [line.strip() for line in result.stdout.split("\n")]
+            repository_root = Path(lines[0])
+            branch_name = lines[1]
+            short_branch_name = re.sub(r"([^a-zA-Z0-9]*)", "", branch_name).lower()[:20]
+            info["branch_name"] = branch_name
+            info["short_branch_name"] = short_branch_name
+            info["repository_root"] = repository_root
+        except subprocess.CalledProcessError as e:
+            logger.debug("Error when running git rev-parse: %s", e.stderr)
 
         return info
 
     @classmethod
     def add_path(cls, path: Union[str, Path]) -> None:
         """Add a path to the VCS."""
-        subprocess.check_output(["git", "add", "--update", str(path)])  # noqa: S603, S607
+        info = SCMInfo(**cls._revision_info())
+        if not info.path_in_repo(path):
+            return
+        cwd = Path.cwd()
+        temp_path = os.path.relpath(path, cwd)
+        try:
+            run_command(["git", "add", "--update", str(temp_path)])
+        except subprocess.CalledProcessError as e:
+            format_and_raise_error(e)
 
     @classmethod
     def tag(cls, name: str, sign: bool = False, message: Optional[str] = None) -> None:
@@ -304,7 +363,7 @@ class Git(SourceCodeManager):
         Create a tag of the new_version in VCS.
 
         If only name is given, bumpversion uses a lightweight tag.
-        Otherwise, it utilizes an annotated tag.
+        Otherwise, it uses an annotated tag.
 
         Args:
             name: The name of the tag
@@ -316,7 +375,7 @@ class Git(SourceCodeManager):
             command += ["--sign"]
         if message:
             command += ["--message", message]
-        subprocess.check_output(command)  # noqa: S603
+        run_command(command)
 
 
 class Mercurial(SourceCodeManager):
@@ -331,19 +390,14 @@ class Mercurial(SourceCodeManager):
         """Return information about the latest tag."""
         current_version = None
         re_pattern = tag_name.replace("{new_version}", ".*")
-        result = subprocess.run(
-            ["hg", "log", "-r", f"tag('re:{re_pattern}')", "--template", "{latesttag}\n"],  # noqa: S603, S607
-            text=True,
-            check=True,
-            capture_output=True,
-        )
+        result = run_command(["hg", "log", "-r", f"tag('re:{re_pattern}')", "--template", "{latesttag}\n"])
         result.check_returncode()
         if result.stdout:
             tag_string = result.stdout.splitlines(keepends=False)[-1]
             current_version = cls.get_version_from_tag(tag_string, tag_name, parse_pattern)
         else:
             logger.debug("No tags found")
-        is_dirty = len(subprocess.check_output(["hg", "status", "-mard"])) != 0  # noqa: S603, S607
+        is_dirty = len(run_command(["hg", "status", "-mard"]).stdout) != 0
         return SCMInfo(tool=cls, current_version=current_version, dirty=is_dirty)
 
     @classmethod
@@ -351,12 +405,12 @@ class Mercurial(SourceCodeManager):
         """Assert that the working directory is clean."""
         lines = [
             line.strip()
-            for line in subprocess.check_output(["hg", "status", "-mard"]).splitlines()  # noqa: S603, S607
-            if not line.strip().startswith(b"??")
+            for line in run_command(["hg", "status", "-mard"]).stdout.splitlines()
+            if not line.strip().startswith("??")
         ]
 
         if lines:
-            joined_lines = b"\n".join(lines).decode()
+            joined_lines = "\n".join(lines)
             raise DirtyWorkingDirectoryError(f"Mercurial working directory is not clean:\n{joined_lines}")
 
     @classmethod
@@ -370,7 +424,7 @@ class Mercurial(SourceCodeManager):
         Create a tag of the new_version in VCS.
 
         If only name is given, bumpversion uses a lightweight tag.
-        Otherwise, it utilizes an annotated tag.
+        Otherwise, it uses an annotated tag.
 
         Args:
             name: The name of the tag
@@ -385,7 +439,7 @@ class Mercurial(SourceCodeManager):
             raise SignedTagsError("Mercurial does not support signed tags.")
         if message:
             command += ["--message", message]
-        subprocess.check_output(command)  # noqa: S603
+        run_command(command)
 
 
 def get_scm_info(tag_name: str, parse_pattern: str) -> SCMInfo:

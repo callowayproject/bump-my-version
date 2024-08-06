@@ -129,6 +129,11 @@ def update_config_file(
         logger.info("\n%sProcessing config file: %s", logger.indent_str, config_file)
     logger.indent()
     config_path = Path(config_file)
+
+    if config.scm_info.tool and not config.scm_info.path_in_repo(config_path):
+        logger.info("\n%sConfiguration file is outside of the repo. Not going to change.", logger.indent_str)
+        return
+
     if config_path.suffix != ".toml":
         logger.info("You must have a `.toml` suffix to update the config file: %s.", config_path)
         return

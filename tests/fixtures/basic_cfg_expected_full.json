@@ -129,6 +129,7 @@
     "current_version": null,
     "dirty": null,
     "distance_to_latest_tag": 0,
+    "repository_root": null,
     "short_branch_name": null,
     "tool": null
   },
