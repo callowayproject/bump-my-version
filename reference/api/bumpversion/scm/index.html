@@ -2234,7 +2234,7 @@
 
       <p>Create a tag of the new_version in VCS.</p>
 <p>If only name is given, bumpversion uses a lightweight tag.
-Otherwise, it utilizes an annotated tag.</p>
+Otherwise, it uses an annotated tag.</p>
 
 
 
@@ -2412,7 +2412,7 @@ Otherwise, it utilizes an annotated tag.</p>
 
       <p>Create a tag of the new_version in VCS.</p>
 <p>If only name is given, bumpversion uses a lightweight tag.
-Otherwise, it utilizes an annotated tag.</p>
+Otherwise, it uses an annotated tag.</p>
 
 
 
@@ -2499,6 +2499,7 @@ Otherwise, it utilizes an annotated tag.</p>
     <span class="n">current_version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">branch_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">short_branch_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">repository_root</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">dirty</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -2519,7 +2520,26 @@ Otherwise, it utilizes an annotated tag.</p>
 
 
 
+<h4 id="bumpversion.scm.SCMInfo-functions">Functions<a href="#bumpversion.scm.SCMInfo-functions" class="headerlink" title="Permanent link">&para;</a></h4>
 
+<div class="doc doc-object doc-function">
+
+
+<h5 id="bumpversion.scm.SCMInfo.path_in_repo" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">path_in_repo</span>
+
+
+<a href="#bumpversion.scm.SCMInfo.path_in_repo" class="headerlink" title="Permanent link">&para;</a></h5>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">path_in_repo</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Return whether a path is inside this repository.</p>
+
+    </div>
+
+</div>
 
 
 
@@ -2891,7 +2911,7 @@ Otherwise, it utilizes an annotated tag.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 4, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 6, 2024</span>
   </span>
 
     
