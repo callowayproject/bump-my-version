@@ -6,7 +6,7 @@ import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from typing import TYPE_CHECKING, ClassVar, List, MutableMapping, Optional, Type, Union
+from typing import TYPE_CHECKING, Any, ClassVar, Dict, List, MutableMapping, Optional, Type, Union
 
 from bumpversion.ui import get_indented_logger
 from bumpversion.utils import extract_regex_flags, run_command
@@ -51,7 +51,7 @@ class SCMInfo:
     def path_in_repo(self, path: Union[Path, str]) -> bool:
         """Return whether a path is inside this repository."""
         if self.repository_root is None:
-            return False
+            return True
 
         return Path(path).is_relative_to(self.repository_root)
 
@@ -263,7 +263,7 @@ class Git(SourceCodeManager):
         if not cls.is_usable():
             return SCMInfo()
 
-        info = SCMInfo(tool=cls)
+        info: Dict[str, Any] = {"tool": cls}
 
         try:
             # git-describe doesn't update the git-index, so we do that
@@ -271,7 +271,28 @@ class Git(SourceCodeManager):
         except subprocess.CalledProcessError as e:
             logger.debug("Error when running git update-index: %s", e.stderr)
 
+        commit_info = cls._commit_info(parse_pattern, tag_name)
+        rev_info = cls._revision_info()
+        info |= commit_info
+        info |= rev_info
+
+        return SCMInfo(**info)
+
+    @classmethod
+    def _commit_info(cls, parse_pattern: str, tag_name: str) -> dict:
+        """
+        Get the commit info for the repo.
+
+        Args:
+            parse_pattern: The regular expression pattern used to parse the version from the tag.
+            tag_name: The tag name format used to locate the latest tag.
+
+        Returns:
+            A dictionary containing information about the latest commit.
+        """
         tag_pattern = tag_name.replace("{new_version}", "*")
+        info = dict.fromkeys(["dirty", "commit_sha", "distance_to_latest_tag", "current_version"])
+        info["distance_to_latest_tag"] = 0
         try:
             # get info about the latest tag in git
             git_cmd = [
@@ -286,17 +307,34 @@ class Git(SourceCodeManager):
             result = run_command(git_cmd)
             describe_out = result.stdout.strip().split("-")
             if describe_out[-1].strip() == "dirty":
-                info.dirty = True
+                info["dirty"] = True
                 describe_out.pop()
             else:
-                info.dirty = False
+                info["dirty"] = False
 
-            info.commit_sha = describe_out.pop().lstrip("g")
-            info.distance_to_latest_tag = int(describe_out.pop())
+            info["commit_sha"] = describe_out.pop().lstrip("g")
+            info["distance_to_latest_tag"] = int(describe_out.pop())
             version = cls.get_version_from_tag("-".join(describe_out), tag_name, parse_pattern)
-            info.current_version = version or "-".join(describe_out).lstrip("v")
+            info["current_version"] = version or "-".join(describe_out).lstrip("v")
         except subprocess.CalledProcessError as e:
             logger.debug("Error when running git describe: %s", e.stderr)
+
+        return info
+
+    @classmethod
+    def _revision_info(cls) -> dict:
+        """
+        Returns a dictionary containing revision information.
+
+        If an error occurs while running the git command, the dictionary values will be set to None.
+
+        Returns:
+            A dictionary with the following keys:
+                - branch_name: The name of the current branch.
+                - short_branch_name: A 20 lowercase characters of the branch name with special characters removed.
+                - repository_root: The root directory of the Git repository.
+        """
+        info = dict.fromkeys(["branch_name", "short_branch_name", "repository_root"])
 
         try:
             git_cmd = ["git", "rev-parse", "--show-toplevel", "--abbrev-ref", "HEAD"]
@@ -305,9 +343,9 @@ class Git(SourceCodeManager):
             repository_root = Path(lines[0])
             branch_name = lines[1]
             short_branch_name = re.sub(r"([^a-zA-Z0-9]*)", "", branch_name).lower()[:20]
-            info.branch_name = branch_name
-            info.short_branch_name = short_branch_name
-            info.repository_root = repository_root
+            info["branch_name"] = branch_name
+            info["short_branch_name"] = short_branch_name
+            info["repository_root"] = repository_root
         except subprocess.CalledProcessError as e:
             logger.debug("Error when running git rev-parse: %s", e.stderr)
 
@@ -316,7 +354,9 @@ class Git(SourceCodeManager):
     @classmethod
     def add_path(cls, path: Union[str, Path]) -> None:
         """Add a path to the VCS."""
-        run_command(["git", "add", "--update", str(path)])
+        info = SCMInfo(**cls._revision_info())
+        if info.path_in_repo(path):
+            run_command(["git", "add", "--update", str(path)])
 
     @classmethod
     def tag(cls, name: str, sign: bool = False, message: Optional[str] = None) -> None:

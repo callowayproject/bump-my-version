@@ -2,7 +2,7 @@
 
 import shlex
 from pathlib import Path
-from typing import TYPE_CHECKING, ChainMap, List, Optional
+from typing import TYPE_CHECKING, List, MutableMapping, Optional
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.files import ConfiguredFile
@@ -117,7 +117,7 @@ def commit_and_tag(
     config: Config,
     config_file: Optional[Path],
     configured_files: List["ConfiguredFile"],
-    ctx: ChainMap,
+    ctx: MutableMapping,
     dry_run: bool = False,
 ) -> None:
     """
