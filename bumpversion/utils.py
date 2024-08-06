@@ -103,7 +103,7 @@ def set_nested_value(d: dict, value: Any, path: str) -> None:
             current_element = current_element[key]
 
 
-def run_command(command: list, env: Optional[dict] = None) -> CompletedProcess[str]:
+def run_command(command: list, env: Optional[dict] = None) -> CompletedProcess:
     """Run a shell command and return its output."""
     result = subprocess.run(command, text=True, check=True, capture_output=True, env=env)  # NOQA: S603
     result.check_returncode()
