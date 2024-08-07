@@ -52,6 +52,8 @@ class SCMInfo:
         """Return whether a path is inside this repository."""
         if self.repository_root is None:
             return True
+        elif not Path(path).is_absolute():
+            return True
 
         return str(path).startswith(str(self.repository_root))
 

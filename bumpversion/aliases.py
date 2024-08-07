@@ -16,7 +16,7 @@ class AliasedGroup(RichGroup):
     If there were a command called ``push``, it would accept ``pus`` as an alias (so long as it was unique)
     """
 
-    def get_command(self, ctx: Context, cmd_name: str) -> Optional[click.Command]:
+    def get_command(self, ctx: Context, cmd_name: str) -> Optional[click.Command]:  # type: ignore[return]
         """Given a context and a command name, this returns a Command object if it exists or returns None."""
         rv = click.Group.get_command(self, ctx, cmd_name)
         if rv is not None:
