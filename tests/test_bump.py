@@ -11,6 +11,7 @@ from bumpversion import bump
 from bumpversion.exceptions import ConfigurationError, VersionNotFoundError
 from bumpversion.files import ConfiguredFile
 from bumpversion.scm import Git, SCMInfo
+from bumpversion.utils import run_command
 from tests.conftest import get_config_data, inside_dir
 
 
@@ -351,5 +352,85 @@ def test_key_path_required_for_toml_change(tmp_path: Path, caplog):
         [tool.othertool]
         bake_cookies = true
         ignore-words-list = "sugar, salt, flour"
+        """
+    )
+
+
+def test_changes_to_files_are_committed(git_repo: Path, caplog):
+    """Any files changed during the bump are committed."""
+    from bumpversion import config
+
+    # Arrange
+    config_path = git_repo / ".bumpversion.toml"
+    config_path.write_text(
+        dedent(
+            """
+            [tool.bumpversion]
+            current_version = "0.1.26"
+            allow_dirty = true
+            commit = true
+
+            [[tool.bumpversion.files]]
+            filename = "helm/charts/somechart/Chart.yaml"
+
+            """
+        ),
+        encoding="utf-8",
+    )
+    chart_path = git_repo / "helm" / "charts" / "somechart" / "Chart.yaml"
+
+    chart_path.parent.mkdir(parents=True, exist_ok=True)
+    chart_path.write_text(
+        dedent(
+            """
+            appVersion: 0.1.26
+            version: 0.1.26
+
+            """
+        )
+    )
+
+    with inside_dir(git_repo):
+        run_command(["git", "add", str(chart_path), str(config_path)])
+        run_command(["git", "commit", "-m", "Initial commit"])
+
+    # Act
+    from click.testing import CliRunner, Result
+    from bumpversion import cli
+
+    runner: CliRunner = CliRunner()
+    with inside_dir(git_repo):
+        result: Result = runner.invoke(
+            cli.cli,
+            ["bump", "-vv", "minor"],
+        )
+
+    if result.exit_code != 0:
+        print(caplog.text)
+        print("Here is the output:")
+        print(result.output)
+        import traceback
+
+        print(traceback.print_exception(result.exc_info[1]))
+
+    # Assert
+    assert result.exit_code == 0
+    assert config_path.read_text() == dedent(
+        """
+        [tool.bumpversion]
+        current_version = "0.2.0"
+        allow_dirty = true
+        commit = true
+
+        [[tool.bumpversion.files]]
+        filename = "helm/charts/somechart/Chart.yaml"
+
+        """
+    )
+    assert chart_path.read_text() == dedent(
+        """
+        appVersion: 0.2.0
+        version: 0.2.0
+
         """
     )
