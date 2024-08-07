@@ -367,7 +367,7 @@ def test_changes_to_files_are_committed(git_repo: Path, caplog):
             """
             [tool.bumpversion]
             current_version = "0.1.26"
-            allow_dirty = true
+            tag_name = "{new_version}"
             commit = true
 
             [[tool.bumpversion.files]]
@@ -394,6 +394,7 @@ def test_changes_to_files_are_committed(git_repo: Path, caplog):
     with inside_dir(git_repo):
         run_command(["git", "add", str(chart1_path), str(chart2_path), str(config_path)])
         run_command(["git", "commit", "-m", "Initial commit"])
+        run_command(["git", "tag", "0.1.26"])
 
     # Act
     from click.testing import CliRunner, Result
@@ -420,7 +421,7 @@ def test_changes_to_files_are_committed(git_repo: Path, caplog):
         """
         [tool.bumpversion]
         current_version = "0.2.0"
-        allow_dirty = true
+        tag_name = "{new_version}"
         commit = true
 
         [[tool.bumpversion.files]]
@@ -442,3 +443,6 @@ def test_changes_to_files_are_committed(git_repo: Path, caplog):
 
         """
     )
+    with inside_dir(git_repo):
+        status = run_command(["git", "status", "--porcelain"])
+        assert status.stdout == ""
