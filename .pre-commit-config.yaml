@@ -1,13 +1,13 @@
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
-    rev: 'v0.5.5'
+    rev: 'v0.5.6'
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
         exclude: test.*
   - repo: https://github.com/psf/black
-    rev: 24.4.2
+    rev: 24.8.0
     hooks:
       - id: black
   - repo: https://github.com/codespell-project/codespell
@@ -50,7 +50,7 @@ repos:
         args: ['--baseline', '.secrets.baseline']
         additional_dependencies: ["gibberish-detector"]
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.11.0
+    rev: v1.11.1
     hooks:
       - id: mypy
         args: [--no-strict-optional, --ignore-missing-imports]
