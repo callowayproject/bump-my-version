@@ -371,27 +371,28 @@ def test_changes_to_files_are_committed(git_repo: Path, caplog):
             commit = true
 
             [[tool.bumpversion.files]]
-            filename = "helm/charts/somechart/Chart.yaml"
+            glob = "helm/charts/*/Chart.yaml"
 
             """
         ),
         encoding="utf-8",
     )
-    chart_path = git_repo / "helm" / "charts" / "somechart" / "Chart.yaml"
+    chart_contents = dedent(
+        """
+        appVersion: 0.1.26
+        version: 0.1.26
 
-    chart_path.parent.mkdir(parents=True, exist_ok=True)
-    chart_path.write_text(
-        dedent(
-            """
-            appVersion: 0.1.26
-            version: 0.1.26
-
-            """
-        )
+        """
     )
+    chart1_path = git_repo / "helm" / "charts" / "somechart" / "Chart.yaml"
+    chart2_path = git_repo / "helm" / "charts" / "otherchart" / "Chart.yaml"
+    chart1_path.parent.mkdir(parents=True, exist_ok=True)
+    chart1_path.write_text(chart_contents, encoding="utf-8")
+    chart2_path.parent.mkdir(parents=True, exist_ok=True)
+    chart2_path.write_text(chart_contents, encoding="utf-8")
 
     with inside_dir(git_repo):
-        run_command(["git", "add", str(chart_path), str(config_path)])
+        run_command(["git", "add", str(chart1_path), str(chart2_path), str(config_path)])
         run_command(["git", "commit", "-m", "Initial commit"])
 
     # Act
@@ -423,11 +424,18 @@ def test_changes_to_files_are_committed(git_repo: Path, caplog):
         commit = true
 
         [[tool.bumpversion.files]]
-        filename = "helm/charts/somechart/Chart.yaml"
+        glob = "helm/charts/*/Chart.yaml"
 
         """
     )
-    assert chart_path.read_text() == dedent(
+    assert chart1_path.read_text() == dedent(
+        """
+        appVersion: 0.2.0
+        version: 0.2.0
+
+        """
+    )
+    assert chart2_path.read_text() == dedent(
         """
         appVersion: 0.2.0
         version: 0.2.0
