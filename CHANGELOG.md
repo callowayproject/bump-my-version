@@ -1,5 +1,33 @@
 # Changelog
 
+## Unreleased (2024-08-08)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.25.1...HEAD)
+
+### Fixes
+
+- Fix JSON serialization. [d3f3022](https://github.com/callowayproject/bump-my-version/commit/d3f3022bd4c8b8d6e41fa7b5b6ccfc2aa6cf7878)
+    
+  Extended the default_encoder function to handle Path objects by converting them to their string representation. This ensures that Path objects can be properly serialized to JSON format.
+
+## 0.25.1 (2024-08-07)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.25.0...0.25.1)
+
+### Fixes
+
+- Fixes mypy pre-commit checking. [f7d0909](https://github.com/callowayproject/bump-my-version/commit/f7d0909deb8d0cf06607c4d51090ca23f7d92664)
+    
+- Fixes repository path checks. [ff3f72a](https://github.com/callowayproject/bump-my-version/commit/ff3f72a9a922dfbb61eea9325fc9dba7c12c7f62)
+    
+  Checked for relative paths when determining if the file was part of the repo or not.
+- Fixed test to use globs. [72f9841](https://github.com/callowayproject/bump-my-version/commit/72f9841a9628e26c6cf06518b0428d3990a08421)
+    
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [58cc73e](https://github.com/callowayproject/bump-my-version/commit/58cc73ed041f978fddd9f81e995901596f6ac722)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.5.5 → v0.5.6](https://github.com/astral-sh/ruff-pre-commit/compare/v0.5.5...v0.5.6)
+
+
 ## 0.25.0 (2024-08-06)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.24.3...0.25.0)
 
