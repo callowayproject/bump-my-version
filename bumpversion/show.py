@@ -2,6 +2,7 @@
 
 import dataclasses
 from io import StringIO
+from pathlib import Path
 from pprint import pprint
 from typing import Any, Optional
 
@@ -39,6 +40,8 @@ def output_json(value: dict) -> None:
             return str(obj)
         elif isinstance(obj, type):
             return obj.__name__
+        elif isinstance(obj, Path):
+            return str(obj)
         raise TypeError(f"Object of type {type(obj), str(obj)} is not JSON serializable")
 
     print_info(json.dumps(value, sort_keys=True, indent=2, default=default_encoder))
