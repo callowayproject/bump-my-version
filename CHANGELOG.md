@@ -1,7 +1,7 @@
 # Changelog
 
-## Unreleased (2024-08-08)
-[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.25.1...HEAD)
+## 0.25.2 (2024-08-11)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.25.1...0.25.2)
 
 ### Fixes
 
