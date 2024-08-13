@@ -1,7 +1,7 @@
 """Tests for the ConfiguredFile class."""
 
 from bumpversion.files import ConfiguredFile, FileChange
-from bumpversion.version_part import VersionConfig
+from bumpversion.versioning.version_config import VersionConfig
 from bumpversion.versioning.models import VersionComponentSpec
 
 
