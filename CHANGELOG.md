@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.25.3 (2024-08-13)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.25.2...0.25.3)
+
+### Fixes
+
+- Refactor version parsing in visualize function. [5f25300](https://github.com/callowayproject/bump-my-version/commit/5f25300b007cee294a43af64eb970e3e100931a8)
+    
+  Simplify the version parsing process by utilizing the raise_error parameter in the parse method, removing the need for a separate error check. This change ensures that parsing errors are immediately raised and handled cleanly within the visualize function.
+- Refactor and rename `version_part` to `versioning.version_config`. [5b90817](https://github.com/callowayproject/bump-my-version/commit/5b90817e6210f983c691bd06008afa065c961c4f)
+    
+  Moved `version_part.py` to `versioning/version_config.py` and updated all import statements accordingly. Enhanced error handling in `VersionConfig` by adding `raise_error` flag and relevant exception raising for invalid version strings. Refined tests to reflect these changes.
+- Fix version visualization and add verbose logging. [ad46978](https://github.com/callowayproject/bump-my-version/commit/ad469783c0507bf7e4160cf131d2b73b494c52e8)
+    
+  Raise an exception for unparsable versions and aggregate visualization output in a list before printing. Add a verbose logging option to the `show_bump` command for detailed logging control.
+
 ## 0.25.2 (2024-08-11)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.25.1...0.25.2)
 
