@@ -47,5 +47,5 @@ for path in sorted(package_root.rglob("*.py")):
 
     mkdocs_gen_files.set_edit_path(full_doc_path, path)
 
-with mkdocs_gen_files.open("reference/api/SUMMARY.md", "w") as nav_file:
+with mkdocs_gen_files.open("reference/api/nav.md", "w") as nav_file:
     nav_file.writelines(nav.build_literate_nav())

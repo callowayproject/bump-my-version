@@ -58,22 +58,22 @@ These fields will only have values if the code is in a Git or Mercurial reposito
     `current_version`
     : The current version serialized as a string
     
-    `current_<version part>`
-    : Each version part defined by the [version configuration parsing regular expression](version-parts.md#version-configuration). The default configuration would have `current_major`, `current_minor`, and `current_patch` available.
+    `current_<version component>`
+    : Each version component defined by the [version configuration parsing regular expression](configuration/global.md#parse). The default configuration would have `current_major`, `current_minor`, and `current_patch` available.
     
     `new_version`
     : The new version serialized as a string
     
-    `new_<version part>`
-    : Each version part defined by the [version configuration parsing regular expression](version-parts.md#version-configuration). The default configuration would have `new_major`, `new_minor`, and `new_patch` available.
+    `new_<version component>`
+    : Each version component defined by the [version configuration parsing regular expression](configuration/global.md#parse). The default configuration would have `new_major`, `new_minor`, and `new_patch` available.
 
 !!! note
 
     The following fields are only available when serializing a version.
 
 ::: field-list
-    `<version part>`
-    : Each version part defined by the [version configuration parsing regular expression](version-parts.md#version-configuration). The default configuration would have `major`, `minor`, and `patch` available.
+    `<version component>`
+    : Each version part defined by the [version configuration parsing regular expression](configuration/global.md#parse). The default configuration would have `major`, `minor`, and `patch` available.
 
 ## Environment variables
 

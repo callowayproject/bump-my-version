@@ -1,4 +1,4 @@
-# Version parts
+# Version components
 
 - The version string is the rendering of some or all version parts.
 - While the version string may be rendered differently in various places, the value for all parts is maintained in Bump My Version's configuration.
