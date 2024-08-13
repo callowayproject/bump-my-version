@@ -110,9 +110,7 @@ def filter_version_parts(config: Config) -> List[str]:
 
 def visualize(config: Config, version_str: str, box_style: str = "light") -> None:
     """Output a visualization of the bump-my-version bump process."""
-    version = config.version_config.parse(version_str)
-    if version is None:
-        raise BumpVersionError(f"Unable to parse version {version_str}")
+    version = config.version_config.parse(version_str, raise_error=True)
     version_parts = filter_version_parts(config)
     num_parts = len(version_parts)
 
