@@ -17,7 +17,7 @@ from bumpversion.config.models import FileChange
 from bumpversion.context import get_context
 from bumpversion.exceptions import VersionNotFoundError
 from bumpversion.ui import setup_logging, get_indented_logger
-from bumpversion.version_part import VersionConfig
+from bumpversion.versioning.version_config import VersionConfig
 from tests.conftest import get_config_data, inside_dir
 
 

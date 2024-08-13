@@ -5,6 +5,7 @@ from typing import Any, Dict, List, MutableMapping, Optional, Tuple
 
 from click import UsageError
 
+from bumpversion.exceptions import BumpVersionError
 from bumpversion.ui import get_indented_logger
 from bumpversion.utils import labels_for_format
 from bumpversion.versioning.models import Version, VersionComponentSpec, VersionSpec
@@ -29,7 +30,7 @@ class VersionConfig:
         try:
             self.parse_regex = re.compile(parse, re.VERBOSE)
         except re.error as e:
-            raise UsageError(f"--parse '{parse}' is not a valid regex.") from e
+            raise UsageError(f"'{parse}' is not a valid regex.") from e
 
         self.serialize_formats = serialize
         self.part_configs = part_configs or {}
@@ -38,7 +39,7 @@ class VersionConfig:
         self.search = search
         self.replace = replace
 
-    def __repr__(self) -> str:
+    def __repr__(self) -> str:  # pragma: no-coverage
         return f"<bumpversion.VersionConfig:{self.parse_regex.pattern}:{self.serialize_formats}>"
 
     def __eq__(self, other: Any) -> bool:
@@ -63,19 +64,25 @@ class VersionConfig:
         """
         return labels_for_format(self.serialize_formats[0])
 
-    def parse(self, version_string: Optional[str] = None) -> Optional[Version]:
+    def parse(self, version_string: Optional[str] = None, raise_error: bool = False) -> Optional[Version]:
         """
         Parse a version string into a Version object.
 
         Args:
             version_string: Version string to parse
+            raise_error: Raise an exception if a version string is invalid
 
         Returns:
             A Version object representing the string.
+
+        Raises:
+            BumpversionException: If a version string is invalid and raise_error is True.
         """
         parsed = parse_version(version_string, self.parse_regex.pattern)
 
-        if not parsed:
+        if not parsed and raise_error:
+            raise BumpVersionError(f"Unable to parse version {version_string} using {self.parse_regex.pattern}")
+        elif not parsed:
             return None
 
         version = self.version_spec.create_version(parsed)
