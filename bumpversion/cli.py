@@ -287,7 +287,7 @@ def bump(
     config = get_configuration(found_config_file, **overrides)
     if args:
         if args[0] not in config.parts.keys():
-            raise click.BadArgumentUsage(f"Unknown version part: {args[0]}")
+            raise click.BadArgumentUsage(f"Unknown version component: {args[0]}")
         version_part = args[0]
         files = args[1:]
     else:
@@ -335,7 +335,7 @@ def bump(
     required=False,
     envvar="BUMPVERSION_INCREMENT",
     type=str,
-    help="Increment the version part and add `new_version` to the configuration.",
+    help="Increment the version component and add `new_version` to the configuration.",
 )
 def show(args: List[str], config_file: Optional[str], format_: str, increment: Optional[str]) -> None:
     """

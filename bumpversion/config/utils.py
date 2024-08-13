@@ -13,7 +13,7 @@ from bumpversion.versioning.models import VersionComponentSpec
 
 
 def get_all_file_configs(config_dict: dict) -> List[FileChange]:
-    """Make sure all version parts are included."""
+    """Make sure all version components are included."""
     defaults = {
         "parse": config_dict["parse"],
         "serialize": config_dict["serialize"],
@@ -31,7 +31,7 @@ def get_all_file_configs(config_dict: dict) -> List[FileChange]:
 
 
 def get_all_part_configs(config_dict: dict) -> Dict[str, VersionComponentSpec]:
-    """Make sure all version parts are included."""
+    """Make sure all version components are included."""
     try:
         parsing_groups = list(re.compile(config_dict["parse"]).groupindex.keys())
     except re.error as e:
