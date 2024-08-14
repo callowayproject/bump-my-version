@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.25.4 (2024-08-14)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.25.3...0.25.4)
+
+### Fixes
+
+- Fixed terminology in tests. [0338da2](https://github.com/callowayproject/bump-my-version/commit/0338da2b674e3f960fd026485a9ddbb2648dff30)
+    
+  Updated test parameter and assertion messages to use "version component" instead of "version part" for clarity and consistency. This change affects the test cases that detect bad or missing version inputs.
+- Fixed documentation layout. [57958ea](https://github.com/callowayproject/bump-my-version/commit/57958eaed527447bd63e100c08763c8810e4dc8e)
+    
+- Fixed inconsistent terms in docstrings. [dfdf23e](https://github.com/callowayproject/bump-my-version/commit/dfdf23e04fe6a75341a8943f674c79897f5e0712)
+    
+  - Switched from using both version parts and version components to simply version components.
+### Updates
+
+- Updated documentation. [5aedd64](https://github.com/callowayproject/bump-my-version/commit/5aedd64391ffc6e49ec6cb4ddace847a31ff72fe)
+    
+- Removed old requirements. [ec95eef](https://github.com/callowayproject/bump-my-version/commit/ec95eef8ddef229eb84577cfac301bf92fd8eceb)
+    
+
 ## 0.25.3 (2024-08-13)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.25.2...0.25.3)
 
