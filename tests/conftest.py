@@ -42,7 +42,7 @@ def inside_dir(dirpath: Path) -> Generator:
 def get_config_data(overrides: dict) -> tuple:
     """Get the configuration, version_config and version."""
     from bumpversion import config
-    from bumpversion.version_part import VersionConfig
+    from bumpversion.versioning.version_config import VersionConfig
 
     conf = config.get_configuration(config_file="missing", **overrides)
     version_config = VersionConfig(conf.parse, conf.serialize, conf.search, conf.replace, conf.parts)

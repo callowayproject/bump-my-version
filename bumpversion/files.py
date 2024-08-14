@@ -11,8 +11,8 @@ from bumpversion.config.models import FileChange
 from bumpversion.exceptions import VersionNotFoundError
 from bumpversion.ui import get_indented_logger
 from bumpversion.utils import get_nested_value, set_nested_value
-from bumpversion.version_part import VersionConfig
 from bumpversion.versioning.models import Version, VersionComponentSpec
+from bumpversion.versioning.version_config import VersionConfig
 
 logger = get_indented_logger(__name__)
 
@@ -151,7 +151,7 @@ class ConfiguredFile:
             return True
 
         # The `search` pattern did not match, but the original supplied
-        # version number (representing the same version part values) might
+        # version number (representing the same version component values) might
         # match instead. This is probably the case if environment variables are used.
 
         # check whether `search` isn't customized

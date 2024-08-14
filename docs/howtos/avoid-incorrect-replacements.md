@@ -1,4 +1,4 @@
-# Avoiding incorrect replacements
+# Avoid incorrect replacements
 
 In files that have multiple version strings, Bump My Version may find the wrong string and replace it. Given this `requirements.txt` for `MyProject`:
 

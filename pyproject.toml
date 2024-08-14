@@ -68,7 +68,7 @@ docs = [
     "mkdocs-gen-files",
     "mkdocs-git-authors-plugin",
     "mkdocs-git-committers-plugin",
-    "mkdocs-git-revision-date-localized-plugin",
+    "mkdocs-git-revision-date-localized-plugin>=1.2.6",
     "mkdocs-include-markdown-plugin",
     "mkdocs-literate-nav",
     "mkdocs-material",
@@ -216,7 +216,7 @@ order-by-type = true
 convention = "google"
 
 [tool.bumpversion]
-current_version = "0.25.2"
+current_version = "0.25.3"
 commit = true
 commit_args = "--no-verify"
 tag = true

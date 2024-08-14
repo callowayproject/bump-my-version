@@ -2,6 +2,7 @@
 
 from freezegun import freeze_time
 
+from bumpversion import exceptions
 from bumpversion.versioning.models import VersionComponentSpec
 from bumpversion.versioning.models import VersionSpec
 import pytest
@@ -131,6 +132,34 @@ class TestSemVerVersion:
             assert minor_version_str == "1.3.0.4.6"
             assert major_version_str == "2.0.0.4.6"
             assert build_version_str == "1.2.3.5.6"
+
+        def test_invalid_component_raises_error(self, semver_version_spec: VersionSpec):
+            """If you bump a version with an invalid component name raises an error."""
+            version1 = semver_version_spec.create_version(
+                {"major": "1", "minor": "2", "patch": "3", "build": "4", "auto": "5"}
+            )
+            with pytest.raises(exceptions.InvalidVersionPartError, match="No part named 'bugfix'"):
+                version1.bump("bugfix")
+
+        def test_independent_component_is_independent(self, semver_version_spec: VersionSpec):
+            """An independent component can only get bumped independently."""
+            # Arrange
+            version1 = semver_version_spec.create_version(
+                {"major": "1", "minor": "2", "patch": "3", "build": "4", "auto": "5"}
+            )
+
+            # Act & Assert
+            build_version_bump = version1.bump("build")
+            assert build_version_bump["build"].value == "5"
+            assert build_version_bump["major"].value == "1"
+
+            major_version_bump = build_version_bump.bump("major")
+            assert major_version_bump["build"].value == "5"
+            assert major_version_bump["major"].value == "2"
+
+            build_version_bump2 = major_version_bump.bump("build")
+            assert build_version_bump2["build"].value == "6"
+            assert build_version_bump2["major"].value == "2"
 
     class TestRequiredComponents:
         """Tests of the required_keys function."""
