@@ -9,10 +9,6 @@
       
       
       
-        <link rel="prev" href="../custom-version-formats-by-file/">
-      
-      
-        <link rel="next" href="../update-a-date/">
       
       
       <link rel="icon" href="../../assets/favicon.png">
@@ -20,7 +16,7 @@
     
     
       
-        <title>Multiple replacements within the same file - Bump My Version</title>
+        <title>Nav - Bump My Version</title>
       
     
     
@@ -81,11 +77,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#multiple-replacements-within-the-same-file" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -117,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Multiple replacements within the same file
+              Nav
             
           </span>
         </div>
@@ -373,10 +364,8 @@
       
   
   
-    
   
   
-  
     
     
       
@@ -398,11 +387,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
@@ -416,7 +405,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             How Tos
@@ -490,19 +479,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../multiple-replacements/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -511,7 +491,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1809,7 +1788,7 @@
                   
 
   
-    <a href="https://github.com/callowayproject/bump-my-version/edit/master/docs/howtos/multiple-replacements.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/callowayproject/bump-my-version/edit/master/docs/howtos/nav.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
     </a>
@@ -1818,27 +1797,18 @@
     
       
     
-    <a href="https://github.com/callowayproject/bump-my-version/raw/master/docs/howtos/multiple-replacements.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/callowayproject/bump-my-version/raw/master/docs/howtos/nav.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
     </a>
   
 
 
-<h1 id="multiple-replacements-within-the-same-file">Multiple replacements within the same file<a class="headerlink" href="#multiple-replacements-within-the-same-file" title="Permanent link">&para;</a></h1>
-<p>To make several replacements in the same file, you must configure multiple <code>[[tool.bumpversion.files]]</code> sections for the same file with different configuration options.</p>
-<p>In this example, the changelog is generated before the version bump. It uses <code>Unreleased</code> as the heading and includes a link to GitHub to compare this version (<code>HEAD</code>) with the previous version.</p>
-<p>To change <code>Unreleased</code> to the current version, we have an entry with <code>search</code> set to <code>Unreleased</code>.  The default <code>replace</code> value is <code>{new_version}</code>, so changing it is unnecessary.</p>
-<p>To change the link, another entry has its <code>search</code> set to <code>{current_version}...HEAD</code> and the <code>replace</code> set to <code>{current_version}...{new_version}</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="k">[[tool.bumpversion.files]]</span>
-<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;CHANGELOG.md&quot;</span>
-<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Unreleased&quot;</span>
+  <h1>Nav</h1>
 
-<span class="k">[[tool.bumpversion.files]]</span>
-<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;CHANGELOG.md&quot;</span>
-<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;{current_version}...HEAD&quot;</span>
-<span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;{current_version}...{new_version}&quot;</span>
-</code></pre></div>
+<ul>
+<li>*.md</li>
+</ul>
 
 
 
@@ -1859,7 +1829,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">March 27, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 14, 2024</span>
   </span>
 
     
