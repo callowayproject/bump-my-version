@@ -1,5 +1,5 @@
 ---
-title: Version part configuration
+title: Version component-specific configuration
 description: Configuration options for a specific version part
 icon:
 date: 2024-08-11
