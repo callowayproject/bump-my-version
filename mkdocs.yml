@@ -10,15 +10,15 @@ theme:
   logo: assets/bump-my-version-logo.svg
   favicon: assets/favicon.png
   features:
-    - navigation.tabs
     - navigation.sections
     - navigation.path
     - navigation.indexes
-    - toc.integrate
+    - navigation.top
     - content.action.edit
     - content.action.view
     - content.code.annotate
     - content.tabs.link
+    - toc.integrate
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -74,7 +74,7 @@ plugins:
   - include-markdown
   - drawio
   - literate-nav:
-      nav_file: SUMMARY.md
+      nav_file: nav.md
   - gen-files:
       scripts:
         - docs/gen_doc_stubs.py
@@ -115,9 +115,11 @@ extra_css:
   - assets/css/cards.css
   - assets/css/field-list.css
 
-#nav:
-#  - General: "general/"
-#  - Provisioning LLMs for Applications: "provisioning-llms/"
-#  - Tutorials: "tutorials/"
-#  - Security & Privacy: "security-and-privacy/"
-#  - Guilds: "guilds/"
+nav:
+  - Home: "index.md"
+  - Tutorials: "tutorials/"
+  - How Tos: "howtos/"
+  - Reference: "reference/"
+  - Explanation: "explanation/"
+  - "CHANGELOG.md"
+  - "CONTRIBUTING.md"

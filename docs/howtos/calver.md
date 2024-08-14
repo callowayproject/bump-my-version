@@ -7,7 +7,6 @@ For this example, we will use the following format: `YYYY.MM.DD.patch`. It will 
 - `2022.2.1` for the first patch of February 1, 2022
 - `2022.2.1.1` for the second patch of February 1, 2022
 
-
 ## Initial configuration
 
 ```toml title=".bumpversion.toml"
@@ -31,7 +30,12 @@ You can look up the regular expressions for the CalVer format in the [CalVer ref
 
 ## Expected behavior
 
-You can find out more about the logic behind the CalVer incrementing in the [CalVer reference](../reference/calver_reference.md#calver-incrementing-logic).
+- CalVer version components are marked as `always_increment` by default.
+- When bumping a version, you specify which component to increment. It is called the target component.
+- When bumping a version, the components marked as `always_increment` are incremented first.
+- If an `always_increment` component's value changed, its dependent components are marked for reset to their default values.
+- If the target component is in the set of components marked for reset, the target component is reset to its default value.
+- If the target component is not in the set of components marked for reset, the target component is incremented and its dependent components are reset to their default values.
 
 ### Bumping the release resets the patch part
 

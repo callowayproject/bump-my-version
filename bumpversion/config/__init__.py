@@ -70,7 +70,7 @@ def get_configuration(config_file: Union[str, Path, None] = None, **overrides: A
     parsed_config = read_config_file(config_file) if config_file else {}
     config_dict = set_config_defaults(parsed_config, **overrides)
 
-    # Set any missing version parts
+    # Set any missing version components
     config_dict["parts"] = get_all_part_configs(config_dict)
 
     # Set any missing file configuration

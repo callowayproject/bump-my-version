@@ -151,7 +151,7 @@ class ConfiguredFile:
             return True
 
         # The `search` pattern did not match, but the original supplied
-        # version number (representing the same version part values) might
+        # version number (representing the same version component values) might
         # match instead. This is probably the case if environment variables are used.
 
         # check whether `search` isn't customized

@@ -195,11 +195,11 @@ def test_non_scm_operations_if_scm_not_installed(tmp_path: Path, monkeypatch, ru
 @pytest.mark.parametrize(
     ["version_part"],
     [
-        param("charlie", id="bad_version_part"),
-        param("", id="missing_version_part"),
+        param("charlie", id="bad_version_component"),
+        param("", id="missing_version_component"),
     ],
 )
-def test_detects_bad_or_missing_version_part(version_part: str, tmp_path: Path, monkeypatch, runner):
+def test_detects_bad_or_missing_version_component(version_part: str, tmp_path: Path, monkeypatch, runner):
     """It properly detects bad or missing version part."""
     # Arrange
     monkeypatch.setenv("PATH", "")
@@ -217,7 +217,7 @@ def test_detects_bad_or_missing_version_part(version_part: str, tmp_path: Path, 
 
     # Assert
     assert result.exception is not None
-    assert "Unknown version part:" in result.stdout
+    assert "Unknown version component:" in result.stdout
 
 
 def test_ignores_missing_files_with_option(tmp_path, fixtures_path, runner):

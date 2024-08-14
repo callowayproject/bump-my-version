@@ -92,7 +92,7 @@ The default configuration only allows bumping the major, minor, or patch version
 
 ### Add support for pre-release versions
 
-Alter the `parse` configuration to support pre-release versions. This `parse` option uses an extended (or verbose) regular expression to extract the version parts from the current version. 
+Alter the `parse` configuration to support pre-release versions. This `parse` option uses an extended (or verbose) regular expression to extract the version components from the current version. 
 
 ```toml title="New parse configuration"
 parse = """(?x)

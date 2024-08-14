@@ -2,7 +2,9 @@
 
 ## Calendar versioning codes
 
-The following table lists the available format codes for calendar versioning (CalVer) schemes. The codes can be used to define the version format in the `calver_format` configuration options. Formatting codes, surrounded by `{ }` can be combined to create a custom version format. For example, the format `YYYY.MM.DD` can be defined as `"{YYYY}.{MM}.{DD}"`.
+The following table lists the available format codes for calendar versioning (CalVer) schemes. The codes can be used to
+define the version format in the `calver_format` configuration options. Formatting codes, surrounded by `{ }` can be
+combined to create a custom version format. For example, the format `YYYY.MM.DD` can be defined as `"{YYYY}.{MM}.{DD}"`.
 
 | Code   | Example(s)          | Comment                                       |
 |--------|---------------------|-----------------------------------------------|
@@ -31,7 +33,6 @@ The following table lists the available format codes for calendar versioning (Ca
 [tool.bumpversion.parts.release]
 calver_format = "{YYYY}.{MM}.{DD}"
 ```
-
 
 ## Parsing CalVer versions
 
@@ -68,7 +69,9 @@ Using the following chart, we can set up the version parsing:
 
     `(?:jan|fév|mar|avr|mai|jui|jui|aoû|sep|oct|nov|déc)` for French
 
-You can use these regular expressions to parse CalVer versions in your project. For example, the following `parse` configuration can be used to parse a version string in the format `YYYY.MM.DD` as the `release` part of the version string:
+You can use these regular expressions to parse CalVer versions in your project. For example, the following `parse`
+configuration can be used to parse a version string in the format `YYYY.MM.DD` as the `release` part of the version
+string:
 
 ```toml
 [tool.bumpversion]
@@ -80,12 +83,3 @@ parse = """(?x)                      # Verbose mode
     )
 """
 ```
-
-## CalVer incrementing logic
-
-- CalVer version components are marked as `always_increment` by default.
-- When bumping a version, you specify which component to increment. It is called the target component.
-- When bumping a version, the components marked as `always_increment` are incremented first.
-- If an `always_increment` component's value changed, its dependent components are marked for reset to their default values.
-- If the target component is in the set of components marked for reset, the target component is reset to its default value.
-- If the target component is not in the set of components marked for reset, the target component is incremented and its dependent components are reset to their default values.
