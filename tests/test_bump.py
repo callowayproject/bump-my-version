@@ -283,7 +283,7 @@ def test_commit_and_tag_with_config_file(mock_context):
 def test_key_path_required_for_toml_change(tmp_path: Path, caplog):
     """If the key_path is not provided, the toml file should use standard search and replace."""
     from bumpversion import config
-    from bumpversion.version_part import VersionConfig
+    from bumpversion.versioning.version_config import VersionConfig
 
     # Arrange
     config_path = tmp_path / "pyproject.toml"

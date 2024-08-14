@@ -575,8 +575,17 @@ def sample_config(prompt: bool, destination: str) -> None:
     help="Config file to read most of the variables from.",
 )
 @click.option("--ascii", is_flag=True, help="Use ASCII characters only.")
-def show_bump(version: str, config_file: Optional[str], ascii: bool) -> None:
+@click.option(
+    "-v",
+    "--verbose",
+    count=True,
+    required=False,
+    envvar="BUMPVERSION_VERBOSE",
+    help="Print verbose logging to stderr. Can specify several times for more verbosity.",
+)
+def show_bump(version: str, config_file: Optional[str], ascii: bool, verbose: int) -> None:
     """Show the possible versions resulting from the bump subcommand."""
+    setup_logging(verbose)
     found_config_file = find_config_file(config_file)
     config = get_configuration(found_config_file)
     if not version:

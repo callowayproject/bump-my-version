@@ -1,5 +1,48 @@
 # Changelog
 
+## 0.25.3 (2024-08-13)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.25.2...0.25.3)
+
+### Fixes
+
+- Refactor version parsing in visualize function. [5f25300](https://github.com/callowayproject/bump-my-version/commit/5f25300b007cee294a43af64eb970e3e100931a8)
+    
+  Simplify the version parsing process by utilizing the raise_error parameter in the parse method, removing the need for a separate error check. This change ensures that parsing errors are immediately raised and handled cleanly within the visualize function.
+- Refactor and rename `version_part` to `versioning.version_config`. [5b90817](https://github.com/callowayproject/bump-my-version/commit/5b90817e6210f983c691bd06008afa065c961c4f)
+    
+  Moved `version_part.py` to `versioning/version_config.py` and updated all import statements accordingly. Enhanced error handling in `VersionConfig` by adding `raise_error` flag and relevant exception raising for invalid version strings. Refined tests to reflect these changes.
+- Fix version visualization and add verbose logging. [ad46978](https://github.com/callowayproject/bump-my-version/commit/ad469783c0507bf7e4160cf131d2b73b494c52e8)
+    
+  Raise an exception for unparsable versions and aggregate visualization output in a list before printing. Add a verbose logging option to the `show_bump` command for detailed logging control.
+
+## 0.25.2 (2024-08-11)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.25.1...0.25.2)
+
+### Fixes
+
+- Fix JSON serialization. [d3f3022](https://github.com/callowayproject/bump-my-version/commit/d3f3022bd4c8b8d6e41fa7b5b6ccfc2aa6cf7878)
+    
+  Extended the default_encoder function to handle Path objects by converting them to their string representation. This ensures that Path objects can be properly serialized to JSON format.
+
+## 0.25.1 (2024-08-07)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.25.0...0.25.1)
+
+### Fixes
+
+- Fixes mypy pre-commit checking. [f7d0909](https://github.com/callowayproject/bump-my-version/commit/f7d0909deb8d0cf06607c4d51090ca23f7d92664)
+    
+- Fixes repository path checks. [ff3f72a](https://github.com/callowayproject/bump-my-version/commit/ff3f72a9a922dfbb61eea9325fc9dba7c12c7f62)
+    
+  Checked for relative paths when determining if the file was part of the repo or not.
+- Fixed test to use globs. [72f9841](https://github.com/callowayproject/bump-my-version/commit/72f9841a9628e26c6cf06518b0428d3990a08421)
+    
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [58cc73e](https://github.com/callowayproject/bump-my-version/commit/58cc73ed041f978fddd9f81e995901596f6ac722)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.5.5 → v0.5.6](https://github.com/astral-sh/ruff-pre-commit/compare/v0.5.5...v0.5.6)
+
+
 ## 0.25.0 (2024-08-06)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.24.3...0.25.0)
 

@@ -110,7 +110,7 @@ def filter_version_parts(config: Config) -> List[str]:
 
 def visualize(config: Config, version_str: str, box_style: str = "light") -> None:
     """Output a visualization of the bump-my-version bump process."""
-    version = config.version_config.parse(version_str)
+    version = config.version_config.parse(version_str, raise_error=True)
     version_parts = filter_version_parts(config)
     num_parts = len(version_parts)
 
@@ -120,7 +120,7 @@ def visualize(config: Config, version_str: str, box_style: str = "light") -> Non
     version_lead = lead_string(version_str, border)
     blank_lead = lead_string(version_str, border, blank=True)
     version_part_length = max(len(part) for part in version_parts)
-
+    lines = []
     for i, part in enumerate(version_parts):
         line = [version_lead] if i == 0 else [blank_lead]
 
@@ -135,4 +135,5 @@ def visualize(config: Config, version_str: str, box_style: str = "light") -> Non
         line.append(connection_str(border, has_next=has_next, has_previous=has_previous))
         line.append(labeled_line(part, border, version_part_length))
         line.append(next_version_str)
-        print_info("".join(line))
+        lines.append("".join(line))
+    print_info("\n".join(lines))

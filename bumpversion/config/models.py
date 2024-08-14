@@ -15,8 +15,8 @@ from bumpversion.versioning.models import VersionComponentSpec  # NOQA: TCH001
 
 if TYPE_CHECKING:
     from bumpversion.scm import SCMInfo
-    from bumpversion.version_part import VersionConfig
     from bumpversion.versioning.models import VersionSpec
+    from bumpversion.versioning.version_config import VersionConfig
 
 logger = get_indented_logger(__name__)
 
@@ -166,7 +166,7 @@ class Config(BaseSettings):
     @property
     def version_config(self) -> "VersionConfig":
         """Return the version configuration."""
-        from bumpversion.version_part import VersionConfig
+        from bumpversion.versioning.version_config import VersionConfig
 
         return VersionConfig(self.parse, self.serialize, self.search, self.replace, self.parts)
 
