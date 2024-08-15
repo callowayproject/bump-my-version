@@ -27,6 +27,7 @@ class SCMInfo:
     commit_sha: Optional[str] = None
     distance_to_latest_tag: int = 0
     current_version: Optional[str] = None
+    current_tag: Optional[str] = None
     branch_name: Optional[str] = None
     short_branch_name: Optional[str] = None
     repository_root: Optional[Path] = None
@@ -42,6 +43,7 @@ class SCMInfo:
             f"commit_sha={self.commit_sha}, "
             f"distance_to_latest_tag={self.distance_to_latest_tag}, "
             f"current_version={self.current_version}, "
+            f"current_tag={self.current_tag}, "
             f"branch_name={self.branch_name}, "
             f"short_branch_name={self.short_branch_name}, "
             f"repository_root={self.repository_root}, "
@@ -286,7 +288,7 @@ class Git(SourceCodeManager):
             A dictionary containing information about the latest commit.
         """
         tag_pattern = tag_name.replace("{new_version}", "*")
-        info = dict.fromkeys(["dirty", "commit_sha", "distance_to_latest_tag", "current_version"])
+        info = dict.fromkeys(["dirty", "commit_sha", "distance_to_latest_tag", "current_version", "current_tag"])
         info["distance_to_latest_tag"] = 0
         try:
             # get info about the latest tag in git
@@ -309,6 +311,7 @@ class Git(SourceCodeManager):
 
             info["commit_sha"] = describe_out.pop().lstrip("g")
             info["distance_to_latest_tag"] = int(describe_out.pop())
+            info["current_tag"] = "-".join(describe_out)
             version = cls.get_version_from_tag("-".join(describe_out), tag_name, parse_pattern)
             info["current_version"] = version or "-".join(describe_out).lstrip("v")
         except subprocess.CalledProcessError as e:
