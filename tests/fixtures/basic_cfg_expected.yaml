@@ -106,9 +106,9 @@ parts:
     values:
       - "dev"
       - "gamma"
-post_bump_hooks:
+post_commit_hooks:
 
-pre_bump_hooks:
+pre_commit_hooks:
 
 regex: false
 replace: "{new_version}"

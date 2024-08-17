@@ -35,8 +35,8 @@ DEFAULTS = {
     "parts": {},
     "files": [],
     "setup_hooks": [],
-    "pre_bump_hooks": [],
-    "post_bump_hooks": [],
+    "pre_commit_hooks": [],
+    "post_commit_hooks": [],
 }
 
 
