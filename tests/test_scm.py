@@ -135,36 +135,12 @@ class TestGit:
                 tag_info = scm.Git.latest_tag_info(tag_name, parse_pattern=parse_pattern)
                 assert tag_info.commit_sha is not None
                 assert tag_info.current_version == "0.1.0"
+                assert tag_info.current_tag == f"{tag_prefix}0.1.0"
                 assert tag_info.distance_to_latest_tag == 0
                 assert tag_info.branch_name == "master"
                 assert tag_info.short_branch_name == "master"
                 assert tag_info.repository_root == git_repo
                 assert tag_info.dirty is False
-
-        def test_git_latest_tag_info(self, git_repo: Path) -> None:
-            """Should return information about the latest tag."""
-            readme = git_repo.joinpath("readme.md")
-            readme.touch()
-            tag_prefix = "app/"
-            parse_pattern = r"(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)"
-            tag_name = f"{tag_prefix}{{new_version}}"
-            with inside_dir(git_repo):
-                # Add a file and tag
-                subprocess.run(["git", "add", "readme.md"])
-                subprocess.run(["git", "commit", "-m", "first"])
-                subprocess.run(["git", "tag", f"{tag_prefix}0.1.0"])
-
-                # Make it dirty
-                git_repo.joinpath("something.md").touch()
-                subprocess.run(["git", "add", "something.md"])
-                tag_info = scm.Git.latest_tag_info(tag_name, parse_pattern=parse_pattern)
-                assert tag_info.commit_sha is not None
-                assert tag_info.current_version == "0.1.0"
-                assert tag_info.distance_to_latest_tag == 0
-                assert tag_info.branch_name == "master"
-                assert tag_info.short_branch_name == "master"
-                assert tag_info.repository_root == git_repo
-                assert tag_info.dirty is True
 
 
 def test_git_detects_existing_tag(git_repo: Path, caplog: LogCaptureFixture) -> None:
