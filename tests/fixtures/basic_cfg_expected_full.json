@@ -121,6 +121,8 @@
       ]
     }
   },
+  "post_bump_hooks": [],
+  "pre_bump_hooks": [],
   "regex": false,
   "replace": "{new_version}",
   "scm_info": {
@@ -139,6 +141,7 @@
     "{major}.{minor}.{patch}-{release}",
     "{major}.{minor}.{patch}"
   ],
+  "setup_hooks": [],
   "sign_tags": false,
   "tag": true,
   "tag_message": "Bump version: {current_version} \u2192 {new_version}",

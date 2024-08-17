@@ -106,6 +106,10 @@ parts:
     values:
       - "dev"
       - "gamma"
+post_bump_hooks:
+
+pre_bump_hooks:
+
 regex: false
 replace: "{new_version}"
 scm_info:
@@ -122,6 +126,8 @@ search: "{current_version}"
 serialize:
   - "{major}.{minor}.{patch}-{release}"
   - "{major}.{minor}.{patch}"
+setup_hooks:
+
 sign_tags: false
 tag: true
 tag_message: "Bump version: {current_version} → {new_version}"

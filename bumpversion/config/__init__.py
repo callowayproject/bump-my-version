@@ -34,6 +34,9 @@ DEFAULTS = {
     "scm_info": None,
     "parts": {},
     "files": [],
+    "setup_hooks": [],
+    "pre_bump_hooks": [],
+    "post_bump_hooks": [],
 }
 
 
