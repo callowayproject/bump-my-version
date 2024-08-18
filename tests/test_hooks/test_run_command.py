@@ -1,4 +1,5 @@
 import subprocess
+import sys
 
 import pytest
 
@@ -16,7 +17,8 @@ class TestRunCommand:
 
     def test_can_access_env(self):
         """The command can access custom environment variables."""
-        result = run_command("echo $TEST_ENV", environment={"TEST_ENV": "Hello"})
+        cmd = "echo %TEST_ENV%" if sys.platform == "win32" else "echo $TEST_ENV"
+        result = run_command(cmd, environment={"TEST_ENV": "Hello"})
         assert isinstance(result, subprocess.CompletedProcess)
         assert result.stdout == "Hello\n"
 

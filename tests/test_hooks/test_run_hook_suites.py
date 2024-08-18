@@ -4,7 +4,6 @@ from typing import Callable
 import pytest
 from pytest import param
 from bumpversion.hooks import run_setup_hooks, run_pre_commit_hooks, run_post_commit_hooks
-from bumpversion.versioning.models import Version
 from tests.conftest import get_config_data, get_semver
 
 
