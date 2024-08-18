@@ -5,7 +5,7 @@ import os
 import subprocess
 from pathlib import Path
 
-from bumpversion.hooks import scm_env, PREFIX, base_env, current_version_env
+from bumpversion.hooks import scm_env, PREFIX, base_env, version_env
 from tests.conftest import inside_dir, get_config_data
 
 
@@ -78,10 +78,10 @@ class TestBaseEnv:
 
 def test_current_version_env_includes_correct_info():
     """pass"""
-    config, _, _ = get_config_data(
+    config, _, current_version = get_config_data(
         {"current_version": "0.1.0", "parse": r"(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)"}
     )
-    result = current_version_env(config)
+    result = version_env(current_version, "CURRENT_")
 
     assert result[f"{PREFIX}CURRENT_MAJOR"] == "0"
     assert result[f"{PREFIX}CURRENT_MINOR"] == "1"

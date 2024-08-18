@@ -3,10 +3,11 @@
 import datetime
 import os
 import subprocess
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 
 from bumpversion.config.models import Config
 from bumpversion.ui import get_indented_logger
+from bumpversion.versioning.models import Version
 
 PREFIX = "BVHOOK_"
 
@@ -46,30 +47,43 @@ def scm_env(config: Config) -> Dict[str, str]:
     }
 
 
-def current_version_env(config: Config) -> Dict[str, str]:
-    """Provide the current version environment variables."""
-    version_str = config.current_version
-    version = config.version_config.parse(version_str)
-
-    return {f"{PREFIX}CURRENT_{part.upper()}": version[part].value for part in version}
+def version_env(version: Version, version_prefix: str) -> Dict[str, str]:
+    """Provide the environment variables for each version component with a prefix."""
+    return {f"{PREFIX}{version_prefix}{part.upper()}": version[part].value for part in version}
 
 
-def setup_hook_env(config: Config) -> Dict[str, str]:
+def get_setup_hook_env(config: Config, current_version: Version) -> Dict[str, str]:
     """Provide the environment dictionary for `setup_hook`s."""
-    return {**base_env(config), **scm_env(config), **current_version_env(config)}
+    return {**base_env(config), **scm_env(config), **version_env(current_version, "CURRENT_")}
 
 
-def run_setup_hooks(config: Config) -> None:
-    """Run the setup hooks."""
-    env = setup_hook_env(config)
-    if config.setup_hooks:
-        logger.info("Running setup hooks:")
-    else:
-        logger.info("No setup hooks defined")
-        return
+def get_pre_commit_hook_env(config: Config, current_version: Version, new_version: Version) -> Dict[str, str]:
+    """Provide the environment dictionary for `pre_commit_hook`s."""
+    return {
+        **base_env(config),
+        **scm_env(config),
+        **version_env(current_version, "CURRENT_"),
+        **version_env(new_version, "NEW_"),
+    }
 
+
+def get_post_commit_hook_env(config: Config, current_version: Version, new_version: Version) -> Dict[str, str]:
+    """Provide the environment dictionary for `post_commit_hook`s."""
+    return {
+        **base_env(config),
+        **scm_env(config),
+        **version_env(current_version, "CURRENT_"),
+        **version_env(new_version, "NEW_"),
+    }
+
+
+def run_hooks(hooks: List[str], env: Dict[str, str], dry_run: bool = False) -> None:
+    """Run a list of command-line programs using the shell."""
     logger.indent()
-    for script in config.setup_hooks:
+    for script in hooks:
+        if dry_run:
+            logger.debug(f"Would run {script!r}")
+            continue
         logger.debug(f"Running {script!r}")
         logger.indent()
         result = run_command(script, env)
@@ -80,11 +94,45 @@ def run_setup_hooks(config: Config) -> None:
     logger.dedent()
 
 
-def run_pre_commit_hooks(config: Config) -> None:
+def run_setup_hooks(config: Config, current_version: Version, dry_run: bool = False) -> None:
+    """Run the setup hooks."""
+    env = get_setup_hook_env(config, current_version)
+    if config.setup_hooks:
+        running = "Would run" if dry_run else "Running"
+        logger.info(f"{running} setup hooks:")
+    else:
+        logger.info("No setup hooks defined")
+        return
+
+    run_hooks(config.setup_hooks, env, dry_run)
+
+
+def run_pre_commit_hooks(
+    config: Config, current_version: Version, new_version: Version, dry_run: bool = False
+) -> None:
     """Run the pre-commit hooks."""
-    pass
+    env = get_pre_commit_hook_env(config, current_version, new_version)
+
+    if config.pre_commit_hooks:
+        running = "Would run" if dry_run else "Running"
+        logger.info(f"{running} pre-commit hooks:")
+    else:
+        logger.info("No pre-commit hooks defined")
+        return
+
+    run_hooks(config.pre_commit_hooks, env, dry_run)
 
 
-def run_post_commit_hooks(config: Config) -> None:
+def run_post_commit_hooks(
+    config: Config, current_version: Version, new_version: Version, dry_run: bool = False
+) -> None:
     """Run the post-commit hooks."""
-    pass
+    env = get_post_commit_hook_env(config, current_version, new_version)
+    if config.post_commit_hooks:
+        running = "Would run" if dry_run else "Running"
+        logger.info(f"{running} post-commit hooks:")
+    else:
+        logger.info("No post-commit hooks defined")
+        return
+
+    run_hooks(config.post_commit_hooks, env, dry_run)

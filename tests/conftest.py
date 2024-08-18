@@ -8,6 +8,8 @@ from typing import Generator
 
 import pytest
 
+from bumpversion.versioning.models import Version
+
 
 @pytest.fixture
 def tests_path() -> Path:
@@ -49,6 +51,12 @@ def get_config_data(overrides: dict) -> tuple:
     version = version_config.parse(conf.current_version)
 
     return conf, version_config, version
+
+
+def get_semver(version: str) -> Version:
+    """Get a semantic version from a string."""
+    _, _, version = get_config_data({"current_version": version})
+    return version
 
 
 @pytest.fixture

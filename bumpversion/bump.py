@@ -83,7 +83,7 @@ def do_bump(
     version = config.version_config.parse(config.current_version)
     logger.dedent()
 
-    run_setup_hooks(config)
+    run_setup_hooks(config, version, dry_run)
 
     next_version = get_next_version(version, config, version_part, new_version)
     next_version_str = config.version_config.serialize(next_version, ctx)
@@ -116,11 +116,11 @@ def do_bump(
     ctx = get_context(config, version, next_version)
     ctx["new_version"] = next_version_str
 
-    run_pre_commit_hooks(config)
+    run_pre_commit_hooks(config, version, next_version, dry_run)
 
     commit_and_tag(config, config_file, configured_files, ctx, dry_run)
 
-    run_post_commit_hooks(config)
+    run_post_commit_hooks(config, version, next_version, dry_run)
 
     logger.info("Done.")
 

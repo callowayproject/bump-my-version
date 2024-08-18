@@ -1,11 +1,14 @@
 import subprocess
+from typing import Callable
 
-from bumpversion.config import Config
-from bumpversion.hooks import run_setup_hooks
-from tests.conftest import get_config_data
+import pytest
+from pytest import param
+from bumpversion.hooks import run_setup_hooks, run_pre_commit_hooks, run_post_commit_hooks
+from bumpversion.versioning.models import Version
+from tests.conftest import get_config_data, get_semver
 
 
-def setup_hook_env(config: Config) -> dict:
+def get_hook_env(*args, **kwargs) -> dict:
     """Mocked function for the environment setup"""
     return {}
 
@@ -15,19 +18,102 @@ def run_command(script: str, env: dict) -> subprocess.CompletedProcess:
     return subprocess.CompletedProcess(args=script, returncode=0)
 
 
-def test_run_setup_hooks_calls_each_hook(mocker):
-    """The run_setup_hooks function runs each hook."""
-    # Assemble
-    setup_hook_env_mock = mocker.patch("bumpversion.hooks.setup_hook_env", side_effect=setup_hook_env)
-    run_command_mock = mocker.patch("bumpversion.hooks.run_command", side_effect=run_command)
+CURRENT_VERSION = get_semver("1.0.0")
+NEW_VERSION = get_semver("1.1.0")
 
-    config, _, _ = get_config_data({"current_version": "0.1.0", "setup_hooks": ["script1", "script2"]})
 
-    # Act
-    result = run_setup_hooks(config)
+class TestHookSuites:
+    """Run each hook suite through the same set of tests."""
 
-    # Asserts for function's behavior
-    setup_hook_env_mock.assert_called_once_with(config)
-    assert run_command_mock.call_count == len(config.setup_hooks)
-    run_command_mock.assert_any_call("script1", {})
-    run_command_mock.assert_any_call("script2", {})
+    suites = (
+        param("setup", run_setup_hooks, (CURRENT_VERSION,), id="setup"),
+        param(
+            "pre_commit",
+            run_pre_commit_hooks,
+            (
+                CURRENT_VERSION,
+                NEW_VERSION,
+            ),
+            id="pre_commit",
+        ),
+        param(
+            "post_commit",
+            run_post_commit_hooks,
+            (
+                CURRENT_VERSION,
+                NEW_VERSION,
+            ),
+            id="post_commit",
+        ),
+    )
+
+    @pytest.mark.parametrize(["suite_name", "suite_func", "suite_args"], suites)
+    def test_calls_each_hook(self, mocker, suite_name: str, suite_func: Callable, suite_args: tuple):
+        """The suite hook runs each hook."""
+        # Assemble
+        env = {"var": "value"}
+        mock_env = mocker.patch(f"bumpversion.hooks.get_{suite_name}_hook_env")
+        mock_env.return_value = env
+        mock_run_command = mocker.patch("bumpversion.hooks.run_command")
+        mock_run_command.return_value = mocker.MagicMock(stdout="output", stderr="error", returncode=0)
+        mock_logger = mocker.patch("bumpversion.hooks.logger")
+
+        config, _, _ = get_config_data({"current_version": "1.0.0", f"{suite_name}_hooks": ["script1", "script2"]})
+
+        # Act
+        suite_func(config, *suite_args)
+
+        # Assert
+        mock_logger.info.assert_called_once_with(f"Running {suite_name} hooks:".replace("_", "-"))
+        mock_env.assert_called_once_with(config, *suite_args)
+        expected_run_command_calls = [
+            mocker.call("script1", env),
+            mocker.call("script2", env),
+        ]
+        mock_run_command.assert_has_calls(expected_run_command_calls)
+
+    @pytest.mark.parametrize(["suite_name", "suite_func", "suite_args"], suites)
+    def test_does_not_run_hooks_if_none_are_specified(
+        self, mocker, suite_name: str, suite_func: Callable, suite_args: tuple
+    ):
+        """If no setup_hooks are defined, nothing is run."""
+        # Assemble
+        env = {"var": "value"}
+        mock_env = mocker.patch(f"bumpversion.hooks.get_{suite_name}_hook_env")
+        mock_env.return_value = env
+        mock_run_command = mocker.patch("bumpversion.hooks.run_command")
+        mock_run_command.return_value = mocker.MagicMock(stdout="output", stderr="error", returncode=0)
+        mock_logger = mocker.patch("bumpversion.hooks.logger")
+
+        config, _, _ = get_config_data({"current_version": "1.0.0", f"{suite_name}_hooks": []})
+
+        # Act
+        suite_func(config, *suite_args)
+
+        # Asserts
+        mock_logger.info.assert_called_once_with(f"No {suite_name} hooks defined".replace("_", "-"))
+        mock_env.assert_called_once_with(config, *suite_args)
+        assert mock_run_command.call_count == 0
+
+    @pytest.mark.parametrize(["suite_name", "suite_func", "suite_args"], suites)
+    def test_does_not_run_hooks_if_dry_run_is_true(
+        self, mocker, suite_name: str, suite_func: Callable, suite_args: tuple
+    ):
+        """If dry_run is True, nothing is run."""
+        # Assemble
+        env = {"var": "value"}
+        mock_env = mocker.patch(f"bumpversion.hooks.get_{suite_name}_hook_env")
+        mock_env.return_value = env
+        mock_run_command = mocker.patch("bumpversion.hooks.run_hooks")
+        mock_logger = mocker.patch("bumpversion.hooks.logger")
+
+        config, _, _ = get_config_data({"current_version": "1.0.0", f"{suite_name}_hooks": ["script1", "script2"]})
+
+        # Act
+        args = [*suite_args, True]
+        suite_func(config, *args)
+
+        # Asserts
+        mock_logger.info.assert_called_once_with(f"Would run {suite_name} hooks:".replace("_", "-"))
+        mock_env.assert_called_once_with(config, *suite_args)
+        assert mock_run_command.call_count == 1
