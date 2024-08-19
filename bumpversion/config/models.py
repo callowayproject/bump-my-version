@@ -100,6 +100,9 @@ class Config(BaseSettings):
     scm_info: Optional["SCMInfo"]
     parts: Dict[str, VersionComponentSpec]
     files: List[FileChange] = Field(default_factory=list)
+    setup_hooks: List[str] = Field(default_factory=list)
+    pre_commit_hooks: List[str] = Field(default_factory=list)
+    post_commit_hooks: List[str] = Field(default_factory=list)
     included_paths: List[str] = Field(default_factory=list)
     excluded_paths: List[str] = Field(default_factory=list)
     model_config = SettingsConfigDict(env_prefix="bumpversion_")

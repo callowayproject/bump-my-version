@@ -186,7 +186,7 @@ line-length = 119
 select = ["E", "W", "F", "I", "N", "B", "BLE", "C", "D", "E", "F", "I", "N", "S", "T", "W", "RUF", "NPY", "PD", "PGH", "ANN", "C90", "PLC", "PLE", "PLW", "TCH"]
 ignore = [
     "ANN002", "ANN003", "ANN101", "ANN102", "ANN204", "ANN401",
-    "S101", "S104",
+    "S101", "S104", "S602",
     "D105", "D106", "D107", "D200", "D212",
     "PD011",
     "PLW1510",

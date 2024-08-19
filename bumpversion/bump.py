@@ -4,6 +4,8 @@ import shlex
 from pathlib import Path
 from typing import TYPE_CHECKING, List, MutableMapping, Optional
 
+from bumpversion.hooks import run_post_commit_hooks, run_pre_commit_hooks, run_setup_hooks
+
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.files import ConfiguredFile
     from bumpversion.versioning.models import Version
@@ -75,10 +77,14 @@ def do_bump(
     logger.indent()
 
     ctx = get_context(config)
+
     logger.info("Parsing current version '%s'", config.current_version)
     logger.indent()
     version = config.version_config.parse(config.current_version)
     logger.dedent()
+
+    run_setup_hooks(config, version, dry_run)
+
     next_version = get_next_version(version, config, version_part, new_version)
     next_version_str = config.version_config.serialize(next_version, ctx)
     logger.info("New version will be '%s'", next_version_str)
@@ -109,7 +115,13 @@ def do_bump(
 
     ctx = get_context(config, version, next_version)
     ctx["new_version"] = next_version_str
+
+    run_pre_commit_hooks(config, version, next_version, dry_run)
+
     commit_and_tag(config, config_file, configured_files, ctx, dry_run)
+
+    run_post_commit_hooks(config, version, next_version, dry_run)
+
     logger.info("Done.")
 
 

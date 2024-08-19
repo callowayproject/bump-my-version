@@ -34,6 +34,9 @@ DEFAULTS = {
     "scm_info": None,
     "parts": {},
     "files": [],
+    "setup_hooks": [],
+    "pre_commit_hooks": [],
+    "post_commit_hooks": [],
 }
 
 

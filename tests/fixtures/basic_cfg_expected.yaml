@@ -106,11 +106,16 @@ parts:
     values:
       - "dev"
       - "gamma"
+post_commit_hooks:
+
+pre_commit_hooks:
+
 regex: false
 replace: "{new_version}"
 scm_info:
   branch_name: null
   commit_sha: null
+  current_tag: null
   current_version: null
   dirty: null
   distance_to_latest_tag: 0
@@ -121,6 +126,8 @@ search: "{current_version}"
 serialize:
   - "{major}.{minor}.{patch}-{release}"
   - "{major}.{minor}.{patch}"
+setup_hooks:
+
 sign_tags: false
 tag: true
 tag_message: "Bump version: {current_version} → {new_version}"
