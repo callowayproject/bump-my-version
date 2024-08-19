@@ -1,5 +1,47 @@
 # Changelog
 
+## 0.26.0 (2024-08-19)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.25.4...0.26.0)
+
+### Fixes
+
+- Fix issues with environment test on windows. [04a98d0](https://github.com/callowayproject/bump-my-version/commit/04a98d00793e80bca2c11e354672168a8a6de9cd)
+    
+- Fixed redundant tests for SCM. [e50e991](https://github.com/callowayproject/bump-my-version/commit/e50e991fe481ff25791a25987e4c4af133f50817)
+    
+### New
+
+- Added hook suite documentation. [b73a6e1](https://github.com/callowayproject/bump-my-version/commit/b73a6e120122d1fe28e52c2b9b13eeed95f20a51)
+    
+- Added hooks to bump command. [3b638e0](https://github.com/callowayproject/bump-my-version/commit/3b638e088edee304d2f0a8305e332eff2eba85e0)
+    
+- Added tests for hooks. [8446567](https://github.com/callowayproject/bump-my-version/commit/844656717e3799fc418e76ef2b9e3b12116ca0d5)
+    
+- Add hooks configuration fields. [d6b24f0](https://github.com/callowayproject/bump-my-version/commit/d6b24f01b22fcbfe719ae9954c47e03ec1df3072)
+    
+  Introduced `setup_hooks`, `pre_bump_hooks`, and `post_bump_hooks` fields to configuration models. Updated corresponding test fixtures to verify these new fields.
+- Add current_tag field to scm_info. [304c599](https://github.com/callowayproject/bump-my-version/commit/304c59985d5f71f44754615fee2ded600de237b0)
+    
+  Updated the scm_info structure to include a new field, current_tag, across various configuration files and source code. This ensures that the current tag is tracked and represented in the output formats correctly.
+### Other
+
+- Enhance hook handling and testing across hook types. [49f1953](https://github.com/callowayproject/bump-my-version/commit/49f1953c476a09cc9e7332af6347914935ee982c)
+    
+  - Introduced unified handling for setup, pre-commit, and post-commit hooks, including dry-run support.
+
+  - Added comprehensive tests to ensure the correct behavior for all hook phases, including cases where no hooks are specified or in dry run mode.
+
+  - Updated environment setup to use a common version environment function.
+- [pre-commit.ci] pre-commit autoupdate. [4342198](https://github.com/callowayproject/bump-my-version/commit/434219853b2824cbfff926e3cc79aa1b0ba10b3d)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.5.6 → v0.5.7](https://github.com/astral-sh/ruff-pre-commit/compare/v0.5.6...v0.5.7)
+
+### Updates
+
+- Changed the terminology for hooks. [049b470](https://github.com/callowayproject/bump-my-version/commit/049b4704f245f4ec5c258eb5fc2f10e2b564655a)
+    
+  Change pre-bump and post-bump to pre-commit and post-commit to better indicate their order of operations.
+
 ## 0.25.4 (2024-08-14)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.25.3...0.25.4)
 
