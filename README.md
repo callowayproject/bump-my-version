@@ -179,7 +179,7 @@ The full development and release path is:
 
 ### Automate the pre-release numbering
 
-The `pre_n` or pre-release number is a number that increases with each pre-release. You can automate this my changing the serialization configuration.
+The `pre_n` or pre-release number is a number that increases with each pre-release. You can automate this by changing the serialization configuration.
 
 ```toml title="Serialize configuration with pre_n automation"
 serialize = [
