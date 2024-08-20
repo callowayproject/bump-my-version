@@ -2055,7 +2055,7 @@
 <li>Switch from the release candidate to the final release using <code>bump-my-version bump pre_l</code>.</li>
 </ol>
 <h3 id="automate-the-pre-release-numbering">Automate the pre-release numbering<a class="headerlink" href="#automate-the-pre-release-numbering" title="Permanent link">&para;</a></h3>
-<p>The <code>pre_n</code> or pre-release number is a number that increases with each pre-release. You can automate this my changing the serialization configuration.</p>
+<p>The <code>pre_n</code> or pre-release number is a number that increases with each pre-release. You can automate this by changing the serialization configuration.</p>
 <div class="highlight"><span class="filename">Serialize configuration with pre_n automation</span><pre><span></span><code><span class="n">serialize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}-{pre_l}{distance_to_latest_tag}&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}&quot;</span><span class="p">,</span>
