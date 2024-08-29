@@ -1,0 +1,50 @@
+name: Bump My Version
+description: Bump version of a project
+inputs:
+  args:
+    description: 'May contain any of the following: VERSION_PART (e.g. minor), FILES (additional file(s) to modify).'
+    required: false
+    default: ''
+  github-token:
+    description: 'GitHub Token to use instead of the default one.'
+    required: false
+    default: ${{ github.token }}
+outputs:
+  bumped:
+    description: 'Whether there was a bump or not [true|false]'
+    value: ${{ steps.bump.outputs.bumped }}
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout the code
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+    - name: Setting up git config
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+      run: |
+        git config --global user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
+        git config --global user.name "$(gh api /users/${GITHUB_ACTOR} | jq .name -r)"
+        git config -l
+    - name: Install Python
+      uses: actions/setup-python@v5.1.1
+      with:
+        python-version: '3.12'
+    - name: Install bump-my-version
+      shell: bash
+      run: pip install "bump-my-version==0.26.0"
+    - name: Pass Inputs to Shell
+      id: bump
+      shell: bash
+      run: |
+        bump-my-version bump ${{ inputs.args }}
+        exitcode="$?"
+        ([[ ${exitcode} -gt 0 ]] && echo "bumped=false" || echo "bumped=true") >> $GITHUB_OUTPUT
+    - name: Push changes to GitHub
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ inputs.github-token }}
+        force: true
+

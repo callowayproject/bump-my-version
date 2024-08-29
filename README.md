@@ -231,6 +231,39 @@ The full development and release path now is:
 
 <!--tutorial end-->
 
+### GitHub Actions
+
+You can use `bump-my-version` as part of a GHA workflow. Here is an example of a workflow that bumps the version, commits the change, and tags the commit.
+
+```yaml title="GitHub Actions Workflow"
+name: Bump version
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+
+      - name: Bump version
+        uses: callowayproject/bump-my-version@master
+        with:
+          args: "major"
+```
+
+Inputs for the bump-my-version action are:
+1. `args` - The arguments to pass to the `bump-my-version bump [args]` command. See the CLI documentation for more information.
+2. `github-token` - The GitHub token to use for committing and tagging. This is optional.
+
+Output:
+1. `bump` - Boolean flag for whether the version was bumped.
+2. `version` - [TODO] The new version number.
+
+If you want to ensure that workflows set up with on-push trigger will also start based on those newly pushed commits or tags, you need to provide a custom PAT (`github-token`). See [here](https://github.com/orgs/community/discussions/25702). 
+
 ## Development & Contributing
 
 Thank you, contributors! You can find a full list here: https://github.com/callowayproject/bump-my-version/graphs/contributors
