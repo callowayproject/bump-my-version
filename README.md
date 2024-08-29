@@ -250,6 +250,8 @@ jobs:
 
       - name: Bump version
         uses: callowayproject/bump-my-version@master
+        env:
+          BUMPVERSION_TAG: "true"
         with:
           args: "major"
 ```
