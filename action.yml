@@ -13,6 +13,12 @@ outputs:
   bumped:
     description: 'Whether there was a bump or not [true|false]'
     value: ${{ steps.bump.outputs.bumped }}
+  previous-version:
+    description: 'Previous version'
+    value: ${{ steps.bump.outputs.previous-version }}
+  current-version:
+    description: 'Updated version'
+    value: ${{ steps.bump.outputs.current-version }}
 runs:
   using: 'composite'
   steps:
@@ -39,9 +45,11 @@ runs:
       id: bump
       shell: bash
       run: |
+        echo "previous-version=$(bump-my-version show current_version)" >> $GITHUB_OUTPUT
+        
         bump-my-version bump ${{ inputs.args }}
-        exitcode="$?"
-        ([[ ${exitcode} -gt 0 ]] && echo "bumped=false" || echo "bumped=true") >> $GITHUB_OUTPUT
+        ([[ $? -gt 0 ]] && echo "bumped=false" || echo "bumped=true") >> $GITHUB_OUTPUT
+        echo "current-version=$(bump-my-version show current_version)" >> $GITHUB_OUTPUT
     - name: Push changes to GitHub
       uses: ad-m/github-push-action@master
       with:
