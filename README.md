@@ -240,6 +240,15 @@ name: Bump version
 
 on:
   workflow_dispatch:
+      bump-type:
+        description: 'Bump type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+        - major
+        - minor
+        - patch
 
 jobs:
   build:
@@ -249,11 +258,18 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Bump version
+        id: bump
         uses: callowayproject/bump-my-version@master
         env:
           BUMPVERSION_TAG: "true"
         with:
-          args: "major"
+          args: ${{ inputs.bump-type }}
+          github-token: ${{ secrets.GH_TOKEN }}
+
+      - name: Check
+        if: steps.bump.outputs.bumped == 'true'
+        run: |
+          echo "Version was bumped from ${{ steps.bump.outputs.previous-version }} to ${{ steps.bump.outputs.current-version }}!"
 ```
 
 Inputs for the bump-my-version action are:
@@ -261,8 +277,9 @@ Inputs for the bump-my-version action are:
 2. `github-token` - The GitHub token to use for committing and tagging. This is optional.
 
 Output:
-1. `bump` - Boolean flag for whether the version was bumped.
-2. `version` - [TODO] The new version number.
+1. `bumped` - Boolean flag for whether the version was bumped.
+2. `previous-version` - Version before bump was performed.
+3. `current-version` - Version after performing bump.
 
 If you want to ensure that workflows set up with on-push trigger will also start based on those newly pushed commits or tags, you need to provide a custom PAT (`github-token`). See [here](https://github.com/orgs/community/discussions/25702). 
 
