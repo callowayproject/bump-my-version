@@ -244,6 +244,10 @@ filename = "CHANGELOG.md"
 search = "{current_version}...HEAD"
 replace = "{current_version}...{new_version}"
 
+[[tool.bumpversion.files]]
+filename = "action.yml"
+search = "bump-my-version=={current_version}"
+replace = "bump-my-version=={new_version}"
 
 [tool.pydoclint]
 style = "google"
