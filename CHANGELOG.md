@@ -1,5 +1,40 @@
 # Changelog
 
+## 0.26.1 (2024-09-14)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.26.0...0.26.1)
+
+### Fixes
+
+- Fixed missing new version info in some hook environments. [24a9bdc](https://github.com/callowayproject/bump-my-version/commit/24a9bdc0c8264b1d756d444367f4e6282f38c07f)
+    
+  Introduce the `new_version_env` function and update existing functions (`get_setup_hook_env` and `get_pre_commit_hook_env`) to include new version environment variables. Added new tests for verifying the inclusion of OS, SCM, current, and new version information in hook environments.
+### New
+
+- Add current and previous version outputs to the GHA. [0650ca8](https://github.com/callowayproject/bump-my-version/commit/0650ca8cd4d1a4d155616865ef2cbac39c60c616)
+    
+- Add environment variable to README example. [88c9790](https://github.com/callowayproject/bump-my-version/commit/88c9790b4cac778d17abe8e3bbeead7adad11274)
+    
+- Add GitHub action with support for commit/tag push workflow trigger. [2cdb742](https://github.com/callowayproject/bump-my-version/commit/2cdb7420264810396b42d35827291d1dc080d416)
+    
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [d21d6df](https://github.com/callowayproject/bump-my-version/commit/d21d6df85afadf9a4a38f538ad75bda0cdcbea41)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.6.2 → v0.6.4](https://github.com/astral-sh/ruff-pre-commit/compare/v0.6.2...v0.6.4)
+
+- [pre-commit.ci] pre-commit autoupdate. [b6773ac](https://github.com/callowayproject/bump-my-version/commit/b6773acf3cb57d51479fad0a0ab842ebcbc416a1)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.5.7 → v0.6.2](https://github.com/astral-sh/ruff-pre-commit/compare/v0.5.7...v0.6.2)
+
+### Updates
+
+- Updated pre-commit versions. [6f5d56b](https://github.com/callowayproject/bump-my-version/commit/6f5d56b2e5a55171d79a4c14d06f3e15e9174711)
+    
+- Update example to better showcase the GHA capabilities. [e3ff9a1](https://github.com/callowayproject/bump-my-version/commit/e3ff9a1bf201c440037d9d26b01c7da9941d32c6)
+    
+- Update README.md. [f280371](https://github.com/callowayproject/bump-my-version/commit/f28037120a978034a8910600eb1826a653c706e2)
+    
+
 ## 0.26.0 (2024-08-19)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.25.4...0.26.0)
 
