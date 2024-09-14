@@ -5,8 +5,50 @@ import os
 import subprocess
 from pathlib import Path
 
-from bumpversion.hooks import scm_env, PREFIX, base_env, version_env
+from bumpversion.hooks import (
+    scm_env,
+    PREFIX,
+    base_env,
+    version_env,
+    new_version_env,
+    get_setup_hook_env,
+    get_pre_commit_hook_env,
+)
 from tests.conftest import inside_dir, get_config_data
+
+
+def assert_os_environ_items_included(result_env: dict) -> None:
+    """Assert that the OS environment variables are in the result."""
+    for var, value in os.environ.items():
+        assert var in result_env
+        assert result_env[var] == value
+
+
+def assert_scm_info_included(result_env: dict):
+    """Assert the SCM information is included in the result."""
+    assert f"{PREFIX}COMMIT_SHA" in result_env
+    assert f"{PREFIX}DISTANCE_TO_LATEST_TAG" in result_env
+    assert f"{PREFIX}IS_DIRTY" in result_env
+    assert f"{PREFIX}BRANCH_NAME" in result_env
+    assert f"{PREFIX}SHORT_BRANCH_NAME" in result_env
+    assert f"{PREFIX}CURRENT_VERSION" in result_env
+    assert f"{PREFIX}CURRENT_TAG" in result_env
+
+
+def assert_current_version_info_included(result_env: dict):
+    """Assert the current version information is included in the result."""
+    assert f"{PREFIX}CURRENT_MAJOR" in result_env
+    assert f"{PREFIX}CURRENT_MINOR" in result_env
+    assert f"{PREFIX}CURRENT_PATCH" in result_env
+
+
+def assert_new_version_info_included(result_env: dict):
+    """Assert the new version information is included in the result."""
+    assert f"{PREFIX}NEW_MAJOR" in result_env
+    assert f"{PREFIX}NEW_MINOR" in result_env
+    assert f"{PREFIX}NEW_PATCH" in result_env
+    assert f"{PREFIX}NEW_VERSION" in result_env
+    assert f"{PREFIX}NEW_VERSION_TAG" in result_env
 
 
 def test_scm_env_returns_correct_info(git_repo: Path):
@@ -58,26 +100,18 @@ class TestBaseEnv:
         config, _, _ = get_config_data({"current_version": "0.1.0"})
         result_env = base_env(config)
 
-        for var, value in os.environ.items():
-            assert var in result_env
-            assert result_env[var] == value
+        assert_os_environ_items_included(result_env)
 
     def test_includes_scm_info(self):
         """The output includes SCM information."""
         config, _, _ = get_config_data({"current_version": "0.1.0"})
         result_env = base_env(config)
 
-        assert f"{PREFIX}COMMIT_SHA" in result_env
-        assert f"{PREFIX}DISTANCE_TO_LATEST_TAG" in result_env
-        assert f"{PREFIX}IS_DIRTY" in result_env
-        assert f"{PREFIX}BRANCH_NAME" in result_env
-        assert f"{PREFIX}SHORT_BRANCH_NAME" in result_env
-        assert f"{PREFIX}CURRENT_VERSION" in result_env
-        assert f"{PREFIX}CURRENT_TAG" in result_env
+        assert_scm_info_included(result_env)
 
 
 def test_current_version_env_includes_correct_info():
-    """pass"""
+    """The version_env for a version should include all its parts"""
     config, _, current_version = get_config_data(
         {"current_version": "0.1.0", "parse": r"(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)"}
     )
@@ -86,3 +120,38 @@ def test_current_version_env_includes_correct_info():
     assert result[f"{PREFIX}CURRENT_MAJOR"] == "0"
     assert result[f"{PREFIX}CURRENT_MINOR"] == "1"
     assert result[f"{PREFIX}CURRENT_PATCH"] == "0"
+
+
+def test_new_version_env_includes_correct_info():
+    """The new_version_env should return the serialized version and tag name."""
+
+    config, _, current_version = get_config_data(
+        {"current_version": "0.1.0", "parse": r"(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)"}
+    )
+    new_version = current_version.bump("minor")
+    result = new_version_env(config, current_version, new_version)
+
+    assert result[f"{PREFIX}NEW_VERSION"] == "0.2.0"
+    assert result[f"{PREFIX}NEW_VERSION_TAG"] == "v0.2.0"
+
+
+def test_get_setup_hook_env_includes_correct_info():
+    """The setup hook environment should contain specific information."""
+    config, _, current_version = get_config_data({"current_version": "0.1.0"})
+    result_env = get_setup_hook_env(config, current_version)
+
+    assert_os_environ_items_included(result_env)
+    assert_scm_info_included(result_env)
+    assert_current_version_info_included(result_env)
+
+
+def test_get_pre_commit_hook_env_includes_correct_info():
+    """The pre-commit hook environment should contain specific information."""
+    config, _, current_version = get_config_data({"current_version": "0.1.0"})
+    new_version = current_version.bump("minor")
+    result_env = get_pre_commit_hook_env(config, current_version, new_version)
+
+    assert_os_environ_items_included(result_env)
+    assert_scm_info_included(result_env)
+    assert_current_version_info_included(result_env)
+    assert_new_version_info_included(result_env)
