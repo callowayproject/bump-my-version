@@ -55,4 +55,3 @@ runs:
       with:
         github_token: ${{ inputs.github-token }}
         force: true
-
