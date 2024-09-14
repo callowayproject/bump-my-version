@@ -4,11 +4,12 @@ import subprocess
 from contextlib import contextmanager
 from click.testing import CliRunner
 from pathlib import Path
-from typing import Generator
+from typing import Generator, Tuple
 
 import pytest
-
+from bumpversion.config import Config
 from bumpversion.versioning.models import Version
+from bumpversion.versioning.version_config import VersionConfig
 
 
 @pytest.fixture
@@ -41,10 +42,9 @@ def inside_dir(dirpath: Path) -> Generator:
         os.chdir(old_path)
 
 
-def get_config_data(overrides: dict) -> tuple:
+def get_config_data(overrides: dict) -> Tuple[Config, VersionConfig, Version]:
     """Get the configuration, version_config and version."""
     from bumpversion import config
-    from bumpversion.versioning.version_config import VersionConfig
 
     conf = config.get_configuration(config_file="missing", **overrides)
     version_config = VersionConfig(conf.parse, conf.serialize, conf.search, conf.replace, conf.parts)

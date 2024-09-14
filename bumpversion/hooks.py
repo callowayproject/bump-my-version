@@ -6,6 +6,7 @@ import subprocess
 from typing import Dict, List, Optional
 
 from bumpversion.config.models import Config
+from bumpversion.context import get_context
 from bumpversion.ui import get_indented_logger
 from bumpversion.versioning.models import Version
 
@@ -52,6 +53,15 @@ def version_env(version: Version, version_prefix: str) -> Dict[str, str]:
     return {f"{PREFIX}{version_prefix}{part.upper()}": version[part].value for part in version}
 
 
+def new_version_env(config: Config, current_version: Version, new_version: Version) -> Dict[str, str]:
+    """Provide the environment dictionary for new_version serialized and tag name."""
+    ctx = get_context(config, current_version, new_version)
+    new_version_string = config.version_config.serialize(new_version, ctx)
+    ctx["new_version"] = new_version_string
+    new_version_tag = config.tag_name.format(**ctx)
+    return {f"{PREFIX}NEW_VERSION": new_version_string, f"{PREFIX}NEW_VERSION_TAG": new_version_tag}
+
+
 def get_setup_hook_env(config: Config, current_version: Version) -> Dict[str, str]:
     """Provide the environment dictionary for `setup_hook`s."""
     return {**base_env(config), **scm_env(config), **version_env(current_version, "CURRENT_")}
@@ -64,6 +74,7 @@ def get_pre_commit_hook_env(config: Config, current_version: Version, new_versio
         **scm_env(config),
         **version_env(current_version, "CURRENT_"),
         **version_env(new_version, "NEW_"),
+        **new_version_env(config, current_version, new_version),
     }
 
 
@@ -74,6 +85,7 @@ def get_post_commit_hook_env(config: Config, current_version: Version, new_versi
         **scm_env(config),
         **version_env(current_version, "CURRENT_"),
         **version_env(new_version, "NEW_"),
+        **new_version_env(config, current_version, new_version),
     }
 
 
