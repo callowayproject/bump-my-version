@@ -1981,7 +1981,7 @@
 <a id="bumpversion.versioning.models"></a>
     <div class="doc doc-contents first">
 
-      <p>Models for managing versioning of software projects.</p>
+        <p>Models for managing versioning of software projects.</p>
 
 
 
@@ -2013,7 +2013,7 @@
     <div class="doc doc-contents ">
 
 
-      <p>The specification of a version and its parts.</p>
+        <p>The specification of a version and its parts.</p>
 
 
 
@@ -2041,7 +2041,7 @@
 
     <div class="doc doc-contents ">
 
-      <p>Increase the value of the specified component, reset its dependents, and return a new Version.</p>
+        <p>Increase the value of the specified component, reset its dependents, and return a new Version.</p>
 
     </div>
 
@@ -2060,7 +2060,7 @@
 
     <div class="doc doc-contents ">
 
-      <p>Return the names of the parts that are required.</p>
+        <p>Return the names of the parts that are required.</p>
 
     </div>
 
@@ -2079,7 +2079,7 @@
 
     <div class="doc doc-contents ">
 
-      <p>Return the values of the parts.</p>
+        <p>Return the values of the parts.</p>
 
     </div>
 
@@ -2117,7 +2117,7 @@
     <div class="doc doc-contents ">
 
 
-      <p>Represent part of a version number.</p>
+        <p>Represent part of a version number.</p>
 <p>Determines the PartFunction that rules how the part behaves when increased or reset
 based on the configuration given.</p>
 
@@ -2150,7 +2150,7 @@ based on the configuration given.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Is the part independent of the other parts?</p>
+        <p>Is the part independent of the other parts?</p>
     </div>
 
 </div>
@@ -2173,7 +2173,7 @@ based on the configuration given.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Is the part optional?</p>
+        <p>Is the part optional?</p>
     </div>
 
 </div>
@@ -2196,7 +2196,7 @@ based on the configuration given.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Return the value of the part.</p>
+        <p>Return the value of the part.</p>
     </div>
 
 </div>
@@ -2216,7 +2216,7 @@ based on the configuration given.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Return a part with bumped value.</p>
+        <p>Return a part with bumped value.</p>
 
     </div>
 
@@ -2235,7 +2235,7 @@ based on the configuration given.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Return a copy of the part.</p>
+        <p>Return a copy of the part.</p>
 
     </div>
 
@@ -2254,7 +2254,7 @@ based on the configuration given.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Return a part with first value.</p>
+        <p>Return a part with first value.</p>
 
     </div>
 
@@ -2284,7 +2284,7 @@ based on the configuration given.</p>
               Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
 
 
-      <p>Configuration of a version component.</p>
+        <p>Configuration of a version component.</p>
 <p>This is used to read in the configuration from the bumpversion config file.</p>
 
 
@@ -2317,7 +2317,7 @@ based on the configuration given.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Should the component always increment, even if it is not necessary?</p>
+        <p>Should the component always increment, even if it is not necessary?</p>
     </div>
 
 </div>
@@ -2341,7 +2341,7 @@ based on the configuration given.</p>
 
     <div class="doc doc-contents ">
 
-      <p>The format string for a CalVer component.</p>
+        <p>The format string for a CalVer component.</p>
     </div>
 
 </div>
@@ -2365,7 +2365,7 @@ based on the configuration given.</p>
 
     <div class="doc doc-contents ">
 
-      <p>The name of the component this component depends on.</p>
+        <p>The name of the component this component depends on.</p>
     </div>
 
 </div>
@@ -2389,7 +2389,7 @@ based on the configuration given.</p>
 
     <div class="doc doc-contents ">
 
-      <p>The first value to increment from.</p>
+        <p>The first value to increment from.</p>
     </div>
 
 </div>
@@ -2413,7 +2413,7 @@ based on the configuration given.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Is the component independent of the other components?</p>
+        <p>Is the component independent of the other components?</p>
     </div>
 
 </div>
@@ -2437,7 +2437,7 @@ based on the configuration given.</p>
 
     <div class="doc doc-contents ">
 
-      <p>The value that is optional to include in the version.</p>
+        <p>The value that is optional to include in the version.</p>
 <ul>
 <li>Defaults to first value in values or 0 in the case of numeric.</li>
 <li>Empty string means nothing is optional.</li>
@@ -2466,7 +2466,7 @@ based on the configuration given.</p>
 
     <div class="doc doc-contents ">
 
-      <p>The possible values for the component. If it and <code>calver_format</code> is None, the component is numeric.</p>
+        <p>The possible values for the component. If it and <code>calver_format</code> is None, the component is numeric.</p>
     </div>
 
 </div>
@@ -2488,7 +2488,7 @@ based on the configuration given.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Generate a version component from the configuration.</p>
+        <p>Generate a version component from the configuration.</p>
 
     </div>
 
@@ -2511,7 +2511,7 @@ based on the configuration given.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Set always_increment to True if calver_format is present.</p>
+        <p>Set always_increment to True if calver_format is present.</p>
 
     </div>
 
@@ -2543,7 +2543,7 @@ based on the configuration given.</p>
     <div class="doc doc-contents ">
 
 
-      <p>The specification of a version&rsquo;s components and their relationships.</p>
+        <p>The specification of a version&rsquo;s components and their relationships.</p>
 
 
 
@@ -2571,7 +2571,7 @@ based on the configuration given.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Generate a version from the given values.</p>
+        <p>Generate a version from the given values.</p>
 
     </div>
 
@@ -2590,7 +2590,7 @@ based on the configuration given.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Return the parts that depend on the given part.</p>
+        <p>Return the parts that depend on the given part.</p>
 
     </div>
 
@@ -2632,7 +2632,7 @@ based on the configuration given.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 2, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 14, 2024</span>
   </span>
 
     
