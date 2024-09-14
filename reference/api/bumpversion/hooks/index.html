@@ -1278,6 +1278,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#bumpversion.hooks.new_version_env" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;new_version_env
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#bumpversion.hooks.run_command" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;run_command
@@ -2137,6 +2146,29 @@
     <div class="doc doc-contents ">
 
         <p>Provide the environment dictionary for <code>setup_hook</code>s.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="bumpversion.hooks.new_version_env" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">new_version_env</span>
+
+
+<a href="#bumpversion.hooks.new_version_env" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">new_version_env</span><span class="p">(</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">,</span>
+    <span class="n">current_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span>
+    <span class="n">new_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Provide the environment dictionary for new_version serialized and tag name.</p>
 
     </div>
 
