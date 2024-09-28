@@ -49,9 +49,9 @@ def test_raises_exception_if_hook_fails(mocker):
 
     # Assert
     expected_debug_calls = [mocker.call("Running 'script1'")]
-    expected_info_calls = [mocker.call("output"), mocker.call("error")]
+    expected_warning_calls = [mocker.call("output"), mocker.call("error")]
     mock_logger.debug.assert_has_calls(expected_debug_calls)
-    mock_logger.info.assert_has_calls(expected_info_calls)
+    mock_logger.warning.assert_has_calls(expected_warning_calls)
     mock_run_command.assert_any_call("script1", env)
 
 
