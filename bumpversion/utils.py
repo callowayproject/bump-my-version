@@ -92,6 +92,7 @@ def set_nested_value(d: dict, value: Any, path: str) -> None:
 
     Raises:
         ValueError: If an element in the path is not a dictionary.
+        KeyError: If a key in the path does not exist.
     """
     keys = path.split(".")
     last_element = keys[-1]
@@ -103,7 +104,7 @@ def set_nested_value(d: dict, value: Any, path: str) -> None:
         elif key not in current_element:
             raise KeyError(f"Key '{key}' not found at '{'.'.join(keys[:keys.index(key)])}'")
         elif not isinstance(current_element[key], dict):
-            raise ValueError(f"Path '{'.'.join(keys[:i+1])}' does not lead to a dictionary.")
+            raise ValueError(f"Path '{'.'.join(keys[:i + 1])}' does not lead to a dictionary.")
         else:
             current_element = current_element[key]
 

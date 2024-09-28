@@ -101,7 +101,7 @@ def export_file(
         "--scale",
         "2",
     ]
-    result = subprocess.run(cmd)  # noqa: S603
+    result = subprocess.run(cmd, check=False)  # noqa: S603
     return result.returncode
 
 
@@ -116,7 +116,7 @@ def export_file_if_needed(source: Path, page_index: int, dest_path: Path) -> Non
     if not use_cached_file(source, dest_path):
         export_file(source, page_index, dest_path, "svg")
     else:
-        print(f"Using cached file {dest_path}")  # noqa: T201
+        print(f"Using cached file {dest_path}")
 
 
 if __name__ == "__main__":

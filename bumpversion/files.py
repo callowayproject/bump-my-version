@@ -206,7 +206,7 @@ class ConfiguredFile:
         if file_content_before == file_content_after and current_version.original:
             og_context = deepcopy(context)
             og_context["current_version"] = current_version.original
-            search_for_og, og_raw_search_pattern = self.file_change.get_search_pattern(og_context)
+            search_for_og, _ = self.file_change.get_search_pattern(og_context)
             file_content_after = search_for_og.sub(replace_with, file_content_before)
 
         log_changes(self.file_change.filename, file_content_before, file_content_after, dry_run)

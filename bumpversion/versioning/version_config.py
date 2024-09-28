@@ -76,7 +76,7 @@ class VersionConfig:
             A Version object representing the string.
 
         Raises:
-            BumpversionException: If a version string is invalid and raise_error is True.
+            BumpVersionError: If a version string is invalid and raise_error is True.
         """
         parsed = parse_version(version_string, self.parse_regex.pattern)
 

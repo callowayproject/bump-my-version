@@ -21,7 +21,9 @@ def run_command(script: str, environment: Optional[dict] = None) -> subprocess.C
         raise TypeError(f"`script` must be a string, not {type(script)}")
     if environment and not isinstance(environment, dict):
         raise TypeError(f"`environment` must be a dict, not {type(environment)}")
-    return subprocess.run(script, env=environment, encoding="utf-8", shell=True, text=True, capture_output=True)
+    return subprocess.run(
+        script, env=environment, encoding="utf-8", shell=True, text=True, capture_output=True, check=False
+    )
 
 
 def base_env(config: Config) -> Dict[str, str]:
