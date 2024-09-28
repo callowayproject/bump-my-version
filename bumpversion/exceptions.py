@@ -59,3 +59,9 @@ class BadInputError(BumpVersionError):
     """User input was bad."""
 
     pass
+
+
+class HookError(BumpVersionError):
+    """A hook failed."""
+
+    pass
