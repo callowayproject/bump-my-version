@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.27.0 (2024-10-06)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.26.1...0.27.0)
+
+### Fixes
+
+- Fixed test to look for warning logs. [538c420](https://github.com/callowayproject/bump-my-version/commit/538c4205c1d711daf732027719f5fa67e0418d5e)
+    
+- Refactor and enhance error handling. [c84bfa7](https://github.com/callowayproject/bump-my-version/commit/c84bfa7dcb5914c4adbfa9213d377fd705949501)
+    
+  Updated subprocess calls to disable check, refined lint configurations, fixed type annotations and exceptions, and improved dictionary path validation.
+### New
+
+- Add HookError for failed hook execution with tests. [39fc233](https://github.com/callowayproject/bump-my-version/commit/39fc233163222070d5a7c4549e59ea2b292c6ba5)
+    
+  Raise HookError when a hook script exits with a non-zero status. Modified logger to display warnings instead of debug messages in such scenarios. Added tests to ensure exceptions are raised for failed hooks.
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [130478d](https://github.com/callowayproject/bump-my-version/commit/130478d664e7ed9abe88a9882b00e7d5e4a5c37a)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.6.5 → v0.6.7](https://github.com/astral-sh/ruff-pre-commit/compare/v0.6.5...v0.6.7)
+
+- Create FUNDING.yml. [2bda200](https://github.com/callowayproject/bump-my-version/commit/2bda20037cf10d714fb906fa05b73103c56bb6c3)
+    
+
 ## 0.26.1 (2024-09-14)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.26.0...0.26.1)
 
