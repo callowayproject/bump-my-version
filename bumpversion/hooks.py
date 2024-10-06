@@ -7,6 +7,7 @@ from typing import Dict, List, Optional
 
 from bumpversion.config.models import Config
 from bumpversion.context import get_context
+from bumpversion.exceptions import HookError
 from bumpversion.ui import get_indented_logger
 from bumpversion.versioning.models import Version
 
@@ -21,7 +22,9 @@ def run_command(script: str, environment: Optional[dict] = None) -> subprocess.C
         raise TypeError(f"`script` must be a string, not {type(script)}")
     if environment and not isinstance(environment, dict):
         raise TypeError(f"`environment` must be a dict, not {type(environment)}")
-    return subprocess.run(script, env=environment, encoding="utf-8", shell=True, text=True, capture_output=True)
+    return subprocess.run(
+        script, env=environment, encoding="utf-8", shell=True, text=True, capture_output=True, check=False
+    )
 
 
 def base_env(config: Config) -> Dict[str, str]:
@@ -99,10 +102,15 @@ def run_hooks(hooks: List[str], env: Dict[str, str], dry_run: bool = False) -> N
         logger.debug(f"Running {script!r}")
         logger.indent()
         result = run_command(script, env)
-        logger.debug(result.stdout)
-        logger.debug(result.stderr)
-        logger.debug(f"Exited with {result.returncode}")
-        logger.indent()
+        if result.returncode != 0:
+            logger.warning(result.stdout)
+            logger.warning(result.stderr)
+            raise HookError(f"{script!r} exited with {result.returncode}. ")
+        else:
+            logger.debug(f"Exited with {result.returncode}")
+            logger.debug(result.stdout)
+            logger.debug(result.stderr)
+        logger.dedent()
     logger.dedent()
 
 

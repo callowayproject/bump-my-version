@@ -57,7 +57,7 @@ def process_file(markdown_path: Path) -> None:
         for key, value in update.items():
             post[key] = value
         new_text = frontmatter.dumps(post)
-        print(f"Updating {markdown_path}")  # noqa: T201
+        print(f"Updating {markdown_path}")
         markdown_path.write_text(new_text, encoding="utf-8")
 
 

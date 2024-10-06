@@ -20,7 +20,7 @@ def output_default(value: dict) -> None:
         print_info(next(iter(value.values())))
     else:
         buffer = StringIO()
-        pprint(value, stream=buffer, sort_dicts=True)  # noqa: T203
+        pprint(value, stream=buffer, sort_dicts=True)
         print_info(buffer.getvalue())
 
 
@@ -77,6 +77,8 @@ def resolve_name(obj: Any, name: str, default: Any = None, err_on_missing: bool 
 
     Raises:
         BadInputError: If we cannot resolve the name and `err_on_missing` is `True`
+        AttributeError: If a @property decorator raised it
+        TypeError: If a @property decorator raised it
 
     # noqa: DAR401
     """
