@@ -1,0 +1,12 @@
+.*
+bump_my_version.egg-info/
+docs/
+overrides/
+test-reports/
+tests/
+tools/
+*.yaml
+CODEOWNERS
+Dockerfile
+Makefile
+MANIFEST.in
