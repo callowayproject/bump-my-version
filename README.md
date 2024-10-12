@@ -240,6 +240,7 @@ name: Bump version
 
 on:
   workflow_dispatch:
+    inputs:
       bump-type:
         description: 'Bump type'
         required: true
