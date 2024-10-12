@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "bump-my-version"
@@ -85,11 +85,12 @@ test = [
     "pytest-sugar",
 ]
 
-[tool.setuptools.dynamic]
-version = {attr = "bumpversion.__version__"}
+[tool.hatch.version]
+path = "bumpversion/__init__.py"
 
-[tool.setuptools.packages.find]
-exclude = ["example*", "tests*", "docs*", "build", "tools", "site"]
+[tool.hatch.build.targets.wheel]
+packages = ["bumpversion"]
+
 
 [tool.coverage.run]
 branch = true
