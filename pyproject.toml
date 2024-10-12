@@ -289,6 +289,15 @@ filename = "action.yml"
 search = "bump-my-version=={current_version}"
 replace = "bump-my-version=={new_version}"
 
+[[tool.bumpversion.files]]
+filename = "Dockerfile"
+search = "created=\\d{{4}}-\\d{{2}}-\\d{{2}}T\\d{{2}}:\\d{{2}}:\\d{{2}}Z"
+replace = "created={utcnow:%Y-%m-%dT%H:%M:%SZ}"
+regex = true
+
+[[tool.bumpversion.files]]
+filename = "Dockerfile"
+
 [tool.pydoclint]
 style = "google"
 exclude = '\.git|tests'

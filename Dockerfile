@@ -21,6 +21,14 @@ ARG USERNAME=app
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
+LABEL org.opencontainers.image.authors="Calloway Project https://github.com/callowayproject"
+LABEL org.opencontainers.image.created=2024-10-12T09:38:00Z
+LABEL org.opencontainers.image.url=https://github.com/callowayproject/bump-my-version
+LABEL org.opencontainers.image.documentation=https://callowayproject.github.io/bump-my-version
+LABEL org.opencontainers.image.source=https://github.com/callowayproject/bump-my-version
+LABEL org.opencontainers.image.version=0.27.0
+LABEL org.opencontainers.image.licenses=MIT
+
 # Add a non-root user and group
 RUN groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
