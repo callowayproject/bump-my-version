@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "bump-my-version"
@@ -85,11 +85,12 @@ test = [
     "pytest-sugar",
 ]
 
-[tool.setuptools.dynamic]
-version = {attr = "bumpversion.__version__"}
+[tool.hatch.version]
+path = "bumpversion/__init__.py"
 
-[tool.setuptools.packages.find]
-exclude = ["example*", "tests*", "docs*", "build", "tools", "site"]
+[tool.hatch.build.targets.wheel]
+packages = ["bumpversion"]
+
 
 [tool.coverage.run]
 branch = true
@@ -287,6 +288,15 @@ replace = "{current_version}...{new_version}"
 filename = "action.yml"
 search = "bump-my-version=={current_version}"
 replace = "bump-my-version=={new_version}"
+
+[[tool.bumpversion.files]]
+filename = "Dockerfile"
+search = "created=\\d{{4}}-\\d{{2}}-\\d{{2}}T\\d{{2}}:\\d{{2}}:\\d{{2}}Z"
+replace = "created={utcnow:%Y-%m-%dT%H:%M:%SZ}"
+regex = true
+
+[[tool.bumpversion.files]]
+filename = "Dockerfile"
 
 [tool.pydoclint]
 style = "google"

@@ -11,3 +11,8 @@ updates:
           - "*"  # Group all Actions updates into a single larger pull request
     schedule:
       interval: weekly
+
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: "daily" # Update Docker tags daily
