@@ -97,9 +97,9 @@ def run_hooks(hooks: List[str], env: Dict[str, str], dry_run: bool = False) -> N
     logger.indent()
     for script in hooks:
         if dry_run:
-            logger.debug(f"Would run {script!r}")
+            logger.info(f"Would run {script!r}")
             continue
-        logger.debug(f"Running {script!r}")
+        logger.info(f"Running {script!r}")
         logger.indent()
         result = run_command(script, env)
         if result.returncode != 0:
