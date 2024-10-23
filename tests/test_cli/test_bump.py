@@ -155,8 +155,18 @@ def test_cli_options_override_config(tmp_path: Path, fixtures_path: Path, mocker
 @pytest.mark.parametrize(
     ["repo", "scm_command"],
     [
-        param("git_repo", "git", id="git"),
-        param("hg_repo", "hg", id="hg"),
+        param(
+            "git_repo",
+            "git",
+            id="git",
+            marks=pytest.mark.skipif(not shutil.which("git"), reason="Git is not available."),
+        ),
+        param(
+            "hg_repo",
+            "hg",
+            id="hg",
+            marks=pytest.mark.skipif(not shutil.which("hg"), reason="Mercurial is not available."),
+        ),
     ],
 )
 def test_dirty_work_dir_raises_error(repo: str, scm_command: str, request, runner):
