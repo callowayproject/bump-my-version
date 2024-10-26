@@ -63,7 +63,12 @@ class TestHookSuites:
         suite_func(config, *suite_args)
 
         # Assert
-        mock_logger.info.assert_called_once_with(f"Running {suite_name} hooks:".replace("_", "-"))
+        expected_info_calls = [
+            mocker.call(f"Running {suite_name} hooks:".replace("_", "-")),
+            mocker.call("Running 'script1'"),
+            mocker.call("Running 'script2'"),
+        ]
+        mock_logger.info.assert_has_calls(expected_info_calls)
         mock_env.assert_called_once_with(config, *suite_args)
         expected_run_command_calls = [
             mocker.call("script1", env),
