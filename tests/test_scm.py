@@ -1,6 +1,7 @@
 """Tests of the VCS module."""
 
 import logging
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -176,6 +177,7 @@ def test_hg_is_not_usable(tmp_path: Path) -> None:
         assert not scm.Mercurial.is_usable()
 
 
+@pytest.mark.skipif(not shutil.which("hg"), reason="Mercurial is not available.")
 def test_hg_is_usable(hg_repo: Path) -> None:
     """Should return false if it is not a mercurial repo."""
     with inside_dir(hg_repo):
@@ -185,8 +187,20 @@ def test_hg_is_usable(hg_repo: Path) -> None:
 @pytest.mark.parametrize(
     ["repo", "scm_command", "scm_class"],
     [
-        param("git_repo", "git", scm.Git, id="git"),
-        param("hg_repo", "hg", scm.Mercurial, id="hg"),
+        param(
+            "git_repo",
+            "git",
+            scm.Git,
+            id="git",
+            marks=pytest.mark.skipif(not shutil.which("git"), reason="Git is not available."),
+        ),
+        param(
+            "hg_repo",
+            "hg",
+            scm.Mercurial,
+            id="hg",
+            marks=pytest.mark.skipif(not shutil.which("hg"), reason="Mercurial is not available."),
+        ),
     ],
 )
 def test_commit_and_tag_from_below_scm_root(repo: str, scm_command: str, scm_class: scm.SourceCodeManager, request):
@@ -226,8 +240,20 @@ def test_commit_and_tag_from_below_scm_root(repo: str, scm_command: str, scm_cla
 @pytest.mark.parametrize(
     ["repo", "scm_command", "scm_class"],
     [
-        param("git_repo", "git", scm.Git, id="git"),
-        param("hg_repo", "hg", scm.Mercurial, id="hg"),
+        param(
+            "git_repo",
+            "git",
+            scm.Git,
+            id="git",
+            marks=pytest.mark.skipif(not shutil.which("git"), reason="Git is not available."),
+        ),
+        param(
+            "hg_repo",
+            "hg",
+            scm.Mercurial,
+            id="hg",
+            marks=pytest.mark.skipif(not shutil.which("hg"), reason="Mercurial is not available."),
+        ),
     ],
 )
 @pytest.mark.parametrize(
