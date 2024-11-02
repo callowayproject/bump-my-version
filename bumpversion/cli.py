@@ -327,7 +327,7 @@ def bump(
     envvar="BUMPVERSION_FORMAT",
     type=click.Choice(["default", "yaml", "json"], case_sensitive=False),
     default="default",
-    help="Config file to read most of the variables from.",
+    help="Specify the output format.",
 )
 @click.option(
     "-i",
