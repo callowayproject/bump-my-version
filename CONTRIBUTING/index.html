@@ -14,7 +14,7 @@
       
       
       <link rel="icon" href="../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.44">
     
     
       
@@ -2210,8 +2210,8 @@ to <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#114;&#101;&#121
 <span class="go">python -m venv env</span>
 <span class="go">source env/bin/activate</span>
 
-<span class="gp"># </span>Install<span class="w"> </span>the<span class="w"> </span>development<span class="w"> </span>requirements
-<span class="go">python -m pip install -r requirements/dev.txt</span>
+<span class="gp"># </span>Install<span class="w"> </span>the<span class="w"> </span>project<span class="w"> </span><span class="k">in</span><span class="w"> </span>editable<span class="w"> </span>mode<span class="w"> </span>with<span class="w"> </span>its<span class="w"> </span>optional<span class="w"> </span>dependencies
+<span class="go">python -m pip install -e .[dev,test]</span>
 </code></pre></div>
 <h3 id="run-tests">Run tests<a class="headerlink" href="#run-tests" title="Permanent link">&para;</a></h3>
 <p>Once setup, you should be able to run tests:</p>
