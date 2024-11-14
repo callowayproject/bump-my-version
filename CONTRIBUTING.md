@@ -126,8 +126,8 @@ cd bump-my-version
 python -m venv env
 source env/bin/activate
 
-# Install the development requirements
-python -m pip install -r requirements/dev.txt
+# Install the project in editable mode with its optional dependencies
+python -m pip install -e .[dev,test]
 ```
 
 ### Run tests
