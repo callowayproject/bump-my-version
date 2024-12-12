@@ -9,6 +9,10 @@ inputs:
     description: 'GitHub Token to use instead of the default one.'
     required: false
     default: ${{ github.token }}
+  branch:
+    description: 'Destination branch to push changes.'
+    required: false
+    default: ${{ github.ref }}
 outputs:
   bumped:
     description: 'Whether there was a bump or not [true|false]'
@@ -54,4 +58,5 @@ runs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ inputs.github-token }}
+        branch: ${{ inputs.branch }}
         force: true
