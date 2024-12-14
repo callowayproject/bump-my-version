@@ -56,6 +56,8 @@ jobs:
   release-test-pypi:
     name: Publish in-dev package to test.pypi.org
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v4
         with:

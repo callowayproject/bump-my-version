@@ -210,8 +210,6 @@ select = [
 ignore = [
     "ANN002", # missing-type-args
     "ANN003", # missing-type-kwargs
-    "ANN101", # missing-type-self
-    "ANN102", # missing-type-cls
     "ANN204", # missing-return-type-special-method
     "ANN401", # any-type
     "S101", # assert
