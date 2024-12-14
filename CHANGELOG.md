@@ -1,5 +1,69 @@
 # Changelog
 
+## 0.28.2 (2024-12-14)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.28.1...0.28.2)
+
+### Fixes
+
+- Fixed Ruff errors and workflow permissions. [11c1e42](https://github.com/callowayproject/bump-my-version/commit/11c1e42954281dac9febcac80f10d3775fcfcbbc)
+    
+- Fixed more uv run workflows. [d829276](https://github.com/callowayproject/bump-my-version/commit/d829276347c5391a9d2233e56e30300b69172d14)
+    
+- Fixed installation of test dependencies. [cbf10f2](https://github.com/callowayproject/bump-my-version/commit/cbf10f23c33e8d62d4851f11579f93a359553bff)
+    
+- Fixed issue with python install. [6e2da8d](https://github.com/callowayproject/bump-my-version/commit/6e2da8d54ad79ed3b46976af57d3721b3e50b370)
+    
+- Fixed GitHub workflows. [86a0a3b](https://github.com/callowayproject/bump-my-version/commit/86a0a3bdbebbde81e17df687bc4d7303d27d490f)
+    
+- Refactor warning display with Rich formatting. [2b7c905](https://github.com/callowayproject/bump-my-version/commit/2b7c905c792e1cbe22040a5ba890c4440990f99b)
+    
+  Replace plain click-based warnings with styled Rich panels for better visibility. This enhances user experience by providing clearer and more visually organized warnings.
+- Refactored dependencies config. [39fed07](https://github.com/callowayproject/bump-my-version/commit/39fed070669258650cdf5d2a4c180399bf256ad6)
+    
+  - Changed `project.optional-dependencies` to `dependency-groups`
+### New
+
+- Add branch selection for github-push-action. [4ecc07c](https://github.com/callowayproject/bump-my-version/commit/4ecc07cefa435964d0b1476cf95916c56885bdce)
+    
+### Other
+
+- [pre-commit.ci] auto fixes from pre-commit.com hooks. [183a6f2](https://github.com/callowayproject/bump-my-version/commit/183a6f29a8781eb76029f677aa83678a2ed1d505)
+    
+  for more information, see https://pre-commit.ci
+- [pre-commit.ci] pre-commit autoupdate. [075d0da](https://github.com/callowayproject/bump-my-version/commit/075d0da09b12c91be27ac3f28ba587c308e0c78e)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.7.4 → v0.8.2](https://github.com/astral-sh/ruff-pre-commit/compare/v0.7.4...v0.8.2)
+
+- [pre-commit.ci] pre-commit autoupdate. [6ed9f0e](https://github.com/callowayproject/bump-my-version/commit/6ed9f0e03e83407d8dca0cdf8d9ec920d8479564)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.7.1 → v0.7.4](https://github.com/astral-sh/ruff-pre-commit/compare/v0.7.1...v0.7.4)
+
+- Bump codecov/codecov-action from 4 to 5 in the github-actions group. [4194af8](https://github.com/callowayproject/bump-my-version/commit/4194af89ca515f894447180152c87ef1f3c9be2a)
+    
+  Bumps the github-actions group with 1 update: [codecov/codecov-action](https://github.com/codecov/codecov-action).
+
+
+  Updates `codecov/codecov-action` from 4 to 5
+  - [Release notes](https://github.com/codecov/codecov-action/releases)
+  - [Changelog](https://github.com/codecov/codecov-action/blob/main/CHANGELOG.md)
+  - [Commits](https://github.com/codecov/codecov-action/compare/v4...v5)
+
+  ---
+  **updated-dependencies:** - dependency-name: codecov/codecov-action
+dependency-type: direct:production
+update-type: version-update:semver-major
+dependency-group: github-actions
+
+  **signed-off-by:** dependabot[bot] <support@github.com>
+
+### Updates
+
+- Updated uv.lock. [09b825b](https://github.com/callowayproject/bump-my-version/commit/09b825b57f71ffdd08ddd50c655097812d5b8987)
+    
+- Update setup section in contributing guide. [4bc279b](https://github.com/callowayproject/bump-my-version/commit/4bc279b7946b5eebf6ce9509ff02636bed6b83f9)
+    
+  Use extra dependencies specifier (referring to pyproject.toml) in the instructions, instead of requirements txt files (which were removed in previous commits).
+
 ## 0.28.1 (2024-11-03)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.28.0...0.28.1)
 
