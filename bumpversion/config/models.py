@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from bumpversion.ui import get_indented_logger
-from bumpversion.versioning.models import VersionComponentSpec  # NOQA: TCH001
+from bumpversion.versioning.models import VersionComponentSpec  # NOQA: TC001
 
 if TYPE_CHECKING:
     from bumpversion.scm import SCMInfo

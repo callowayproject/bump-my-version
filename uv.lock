@@ -137,7 +137,7 @@ dependencies = [
     { name = "wcmatch" },
 ]
 
-[package.optional-dependencies]
+[package.dev-dependencies]
 dev = [
     { name = "generate-changelog" },
     { name = "git-fame" },
@@ -173,40 +173,48 @@ test = [
 
 [package.metadata]
 requires-dist = [
-    { name = "black", marker = "extra == 'docs'" },
     { name = "click" },
-    { name = "coverage", marker = "extra == 'test'" },
-    { name = "freezegun", marker = "extra == 'test'" },
-    { name = "generate-changelog", marker = "extra == 'dev'", specifier = ">=0.7.6" },
-    { name = "git-fame", marker = "extra == 'dev'", specifier = ">=1.12.2" },
-    { name = "markdown-customblocks", marker = "extra == 'docs'" },
-    { name = "mdx-truly-sane-lists", marker = "extra == 'docs'" },
-    { name = "mkdocs", marker = "extra == 'docs'" },
-    { name = "mkdocs-click", marker = "extra == 'docs'" },
-    { name = "mkdocs-drawio", marker = "extra == 'docs'" },
-    { name = "mkdocs-gen-files", marker = "extra == 'docs'" },
-    { name = "mkdocs-git-authors-plugin", marker = "extra == 'docs'" },
-    { name = "mkdocs-git-committers-plugin", marker = "extra == 'docs'" },
-    { name = "mkdocs-git-revision-date-localized-plugin", marker = "extra == 'docs'", specifier = ">=1.2.6" },
-    { name = "mkdocs-include-markdown-plugin", marker = "extra == 'docs'" },
-    { name = "mkdocs-literate-nav", marker = "extra == 'docs'" },
-    { name = "mkdocs-material", marker = "extra == 'docs'" },
-    { name = "mkdocstrings", extras = ["python"], marker = "extra == 'docs'" },
-    { name = "pip-tools", marker = "extra == 'dev'" },
-    { name = "pre-commit", marker = "extra == 'dev'" },
-    { name = "pre-commit", marker = "extra == 'test'" },
     { name = "pydantic", specifier = ">=2.0.0" },
     { name = "pydantic-settings" },
-    { name = "pytest", marker = "extra == 'test'" },
-    { name = "pytest-cov", marker = "extra == 'test'" },
-    { name = "pytest-mock", marker = "extra == 'test'" },
-    { name = "pytest-sugar", marker = "extra == 'test'" },
-    { name = "python-frontmatter", marker = "extra == 'docs'" },
     { name = "questionary" },
     { name = "rich" },
     { name = "rich-click" },
     { name = "tomlkit" },
     { name = "wcmatch", specifier = ">=8.5.1" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "generate-changelog", specifier = ">=0.7.6" },
+    { name = "git-fame", specifier = ">=1.12.2" },
+    { name = "pip-tools" },
+    { name = "pre-commit" },
+]
+docs = [
+    { name = "black" },
+    { name = "markdown-customblocks" },
+    { name = "mdx-truly-sane-lists" },
+    { name = "mkdocs" },
+    { name = "mkdocs-click" },
+    { name = "mkdocs-drawio" },
+    { name = "mkdocs-gen-files" },
+    { name = "mkdocs-git-authors-plugin" },
+    { name = "mkdocs-git-committers-plugin" },
+    { name = "mkdocs-git-revision-date-localized-plugin", specifier = ">=1.2.6" },
+    { name = "mkdocs-include-markdown-plugin" },
+    { name = "mkdocs-literate-nav" },
+    { name = "mkdocs-material" },
+    { name = "mkdocstrings", extras = ["python"] },
+    { name = "python-frontmatter" },
+]
+test = [
+    { name = "coverage" },
+    { name = "freezegun" },
+    { name = "pre-commit" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "pytest-mock" },
+    { name = "pytest-sugar" },
 ]
 
 [[package]]

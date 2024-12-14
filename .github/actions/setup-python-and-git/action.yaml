@@ -4,19 +4,21 @@ inputs:
   python-version:
     description: 'Python version to use'
     required: false
-    default: '3.11'
+    default: '3.12'
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-python@v4
+    - uses: actions/setup-python@v5
       name: Setup Python
       with:
         python-version: ${{ inputs.python-version }}
-        cache: 'pip' # caching pip dependencies
-
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v4
+      with:
+        version: "latest"
     - name: Git check
       run: |
-        git config --global user.email "bump-my-version@github.actions"
+        git config --global user.email "action@github.actions"
         git config --global user.name "Testing Git"
         git --version
         git config --list

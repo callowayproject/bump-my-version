@@ -1,14 +1,8 @@
 name: Release
 description: Create a GitHub release and upload the package to PyPI
 inputs:
-  pypi-api-token:
-    description: 'PyPI API token'
-    required: true
   tag-name:
     description: 'The name of the tag for the GitHub release'
-    required: true
-  github-token:
-    description: 'GitHub token'
     required: true
 
 runs:
@@ -31,9 +25,6 @@ runs:
         files: dist/*
         tag_name: "${{ inputs.tag-name }}"
         body_path: release-notes.md
-        token: ${{ inputs.github-token }}
 
     - name: Upload package to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        password: ${{ inputs.pypi-api-token }}
