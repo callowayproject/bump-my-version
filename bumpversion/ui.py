@@ -1,10 +1,14 @@
 """Utilities for user interface."""
 
 import logging
+import sys
 
 import click
 from click import UsageError, secho
 from rich.logging import RichHandler
+from rich.padding import Padding
+from rich.panel import Panel
+from rich_click.rich_help_formatter import RichHelpFormatter
 
 from bumpversion.indented_logger import IndentedLoggerAdapter
 
@@ -50,4 +54,17 @@ def print_error(msg: str) -> None:
 
 def print_warning(msg: str) -> None:
     """Echo a warning to the console."""
-    secho(f"\nWARNING:\n\n{msg}\n", fg="yellow")
+    formatter = RichHelpFormatter(file=sys.stderr)
+    config = formatter.config
+
+    formatter.write(
+        Padding(
+            Panel(
+                formatter.highlighter(msg),
+                border_style="yellow",
+                title="Warning",
+                title_align=config.align_errors_panel,
+            ),
+            (0, 0, 1, 0),
+        )
+    )
