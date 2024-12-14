@@ -42,8 +42,10 @@ jobs:
         run: |
           echo -e '[ui]\nusername = Testing Mercurial<bumpversion-test-hg@github.actions>' > ~/.hgrc
           hg --version
-      - name: Install test dependencies
-        run: pip install '.[test]'
+      - name: Install requirements
+        shell: bash
+        run: |
+          uv sync -p 3.12 --group dev
       - name: Test
         run: pytest --cov-report=xml
       - name: Upload coverage to Codecov

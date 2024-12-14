@@ -96,5 +96,3 @@ jobs:
         uses: ./.github/actions/release
         with:
           tag-name: ${{ env.TAG_NAME }}
-          github-token: ${{ secrets.PAT }}
-          pypi-api-token: ${{ secrets.PYPI_API_TOKEN }}

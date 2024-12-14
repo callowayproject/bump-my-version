@@ -19,18 +19,17 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.PAT }}
 
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v5
+      - name: Setup Python and Git
+        uses: ./.github/actions/setup-python-and-git
         with:
-          python-version: "3.10"
+          python-version: '3.12'
 
       - name: Install dependencies
         run: |
           git pull --all
-          python -m pip install ".[docs]"
+          uv sync -p 3.12 --group docs
 
       - name: Build and deploy documentation
         run: |
-          mkdocs gh-deploy --strict -v
+          uv run mkdocs gh-deploy --strict
