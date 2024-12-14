@@ -22,22 +22,17 @@ jobs:
           - ubuntu-latest
           - windows-latest
         python-version:
-          - "3.8"
           - "3.9"
           - "3.10"
           - "3.11"
+          - "3.12"
+          - "3.13"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: ./.github/actions/setup-python-and-git
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Check git is working
-        run: |
-          git config --global user.email "bumpversion-test-git@github.actions"
-          git config --global user.name "Testing Git"
-          git --version
-          git config --list
       - name: Check mercurial is working
         run: |
           echo -e '[ui]\nusername = Testing Mercurial<bumpversion-test-hg@github.actions>' > ~/.hgrc
