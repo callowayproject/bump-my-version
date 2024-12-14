@@ -40,7 +40,7 @@ jobs:
       - name: Install requirements
         shell: bash
         run: |
-          uv sync -p 3.12 --group dev
+          uv sync -p 3.12 --group dev --group test
       - name: Test
         run: pytest --cov-report=xml
       - name: Upload coverage to Codecov
