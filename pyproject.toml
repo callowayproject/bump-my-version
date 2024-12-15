@@ -266,7 +266,7 @@ serialize = [
     "{major}.{minor}.{patch}"
 ]
 message = "Version updated from {current_version} to {new_version}"
-pre_commit_hooks = ["uv sync --upgrade"]
+pre_commit_hooks = ["uv sync --upgrade", "git add uv.lock"]
 
 [tool.bumpversion.parts.dev]
 values = ["release", "post"]

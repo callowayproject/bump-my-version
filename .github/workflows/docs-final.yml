@@ -4,15 +4,14 @@ on:
   push:
     branches: [ "master" ]
 
-permissions:
-  contents: read
-  pull-requests: write
-  pages: write
-
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      pages: write
 
     steps:
       - name: Checkout
