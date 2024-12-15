@@ -11,7 +11,7 @@ on:
 concurrency: preview-${{ github.ref }}
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
   pages: write
 
