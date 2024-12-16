@@ -39,7 +39,7 @@ runs:
         git config --global user.name "$(gh api /users/${GITHUB_ACTOR} | jq .name -r)"
         git config -l
     - name: Install Python
-      uses: actions/setup-python@v5.1.1
+      uses: actions/setup-python@v5.3.0
       with:
         python-version: '3.12'
     - name: Install bump-my-version
