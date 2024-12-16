@@ -1,0 +1,200 @@
+/*************
+ Grid Modification
+*/
+
+.md-typeset .grid.wide-gap {
+  gap: 1rem;
+}
+
+/*************
+ Cards
+*/
+.card-container {
+  background-color: white;
+  color: rgba(0, 0, 0, 0.87);
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 2px 1px -1px, rgba(0, 0, 0, 0.14) 0 1px 1px 0, rgba(0, 0, 0, 0.12) 0 1px 3px 0;
+  overflow: hidden;
+}
+
+.card-container.depth-0 {
+  box-shadow: none;
+}
+
+/*************
+ Cards - Header
+*/
+
+.card-header {
+  padding: 16px 16px 24px;
+  background: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+}
+
+.card-header.backstage-green {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='1368' height='400' fill='none'%3e%3cmask id='a' width='1368' height='401' x='0' y='0' maskUnits='userSpaceOnUse'%3e%3cpath fill='url(%23paint0_linear)' d='M437 116C223 116 112 0 112 0h1256v400c-82 0-225-21-282-109-112-175-436-175-649-175z'/%3e%3cpath fill='url(%23paint1_linear)' d='M1368 400V282C891-29 788 40 711 161 608 324 121 372 0 361v39h1368z'/%3e%3cpath fill='url(%23paint2_linear)' d='M1368 244v156H0V94c92-24 198-46 375 0l135 41c176 51 195 109 858 109z'/%3e%3cpath fill='url(%23paint3_linear)' d='M1252 400h116c-14-7-35-14-116-16-663-14-837-128-1013-258l-85-61C98 28 46 8 0 0v400h1252z'/%3e%3c/mask%3e%3cg mask='url(%23a)'%3e%3cpath fill='white' d='M-172-98h1671v601H-172z'/%3e%3c/g%3e%3cdefs%3e%3clinearGradient id='paint0_linear' x1='602' x2='1093.5' y1='-960.5' y2='272' gradientUnits='userSpaceOnUse'%3e%3cstop stop-color='white'/%3e%3cstop offset='1' stop-color='white' stop-opacity='0'/%3e%3c/linearGradient%3e%3clinearGradient id='paint1_linear' x1='482' x2='480' y1='1058.5' y2='70.5' gradientUnits='userSpaceOnUse'%3e%3cstop stop-color='white'/%3e%3cstop offset='1' stop-color='white' stop-opacity='0'/%3e%3c/linearGradient%3e%3clinearGradient id='paint2_linear' x1='424' x2='446.1' y1='-587.5' y2='274.6' gradientUnits='userSpaceOnUse'%3e%3cstop stop-color='white'/%3e%3cstop offset='1' stop-color='white' stop-opacity='0'/%3e%3c/linearGradient%3e%3clinearGradient id='paint3_linear' x1='587' x2='349' y1='-1120.5' y2='341' gradientUnits='userSpaceOnUse'%3e%3cstop stop-color='white'/%3e%3cstop offset='1' stop-color='white' stop-opacity='0'/%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e"), linear-gradient(90deg, rgb(0, 91, 75), rgb(0, 91, 75));
+  color: rgb(255, 255, 255);
+}
+
+.card-header.backstage-blue {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='1368' height='400' fill='none'%3e%3cmask id='a' width='1368' height='401' x='0' y='0' maskUnits='userSpaceOnUse'%3e%3cpath fill='url(%23paint0_linear)' d='M437 116C223 116 112 0 112 0h1256v400c-82 0-225-21-282-109-112-175-436-175-649-175z'/%3e%3cpath fill='url(%23paint1_linear)' d='M1368 400V282C891-29 788 40 711 161 608 324 121 372 0 361v39h1368z'/%3e%3cpath fill='url(%23paint2_linear)' d='M1368 244v156H0V94c92-24 198-46 375 0l135 41c176 51 195 109 858 109z'/%3e%3cpath fill='url(%23paint3_linear)' d='M1252 400h116c-14-7-35-14-116-16-663-14-837-128-1013-258l-85-61C98 28 46 8 0 0v400h1252z'/%3e%3c/mask%3e%3cg mask='url(%23a)'%3e%3cpath fill='white' d='M-172-98h1671v601H-172z'/%3e%3c/g%3e%3cdefs%3e%3clinearGradient id='paint0_linear' x1='602' x2='1093.5' y1='-960.5' y2='272' gradientUnits='userSpaceOnUse'%3e%3cstop stop-color='white'/%3e%3cstop offset='1' stop-color='white' stop-opacity='0'/%3e%3c/linearGradient%3e%3clinearGradient id='paint1_linear' x1='482' x2='480' y1='1058.5' y2='70.5' gradientUnits='userSpaceOnUse'%3e%3cstop stop-color='white'/%3e%3cstop offset='1' stop-color='white' stop-opacity='0'/%3e%3c/linearGradient%3e%3clinearGradient id='paint2_linear' x1='424' x2='446.1' y1='-587.5' y2='274.6' gradientUnits='userSpaceOnUse'%3e%3cstop stop-color='white'/%3e%3cstop offset='1' stop-color='white' stop-opacity='0'/%3e%3c/linearGradient%3e%3clinearGradient id='paint3_linear' x1='587' x2='349' y1='-1120.5' y2='341' gradientUnits='userSpaceOnUse'%3e%3cstop stop-color='white'/%3e%3cstop offset='1' stop-color='white' stop-opacity='0'/%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e"), linear-gradient(90deg, rgb(0, 109, 143), rgb(0, 73, 161));
+  color: rgb(255, 255, 255);
+}
+
+.card-header p.subtitle {
+  margin: 0;
+  font-size: 0.8em;
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-weight: 500;
+  line-height: 1.57;
+}
+
+.card-header p.title {
+  margin: 0;
+  font-size: 1.14em;
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-weight: 700;
+  line-height: 1.6;
+  margin-bottom: 2px;
+}
+
+/*************
+ Cards - Media
+*/
+
+.card-media {
+  display: block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  object-fit: cover;
+}
+
+.card-media p {
+  margin: 0;
+}
+
+/*************
+ Cards - Content
+*/
+
+.card-content {
+  padding: 16px;
+}
+
+.card-content p {
+  margin: 0;
+}
+
+.card-content p + p {
+  margin-top: 1em;
+}
+
+.card-content-title {
+  margin-top: 0;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.334;
+  letter-spacing: 0;
+  margin-bottom: 0.35em;
+}
+
+.card-content-title p {
+  margin: 0;
+}
+
+/*************
+ Cards - Actions
+*/
+
+.card-actions {
+  padding: 16px;
+}
+
+.card-actions ul:not([hidden]) {
+  display: flex;
+  margin: 0;
+}
+
+.card-actions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.card-actions.right ul {
+  justify-content: flex-end;
+}
+
+.card-actions p {
+  margin: 0;
+}
+
+[dir=ltr] .card-actions ul li {
+  margin: 0;
+}
+
+.card-actions a {
+  background-color: transparent;
+  margin-top: 0;
+  vertical-align: middle;
+  font-weight: 500;
+  font-size: 0.8125rem;
+  line-height: 1.75;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+}
+
+/*************
+ Cards - Tags
+*/
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  padding: 16px;
+}
+
+.card-tags ul:not([hidden]) {
+  display: flex;
+  margin: 0;
+}
+
+.card-tags ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+[dir=ltr] .card-tags ul li {
+  padding: 2px 8px;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 12px;
+  font-weight: 500;
+  color: #000;
+  background-color: rgba(0, 0, 0, 0.12);
+  border-radius: 16px;
+  height: 24px;
+  line-height: 20px;
+}
+
+/*************
+ Cards - Divider
+*/
+
+.card-divider {
+  margin: 0;
+  padding: 0 16px;
+}
+
+.card-divider hr {
+  margin: 0;
+}
