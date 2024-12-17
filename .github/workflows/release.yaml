@@ -83,16 +83,19 @@ jobs:
               # git push
               # git push --tags
               echo "PACKAGE=true" >> $GITHUB_ENV
+              export PACKAGE=true
               ;;
             dev)
               bump-my-version bump --allow-dirty --verbose --no-commit --no-tag "$RELEASE_KIND"
               echo "PACKAGE=true" >> $GITHUB_ENV
+              export PACKAGE=true
               ;;
             *)
               echo "PACKAGE=false" >> $GITHUB_ENV
+              export PACKAGE=false
           esac
 
-          echo "package=${{ env.PACKAGE }}" >> $GITHUB_OUTPUT
+          echo "package=$PACKAGE" >> $GITHUB_OUTPUT
 
       - name: Package and upload artifacts
         if: ${{ env.PACKAGE == 'true' }}
