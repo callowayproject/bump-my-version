@@ -29,7 +29,6 @@ jobs:
         name: Checkout the repository
         with:
           fetch-depth: 0
-          token: ${{ secrets.PAT }}
 
       - name: Setup Python and Git
         uses: ./.github/actions/setup-python-and-git
@@ -91,8 +90,35 @@ jobs:
         with:
           tag-name: ${{ env.TAG_NAME }}
 
+  release:
+    if: ${{ env.PACKAGE == 'true' }}
+    permissions:
+      id-token: write
+      pull-requests: read
+      contents: write
+    steps:
+      - name: Download packages built by build-and-inspect-python-package
+        uses: actions/download-artifact@v4
+        with:
+          name: Packages
+          path: dist
+
+      - name: Download release notes
+        uses: actions/download-artifact@v4
+        with:
+          name: release-notes
+
       - name: Create a GitHub release
-        if: ${{ env.PACKAGE == 'true' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/*
+          tag_name: "${{ env.TAG_NAME }}"
+          body_path: release-notes.md
+
+      - name: Upload package to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+
+      - name: Create a GitHub release
         uses: ./.github/actions/release
         with:
           tag-name: ${{ env.TAG_NAME }}
