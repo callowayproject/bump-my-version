@@ -60,7 +60,7 @@ jobs:
       - name: Output release kind
         id: release-kind
         run: |
-          echo "release-kind=$RELEASE_KIND" >> $GITHUB_OUTPUT
+          echo "release-kind=${{ env.RELEASE_KIND }}" >> $GITHUB_OUTPUT
 
       - name: Get Pull Request Number
         id: pr
@@ -69,16 +69,14 @@ jobs:
           echo "pull_request_number=${PR_NUMBER}" >> $GITHUB_OUTPUT
           echo "::notice::PR_NUMBER is ${PR_NUMBER}"
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.PAT }}
 
       - name: Bump version
         id: bump-version
         shell: bash
         run: |
           case "$RELEASE_KIND" in
-            no-release)
-              echo "PACKAGE=false" >> $GITHUB_ENV
             major|minor|patch)
               bump-my-version bump --allow-dirty --verbose "$RELEASE_KIND"
               echo "TAG_NAME=$(bump-my-version show current_version)" >> $GITHUB_ENV
@@ -90,9 +88,11 @@ jobs:
               bump-my-version bump --allow-dirty --verbose --no-commit --no-tag "$RELEASE_KIND"
               echo "PACKAGE=true" >> $GITHUB_ENV
               ;;
+            *)
+              echo "PACKAGE=false" >> $GITHUB_ENV
           esac
 
-          echo "package=PACKAGE" >> $GITHUB_OUTPUT
+          echo "package=${{ env.PACKAGE }}" >> $GITHUB_OUTPUT
 
       - name: Package and upload artifacts
         if: ${{ env.PACKAGE == 'true' }}
