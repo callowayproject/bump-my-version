@@ -3,6 +3,7 @@ on:
   pull_request:
     types: [closed]
     branches: [master]
+
   workflow_dispatch:
     inputs:
       releaseType:
@@ -24,6 +25,9 @@ jobs:
       pull-requests: read
       contents: write
     runs-on: ubuntu-latest
+    outputs:
+      release-kind: ${{ steps.release-kind.outputs.release-kind }}
+      package: ${{ steps.bump-version.outputs.package }}
     steps:
       - uses: actions/checkout@v4
         name: Checkout the repository
@@ -45,8 +49,6 @@ jobs:
           RELEASE_KIND=$(generate-changelog --output release-hint)
           echo "::notice::Suggested release type for this branch is: ${RELEASE_KIND}"
           echo "RELEASE_KIND=$RELEASE_KIND" >> $GITHUB_ENV
-          echo "release-kind=$RELEASE_KIND" >> $GITHUB_OUTPUT
-          echo "PACKAGE=false" >> $GITHUB_ENV
 
       - name: Override release kind on manual
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.releaseType  != 'auto' }}
@@ -54,7 +56,11 @@ jobs:
         run: |
           echo "::notice::Overriding release type to ${{ github.event.inputs.releaseType }} since this was a manual trigger"
           echo "RELEASE_KIND=${{ github.event.inputs.releaseType }}" >> $GITHUB_ENV
-          echo "release-kind=${{ github.event.inputs.releaseType }}" >> $GITHUB_OUTPUT
+
+      - name: Output release kind
+        id: release-kind
+        run: |
+          echo "release-kind=$RELEASE_KIND" >> $GITHUB_OUTPUT
 
       - name: Get Pull Request Number
         id: pr
@@ -67,15 +73,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
       - name: Bump version
-        if: ${{ env.RELEASE_KIND != 'no-release' }}
+        id: bump-version
         shell: bash
         run: |
           case "$RELEASE_KIND" in
+            no-release)
+              echo "PACKAGE=false" >> $GITHUB_ENV
             major|minor|patch)
               bump-my-version bump --allow-dirty --verbose "$RELEASE_KIND"
               echo "TAG_NAME=$(bump-my-version show current_version)" >> $GITHUB_ENV
-              git push
-              git push --tags
+              # git push
+              # git push --tags
               echo "PACKAGE=true" >> $GITHUB_ENV
               ;;
             dev)
@@ -84,6 +92,8 @@ jobs:
               ;;
           esac
 
+          echo "package=PACKAGE" >> $GITHUB_OUTPUT
+
       - name: Package and upload artifacts
         if: ${{ env.PACKAGE == 'true' }}
         uses: ./.github/actions/package-and-upload-artifacts
@@ -91,7 +101,8 @@ jobs:
           tag-name: ${{ env.TAG_NAME }}
 
   release:
-    if: ${{ env.PACKAGE == 'true' }}
+    if: needs.version.outputs.package == 'true'
+    needs: version
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -109,17 +120,15 @@ jobs:
         with:
           name: release-notes
 
-      - name: Create a GitHub release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: dist/*
-          tag_name: "${{ env.TAG_NAME }}"
-          body_path: release-notes.md
-
-      - name: Upload package to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-
-      - name: Create a GitHub release
-        uses: ./.github/actions/release
-        with:
-          tag-name: ${{ env.TAG_NAME }}
+      - name: show env
+        run: |
+          echo ${{ env.TAG_NAME }}
+#      - name: Create a GitHub release
+#        uses: softprops/action-gh-release@v1
+#        with:
+#          files: dist/*
+#          tag_name: "${{ env.TAG_NAME }}"
+#          body_path: release-notes.md
+#
+#      - name: Upload package to PyPI
+#        uses: pypa/gh-action-pypi-publish@release/v1
