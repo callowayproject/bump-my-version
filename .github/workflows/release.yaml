@@ -92,6 +92,7 @@ jobs:
 
   release:
     if: ${{ env.PACKAGE == 'true' }}
+    runs-on: ubuntu-latest
     permissions:
       id-token: write
       pull-requests: read
