@@ -28,6 +28,7 @@ jobs:
     outputs:
       release-kind: ${{ steps.release-kind.outputs.release-kind }}
       package: ${{ steps.bump-version.outputs.package }}
+      tag-name: ${{ steps.bump-version.outputs.tag-name }}
     steps:
       - uses: actions/checkout@v4
         name: Checkout the repository
@@ -80,6 +81,7 @@ jobs:
             major|minor|patch)
               bump-my-version bump --allow-dirty --verbose "$RELEASE_KIND"
               echo "TAG_NAME=$(bump-my-version show current_version)" >> $GITHUB_ENV
+              export "TAG_NAME=$(bump-my-version show current_version)"
               # git push
               # git push --tags
               echo "PACKAGE=true" >> $GITHUB_ENV
@@ -96,6 +98,7 @@ jobs:
           esac
 
           echo "package=$PACKAGE" >> $GITHUB_OUTPUT
+          echo "tag-name=$TAG_NAME" >> $GITHUB_OUTPUT
 
       - name: Package and upload artifacts
         if: ${{ env.PACKAGE == 'true' }}
@@ -125,12 +128,12 @@ jobs:
 
       - name: show env
         run: |
-          echo ${{ env.TAG_NAME }}
+          echo ${{ needs.version.outputs.tag-name }}
 #      - name: Create a GitHub release
 #        uses: softprops/action-gh-release@v1
 #        with:
 #          files: dist/*
-#          tag_name: "${{ env.TAG_NAME }}"
+#          tag_name: "${{ needs.version.outputs.tag-name }}"
 #          body_path: release-notes.md
 #
 #      - name: Upload package to PyPI
