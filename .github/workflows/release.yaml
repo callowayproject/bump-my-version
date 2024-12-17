@@ -70,8 +70,6 @@ jobs:
           echo "pull_request_number=${PR_NUMBER}" >> $GITHUB_OUTPUT
           echo "::notice::PR_NUMBER is ${PR_NUMBER}"
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.PAT }}
 
       - name: Bump version
         id: bump-version
@@ -82,8 +80,8 @@ jobs:
               bump-my-version bump --allow-dirty --verbose "$RELEASE_KIND"
               echo "TAG_NAME=$(bump-my-version show current_version)" >> $GITHUB_ENV
               export "TAG_NAME=$(bump-my-version show current_version)"
-              # git push
-              # git push --tags
+              git push
+              git push --tags
               echo "PACKAGE=true" >> $GITHUB_ENV
               export PACKAGE=true
               ;;
@@ -126,15 +124,12 @@ jobs:
         with:
           name: release-notes
 
-      - name: show env
-        run: |
-          echo ${{ needs.version.outputs.tag-name }}
-#      - name: Create a GitHub release
-#        uses: softprops/action-gh-release@v1
-#        with:
-#          files: dist/*
-#          tag_name: "${{ needs.version.outputs.tag-name }}"
-#          body_path: release-notes.md
-#
-#      - name: Upload package to PyPI
-#        uses: pypa/gh-action-pypi-publish@release/v1
+      - name: Create a GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/*
+          tag_name: "${{ needs.version.outputs.tag-name }}"
+          body_path: release-notes.md
+
+      - name: Upload package to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
