@@ -128,7 +128,7 @@ def update_config_file(
     else:
         logger.info("\n%sProcessing config file: %s", logger.indent_str, config_file)
     logger.indent()
-    config_path = Path(config_file)
+    config_path = Path(config_file).resolve()
 
     if config.scm_info.tool and not config.scm_info.path_in_repo(config_path):
         logger.info("\n%sConfiguration file is outside of the repo. Not going to change.", logger.indent_str)
