@@ -337,7 +337,16 @@ def bump(
     type=str,
     help="Increment the version component and add `new_version` to the configuration.",
 )
-def show(args: List[str], config_file: Optional[str], format_: str, increment: Optional[str]) -> None:
+@click.option(
+    "--current-version",
+    metavar="VERSION",
+    required=False,
+    envvar="BUMPVERSION_CURRENT_VERSION",
+    help="Version that needs to be updated",
+)
+def show(
+    args: List[str], config_file: Optional[str], format_: str, increment: Optional[str], current_version: Optional[str]
+) -> None:
     """
     Show current configuration information.
 
@@ -355,9 +364,9 @@ def show(args: List[str], config_file: Optional[str], format_: str, increment: O
     config = get_configuration(found_config_file)
 
     if not args:
-        do_show("all", config=config, format_=format_, increment=increment)
+        do_show("all", config=config, format_=format_, increment=increment, current_version=current_version)
     else:
-        do_show(*args, config=config, format_=format_, increment=increment)
+        do_show(*args, config=config, format_=format_, increment=increment, current_version=current_version)
 
 
 @cli.command()

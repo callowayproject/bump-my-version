@@ -114,8 +114,16 @@ def resolve_name(obj: Any, name: str, default: Any = None, err_on_missing: bool 
             return default
 
 
-def do_show(*args, config: Config, format_: str = "default", increment: Optional[str] = None) -> None:
+def do_show(
+    *args,
+    config: Config,
+    format_: str = "default",
+    increment: Optional[str] = None,
+    current_version: Optional[str] = None,
+) -> None:
     """Show current version or configuration information."""
+    if current_version:
+        config.current_version = current_version
     config_dict = config.model_dump()
     ctx = get_context(config)
 
