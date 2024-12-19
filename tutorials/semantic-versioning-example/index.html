@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.48">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
     
     
       
@@ -1953,8 +1953,6 @@
 
   <h1>Semantic Versioning</h1>
 
-<!-- BEGIN INCLUDE ../../README.md '&lt;!--tutorial start--&gt;' '&lt;!--tutorial end--&gt;' -->
-
 <h3 id="create-a-default-configuration">Create a default configuration<a class="headerlink" href="#create-a-default-configuration" title="Permanent link">&para;</a></h3>
 <p>The default configuration uses a simplified version of <a href="https://semver.org/">semantic versioning</a>.</p>
 <div class="highlight"><span class="filename">Generating a default configuration</span><pre><span></span><code><span class="gp">$ </span>bump-my-version<span class="w"> </span>sample-config<span class="w"> </span>--no-prompt<span class="w"> </span>--destination<span class="w"> </span>.bumpversion.toml
@@ -2056,12 +2054,23 @@
 </ol>
 <h3 id="automate-the-pre-release-numbering">Automate the pre-release numbering<a class="headerlink" href="#automate-the-pre-release-numbering" title="Permanent link">&para;</a></h3>
 <p>The <code>pre_n</code> or pre-release number is a number that increases with each pre-release. You can automate this by changing the serialization configuration.</p>
-<div class="highlight"><span class="filename">Serialize configuration with pre_n automation</span><pre><span></span><code><span class="n">serialize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<div class="highlight"><span class="filename">Serialize configuration with pre_n automation</span><pre><span></span><code><span class="n">parse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;(?x)</span>
+<span class="s2">    (?P&lt;major&gt;0|[1-9]</span><span class="se">\\</span><span class="s2">d*)</span><span class="se">\\</span><span class="s2">.</span>
+<span class="s2">    (?P&lt;minor&gt;0|[1-9]</span><span class="se">\\</span><span class="s2">d*)</span><span class="se">\\</span><span class="s2">.</span>
+<span class="s2">    (?P&lt;patch&gt;0|[1-9]</span><span class="se">\\</span><span class="s2">d*)</span>
+<span class="s2">    (?:</span>
+<span class="s2">        -                             # dash separator for pre-release section</span>
+<span class="s2">        (?P&lt;pre_l&gt;[a-zA-Z-]+)         # pre-release label</span>
+<span class="s2">        (?:0|[1-9]</span><span class="se">\\</span><span class="s2">d*)               # pre-release version number</span>
+<span class="s2">    )?                                # pre-release section is optional</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">serialize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}-{pre_l}{distance_to_latest_tag}&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 </code></pre></div>
-<p>The <code>distance_to_latest_tag</code> is a special value that is replaced with the number of commits since the last tag. This is a good value to use for the <code>pre_n</code> because it will always increase with each commit.</p>
+<p>Now the <code>pre_n</code> is no longer captured in the <code>parse</code> expression and <code>serialize</code> replaces <code>pre_n</code> with <code>distance_to_latest_tag</code>. The <code>distance_to_latest_tag</code> is a special value replaced with the number of commits since the last tag. This is a good value to use for the <code>pre_n</code> because it will always increase with each commit.</p>
 <h3 id="visualize-the-pre_n-versioning-path">Visualize the pre_n versioning path<a class="headerlink" href="#visualize-the-pre_n-versioning-path" title="Permanent link">&para;</a></h3>
 <p>Now when you run <code>bump-my-version show-bump</code>, you can see the new pre-release versioning path.</p>
 <div class="highlight"><span class="filename">Showing the new versioning path with pre_n automation</span><pre><span></span><code><span class="gp">$ </span>bump-my-version<span class="w"> </span>show-bump
@@ -2101,7 +2110,6 @@
 <li>Release candidate versions increase automatically with each commit.</li>
 <li>Switch from the release candidate to the final release using <code>bump-my-version bump pre_l</code>.</li>
 </ol>
-<!-- END INCLUDE -->
 
 
 
@@ -2198,7 +2206,7 @@
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.path", "navigation.indexes", "navigation.top", "content.action.edit", "content.action.view", "content.code.annotate", "content.tabs.link", "toc.integrate"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
       
