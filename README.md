@@ -182,13 +182,24 @@ The full development and release path is:
 The `pre_n` or pre-release number is a number that increases with each pre-release. You can automate this by changing the serialization configuration.
 
 ```toml title="Serialize configuration with pre_n automation"
+parse = """(?x)
+    (?P<major>0|[1-9]\\d*)\\.
+    (?P<minor>0|[1-9]\\d*)\\.
+    (?P<patch>0|[1-9]\\d*)
+    (?:
+        -                             # dash separator for pre-release section
+        (?P<pre_l>[a-zA-Z-]+)         # pre-release label
+        (?:0|[1-9]\\d*)               # pre-release version number
+    )?                                # pre-release section is optional
+"""
+
 serialize = [
     "{major}.{minor}.{patch}-{pre_l}{distance_to_latest_tag}",
     "{major}.{minor}.{patch}",
 ]
 ```
 
-The `distance_to_latest_tag` is a special value that is replaced with the number of commits since the last tag. This is a good value to use for the `pre_n` because it will always increase with each commit.
+Now the `pre_n` is no longer captured in the `parse` expression and `serialize` replaces `pre_n` with `distance_to_latest_tag`. The `distance_to_latest_tag` is a special value replaced with the number of commits since the last tag. This is a good value to use for the `pre_n` because it will always increase with each commit.
 
 ### Visualize the pre_n versioning path
 
