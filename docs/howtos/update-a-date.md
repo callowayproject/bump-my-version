@@ -7,7 +7,7 @@ __date__ = '2022-12-19'
 __version__ = '0.4.0'
 ```
 
-The desired outcome is to update the date to the current date. For example, if today is February 23, 2024, the __init__.py file should look like this after a `minor` bump:
+The desired outcome is to update the date to the current date. For example, if today is February 23, 2024, the `__init__.py` file should look like this after a `minor` bump:
 
 ```python title="my_package/__init__.py"
 __date__ = '2024-02-23'
