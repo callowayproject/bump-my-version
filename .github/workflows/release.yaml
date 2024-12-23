@@ -125,7 +125,7 @@ jobs:
           name: release-notes
 
       - name: Create a GitHub release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: dist/*
           tag_name: "${{ needs.version.outputs.tag-name }}"
