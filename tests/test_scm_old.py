@@ -6,10 +6,10 @@ import subprocess
 from pathlib import Path
 
 import pytest
-from pytest import param, LogCaptureFixture
+from pytest import LogCaptureFixture, param
 
-from bumpversion import scm
-from bumpversion.exceptions import DirtyWorkingDirectoryError, BumpVersionError
+from bumpversion import scm_old
+from bumpversion.exceptions import BumpVersionError, DirtyWorkingDirectoryError
 from bumpversion.ui import setup_logging
 from bumpversion.utils import run_command
 from tests.conftest import get_config_data, inside_dir
@@ -43,7 +43,7 @@ class TestSourceCodeManager:
         def returns_version_from_pattern(self, tag: str, tag_name: str, parse_pattern: str, expected: str) -> None:
             """It properly returns the version from the tag."""
             # Act
-            version = scm.SourceCodeManager.get_version_from_tag(tag, tag_name, parse_pattern)
+            version = scm_old.SourceCodeManager.get_version_from_tag(tag, tag_name, parse_pattern)
 
             # Assert
             assert version == expected
@@ -55,7 +55,7 @@ class TestSourceCodeManager:
                 run_command(["git", "add", "newfile.txt"])
             except subprocess.CalledProcessError as e:
                 with pytest.raises(BumpVersionError) as bump_error:
-                    scm.Git.format_and_raise_error(e)
+                    scm_old.Git.format_and_raise_error(e)
                 assert bump_error.value.message == (
                     "Failed to run `git add newfile.txt`: return code 128, output: "
                     "fatal: pathspec 'newfile.txt' did not match any files\n"
@@ -71,12 +71,12 @@ class TestGit:
         def test_recognizes_a_git_repo(self, git_repo: Path) -> None:
             """Should return true if git is available, and it is a git repo."""
             with inside_dir(git_repo):
-                assert scm.Git.is_usable()
+                assert scm_old.Git.is_usable()
 
         def test_recognizes_not_a_git_repo(self, tmp_path: Path) -> None:
             """Should return false if it is not a git repo."""
             with inside_dir(tmp_path):
-                assert not scm.Git.is_usable()
+                assert not scm_old.Git.is_usable()
 
     class TestAssertNonDirty:
         """Tests for the Git.assert_nondirty() function."""
@@ -84,7 +84,7 @@ class TestGit:
         def test_does_nothing_when_not_dirty(self, git_repo: Path) -> None:
             """If the git repo is clean, assert_nondirty should do nothing."""
             with inside_dir(git_repo):
-                scm.Git.assert_nondirty()
+                scm_old.Git.assert_nondirty()
 
         def test_raises_error_when_dirty(self, git_repo: Path) -> None:
             """If the git repo has modified files, assert_nondirty should return false."""
@@ -92,8 +92,8 @@ class TestGit:
             readme.touch()
             with pytest.raises(DirtyWorkingDirectoryError):
                 with inside_dir(git_repo):
-                    subprocess.run(["git", "add", "readme.md"])
-                    scm.Git.assert_nondirty()
+                    subprocess.run(["git", "add", "readme.md"], check=False)
+                    scm_old.Git.assert_nondirty()
 
     class TestLatestTagInfo:
         """Test for the Git.latest_tag_info() function."""
@@ -107,8 +107,8 @@ class TestGit:
             tag_prefix = "app/"
             parse_pattern = r"(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)"
             tag_name = f"{tag_prefix}{{new_version}}"
-            expected = scm.SCMInfo(
-                tool=scm.Git,
+            expected = scm_old.SCMInfo(
+                tool=scm_old.Git,
                 commit_sha=None,
                 distance_to_latest_tag=0,
                 current_version=None,
@@ -118,7 +118,7 @@ class TestGit:
                 dirty=None,
             )
             with inside_dir(git_repo):
-                latest_tag_info = scm.Git.latest_tag_info(tag_name, parse_pattern=parse_pattern)
+                latest_tag_info = scm_old.Git.latest_tag_info(tag_name, parse_pattern=parse_pattern)
                 assert latest_tag_info == expected
 
         def test_returns_commit_and_tag_info(self, git_repo: Path) -> None:
@@ -133,7 +133,7 @@ class TestGit:
                 subprocess.run(["git", "add", "readme.md"])
                 subprocess.run(["git", "commit", "-m", "first"])
                 subprocess.run(["git", "tag", f"{tag_prefix}0.1.0"])
-                tag_info = scm.Git.latest_tag_info(tag_name, parse_pattern=parse_pattern)
+                tag_info = scm_old.Git.latest_tag_info(tag_name, parse_pattern=parse_pattern)
                 assert tag_info.commit_sha is not None
                 assert tag_info.current_version == "0.1.0"
                 assert tag_info.current_tag == f"{tag_prefix}0.1.0"
@@ -165,7 +165,7 @@ def test_git_detects_existing_tag(git_repo: Path, caplog: LogCaptureFixture) -> 
         subprocess.run(["git", "tag", "v0.2.0"])
 
         # Act
-        scm.Git.tag_in_scm(config=conf, context=context)
+        scm_old.Git.tag_in_scm(config=conf, context=context)
 
     # Assert
     assert "Will not tag" in caplog.text
@@ -174,14 +174,14 @@ def test_git_detects_existing_tag(git_repo: Path, caplog: LogCaptureFixture) -> 
 def test_hg_is_not_usable(tmp_path: Path) -> None:
     """Should return false if it is not a mercurial repo."""
     with inside_dir(tmp_path):
-        assert not scm.Mercurial.is_usable()
+        assert not scm_old.Mercurial.is_usable()
 
 
 @pytest.mark.skipif(not shutil.which("hg"), reason="Mercurial is not available.")
 def test_hg_is_usable(hg_repo: Path) -> None:
     """Should return false if it is not a mercurial repo."""
     with inside_dir(hg_repo):
-        assert scm.Mercurial.is_usable()
+        assert scm_old.Mercurial.is_usable()
 
 
 @pytest.mark.parametrize(
@@ -190,20 +190,22 @@ def test_hg_is_usable(hg_repo: Path) -> None:
         param(
             "git_repo",
             "git",
-            scm.Git,
+            scm_old.Git,
             id="git",
             marks=pytest.mark.skipif(not shutil.which("git"), reason="Git is not available."),
         ),
         param(
             "hg_repo",
             "hg",
-            scm.Mercurial,
+            scm_old.Mercurial,
             id="hg",
             marks=pytest.mark.skipif(not shutil.which("hg"), reason="Mercurial is not available."),
         ),
     ],
 )
-def test_commit_and_tag_from_below_scm_root(repo: str, scm_command: str, scm_class: scm.SourceCodeManager, request):
+def test_commit_and_tag_from_below_scm_root(
+    repo: str, scm_command: str, scm_class: scm_old.SourceCodeManager, request
+):
     # Arrange
     repo_path: Path = request.getfixturevalue(repo)
     version_path = repo_path / "VERSION"
@@ -243,14 +245,14 @@ def test_commit_and_tag_from_below_scm_root(repo: str, scm_command: str, scm_cla
         param(
             "git_repo",
             "git",
-            scm.Git,
+            scm_old.Git,
             id="git",
             marks=pytest.mark.skipif(not shutil.which("git"), reason="Git is not available."),
         ),
         param(
             "hg_repo",
             "hg",
-            scm.Mercurial,
+            scm_old.Mercurial,
             id="hg",
             marks=pytest.mark.skipif(not shutil.which("hg"), reason="Mercurial is not available."),
         ),
@@ -267,7 +269,7 @@ def test_commit_and_tag_from_below_scm_root(repo: str, scm_command: str, scm_cla
 def test_commit_tag_dry_run_interactions(
     repo: str,
     scm_command: str,
-    scm_class: scm.SourceCodeManager,
+    scm_class: scm_old.SourceCodeManager,
     commit: bool,
     tag: bool,
     dry_run: bool,

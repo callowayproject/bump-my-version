@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
-    from bumpversion.scm import SCMInfo
+    from bumpversion.scm_old import SCMInfo
     from bumpversion.versioning.models import Version
 
 MONTH_ABBREVIATIONS = [abbr for abbr in calendar.month_abbr if abbr]
@@ -56,7 +56,7 @@ def prefixed_environ() -> dict:
 
 def base_context(scm_info: Optional["SCMInfo"] = None) -> ChainMap:
     """The default context for rendering messages and tags."""
-    from bumpversion.scm import SCMInfo  # Including this here to avoid circular imports
+    from bumpversion.scm_old import SCMInfo  # Including this here to avoid circular imports
 
     scm = asdict(scm_info) if scm_info else asdict(SCMInfo())
 

@@ -3,8 +3,8 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from bumpversion.scm import SCMInfo
 from bumpversion.config import check_current_version
+from bumpversion.scm_old import SCMInfo
 
 
 @dataclass

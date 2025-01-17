@@ -1,7 +1,7 @@
 """Tests for the bump module."""
 
-from pathlib import Path
 import shutil
+from pathlib import Path
 from textwrap import dedent
 from unittest.mock import MagicMock, patch
 
@@ -10,7 +10,7 @@ import pytest
 from bumpversion import bump
 from bumpversion.exceptions import ConfigurationError, VersionNotFoundError
 from bumpversion.files import ConfiguredFile
-from bumpversion.scm import Git, SCMInfo
+from bumpversion.scm_old import Git, SCMInfo
 from bumpversion.utils import run_command
 from tests.conftest import get_config_data, inside_dir
 

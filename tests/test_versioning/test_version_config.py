@@ -51,7 +51,7 @@ class TestSerialize:
 
     def test_distance_to_latest_tag_in_pattern(self):
         """Using ``distance_to_latest_tag`` in the serialization string outputs correctly."""
-        from bumpversion.scm import Git, SCMInfo
+        from bumpversion.scm_old import Git, SCMInfo
 
         overrides = {
             "current_version": "19.6.0",

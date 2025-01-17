@@ -65,7 +65,7 @@ def get_configuration(config_file: Union[str, Path, None] = None, **overrides: A
         The configuration
     """
     from bumpversion.config.utils import get_all_file_configs, get_all_part_configs
-    from bumpversion.scm import SCMInfo, SourceCodeManager, get_scm_info  # noqa: F401
+    from bumpversion.scm_old import SCMInfo, SourceCodeManager, get_scm_info  # noqa: F401
 
     logger.info("Reading configuration")
     logger.indent()

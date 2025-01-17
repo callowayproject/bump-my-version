@@ -9,7 +9,7 @@ from tempfile import NamedTemporaryFile
 from typing import TYPE_CHECKING, Any, ClassVar, Dict, List, MutableMapping, Optional, Type, Union
 
 from bumpversion.ui import get_indented_logger
-from bumpversion.utils import extract_regex_flags, format_and_raise_error, run_command
+from bumpversion.utils import extract_regex_flags, format_and_raise_error, is_subpath, run_command
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
@@ -50,14 +50,12 @@ class SCMInfo:
             f"dirty={self.dirty})"
         )
 
-    def path_in_repo(self, path: Union[Path, str]) -> bool:
+    def path_in_repo(self, path: Path | str) -> bool:
         """Return whether a path is inside this repository."""
         if self.repository_root is None:
             return True
-        elif not Path(path).is_absolute():
-            return True
 
-        return str(path).startswith(str(self.repository_root))
+        return is_subpath(self.repository_root, path)
 
 
 class SourceCodeManager:
@@ -126,6 +124,11 @@ class SourceCodeManager:
     @classmethod
     def tag(cls, name: str, sign: bool = False, message: Optional[str] = None) -> None:
         """Create a tag of the new_version in VCS."""
+        raise NotImplementedError
+
+    @classmethod
+    def moveable_tag(cls, name: str) -> None:
+        """Create a new lightweight tag that should overwrite any previous tags with the same name."""
         raise NotImplementedError
 
     @classmethod
@@ -228,6 +231,12 @@ class SourceCodeManager:
         )
         if do_tag:
             cls.tag(tag_name, sign_tags, tag_message)
+
+        for moveable_tag in config.moveable_tags:
+            tag_name = moveable_tag.format(**context)
+            logger.info("%s moveable tag '%s' in %s", "Tagging" if do_tag else "Would tag", tag_name, cls.__name__)
+            if do_tag:
+                cls.moveable_tag(moveable_tag)
 
     def __str__(self):
         return self.__repr__()
@@ -381,6 +390,17 @@ class Git(SourceCodeManager):
         if message:
             command += ["--message", message]
         run_command(command)
+
+    @classmethod
+    def moveable_tag(cls, name: str) -> None:
+        """
+        Create a new lightweight tag that should overwrite any previous tags with the same name.
+
+        Args:
+            name: The name of the moveable tag.
+        """
+        run_command(["git", "tag", "-f", name])
+        run_command(["git", "push", "origin", name, "--force"])
 
 
 class Mercurial(SourceCodeManager):
