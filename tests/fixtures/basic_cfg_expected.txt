@@ -49,6 +49,7 @@
  'ignore_missing_version': False,
  'included_paths': [],
  'message': 'Bump version: {current_version} → {new_version}',
+ 'moveable_tags': [],
  'parse': '(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\-(?P<release>[a-z]+))?',
  'parts': {'major': {'always_increment': False,
                      'calver_format': None,
