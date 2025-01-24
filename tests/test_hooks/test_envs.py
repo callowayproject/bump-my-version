@@ -66,13 +66,13 @@ def test_scm_env_returns_correct_info(git_repo: Path):
         conf, _, _ = get_config_data(overrides)
 
     result = scm_env(conf)
-    assert result[f"{PREFIX}BRANCH_NAME"] == "master"
+    assert result[f"{PREFIX}BRANCH_NAME"] == "main"
     assert len(result[f"{PREFIX}COMMIT_SHA"]) == 40
     assert result[f"{PREFIX}CURRENT_TAG"] == "v0.1.0"
     assert result[f"{PREFIX}CURRENT_VERSION"] == "0.1.0"
     assert result[f"{PREFIX}DISTANCE_TO_LATEST_TAG"] == "0"
     assert result[f"{PREFIX}IS_DIRTY"] == "False"
-    assert result[f"{PREFIX}SHORT_BRANCH_NAME"] == "master"
+    assert result[f"{PREFIX}SHORT_BRANCH_NAME"] == "main"
 
 
 class MockDatetime(datetime.datetime):

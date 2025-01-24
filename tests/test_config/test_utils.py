@@ -205,5 +205,4 @@ class TestResolveGlobFiles:
         )
         with inside_dir(tmp_path):
             resolved_files = resolve_glob_files(file_cfg)
-        print([x.filename for x in resolved_files])
         assert len(resolved_files) == expected_number

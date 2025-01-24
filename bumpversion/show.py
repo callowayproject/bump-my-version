@@ -124,7 +124,7 @@ def do_show(
     """Show current version or configuration information."""
     if current_version:
         config.current_version = current_version
-    config_dict = config.model_dump()
+    config_dict = config.model_dump(exclude={"scm_info"})
     ctx = get_context(config)
 
     if increment:

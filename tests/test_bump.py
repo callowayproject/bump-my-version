@@ -10,7 +10,8 @@ import pytest
 from bumpversion import bump
 from bumpversion.exceptions import ConfigurationError, VersionNotFoundError
 from bumpversion.files import ConfiguredFile
-from bumpversion.scm_old import Git, SCMInfo
+from bumpversion.scm.git import Git
+from bumpversion.scm.models import SCMInfo, SCMConfig
 from bumpversion.utils import run_command
 from tests.conftest import get_config_data, inside_dir
 
@@ -69,17 +70,19 @@ class TestDoBump:
 
     @patch("bumpversion.files.modify_files")
     @patch("bumpversion.bump.update_config_file")
-    def test_passing_version_part_increments_part(self, mock_update_config_file, mock_modify_files):
+    def test_passing_version_part_increments_part(
+        self, mock_update_config_file, mock_modify_files, scm_config: SCMConfig
+    ):
         # Arrange
         version_part = "major"
         new_version = None
-        config, version_config, current_version = get_config_data(
+        config, _, current_version = get_config_data(
             {
                 "current_version": "1.2.3",
                 "files": [{"filename": "foo.txt"}, {"filename": "bar.txt"}],
             }
         )
-        config.scm_info = SCMInfo()
+        config.scm_info = SCMInfo(scm_config)
         dry_run = False
 
         # Act
@@ -100,7 +103,7 @@ class TestDoBump:
 
     @patch("bumpversion.files.modify_files")
     @patch("bumpversion.bump.update_config_file")
-    def test_passing_new_version_sets_version(self, mock_update_config_file, mock_modify_files):
+    def test_passing_new_version_sets_version(self, mock_update_config_file, mock_modify_files, scm_config: SCMConfig):
         # Arrange
         version_part = None
         new_version = "2.0.0"
@@ -109,7 +112,7 @@ class TestDoBump:
                 "current_version": "1.2.3",
             }
         )
-        config.scm_info = SCMInfo()
+        config.scm_info = SCMInfo(scm_config)
         dry_run = True
 
         # Act
@@ -167,7 +170,7 @@ class TestDoBump:
         new_version = "1.2.3"
 
         with inside_dir(tmp_path):
-            config, version_config, current_version = get_config_data({"current_version": "1.2.3"})
+            config, _, _ = get_config_data({"current_version": "1.2.3"})
             # Act
             bump.do_bump(version_part, new_version, config)
 
@@ -175,12 +178,12 @@ class TestDoBump:
         mock_modify_files.assert_not_called()
         mock_update_config_file.assert_not_called()
 
-    def test_passing_no_arguments_raises_error(self):
+    def test_passing_no_arguments_raises_error(self, scm_config: SCMConfig):
         # Arrange
         version_part = None
         new_version = None
-        config, version_config, current_version = get_config_data({"current_version": "1.2.3"})
-        config.scm_info = SCMInfo()
+        config, _, _ = get_config_data({"current_version": "1.2.3"})
+        config.scm_info = SCMInfo(scm_config)
         dry_run = False
 
         # Act/Assert
@@ -189,17 +192,19 @@ class TestDoBump:
 
     @patch("bumpversion.files.modify_files")
     @patch("bumpversion.bump.update_config_file")
-    def test_includes_files_with_include_bumps(self, mock_update_config_file, mock_modify_files):
+    def test_includes_files_with_include_bumps(
+        self, mock_update_config_file, mock_modify_files, scm_config: SCMConfig
+    ):
         """Files that have include_bumps are included when those bumps happen."""
         # Arrange
         new_version = None
-        config, version_config, current_version = get_config_data(
+        config, _, _ = get_config_data(
             {
                 "current_version": "1.2.3",
                 "files": [{"filename": "foo.txt", "include_bumps": ["major", "minor"]}, {"filename": "bar.txt"}],
             }
         )
-        config.scm_info = SCMInfo()
+        config.scm_info = SCMInfo(scm_config)
         dry_run = False
 
         # Act
@@ -216,17 +221,19 @@ class TestDoBump:
 
     @patch("bumpversion.files.modify_files")
     @patch("bumpversion.bump.update_config_file")
-    def test_excludes_files_with_exclude_bumps(self, mock_update_config_file, mock_modify_files):
+    def test_excludes_files_with_exclude_bumps(
+        self, mock_update_config_file, mock_modify_files, scm_config: SCMConfig
+    ):
         """Files that have exclude_bumps are excluded when those bumps happen."""
         # Arrange
         new_version = None
-        config, version_config, current_version = get_config_data(
+        config, _, _ = get_config_data(
             {
                 "current_version": "1.2.3",
                 "files": [{"filename": "foo.txt", "exclude_bumps": ["patch"]}, {"filename": "bar.txt"}],
             }
         )
-        config.scm_info = SCMInfo()
+        config.scm_info = SCMInfo(scm_config)
         dry_run = False
 
         # Act
@@ -242,48 +249,47 @@ class TestDoBump:
         assert {f.file_change.filename for f in mock_modify_files.call_args[0][0]} == {"foo.txt", "bar.txt"}
 
 
-def test_commit_and_tag_with_no_tool():
-    config, version_config, current_version = get_config_data(
+def test_commit_and_tag_with_no_tool(scm_config: SCMConfig):
+    config, _, _ = get_config_data(
         {
             "current_version": "1.2.3",
         }
     )
-    config.scm_info = SCMInfo()
+    config.scm_info = SCMInfo(scm_config)
     mock_context = MagicMock()
 
     bump.commit_and_tag(config, None, [], mock_context, False)
 
 
-def test_commit_and_tag_with_tool(mock_context):
-    config, version_config, current_version = get_config_data(
+def test_commit_and_tag_with_tool(mock_context, scm_config: SCMConfig):
+    config, version_config, _ = get_config_data(
         {"current_version": "1.2.3", "files": [{"filename": "foo.txt"}, {"filename": "bar.txt"}]}
     )
-    config.scm_info = SCMInfo()
+    config.scm_info = MagicMock(spec=SCMInfo)
     config.scm_info.tool = MagicMock(spec=Git)
     configured_files = [ConfiguredFile(file_cfg, version_config) for file_cfg in config.files]
     bump.commit_and_tag(config, None, configured_files, mock_context, False)
-    config.scm_info.tool.commit_to_scm.assert_called_once()
-    config.scm_info.tool.tag_in_scm.assert_called_once()
-    assert set(config.scm_info.tool.commit_to_scm.call_args[0][0]) == {"foo.txt", "bar.txt"}
+    config.scm_info.commit_and_tag.assert_called_once()
+    assert set(config.scm_info.commit_and_tag.call_args[0][0]) == {"foo.txt", "bar.txt"}
 
 
-def test_commit_and_tag_with_config_file(mock_context):
+def test_commit_and_tag_with_config_file(mock_context, scm_config: SCMConfig):
     config, version_config, current_version = get_config_data(
         {"current_version": "1.2.3", "files": [{"filename": "foo.txt"}, {"filename": "bar.txt"}]}
     )
-    config.scm_info = SCMInfo()
+    config.scm_info = MagicMock(spec=SCMInfo)
     config.scm_info.tool = MagicMock(spec=Git)
     configured_files = [ConfiguredFile(file_cfg, version_config) for file_cfg in config.files]
     bump.commit_and_tag(config, Path("pyproject.toml"), configured_files, mock_context, False)
-    config.scm_info.tool.commit_to_scm.assert_called_once()
-    config.scm_info.tool.tag_in_scm.assert_called_once()
-    assert set(config.scm_info.tool.commit_to_scm.call_args[0][0]) == {"foo.txt", "bar.txt", "pyproject.toml"}
+    config.scm_info.commit_and_tag.assert_called_once()
+    assert set(config.scm_info.commit_and_tag.call_args[0][0]) == {"foo.txt", "bar.txt", "pyproject.toml"}
 
 
 def test_key_path_required_for_toml_change(tmp_path: Path, caplog):
     """If the key_path is not provided, the toml file should use standard search and replace."""
-    from bumpversion import config
-    from bumpversion.versioning.version_config import VersionConfig
+    from click.testing import CliRunner, Result
+
+    from bumpversion import cli, config
 
     # Arrange
     config_path = tmp_path / "pyproject.toml"
@@ -314,9 +320,6 @@ def test_key_path_required_for_toml_change(tmp_path: Path, caplog):
     conf = config.get_configuration(config_file=config_path)
 
     # Act
-    from click.testing import CliRunner, Result
-    from bumpversion import cli
-
     runner: CliRunner = CliRunner()
     with inside_dir(tmp_path):
         result: Result = runner.invoke(
@@ -358,7 +361,9 @@ def test_key_path_required_for_toml_change(tmp_path: Path, caplog):
 
 def test_changes_to_files_are_committed(git_repo: Path, caplog):
     """Any files changed during the bump are committed."""
-    from bumpversion import config
+    from click.testing import CliRunner, Result
+
+    from bumpversion import cli
 
     # Arrange
     config_path = git_repo / ".bumpversion.toml"
@@ -397,9 +402,6 @@ def test_changes_to_files_are_committed(git_repo: Path, caplog):
         run_command(["git", "tag", "0.1.26"])
 
     # Act
-    from click.testing import CliRunner, Result
-    from bumpversion import cli
-
     runner: CliRunner = CliRunner()
     with inside_dir(git_repo):
         result: Result = runner.invoke(

@@ -170,6 +170,7 @@ def test_cli_options_override_config(tmp_path: Path, fixtures_path: Path, mocker
     ],
 )
 def test_dirty_work_dir_raises_error(repo: str, scm_command: str, request, runner):
+    """A dirty working directory should raise an error."""
     repo_path: Path = request.getfixturevalue(repo)
     with inside_dir(repo_path):
         # Arrange
@@ -178,10 +179,11 @@ def test_dirty_work_dir_raises_error(repo: str, scm_command: str, request, runne
 
         # Act
         result: Result = runner.invoke(
-            cli.cli, ["bump", "patch", "--current-version", "1.1.1", "--no-allow-dirty", "dirty2"]
+            cli.cli, ["bump", "patch", "--current-version", "1.1.1", "-vv", "--no-allow-dirty", "dirty2"]
         )
 
     # Assert
+    print(f"{result.output=}")
     assert result.exit_code != 0
     assert "working directory is not clean" in result.output
 

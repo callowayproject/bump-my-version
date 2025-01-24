@@ -1,4 +1,5 @@
 from pathlib import Path
+from unittest.mock import MagicMock
 
 import pytest
 from click import UsageError
@@ -51,7 +52,7 @@ class TestSerialize:
 
     def test_distance_to_latest_tag_in_pattern(self):
         """Using ``distance_to_latest_tag`` in the serialization string outputs correctly."""
-        from bumpversion.scm_old import Git, SCMInfo
+        from bumpversion.scm.models import SCMConfig, SCMInfo
 
         overrides = {
             "current_version": "19.6.0",
@@ -59,9 +60,12 @@ class TestSerialize:
             "serialize": ["{major}.{minor}.{patch}-pre{distance_to_latest_tag}"],
         }
         conf, version_config, current_version = get_config_data(overrides)
-        conf.scm_info = SCMInfo(
-            tool=Git, commit_sha="1234123412341234", distance_to_latest_tag=3, current_version="19.6.0", dirty=False
-        )
+        scm_config = SCMConfig.from_config(conf)
+        scm_info = SCMInfo(scm_config)
+        scm_info.current_version = "19.6.0"
+        scm_info.distance_to_latest_tag = 3
+        scm_info.commit_sha = "1234123412341234"
+        conf.scm_info = scm_info
         assert version_config.serialize(current_version, get_context(conf)) == "19.6.0-pre3"
 
     def test_environment_var_in_serialize_pattern(self):
