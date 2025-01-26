@@ -13,7 +13,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from bumpversion.ui import get_indented_logger
 from bumpversion.versioning.models import VersionComponentSpec  # NOQA: TC001
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.scm.models import SCMInfo
     from bumpversion.versioning.models import VersionSpec
     from bumpversion.versioning.version_config import VersionConfig
