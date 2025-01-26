@@ -104,7 +104,7 @@ def filter_version_parts(config: Config) -> List[str]:
         The version parts that are in the configuration
     """
     version_parts = [part for part in config.version_config.order if not part.startswith("$")]
-    default_context = base_context(config.scm_info)
+    default_context = base_context(config)
     return [part for part in version_parts if part not in default_context]
 
 

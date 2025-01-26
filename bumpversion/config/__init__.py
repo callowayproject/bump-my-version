@@ -30,6 +30,7 @@ DEFAULTS = {
     "allow_dirty": False,
     "commit": False,
     "message": "Bump version: {current_version} → {new_version}",
+    "moveable_tags": [],
     "commit_args": None,
     "scm_info": None,
     "parts": {},
@@ -65,7 +66,7 @@ def get_configuration(config_file: Union[str, Path, None] = None, **overrides: A
         The configuration
     """
     from bumpversion.config.utils import get_all_file_configs, get_all_part_configs
-    from bumpversion.scm import SCMInfo, SourceCodeManager, get_scm_info  # noqa: F401
+    from bumpversion.scm.models import SCMConfig, SCMInfo
 
     logger.info("Reading configuration")
     logger.indent()
@@ -84,7 +85,7 @@ def get_configuration(config_file: Union[str, Path, None] = None, **overrides: A
     config = Config(**config_dict)  # type: ignore[arg-type]
 
     # Get the information about the SCM
-    scm_info = get_scm_info(config.tag_name, config.parse)
+    scm_info = SCMInfo(SCMConfig.from_config(config))
     config.scm_info = scm_info
 
     # Update and verify the current_version

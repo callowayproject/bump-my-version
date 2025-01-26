@@ -2,6 +2,7 @@
 
 import string
 import subprocess
+from pathlib import Path
 from subprocess import CompletedProcess
 from typing import Any, List, Optional, Tuple, Union
 
@@ -126,3 +127,10 @@ def run_command(command: list, env: Optional[dict] = None) -> CompletedProcess:
     result = subprocess.run(command, text=True, check=True, capture_output=True, env=env)  # NOQA: S603
     result.check_returncode()
     return result
+
+
+def is_subpath(parent: Path | str, path: Path | str) -> bool:
+    """Return whether a path is inside the parent."""
+    normalized_parent = Path(parent)
+    normalized_path = Path(path)
+    return str(normalized_path).startswith(str(normalized_parent)) if normalized_path.is_absolute() else True

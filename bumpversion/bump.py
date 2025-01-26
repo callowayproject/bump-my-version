@@ -1,6 +1,5 @@
 """Version changing methods."""
 
-import shlex
 from pathlib import Path
 from typing import TYPE_CHECKING, List, MutableMapping, Optional
 
@@ -137,19 +136,16 @@ def commit_and_tag(
 
     Args:
         config: The configuration
-        config_file: The configuration file to include in the commit, if it exists
+        config_file: The configuration file to include in the commit if it exists
         configured_files: A list of files to commit
         ctx: The context used to render the tag and tag message
         dry_run: True if the operation should be a dry run
     """
-    if not config.scm_info.tool:
+    if not config.scm_info or not config.scm_info.tool:  # pragma: no-coverage
         return
-
-    extra_args = shlex.split(config.commit_args) if config.commit_args else []
 
     commit_files = {f.file_change.filename for f in configured_files}
     if config_file:
         commit_files |= {str(config_file)}
 
-    config.scm_info.tool.commit_to_scm(list(commit_files), config, ctx, extra_args, dry_run)
-    config.scm_info.tool.tag_in_scm(config, ctx, dry_run)
+    config.scm_info.commit_and_tag(list(commit_files), ctx, dry_run)

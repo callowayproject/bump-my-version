@@ -15,9 +15,10 @@ from bumpversion.indented_logger import IndentedLoggerAdapter
 logger = logging.getLogger("bumpversion")
 
 VERBOSITY = {
-    0: logging.WARNING,
-    1: logging.INFO,
-    2: logging.DEBUG,
+    0: (logging.WARNING, "%(message)s"),
+    1: (logging.INFO, "%(message)s"),
+    2: (logging.DEBUG, "%(message)s"),
+    3: (logging.DEBUG, "%(message)s %(pathname)s:%(lineno)d"),
 }
 
 
@@ -28,9 +29,10 @@ def get_indented_logger(name: str) -> "IndentedLoggerAdapter":
 
 def setup_logging(verbose: int = 0) -> None:
     """Configure the logging."""
+    verbosity, log_format = VERBOSITY.get(verbose, VERBOSITY[3])
     logging.basicConfig(
-        level=VERBOSITY.get(verbose, logging.DEBUG),
-        format="%(message)s",
+        level=verbosity,
+        format=log_format,
         datefmt="[%X]",
         handlers=[
             RichHandler(
@@ -39,7 +41,7 @@ def setup_logging(verbose: int = 0) -> None:
         ],
     )
     root_logger = get_indented_logger("")
-    root_logger.setLevel(VERBOSITY.get(verbose, logging.DEBUG))
+    root_logger.setLevel(verbosity)
 
 
 def print_info(msg: str) -> None:

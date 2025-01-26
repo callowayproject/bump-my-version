@@ -2,12 +2,14 @@
 
 import subprocess
 from contextlib import contextmanager
-from click.testing import CliRunner
 from pathlib import Path
 from typing import Generator, Tuple
 
 import pytest
-from bumpversion.config import Config
+from click.testing import CliRunner
+
+from bumpversion.config import DEFAULTS, Config
+from bumpversion.scm.models import SCMConfig
 from bumpversion.versioning.models import Version
 from bumpversion.versioning.version_config import VersionConfig
 
@@ -62,19 +64,37 @@ def get_semver(version: str) -> Version:
 @pytest.fixture
 def git_repo(tmp_path: Path) -> Path:
     """Generate a simple temporary git repo and return the path."""
-    subprocess.run(["git", "init"], cwd=tmp_path, check=True, capture_output=True)
+    subprocess.run(  # noqa: S603
+        ["git", "init", "--initial-branch=main"], cwd=tmp_path, check=True, capture_output=True  # noqa: S607
+    )
     return tmp_path
 
 
 @pytest.fixture
 def hg_repo(tmp_path: Path) -> Path:
     """Generate a simple temporary mercurial repo and return the path."""
-    subprocess.run(["hg", "init"], cwd=tmp_path, check=True, capture_output=True)
+    subprocess.run(["hg", "init"], cwd=tmp_path, check=True, capture_output=True)  # noqa: S603, S607
     return tmp_path
 
 
 @pytest.fixture
 def runner() -> CliRunner:
     """Return a CliRunner instance."""
-
     return CliRunner()
+
+
+@pytest.fixture
+def scm_config() -> SCMConfig:
+    """Dummy SCMConfig fixture."""
+    return SCMConfig(
+        tag=DEFAULTS["tag"],
+        sign_tags=DEFAULTS["sign_tags"],
+        tag_name=DEFAULTS["tag_name"],
+        allow_dirty=DEFAULTS["allow_dirty"],
+        commit=DEFAULTS["commit"],
+        message=DEFAULTS["message"],
+        moveable_tags=DEFAULTS["moveable_tags"],
+        parse_pattern=DEFAULTS["parse"],
+        tag_message=DEFAULTS["tag_message"],
+        commit_args=DEFAULTS["commit_args"],
+    )

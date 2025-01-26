@@ -3,12 +3,10 @@
 import calendar
 import datetime
 from collections import ChainMap
-from dataclasses import asdict
 from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
-    from bumpversion.scm import SCMInfo
     from bumpversion.versioning.models import Version
 
 MONTH_ABBREVIATIONS = [abbr for abbr in calendar.month_abbr if abbr]
@@ -54,11 +52,9 @@ def prefixed_environ() -> dict:
     return {f"${key}": value for key, value in os.environ.items()}
 
 
-def base_context(scm_info: Optional["SCMInfo"] = None) -> ChainMap:
+def base_context(config: "Config") -> ChainMap:
     """The default context for rendering messages and tags."""
-    from bumpversion.scm import SCMInfo  # Including this here to avoid circular imports
-
-    scm = asdict(scm_info) if scm_info else asdict(SCMInfo())
+    scm = config.scm_info.as_dict()
 
     return ChainMap(
         {
@@ -75,7 +71,7 @@ def get_context(
     config: "Config", current_version: Optional["Version"] = None, new_version: Optional["Version"] = None
 ) -> ChainMap:
     """Return the context for rendering messages and tags."""
-    ctx = base_context(config.scm_info)
+    ctx = base_context(config)
     ctx = ctx.new_child({"current_version": config.current_version})
     if current_version:
         ctx = ctx.new_child({f"current_{part}": current_version[part].value for part in current_version})

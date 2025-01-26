@@ -28,9 +28,9 @@ def noneify(s: str) -> None:
 
 def listify(s: str) -> list:
     """
-    Convert a string representation of a list into list of homogeneous basic types.
+    Convert a string representation of a list into a `list` of homogeneous basic types.
 
-    Type of elements in list is determined via first element. Successive elements are
+    The type of the elements in the list is determined via the first element. Successive elements are
     cast to that type.
 
     Args:
