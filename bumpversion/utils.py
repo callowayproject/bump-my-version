@@ -131,4 +131,8 @@ def run_command(command: list, env: Optional[dict] = None) -> CompletedProcess:
 
 def is_subpath(parent: Path | str, path: Path | str) -> bool:
     """Return whether a path is inside the parent."""
-    return str(path).startswith(str(parent)) if Path(path).is_absolute() else True
+    normalized_parent = Path(parent).resolve()
+    normalized_path = Path(path).resolve()
+    print(f"normalized_parent: {normalized_parent}")
+    print(f"normalized_path: {normalized_path}")
+    return str(normalized_path).startswith(str(normalized_parent)) if normalized_path.is_absolute() else True

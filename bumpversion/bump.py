@@ -136,12 +136,12 @@ def commit_and_tag(
 
     Args:
         config: The configuration
-        config_file: The configuration file to include in the commit, if it exists
+        config_file: The configuration file to include in the commit if it exists
         configured_files: A list of files to commit
         ctx: The context used to render the tag and tag message
         dry_run: True if the operation should be a dry run
     """
-    if not config.scm_info or not config.scm_info.tool:
+    if not config.scm_info or not config.scm_info.tool:  # pragma: no-coverage
         return
 
     commit_files = {f.file_change.filename for f in configured_files}
