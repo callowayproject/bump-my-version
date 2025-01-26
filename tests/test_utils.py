@@ -1,8 +1,10 @@
 """Tests for the utils module."""
 
 from itertools import combinations
+from pathlib import Path
 
 import pytest
+from pytest import param
 from bumpversion import utils
 
 
@@ -131,3 +133,28 @@ class TestExtractRegexFlags:
 
         # Assert
         assert actual_flags == expected
+
+
+@pytest.mark.parametrize(
+    ["parent", "path", "expected"],
+    [
+        param(Path("/parent"), Path("/parent/subpath"), True, id="absolute_path_within_parent_returns_true"),
+        param("/parent", Path("/parent/subpath"), True, id="parent_as_string_path_as_path_1"),
+        param(Path("/parent"), "/parent/subpath", True, id="parent_as_path_path_as_string_1"),
+        param(Path("/parent"), Path("/other/subpath"), False, id="absolute_path_outside_of_parent_returns_false"),
+        param("/parent", Path("/other/subpath"), False, id="parent_as_string_path_as_path_2"),
+        param(Path("/parent"), "/other/subpath", False, id="parent_as_path_path_as_string_2"),
+        param(Path("/parent"), Path("/parent"), True, id="identical_absolute_paths_return_true"),
+        param("/parent", Path("/parent"), True, id="parent_as_string_path_as_path_3"),
+        param(Path("/parent"), "/parent", True, id="parent_as_path_path_as_string_3"),
+        param(Path("/parent"), Path("relative/path"), True, id="relative_path_returns_true"),
+        param("/parent", Path("relative/path"), True, id="parent_as_string_path_as_path_4"),
+        param(Path("/parent"), "relative/path", True, id="parent_as_path_path_as_string_4"),
+    ],
+)
+def test_is_subpath(parent: Path | str, path: Path | str, expected: bool) -> None:
+    """Test the is_subpath function."""
+    # Act
+    result = utils.is_subpath(parent, path)
+    # Assert
+    assert result is expected
