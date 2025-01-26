@@ -1,3 +1,5 @@
+"""Tests for bumpversion.scm.git."""
+
 import subprocess
 from pathlib import Path
 from unittest.mock import MagicMock, patch
@@ -5,7 +7,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 from pytest import param
 
-from bumpversion.exceptions import DirtyWorkingDirectoryError
+from bumpversion.exceptions import BumpVersionError, DirtyWorkingDirectoryError
 from bumpversion.scm.git import Git, assert_nondirty, commit_info, moveable_tag, revision_info, tag
 from bumpversion.scm.models import LatestTagInfo, SCMConfig
 from bumpversion.utils import run_command
@@ -69,6 +71,73 @@ class TestGit:
             assert tag_info.short_branch_name == "main"
             assert tag_info.repository_root == git_repo
             assert tag_info.dirty is False
+
+    class TestGitAddPath:
+        """Tests for the add_path method in the Git class."""
+
+        @patch("bumpversion.scm.git.run_command")
+        @patch("bumpversion.scm.git.Git.latest_tag_info")
+        @patch("bumpversion.scm.git.is_subpath")
+        def test_valid_subpath_is_added(
+            self, mock_is_subpath, mock_latest_tag_info, mock_run_command, scm_config: SCMConfig, tmp_path: Path
+        ):
+            """A path that is a subpath of the repository root should be added."""
+            # Arrange
+            repository_root = tmp_path / "repository"
+            repository_root.mkdir()
+            path_to_add = repository_root / "file.txt"
+            mock_latest_tag_info.return_value.repository_root = repository_root
+            mock_is_subpath.return_value = True
+            mock_run_command.return_value = None
+            git_instance = Git(scm_config)
+
+            # Act
+            with inside_dir(repository_root):
+                git_instance.add_path(path_to_add)
+
+            # Assert
+            mock_run_command.assert_called_once_with(["git", "add", "--update", "file.txt"])
+
+        @patch("bumpversion.scm.git.run_command")
+        @patch("bumpversion.scm.git.Git.latest_tag_info")
+        @patch("bumpversion.scm.git.is_subpath")
+        def test_invalid_subpath_is_not_added(
+            self, mock_is_subpath, mock_latest_tag_info, mock_run_command, scm_config, tmp_path: Path
+        ):
+            """A path that is not a subpath of the repository root should not be added."""
+            # Arrange
+            repository_root = tmp_path / "repository"
+            repository_root.mkdir()
+            path_to_add = repository_root / "file.txt"
+            mock_latest_tag_info.return_value.repository_root = repository_root
+            mock_is_subpath.return_value = False
+            git_instance = Git(scm_config)
+
+            # Act
+            git_instance.add_path(path_to_add)
+
+            # Assert
+            mock_run_command.assert_not_called()
+
+        @patch("bumpversion.scm.git.run_command")
+        @patch("bumpversion.scm.git.Git.latest_tag_info")
+        @patch("bumpversion.scm.git.is_subpath")
+        def test_raises_error_on_command_failure(
+            self, mock_is_subpath, mock_latest_tag_info, mock_run_command, scm_config: SCMConfig, tmp_path: Path
+        ):
+            """If the git command fails, a BumpVersionError should be raised."""
+            # Arrange
+            repository_root = tmp_path / "repository"
+            repository_root.mkdir()
+            path_to_add = repository_root / "file.txt"
+            mock_latest_tag_info.return_value.repository_root = repository_root
+            mock_is_subpath.return_value = True
+            mock_run_command.side_effect = subprocess.CalledProcessError(returncode=1, cmd="git add")
+            git_instance = Git(scm_config)
+
+            # Act / Assert
+            with pytest.raises(BumpVersionError):
+                git_instance.add_path(path_to_add)
 
 
 class TestRevisionInfo:

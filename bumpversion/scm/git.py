@@ -70,7 +70,12 @@ class Git:
         try:
             result = run_command(self._ALL_TAGS_COMMAND)
             return result.stdout.splitlines()
-        except (FileNotFoundError, PermissionError, NotADirectoryError, subprocess.CalledProcessError):
+        except (  # pragma: no-coverage
+            FileNotFoundError,
+            PermissionError,
+            NotADirectoryError,
+            subprocess.CalledProcessError,
+        ):
             return []
 
     def commit_and_tag(self, files: list[Path | str], context: MutableMapping, dry_run: bool = False) -> None:
@@ -109,9 +114,9 @@ class Git:
         new_version = context.get("new_version", "")
         commit_message = self.config.message.format(**context)
 
-        if not current_version:
+        if not current_version:  # pragma: no-coverage
             logger.warning("No current version given, using an empty string.")
-        if not new_version:
+        if not new_version:  # pragma: no-coverage
             logger.warning("No new version given, using an empty string.")
 
         with NamedTemporaryFile("wb", delete=False) as f:
