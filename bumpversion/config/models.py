@@ -14,7 +14,7 @@ from bumpversion.ui import get_indented_logger
 from bumpversion.versioning.models import VersionComponentSpec  # NOQA: TC001
 
 if TYPE_CHECKING:
-    from bumpversion.scm_old import SCMInfo
+    from bumpversion.scm.models import SCMInfo
     from bumpversion.versioning.models import VersionSpec
     from bumpversion.versioning.version_config import VersionConfig
 
