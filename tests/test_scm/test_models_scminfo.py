@@ -46,20 +46,10 @@ class TestPathInRepo:
         # Assert
         assert result is True
 
-    @pytest.mark.parametrize(
-        ["test_path", "expected"],
-        [
-            param("{tmp_path}/repo/root/some/path", True, id="absolute path in repo is true"),
-            param("some/path", True, id="relative path is true"),
-            param("/outside/path", False, id="absolute path outside repo is false"),
-        ],
-    )
-    def test_function_logic_working(
-        self, test_path: str, expected: bool, scm_config: SCMConfig, tmp_path: Path
-    ) -> None:
+    def test_absolute_path_in_repo_returns_true(self, scm_config: SCMConfig, tmp_path: Path) -> None:
         """Ensure path_in_repo returns the correct result for absolute paths."""
         # Arrange
-        full_test_path = test_path.format(tmp_path=tmp_path)
+        full_test_path = tmp_path / "repo" / "root" / "some" / "path"
         with inside_dir(tmp_path):
             scm_info = SCMInfo(scm_config)
             scm_info.repository_root = tmp_path / "repo" / "root"
@@ -68,7 +58,33 @@ class TestPathInRepo:
         result = scm_info.path_in_repo(full_test_path)
 
         # Assert
-        assert result is expected
+        assert result is True
+
+    def test_relative_path_in_repo_returns_true(self, scm_config: SCMConfig, tmp_path: Path) -> None:
+        """Ensure path_in_repo returns the correct result for relative paths."""
+        # Arrange
+        with inside_dir(tmp_path):
+            scm_info = SCMInfo(scm_config)
+            scm_info.repository_root = tmp_path / "repo" / "root"
+
+        # Act
+        result = scm_info.path_in_repo("some/path")
+
+        # Assert
+        assert result is True
+
+    def test_absolute_path_outside_repo_returns_false(self, scm_config: SCMConfig, tmp_path: Path) -> None:
+        """Ensure path_in_repo returns the correct result for absolute paths."""
+        # Arrange
+        with inside_dir(tmp_path):
+            scm_info = SCMInfo(scm_config)
+            scm_info.repository_root = tmp_path / "repo" / "root"
+
+        # Act
+        result = scm_info.path_in_repo(tmp_path)
+
+        # Assert
+        assert result is False
 
 
 @patch("bumpversion.scm.git.Git.is_available", return_value=True)
