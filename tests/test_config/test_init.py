@@ -1,18 +1,9 @@
 """Tests for the config.__init__ module."""
 
-from dataclasses import dataclass
-from typing import Optional
+from unittest.mock import Mock
 
-from bumpversion.scm import SCMInfo
-from bumpversion.config import check_current_version
-
-
-@dataclass
-class MockConfig:
-    """Just includes the current_version and scm_info attributes."""
-
-    current_version: Optional[str]
-    scm_info: SCMInfo
+from bumpversion.config import Config, check_current_version
+from bumpversion.scm.models import SCMConfig, SCMInfo
 
 
 class TestCheckCurrentVersion:
@@ -23,12 +14,13 @@ class TestCheckCurrentVersion:
     - tag may not match current version in config
     """
 
-    def test_uses_tag_when_missing_current_version(self):
+    def test_uses_tag_when_missing_current_version(self, scm_config: SCMConfig):
         """When the config does not have a current_version, the last tag is used."""
-        # Assemble
-        scm_info = SCMInfo()
+        # Arrange
+
+        scm_info = SCMInfo(scm_config)
         scm_info.current_version = "1.2.3"
-        config = MockConfig(current_version=None, scm_info=scm_info)
+        config = Mock(spec=Config, current_version=None, scm_info=scm_info)
 
         # Act
         result = check_current_version(config)

@@ -14,7 +14,7 @@ from bumpversion.ui import get_indented_logger
 from bumpversion.versioning.models import VersionComponentSpec  # NOQA: TC001
 
 if TYPE_CHECKING:
-    from bumpversion.scm import SCMInfo
+    from bumpversion.scm_old import SCMInfo
     from bumpversion.versioning.models import VersionSpec
     from bumpversion.versioning.version_config import VersionConfig
 
@@ -99,6 +99,7 @@ class Config(BaseSettings):
     commit_args: Optional[str]
     scm_info: Optional["SCMInfo"]
     parts: Dict[str, VersionComponentSpec]
+    moveable_tags: list[str] = Field(default_factory=list)
     files: List[FileChange] = Field(default_factory=list)
     setup_hooks: List[str] = Field(default_factory=list)
     pre_commit_hooks: List[str] = Field(default_factory=list)

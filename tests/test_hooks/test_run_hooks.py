@@ -8,7 +8,7 @@ from bumpversion.exceptions import HookError
 
 def test_calls_each_hook(mocker):
     """It should call each hook passed to it."""
-    # Assemble
+    # Arrange
     mock_logger = mocker.patch("bumpversion.hooks.logger")
     mock_run_command = mocker.patch("bumpversion.hooks.run_command")
     hooks_list = ["script1", "script2"]
@@ -39,7 +39,7 @@ def test_calls_each_hook(mocker):
 
 def test_raises_exception_if_hook_fails(mocker):
     """If a hook responds with an error, an exception should be raised."""
-    # Assemble
+    # Arrange
     mock_logger = mocker.patch("bumpversion.hooks.logger")
     mock_run_command = mocker.patch("bumpversion.hooks.run_command")
     hooks_list = ["script1", "script2"]
@@ -60,7 +60,7 @@ def test_raises_exception_if_hook_fails(mocker):
 
 def test_does_not_call_each_hook_when_dry_run(mocker):
     """It should not call each hook passed to it when dry_run is True."""
-    # Assemble
+    # Arrange
     mock_logger = mocker.patch("bumpversion.hooks.logger")
     mock_run_command = mocker.patch("bumpversion.hooks.run_command")
     hooks_list = ["script1", "script2"]

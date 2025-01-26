@@ -49,7 +49,7 @@ class TestHookSuites:
     @pytest.mark.parametrize(["suite_name", "suite_func", "suite_args"], suites)
     def test_calls_each_hook(self, mocker, suite_name: str, suite_func: Callable, suite_args: tuple):
         """The suite hook runs each hook."""
-        # Assemble
+        # Arrange
         env = {"var": "value"}
         mock_env = mocker.patch(f"bumpversion.hooks.get_{suite_name}_hook_env")
         mock_env.return_value = env
@@ -81,7 +81,7 @@ class TestHookSuites:
         self, mocker, suite_name: str, suite_func: Callable, suite_args: tuple
     ):
         """If no setup_hooks are defined, nothing is run."""
-        # Assemble
+        # Arrange
         env = {"var": "value"}
         mock_env = mocker.patch(f"bumpversion.hooks.get_{suite_name}_hook_env")
         mock_env.return_value = env
@@ -104,7 +104,7 @@ class TestHookSuites:
         self, mocker, suite_name: str, suite_func: Callable, suite_args: tuple
     ):
         """If dry_run is True, nothing is run."""
-        # Assemble
+        # Arrange
         env = {"var": "value"}
         mock_env = mocker.patch(f"bumpversion.hooks.get_{suite_name}_hook_env")
         mock_env.return_value = env
