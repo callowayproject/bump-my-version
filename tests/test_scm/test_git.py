@@ -136,8 +136,9 @@ class TestGit:
             git_instance = Git(scm_config)
 
             # Act / Assert
-            with pytest.raises(BumpVersionError):
-                git_instance.add_path(path_to_add)
+            with inside_dir(repository_root):
+                with pytest.raises(BumpVersionError):
+                    git_instance.add_path(path_to_add)
 
 
 class TestRevisionInfo:
