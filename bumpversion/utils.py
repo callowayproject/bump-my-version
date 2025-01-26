@@ -135,4 +135,8 @@ def is_subpath(parent: Path | str, path: Path | str) -> bool:
     normalized_path = Path(path)
     print(f"normalized_parent: {normalized_parent}")
     print(f"normalized_path: {normalized_path}")
+    print(
+        f"str(normalized_path).startswith(str(normalized_parent)): {str(normalized_path).startswith(str(normalized_parent))}"
+    )
+    print(f"normalized_path.is_absolute(): {normalized_path.is_absolute()}")
     return str(normalized_path).startswith(str(normalized_parent)) if normalized_path.is_absolute() else True
