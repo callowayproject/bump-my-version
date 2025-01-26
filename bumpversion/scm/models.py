@@ -189,7 +189,7 @@ class SCMInfo:
             return True
         elif not Path(path).is_absolute():
             return True
-
+        print(path, self.repository_root)
         return str(path).startswith(str(self.repository_root))
 
     def commit_and_tag(

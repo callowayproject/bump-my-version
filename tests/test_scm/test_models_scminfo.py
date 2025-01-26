@@ -49,7 +49,7 @@ class TestPathInRepo:
     @pytest.mark.parametrize(
         ["test_path", "expected"],
         [
-            param("/repo/root/some/path", True, id="absolute path in repo is true"),
+            param("{tmp_path}/repo/root/some/path", True, id="absolute path in repo is true"),
             param("some/path", True, id="relative path is true"),
             param("/outside/path", False, id="absolute path outside repo is false"),
         ],
@@ -59,12 +59,13 @@ class TestPathInRepo:
     ) -> None:
         """Ensure path_in_repo returns the correct result for absolute paths."""
         # Arrange
+        full_test_path = test_path.format(tmp_path=tmp_path)
         with inside_dir(tmp_path):
             scm_info = SCMInfo(scm_config)
-        scm_info.repository_root = Path("/repo/root")
+            scm_info.repository_root = tmp_path.joinpath("repo/root")
 
         # Act
-        result = scm_info.path_in_repo(test_path)
+        result = scm_info.path_in_repo(full_test_path)
 
         # Assert
         assert result is expected
