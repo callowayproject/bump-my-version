@@ -185,11 +185,11 @@ class SCMInfo:
 
     def path_in_repo(self, path: Path | str) -> bool:
         """Return whether a path is inside this repository."""
+        print(path, self.repository_root)
         if self.repository_root is None:
             return True
         elif not Path(path).is_absolute():
             return True
-        print(path, self.repository_root)
         return str(path).startswith(str(self.repository_root))
 
     def commit_and_tag(

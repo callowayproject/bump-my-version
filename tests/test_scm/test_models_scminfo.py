@@ -62,7 +62,7 @@ class TestPathInRepo:
         full_test_path = test_path.format(tmp_path=tmp_path)
         with inside_dir(tmp_path):
             scm_info = SCMInfo(scm_config)
-            scm_info.repository_root = tmp_path.joinpath("repo/root")
+            scm_info.repository_root = tmp_path / "repo" / "root"
 
         # Act
         result = scm_info.path_in_repo(full_test_path)
