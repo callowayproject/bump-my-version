@@ -32,7 +32,7 @@ def test_get_version_from_tag_returns_version_from_pattern(
     scm_config: SCMConfig, tag: str, tag_name: str, parse_pattern: str, expected: str
 ) -> None:
     """SCMConfig.get_version_from_tag properly returns the version from the tag."""
-    # Assemble
+    # Arrange
     scm_config.parse_pattern = parse_pattern
     scm_config.tag_name = tag_name
 

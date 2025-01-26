@@ -16,7 +16,7 @@ class TestCheckCurrentVersion:
 
     def test_uses_tag_when_missing_current_version(self, scm_config: SCMConfig):
         """When the config does not have a current_version, the last tag is used."""
-        # Assemble
+        # Arrange
 
         scm_info = SCMInfo(scm_config)
         scm_info.current_version = "1.2.3"

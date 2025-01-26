@@ -8,9 +8,8 @@ from pathlib import Path
 from textwrap import dedent
 
 import pytest
-from pytest import param
-
 from click.testing import Result
+from pytest import param
 
 from bumpversion import cli
 from tests.conftest import inside_dir

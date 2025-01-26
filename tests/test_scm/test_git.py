@@ -35,7 +35,7 @@ class TestGit:
 
         def test_returns_default_if_not_available(self, tmp_path: Path, scm_config: SCMConfig) -> None:
             """If git is not available, it returns the default LatestTagInfo object, with all None values."""
-            # Assemble
+            # Arrange
             expected = LatestTagInfo()
             tool = Git(scm_config)
 
@@ -48,7 +48,7 @@ class TestGit:
 
         def test_returns_correct_commit_and_tag_info(self, git_repo: Path, scm_config: SCMConfig) -> None:
             """Should return information that it is a git repo."""
-            # Assemble
+            # Arrange
             tag_prefix = "app/"
             readme = git_repo.joinpath("readme.md")
             readme.touch()
@@ -127,7 +127,7 @@ class TestMoveableTag:
 
     def test_moves_tags(self, git_repo: Path) -> None:
         """Tag moves to subsequent commit."""
-        # Assemble
+        # Arrange
         readme = git_repo.joinpath("readme.md")
         readme.touch()
 

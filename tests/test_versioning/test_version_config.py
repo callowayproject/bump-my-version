@@ -21,7 +21,7 @@ class TestParse:
 
     def test_cant_parse_returns_none(self):
         """The default behavior when unable to parse a string is to return None."""
-        # Assemble
+        # Arrange
         overrides = {
             "current_version": "19.6.0",
             "parse": r"(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+).*",
@@ -34,7 +34,7 @@ class TestParse:
 
     def test_cant_parse_raises_error_when_set(self):
         """When `raise_error` is enabled, the inability to parse a string will raise an error."""
-        # Assemble
+        # Arrange
         overrides = {
             "current_version": "19.6.0",
             "parse": r"(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+).*",

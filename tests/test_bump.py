@@ -11,7 +11,7 @@ from bumpversion import bump
 from bumpversion.exceptions import ConfigurationError, VersionNotFoundError
 from bumpversion.files import ConfiguredFile
 from bumpversion.scm.git import Git
-from bumpversion.scm.models import SCMInfo, SCMConfig
+from bumpversion.scm.models import SCMConfig, SCMInfo
 from bumpversion.utils import run_command
 from tests.conftest import get_config_data, inside_dir
 
@@ -25,7 +25,7 @@ class TestGetNextVersion:
     """Tests for the get_next_version function."""
 
     def test_passing_a_new_version_should_override_a_version_part(self, tmp_path: Path):
-        """Passing a new version should return that version."""
+        """Passing a new version should return that version, even if a version part is provided."""
         # Arrange
         with inside_dir(tmp_path):
             config, version_config, current_version = get_config_data({"current_version": "0.1.0"})
@@ -54,6 +54,7 @@ class TestGetNextVersion:
         assert actual_next_version == expected_next_version
 
     def test_passing_no_arguments_raises_error(self):
+        """If no arguments are provided, an error should be raised."""
         # Arrange
         current_version = MagicMock()
         config = MagicMock()
@@ -73,6 +74,7 @@ class TestDoBump:
     def test_passing_version_part_increments_part(
         self, mock_update_config_file, mock_modify_files, scm_config: SCMConfig
     ):
+        """If a version part is provided, and no new version, it should increment that part."""
         # Arrange
         version_part = "major"
         new_version = None
@@ -104,6 +106,7 @@ class TestDoBump:
     @patch("bumpversion.files.modify_files")
     @patch("bumpversion.bump.update_config_file")
     def test_passing_new_version_sets_version(self, mock_update_config_file, mock_modify_files, scm_config: SCMConfig):
+        """If a new version is provided, it should set the version to that new version."""
         # Arrange
         version_part = None
         new_version = "2.0.0"
@@ -136,6 +139,7 @@ class TestDoBump:
     def test_doesnt_commit_if_modify_error(
         self, mock_update_config_file, mock_commit_and_tag, tmp_path: Path, fixtures_path: Path
     ):
+        """If there is an error modifying a file, the commit should not happen."""
         from bumpversion import config
 
         # Arrange
@@ -164,7 +168,6 @@ class TestDoBump:
     @patch("bumpversion.bump.update_config_file")
     def test_when_new_equals_current_nothing_happens(self, mock_update_config_file, mock_modify_files, tmp_path: Path):
         """When the new version is the same as the current version, nothing should happen."""
-
         # Arrange
         version_part = None
         new_version = "1.2.3"
@@ -179,6 +182,7 @@ class TestDoBump:
         mock_update_config_file.assert_not_called()
 
     def test_passing_no_arguments_raises_error(self, scm_config: SCMConfig):
+        """If no arguments are provided, an error should be raised."""
         # Arrange
         version_part = None
         new_version = None
@@ -249,40 +253,61 @@ class TestDoBump:
         assert {f.file_change.filename for f in mock_modify_files.call_args[0][0]} == {"foo.txt", "bar.txt"}
 
 
-def test_commit_and_tag_with_no_tool(scm_config: SCMConfig):
-    config, _, _ = get_config_data(
-        {
-            "current_version": "1.2.3",
-        }
-    )
-    config.scm_info = SCMInfo(scm_config)
-    mock_context = MagicMock()
+class TestCommitAndTag:
+    """Tests for the commit_and_tag function."""
 
-    bump.commit_and_tag(config, None, [], mock_context, False)
+    def does_nothing_if_no_scm_tool(self, scm_config: SCMConfig):
+        """If there is no SCM tool, nothing should happen."""
+        # Arrange
+        config, _, _ = get_config_data(
+            {
+                "current_version": "1.2.3",
+            }
+        )
+        config.scm_info = SCMInfo(scm_config)
+        mock_commit_and_tag = MagicMock()
+        config.scm_info.commit_and_tag = mock_commit_and_tag
+        mock_context = MagicMock()
 
+        # Act
+        bump.commit_and_tag(config, None, [], mock_context, False)
 
-def test_commit_and_tag_with_tool(mock_context, scm_config: SCMConfig):
-    config, version_config, _ = get_config_data(
-        {"current_version": "1.2.3", "files": [{"filename": "foo.txt"}, {"filename": "bar.txt"}]}
-    )
-    config.scm_info = MagicMock(spec=SCMInfo)
-    config.scm_info.tool = MagicMock(spec=Git)
-    configured_files = [ConfiguredFile(file_cfg, version_config) for file_cfg in config.files]
-    bump.commit_and_tag(config, None, configured_files, mock_context, False)
-    config.scm_info.commit_and_tag.assert_called_once()
-    assert set(config.scm_info.commit_and_tag.call_args[0][0]) == {"foo.txt", "bar.txt"}
+        # Assert
+        assert mock_commit_and_tag.call_count == 0
 
+    def test_calls_scm_tool_commit_and_tag_with_files(self, mock_context, scm_config: SCMConfig):
+        """When there is an SCM tool, the files should be passed to the SCM tool."""
+        # Arrange
+        config, version_config, _ = get_config_data(
+            {"current_version": "1.2.3", "files": [{"filename": "foo.txt"}, {"filename": "bar.txt"}]}
+        )
+        config.scm_info = MagicMock(spec=SCMInfo)
+        config.scm_info.tool = MagicMock(spec=Git)
+        configured_files = [ConfiguredFile(file_cfg, version_config) for file_cfg in config.files]
 
-def test_commit_and_tag_with_config_file(mock_context, scm_config: SCMConfig):
-    config, version_config, current_version = get_config_data(
-        {"current_version": "1.2.3", "files": [{"filename": "foo.txt"}, {"filename": "bar.txt"}]}
-    )
-    config.scm_info = MagicMock(spec=SCMInfo)
-    config.scm_info.tool = MagicMock(spec=Git)
-    configured_files = [ConfiguredFile(file_cfg, version_config) for file_cfg in config.files]
-    bump.commit_and_tag(config, Path("pyproject.toml"), configured_files, mock_context, False)
-    config.scm_info.commit_and_tag.assert_called_once()
-    assert set(config.scm_info.commit_and_tag.call_args[0][0]) == {"foo.txt", "bar.txt", "pyproject.toml"}
+        # Act
+        bump.commit_and_tag(config, None, configured_files, mock_context, False)
+
+        # Assert
+        config.scm_info.commit_and_tag.assert_called_once()
+        assert set(config.scm_info.commit_and_tag.call_args[0][0]) == {"foo.txt", "bar.txt"}
+
+    def test_includes_config_file_in_files(self, mock_context, scm_config: SCMConfig):
+        """If the config file is passed to commit_and_tag, it should be included in the files list."""
+        # Arrange
+        config, version_config, _ = get_config_data(
+            {"current_version": "1.2.3", "files": [{"filename": "foo.txt"}, {"filename": "bar.txt"}]}
+        )
+        config.scm_info = MagicMock(spec=SCMInfo)
+        config.scm_info.tool = MagicMock(spec=Git)
+        configured_files = [ConfiguredFile(file_cfg, version_config) for file_cfg in config.files]
+
+        # Act
+        bump.commit_and_tag(config, Path("pyproject.toml"), configured_files, mock_context, False)
+
+        # Assert
+        config.scm_info.commit_and_tag.assert_called_once()
+        assert set(config.scm_info.commit_and_tag.call_args[0][0]) == {"foo.txt", "bar.txt", "pyproject.toml"}
 
 
 def test_key_path_required_for_toml_change(tmp_path: Path, caplog):
