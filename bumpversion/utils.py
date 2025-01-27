@@ -131,7 +131,7 @@ def run_command(command: list, env: Optional[dict] = None) -> CompletedProcess:
     return result
 
 
-def is_subpath(parent: Path | str, path: Path | str) -> bool:
+def is_subpath(parent: Union[Path, str], path: Union[Path, str]) -> bool:
     """Return whether a path is inside the parent."""
     normalized_parent = Path(parent)
     normalized_path = Path(path)
