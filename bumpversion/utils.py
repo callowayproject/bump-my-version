@@ -124,7 +124,9 @@ def format_and_raise_error(exc: Union[TypeError, subprocess.CalledProcessError])
 
 def run_command(command: list, env: Optional[dict] = None) -> CompletedProcess:
     """Run a shell command and return its output."""
-    result = subprocess.run(command, text=True, check=True, capture_output=True, env=env)  # NOQA: S603
+    result = subprocess.run(  # NOQA: S603
+        command, text=True, check=True, capture_output=True, env=env, encoding="utf-8"
+    )
     result.check_returncode()
     return result
 
