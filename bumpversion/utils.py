@@ -1,5 +1,7 @@
 """General utilities."""
 
+from __future__ import annotations
+
 import string
 import subprocess
 from pathlib import Path
