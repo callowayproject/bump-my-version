@@ -110,6 +110,14 @@ class DefaultSCMTool:
     def __init__(self, config: SCMConfig):
         self.config = config
 
+    def __repr__(self) -> str:
+        """Return a string representation of the SCMTool."""
+        return self.__str__()
+
+    def __str__(self) -> str:
+        """A string representation of the object."""
+        return "None"
+
     def is_available(self) -> bool:
         """Return whether the SCM tool is available."""
         return True
@@ -150,6 +158,15 @@ class SCMInfo:
         self.dirty: Optional[bool] = None
         self.tool: SCMTool = DefaultSCMTool(config)
         self._set_from_scm_tool()
+
+    def __repr__(self) -> str:
+        """Return a string representation of the SCMInfo."""
+        import pprint
+        from io import StringIO
+
+        str_io = StringIO()
+        pprint.pprint(self.as_dict(), stream=str_io)
+        return str_io.getvalue().rstrip()
 
     def as_dict(self) -> dict[str, Any]:
         """Return the information as a dict."""

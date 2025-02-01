@@ -27,6 +27,14 @@ class Git:
         self.config = config
         self._latest_tag_info: Optional[LatestTagInfo] = None
 
+    def __repr__(self) -> str:
+        """Return a string representation of the SCMTool."""
+        return self.__str__()
+
+    def __str__(self) -> str:
+        """A string representation of the object."""
+        return "Git"
+
     def is_available(self) -> bool:
         """Is the VCS implementation usable?"""
         try:
