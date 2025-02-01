@@ -126,6 +126,17 @@
   "pre_commit_hooks": [],
   "regex": false,
   "replace": "{new_version}",
+  "scm_info": {
+    "branch_name": null,
+    "commit_sha": null,
+    "current_tag": null,
+    "current_version": null,
+    "dirty": null,
+    "distance_to_latest_tag": 0,
+    "repository_root": null,
+    "short_branch_name": null,
+    "tool": "None"
+  },
   "search": "{current_version}",
   "serialize": [
     "{major}.{minor}.{patch}-{release}",

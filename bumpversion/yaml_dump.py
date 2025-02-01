@@ -6,6 +6,8 @@ from io import StringIO
 from textwrap import indent
 from typing import Any, Callable, Union
 
+from bumpversion.scm.models import SCMInfo
+
 DumperFunc = Callable[[Any], str]
 
 
@@ -90,7 +92,7 @@ def format_dict(val: dict) -> str:
 
     for key, value in sorted(val.items()):
         rendered_value = dump(value).strip()
-        if isinstance(value, (dict, list, tuple)):
+        if isinstance(value, (dict, list, tuple, SCMInfo)):
             rendered_value = f"\n{indent(rendered_value, INDENT)}"
         else:
             rendered_value = f" {rendered_value}"
@@ -146,3 +148,11 @@ def format_datetime(val: datetime.datetime) -> str:
 
 
 YAML_DUMPERS.add_dumper(datetime.datetime, format_datetime)
+
+
+def format_scminfo(val: SCMInfo) -> str:
+    """Return a string representation of a value."""
+    return format_dict(val.as_dict())
+
+
+YAML_DUMPERS.add_dumper(SCMInfo, format_scminfo)
