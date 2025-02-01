@@ -4,12 +4,13 @@ import dataclasses
 from io import StringIO
 from pathlib import Path
 from pprint import pprint
-from typing import Any, Optional
+from typing import Any, Optional, Union
 
 from bumpversion.bump import get_next_version
 from bumpversion.config import Config
 from bumpversion.context import get_context
 from bumpversion.exceptions import BadInputError
+from bumpversion.scm.models import SCMInfo
 from bumpversion.ui import print_error, print_info
 from bumpversion.utils import recursive_sort_dict
 
@@ -35,14 +36,16 @@ def output_json(value: dict) -> None:
     """Output the value as json."""
     import json
 
-    def default_encoder(obj: Any) -> str:
+    def default_encoder(obj: Any) -> Union[str, dict]:
         if dataclasses.is_dataclass(obj):
             return str(obj)
         elif isinstance(obj, type):
             return obj.__name__
         elif isinstance(obj, Path):
             return str(obj)
-        raise TypeError(f"Object of type {type(obj), str(obj)} is not JSON serializable")
+        elif isinstance(obj, SCMInfo):
+            return obj.as_dict()
+        return str(obj)
 
     print_info(json.dumps(value, sort_keys=True, indent=2, default=default_encoder))
 
@@ -124,7 +127,7 @@ def do_show(
     """Show current version or configuration information."""
     if current_version:
         config.current_version = current_version
-    config_dict = config.model_dump(exclude={"scm_info"})
+    config_dict = config.model_dump()
     ctx = get_context(config)
 
     if increment:
