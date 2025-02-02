@@ -8,6 +8,7 @@ import pytest
 from pytest import param
 
 from bumpversion import utils
+from bumpversion.utils import Pathlike
 
 DRIVE_PREFIX = "c:" if sys.platform == "win32" else ""
 
@@ -183,7 +184,7 @@ class TestExtractRegexFlags:
         param(Path(f"{DRIVE_PREFIX}/parent"), "relative/path", True, id="parent_as_path_path_as_string_4"),
     ],
 )
-def test_is_subpath(parent: Path | str, path: Path | str, expected: bool) -> None:
+def test_is_subpath(parent: Pathlike, path: Pathlike, expected: bool) -> None:
     """Test the is_subpath function."""
     # Act
     result = utils.is_subpath(parent, path)

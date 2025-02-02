@@ -11,7 +11,7 @@ from typing import Any, ClassVar, MutableMapping, Optional
 from bumpversion.exceptions import DirtyWorkingDirectoryError
 from bumpversion.scm.models import LatestTagInfo, SCMConfig
 from bumpversion.ui import get_indented_logger
-from bumpversion.utils import format_and_raise_error, is_subpath, run_command
+from bumpversion.utils import Pathlike, format_and_raise_error, is_subpath, run_command
 
 logger = get_indented_logger(__name__)
 
@@ -60,7 +60,7 @@ class Git:
         self._latest_tag_info = LatestTagInfo(**info)
         return self._latest_tag_info
 
-    def add_path(self, path: str | Path) -> None:
+    def add_path(self, path: Pathlike) -> None:
         """Add a path to the VCS."""
         repository_root = self.latest_tag_info().repository_root
         if not (repository_root and is_subpath(repository_root, path)):
@@ -86,7 +86,7 @@ class Git:
         ):
             return []
 
-    def commit_and_tag(self, files: list[Path | str], context: MutableMapping, dry_run: bool = False) -> None:
+    def commit_and_tag(self, files: list[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
         """Commit and tag files to the repository using the configuration."""
         if dry_run:
             return
