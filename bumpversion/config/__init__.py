@@ -9,7 +9,7 @@ from bumpversion.config.models import Config
 from bumpversion.exceptions import ConfigurationError
 from bumpversion.ui import get_indented_logger
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.utils import Pathlike
 
 logger = get_indented_logger(__name__)
