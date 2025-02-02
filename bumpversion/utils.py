@@ -14,6 +14,10 @@ from bumpversion.ui import get_indented_logger
 logger = get_indented_logger(__name__)
 
 
+Pathlike = Union[str, Path]
+"""A type alias for a path-like object."""
+
+
 def extract_regex_flags(regex_pattern: str) -> Tuple[str, str]:
     """
     Extract the regex flags from the regex pattern.
@@ -133,7 +137,7 @@ def run_command(command: list, env: Optional[dict] = None) -> CompletedProcess:
     return result
 
 
-def is_subpath(parent: Union[Path, str], path: Union[Path, str]) -> bool:
+def is_subpath(parent: Pathlike, path: Pathlike) -> bool:
     """Return whether a path is inside the parent."""
     normalized_parent = Path(parent)
     normalized_path = Path(path)

@@ -7,7 +7,7 @@ from typing import Any, MutableMapping, Optional, Protocol
 
 from bumpversion.config import Config
 from bumpversion.ui import get_indented_logger
-from bumpversion.utils import extract_regex_flags
+from bumpversion.utils import Pathlike, extract_regex_flags
 
 logger = get_indented_logger(__name__)
 
@@ -82,7 +82,7 @@ class SCMTool(Protocol):
         """Return the latest tag information."""
         ...
 
-    def add_path(self, path: str | Path) -> None:
+    def add_path(self, path: Pathlike) -> None:
         """Add a path to the pending commit."""
         ...
 
@@ -90,7 +90,7 @@ class SCMTool(Protocol):
         """Return all tags in the SCM."""
         ...
 
-    def commit_and_tag(self, files: list[Path | str], context: MutableMapping, dry_run: bool = False) -> None:
+    def commit_and_tag(self, files: list[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
         """Commit and tag files to the repository using the configuration."""
         ...
 
@@ -126,7 +126,7 @@ class DefaultSCMTool:
         """Return the latest tag information."""
         return LatestTagInfo()
 
-    def add_path(self, path: str | Path) -> None:
+    def add_path(self, path: Pathlike) -> None:
         """Add a path to the pending commit."""
         logger.debug("No source code management system configured. Skipping adding path '%s'.", path)
 
@@ -134,7 +134,7 @@ class DefaultSCMTool:
         """Return all tags in the SCM."""
         return []
 
-    def commit_and_tag(self, files: list[Path | str], context: MutableMapping, dry_run: bool = False) -> None:
+    def commit_and_tag(self, files: list[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
         """Pretend to commit and tag files to the repository using the configuration."""
         logger.debug("No source code management system configured. Skipping committing and tagging.")
 
@@ -200,7 +200,7 @@ class SCMInfo:
         for attr_name, value in asdict(latest_tag_info).items():
             setattr(self, attr_name, value)
 
-    def path_in_repo(self, path: Path | str) -> bool:
+    def path_in_repo(self, path: Pathlike) -> bool:
         """Return whether a path is inside this repository."""
         if self.repository_root is None:
             return True
@@ -208,12 +208,7 @@ class SCMInfo:
             return True
         return str(path).startswith(str(self.repository_root))
 
-    def commit_and_tag(
-        self,
-        files: list[str | Path],
-        context: MutableMapping,
-        dry_run: bool = False,
-    ) -> None:
+    def commit_and_tag(self, files: list[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
         """Commit the files to the source code management system."""
         logger.indent()
 
@@ -230,7 +225,7 @@ class SCMInfo:
         self.tool.commit_and_tag(files=files, context=context, dry_run=dry_run)
         logger.dedent()
 
-    def _commit(self, files: list[Path | str], context: MutableMapping, dry_run: bool = False) -> None:
+    def _commit(self, files: list[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
         """Commit the files to the source code management system."""
         do_commit = not dry_run
         logger.info("%s the commit", "Preparing" if do_commit else "Would prepare")

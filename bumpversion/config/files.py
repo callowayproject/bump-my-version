@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Dict, MutableMapping, Union
+from typing import TYPE_CHECKING, Any, Dict, MutableMapping, Optional, Union
 
 from bumpversion.config.files_legacy import read_ini_file
 from bumpversion.ui import get_indented_logger, print_warning
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config.models import Config
+    from bumpversion.utils import Pathlike
     from bumpversion.versioning.models import Version
 
 logger = get_indented_logger(__name__)
@@ -22,7 +23,7 @@ CONFIG_FILE_SEARCH_ORDER = (
 )
 
 
-def find_config_file(explicit_file: Union[str, Path, None] = None) -> Union[Path, None]:
+def find_config_file(explicit_file: Optional[Pathlike] = None) -> Union[Path, None]:
     """
     Find the configuration file, if it exists.
 
@@ -48,7 +49,7 @@ def find_config_file(explicit_file: Union[str, Path, None] = None) -> Union[Path
     )
 
 
-def read_config_file(config_file: Union[str, Path, None] = None) -> Dict[str, Any]:
+def read_config_file(config_file: Optional[Pathlike] = None) -> Dict[str, Any]:
     """
     Read the configuration file, if it exists.
 

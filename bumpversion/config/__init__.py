@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Union
+from typing import TYPE_CHECKING, Any, Optional
 
 from bumpversion.config.files import read_config_file
 from bumpversion.config.models import Config
@@ -10,7 +10,7 @@ from bumpversion.exceptions import ConfigurationError
 from bumpversion.ui import get_indented_logger
 
 if TYPE_CHECKING:  # pragma: no-coverage
-    from pathlib import Path
+    from bumpversion.utils import Pathlike
 
 logger = get_indented_logger(__name__)
 
@@ -54,7 +54,7 @@ def set_config_defaults(parsed_config: dict[str, Any], **overrides: Any) -> dict
     return config_dict
 
 
-def get_configuration(config_file: Union[str, Path, None] = None, **overrides: Any) -> Config:
+def get_configuration(config_file: Optional[Pathlike] = None, **overrides: Any) -> Config:
     """
     Return the configuration based on any configuration files and overrides.
 

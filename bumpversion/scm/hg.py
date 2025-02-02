@@ -1,13 +1,12 @@
 """Mercurial source control management."""
 
 import subprocess
-from pathlib import Path
 from typing import ClassVar, MutableMapping, Optional
 
 from bumpversion.exceptions import DirtyWorkingDirectoryError, SignedTagsError
 from bumpversion.scm.models import LatestTagInfo, SCMConfig
 from bumpversion.ui import get_indented_logger
-from bumpversion.utils import run_command
+from bumpversion.utils import Pathlike, run_command
 
 logger = get_indented_logger(__name__)
 
@@ -51,11 +50,11 @@ class Mercurial:
         self._latest_tag_info = LatestTagInfo(**info)
         return self._latest_tag_info
 
-    def add_path(self, path: str | Path) -> None:
+    def add_path(self, path: Pathlike) -> None:
         """Add a path to the Source Control Management repository."""
         pass
 
-    def commit_and_tag(self, files: list[Path | str], context: MutableMapping, dry_run: bool = False) -> None:
+    def commit_and_tag(self, files: list[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
         """Commit and tag files to the repository using the configuration."""
 
     def tag(self, name: str, sign: bool = False, message: Optional[str] = None) -> None:
