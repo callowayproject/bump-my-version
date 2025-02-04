@@ -40,6 +40,7 @@ dependencies = [
     "rich",
     "tomlkit",
     "wcmatch>=8.5.1",
+    "httpx>=0.28.1",
 ]
 
 [project.scripts]
