@@ -163,6 +163,7 @@ test = [
     { name = "pre-commit" },
     { name = "pytest" },
     { name = "pytest-cov" },
+    { name = "pytest-localserver" },
     { name = "pytest-mock" },
     { name = "pytest-sugar" },
 ]
@@ -210,6 +211,7 @@ test = [
     { name = "pre-commit" },
     { name = "pytest" },
     { name = "pytest-cov" },
+    { name = "pytest-localserver", specifier = ">=0.9.0.post0" },
     { name = "pytest-mock" },
     { name = "pytest-sugar" },
 ]
@@ -1690,6 +1692,18 @@ wheels = [
 ]
 
 [[package]]
+name = "pytest-localserver"
+version = "0.9.0.post0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "werkzeug" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ec/33/e77476a3dee691845a052d6a3b75c715c803566fdf744b43080f92c1107a/pytest_localserver-0.9.0.post0.tar.gz", hash = "sha256:8033a36fb382d2bc4850f9acfe2c3fb5654cd5f0d163af6daf47f290db7d5ff0", size = 30280 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/47/5a/dba3573fb43fc5133a9d06a266b178a5210eb6ff7b4cf61dc261d663c728/pytest_localserver-0.9.0.post0-py3-none-any.whl", hash = "sha256:88a50e99637c84ab20680fd54b8dcfd53a36cbdf877013abd0e7442536a95bce", size = 20787 },
+]
+
+[[package]]
 name = "pytest-mock"
 version = "3.14.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2297,6 +2311,18 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/6c/63/53559446a878410fc5a5974feb13d31d78d752eb18aeba59c7fef1af7598/wcwidth-0.2.13.tar.gz", hash = "sha256:72ea0c06399eb286d978fdedb6923a9eb47e1c486ce63e9b4e64fc18303972b5", size = 101301 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/fd/84/fd2ba7aafacbad3c4201d395674fc6348826569da3c0937e75505ead3528/wcwidth-0.2.13-py2.py3-none-any.whl", hash = "sha256:3da69048e4540d84af32131829ff948f1e022c1c6bdb8d6102117aac784f6859", size = 34166 },
+]
+
+[[package]]
+name = "werkzeug"
+version = "3.1.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "markupsafe" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/9f/69/83029f1f6300c5fb2471d621ab06f6ec6b3324685a2ce0f9777fd4a8b71e/werkzeug-3.1.3.tar.gz", hash = "sha256:60723ce945c19328679790e3282cc758aa4a6040e4bb330f53d30fa546d44746", size = 806925 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/52/24/ab44c871b0f07f491e5d2ad12c9bd7358e527510618cb1b803a88e986db1/werkzeug-3.1.3-py3-none-any.whl", hash = "sha256:54b78bf3716d19a65be4fceccc0d1d7b89e608834989dfae50ea87564639213e", size = 224498 },
 ]
 
 [[package]]
