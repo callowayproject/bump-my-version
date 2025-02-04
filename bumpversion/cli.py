@@ -10,6 +10,7 @@ from tomlkit import dumps
 
 from bumpversion import __version__
 from bumpversion.bump import do_bump
+from bumpversion.click_config import config_option
 from bumpversion.config import get_configuration
 from bumpversion.config.create import create_configuration
 from bumpversion.config.files import find_config_file
@@ -76,12 +77,9 @@ click.rich_click.OPTION_GROUPS = {
 
 @cli.command(context_settings={"ignore_unknown_options": True})
 @click.argument("args", nargs=-1, type=str)
-@click.option(
+@config_option(
     "--config-file",
-    metavar="FILE",
-    required=False,
     envvar="BUMPVERSION_CONFIG_FILE",
-    type=click.Path(exists=True),
     help="Config file to read most of the variables from.",
 )
 @click.option(
