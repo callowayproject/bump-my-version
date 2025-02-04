@@ -9,7 +9,7 @@ import httpx
 from click import Context, Option
 from click.decorators import FC, _param_memo  # noqa: PLC2701
 
-from bumpversion.exceptions import BadInputError
+from bumpversion.exceptions import BadInputError, BumpVersionError
 from bumpversion.ui import get_indented_logger
 
 logger = get_indented_logger(__name__)
@@ -65,10 +65,10 @@ class ConfigOption(Option):
             **attrs,
         )
 
-    def process_value(self, ctx: Context, value: Any) -> Path:
+    def process_value(self, ctx: Context, value: Any) -> Optional[Path]:
         """Process the value of the option."""
         value = super().process_value(ctx, value)
-        return resolve_conf_location(value)
+        return resolve_conf_location(value) if value else None
 
 
 def config_option(*param_decls: str, cls: Optional[type[ConfigOption]] = None, **attrs: Any) -> Callable[[FC], FC]:
@@ -108,6 +108,9 @@ def resolve_conf_location(url_or_path: str) -> Path:
     Args:
         url_or_path: The URL or path to resolve.
 
+    Raises:
+        BumpVersionError: if the file does not exist.
+
     Returns:
         The contents of the location.
     """
@@ -116,7 +119,10 @@ def resolve_conf_location(url_or_path: str) -> Path:
     if parsed_url.scheme in ("http", "https"):
         return download_url(url_or_path)
 
-    return Path(url_or_path)
+    path = Path(url_or_path)
+    if not path.exists():
+        raise BumpVersionError(f"'{path}' does not exist.")
+    return path
 
 
 def download_url(url: str) -> Path:
