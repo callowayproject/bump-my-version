@@ -309,12 +309,9 @@ def bump(
 
 @cli.command()
 @click.argument("args", nargs=-1, type=str)
-@click.option(
+@config_option(
     "--config-file",
-    metavar="FILE",
-    required=False,
     envvar="BUMPVERSION_CONFIG_FILE",
-    type=click.Path(exists=True),
     help="Config file to read most of the variables from.",
 )
 @click.option(
@@ -369,12 +366,9 @@ def show(
 
 @cli.command()
 @click.argument("files", nargs=-1, type=str)
-@click.option(
+@config_option(
     "--config-file",
-    metavar="FILE",
-    required=False,
     envvar="BUMPVERSION_CONFIG_FILE",
-    type=click.Path(exists=True),
     help="Config file to read most of the variables from.",
 )
 @click.option(
@@ -573,12 +567,9 @@ def sample_config(prompt: bool, destination: str) -> None:
 
 @cli.command()
 @click.argument("version", nargs=1, type=str, required=False, default="")
-@click.option(
+@config_option(
     "--config-file",
-    metavar="FILE",
-    required=False,
     envvar="BUMPVERSION_CONFIG_FILE",
-    type=click.Path(exists=True),
     help="Config file to read most of the variables from.",
 )
 @click.option("--ascii", is_flag=True, help="Use ASCII characters only.")
