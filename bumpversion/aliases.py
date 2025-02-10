@@ -4,7 +4,7 @@ from typing import List, Optional
 
 import rich_click as click
 from click import Context
-from rich_click.rich_group import RichGroup
+from rich_click.rich_command import RichGroup
 
 from bumpversion.ui import print_warning
 
@@ -13,7 +13,7 @@ class AliasedGroup(RichGroup):
     """
     This following example implements a subclass of Group that accepts a prefix for a command.
 
-    If there were a command called ``push``, it would accept ``pus`` as an alias (so long as it was unique)
+    If there were a command called `push`, it would accept `pus` as an alias (so long as it was unique)
     """
 
     def get_command(self, ctx: Context, cmd_name: str) -> Optional[click.Command]:  # type: ignore[return]
