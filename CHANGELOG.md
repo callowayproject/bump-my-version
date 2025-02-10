@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.32.1 (2025-02-10)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.32.0...0.32.1)
+
+### Fixes
+
+- Fix rich-click deprecation. [e1fb9fa](https://github.com/callowayproject/bump-my-version/commit/e1fb9fa52b466f70ebced8f192d4411a5804da60)
+    
+- Fix Python 3.8 support. [9b2d894](https://github.com/callowayproject/bump-my-version/commit/9b2d894c6ae3fc621789e52dd8b53e088d87f00f)
+    
+
 ## 0.32.0 (2025-02-06)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/0.31.1...0.32.0)
 
