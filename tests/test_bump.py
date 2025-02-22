@@ -11,7 +11,7 @@ from bumpversion import bump
 from bumpversion.exceptions import ConfigurationError, VersionNotFoundError
 from bumpversion.files import ConfiguredFile
 from bumpversion.scm.git import Git
-from bumpversion.scm.models import SCMConfig, SCMInfo
+from bumpversion.scm.models import SCMConfig, SCMInfo, DefaultSCMTool
 from bumpversion.utils import run_command
 from tests.conftest import get_config_data, inside_dir
 
@@ -256,7 +256,7 @@ class TestDoBump:
 class TestCommitAndTag:
     """Tests for the commit_and_tag function."""
 
-    def does_nothing_if_no_scm_tool(self, scm_config: SCMConfig):
+    def test_does_nothing_if_no_scm_tool(self, scm_config: SCMConfig):
         """If there is no SCM tool, nothing should happen."""
         # Arrange
         config, _, _ = get_config_data(
@@ -265,6 +265,7 @@ class TestCommitAndTag:
             }
         )
         config.scm_info = SCMInfo(scm_config)
+        config.scm_info.tool = None
         mock_commit_and_tag = MagicMock()
         config.scm_info.commit_and_tag = mock_commit_and_tag
         mock_context = MagicMock()

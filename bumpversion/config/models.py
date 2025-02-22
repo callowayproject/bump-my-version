@@ -10,11 +10,11 @@ from typing import TYPE_CHECKING, Dict, List, MutableMapping, Optional, Tuple, U
 from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from bumpversion.scm.models import SCMInfo  # NOQA: TC001
 from bumpversion.ui import get_indented_logger
 from bumpversion.versioning.models import VersionComponentSpec  # NOQA: TC001
 
 if TYPE_CHECKING:  # pragma: no-coverage
-    from bumpversion.scm.models import SCMInfo
     from bumpversion.versioning.models import VersionSpec
     from bumpversion.versioning.version_config import VersionConfig
 
@@ -97,7 +97,7 @@ class Config(BaseSettings):
     commit: bool
     message: str
     commit_args: Optional[str]
-    scm_info: Optional["SCMInfo"]
+    scm_info: Optional[SCMInfo]
     parts: Dict[str, VersionComponentSpec]
     moveable_tags: list[str] = Field(default_factory=list)
     files: List[FileChange] = Field(default_factory=list)
