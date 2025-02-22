@@ -10,7 +10,7 @@ from bumpversion.utils import Pathlike, extract_regex_flags
 
 logger = get_indented_logger(__name__)
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config import Config
 
 
