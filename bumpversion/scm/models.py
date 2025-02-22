@@ -3,13 +3,15 @@
 import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Any, MutableMapping, Optional, Protocol
+from typing import TYPE_CHECKING, Any, MutableMapping, Optional, Protocol
 
-from bumpversion.config import Config
 from bumpversion.ui import get_indented_logger
 from bumpversion.utils import Pathlike, extract_regex_flags
 
 logger = get_indented_logger(__name__)
+
+if TYPE_CHECKING:  # pragma: no-coverage
+    from bumpversion.config import Config
 
 
 @dataclass
@@ -39,7 +41,7 @@ class SCMConfig:
         return match["current_version"] if (match := tag_regex.search(tag)) else None
 
     @classmethod
-    def from_config(cls, config: Config) -> "SCMConfig":
+    def from_config(cls, config: "Config") -> "SCMConfig":
         """Return a SCMConfig from a Config object."""
         return cls(
             tag=config.tag,
