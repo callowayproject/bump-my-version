@@ -187,4 +187,4 @@ class Config(BaseSettings):
 class PEP621Info:
     """PEP 621 info, in particular, the static version number."""
 
-    version: Optional[str]
+    version: Optional[str] = None
