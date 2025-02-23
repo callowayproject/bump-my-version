@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 from collections import defaultdict
+from dataclasses import dataclass
 from itertools import chain
 from typing import TYPE_CHECKING, Dict, List, MutableMapping, Optional, Tuple, Union
 
@@ -97,6 +98,7 @@ class Config(BaseSettings):
     commit: bool
     message: str
     commit_args: Optional[str]
+    pep621_info: Optional[PEP621Info]
     scm_info: Optional[SCMInfo]
     parts: Dict[str, VersionComponentSpec]
     moveable_tags: list[str] = Field(default_factory=list)
@@ -179,3 +181,10 @@ class Config(BaseSettings):
         from bumpversion.versioning.models import VersionSpec
 
         return VersionSpec(self.parts)
+
+
+@dataclass
+class PEP621Info:
+    """PEP 621 info, in particular, the static version number."""
+
+    version: Optional[str]
