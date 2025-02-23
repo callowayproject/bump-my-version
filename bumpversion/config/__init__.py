@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Optional
 
-from bumpversion.config.files import read_config_file
+from bumpversion.config.files import get_pep621_info, read_config_file
 from bumpversion.config.models import Config
 from bumpversion.exceptions import ConfigurationError
 from bumpversion.ui import get_indented_logger
@@ -32,6 +32,7 @@ DEFAULTS = {
     "message": "Bump version: {current_version} → {new_version}",
     "moveable_tags": [],
     "commit_args": None,
+    "pep621_info": None,
     "scm_info": None,
     "parts": {},
     "files": [],
@@ -83,6 +84,9 @@ def get_configuration(config_file: Optional[Pathlike] = None, **overrides: Any) 
     # Resolve the SCMInfo class for Pydantic's BaseSettings
     Config.model_rebuild()
     config = Config(**config_dict)  # type: ignore[arg-type]
+
+    # Get the PEP 621 project.version key from pyproject.toml, if possible
+    config.pep621_info = get_pep621_info(config_file)
 
     # Get the information about the SCM
     scm_info = SCMInfo(SCMConfig.from_config(config))

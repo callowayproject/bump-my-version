@@ -122,6 +122,9 @@
       ]
     }
   },
+  "pep621_info": {
+    "version": null
+  },
   "post_commit_hooks": [],
   "pre_commit_hooks": [],
   "regex": false,
