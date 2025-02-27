@@ -36,9 +36,10 @@ BASIC_CONFIG = {
 
 @pytest.fixture
 def default_config() -> dict:
-    """The default configuration with the scm_info and parts removed."""
+    """The default configuration with the scm_info, pep621_info and parts removed."""
     defaults = DEFAULTS.copy()
     del defaults["scm_info"]
+    del defaults["pep621_info"]
     del defaults["parts"]
     del defaults["files"]
     return defaults

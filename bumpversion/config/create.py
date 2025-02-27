@@ -71,6 +71,7 @@ def get_defaults_from_dest(destination: str) -> Tuple[dict, TOMLDocument]:
     project_config = destination_config.get("project", {}).get("version")
     config["current_version"] = config["current_version"] or project_config or "0.1.0"
     del config["scm_info"]
+    del config["pep621_info"]
     del config["parts"]
     del config["files"]
 
