@@ -23,7 +23,14 @@ def create_configuration(destination: str, prompt: bool) -> TOMLDocument:
     if prompt:
         allow_dirty_default = "(Y/n)" if config["allow_dirty"] else "(y/N)"
         answers = questionary.form(
-            current_version=questionary.text("What is the current version?", default=config["current_version"]),
+            current_version=questionary.text(
+                "What is the current version?",
+                default=config["current_version"],
+                instruction=(
+                    "If omitted, use the project.version key in pyproject.toml. "
+                    "(Does not support dynamically set versions.)"
+                ),
+            ),
             commit=questionary.confirm(
                 "Commit changes made when bumping to version control?", default=config["commit"]
             ),
@@ -45,6 +52,8 @@ def create_configuration(destination: str, prompt: bool) -> TOMLDocument:
         config.update(answers)
 
     for key, val in config.items():
+        if key == "current_version" and not val:
+            continue
         destination_config["tool"]["bumpversion"][key] = val if val is not None else ""
 
     return destination_config
