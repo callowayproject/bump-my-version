@@ -36,9 +36,10 @@ BASIC_CONFIG = {
 
 @pytest.fixture
 def default_config() -> dict:
-    """The default configuration with the scm_info and parts removed."""
+    """The default configuration with the scm_info, pep621_info and parts removed."""
     defaults = DEFAULTS.copy()
     del defaults["scm_info"]
+    del defaults["pep621_info"]
     del defaults["parts"]
     del defaults["files"]
     return defaults
@@ -164,4 +165,21 @@ class TestCreateConfiguration:
         assert destination_config["tool"]["bumpversion"]["tag"] == default_config["tag"]
         assert destination_config["tool"]["bumpversion"]["tag_message"] == default_config["tag_message"]
         assert destination_config["tool"]["bumpversion"]["tag_name"] == default_config["tag_name"]
+        assert mocked_questionary.form.return_value.ask.call_count == 1
+
+    def test_prompt_true_empty_current_version_removes_key(self, tmp_path: Path, default_config: dict, mocker):
+        """If prompt is True and if current_version is empty, that key should be missing in the answer."""
+        answer = {
+            "current_version": "",
+            "commit": True,
+            "allow_dirty": True,
+            "tag": True,
+            "commit_args": "--no-verify",
+        }
+        mocked_questionary = mocker.patch("bumpversion.config.create.questionary", autospec=True)
+        mocked_questionary.form.return_value.ask.return_value = answer
+        with inside_dir(tmp_path):
+            destination_config = create_configuration("pyproject.toml", prompt=True)
+
+        assert "current_version" not in destination_config["tool"]["bumpversion"]
         assert mocked_questionary.form.return_value.ask.call_count == 1

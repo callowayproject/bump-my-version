@@ -19,6 +19,7 @@ def write_config(tmp_path: Path, overrides: dict) -> Path:
     defaults = DEFAULTS.copy()
     defaults.pop("parts")
     defaults.pop("scm_info")
+    defaults.pop("pep621_info")
     defaults["current_version"] = defaults["current_version"] or "1.2.3"
     defaults["commit_args"] = ""
     config = {"tool": {"bumpversion": {**defaults, **overrides}}}

@@ -80,7 +80,7 @@ If you have pre-commit hooks, add an option to turn off your pre-commit hooks. F
 ::: field-list
 
     required
-    : **Yes**
+    : **Yes‡**
     
     default
     : `""`
@@ -94,7 +94,11 @@ If you have pre-commit hooks, add an option to turn off your pre-commit hooks. F
     environment var
     : `BUMPVERSION_CURRENT_VERSION`
 
-The current version of the software package before bumping. A value for this is required.
+The current version of the software package before bumping. A value for this is required, unless a fallback value is found.
+
+!!! note
+
+    ‡ If `pyproject.toml` exists, then `current_version` falls back to `project.version` in `pyproject.toml`. This only works if `project.version` is statically set.
 
 ## ignore_missing_files
 

@@ -385,6 +385,248 @@ def test_key_path_required_for_toml_change(tmp_path: Path, caplog):
     )
 
 
+def test_pep621_fallback_works_static_case(tmp_path: Path, caplog):
+    """If tool.bumpversion.current_version is not defined, but static project.version is, use that."""
+    from click.testing import CliRunner, Result
+
+    from bumpversion import cli, config
+
+    # Arrange
+    config_path = tmp_path / "pyproject.toml"
+    config_path.write_text(
+        dedent(
+            """
+            [project]
+            version = "0.1.26"
+
+            [tool.bumpversion]
+            allow_dirty = true
+            commit = true
+
+            [tool.othertool]
+            bake_cookies = true
+            ignore-words-list = "sugar, salt, flour"
+
+            [tool.other-othertool]
+            version = "0.1.26"
+            """
+        ),
+        encoding="utf-8",
+    )
+
+    conf = config.get_configuration(config_file=config_path)
+
+    # Act
+    runner: CliRunner = CliRunner()
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(
+            cli.cli,
+            ["bump", "-vv", "minor"],
+        )
+
+    if result.exit_code != 0:
+        print(caplog.text)
+        print("Here is the output:")
+        print(result.output)
+        import traceback
+
+        print(traceback.print_exception(result.exc_info[1]))
+
+    # Assert
+    assert result.exit_code == 0
+    assert config_path.read_text() == dedent(
+        """
+        [project]
+        version = "0.2.0"
+
+        [tool.bumpversion]
+        allow_dirty = true
+        commit = true
+
+        [tool.othertool]
+        bake_cookies = true
+        ignore-words-list = "sugar, salt, flour"
+
+        [tool.other-othertool]
+        version = "0.1.26"
+        """
+    )
+
+
+def test_pep621_fallback_works_dynamic_case(tmp_path: Path, caplog):
+    """If tool.bumpversion.current_version is not defined, but dynamic project.version is, *don't* use that."""
+    from click.testing import CliRunner, Result
+
+    from bumpversion import cli, config
+    from bumpversion.exceptions import ConfigurationError
+
+    # Arrange
+    config_path = tmp_path / "pyproject.toml"
+    config_path.write_text(
+        dedent(
+            """
+            [project]
+            dynamic = ["version"]
+
+            [tool.bumpversion]
+            allow_dirty = true
+            commit = true
+
+            [tool.othertool]
+            bake_cookies = true
+            ignore-words-list = "sugar, salt, flour"
+
+            [tool.other-othertool]
+            version = "0.1.26"
+            """
+        ),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigurationError):
+        config.get_configuration(config_file=config_path)
+
+
+def test_pep621_fallback_always_updated(tmp_path: Path, caplog):
+    """Always update project.version (if static)."""
+    from click.testing import CliRunner, Result
+
+    from bumpversion import cli, config
+
+    # Arrange
+    config_path = tmp_path / "pyproject.toml"
+    config_path.write_text(
+        dedent(
+            """
+            [project]
+            version = "0.1.26"
+
+            [tool.bumpversion]
+            current_version = "0.1.26"
+            allow_dirty = true
+            commit = true
+
+            [tool.othertool]
+            bake_cookies = true
+            ignore-words-list = "sugar, salt, flour"
+
+            [tool.other-othertool]
+            version = "0.1.26"
+            """
+        ),
+        encoding="utf-8",
+    )
+
+    conf = config.get_configuration(config_file=config_path)
+
+    # Act
+    runner: CliRunner = CliRunner()
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(
+            cli.cli,
+            ["bump", "-vv", "minor"],
+        )
+
+    if result.exit_code != 0:
+        print(caplog.text)
+        print("Here is the output:")
+        print(result.output)
+        import traceback
+
+        print(traceback.print_exception(result.exc_info[1]))
+
+    # Assert
+    assert result.exit_code == 0
+    assert config_path.read_text() == dedent(
+        """
+        [project]
+        version = "0.2.0"
+
+        [tool.bumpversion]
+        current_version = "0.2.0"
+        allow_dirty = true
+        commit = true
+
+        [tool.othertool]
+        bake_cookies = true
+        ignore-words-list = "sugar, salt, flour"
+
+        [tool.other-othertool]
+        version = "0.1.26"
+        """
+    )
+
+
+def test_pep621_fallback_never_updated_if_dynamic(tmp_path: Path, caplog):
+    """Never update project.version if dynamic."""
+    from click.testing import CliRunner, Result
+
+    from bumpversion import cli, config
+
+    # Arrange
+    config_path = tmp_path / "pyproject.toml"
+    config_path.write_text(
+        dedent(
+            """
+            [project]
+            dynamic = ["version"]
+
+            [tool.bumpversion]
+            current_version = "0.1.26"
+            allow_dirty = true
+            commit = true
+
+            [tool.othertool]
+            bake_cookies = true
+            ignore-words-list = "sugar, salt, flour"
+
+            [tool.other-othertool]
+            version = "0.1.26"
+            """
+        ),
+        encoding="utf-8",
+    )
+
+    conf = config.get_configuration(config_file=config_path)
+
+    # Act
+    runner: CliRunner = CliRunner()
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(
+            cli.cli,
+            ["bump", "-vv", "minor"],
+        )
+
+    if result.exit_code != 0:
+        print(caplog.text)
+        print("Here is the output:")
+        print(result.output)
+        import traceback
+
+        print(traceback.print_exception(result.exc_info[1]))
+
+    # Assert
+    assert result.exit_code == 0
+    assert config_path.read_text() == dedent(
+        """
+        [project]
+        dynamic = ["version"]
+
+        [tool.bumpversion]
+        current_version = "0.2.0"
+        allow_dirty = true
+        commit = true
+
+        [tool.othertool]
+        bake_cookies = true
+        ignore-words-list = "sugar, salt, flour"
+
+        [tool.other-othertool]
+        version = "0.1.26"
+        """
+    )
+
+
 def test_changes_to_files_are_committed(git_repo: Path, caplog):
     """Any files changed during the bump are committed."""
     from click.testing import CliRunner, Result
