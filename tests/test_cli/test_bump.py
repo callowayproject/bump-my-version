@@ -1,5 +1,6 @@
 """Tests the bump CLI subcommand."""
 
+import logging
 import shutil
 import subprocess
 import traceback
@@ -394,3 +395,41 @@ def test_remote_config_doesnt_update(tmp_path, git_repo, runner):
     assert result.exit_code == 0
     assert config_file.read_text() == config_contents
     assert myfile.read_text() == "version = 1.1.0\n"
+
+
+def test_moveable_tags(git_repo: Path, fixtures_path: Path, runner, caplog):
+    """The current version is not required in the configuration."""
+    caplog.set_level(logging.DEBUG)
+    config_file = git_repo / ".bumpversion.toml"
+    orig_config = fixtures_path / "basic_cfg_moveable.toml"
+    shutil.copy(orig_config, config_file)
+    changelog_path = git_repo / "CHANGELOG.md"
+    changelog_path.write_text("**unreleased**")
+    mkdir_path = git_repo / "example"
+    mkdir_path.mkdir()
+    init_path = mkdir_path / "__init__.py"
+    init_path.write_text('__version__ = "1.0.0"')
+
+    # Act
+    with inside_dir(git_repo):
+        subprocess.run(["git", "add", "."], check=True)
+        subprocess.run(["git", "commit", "-m", "added files"], check=True)
+
+        result: Result = runner.invoke(
+            cli.cli,
+            [
+                "bump",
+                "-vv",
+                "--dry-run",
+                "minor",
+            ],
+        )
+
+    # Assert
+    if result.exit_code != 0:
+        print("Here is the output:")
+        print(result.output)
+        print(traceback.print_exception(*result.exc_info))
+
+    assert result.exit_code == 0
+    assert "Would tag moveable tag 'v1'" in caplog.text
