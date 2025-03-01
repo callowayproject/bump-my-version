@@ -6,18 +6,21 @@ from textwrap import dedent
 from unittest.mock import MagicMock, patch
 
 import pytest
+from click.testing import CliRunner, Result
 
-from bumpversion import bump
+from bumpversion import bump, cli
+from bumpversion.config import get_configuration
 from bumpversion.exceptions import ConfigurationError, VersionNotFoundError
 from bumpversion.files import ConfiguredFile
 from bumpversion.scm.git import Git
-from bumpversion.scm.models import SCMConfig, SCMInfo, DefaultSCMTool
+from bumpversion.scm.models import SCMConfig, SCMInfo
 from bumpversion.utils import run_command
 from tests.conftest import get_config_data, inside_dir
 
 
 @pytest.fixture
 def mock_context():
+    """A mock context for testing."""
     return {"current_version": "1.2.3", "new_version": "1.2.4"}
 
 
@@ -28,13 +31,13 @@ class TestGetNextVersion:
         """Passing a new version should return that version, even if a version part is provided."""
         # Arrange
         with inside_dir(tmp_path):
-            config, version_config, current_version = get_config_data({"current_version": "0.1.0"})
+            conf, version_config, current_version = get_config_data({"current_version": "0.1.0"})
             version_part = "patch"
             new_version = "1.2.3"
             expected_next_version = version_config.parse("1.2.3")
 
             # Act
-            actual_next_version = bump.get_next_version(current_version, config, version_part, new_version)
+            actual_next_version = bump.get_next_version(current_version, conf, version_part, new_version)
 
         # Assert
         assert actual_next_version == expected_next_version
@@ -42,13 +45,13 @@ class TestGetNextVersion:
     def test_passing_version_part_should_increment_part(self):
         """If a version part is provided, it should return the increment of that part."""
         # Arrange
-        config, version_config, current_version = get_config_data({"current_version": "0.1.0"})
+        conf, version_config, current_version = get_config_data({"current_version": "0.1.0"})
         version_part = "major"
         new_version = None
         expected_next_version = version_config.parse("1.0.0")
 
         # Act
-        actual_next_version = bump.get_next_version(current_version, config, version_part, new_version)
+        actual_next_version = bump.get_next_version(current_version, conf, version_part, new_version)
 
         # Assert
         assert actual_next_version == expected_next_version
@@ -57,13 +60,13 @@ class TestGetNextVersion:
         """If no arguments are provided, an error should be raised."""
         # Arrange
         current_version = MagicMock()
-        config = MagicMock()
+        conf = MagicMock()
         version_part = None
         new_version = None
 
         # Act/Assert
         with pytest.raises(ConfigurationError):
-            bump.get_next_version(current_version, config, version_part, new_version)
+            bump.get_next_version(current_version, conf, version_part, new_version)
 
 
 class TestDoBump:
@@ -78,17 +81,17 @@ class TestDoBump:
         # Arrange
         version_part = "major"
         new_version = None
-        config, _, current_version = get_config_data(
+        conf, _, current_version = get_config_data(
             {
                 "current_version": "1.2.3",
                 "files": [{"filename": "foo.txt"}, {"filename": "bar.txt"}],
             }
         )
-        config.scm_info = SCMInfo(scm_config)
+        conf.scm_info = SCMInfo(scm_config)
         dry_run = False
 
         # Act
-        bump.do_bump(version_part, new_version, config, dry_run=dry_run)
+        bump.do_bump(version_part, new_version, conf, dry_run=dry_run)
 
         # Assert
         mock_modify_files.assert_called_once()
@@ -98,7 +101,7 @@ class TestDoBump:
             "bar.txt",
         }
         assert mock_update_config_file.call_args[0][0] is None
-        assert mock_update_config_file.call_args[0][1] == config
+        assert mock_update_config_file.call_args[0][1] == conf
         assert mock_update_config_file.call_args[0][2] == current_version
         assert mock_update_config_file.call_args[0][3] == current_version.bump(version_part)
         assert mock_update_config_file.call_args[0][5] is False
@@ -110,16 +113,16 @@ class TestDoBump:
         # Arrange
         version_part = None
         new_version = "2.0.0"
-        config, version_config, current_version = get_config_data(
+        conf, version_config, current_version = get_config_data(
             {
                 "current_version": "1.2.3",
             }
         )
-        config.scm_info = SCMInfo(scm_config)
+        conf.scm_info = SCMInfo(scm_config)
         dry_run = True
 
         # Act
-        bump.do_bump(version_part, new_version, config, dry_run=dry_run)
+        bump.do_bump(version_part, new_version, conf, dry_run=dry_run)
 
         # Assert
         mock_modify_files.assert_called_once()
@@ -129,7 +132,7 @@ class TestDoBump:
 
         mock_update_config_file.assert_called_once()
         assert mock_update_config_file.call_args[0][0] is None
-        assert mock_update_config_file.call_args[0][1] == config
+        assert mock_update_config_file.call_args[0][1] == conf
         assert mock_update_config_file.call_args[0][2] == current_version
         assert mock_update_config_file.call_args[0][3] == version_config.parse(new_version)
         assert mock_update_config_file.call_args[0][5] is dry_run
@@ -140,8 +143,6 @@ class TestDoBump:
         self, mock_update_config_file, mock_commit_and_tag, tmp_path: Path, fixtures_path: Path
     ):
         """If there is an error modifying a file, the commit should not happen."""
-        from bumpversion import config
-
         # Arrange
         setup_py_path = tmp_path / "setup.py"
         setup_py_path.touch()
@@ -155,9 +156,9 @@ class TestDoBump:
 
         # Act
         with inside_dir(tmp_path):
-            config = config.get_configuration(config_file=dest_config_path)
+            conf = get_configuration(config_file=dest_config_path)
             with pytest.raises(VersionNotFoundError):
-                bump.do_bump(version_part, None, config)
+                bump.do_bump(version_part, None, conf)
 
         # Assert
         mock_commit_and_tag.assert_not_called()
@@ -173,9 +174,9 @@ class TestDoBump:
         new_version = "1.2.3"
 
         with inside_dir(tmp_path):
-            config, _, _ = get_config_data({"current_version": "1.2.3"})
+            conf, _, _ = get_config_data({"current_version": "1.2.3"})
             # Act
-            bump.do_bump(version_part, new_version, config)
+            bump.do_bump(version_part, new_version, conf)
 
         # Assert
         mock_modify_files.assert_not_called()
@@ -186,13 +187,13 @@ class TestDoBump:
         # Arrange
         version_part = None
         new_version = None
-        config, _, _ = get_config_data({"current_version": "1.2.3"})
-        config.scm_info = SCMInfo(scm_config)
+        conf, _, _ = get_config_data({"current_version": "1.2.3"})
+        conf.scm_info = SCMInfo(scm_config)
         dry_run = False
 
         # Act/Assert
         with pytest.raises(ConfigurationError):
-            bump.do_bump(version_part, new_version, config, dry_run=dry_run)
+            bump.do_bump(version_part, new_version, conf, dry_run=dry_run)
 
     @patch("bumpversion.files.modify_files")
     @patch("bumpversion.bump.update_config_file")
@@ -202,23 +203,23 @@ class TestDoBump:
         """Files that have include_bumps are included when those bumps happen."""
         # Arrange
         new_version = None
-        config, _, _ = get_config_data(
+        conf, _, _ = get_config_data(
             {
                 "current_version": "1.2.3",
                 "files": [{"filename": "foo.txt", "include_bumps": ["major", "minor"]}, {"filename": "bar.txt"}],
             }
         )
-        config.scm_info = SCMInfo(scm_config)
+        conf.scm_info = SCMInfo(scm_config)
         dry_run = False
 
         # Act
-        bump.do_bump("patch", new_version, config, dry_run=dry_run)
+        bump.do_bump("patch", new_version, conf, dry_run=dry_run)
 
         # Assert
         assert {f.file_change.filename for f in mock_modify_files.call_args[0][0]} == {"bar.txt"}
 
         # Act
-        bump.do_bump("minor", new_version, config, dry_run=dry_run)
+        bump.do_bump("minor", new_version, conf, dry_run=dry_run)
 
         # Assert
         assert {f.file_change.filename for f in mock_modify_files.call_args[0][0]} == {"foo.txt", "bar.txt"}
@@ -231,23 +232,23 @@ class TestDoBump:
         """Files that have exclude_bumps are excluded when those bumps happen."""
         # Arrange
         new_version = None
-        config, _, _ = get_config_data(
+        conf, _, _ = get_config_data(
             {
                 "current_version": "1.2.3",
                 "files": [{"filename": "foo.txt", "exclude_bumps": ["patch"]}, {"filename": "bar.txt"}],
             }
         )
-        config.scm_info = SCMInfo(scm_config)
+        conf.scm_info = SCMInfo(scm_config)
         dry_run = False
 
         # Act
-        bump.do_bump("patch", new_version, config, dry_run=dry_run)
+        bump.do_bump("patch", new_version, conf, dry_run=dry_run)
 
         # Assert
         assert {f.file_change.filename for f in mock_modify_files.call_args[0][0]} == {"bar.txt"}
 
         # Act
-        bump.do_bump("minor", new_version, config, dry_run=dry_run)
+        bump.do_bump("minor", new_version, conf, dry_run=dry_run)
 
         # Assert
         assert {f.file_change.filename for f in mock_modify_files.call_args[0][0]} == {"foo.txt", "bar.txt"}
@@ -259,19 +260,19 @@ class TestCommitAndTag:
     def test_does_nothing_if_no_scm_tool(self, scm_config: SCMConfig):
         """If there is no SCM tool, nothing should happen."""
         # Arrange
-        config, _, _ = get_config_data(
+        conf, _, _ = get_config_data(
             {
                 "current_version": "1.2.3",
             }
         )
-        config.scm_info = SCMInfo(scm_config)
-        config.scm_info.tool = None
+        conf.scm_info = SCMInfo(scm_config)
+        conf.scm_info.tool = None
         mock_commit_and_tag = MagicMock()
-        config.scm_info.commit_and_tag = mock_commit_and_tag
+        conf.scm_info.commit_and_tag = mock_commit_and_tag
         mock_context = MagicMock()
 
         # Act
-        bump.commit_and_tag(config, None, [], mock_context, False)
+        bump.commit_and_tag(conf, None, [], mock_context, False)
 
         # Assert
         assert mock_commit_and_tag.call_count == 0
@@ -279,19 +280,19 @@ class TestCommitAndTag:
     def test_calls_scm_tool_commit_and_tag_with_files(self, mock_context, scm_config: SCMConfig):
         """When there is an SCM tool, the files should be passed to the SCM tool."""
         # Arrange
-        config, version_config, _ = get_config_data(
+        conf, version_config, _ = get_config_data(
             {"current_version": "1.2.3", "files": [{"filename": "foo.txt"}, {"filename": "bar.txt"}]}
         )
-        config.scm_info = MagicMock(spec=SCMInfo)
-        config.scm_info.tool = MagicMock(spec=Git)
-        configured_files = [ConfiguredFile(file_cfg, version_config) for file_cfg in config.files]
+        conf.scm_info = MagicMock(spec=SCMInfo)
+        conf.scm_info.tool = MagicMock(spec=Git)
+        configured_files = [ConfiguredFile(file_cfg, version_config) for file_cfg in conf.files]
 
         # Act
-        bump.commit_and_tag(config, None, configured_files, mock_context, False)
+        bump.commit_and_tag(conf, None, configured_files, mock_context, False)
 
         # Assert
-        config.scm_info.commit_and_tag.assert_called_once()
-        assert set(config.scm_info.commit_and_tag.call_args[0][0]) == {"foo.txt", "bar.txt"}
+        conf.scm_info.commit_and_tag.assert_called_once()
+        assert set(conf.scm_info.commit_and_tag.call_args[0][0]) == {"foo.txt", "bar.txt"}
 
     def test_includes_config_file_in_files(self, mock_context, scm_config: SCMConfig):
         """If the config file is passed to commit_and_tag, it should be included in the files list."""
@@ -313,10 +314,6 @@ class TestCommitAndTag:
 
 def test_key_path_required_for_toml_change(tmp_path: Path, caplog):
     """If the key_path is not provided, the toml file should use standard search and replace."""
-    from click.testing import CliRunner, Result
-
-    from bumpversion import cli, config
-
     # Arrange
     config_path = tmp_path / "pyproject.toml"
     config_path.write_text(
@@ -342,8 +339,6 @@ def test_key_path_required_for_toml_change(tmp_path: Path, caplog):
         ),
         encoding="utf-8",
     )
-
-    conf = config.get_configuration(config_file=config_path)
 
     # Act
     runner: CliRunner = CliRunner()
@@ -385,19 +380,56 @@ def test_key_path_required_for_toml_change(tmp_path: Path, caplog):
     )
 
 
-def test_pep621_fallback_works_static_case(tmp_path: Path, caplog):
-    """If tool.bumpversion.current_version is not defined, but static project.version is, use that."""
-    from click.testing import CliRunner, Result
+class TestPep621Fallback:
+    """Tests around the PEP-621 fallback mechanism."""
 
-    from bumpversion import cli, config
+    def test_uses_static_pep261_when_missing_current_version(self, tmp_path: Path, caplog):
+        """If tool.bumpversion.current_version is not defined, but static project.version is, use that."""
+        # Arrange
+        config_path = tmp_path / "pyproject.toml"
+        config_path.write_text(
+            dedent(
+                """
+                [project]
+                version = "0.1.26"
 
-    # Arrange
-    config_path = tmp_path / "pyproject.toml"
-    config_path.write_text(
-        dedent(
+                [tool.bumpversion]
+                allow_dirty = true
+                commit = true
+
+                [tool.othertool]
+                bake_cookies = true
+                ignore-words-list = "sugar, salt, flour"
+
+                [tool.other-othertool]
+                version = "0.1.26"
+                """
+            ),
+            encoding="utf-8",
+        )
+
+        # Act
+        runner: CliRunner = CliRunner()
+        with inside_dir(tmp_path):
+            result: Result = runner.invoke(
+                cli.cli,
+                ["bump", "-vv", "minor"],
+            )
+
+        if result.exit_code != 0:
+            print(caplog.text)
+            print("Here is the output:")
+            print(result.output)
+            import traceback
+
+            print(traceback.print_exception(result.exc_info[1]))
+
+        # Assert
+        assert result.exit_code == 0
+        assert config_path.read_text() == dedent(
             """
             [project]
-            version = "0.1.26"
+            version = "0.2.0"
 
             [tool.bumpversion]
             allow_dirty = true
@@ -410,65 +442,158 @@ def test_pep621_fallback_works_static_case(tmp_path: Path, caplog):
             [tool.other-othertool]
             version = "0.1.26"
             """
-        ),
-        encoding="utf-8",
-    )
-
-    conf = config.get_configuration(config_file=config_path)
-
-    # Act
-    runner: CliRunner = CliRunner()
-    with inside_dir(tmp_path):
-        result: Result = runner.invoke(
-            cli.cli,
-            ["bump", "-vv", "minor"],
         )
 
-    if result.exit_code != 0:
-        print(caplog.text)
-        print("Here is the output:")
-        print(result.output)
-        import traceback
-
-        print(traceback.print_exception(result.exc_info[1]))
-
-    # Assert
-    assert result.exit_code == 0
-    assert config_path.read_text() == dedent(
+    def test_does_not_use_dynamic_pep621(self, tmp_path: Path, caplog):
         """
-        [project]
-        version = "0.2.0"
+        If tool.bumpversion.current_version is not defined and dynamic project.version is, raise an error.
 
-        [tool.bumpversion]
-        allow_dirty = true
-        commit = true
-
-        [tool.othertool]
-        bake_cookies = true
-        ignore-words-list = "sugar, salt, flour"
-
-        [tool.other-othertool]
-        version = "0.1.26"
+        A dynamic pep621 version is ignored, so when current_version is also missing, it should raise a
+        ConfigurationError because it can't determine the current version.
         """
-    )
+        from bumpversion.exceptions import ConfigurationError
 
+        # Arrange
+        config_path = tmp_path / "pyproject.toml"
+        config_path.write_text(
+            dedent(
+                """
+                [project]
+                dynamic = ["version"]
 
-def test_pep621_fallback_works_dynamic_case(tmp_path: Path, caplog):
-    """If tool.bumpversion.current_version is not defined, but dynamic project.version is, *don't* use that."""
-    from click.testing import CliRunner, Result
+                [tool.bumpversion]
+                allow_dirty = true
+                commit = true
 
-    from bumpversion import cli, config
-    from bumpversion.exceptions import ConfigurationError
+                [tool.othertool]
+                bake_cookies = true
+                ignore-words-list = "sugar, salt, flour"
 
-    # Arrange
-    config_path = tmp_path / "pyproject.toml"
-    config_path.write_text(
-        dedent(
+                [tool.other-othertool]
+                version = "0.1.26"
+                """
+            ),
+            encoding="utf-8",
+        )
+
+        with inside_dir(tmp_path):
+            with pytest.raises(ConfigurationError):
+                get_configuration(config_file=config_path)
+
+    def test_static_pep621_value_always_updated(self, tmp_path: Path, caplog):
+        """Always update project.version if it is static."""
+        # Arrange
+        config_path = tmp_path / "pyproject.toml"
+        config_path.write_text(
+            dedent(
+                """
+                [project]
+                version = "0.1.26"
+
+                [tool.bumpversion]
+                current_version = "0.1.26"
+                allow_dirty = true
+                commit = true
+
+                [tool.othertool]
+                bake_cookies = true
+                ignore-words-list = "sugar, salt, flour"
+
+                [tool.other-othertool]
+                version = "0.1.26"
+                """
+            ),
+            encoding="utf-8",
+        )
+
+        # Act
+        runner: CliRunner = CliRunner()
+        with inside_dir(tmp_path):
+            result: Result = runner.invoke(
+                cli.cli,
+                ["bump", "-vv", "minor"],
+            )
+
+        if result.exit_code != 0:
+            print(caplog.text)
+            print("Here is the output:")
+            print(result.output)
+            import traceback
+
+            print(traceback.print_exception(result.exc_info[1]))
+
+        # Assert
+        assert result.exit_code == 0
+        assert config_path.read_text() == dedent(
+            """
+            [project]
+            version = "0.2.0"
+
+            [tool.bumpversion]
+            current_version = "0.2.0"
+            allow_dirty = true
+            commit = true
+
+            [tool.othertool]
+            bake_cookies = true
+            ignore-words-list = "sugar, salt, flour"
+
+            [tool.other-othertool]
+            version = "0.1.26"
+            """
+        )
+
+    def test_dynamic_pep621_value_never_updated(self, tmp_path: Path, caplog):
+        """Never update project.version if it is dynamic."""
+        # Arrange
+        config_path = tmp_path / "pyproject.toml"
+        config_path.write_text(
+            dedent(
+                """
+                [project]
+                dynamic = ["version"]
+
+                [tool.bumpversion]
+                current_version = "0.1.26"
+                allow_dirty = true
+                commit = true
+
+                [tool.othertool]
+                bake_cookies = true
+                ignore-words-list = "sugar, salt, flour"
+
+                [tool.other-othertool]
+                version = "0.1.26"
+                """
+            ),
+            encoding="utf-8",
+        )
+
+        # Act
+        runner: CliRunner = CliRunner()
+        with inside_dir(tmp_path):
+            result: Result = runner.invoke(
+                cli.cli,
+                ["bump", "-vv", "minor"],
+            )
+
+        if result.exit_code != 0:
+            print(caplog.text)
+            print("Here is the output:")
+            print(result.output)
+            import traceback
+
+            print(traceback.print_exception(result.exc_info[1]))
+
+        # Assert
+        assert result.exit_code == 0
+        assert config_path.read_text() == dedent(
             """
             [project]
             dynamic = ["version"]
 
             [tool.bumpversion]
+            current_version = "0.2.0"
             allow_dirty = true
             commit = true
 
@@ -479,160 +604,11 @@ def test_pep621_fallback_works_dynamic_case(tmp_path: Path, caplog):
             [tool.other-othertool]
             version = "0.1.26"
             """
-        ),
-        encoding="utf-8",
-    )
-
-    with pytest.raises(ConfigurationError):
-        config.get_configuration(config_file=config_path)
-
-
-def test_pep621_fallback_always_updated(tmp_path: Path, caplog):
-    """Always update project.version (if static)."""
-    from click.testing import CliRunner, Result
-
-    from bumpversion import cli, config
-
-    # Arrange
-    config_path = tmp_path / "pyproject.toml"
-    config_path.write_text(
-        dedent(
-            """
-            [project]
-            version = "0.1.26"
-
-            [tool.bumpversion]
-            current_version = "0.1.26"
-            allow_dirty = true
-            commit = true
-
-            [tool.othertool]
-            bake_cookies = true
-            ignore-words-list = "sugar, salt, flour"
-
-            [tool.other-othertool]
-            version = "0.1.26"
-            """
-        ),
-        encoding="utf-8",
-    )
-
-    conf = config.get_configuration(config_file=config_path)
-
-    # Act
-    runner: CliRunner = CliRunner()
-    with inside_dir(tmp_path):
-        result: Result = runner.invoke(
-            cli.cli,
-            ["bump", "-vv", "minor"],
         )
-
-    if result.exit_code != 0:
-        print(caplog.text)
-        print("Here is the output:")
-        print(result.output)
-        import traceback
-
-        print(traceback.print_exception(result.exc_info[1]))
-
-    # Assert
-    assert result.exit_code == 0
-    assert config_path.read_text() == dedent(
-        """
-        [project]
-        version = "0.2.0"
-
-        [tool.bumpversion]
-        current_version = "0.2.0"
-        allow_dirty = true
-        commit = true
-
-        [tool.othertool]
-        bake_cookies = true
-        ignore-words-list = "sugar, salt, flour"
-
-        [tool.other-othertool]
-        version = "0.1.26"
-        """
-    )
-
-
-def test_pep621_fallback_never_updated_if_dynamic(tmp_path: Path, caplog):
-    """Never update project.version if dynamic."""
-    from click.testing import CliRunner, Result
-
-    from bumpversion import cli, config
-
-    # Arrange
-    config_path = tmp_path / "pyproject.toml"
-    config_path.write_text(
-        dedent(
-            """
-            [project]
-            dynamic = ["version"]
-
-            [tool.bumpversion]
-            current_version = "0.1.26"
-            allow_dirty = true
-            commit = true
-
-            [tool.othertool]
-            bake_cookies = true
-            ignore-words-list = "sugar, salt, flour"
-
-            [tool.other-othertool]
-            version = "0.1.26"
-            """
-        ),
-        encoding="utf-8",
-    )
-
-    conf = config.get_configuration(config_file=config_path)
-
-    # Act
-    runner: CliRunner = CliRunner()
-    with inside_dir(tmp_path):
-        result: Result = runner.invoke(
-            cli.cli,
-            ["bump", "-vv", "minor"],
-        )
-
-    if result.exit_code != 0:
-        print(caplog.text)
-        print("Here is the output:")
-        print(result.output)
-        import traceback
-
-        print(traceback.print_exception(result.exc_info[1]))
-
-    # Assert
-    assert result.exit_code == 0
-    assert config_path.read_text() == dedent(
-        """
-        [project]
-        dynamic = ["version"]
-
-        [tool.bumpversion]
-        current_version = "0.2.0"
-        allow_dirty = true
-        commit = true
-
-        [tool.othertool]
-        bake_cookies = true
-        ignore-words-list = "sugar, salt, flour"
-
-        [tool.other-othertool]
-        version = "0.1.26"
-        """
-    )
 
 
 def test_changes_to_files_are_committed(git_repo: Path, caplog):
     """Any files changed during the bump are committed."""
-    from click.testing import CliRunner, Result
-
-    from bumpversion import cli
-
     # Arrange
     config_path = git_repo / ".bumpversion.toml"
     config_path.write_text(
