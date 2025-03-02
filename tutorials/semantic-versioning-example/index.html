@@ -415,6 +415,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#get-the-new-version-in-a-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get the new version in a script
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#add-support-for-pre-release-versions" class="md-nav__link">
     <span class="md-ellipsis">
       Add support for pre-release versions
@@ -2217,6 +2226,13 @@
 <span class="go">               ╰─ patch ─ 1.2.4</span>
 </code></pre></div>
 <p>The default configuration only allows bumping the major, minor, or patch version. What if you wanted to support pre-release versions?</p>
+<h3 id="get-the-new-version-in-a-script">Get the new version in a script<a class="headerlink" href="#get-the-new-version-in-a-script" title="Permanent link">&para;</a></h3>
+<p>If you want to get the new version within a script, you can use the <a href="https://callowayproject.github.io/bump-my-version/reference/cli/#bump-my-version-show"><code>show</code></a> method.</p>
+<div class="highlight"><span class="filename">Extract the new version</span><pre><span></span><code><span class="gp">$ </span>bump-my-version<span class="w"> </span>show<span class="w"> </span>current_version
+<span class="go">1.2.3</span>
+<span class="gp">$ </span>bump-my-version<span class="w"> </span>show<span class="w"> </span>--increment<span class="w"> </span>minor<span class="w"> </span>new_version
+<span class="go">1.3.3</span>
+</code></pre></div>
 <h3 id="add-support-for-pre-release-versions">Add support for pre-release versions<a class="headerlink" href="#add-support-for-pre-release-versions" title="Permanent link">&para;</a></h3>
 <p>Alter the <code>parse</code> configuration to support pre-release versions. This <code>parse</code> option uses an extended (or verbose) regular expression to extract the version components from the current version. </p>
 <div class="highlight"><span class="filename">New parse configuration</span><pre><span></span><code><span class="n">parse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;(?x)</span>
