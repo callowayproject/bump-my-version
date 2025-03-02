@@ -23,11 +23,10 @@ Bump My Version's purpose is to:
 
 - Work as a part of an automated build system
 - Manage project versioning through the project's development life cycle
-    - Incrementing version numbers
-    - serializing version numbers
+    - Incrementing and serializing version numbers
     - parsing version numbers
     - supporting SemVer, CalVer, and other versioning schemes
-- Modify project files as part of the project's development life cycle
+- Search and replace data in project files
 - Work with the project's source control system
     - Committing changes
     - Tagging releases
@@ -35,10 +34,10 @@ Bump My Version's purpose is to:
 
 ## Installation
 
-You can download and install the latest version of this software from the Python package index (PyPI) as follows:
+To install Bump My Version as an independent tool, use [uv](https://docs.astral.sh/uv/getting-started/installation/) to install it on your system.
 
 ```console
-pip install --upgrade bump-my-version
+uv tool install bump-my-version
 ```
 
 ## Changelog
@@ -89,6 +88,18 @@ $ bump-my-version show-bump 1.2.3
 ```
 
 The default configuration only allows bumping the major, minor, or patch version. What if you wanted to support pre-release versions?
+
+### Get the new version in a script
+
+If you want to get the new version within a script, you can use the [`show`](https://callowayproject.github.io/bump-my-version/reference/cli/#bump-my-version-show) method.
+
+```console title="Extract the new version"
+$ bump-my-version show current_version
+1.2.3
+$ bump-my-version show --increment minor new_version
+1.3.3
+```
+
 
 ### Add support for pre-release versions
 
