@@ -1,0 +1,5 @@
+- [Avoid incorrect replacements](avoid-incorrect-replacements.md)
+- [Using Calendar Versioning (CalVer)](calver.md)
+- [Custom version formats in different files](custom-version-formats-by-file.md)
+- [Multiple replacements within the same file](multiple-replacements.md)
+- [How to update a date in a file](update-a-date.md)

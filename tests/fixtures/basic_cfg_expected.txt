@@ -79,6 +79,7 @@
                        'independent': False,
                        'optional_value': 'gamma',
                        'values': ['dev', 'gamma']}},
+ 'pep621_info': {'version': None},
  'post_commit_hooks': [],
  'pre_commit_hooks': [],
  'regex': False,

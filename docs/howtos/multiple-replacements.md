@@ -18,3 +18,7 @@ filename = "CHANGELOG.md"
 search = "{current_version}...HEAD"
 replace = "{current_version}...{new_version}"
 ```
+
+??? note "Note: `project.version` in `pyproject.toml`"
+
+    This technique is **not** needed to keep `project.version` in `pyproject.toml` up-to-date if you are storing your Bump My Version configuration in `pyproject.toml` as well. Bump My Version will handle this case automatically.

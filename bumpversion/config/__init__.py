@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Optional
 
-from bumpversion.config.files import read_config_file
+from bumpversion.config.files import get_pep621_info, read_config_file
 from bumpversion.config.models import Config
 from bumpversion.exceptions import ConfigurationError
 from bumpversion.ui import get_indented_logger
@@ -32,6 +32,7 @@ DEFAULTS = {
     "message": "Bump version: {current_version} → {new_version}",
     "moveable_tags": [],
     "commit_args": None,
+    "pep621_info": None,
     "scm_info": None,
     "parts": {},
     "files": [],
@@ -84,6 +85,10 @@ def get_configuration(config_file: Optional[Pathlike] = None, **overrides: Any) 
     Config.model_rebuild()
     config = Config(**config_dict)  # type: ignore[arg-type]
 
+    # Get the PEP 621 project.version key from pyproject.toml, if possible
+    config.pep621_info = get_pep621_info(config_file)
+    logger.debug("config.pep621_info = %r", config.pep621_info)
+
     # Get the information about the SCM
     scm_info = SCMInfo(SCMConfig.from_config(config))
     config.scm_info = scm_info
@@ -113,9 +118,12 @@ def check_current_version(config: Config) -> str:
         ConfigurationError: If it can't find the current version
     """
     current_version = config.current_version
+    pep621_info = config.pep621_info
     scm_info = config.scm_info
 
-    if current_version is None and scm_info.current_version:
+    if current_version is None and pep621_info is not None and pep621_info.version:
+        return pep621_info.version
+    elif current_version is None and scm_info.current_version:
         return scm_info.current_version
     elif current_version and scm_info.current_version and current_version != scm_info.current_version:
         logger.warning(

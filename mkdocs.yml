@@ -82,7 +82,7 @@ plugins:
       custom_templates: overrides/mkdocstrings
       handlers:
         python:
-          import:
+          inventories:
             - https://docs.python.org/3/objects.inv
             - https://numpy.org/doc/stable/objects.inv
             - https://pandas.pydata.org/docs/objects.inv
@@ -93,7 +93,6 @@ plugins:
             docstring_options:
               ignore_init_summary: true
             docstring_section_style: spacy
-            enable_inventory: true
             group_by_category: true
             members_order: alphabetical
             merge_init_into_class: true

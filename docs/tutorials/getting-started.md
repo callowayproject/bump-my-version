@@ -2,10 +2,10 @@
 
 ## Installation
 
-You can download and install the latest version of this software from the Python package index (PyPI) as follows:
+To install Bump My Version as an independent tool, use [uv](https://docs.astral.sh/uv/getting-started/installation/) to install it on your system.
 
 ```console
-pip install --upgrade bump-my-version
+uv tool install bump-my-version
 ```
 
 ## Create a default configuration
@@ -57,6 +57,16 @@ $ bump-my-version show-bump 1.2.3
                ╰─ patch ─ 1.2.4
 ```
 
+## Get the new version in a script
+
+If you want to get the new version within a script, you can use the [`show`](../../reference/cli/#bump-my-version-show) method.
+
+```console title="Extract the new version"
+$ bump-my-version show current_version
+1.2.3
+$ bump-my-version show --increment minor new_version
+1.3.3
+```
 
 ## Configure a file to modify when bumping
 

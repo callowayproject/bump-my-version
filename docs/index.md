@@ -5,28 +5,45 @@ title: Bump My Version
 
 # Bump My Version
 
-Bump My Version's purpose is to:
+## Bump My Version's purpose is to
 
-- Work as a part of an automated build system
-- Manage project versioning through the project's development life cycle
-  - Incrementing version numbers
-  - Serializing version numbers
-  - Parsing version numbers
-  - Support SemVer, CalVer, and other versioning schemes
-- Modify project files as part of the project's development life cycle
-- Work with the project's source control system
-  - Committing changes
-  - Tagging releases
-  - Reading version numbers from tags
+::: grid wide-gap
+    ::: card-container horizontal depth-0
+        ::: card-icon
+            :fontawesome-solid-gear:
+        ::: card-content
+            ::: card-content-title
+                Work as a part of an automated build system.
+            Bump My Version works with automation workflows.
 
-## Installation
+    ::: card-container horizontal depth-0
+        ::: card-icon
+            :fontawesome-solid-magnifying-glass:
+        ::: card-content
+            ::: card-content-title
+                Search and replace data in project files
+            Update the version and metadata in your files when you increment your version.
 
-You can download and install the latest version of this software from the Python package index (PyPI) as follows:
+    ::: card-container horizontal depth-0
+        ::: card-icon
+            :fontawesome-solid-sliders:
+        ::: card-content
+            ::: card-content-title
+                Manage your project's versioning
+            - Increment and serialize version numbers
+            - Parsing version numbers
+            - Support SemVer, CalVer, and other versioning schemes
 
-```console
-pip install --upgrade bump-my-version
-```
-<!--
+    ::: card-container horizontal depth-0
+        ::: card-icon
+            :fontawesome-solid-code-commit:
+        ::: card-content
+            ::: card-content-title
+                Work with the project's source control system
+            - Committing changes
+            - Tagging releases
+            - Reading version numbers from tags
+
 ## Jump to section
 
 ::: grid wide-gap
@@ -82,4 +99,3 @@ pip install --upgrade bump-my-version
             { .card-content-title }
 
             Want to understand the library better? Read our explanations behind the design.
--->
