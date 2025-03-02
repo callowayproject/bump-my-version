@@ -136,5 +136,4 @@ release_hint_rules:
     branch: master|main
   - match_result: major
     grouping: Breaking Changes
-    path: bumpversion/*
     branch: master|main
