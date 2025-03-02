@@ -34,6 +34,10 @@ summary_pipeline:
 
 # Process the commit's body for use in the changelog.
 body_pipeline:
+  - action: ParseBreakingChangeFooter
+    comment: Check for breaking changes.
+    kwargs:
+      commit_metadata: save_commit_metadata
   - action: ParseTrailers
     comment: Parse the trailers into metadata.
     kwargs:
