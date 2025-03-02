@@ -44,7 +44,7 @@ runs:
         python-version: '3.12'
     - name: Install bump-my-version
       shell: bash
-      run: pip install "bump-my-version==0.33.0"
+      run: pip install "bump-my-version==1.0.0"
     - name: Pass Inputs to Shell
       id: bump
       shell: bash
