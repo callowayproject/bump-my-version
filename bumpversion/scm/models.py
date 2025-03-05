@@ -3,7 +3,7 @@
 import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, MutableMapping, Optional, Protocol
+from typing import TYPE_CHECKING, Any, List, MutableMapping, Optional, Protocol
 
 from bumpversion.ui import get_indented_logger
 from bumpversion.utils import Pathlike, extract_regex_flags
@@ -27,7 +27,7 @@ class SCMConfig:
     parse_pattern: str
     tag_message: Optional[str] = None
     commit_args: Optional[str] = None
-    moveable_tags: list[str] = field(default_factory=list)
+    moveable_tags: List[str] = field(default_factory=list)
 
     def get_version_from_tag(self, tag: str) -> Optional[str]:
         """Return the version from a tag."""
