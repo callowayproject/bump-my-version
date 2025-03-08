@@ -24,7 +24,7 @@ def get_all_file_configs(config_dict: dict) -> List[FileChange]:
         "regex": config_dict["regex"],
         "include_bumps": tuple(config_dict["parts"]),
     }
-    files = [{k: v for k, v in filecfg.items() if v is not None} for filecfg in config_dict["files"]]
+    files = [{k: v for k, v in filecfg.items() if v is not None} for filecfg in filter(None, config_dict["files"])]
     for f in files:
         f.update({k: v for k, v in defaults.items() if k not in f})
     return [FileChange(**f) for f in files]

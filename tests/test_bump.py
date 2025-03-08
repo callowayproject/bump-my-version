@@ -692,3 +692,46 @@ def test_changes_to_files_are_committed(git_repo: Path, caplog):
     with inside_dir(git_repo):
         status = run_command(["git", "status", "--porcelain"])
         assert status.stdout == ""
+
+
+def test_empty_files_config_is_ignored(git_repo: Path, caplog):
+    """An empty files config should be ignored."""
+    # Arrange
+    config_path = git_repo / ".bumpversion.toml"
+    config_path.write_text(
+        dedent(
+            """
+            [tool.bumpversion]
+            current_version = "0.1.26"
+            tag_name = "{new_version}"
+            commit = true
+
+            [[tool.bumpversion.files]]
+
+            """
+        ),
+        encoding="utf-8",
+    )
+    with inside_dir(git_repo):
+        run_command(["git", "add", str(config_path)])
+        run_command(["git", "commit", "-m", "Initial commit"])
+        run_command(["git", "tag", "0.1.26"])
+
+    # Act
+    runner: CliRunner = CliRunner()
+    with inside_dir(git_repo):
+        result: Result = runner.invoke(
+            cli.cli,
+            ["bump", "-vv", "minor"],
+        )
+
+    if result.exit_code != 0:
+        print(caplog.text)
+        print("Here is the output:")
+        print(result.output)
+        import traceback
+
+        print(traceback.print_exception(*result.exc_info))
+
+    # Assert
+    assert result.exit_code == 0
