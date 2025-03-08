@@ -262,6 +262,10 @@ commit = true
 commit_args = "--no-verify"
 tag = true
 tag_name = "{new_version}"
+moveable_tags = [
+    "v{new_major}",
+    "v{new_major}.{new_minor}",
+]
 allow_dirty = true
 parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\.(?P<dev>post)\\d+\\.dev\\d+)?"
 serialize = [
