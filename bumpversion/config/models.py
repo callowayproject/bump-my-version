@@ -113,7 +113,7 @@ class Config(BaseSettings):
 
     def add_files(self, filename: Union[str, List[str]]) -> None:
         """Add a filename to the list of files."""
-        if not self.files:
+        if not filename:
             return
         filenames = [filename] if isinstance(filename, str) else filename
         files = set(self.files)
