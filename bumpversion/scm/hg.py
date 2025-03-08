@@ -1,7 +1,7 @@
 """Mercurial source control management."""
 
 import subprocess
-from typing import ClassVar, MutableMapping, Optional
+from typing import ClassVar, List, MutableMapping, Optional
 
 from bumpversion.exceptions import DirtyWorkingDirectoryError, SignedTagsError
 from bumpversion.scm.models import LatestTagInfo, SCMConfig
@@ -14,9 +14,9 @@ logger = get_indented_logger(__name__)
 class Mercurial:
     """Mercurial source control management."""
 
-    _TEST_AVAILABLE_COMMAND: ClassVar[list[str]] = ["hg", "root"]
-    _COMMIT_COMMAND: ClassVar[list[str]] = ["hg", "commit", "--logfile"]
-    _ALL_TAGS_COMMAND: ClassVar[list[str]] = ["hg", "log", '--rev="tag()"', '--template="{tags}\n"']
+    _TEST_AVAILABLE_COMMAND: ClassVar[List[str]] = ["hg", "root"]
+    _COMMIT_COMMAND: ClassVar[List[str]] = ["hg", "commit", "--logfile"]
+    _ALL_TAGS_COMMAND: ClassVar[List[str]] = ["hg", "log", '--rev="tag()"', '--template="{tags}\n"']
 
     def __init__(self, config: SCMConfig):
         self.config = config
@@ -54,7 +54,7 @@ class Mercurial:
         """Add a path to the Source Control Management repository."""
         pass
 
-    def commit_and_tag(self, files: list[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
+    def commit_and_tag(self, files: List[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
         """Commit and tag files to the repository using the configuration."""
 
     def tag(self, name: str, sign: bool = False, message: Optional[str] = None) -> None:

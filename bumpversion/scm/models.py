@@ -88,11 +88,11 @@ class SCMTool(Protocol):
         """Add a path to the pending commit."""
         ...
 
-    def get_all_tags(self) -> list[str]:
+    def get_all_tags(self) -> List[str]:
         """Return all tags in the SCM."""
         ...
 
-    def commit_and_tag(self, files: list[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
+    def commit_and_tag(self, files: List[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
         """Commit and tag files to the repository using the configuration."""
         ...
 
@@ -132,11 +132,11 @@ class DefaultSCMTool:
         """Add a path to the pending commit."""
         logger.debug("No source code management system configured. Skipping adding path '%s'.", path)
 
-    def get_all_tags(self) -> list[str]:
+    def get_all_tags(self) -> List[str]:
         """Return all tags in the SCM."""
         return []
 
-    def commit_and_tag(self, files: list[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
+    def commit_and_tag(self, files: List[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
         """Pretend to commit and tag files to the repository using the configuration."""
         logger.debug("No source code management system configured. Skipping committing and tagging.")
 
@@ -210,7 +210,7 @@ class SCMInfo:
             return True
         return str(path).startswith(str(self.repository_root))
 
-    def commit_and_tag(self, files: list[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
+    def commit_and_tag(self, files: List[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
         """Commit the files to the source code management system."""
         logger.indent()
 
@@ -227,7 +227,7 @@ class SCMInfo:
         self.tool.commit_and_tag(files=files, context=context, dry_run=dry_run)
         logger.dedent()
 
-    def _commit(self, files: list[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
+    def _commit(self, files: List[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
         """Commit the files to the source code management system."""
         do_commit = not dry_run
         logger.info("%s the commit", "Preparing" if do_commit else "Would prepare")

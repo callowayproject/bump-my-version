@@ -6,7 +6,7 @@ import shlex
 import subprocess
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from typing import Any, ClassVar, MutableMapping, Optional
+from typing import Any, ClassVar, List, MutableMapping, Optional
 
 from bumpversion.exceptions import DirtyWorkingDirectoryError
 from bumpversion.scm.models import LatestTagInfo, SCMConfig
@@ -19,9 +19,9 @@ logger = get_indented_logger(__name__)
 class Git:
     """Git implementation."""
 
-    _TEST_AVAILABLE_COMMAND: ClassVar[list[str]] = ["git", "rev-parse", "--git-dir"]
-    _COMMIT_COMMAND: ClassVar[list[str]] = ["git", "commit", "-F"]
-    _ALL_TAGS_COMMAND: ClassVar[list[str]] = ["git", "tag", "--list"]
+    _TEST_AVAILABLE_COMMAND: ClassVar[List[str]] = ["git", "rev-parse", "--git-dir"]
+    _COMMIT_COMMAND: ClassVar[List[str]] = ["git", "commit", "-F"]
+    _ALL_TAGS_COMMAND: ClassVar[List[str]] = ["git", "tag", "--list"]
 
     def __init__(self, config: SCMConfig):
         self.config = config
@@ -73,7 +73,7 @@ class Git:
         except subprocess.CalledProcessError as e:
             format_and_raise_error(e)
 
-    def get_all_tags(self) -> list[str]:
+    def get_all_tags(self) -> List[str]:
         """Return all tags in git."""
         try:
             result = run_command(self._ALL_TAGS_COMMAND)
@@ -86,7 +86,7 @@ class Git:
         ):
             return []
 
-    def commit_and_tag(self, files: list[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
+    def commit_and_tag(self, files: List[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
         """Commit and tag files to the repository using the configuration."""
         if dry_run:
             return
