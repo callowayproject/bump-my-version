@@ -101,7 +101,7 @@ class Config(BaseSettings):
     pep621_info: Optional[PEP621Info]
     scm_info: Optional[SCMInfo]
     parts: Dict[str, VersionComponentSpec]
-    moveable_tags: list[str] = Field(default_factory=list)
+    moveable_tags: List[str] = Field(default_factory=list)
     files: List[FileChange] = Field(default_factory=list)
     setup_hooks: List[str] = Field(default_factory=list)
     pre_commit_hooks: List[str] = Field(default_factory=list)
@@ -113,6 +113,8 @@ class Config(BaseSettings):
 
     def add_files(self, filename: Union[str, List[str]]) -> None:
         """Add a filename to the list of files."""
+        if not filename:
+            return
         filenames = [filename] if isinstance(filename, str) else filename
         files = set(self.files)
         for name in filenames:

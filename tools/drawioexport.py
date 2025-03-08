@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import List, Optional
 
 
-def get_executable_paths() -> list[str]:
+def get_executable_paths() -> List[str]:
     """Get the Draw.io executable paths for the platform.
 
     Declared as a function to allow us to use API/environment information
