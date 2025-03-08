@@ -39,9 +39,10 @@ runs:
         git config --global user.name "$(gh api /users/${GITHUB_ACTOR} | jq .name -r)"
         git config -l
     - name: Install Python
-      uses: actions/setup-python@v5.4.0
+      uses: actions/setup-python@v5
       with:
         python-version: '3.12'
+        cache: 'pip'
     - name: Install bump-my-version
       shell: bash
       run: pip install "bump-my-version==1.0.2"
@@ -50,7 +51,7 @@ runs:
       shell: bash
       run: |
         echo "previous-version=$(bump-my-version show current_version)" >> $GITHUB_OUTPUT
-        
+
         bump-my-version bump ${{ inputs.args }}
         ([[ $? -gt 0 ]] && echo "bumped=false" || echo "bumped=true") >> $GITHUB_OUTPUT
         echo "current-version=$(bump-my-version show current_version)" >> $GITHUB_OUTPUT
