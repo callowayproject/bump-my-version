@@ -171,3 +171,8 @@ temp.*
 .python-version
 requirements-dev.lock
 requirements.lock
+
+# Devenv files
+.devenv/
+devenv.lock
+.devenv.flake.nix
