@@ -5,7 +5,9 @@ let
   system = pkgs.stdenv.system;
   git-hooks = inputs.git-hooks.packages.${system}.git-hooks;
 in {
-  name = "bumpversion";
+  name = "bump-my-version";
+
+  cachix.enable = false;
 
   # Languages to include in the environment
   languages = {

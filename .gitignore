@@ -163,6 +163,7 @@ flake8-errors.txt
 
 RELEASE.txt
 site-packages
+test-reports
 reports
 *.env
 todo.txt

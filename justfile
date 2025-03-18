@@ -25,8 +25,13 @@ show-bump from-version="":
 get-version:
     uv tool run bump-my-version show current_version
 
-# Initialize the python project environment   
+# Initialize the python project environment
 ready-py:
     uv lock
-    uv sync
+    uv sync --group dev --group test
     unset VIRTUAL_ENV
+
+# Run the tests and open the coverage report
+test:
+    -pytest
+    sudo -u {{ user }} gio open ./test-reports/htmlcov/index.html
