@@ -2336,11 +2336,13 @@
 <p>First off, thanks for taking the time to contribute! ❤️</p>
 <p>All types of contributions are encouraged and valued. See the <a href="#table-of-contents">Table of Contents</a> for different ways to help and details about how this project handles them. Please make sure to read the relevant section before making your contribution. It will make it much easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions. 🎉</p>
 <blockquote>
-<p>If you like the project but don&rsquo;t have time to contribute, that&rsquo;s fine. There are other easy ways to support the project and show your appreciation, which we would also be very happy about:
-- Star the project
-- Tweet about it
-- Refer to this project in your project&rsquo;s readme
-- Mention the project at local meetups and tell your friends/colleagues</p>
+<p>If you like the project but don&rsquo;t have time to contribute, that&rsquo;s fine. There are other easy ways to support the project and show your appreciation, which we would also be very happy about:</p>
+<ul>
+<li>Star the project</li>
+<li>Tweet about it</li>
+<li>Refer to this project in your project&rsquo;s readme</li>
+<li>Mention the project at local meetups and tell your friends/colleagues</li>
+</ul>
 </blockquote>
 <h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2431,26 +2433,31 @@ to <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#114;&#101;&#121
 <h3 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h3>
 <p>There are several ways to create an isolated Python development environment. This is the <a href="https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment">default method</a>.</p>
 <p>Run the following in a terminal:</p>
-<div class="highlight"><pre><span></span><code><span class="gp"># </span>Clone<span class="w"> </span>the<span class="w"> </span>repository
-<span class="go">git clone https://github.com/callowayproject/bump-my-version.git</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Clone the repository</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/callowayproject/bump-my-version.git
 
-<span class="gp"># </span>Enter<span class="w"> </span>the<span class="w"> </span>repository
-<span class="go">cd bump-my-version</span>
+<span class="c1"># Enter the repository</span>
+<span class="nb">cd</span><span class="w"> </span>bump-my-version
 
-<span class="gp"># </span>Create,<span class="w"> </span><span class="k">then</span><span class="w"> </span>activate<span class="w"> </span>a<span class="w"> </span>virtual<span class="w"> </span>environment
-<span class="go">python -m venv env</span>
-<span class="go">source env/bin/activate</span>
+<span class="c1"># Create, then activate a virtual environment</span>
+python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>env
+<span class="nb">source</span><span class="w"> </span>env/bin/activate
 
-<span class="gp"># </span>Install<span class="w"> </span>the<span class="w"> </span>project<span class="w"> </span><span class="k">in</span><span class="w"> </span>editable<span class="w"> </span>mode<span class="w"> </span>with<span class="w"> </span>its<span class="w"> </span>optional<span class="w"> </span>dependencies
-<span class="go">python -m pip install -e .[dev,test]</span>
+<span class="c1"># Install the project in editable mode with its optional dependencies</span>
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>dev,test<span class="o">]</span>
 </code></pre></div>
+<p>If you are inclined to use the included <code>devenv.nix</code> environment, ensure you have both the <code>nix</code> package manager and <code>devenv</code> installed; reference the setup instructions for these tools <a href="http://devenv.sh/getting-started/">here</a>. Once <code>devenv</code> is installed, you can use the following command from the project&rsquo;s root directory:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create and enter the devenv shell </span>
+devenv<span class="w"> </span>shell
+</code></pre></div>
+<p>This will create an isolated shell with the necessary packages installed, as well as create the virtual environment for running the project using <code>uv</code>.</p>
 <h3 id="run-tests">Run tests<a class="headerlink" href="#run-tests" title="Permanent link">&para;</a></h3>
 <p>Once setup, you should be able to run tests:</p>
-<div class="highlight"><pre><span></span><code><span class="go">pytest</span>
+<div class="highlight"><pre><span></span><code>pytest
 </code></pre></div>
 <h3 id="install-pre-commit-hooks">Install Pre-commit Hooks<a class="headerlink" href="#install-pre-commit-hooks" title="Permanent link">&para;</a></h3>
 <p>Pre-commit hooks are scripts that run every time you make a commit. If any of the scripts fail, it stops the commit. You can see a listing of the checks in the <code>.pre-commit-config.yaml</code> file.</p>
-<div class="highlight"><pre><span></span><code><span class="go">pre-commit install</span>
+<div class="highlight"><pre><span></span><code>pre-commit<span class="w"> </span>install
 </code></pre></div>
 <h2 id="improving-the-documentation">Improving The Documentation<a class="headerlink" href="#improving-the-documentation" title="Permanent link">&para;</a></h2>
 <p>Please, please help us here.</p>
