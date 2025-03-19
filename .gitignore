@@ -163,6 +163,7 @@ flake8-errors.txt
 
 RELEASE.txt
 site-packages
+test-reports
 reports
 *.env
 todo.txt
@@ -171,3 +172,8 @@ temp.*
 .python-version
 requirements-dev.lock
 requirements.lock
+
+# Devenv files
+.devenv/
+devenv.lock
+.devenv.flake.nix
