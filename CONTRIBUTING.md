@@ -5,6 +5,7 @@ First off, thanks for taking the time to contribute! ❤️
 All types of contributions are encouraged and valued. See the [Table of Contents](#table-of-contents) for different ways to help and details about how this project handles them. Please make sure to read the relevant section before making your contribution. It will make it much easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions. 🎉
 
 > If you like the project but don't have time to contribute, that's fine. There are other easy ways to support the project and show your appreciation, which we would also be very happy about:
+>
 > - Star the project
 > - Tweet about it
 > - Refer to this project in your project's readme
@@ -21,13 +22,11 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 - [Styleguides](#styleguides)
 - [Join The Project Team](#join-the-project-team)
 
-
 ## Code of Conduct
 
 This project and everyone participating in it are governed by the
 [Bump My Version Code of Conduct](https://github.com/callowayproject/bump-my-versionblob/master/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior
-to <coreyoordt@gmail.com>.
-
+to <mailto:coreyoordt@gmail.com>.
 
 ## I Have a Question
 
@@ -54,16 +53,15 @@ A good bug report shouldn't leave others needing to chase you up for more inform
 - To see if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the [bug tracker](https://github.com/callowayproject/bump-my-version/issues).
 - Also, make sure to search the internet (including Stack Overflow) to see if users outside of the GitHub community have discussed the issue.
 - Collect information about the bug:
-  - Stack trace (Traceback)
-  - OS, Platform, and Version (Windows, Linux, macOS, x86, ARM)
-  - The version of Python
-  - Possibly your input and the output
-  - Can you reliably reproduce the issue? And can you also reproduce it with older versions?
-
+   - Stack trace (Traceback)
+   - OS, Platform, and Version (Windows, Linux, macOS, x86, ARM)
+   - The version of Python
+   - Possibly your input and the output
+   - Can you reliably reproduce the issue? And can you also reproduce it with older versions?
 
 ### How Do I Submit a Good Bug Report?
 
-> You must never report security-related issues, vulnerabilities, or bugs that include sensitive information to the issue tracker or elsewhere in public. Instead, sensitive bugs must be sent by email to <coreyoordt@gmail.com>.
+> You must never report security-related issues, vulnerabilities, or bugs that include sensitive information to the issue tracker or elsewhere in public. Instead, sensitive bugs must be sent by email to <mailto:coreyoordt@gmail.com>.
 
 We use GitHub issues to track bugs and errors. If you run into an issue with the project:
 
@@ -77,7 +75,6 @@ Once it's filed:
 - The project team will label the issue accordingly.
 - A team member will try to reproduce the issue with your provided steps. If there are no reproduction steps or no obvious way to reproduce the issue, the team will ask you for those steps and will not address them until they are included.
 - If the team is able to reproduce the issue, the issue will be left to be [implemented by someone](#your-first-code-contribution).
-
 
 ## Suggesting Enhancements
 
@@ -104,7 +101,6 @@ Enhancement suggestions are tracked as [GitHub issues](https://github.com/callow
 
 ## Your First Code Contribution
 
-
 > ### Legal Notice
 >
 > When contributing to this project, you must agree that you have authored 100% of the content, that you have the necessary rights to the content and that the content you contribute may be provided under the project license.
@@ -115,7 +111,7 @@ There are several ways to create an isolated Python development environment. Thi
 
 Run the following in a terminal:
 
-```console
+```sh
 # Clone the repository
 git clone https://github.com/callowayproject/bump-my-version.git
 
@@ -130,26 +126,37 @@ source env/bin/activate
 python -m pip install -e .[dev,test]
 ```
 
+If you are inclined to use the included `devenv.nix` environment, ensure you have both the `nix` package manager and `devenv` installed; reference the setup instructions for these tools [here](http://devenv.sh/getting-started/). Once `devenv` is installed, you can use the following command from the project's root directory:
+
+```sh
+# Create and enter the devenv shell 
+devenv shell
+```
+
+This will create an isolated shell with the necessary packages installed, as well as create the virtual environment for running the project using `uv`.
+
 ### Run tests
 
 Once setup, you should be able to run tests:
 
-```console
+```sh
 pytest
 ```
 
 ### Install Pre-commit Hooks
 
-Pre-commit hooks are scripts that run every time you make a commit. If any of the scripts fail, it stops the commit. You can see a listing of the checks in the ``.pre-commit-config.yaml`` file.
+Pre-commit hooks are scripts that run every time you make a commit. If any of the scripts fail, it stops the commit. You can see a listing of the checks in the `.pre-commit-config.yaml` file.
 
-```console
+```sh
 pre-commit install
 ```
 
 ## Improving The Documentation
+
 Please, please help us here.
 
 ## Styleguides
+
 ### Coding Style
 
 All of the basic coding styles are configured into tools for fixing and checking them. [Pre-commit](https://pre-commit.com) is used to automate the process.
@@ -213,4 +220,5 @@ To have the change log generator ignore this commit, add to the summary line:
 If you would like to be a maintainer, reach out to coreyoordt@gmail.com.
 
 ## Attribution
+
 This guide is based on the **contributing-gen**. [Make your own](https://github.com/bttger/contributing-gen)!
