@@ -106,11 +106,15 @@ omit = [
     "*.tox*",
 ]
 show_missing = true
-exclude_lines = [
+exclude_also = [
     "raise NotImplementedError",
     "pragma: no-coverage",
     "pragma: no-cov",
+    "def __str__",
+    "def __repr__",
 ]
+skip_covered = true
+skip_empty = true
 
 [tool.coverage.html]
 directory = "test-reports/htmlcov"

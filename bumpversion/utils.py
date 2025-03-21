@@ -116,7 +116,7 @@ def set_nested_value(d: dict, value: Any, path: str) -> None:
             current_element = current_element[key]
 
 
-def format_and_raise_error(exc: Union[TypeError, subprocess.CalledProcessError]) -> None:
+def format_and_raise_error(exc: Union[BaseException, subprocess.CalledProcessError]) -> None:
     """Format the error message from an exception and re-raise it as a BumpVersionError."""
     if isinstance(exc, subprocess.CalledProcessError):
         output = "\n".join([x for x in [exc.stdout, exc.stderr] if x])
