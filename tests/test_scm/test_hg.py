@@ -129,7 +129,7 @@ class TestMercurial:
             with inside_dir(hg_repo):
                 hg_instance.add_path(new_file)
 
-            mock_run_command.called_once_with(["hg", "root"])
+            mock_run_command.assert_called_once_with(["hg", "root"])
 
     class TestGetAllTags:
         """Tests for the get_all_tags method."""
