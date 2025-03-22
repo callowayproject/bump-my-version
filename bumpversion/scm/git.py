@@ -103,7 +103,7 @@ class Git:
             tag(tag_name, sign=self.config.sign_tags, message=tag_message)
 
             for m_tag_name in self.config.moveable_tags:
-                moveable_tag(m_tag_name)
+                moveable_tag(m_tag_name.format(**context))
 
     def assert_nondirty(self) -> None:
         """

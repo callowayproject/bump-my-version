@@ -14,53 +14,56 @@ from bumpversion.utils import run_command
 from tests.conftest import inside_dir
 
 
+@pytest.fixture
+def git_instance(scm_config: SCMConfig) -> Git:
+    """Return a Git instance."""
+    return Git(config=scm_config)
+
+
 class TestGit:
     """Tests related to Git."""
 
     class TestIsAvailable:
         """Tests related to Git.is_available."""
 
-        def test_recognizes_a_git_repo(self, git_repo: Path, scm_config: SCMConfig) -> None:
+        def test_recognizes_a_git_repo(self, git_repo: Path, git_instance: Git) -> None:
             """Should return true if git is available, and it is a git repo."""
             with inside_dir(git_repo):
-                git_tool = Git(scm_config)
-                assert git_tool.is_available()
+                assert git_instance.is_available()
 
-        def test_recognizes_not_a_git_repo(self, tmp_path: Path, scm_config: SCMConfig) -> None:
+        def test_recognizes_not_a_git_repo(self, tmp_path: Path, git_instance: Git) -> None:
             """Should return false if it is not a git repo."""
             with inside_dir(tmp_path):
-                git_tool = Git(scm_config)
-                assert not git_tool.is_available()
+                assert not git_instance.is_available()
 
     class TestLatestTagInfo:
         """Test for the Git.latest_tag_info() function."""
 
-        def test_returns_default_if_not_available(self, tmp_path: Path, scm_config: SCMConfig) -> None:
+        def test_returns_default_if_not_available(self, tmp_path: Path, git_instance: Git) -> None:
             """If git is not available, it returns the default LatestTagInfo object, with all None values."""
             # Arrange
             expected = LatestTagInfo()
-            tool = Git(scm_config)
 
             # Act
             with inside_dir(tmp_path):
-                info = tool.latest_tag_info()
+                info = git_instance.latest_tag_info()
 
             # Assert
             assert info == expected
 
-        def test_returns_correct_commit_and_tag_info(self, git_repo: Path, scm_config: SCMConfig) -> None:
+        def test_returns_correct_commit_and_tag_info(self, git_repo: Path, git_instance: Git) -> None:
             """Should return information that it is a git repo."""
             # Arrange
             tag_prefix = "app/"
             readme = git_repo.joinpath("readme.md")
             readme.touch()
-            scm_config.tag_name = f"{tag_prefix}{{new_version}}"
+            git_instance.config.tag_name = f"{tag_prefix}{{new_version}}"
 
             # Act
             with inside_dir(git_repo):
                 commit_readme("first")
                 tag(f"{tag_prefix}0.1.0", sign=False, message="bumpversion")
-                tag_info = Git(scm_config).latest_tag_info()
+                tag_info = git_instance.latest_tag_info()
 
             # Assert
             assert tag_info.commit_sha is not None
@@ -79,7 +82,7 @@ class TestGit:
         @patch("bumpversion.scm.git.Git.latest_tag_info")
         @patch("bumpversion.scm.git.is_subpath")
         def test_valid_subpath_is_added(
-            self, mock_is_subpath, mock_latest_tag_info, mock_run_command, scm_config: SCMConfig, tmp_path: Path
+            self, mock_is_subpath, mock_latest_tag_info, mock_run_command, git_instance: Git, tmp_path: Path
         ):
             """A path that is a subpath of the repository root should be added."""
             # Arrange
@@ -89,7 +92,6 @@ class TestGit:
             mock_latest_tag_info.return_value.repository_root = repository_root
             mock_is_subpath.return_value = True
             mock_run_command.return_value = None
-            git_instance = Git(scm_config)
 
             # Act
             with inside_dir(repository_root):
@@ -102,7 +104,7 @@ class TestGit:
         @patch("bumpversion.scm.git.Git.latest_tag_info")
         @patch("bumpversion.scm.git.is_subpath")
         def test_invalid_subpath_is_not_added(
-            self, mock_is_subpath, mock_latest_tag_info, mock_run_command, scm_config, tmp_path: Path
+            self, mock_is_subpath, mock_latest_tag_info, mock_run_command, git_instance: Git, tmp_path: Path
         ):
             """A path that is not a subpath of the repository root should not be added."""
             # Arrange
@@ -111,7 +113,6 @@ class TestGit:
             path_to_add = repository_root / "file.txt"
             mock_latest_tag_info.return_value.repository_root = repository_root
             mock_is_subpath.return_value = False
-            git_instance = Git(scm_config)
 
             # Act
             git_instance.add_path(path_to_add)
@@ -123,7 +124,7 @@ class TestGit:
         @patch("bumpversion.scm.git.Git.latest_tag_info")
         @patch("bumpversion.scm.git.is_subpath")
         def test_raises_error_on_command_failure(
-            self, mock_is_subpath, mock_latest_tag_info, mock_run_command, scm_config: SCMConfig, tmp_path: Path
+            self, mock_is_subpath, mock_latest_tag_info, mock_run_command, git_instance: Git, tmp_path: Path
         ):
             """If the git command fails, a BumpVersionError should be raised."""
             # Arrange
@@ -133,12 +134,100 @@ class TestGit:
             mock_latest_tag_info.return_value.repository_root = repository_root
             mock_is_subpath.return_value = True
             mock_run_command.side_effect = subprocess.CalledProcessError(returncode=1, cmd="git add")
-            git_instance = Git(scm_config)
 
             # Act / Assert
             with inside_dir(repository_root):
                 with pytest.raises(BumpVersionError):
                     git_instance.add_path(path_to_add)
+
+    class TestGitCommitAndTag:
+        """Tests for the commit_and_tag() method."""
+
+        def test_dry_run_skips_method(self, git_instance: Git, mocker):
+            """If dry_run is True, the method is short-circuited."""
+            # Arrange
+            files = ["file1.txt", "file2.txt"]
+            context = {"new_version": "1.0.0", "new_major": "1", "current_version": "0.1.0"}
+            mock_add_path = mocker.patch.object(git_instance, "add_path")
+            mock_commit = mocker.patch.object(git_instance, "commit")
+            mock_tag = mocker.patch("bumpversion.scm.git.tag")
+            mock_moveable_tag = mocker.patch("bumpversion.scm.git.moveable_tag")
+
+            # Act
+            git_instance.commit_and_tag(files, context, dry_run=True)
+
+            # Assert
+            mock_add_path.assert_not_called()
+            mock_commit.assert_not_called()
+            mock_tag.assert_not_called()
+            mock_moveable_tag.assert_not_called()
+
+        def test_commits_and_tags_when_configured(self, git_instance: Git, mocker):
+            """Does both commit and tag functions when they are configured."""
+            # Arrange
+            files = ["file1.txt", "file2.txt"]
+            context = {"new_version": "1.0.0", "new_major": "1", "current_version": "0.1.0"}
+            git_instance.config.moveable_tags = ["v{new_major}"]
+            git_instance.config.tag = True
+            git_instance.config.commit = True
+            mock_add_path = mocker.patch.object(git_instance, "add_path")
+            mock_commit = mocker.patch.object(git_instance, "commit")
+            mock_tag = mocker.patch("bumpversion.scm.git.tag")
+            mock_moveable_tag = mocker.patch("bumpversion.scm.git.moveable_tag")
+
+            # Act
+            git_instance.commit_and_tag(files, context, dry_run=False)
+
+            # Assert
+            assert mock_add_path.call_count == len(files)
+            mock_add_path.assert_any_call("file1.txt")
+            mock_add_path.assert_any_call("file2.txt")
+            mock_commit.assert_called_once_with(context)
+            mock_tag.assert_called_once_with("v1.0.0", sign=False, message="Bump version: 0.1.0 → 1.0.0")
+            mock_moveable_tag.assert_called_once_with("v1")
+
+        def test_tags_when_commit_is_false(self, git_instance: Git, mocker):
+            """The method only tags when commit is False."""
+            # Arrange
+            files = ["file1.txt"]
+            context = {"new_version": "1.0.0", "new_major": "1", "current_version": "0.1.0"}
+            git_instance.config.moveable_tags = ["v{new_major}"]
+            git_instance.config.commit = False
+            git_instance.config.tag = True
+            mock_add_path = mocker.patch.object(git_instance, "add_path")
+            mock_commit = mocker.patch.object(git_instance, "commit")
+            mock_tag = mocker.patch("bumpversion.scm.git.tag")
+            mock_moveable_tag = mocker.patch("bumpversion.scm.git.moveable_tag")
+
+            # Act
+            git_instance.commit_and_tag(files, context, dry_run=False)
+
+            # Assert
+            mock_add_path.assert_not_called()
+            mock_commit.assert_not_called()
+            mock_tag.assert_called_once_with("v1.0.0", sign=False, message="Bump version: 0.1.0 → 1.0.0")
+            mock_moveable_tag.assert_called_once_with("v1")
+
+        def test_commits_when_tag_is_false(self, git_instance: Git, mocker):
+            """The method only commits when tag is False."""
+            # Arrange
+            files = ["file1.txt"]
+            context = {"new_version": "1.0.0", "new_major": "1", "current_version": "0.1.0"}
+            git_instance.config.moveable_tags = ["v{new_major}"]
+            git_instance.config.tag = False
+            git_instance.config.commit = True
+            mock_add_path = mocker.patch.object(git_instance, "add_path")
+            mock_commit = mocker.patch.object(git_instance, "commit")
+            mock_tag = mocker.patch("bumpversion.scm.git.tag")
+            mock_moveable_tag = mocker.patch("bumpversion.scm.git.moveable_tag")
+
+            # Act
+            git_instance.commit_and_tag(files, context, dry_run=False)
+
+            mock_add_path.assert_called_with("file1.txt")
+            mock_commit.assert_called_once_with(context)
+            mock_tag.assert_not_called()
+            mock_moveable_tag.assert_not_called()
 
 
 class TestRevisionInfo:
