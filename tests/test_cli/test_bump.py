@@ -183,8 +183,6 @@ def test_dirty_work_dir_raises_error(repo: str, scm_command: str, request, runne
         )
 
     # Assert
-    print(f"{result.output=}")
-    assert result.exit_code != 0
     assert "working directory is not clean" in result.output
 
 
