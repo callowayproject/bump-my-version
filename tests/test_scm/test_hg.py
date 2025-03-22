@@ -4,6 +4,7 @@ import json
 import shutil
 import subprocess
 from pathlib import Path
+from unittest.mock import patch
 
 import pytest
 from pytest import param
@@ -99,6 +100,95 @@ class TestMercurial:
             assert tag_info.repository_root == hg_repo
             assert tag_info.dirty is False
 
+    class TestAddPath:
+        """Tests for the add_path method in the Mercurial class."""
+
+        def test_adds_to_repo_if_file_is_within_repo(self, hg_repo: Path, hg_instance: Mercurial):
+            """The file is added to the repo when it is within the repo root."""
+            # Arrange
+            new_file = hg_repo / "newfile.txt"
+            new_file.write_text("new file")
+
+            # Act
+            with inside_dir(hg_repo):
+                hg_instance.add_path(new_file)
+                result = run_command(["hg", "status"])
+
+            # Assert
+            assert result.stdout == "A newfile.txt\n"
+
+        @patch("bumpversion.scm.hg.run_command")
+        def test_does_not_add_path_when_not_in_repository(
+            self, mock_run_command, hg_repo: Path, hg_instance: Mercurial, fixtures_path: Path
+        ):
+            """The file is not added to the repo when it is outside the repo root."""
+            # Arrange
+            new_file = fixtures_path / "basic_cfg.toml"
+
+            # Act
+            with inside_dir(hg_repo):
+                hg_instance.add_path(new_file)
+
+            mock_run_command.called_once_with(["hg", "root"])
+
+    class TestGetAllTags:
+        """Tests for the get_all_tags method."""
+
+        def test_returns_correct_tags(self, hg_repo: Path, hg_instance: Mercurial):
+            """Returns all the tags in the repo."""
+            # Arrange
+            readme = hg_repo.joinpath("readme.md")
+            readme.touch()
+            file1 = hg_repo.joinpath("file1.txt")
+            file1.touch()
+            file2 = hg_repo.joinpath("file2.txt")
+            file2.touch()
+            with inside_dir(hg_repo):
+                commit_readme("first")
+                tag("tag1")
+                hg_instance.add_path(file1)
+                run_command(["hg", "commit", "-m", "add file1"])
+                tag("tag2")
+                hg_instance.add_path(file2)
+                run_command(["hg", "commit", "-m", "add file2"])
+                tag("tag3")
+
+                # Act
+                tags = hg_instance.get_all_tags()
+
+            # Assert
+            assert set(tags) == {"tip", "tag1", "tag2", "tag3"}
+
+        def test_handles_empty_tags(self, hg_repo: Path, hg_instance: Mercurial):
+            """When there are no tags, an empty list is returned."""
+            # Arrange
+            with inside_dir(hg_repo):
+                hg_repo.joinpath("readme.md").touch()
+                commit_readme("first")
+
+                # Act
+                tags = hg_instance.get_all_tags()
+
+            # Assert
+            assert set(tags) == {"tip"}
+
+        @pytest.mark.parametrize(
+            ["side_effect"],
+            [
+                param(subprocess.CalledProcessError(1, "cmd"), id="command failure"),
+                param(FileNotFoundError, id="file not found"),
+                param(PermissionError, id="permission error"),
+            ],
+        )
+        def test_failure_raises_error(self, hg_instance, side_effect, mocker):
+            """On failure, it raises a BumpVersionError exception."""
+            # Arrange
+            mocker.patch("bumpversion.utils.run_command", side_effect=side_effect)
+
+            # Act, Assert
+            with pytest.raises(BumpVersionError):
+                hg_instance.get_all_tags()
+
 
 @pytest.mark.skipif(not shutil.which("hg"), reason="Mercurial is not available.")
 def test_hg_bump_version_commits_changes(hg_repo: Path, fixtures_path: Path, runner) -> None:
@@ -118,65 +208,6 @@ def test_hg_bump_version_commits_changes(hg_repo: Path, fixtures_path: Path, run
     hg_logs = json.loads(hg_result.stdout)
     tags = [item["tag"] for item in hg_logs]
     assert "v1.1.0" in tags
-
-
-class TestGetAllTags:
-    """Tests for the get_all_tags method."""
-
-    def test_returns_correct_tags(self, hg_repo: Path, hg_instance: Mercurial):
-        """Returns all the tags in the repo."""
-        # Arrange
-        readme = hg_repo.joinpath("readme.md")
-        readme.touch()
-        file1 = hg_repo.joinpath("file1.txt")
-        file1.touch()
-        file2 = hg_repo.joinpath("file2.txt")
-        file2.touch()
-        with inside_dir(hg_repo):
-            commit_readme("first")
-            tag("tag1")
-            hg_instance.add_path(file1)
-            run_command(["hg", "commit", "-m", "add file1"])
-            tag("tag2")
-            hg_instance.add_path(file2)
-            run_command(["hg", "commit", "-m", "add file2"])
-            tag("tag3")
-
-            # Act
-            tags = hg_instance.get_all_tags()
-
-        # Assert
-        assert set(tags) == {"tip", "tag1", "tag2", "tag3"}
-
-    def test_handles_empty_tags(self, hg_repo: Path, hg_instance: Mercurial):
-        """When there are no tags, an empty list is returned."""
-        # Arrange
-        with inside_dir(hg_repo):
-            hg_repo.joinpath("readme.md").touch()
-            commit_readme("first")
-
-            # Act
-            tags = hg_instance.get_all_tags()
-
-        # Assert
-        assert set(tags) == {"tip"}
-
-    @pytest.mark.parametrize(
-        ["side_effect"],
-        [
-            param(subprocess.CalledProcessError(1, "cmd"), id="command failure"),
-            param(FileNotFoundError, id="file not found"),
-            param(PermissionError, id="permission error"),
-        ],
-    )
-    def test_failure_raises_error(self, hg_instance, side_effect, mocker):
-        """On failure, it raises a BumpVersionError exception."""
-        # Arrange
-        mocker.patch("bumpversion.utils.run_command", side_effect=side_effect)
-
-        # Act, Assert
-        with pytest.raises(BumpVersionError):
-            hg_instance.get_all_tags()
 
 
 class TestAssertNonDirty:

@@ -80,7 +80,7 @@ class Mercurial:
         temp_path = os.path.relpath(path, cwd)
         try:
             run_command(["hg", "add", str(temp_path)])
-        except subprocess.CalledProcessError as e:
+        except subprocess.CalledProcessError as e:  # pragma: no-cover
             format_and_raise_error(e)
 
     def commit_and_tag(self, files: List[Pathlike], context: MutableMapping, dry_run: bool = False) -> None:
