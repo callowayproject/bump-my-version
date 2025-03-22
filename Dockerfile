@@ -22,11 +22,11 @@ ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
 LABEL org.opencontainers.image.authors="Calloway Project https://github.com/callowayproject"
-LABEL org.opencontainers.image.created=2025-03-08T14:39:21Z
+LABEL org.opencontainers.image.created=2025-03-22T13:38:16Z
 LABEL org.opencontainers.image.url=https://github.com/callowayproject/bump-my-version
 LABEL org.opencontainers.image.documentation=https://callowayproject.github.io/bump-my-version
 LABEL org.opencontainers.image.source=https://github.com/callowayproject/bump-my-version
-LABEL org.opencontainers.image.version=1.0.2
+LABEL org.opencontainers.image.version=1.1.0
 LABEL org.opencontainers.image.licenses=MIT
 
 # Add a non-root user and group
