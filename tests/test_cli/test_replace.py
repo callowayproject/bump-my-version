@@ -197,14 +197,7 @@ class TestReplaceCLI:
             )
             config_file = tmp_path / ".bumpversion.toml"
             config_file.write_text(
-                "[tool.bumpversion]\n"
-                'current_version = "0.0.1"\n'
-                "allow_dirty = true\n\n"
-                "[[tool.bumpversion.files]]\n"
-                'filename = "VERSION"\n'
-                "regex = false\n"
-                f'search = "{search}"\n'
-                f'replace = "{replace}"\n',
+                "[tool.bumpversion]\n" 'current_version = "0.0.1"\n' "allow_dirty = true\n\n",
                 encoding="utf-8",
             )
 
@@ -214,7 +207,7 @@ class TestReplaceCLI:
                     cli.cli,
                     [
                         "replace",
-                        "--verbose",
+                        "-vv",
                         "--no-regex",
                         "--no-configured-files",
                         "--search",
@@ -229,7 +222,10 @@ class TestReplaceCLI:
             if result.exit_code != 0:
                 print("Here is the output:")
                 print(result.output)
-                print(traceback.print_exception(result.exc_info[1]))
+                # print(traceback.print_exception(result.exc_info[1]))
+                print(caplog.text)
+                print("ouch")
+                print(version_path.read_text())
 
             assert result.exit_code == 0
             assert (

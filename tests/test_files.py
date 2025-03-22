@@ -69,7 +69,7 @@ class TestModifyFiles:
             """
         # Unreleased
 
-        * bullet point A
+        * bullet point A prep for 1.0.3
 
         # Release v'older' (2019-09-17)
 
