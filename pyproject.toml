@@ -261,7 +261,7 @@ suppress-dummy-args = true
 suppress-none-returning = true
 
 [tool.bumpversion]
-current_version = "1.1.0"
+current_version = "1.1.1"
 commit = true
 commit_args = "--no-verify"
 tag = true
