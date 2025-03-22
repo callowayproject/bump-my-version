@@ -197,13 +197,13 @@ def test_hg_bump_version_commits_changes(hg_repo: Path, fixtures_path: Path, run
     dest_cfg.write_text(BASIC_CONFIG)
 
     with inside_dir(hg_repo):
-        subprocess.run(["hg", "add", ".bumpversion.toml"])
-        subprocess.run(["hg", "commit", "-m", "add configuration"])
+        run_command(["hg", "add", ".bumpversion.toml"])
+        run_command(["hg", "commit", "-m", "add configuration"])
         runner.invoke(
             cli.cli,
             ["bump", "minor", "-vv"],
         )
-        hg_result = subprocess.run(["hg", "tags", "-T", "json"], text=True, capture_output=True)
+        hg_result = run_command(["hg", "tags", "-T", "json"])
 
     hg_logs = json.loads(hg_result.stdout)
     tags = [item["tag"] for item in hg_logs]
