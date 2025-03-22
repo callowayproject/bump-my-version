@@ -7,6 +7,7 @@ from difflib import context_diff
 from pathlib import Path
 from typing import Dict, List, MutableMapping, Optional
 
+from bumpversion.config import DEFAULTS as DEFAULT_CONFIG
 from bumpversion.config.models import FileChange
 from bumpversion.exceptions import VersionNotFoundError
 from bumpversion.ui import get_indented_logger
@@ -129,7 +130,7 @@ class ConfiguredFile:
             f.write(contents)
 
     def _contains_change_pattern(
-        self, search_expression: re.Pattern, raw_search_expression: str, version: Version, context: MutableMapping
+        self, search_expression: re.Pattern, raw_search_expression: str, version: Version
     ) -> bool:
         """
         Does the file contain the change pattern?
@@ -138,7 +139,6 @@ class ConfiguredFile:
             search_expression: The compiled search expression
             raw_search_expression: The raw search expression
             version: The version to check, in case it's not the same as the original
-            context: The context to use
 
         Raises:
             VersionNotFoundError: if the version number isn't present in this file.
@@ -155,7 +155,7 @@ class ConfiguredFile:
         # match instead. This is probably the case if environment variables are used.
 
         # check whether `search` isn't customized
-        search_pattern_is_default = self.file_change.search == self.version_config.search
+        search_pattern_is_default = self.file_change.search == DEFAULT_CONFIG["search"]
 
         if search_pattern_is_default and contains_pattern(re.compile(re.escape(version.original)), file_contents):
             # The original version is present, and we're not looking for something
@@ -195,7 +195,7 @@ class ConfiguredFile:
         search_for, raw_search_pattern = self.file_change.get_search_pattern(context)
         replace_with = self.version_config.replace.format(**context)
 
-        if not self._contains_change_pattern(search_for, raw_search_pattern, current_version, context):
+        if not self._contains_change_pattern(search_for, raw_search_pattern, current_version):
             logger.dedent()
             return
 
