@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.8608ea7d.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.4af4bdda.min.css">
       
         
         <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
@@ -2252,6 +2252,7 @@
 
 
 
+
   <div class="doc doc-children">
 
 
@@ -2291,6 +2292,7 @@
 
 
 
+
   <div class="doc doc-children">
 
 
@@ -2300,125 +2302,6 @@
 
 
 <h4 id="bumpversion.files.ConfiguredFile-functions">Functions<a href="#bumpversion.files.ConfiguredFile-functions" class="headerlink" title="Permanent link">&para;</a></h4>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="bumpversion.files.ConfiguredFile._contains_change_pattern" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">_contains_change_pattern</span>
-
-
-<a href="#bumpversion.files.ConfiguredFile._contains_change_pattern" class="headerlink" title="Permanent link">&para;</a></h5>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">_contains_change_pattern</span><span class="p">(</span>
-    <span class="n">search_expression</span><span class="p">:</span> <span class="n">Pattern</span><span class="p">,</span>
-    <span class="n">raw_search_expression</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span>
-    <span class="n">context</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
-</code></pre></div>
-
-    <div class="doc doc-contents ">
-
-        <p>Does the file contain the change pattern?</p>
-
-
-
-  <p class="doc-section-head">Parameters:</p>
-  <dl class="doc-field-list">
-    <dt class="doc-field-term"><code>search_expression</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The compiled search expression</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" title="re.Pattern" href="https://docs.python.org/3/library/re.html#re.Pattern">Pattern</a></code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>raw_search_expression</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The raw search expression</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>version</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The version to check, in case it&rsquo;s not the same as the original</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-internal" title="bumpversion.versioning.models.Version" href="../versioning/models/#bumpversion.versioning.models.Version">Version</a></code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>context</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The context to use</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" title="typing.MutableMapping" href="https://docs.python.org/3/library/typing.html#typing.MutableMapping">MutableMapping</a></code>
-      </p>    </dd>
-  </dl>
-
-
-
-  <p class="doc-section-head">Raises:</p>
-  <dl class="doc-field-list">
-      <dt class="doc-field-term doc-raises-annotation">
-          <code><a class="autorefs autorefs-internal" title="bumpversion.exceptions.VersionNotFoundError" href="../exceptions/#bumpversion.exceptions.VersionNotFoundError">VersionNotFoundError</a></code>
-      </dt>
-      <dd class="doc-field-def doc-raises-details">
-        <div class="doc-md-description">
-          <p>if the version number isn&rsquo;t present in this file.</p>
-        </div>
-      </dd>
-  </dl>
-
-
-
-  <p class="doc-section-head">Returns:</p>
-  <dl class="doc-field-list">
-      <dt class="doc-field-term">
-          <span class="doc-returns-annotation">
-              <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
-          </span>
-      </dt>
-      <dd class="doc-field-def doc-returns-details">
-        <div class="doc-md-description">
-          <p>True if the version number is in fact present.</p>
-        </div>
-      </dd>
-  </dl>
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="bumpversion.files.ConfiguredFile._get_serialized_version" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">_get_serialized_version</span>
-
-
-<a href="#bumpversion.files.ConfiguredFile._get_serialized_version" class="headerlink" title="Permanent link">&para;</a></h5>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">_get_serialized_version</span><span class="p">(</span>
-    <span class="n">context_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span>
-    <span class="n">context</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
-</code></pre></div>
-
-    <div class="doc doc-contents ">
-
-        <p>Get the serialized version.</p>
-
-    </div>
-
-</div>
 
 <div class="doc doc-object doc-function">
 
@@ -2465,6 +2348,7 @@
       </dd>
   </dl>
 
+
     </div>
 
 </div>
@@ -2489,6 +2373,7 @@
 
         <p>Make the change to the file.</p>
 
+
     </div>
 
 </div>
@@ -2507,6 +2392,7 @@
     <div class="doc doc-contents ">
 
         <p>Write the contents of the file.</p>
+
 
     </div>
 
@@ -2548,6 +2434,7 @@
 
 
 
+
   <div class="doc doc-children">
 
 
@@ -2557,30 +2444,6 @@
 
 
 <h4 id="bumpversion.files.DataFileUpdater-functions">Functions<a href="#bumpversion.files.DataFileUpdater-functions" class="headerlink" title="Permanent link">&para;</a></h4>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="bumpversion.files.DataFileUpdater._update_toml_file" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">_update_toml_file</span>
-
-
-<a href="#bumpversion.files.DataFileUpdater._update_toml_file" class="headerlink" title="Permanent link">&para;</a></h5>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">_update_toml_file</span><span class="p">(</span>
-    <span class="n">search_for</span><span class="p">:</span> <span class="n">Pattern</span><span class="p">,</span>
-    <span class="n">raw_search_pattern</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">replace_with</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">dry_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
-</code></pre></div>
-
-    <div class="doc doc-contents ">
-
-        <p>Update a TOML file.</p>
-
-    </div>
-
-</div>
 
 <div class="doc doc-object doc-function">
 
@@ -2601,6 +2464,7 @@
     <div class="doc doc-contents ">
 
         <p>Update the files.</p>
+
 
     </div>
 
@@ -2644,6 +2508,7 @@
 
 
 
+
   <div class="doc doc-children">
 
 
@@ -2674,6 +2539,7 @@
 
         <p>Update the files.</p>
 
+
     </div>
 
 </div>
@@ -2701,6 +2567,7 @@
     <div class="doc doc-contents ">
 
         <p>Does the search pattern match any part of the contents?</p>
+
 
     </div>
 
@@ -2771,6 +2638,7 @@
       </p>    </dd>
   </dl>
 
+
     </div>
 
 </div>
@@ -2807,7 +2675,7 @@
       </div>
 <p class="doc-param-annotation">
         <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" title="typing.List" href="https://docs.python.org/3/library/typing.html#typing.List">List</a>[<a class="autorefs autorefs-internal" title="bumpversion.files.ConfiguredFile" href="#bumpversion.files.ConfiguredFile">ConfiguredFile</a>]</code>
+          <code><a class="autorefs autorefs-external" title="typing.List" href="https://docs.python.org/3/library/typing.html#typing.List">List</a>[<a class="autorefs autorefs-internal" title="            ConfiguredFile (bumpversion.files.ConfiguredFile)" href="#bumpversion.files.ConfiguredFile">ConfiguredFile</a>]</code>
       </p>    </dd>
     <dt class="doc-field-term"><code>current_version</code></dt>
     <dd class="doc-field-def">
@@ -2816,7 +2684,7 @@
       </div>
 <p class="doc-param-annotation">
         <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-internal" title="bumpversion.versioning.models.Version" href="../versioning/models/#bumpversion.versioning.models.Version">Version</a></code>
+          <code><a class="autorefs autorefs-internal" title="            Version (bumpversion.versioning.models.Version)" href="../versioning/models/#bumpversion.versioning.models.Version">Version</a></code>
       </p>    </dd>
     <dt class="doc-field-term"><code>new_version</code></dt>
     <dd class="doc-field-def">
@@ -2825,7 +2693,7 @@
       </div>
 <p class="doc-param-annotation">
         <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-internal" title="bumpversion.versioning.models.Version" href="../versioning/models/#bumpversion.versioning.models.Version">Version</a></code>
+          <code><a class="autorefs autorefs-internal" title="            Version (bumpversion.versioning.models.Version)" href="../versioning/models/#bumpversion.versioning.models.Version">Version</a></code>
       </p>    </dd>
     <dt class="doc-field-term"><code>context</code></dt>
     <dd class="doc-field-def">
@@ -2849,6 +2717,7 @@
           <code>False</code>
       </p>    </dd>
   </dl>
+
 
     </div>
 
@@ -2885,7 +2754,7 @@
       </div>
 <p class="doc-param-annotation">
         <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" title="typing.List" href="https://docs.python.org/3/library/typing.html#typing.List">List</a>[<a class="autorefs autorefs-internal" title="bumpversion.config.models.FileChange" href="../config/models/#bumpversion.config.models.FileChange">FileChange</a>]</code>
+          <code><a class="autorefs autorefs-external" title="typing.List" href="https://docs.python.org/3/library/typing.html#typing.List">List</a>[<a class="autorefs autorefs-internal" title="            FileChange (bumpversion.config.models.FileChange)" href="../config/models/#bumpversion.config.models.FileChange">FileChange</a>]</code>
       </p>    </dd>
     <dt class="doc-field-term"><code>version_config</code></dt>
     <dd class="doc-field-def">
@@ -2894,7 +2763,7 @@
       </div>
 <p class="doc-param-annotation">
         <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-internal" title="bumpversion.versioning.version_config.VersionConfig" href="../versioning/version_config/#bumpversion.versioning.version_config.VersionConfig">VersionConfig</a></code>
+          <code><a class="autorefs autorefs-internal" title="            VersionConfig (bumpversion.versioning.version_config.VersionConfig)" href="../versioning/version_config/#bumpversion.versioning.version_config.VersionConfig">VersionConfig</a></code>
       </p>    </dd>
     <dt class="doc-field-term"><code>search</code></dt>
     <dd class="doc-field-def">
@@ -2928,7 +2797,7 @@
   <dl class="doc-field-list">
       <dt class="doc-field-term">
           <span class="doc-returns-annotation">
-              <code><a class="autorefs autorefs-external" title="typing.List" href="https://docs.python.org/3/library/typing.html#typing.List">List</a>[<a class="autorefs autorefs-internal" title="bumpversion.files.ConfiguredFile" href="#bumpversion.files.ConfiguredFile">ConfiguredFile</a>]</code>
+              <code><a class="autorefs autorefs-external" title="typing.List" href="https://docs.python.org/3/library/typing.html#typing.List">List</a>[<a class="autorefs autorefs-internal" title="            ConfiguredFile (bumpversion.files.ConfiguredFile)" href="#bumpversion.files.ConfiguredFile">ConfiguredFile</a>]</code>
           </span>
       </dt>
       <dd class="doc-field-def doc-returns-details">
@@ -2937,6 +2806,7 @@
         </div>
       </dd>
   </dl>
+
 
     </div>
 
@@ -2969,7 +2839,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 22, 2025 13:38:16">March 22, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 24, 2025 10:36:18">March 24, 2025</span>
   </span>
 
     
