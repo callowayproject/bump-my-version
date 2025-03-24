@@ -38,20 +38,23 @@ def get_next_version(
     Raises:
         ConfigurationError: If it can't generate the next version.
     """
-    if new_version:
-        logger.info("Attempting to set new version '%s'", new_version)
-        logger.indent()
-        next_version = config.version_config.parse(new_version)
-    elif version_part:
-        logger.info("Attempting to increment part '%s'", version_part)
-        logger.indent()
-        next_version = current_version.bump(version_part)
-    else:
-        raise ConfigurationError("Unable to get the next version.")
+    try:
+        if new_version:
+            logger.info("Attempting to set new version '%s'", new_version)
+            logger.indent()
+            next_version = config.version_config.parse(new_version)
+        elif version_part:
+            logger.info("Attempting to increment part '%s'", version_part)
+            logger.indent()
+            next_version = current_version.bump(version_part)
+        else:
+            logger.indent()
+            raise ConfigurationError("Unable to get the next version.")
 
-    logger.info("Values are now: %s", key_val_string(next_version.components))
-    logger.dedent()
-    return next_version
+        logger.info("Values are now: %s", key_val_string(next_version.components))
+        return next_version
+    finally:
+        logger.dedent()
 
 
 def do_bump(
