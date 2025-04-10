@@ -179,7 +179,7 @@ def commit_info(config: SCMConfig) -> dict:
     )
 
     info["distance_to_latest_tag"] = 0
-    result = run_command(["hg", "log", "-r", f"tag('re:{tag_pattern}')", "-T", "json"])
+    result = run_command(["hg", "identify", "-r", f"last(tag('re:{tag_pattern}') - tip)", "-T", "json"])
     repo_path = run_command(["hg", "root"]).stdout.strip()
 
     output_info = parse_commit_log(result.stdout, config)
