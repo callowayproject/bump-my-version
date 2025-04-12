@@ -45,7 +45,7 @@ runs:
         cache: 'pip'
     - name: Install bump-my-version
       shell: bash
-      run: pip install "bump-my-version==1.1.1"
+      run: pip install "bump-my-version==1.1.2"
     - name: Pass Inputs to Shell
       id: bump
       shell: bash
