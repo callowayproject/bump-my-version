@@ -10,7 +10,7 @@ Bump My Version's stance is to provide unique, immutable release tags when taggi
 
 ## How they work
 
-- The `moving_tags` configuration is a list of serialization strings.
+- The `moveable_tags` configuration is a list of serialization strings.
 - All strings are serialized
 - Each string is forcibly tagged (as a lightweight, non-annotated tag) and forcibly pushed to origin. 
 
@@ -20,9 +20,8 @@ Bump My Version's stance is to provide unique, immutable release tags when taggi
 ```toml
 moving_tags = [
     "latest",
-    "v{major}.{minor}.{patch}",
-    "v{major}.{minor}",
-    "v{major}"
+    "v{new_major}.{new_minor}",
+    "v{new_major}"
 ]
 ```
 
