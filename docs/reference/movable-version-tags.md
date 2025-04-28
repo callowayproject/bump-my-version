@@ -18,7 +18,7 @@ Bump My Version's stance is to provide unique, immutable release tags when taggi
 ## Configuration
 
 ```toml
-moving_tags = [
+moveable_tags = [
     "latest",
     "v{new_major}.{new_minor}",
     "v{new_major}"
