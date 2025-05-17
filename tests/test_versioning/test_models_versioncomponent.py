@@ -1,10 +1,10 @@
 """Tests of the VersionPart model."""
 
+import pytest
 from freezegun import freeze_time
 
+from bumpversion.versioning.functions import CalVerFunction, NumericFunction, ValuesFunction
 from bumpversion.versioning.models import VersionComponentSpec
-from bumpversion.versioning.functions import ValuesFunction, NumericFunction, CalVerFunction
-import pytest
 
 params = {
     "numeric": [{"optional_value": "0", "first_value": "0"}],

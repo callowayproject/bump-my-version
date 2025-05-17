@@ -1,8 +1,8 @@
 """Tests of the VersionSpec model."""
 
 import pytest
-from bumpversion.versioning.models import VersionSpec
-from bumpversion.versioning.models import VersionComponentSpec
+
+from bumpversion.versioning.models import VersionComponentSpec, VersionSpec
 
 
 class TestVersionSpec:

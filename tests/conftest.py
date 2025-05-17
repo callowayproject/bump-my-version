@@ -64,8 +64,20 @@ def get_semver(version: str) -> Version:
 @pytest.fixture
 def git_repo(tmp_path: Path) -> Path:
     """Generate a simple temporary git repo and return the path."""
-    subprocess.run(  # noqa: S603
+    subprocess.run(
         ["git", "init", "--initial-branch=main"], cwd=tmp_path, check=True, capture_output=True  # noqa: S607
+    )
+    subprocess.run(
+        ["git", "config", "--local", "--type", "bool", "commit.gpgsign", "false"],  # noqa: S607
+        cwd=tmp_path,
+        check=True,
+        capture_output=True,
+    )
+    subprocess.run(
+        ["git", "config", "--local", "--type", "bool", "tag.gpgsign", "false"],  # noqa: S607
+        cwd=tmp_path,
+        check=True,
+        capture_output=True,
     )
     return tmp_path
 
