@@ -27,7 +27,7 @@ jobs:
       - name: Get the release hint
         id: generate-changelog
         run: |
-          RELEASE_KIND=$(generate-changelog --output release-hint --branch-override ${{ github.base_ref }} --skip-output-pipeline)
+          RELEASE_KIND=$(generate-changelog --output release-hint --branch-override ${{ github.base_ref }})
           echo "::notice::Suggested release type upon merge to ${{ github.base_ref }}: ${RELEASE_KIND}"
           echo "RELEASE_KIND=$RELEASE_KIND" >> $GITHUB_ENV
           echo "release-kind=$RELEASE_KIND" >> $GITHUB_OUTPUT

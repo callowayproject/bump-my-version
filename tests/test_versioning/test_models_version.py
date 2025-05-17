@@ -35,6 +35,18 @@ def calver_version_spec():
     return VersionSpec(config)
 
 
+@pytest.fixture
+def calver_version_spec_no_auto_increment():
+    """Return a calver version spec with `auto_increment` set to False."""
+    config = {
+        "release": VersionComponentSpec(calver_format="{YYYY}.{MM}.{DD}", always_increment=False),
+        "patch": VersionComponentSpec(),
+        "build": VersionComponentSpec(optional_value="0", independent=True),
+    }
+
+    return VersionSpec(config)
+
+
 class TestSemVerVersion:
     """Test how a SemVer-style Version model should behave."""
 
@@ -207,6 +219,36 @@ class TestCalVerVersion:
 
         with pytest.raises(KeyError):
             version["invalid"]
+
+    @freeze_time("2020-05-01")
+    def test_bump_alters_calver_by_default(self, calver_version_spec: VersionSpec):
+        """By default, the CalVer component should automatically increment."""
+        # Arrange
+        version = calver_version_spec.create_version({"release": "2020.4.1", "patch": "3", "build": "10"})
+
+        # Act
+        version = version.bump("patch")
+
+        # Assert
+        assert version["release"].value == "2020.5.1"
+        assert version["patch"].value == "0"
+        assert version["build"].value == "10"
+
+    @freeze_time("2020-05-01")
+    def test_auto_increment_false_does_not_increment(self, calver_version_spec_no_auto_increment: VersionSpec):
+        """If auto_increment is False, the CalVer component does not increment."""
+        # Arrange
+        version = calver_version_spec_no_auto_increment.create_version(
+            {"release": "2020.4.1", "patch": "3", "build": "10"}
+        )
+
+        # Act
+        version = version.bump("patch")
+
+        # Assert
+        assert version["release"].value == "2020.4.1"
+        assert version["patch"].value == "4"
+        assert version["build"].value == "10"
 
     def test_length_is_number_of_parts(self, calver_version_spec: VersionSpec):
         # Arrange

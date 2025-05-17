@@ -141,7 +141,7 @@ class VersionComponentSpec(BaseModel):
     @classmethod
     def set_always_increment_with_calver(cls, data: Any) -> Any:
         """Set always_increment to True if calver_format is present."""
-        if isinstance(data, dict) and data.get("calver_format"):
+        if isinstance(data, dict) and data.get("calver_format") and "always_increment" not in data:
             data["always_increment"] = True
         return data
 
