@@ -2,7 +2,7 @@
 
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from typing import Any, Callable, Optional, Sequence, Union
+from typing import Any, Callable, Optional, Sequence, Type, Union
 from urllib.parse import urlparse
 
 import httpx
@@ -71,7 +71,7 @@ class ConfigOption(Option):
         return resolve_conf_location(value) if value else None
 
 
-def config_option(*param_decls: str, cls: Optional[type[ConfigOption]] = None, **attrs: Any) -> Callable[[FC], FC]:
+def config_option(*param_decls: str, cls: Optional[Type[ConfigOption]] = None, **attrs: Any) -> Callable[[FC], FC]:
     """
     Attaches a ConfigOption to the command.
 
