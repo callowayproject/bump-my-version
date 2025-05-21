@@ -226,6 +226,9 @@ def test_detects_bad_or_missing_version_component(version_part: str, tmp_path: P
         result = runner.invoke(cli.cli, args)
 
     # Assert
+    if result.exit_code:
+        print(f"{result.stdout=}")
+        print(f"{result.stderr=}")
     assert result.exception is not None
     assert "Unknown version component:" in result.stdout
 
