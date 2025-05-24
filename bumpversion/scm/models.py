@@ -3,7 +3,7 @@
 import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, List, MutableMapping, Optional, Protocol
+from typing import TYPE_CHECKING, Any, Dict, List, MutableMapping, Optional, Protocol
 
 from bumpversion.ui import get_indented_logger
 from bumpversion.utils import Pathlike, extract_regex_flags
@@ -170,7 +170,7 @@ class SCMInfo:
         pprint.pprint(self.as_dict(), stream=str_io)
         return str_io.getvalue().rstrip()
 
-    def as_dict(self) -> dict[str, Any]:
+    def as_dict(self) -> Dict[str, Any]:
         """Return the information as a dict."""
         return {
             "commit_sha": self.commit_sha,

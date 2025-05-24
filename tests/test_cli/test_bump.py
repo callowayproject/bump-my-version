@@ -227,7 +227,7 @@ def test_detects_bad_or_missing_version_component(version_part: str, tmp_path: P
 
     # Assert
     assert result.exception is not None
-    assert "Unknown version component:" in result.stdout
+    assert "Unknown version component:" in result.output
 
 
 def test_ignores_missing_files_with_option(tmp_path, fixtures_path, runner):
