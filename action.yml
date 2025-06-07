@@ -1,5 +1,6 @@
 name: Bump My Version
 description: Bump version of a project
+author: "Corey Oordt"
 inputs:
   args:
     description: 'May contain any of the following: VERSION_PART (e.g. minor), FILES (additional file(s) to modify).'
@@ -23,6 +24,9 @@ outputs:
   current-version:
     description: 'Updated version'
     value: ${{ steps.bump.outputs.current-version }}
+branding:
+  color: blue
+  icon: chevrons-up
 runs:
   using: 'composite'
   steps:

@@ -8,8 +8,8 @@ COPY pyproject.toml /app/pyproject.toml
 COPY uv.lock /app/uv.lock
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-#    --mount=type=bind,source=uv.lock,target=uv.lock \
-#    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     uv sync --frozen --no-install-project --no-dev
 COPY . /app
 RUN --mount=type=cache,target=/root/.cache/uv \
@@ -21,13 +21,18 @@ ARG USERNAME=app
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-LABEL org.opencontainers.image.authors="Calloway Project https://github.com/callowayproject"
-LABEL org.opencontainers.image.created=2025-05-21T11:58:03Z
-LABEL org.opencontainers.image.url=https://github.com/callowayproject/bump-my-version
-LABEL org.opencontainers.image.documentation=https://callowayproject.github.io/bump-my-version
-LABEL org.opencontainers.image.source=https://github.com/callowayproject/bump-my-version
-LABEL org.opencontainers.image.version=1.1.4
-LABEL org.opencontainers.image.licenses=MIT
+LABEL com.github.actions.name="Bump My Version" \
+    com.github.actions.description="Bump version of a project." \
+    com.github.actions.icon="chevrons-up" \
+    com.github.actions.color="blue" \
+    maintainer="@coordt" \
+    org.opencontainers.image.authors="Calloway Project https://github.com/callowayproject" \
+    org.opencontainers.image.created=2025-04-12T14:20:27Z \
+    org.opencontainers.image.url=https://github.com/callowayproject/bump-my-version \
+    org.opencontainers.image.documentation=https://callowayproject.github.io/bump-my-version \
+    org.opencontainers.image.source=https://github.com/callowayproject/bump-my-version \
+    org.opencontainers.image.version=1.1.4 \
+    org.opencontainers.image.licenses=MIT
 
 # Add a non-root user and group
 RUN groupadd --gid $USER_GID $USERNAME \
