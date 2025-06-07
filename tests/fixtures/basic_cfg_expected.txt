@@ -92,6 +92,7 @@
  'distance_to_latest_tag': 0,
  'repository_root': None,
  'short_branch_name': None,
+ 'short_commit_sha': None,
  'tool': None},
  'search': '{current_version}',
  'serialize': ('{major}.{minor}.{patch}-{release}', '{major}.{minor}.{patch}'),

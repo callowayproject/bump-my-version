@@ -62,6 +62,7 @@ class LatestTagInfo:
     """Information about the latest tag."""
 
     commit_sha: Optional[str] = None
+    short_commit_sha: Optional[str] = None
     distance_to_latest_tag: int = 0
     current_version: Optional[str] = None
     current_tag: Optional[str] = None
@@ -151,6 +152,7 @@ class SCMInfo:
     def __init__(self, config: SCMConfig):
         self.config = config
         self.commit_sha: Optional[str] = None
+        self.short_commit_sha: Optional[str] = None
         self.distance_to_latest_tag: int = 0
         self.current_version: Optional[str] = None
         self.current_tag: Optional[str] = None
@@ -174,6 +176,7 @@ class SCMInfo:
         """Return the information as a dict."""
         return {
             "commit_sha": self.commit_sha,
+            "short_commit_sha": self.short_commit_sha,
             "distance_to_latest_tag": self.distance_to_latest_tag,
             "current_version": self.current_version,
             "current_tag": self.current_tag,

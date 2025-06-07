@@ -39,6 +39,9 @@ These fields will only have values if the code is in a Git or Mercurial reposito
 
     `commit_sha`
     : The latest commit reference.
+
+    `short_commit_sha`
+    : The short version of the latest commit reference.
     
     `distance_to_latest_tag`
     : The number of commits since the latest tag.

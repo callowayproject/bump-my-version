@@ -88,6 +88,9 @@ All environment variables set before bump-my-version was run are available.
     `BVHOOK_COMMIT_SHA`
     : The latest commit reference.
     
+    `BVHOOK_SHORT_COMMIT_SHA`
+    : The shortened version of the latest commit reference.
+
     `BHOOK_DISTANCE_TO_LATEST_TAG`
     : The number of commits since the latest tag.
     
