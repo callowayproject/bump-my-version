@@ -162,7 +162,9 @@ def commit_info(config: SCMConfig) -> dict:
         A dictionary containing information about the latest commit.
     """
     tag_pattern = config.tag_name.replace("{new_version}", "*")
-    info = dict.fromkeys(["dirty", "commit_sha", "distance_to_latest_tag", "current_version", "current_tag"])
+    info = dict.fromkeys(
+        ["dirty", "commit_sha", "short_commit_sha", "distance_to_latest_tag", "current_version", "current_tag"]
+    )
     info["distance_to_latest_tag"] = 0
     try:
         git_cmd = ["git", "describe", "--dirty", "--tags", "--long", "--abbrev=40", f"--match={tag_pattern}"]
@@ -182,6 +184,7 @@ def commit_info(config: SCMConfig) -> dict:
         info["dirty"] = False
 
     info["commit_sha"] = describe_out.pop().lstrip("g")
+    info["short_commit_sha"] = info["commit_sha"][:7]
     info["distance_to_latest_tag"] = int(describe_out.pop())
     info["current_tag"] = "-".join(describe_out)
     version = config.get_version_from_tag("-".join(describe_out))

@@ -125,6 +125,7 @@ scm_info:
   distance_to_latest_tag: 0
   repository_root: null
   short_branch_name: null
+  short_commit_sha: null
   tool: "None"
 search: "{current_version}"
 serialize:

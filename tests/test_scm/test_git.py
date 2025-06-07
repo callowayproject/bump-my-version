@@ -420,6 +420,22 @@ class TestCommitInfo:
         assert result["commit_sha"] == "abcd1234"
 
     @patch("bumpversion.scm.git.run_command")
+    def test_commit_info_parses_short_commit_sha_correctly(self, mock_run_command):
+        """Test that the short commit SHA is correctly parsed."""
+        # Arrange
+        config = MagicMock(spec=SCMConfig)
+        config.tag_name = "{new_version}"
+        mock_result = MagicMock()
+        mock_result.stdout = "v1.0.0-5-gabcd1234\n"
+        mock_run_command.return_value = mock_result
+
+        # Act
+        result = commit_info(config)
+
+        # Assert
+        assert result["short_commit_sha"] == "abcd123"
+
+    @patch("bumpversion.scm.git.run_command")
     def test_commit_info_calculates_distance_to_latest_tag(self, mock_run_command):
         """Test that the function correctly calculates the distance to the latest tag."""
         # Arrange

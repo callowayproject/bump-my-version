@@ -169,6 +169,7 @@ def commit_info(config: SCMConfig) -> dict:
         [
             "dirty",
             "commit_sha",
+            "short_commit_sha",
             "distance_to_latest_tag",
             "current_version",
             "current_tag",
@@ -179,7 +180,7 @@ def commit_info(config: SCMConfig) -> dict:
     )
 
     info["distance_to_latest_tag"] = 0
-    result = run_command(["hg", "log", "-r", f"tag('re:{tag_pattern}')", "-T", "json"])
+    result = run_command(["hg", "log", "-r", f"last(tag('re:{tag_pattern}') - tip)", "-T", "json"])
     repo_path = run_command(["hg", "root"]).stdout.strip()
 
     output_info = parse_commit_log(result.stdout, config)
@@ -206,6 +207,7 @@ def parse_commit_log(log_string: str, config: SCMConfig) -> dict:
         "current_version": config.get_version_from_tag(first_rev["tags"][0]),
         "current_tag": first_rev["tags"][0],
         "commit_sha": first_rev["node"],
+        "short_commit_sha": first_rev["node"][:7],
         "distance_to_latest_tag": 0,
         "branch_name": branch_name,
         "short_branch_name": short_branch_name,

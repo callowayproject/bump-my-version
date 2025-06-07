@@ -42,6 +42,7 @@ def scm_env(config: Config) -> Dict[str, str]:
     scm = config.scm_info
     return {
         f"{PREFIX}COMMIT_SHA": scm.commit_sha or "",
+        f"{PREFIX}SHORT_COMMIT_SHA": scm.short_commit_sha or "",
         f"{PREFIX}DISTANCE_TO_LATEST_TAG": str(scm.distance_to_latest_tag) or "0",
         f"{PREFIX}IS_DIRTY": str(scm.dirty),
         f"{PREFIX}BRANCH_NAME": scm.branch_name or "",
