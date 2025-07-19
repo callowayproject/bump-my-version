@@ -61,7 +61,7 @@ def resolve_glob_files(file_cfg: FileChange) -> List[FileChange]:
     """
     files: List[FileChange] = []
     exclude = file_cfg.glob_exclude or ()
-    glob_flags = glob.GLOBSTAR | glob.FORCEUNIX | glob.SPLIT
+    glob_flags = glob.GLOBSTAR | glob.FORCEUNIX | glob.SPLIT | glob.EXTGLOB
     for filename_glob in glob.glob(file_cfg.glob, flags=glob_flags, exclude=exclude):
         new_file_cfg = file_cfg.model_copy()
         new_file_cfg.filename = filename_glob
