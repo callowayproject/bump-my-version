@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.2.1 (2025-07-19)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.2.0...1.2.1)
+
+### Other
+
+- Extend globbing functionality with EXTGLOB support in configuration utils. [b7eefab](https://github.com/callowayproject/bump-my-version/commit/b7eefab2f6ae585c2bf5fe3fb454f835ca13a6c3)
+    
+  Fixes #357
+- [pre-commit.ci] pre-commit autoupdate. [a1a2a16](https://github.com/callowayproject/bump-my-version/commit/a1a2a16b93c8dc003e7bb95bc9332723dbbec1a7)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.11.12 → v0.12.3](https://github.com/astral-sh/ruff-pre-commit/compare/v0.11.12...v0.12.3)
+
+
 ## 1.2.0 (2025-06-07)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.1.4...1.2.0)
 
