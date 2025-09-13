@@ -54,7 +54,7 @@ class VersionComponent:
         """Return the value of the part."""
         return self._value or self.func.optional_value
 
-    def copy(self) -> "VersionComponent":
+    def copy(self) -> VersionComponent:
         """Return a copy of the part."""
         return VersionComponent(
             values=getattr(self.func, "_values", None),
@@ -67,13 +67,13 @@ class VersionComponent:
             value=self._value,
         )
 
-    def bump(self) -> "VersionComponent":
+    def bump(self) -> VersionComponent:
         """Return a part with bumped value."""
         new_component = self.copy()
         new_component._value = self.func.bump(self.value)
         return new_component
 
-    def null(self) -> "VersionComponent":
+    def null(self) -> VersionComponent:
         """Return a part with first value."""
         new_component = self.copy()
         new_component._value = self.func.first_value
@@ -184,7 +184,7 @@ class VersionSpec:
                 self.dependency_map[previous_component].append(component)
             previous_component = component
 
-    def create_version(self, values: Dict[str, str]) -> "Version":
+    def create_version(self, values: Dict[str, str]) -> Version:
         """Generate a version from the given values."""
         components = {
             key: comp_config.create_component(value=values.get(key))
@@ -243,7 +243,7 @@ class Version:
         """Return the names of the parts that are required."""
         return [key for key, value in self.components.items() if value.value != value.func.optional_value]
 
-    def bump(self, component_name: str) -> "Version":
+    def bump(self, component_name: str) -> Version:
         """Increase the value of the specified component, reset its dependents, and return a new Version."""
         if component_name not in self.components:
             raise InvalidVersionPartError(f"No part named {component_name!r}")

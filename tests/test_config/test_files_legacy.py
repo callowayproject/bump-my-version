@@ -165,7 +165,7 @@ def test_current_version_is_always_a_string(tmp_path: Path):
         "current_version = 2\n"
         "commit = False\n"
         "tag = False\n"
-        "parse = (?P<major>\d+)\n"
+        "parse = (?P<major>\\d+)\n"
         "serialize = \n"
         "	{major}\n"
     )

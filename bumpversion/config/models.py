@@ -172,13 +172,13 @@ class Config(BaseSettings):
         )
 
     @property
-    def version_config(self) -> "VersionConfig":
+    def version_config(self) -> VersionConfig:
         """Return the version configuration."""
         from bumpversion.versioning.version_config import VersionConfig
 
         return VersionConfig(self.parse, self.serialize, self.search, self.replace, self.parts)
 
-    def version_spec(self, version: Optional[str] = None) -> "VersionSpec":
+    def version_spec(self, version: Optional[str] = None) -> VersionSpec:
         """Return the version specification."""
         from bumpversion.versioning.models import VersionSpec
 

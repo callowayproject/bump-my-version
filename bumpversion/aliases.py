@@ -41,8 +41,7 @@ class AliasedGroup(RichGroup):
                 original_args.remove("bump")
             else:
                 print_warning(
-                    "Calling bumpversion without a subcommand is deprecated. "
-                    "Please use `bump-my-version bump` instead"
+                    "Calling bumpversion without a subcommand is deprecated. Please use `bump-my-version bump` instead"
                 )
             return cmd.name, cmd, original_args
         return cmd.name, cmd, args
