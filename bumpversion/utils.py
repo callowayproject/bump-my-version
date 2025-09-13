@@ -78,10 +78,10 @@ def get_nested_value(d: dict, path: str) -> Any:
 
     for key in keys:
         if not isinstance(current_element, dict):
-            raise ValueError(f"Element at '{'.'.join(keys[:keys.index(key)])}' is not a dictionary")
+            raise ValueError(f"Element at '{'.'.join(keys[: keys.index(key)])}' is not a dictionary")
 
         if key not in current_element:
-            raise KeyError(f"Key '{key}' not found at '{'.'.join(keys[:keys.index(key)])}'")
+            raise KeyError(f"Key '{key}' not found at '{'.'.join(keys[: keys.index(key)])}'")
 
         current_element = current_element[key]
 
@@ -109,9 +109,9 @@ def set_nested_value(d: dict, value: Any, path: str) -> None:
         if key == last_element:
             current_element[key] = value
         elif key not in current_element:
-            raise KeyError(f"Key '{key}' not found at '{'.'.join(keys[:keys.index(key)])}'")
+            raise KeyError(f"Key '{key}' not found at '{'.'.join(keys[: keys.index(key)])}'")
         elif not isinstance(current_element[key], dict):
-            raise ValueError(f"Path '{'.'.join(keys[:i + 1])}' does not lead to a dictionary.")
+            raise ValueError(f"Path '{'.'.join(keys[: i + 1])}' does not lead to a dictionary.")
         else:
             current_element = current_element[key]
 

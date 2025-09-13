@@ -49,7 +49,7 @@ def process_file(markdown_path: Path) -> None:
     """Process a single file."""
     if not (markdown_path.is_file() and markdown_path.suffix == ".md"):
         return
-    raw_text = markdown_path.read_text()
+    raw_text = markdown_path.read_text(encoding="utf-8")
     post = frontmatter.loads(raw_text)
 
     update = calculate_update(post)

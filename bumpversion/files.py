@@ -116,7 +116,7 @@ class ConfiguredFile:
         if not os.path.exists(self.file_change.filename):
             raise FileNotFoundError(f"File not found: '{self.file_change.filename}'")  # pragma: no-coverage
 
-        with open(self.file_change.filename, "rt", encoding="utf-8") as f:
+        with open(self.file_change.filename, encoding="utf-8") as f:
             contents = f.read()
             self._newlines = f.newlines[0] if isinstance(f.newlines, tuple) else f.newlines
             return contents
@@ -126,7 +126,7 @@ class ConfiguredFile:
         if self._newlines is None:
             _ = self.get_file_contents()
 
-        with open(self.file_change.filename, "wt", encoding="utf-8", newline=self._newlines) as f:
+        with open(self.file_change.filename, "w", encoding="utf-8", newline=self._newlines) as f:
             f.write(contents)
 
     def _contains_change_pattern(
