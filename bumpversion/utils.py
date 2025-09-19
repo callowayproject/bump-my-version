@@ -138,7 +138,20 @@ def run_command(command: list, env: Optional[dict] = None) -> CompletedProcess:
 
 
 def is_subpath(parent: Pathlike, path: Pathlike) -> bool:
-    """Return whether a path is inside the parent."""
+    """
+    Determines if a given path is a subpath of a specified parent path.
+
+    The function normalizes the inputs as Path objects and checks if the normalized path starts
+    with the normalized parent path as a prefix. For relative paths, the function assumes the path
+    could be within the parent and returns True.
+
+    Args:
+        parent: A Pathlike object representing the parent directory or path.
+        path: A Pathlike object representing the path to check.
+
+    Returns:
+        True if the path is a subpath of the parent, or if it is a relative path; otherwise, False.
+    """
     normalized_parent = Path(parent)
     normalized_path = Path(path)
     return str(normalized_path).startswith(str(normalized_parent)) if normalized_path.is_absolute() else True
