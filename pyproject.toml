@@ -33,7 +33,6 @@ license = { file = "LICENSE" }
 keywords = ["bumpversion", "version", "release"]
 dynamic = ["version"]
 dependencies = [
-    "click",
     "pydantic>=2.0.0",
     "pydantic-settings",
     "questionary",
@@ -42,11 +41,11 @@ dependencies = [
     "tomlkit",
     "wcmatch>=8.5.1",
     "httpx>=0.28.1",
+    "click<8.3",
 ]
 
 [project.scripts]
 bump-my-version = "bumpversion.cli:cli"
-
 
 [project.urls]
 homepage = "https://github.com/callowayproject/bump-my-version"
@@ -93,7 +92,6 @@ path = "bumpversion/__init__.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["bumpversion"]
-
 
 [tool.coverage.run]
 branch = true
@@ -193,19 +191,19 @@ line-length = 119
 [tool.ruff.lint]
 preview = true
 select = [
-    "E", # pycodestyle errors
-    "W", # pycodestyle warnings
-    "F", # pyflakes
-    "I", # isort
-    "N", # PEP8 naming
-    "B", # flake8-bugbear
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "N",   # PEP8 naming
+    "B",   # flake8-bugbear
     "BLE", # flake8-blind except
-    "D", # pydocstyle
+    "D",   # pydocstyle
     # "DOC", # pydoclint
-    "S", # flakeu-bandit
+    "S",   # flakeu-bandit
     "RUF", # Ruff-specific rules
     "NPY", # NumPy-specific rules
-    "PD", # Pandas-vet
+    "PD",  # Pandas-vet
     "PGH", # PyGrep hooks
     "ANN", # flake8-annotations
     "C90", # McCabe complexity
@@ -215,20 +213,20 @@ select = [
     "TCH", # Flake8 type-checking
 ]
 ignore = [
-    "ANN002", # missing-type-args
-    "ANN003", # missing-type-kwargs
-    "ANN204", # missing-return-type-special-method
-    "ANN401", # any-type
-    "S101", # assert
-    "S104", # hardcoded-bind-all-interfaces
-    "S404", # suspicious-subprocess-import
-    "S602", # subprocess-popen-with-shell-equals-true
-    "D105", # undocumented-magic-method
-    "D106", # undocumented-public-nested-class
-    "D107", # undocumented-public-init
-    "D200", # fits-on-one-line
-    "D212", # multi-line-summary-first-line
-    "PD011", # pandas-use-of-dot-values
+    "ANN002",  # missing-type-args
+    "ANN003",  # missing-type-kwargs
+    "ANN204",  # missing-return-type-special-method
+    "ANN401",  # any-type
+    "S101",    # assert
+    "S104",    # hardcoded-bind-all-interfaces
+    "S404",    # suspicious-subprocess-import
+    "S602",    # subprocess-popen-with-shell-equals-true
+    "D105",    # undocumented-magic-method
+    "D106",    # undocumented-public-nested-class
+    "D107",    # undocumented-public-init
+    "D200",    # fits-on-one-line
+    "D212",    # multi-line-summary-first-line
+    "PD011",   # pandas-use-of-dot-values
     "PLC0415", # import-outside-toplevel
     "PLW1641", # eq-without-hash
 ]
@@ -239,10 +237,35 @@ unfixable = []
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
-typing-modules = ["typing", "types", "typing_extensions", "mypy", "mypy_extensions"]
+typing-modules = [
+    "typing",
+    "types",
+    "typing_extensions",
+    "mypy",
+    "mypy_extensions",
+]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/*" = ["S101", "PLR0913", "PLR0915", "PGH003", "ANN001", "ANN202", "ANN201", "PLR0912", "TRY301", "PLW0603", "PLR2004", "ANN101", "S106", "TRY201", "ANN003", "ANN002", "S105", "TRY003"]
+"tests/*" = [
+    "S101",
+    "PLR0913",
+    "PLR0915",
+    "PGH003",
+    "ANN001",
+    "ANN202",
+    "ANN201",
+    "PLR0912",
+    "TRY301",
+    "PLW0603",
+    "PLR2004",
+    "ANN101",
+    "S106",
+    "TRY201",
+    "ANN003",
+    "ANN002",
+    "S105",
+    "TRY003",
+]
 
 [tool.ruff.lint.mccabe]
 # Unlike Flake8, default to a complexity level of 10.
@@ -274,7 +297,7 @@ allow_dirty = true
 parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\.(?P<dev>post)\\d+\\.dev\\d+)?"
 serialize = [
     "{major}.{minor}.{patch}.{dev}{$PR_NUMBER}.dev{distance_to_latest_tag}",
-    "{major}.{minor}.{patch}"
+    "{major}.{minor}.{patch}",
 ]
 message = "Version updated from {current_version} to {new_version}"
 pre_commit_hooks = ["uv sync --upgrade", "git add uv.lock"]
