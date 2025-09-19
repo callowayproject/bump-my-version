@@ -1,13 +1,11 @@
 [build-system]
-requires = ["hatchling"]
+requires      = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
 name = "bump-my-version"
 description = "Version bump your Python project"
-authors = [
-    { name = "Corey Oordt", email = "coreyoordt@gmail.com" }
-]
+authors = [{ name = "Corey Oordt", email = "coreyoordt@gmail.com" }]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
@@ -33,7 +31,6 @@ license = { file = "LICENSE" }
 keywords = ["bumpversion", "version", "release"]
 dynamic = ["version"]
 dependencies = [
-    "click",
     "pydantic>=2.0.0",
     "pydantic-settings",
     "questionary",
@@ -42,15 +39,15 @@ dependencies = [
     "tomlkit",
     "wcmatch>=8.5.1",
     "httpx>=0.28.1",
+    "click<8.3",
 ]
 
 [project.scripts]
 bump-my-version = "bumpversion.cli:cli"
 
-
 [project.urls]
-homepage = "https://github.com/callowayproject/bump-my-version"
-repository = "https://github.com/callowayproject/bump-my-version.git"
+homepage      = "https://github.com/callowayproject/bump-my-version"
+repository    = "https://github.com/callowayproject/bump-my-version.git"
 documentation = "https://callowayproject.github.io/bump-my-version/"
 
 [dependency-groups]
@@ -59,6 +56,12 @@ dev = [
     "generate-changelog>=0.7.6",
     "pip-tools",
     "pre-commit",
+    "pytest>=8.3.5",
+    "pytest-cov>=3.0.0",
+    "freezegun>=1.5.5",
+    "pytest-mock>=3.14.1",
+    "httpserver>=1.1.0",
+    "pytest-httpserver>=1.1.1",
 ]
 docs = [
     "black",
@@ -79,11 +82,7 @@ docs = [
 ]
 test = [
     "coverage",
-    "freezegun",
     "pre-commit",
-    "pytest-cov",
-    "pytest",
-    "pytest-mock",
     "pytest-sugar",
     "pytest-localserver>=0.9.0.post0",
 ]
@@ -94,17 +93,12 @@ path = "bumpversion/__init__.py"
 [tool.hatch.build.targets.wheel]
 packages = ["bumpversion"]
 
-
 [tool.coverage.run]
 branch = true
-omit = ["**/test_*.py", "**/__main__.py", "**/aliases.py"]
+omit   = ["**/test_*.py", "**/__main__.py", "**/aliases.py"]
 
 [tool.coverage.report]
-omit = [
-    "*site-packages*",
-    "*tests*",
-    "*.tox*",
-]
+omit = ["*site-packages*", "*tests*", "*.tox*"]
 show_missing = true
 exclude_also = [
     "raise NotImplementedError",
@@ -142,23 +136,23 @@ addopts = [
 ]
 
 [tool.interrogate]
-ignore-init-method = true
-ignore-init-module = false
-ignore-magic = true
-ignore-semiprivate = false
-ignore-private = false
+ignore-init-method         = true
+ignore-init-module         = false
+ignore-magic               = true
+ignore-semiprivate         = false
+ignore-private             = false
 ignore-property-decorators = false
-ignore-module = false
-ignore-nested-functions = true
-ignore-nested-classes = true
-ignore-setters = false
-fail-under = 95
-exclude = ["setup.py", "docs", "build"]
-ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*"]
-verbose = 0
-quiet = false
-whitelist-regex = []
-color = true
+ignore-module              = false
+ignore-nested-functions    = true
+ignore-nested-classes      = true
+ignore-setters             = false
+fail-under                 = 95
+exclude                    = ["setup.py", "docs", "build"]
+ignore-regex               = ["^get$", "^mock_.*", ".*BaseClass.*"]
+verbose                    = 0
+quiet                      = false
+whitelist-regex            = []
+color                      = true
 
 [tool.black]
 line-length = 119
@@ -193,19 +187,19 @@ line-length = 119
 [tool.ruff.lint]
 preview = true
 select = [
-    "E", # pycodestyle errors
-    "W", # pycodestyle warnings
-    "F", # pyflakes
-    "I", # isort
-    "N", # PEP8 naming
-    "B", # flake8-bugbear
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "N",   # PEP8 naming
+    "B",   # flake8-bugbear
     "BLE", # flake8-blind except
-    "D", # pydocstyle
+    "D",   # pydocstyle
     # "DOC", # pydoclint
-    "S", # flakeu-bandit
+    "S",   # flakeu-bandit
     "RUF", # Ruff-specific rules
     "NPY", # NumPy-specific rules
-    "PD", # Pandas-vet
+    "PD",  # Pandas-vet
     "PGH", # PyGrep hooks
     "ANN", # flake8-annotations
     "C90", # McCabe complexity
@@ -215,34 +209,59 @@ select = [
     "TCH", # Flake8 type-checking
 ]
 ignore = [
-    "ANN002", # missing-type-args
-    "ANN003", # missing-type-kwargs
-    "ANN204", # missing-return-type-special-method
-    "ANN401", # any-type
-    "S101", # assert
-    "S104", # hardcoded-bind-all-interfaces
-    "S404", # suspicious-subprocess-import
-    "S602", # subprocess-popen-with-shell-equals-true
-    "D105", # undocumented-magic-method
-    "D106", # undocumented-public-nested-class
-    "D107", # undocumented-public-init
-    "D200", # fits-on-one-line
-    "D212", # multi-line-summary-first-line
-    "PD011", # pandas-use-of-dot-values
+    "ANN002",  # missing-type-args
+    "ANN003",  # missing-type-kwargs
+    "ANN204",  # missing-return-type-special-method
+    "ANN401",  # any-type
+    "S101",    # assert
+    "S104",    # hardcoded-bind-all-interfaces
+    "S404",    # suspicious-subprocess-import
+    "S602",    # subprocess-popen-with-shell-equals-true
+    "D105",    # undocumented-magic-method
+    "D106",    # undocumented-public-nested-class
+    "D107",    # undocumented-public-init
+    "D200",    # fits-on-one-line
+    "D212",    # multi-line-summary-first-line
+    "PD011",   # pandas-use-of-dot-values
     "PLC0415", # import-outside-toplevel
     "PLW1641", # eq-without-hash
 ]
 
-fixable = ["ALL"]
+fixable   = ["ALL"]
 unfixable = []
 
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
-typing-modules = ["typing", "types", "typing_extensions", "mypy", "mypy_extensions"]
+typing-modules = [
+    "typing",
+    "types",
+    "typing_extensions",
+    "mypy",
+    "mypy_extensions",
+]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/*" = ["S101", "PLR0913", "PLR0915", "PGH003", "ANN001", "ANN202", "ANN201", "PLR0912", "TRY301", "PLW0603", "PLR2004", "ANN101", "S106", "TRY201", "ANN003", "ANN002", "S105", "TRY003"]
+"tests/*" = [
+    "S101",
+    "PLR0913",
+    "PLR0915",
+    "PGH003",
+    "ANN001",
+    "ANN202",
+    "ANN201",
+    "PLR0912",
+    "TRY301",
+    "PLW0603",
+    "PLR2004",
+    "ANN101",
+    "S106",
+    "TRY201",
+    "ANN003",
+    "ANN002",
+    "S105",
+    "TRY003",
+]
 
 [tool.ruff.lint.mccabe]
 # Unlike Flake8, default to a complexity level of 10.
@@ -255,9 +274,9 @@ order-by-type = true
 convention = "google"
 
 [tool.ruff.lint.flake8-annotations]
-allow-star-arg-any = true
-mypy-init-return = true
-suppress-dummy-args = true
+allow-star-arg-any      = true
+mypy-init-return        = true
+suppress-dummy-args     = true
 suppress-none-returning = true
 
 [tool.bumpversion]
@@ -266,15 +285,12 @@ commit = true
 commit_args = "--no-verify"
 tag = true
 tag_name = "{new_version}"
-moveable_tags = [
-    "v{new_major}",
-    "v{new_major}.{new_minor}",
-]
+moveable_tags = ["v{new_major}", "v{new_major}.{new_minor}"]
 allow_dirty = true
 parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\.(?P<dev>post)\\d+\\.dev\\d+)?"
 serialize = [
     "{major}.{minor}.{patch}.{dev}{$PR_NUMBER}.dev{distance_to_latest_tag}",
-    "{major}.{minor}.{patch}"
+    "{major}.{minor}.{patch}",
 ]
 message = "Version updated from {current_version} to {new_version}"
 pre_commit_hooks = ["uv sync --upgrade", "git add uv.lock"]
@@ -287,33 +303,33 @@ filename = "bumpversion/__init__.py"
 
 [[tool.bumpversion.files]]
 filename = "CHANGELOG.md"
-search = "Unreleased"
+search   = "Unreleased"
 
 [[tool.bumpversion.files]]
 filename = "CHANGELOG.md"
-search = "{current_version}...HEAD"
-replace = "{current_version}...{new_version}"
+search   = "{current_version}...HEAD"
+replace  = "{current_version}...{new_version}"
 
 [[tool.bumpversion.files]]
 filename = "action.yml"
-search = "bump-my-version=={current_version}"
-replace = "bump-my-version=={new_version}"
+search   = "bump-my-version=={current_version}"
+replace  = "bump-my-version=={new_version}"
 
 [[tool.bumpversion.files]]
 filename = "Dockerfile"
-search = "created=\\d{{4}}-\\d{{2}}-\\d{{2}}T\\d{{2}}:\\d{{2}}:\\d{{2}}Z"
-replace = "created={utcnow:%Y-%m-%dT%H:%M:%SZ}"
-regex = true
+search   = "created=\\d{{4}}-\\d{{2}}-\\d{{2}}T\\d{{2}}:\\d{{2}}:\\d{{2}}Z"
+replace  = "created={utcnow:%Y-%m-%dT%H:%M:%SZ}"
+regex    = true
 
 [[tool.bumpversion.files]]
 filename = "Dockerfile"
 
 [tool.pydoclint]
-style = "google"
-exclude = '\.git|tests'
+style                                         = "google"
+exclude                                       = '\.git|tests'
 require-return-section-when-returning-nothing = false
-arg-type-hints-in-docstring = false
-check-return-types = false
-skip-checking-raises = true
-quiet = true
-check-class-attributes = false
+arg-type-hints-in-docstring                   = false
+check-return-types                            = false
+skip-checking-raises                          = true
+quiet                                         = true
+check-class-attributes                        = false

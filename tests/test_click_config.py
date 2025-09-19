@@ -48,14 +48,11 @@ class TestConfigOption:
 
     def test_passing_url_returns_path(self, runner, fixtures_path: Path, httpserver):
         """Passing an existing file path should return a Path object."""
-        # Assemble
         config = fixtures_path.joinpath("basic_cfg.toml").read_text()
-        httpserver.serve_content(config)
+        httpserver.expect_request("/basic_cfg.toml").respond_with_data(config)
 
-        # Act
-        result = runner.invoke(hello, ["--config", f"{httpserver.url}/basic_cfg.toml"])
+        result = runner.invoke(hello, ["--config", f"http://{httpserver.host}:{httpserver.port}/basic_cfg.toml"])
 
-        # Assert
         assert result.exit_code == 0
         assert "path exists: True" in result.output
 
@@ -72,15 +69,12 @@ class TestResolveConfLocation:
 
     def test_resolves_valid_url(self, fixtures_path: Path, httpserver):
         """Should download the file if given a valid URL."""
-        # Arrange
         config = fixtures_path.joinpath("basic_cfg.toml").read_text()
-        httpserver.serve_content(config)
-        url = f"{httpserver.url}/basic_cfg.toml"
+        httpserver.expect_request("/basic_cfg.toml").respond_with_data(config)
+        url = f"http://{httpserver.host}:{httpserver.port}/basic_cfg.toml"
 
-        # Act
         result = resolve_conf_location(url)
 
-        # Assert
         assert isinstance(result, Path)
         assert result.read_text() == config
 
@@ -90,15 +84,12 @@ class TestDownloadUrl:
 
     def test_download_url_success(self, fixtures_path: Path, httpserver):
         """Should return a Path for a valid request."""
-        # Arrange
         config = fixtures_path.joinpath("basic_cfg.toml").read_text()
-        httpserver.serve_content(config)
-        url = f"{httpserver.url}/basic_cfg.toml"
+        httpserver.expect_request("/basic_cfg.toml").respond_with_data(config)
+        url = f"http://{httpserver.host}:{httpserver.port}/basic_cfg.toml"
 
-        # Act
         result = download_url(url)
 
-        # Assert
         assert isinstance(result, Path)
         assert result.read_text() == config
 
