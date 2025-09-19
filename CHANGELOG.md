@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.2.3 (2025-09-19)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.2.2...1.2.3)
+
+### Fixes
+
+- Fix `is_subpath` docstring for clarity and detailed explanation of functionality. [68041e8](https://github.com/callowayproject/bump-my-version/commit/68041e84d0eabe89b534fb6a86960a193fc088eb)
+    
+- Refactor tests to improve readability by using Arrange-Act-Assert pattern and updating `httpserver` methods. [164c99d](https://github.com/callowayproject/bump-my-version/commit/164c99d3c8bff8bb56d32516fd7c91ffcd9e239e)
+    
+- Fix: set "click<8.3" and adjust some pytest_httpserver methods to latest. [8374073](https://github.com/callowayproject/bump-my-version/commit/8374073936def435305e8a06a48bf1d691bc9bd0)
+    
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [58946b2](https://github.com/callowayproject/bump-my-version/commit/58946b2e49922d90f54b9170075eae4f384c2d9f)
+    
+  **updates:** - [github.com/pre-commit/mirrors-mypy: v1.17.1 → v1.18.1](https://github.com/pre-commit/mirrors-mypy/compare/v1.17.1...v1.18.1)
+
+### Updates
+
+- Update `uv.lock` and `pyproject.toml` to refactor dependency groups and align formatting. [8b4d8aa](https://github.com/callowayproject/bump-my-version/commit/8b4d8aaf1d6397738ebc477094e342c9e623dd2f)
+    
+
 ## 1.2.2 (2025-09-13)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.2.1...1.2.2)
 
