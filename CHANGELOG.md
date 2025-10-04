@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.2.4 (2025-10-04)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.2.3...1.2.4)
+
+### Fixes
+
+- Fixed release hint rules. [fbd3deb](https://github.com/callowayproject/bump-my-version/commit/fbd3deb88e46744df5a8164777d926cbb89d5059)
+    
+  - trigger release when pypproject.toml is changed
+- Fix mercurial install on Windows. [c230f4a](https://github.com/callowayproject/bump-my-version/commit/c230f4ab09e72617a059f2696bb6cc19ebfe3ca3)
+    
+- Fix breaking Click dependency. [5a4073b](https://github.com/callowayproject/bump-my-version/commit/5a4073b49fd7f202e54c2456f3fc6d3d8d8a088d)
+    
+  - Set Click required version to `<8.2.2`
+  - `uv.lock` regenerated with upgraded dependencies
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [1af3e18](https://github.com/callowayproject/bump-my-version/commit/1af3e18903b4dd5ec3cd8e6771627ddd43208416)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.13.0 → v0.13.2](https://github.com/astral-sh/ruff-pre-commit/compare/v0.13.0...v0.13.2)
+
+
 ## 1.2.3 (2025-09-19)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.2.2...1.2.3)
 
