@@ -116,7 +116,7 @@ release_hint_rules:
   - match_result: dev
     branch: ^((?!master|main).)*$
   - match_result: patch
-    path: requirements/prod.in
+    path: pyproject.toml
     branch: master|main
   - match_result: patch
     grouping: Other
