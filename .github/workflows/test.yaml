@@ -34,6 +34,11 @@ jobs:
       - uses: ./.github/actions/setup-python-and-git
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Install Mercurial
+        if: matrix.os == 'windows-latest'
+        shell: powershell
+        run: |
+          choco install mercurial --confirm
       - name: Check mercurial is working
         run: |
           echo -e '[ui]\nusername = Testing Mercurial<bumpversion-test-hg@github.actions>' > ~/.hgrc
