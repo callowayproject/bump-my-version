@@ -114,13 +114,13 @@ jobs:
       contents: write
     steps:
       - name: Download packages built by build-and-inspect-python-package
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: Packages
           path: dist
 
       - name: Download release notes
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: release-notes
 
