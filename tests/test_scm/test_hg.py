@@ -10,9 +10,9 @@ import pytest
 from pytest import param
 
 from bumpversion import cli
-from bumpversion.scm.hg import Mercurial, tag, assert_nondirty
-from bumpversion.scm.models import LatestTagInfo, SCMConfig
 from bumpversion.exceptions import BumpVersionError, DirtyWorkingDirectoryError
+from bumpversion.scm.hg import Mercurial, assert_nondirty, tag
+from bumpversion.scm.models import LatestTagInfo, SCMConfig
 from bumpversion.utils import run_command
 from tests.conftest import inside_dir
 
@@ -27,6 +27,9 @@ serialize = [
     "{major}.{minor}.{patch}"
 ]
 """
+
+if not shutil.which("hg"):
+    pytest.mark.skip("Mercurial is not available.", allow_module_level=True)
 
 
 @pytest.fixture
