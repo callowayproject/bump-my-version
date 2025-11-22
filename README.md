@@ -275,6 +275,10 @@ on:
 
 jobs:
   build:
+    permissions:
+      id-token: write
+      pull-requests: read
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
@@ -287,7 +291,7 @@ jobs:
           BUMPVERSION_TAG: "true"
         with:
           args: ${{ inputs.bump-type }}
-          github-token: ${{ secrets.GH_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check
         if: steps.bump.outputs.bumped == 'true'
@@ -304,7 +308,7 @@ Output:
 2. `previous-version` - Version before bump was performed.
 3. `current-version` - Version after performing bump.
 
-If you want to ensure that workflows set up with on-push trigger will also start based on those newly pushed commits or tags, you need to provide a custom PAT (`github-token`). See [here](https://github.com/orgs/community/discussions/25702). 
+If you want to ensure that workflows set up with on-push trigger will also start based on those newly pushed commits or tags, you need to provide a custom personal access token (PAT). See [here](https://github.com/orgs/community/discussions/25702). 
 
 ## Development & Contributing
 
