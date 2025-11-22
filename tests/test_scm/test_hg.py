@@ -28,8 +28,7 @@ serialize = [
 ]
 """
 
-if not shutil.which("hg"):
-    pytest.mark.skip("Mercurial is not available.", allow_module_level=True)
+pytestmark = pytest.mark.skipif(not shutil.which("hg"), reason="Mercurial is not available.")
 
 
 @pytest.fixture
