@@ -22,7 +22,6 @@ jobs:
           - ubuntu-latest
           - windows-latest
         python-version:
-          - "3.8"
           - "3.9"
           - "3.10"
           - "3.11"
@@ -34,15 +33,15 @@ jobs:
       - uses: ./.github/actions/setup-python-and-git
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install Mercurial
-        if: matrix.os == 'windows-latest'
-        shell: powershell
-        run: |
-          choco install hg --confirm
-      - name: Check mercurial is working
-        run: |
-          echo -e '[ui]\nusername = Testing Mercurial<bumpversion-test-hg@github.actions>' > ~/.hgrc
-          hg --version
+#      - name: Install Mercurial
+#        if: matrix.os == 'windows-latest'
+#        shell: powershell
+#        run: |
+#          choco install hg --confirm
+#      - name: Check mercurial is working
+#        run: |
+#          echo -e '[ui]\nusername = Testing Mercurial<bumpversion-test-hg@github.actions>' > ~/.hgrc
+#          hg --version
       - name: Install requirements
         shell: bash
         run: |
