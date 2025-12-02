@@ -68,7 +68,7 @@ class ConfigOption(Option):
     def process_value(self, ctx: Context, value: Any) -> Optional[Path]:
         """Process the value of the option."""
         value = super().process_value(ctx, value)
-        return resolve_conf_location(value) if value else None
+        return resolve_conf_location(value) if (isinstance(value, str) and value) else None
 
 
 def config_option(*param_decls: str, cls: Optional[Type[ConfigOption]] = None, **attrs: Any) -> Callable[[FC], FC]:
