@@ -1,6 +1,6 @@
 {{ log.debug("Rendering raises section") }}
 
-{% import "language.html" as lang with context %}
+{% import "language.html.jinja" as lang with context %}
 
 {% if config.docstring_section_style == "table" %}
   {% block table_style scoped %}
@@ -18,7 +18,7 @@
           <td>
             {% if raises.annotation %}
               {% with expression = raises.annotation %}
-                <code>{% include "expression.html" with context %}</code>
+                <code>{% include "expression.html.jinja" with context %}</code>
               {% endwith %}
             {% endif %}
           </td>
@@ -40,7 +40,7 @@
       <li class="field-body">
         {% if raises.annotation %}
           {% with expression = raises.annotation %}
-            <code>{% include "expression.html" with context %}</code>
+            <code>{% include "expression.html.jinja" with context %}</code>
           {% endwith %}
           –
         {% endif %}
@@ -58,7 +58,7 @@
     {% for raises in section.value %}
       <dt class="doc-field-term doc-raises-annotation">
         {% with expression = raises.annotation %}
-          <code>{% include "expression.html" with context %}</code>
+          <code>{% include "expression.html.jinja" with context %}</code>
         {% endwith %}
       </dt>
       <dd class="doc-field-def doc-raises-details">
