@@ -84,9 +84,6 @@ plugins:
         python:
           inventories:
             - https://docs.python.org/3/objects.inv
-            - https://numpy.org/doc/stable/objects.inv
-            - https://pandas.pydata.org/docs/objects.inv
-            - https://api.python.langchain.com/en/latest/objects.inv
           options:
             allow_inspection: true
             docstring_style: google
