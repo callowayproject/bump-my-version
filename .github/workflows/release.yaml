@@ -30,7 +30,7 @@ jobs:
       package: ${{ steps.bump-version.outputs.package }}
       tag-name: ${{ steps.bump-version.outputs.tag-name }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         name: Checkout the repository
         with:
           fetch-depth: 0
@@ -114,13 +114,13 @@ jobs:
       contents: write
     steps:
       - name: Download packages built by build-and-inspect-python-package
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: Packages
           path: dist
 
       - name: Download release notes
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: release-notes
 

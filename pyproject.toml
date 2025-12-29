@@ -41,7 +41,7 @@ dependencies = [
     "tomlkit",
     "wcmatch>=8.5.1",
     "httpx>=0.28.1",
-    "click<8.2.2",
+    "click<8.4",
 ]
 
 [project.scripts]
