@@ -1,6 +1,6 @@
 {{ log.debug("Rendering returns section") }}
 
-{% import "language.html" as lang with context %}
+{% import "language.html.jinja" as lang with context %}
 
 {% if config.docstring_section_style == "table" %}
   {% block table_style scoped %}
@@ -21,7 +21,7 @@
           <td>
             {% if returns.annotation %}
               {% with expression = returns.annotation %}
-                <code>{% include "expression.html" with context %}</code>
+                <code>{% include "expression.html.jinja" with context %}</code>
               {% endwith %}
             {% endif %}
           </td>
@@ -45,7 +45,7 @@
         {% if returns.annotation %}
           {% with expression = returns.annotation %}
             {% if returns.name %} ({% endif %}
-            <code>{% include "expression.html" with context %}</code>
+            <code>{% include "expression.html.jinja" with context %}</code>
             {% if returns.name %}){% endif %}
           {% endwith %}
         {% endif %}
@@ -68,7 +68,7 @@
         {% elif returns.annotation %}
           <span class="doc-returns-annotation">
             {% with expression = returns.annotation %}
-              <code>{% include "expression.html" with context %}</code>
+              <code>{% include "expression.html.jinja" with context %}</code>
             {% endwith %}
           </span>
         {% endif %}
@@ -82,7 +82,7 @@
             <span class="doc-returns-annotation">
               <span class="doc-param-key">{{ lang.t("TYPE:") }}</span>
               {% with expression = returns.annotation %}
-                <code>{% include "expression.html" with context %}</code>
+                <code>{% include "expression.html.jinja" with context %}</code>
               {% endwith %}
             </span>
           </p>

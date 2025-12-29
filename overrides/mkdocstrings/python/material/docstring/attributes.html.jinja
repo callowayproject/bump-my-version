@@ -1,6 +1,6 @@
 {{ log.debug("Rendering attributes section") }}
 
-{% import "language.html" as lang with context %}
+{% import "language.html.jinja" as lang with context %}
 
 {% if config.docstring_section_style == "table" %}
   {% block table_style scoped %}
@@ -20,7 +20,7 @@
           <td>
             {% if attribute.annotation %}
               {% with expression = attribute.annotation %}
-                <code>{% include "expression.html" with context %}</code>
+                <code>{% include "expression.html.jinja" with context %}</code>
               {% endwith %}
             {% endif %}
           </td>
@@ -43,7 +43,7 @@
         <b><code><span data-autorefs-optional-hover="{{ obj.path }}.{{ attribute.name }}">{{ attribute.name }}</span></code></b>
         {% if attribute.annotation %}
           {% with expression = attribute.annotation %}
-            (<code>{% include "expression.html" with context %}</code>)
+            (<code>{% include "expression.html.jinja" with context %}</code>)
           {% endwith %}
         {% endif %}
         –
@@ -76,7 +76,7 @@
                 <span class="doc-attribute-annotation">
                   <b>TYPE:</b>
                   {% with expression = attribute.annotation %}
-                    <code>{% include "expression.html" with context %}</code>
+                    <code>{% include "expression.html.jinja" with context %}</code>
                   {% endwith %}
                 </span>
               {% endif %}

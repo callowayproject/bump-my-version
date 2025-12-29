@@ -37,7 +37,7 @@ class ConfigOption(Option):
         show_choices = True
         prompt = False
         confirmation_prompt = False
-        is_flag = None
+        is_flag = False
         flag_value = None
         prompt_required = True
         hide_input = False
