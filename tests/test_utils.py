@@ -182,6 +182,25 @@ class TestExtractRegexFlags:
         param(Path(f"{DRIVE_PREFIX}/parent"), Path("relative/path"), True, id="relative_path_returns_true"),
         param(f"{DRIVE_PREFIX}/parent", Path("relative/path"), True, id="parent_as_string_path_as_path_4"),
         param(Path(f"{DRIVE_PREFIX}/parent"), "relative/path", True, id="parent_as_path_path_as_string_4"),
+        # Security edge cases: path traversal attempts
+        param(
+            Path(f"{DRIVE_PREFIX}/repo"),
+            Path(f"{DRIVE_PREFIX}/repo-evil"),
+            False,
+            id="sibling_path_with_prefix_returns_false",
+        ),
+        param(
+            Path(f"{DRIVE_PREFIX}/repo"),
+            Path(f"{DRIVE_PREFIX}/repo2"),
+            False,
+            id="sibling_path_with_suffix_returns_false",
+        ),
+        param(
+            Path(f"{DRIVE_PREFIX}/parent"),
+            Path(f"{DRIVE_PREFIX}/parent/../other"),
+            False,
+            id="parent_traversal_outside_returns_false",
+        ),
     ],
 )
 def test_is_subpath(parent: Pathlike, path: Pathlike, expected: bool) -> None:

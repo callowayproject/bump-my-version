@@ -1,5 +1,15 @@
 # Agent instructions
 
+## Running Pytest
+
+To run pytest for the agent codebase, navigate to the root directory of the repository and execute the following command in your terminal:
+
+```bash
+uv run pytest
+```
+
+This will run all tests in the `tests/` directory and provide detailed output on test results.
+
 ## When to Use What
 
 | Your Need                                     | Skill                    | Example Trigger                                               |
