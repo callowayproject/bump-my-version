@@ -2,7 +2,7 @@
 
 import subprocess
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, call, patch
 
 import pytest
 from pytest import param
@@ -283,6 +283,62 @@ class TestRevisionInfo:
 
 class TestMoveableTag:
     """Tests for the moveable_tag function."""
+
+    @patch("bumpversion.scm.git.run_command")
+    def test_deletes_remote_tag_before_push(self, mock_run_command) -> None:
+        """Moveable tags should delete remote tag and then push without force."""
+        mock_run_command.return_value = MagicMock(stdout="origin\n")
+
+        moveable_tag("v1")
+
+        assert mock_run_command.call_args_list == [
+            call(["git", "tag", "-f", "v1"]),
+            call(["git", "remote"]),
+            call(["git", "push", "--delete", "origin", "v1"]),
+            call(["git", "remote"]),
+            call(["git", "push", "origin", "v1"]),
+        ]
+
+    @patch("bumpversion.scm.git.run_command")
+    def test_missing_remote_tag_delete_is_ignored(self, mock_run_command) -> None:
+        """Missing remote tag during delete should not block the subsequent push."""
+        mock_run_command.side_effect = [
+            MagicMock(stdout="origin\n"),
+            MagicMock(stdout="origin\n"),
+            subprocess.CalledProcessError(
+                returncode=1,
+                cmd="git push --delete origin v1",
+                stderr="error: unable to delete 'v1': remote ref does not exist",
+            ),
+            MagicMock(stdout="origin\n"),
+            MagicMock(stdout=""),
+        ]
+
+        moveable_tag("v1")
+
+        assert mock_run_command.call_args_list == [
+            call(["git", "tag", "-f", "v1"]),
+            call(["git", "remote"]),
+            call(["git", "push", "--delete", "origin", "v1"]),
+            call(["git", "remote"]),
+            call(["git", "push", "origin", "v1"]),
+        ]
+
+    @patch("bumpversion.scm.git.run_command")
+    def test_delete_failure_raises_error(self, mock_run_command) -> None:
+        """Unexpected delete failures should raise BumpVersionError."""
+        mock_run_command.side_effect = [
+            MagicMock(stdout="origin\n"),
+            MagicMock(stdout="origin\n"),
+            subprocess.CalledProcessError(
+                returncode=1,
+                cmd="git push --delete origin v1",
+                stderr="remote: permission denied",
+            ),
+        ]
+
+        with pytest.raises(BumpVersionError):
+            moveable_tag("v1")
 
     def test_moves_tags(self, git_repo: Path) -> None:
         """Tag moves to subsequent commit."""

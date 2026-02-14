@@ -263,7 +263,10 @@ def moveable_tag(name: str) -> None:
     """
     try:
         run_command(["git", "tag", "-f", name])
-        push_remote("origin", name, force=True)
+        if not has_remote("origin"):
+            return
+        delete_remote_tag("origin", name)
+        push_remote("origin", name)
     except subprocess.CalledProcessError as e:
         format_and_raise_error(e)
 
@@ -282,10 +285,40 @@ def assert_nondirty() -> None:
 def push_remote(remote_name: str, ref_name: str, force: bool = False) -> None:
     """Push the `ref_name` to the `remote_name` repository, optionally forcing the push."""
     try:
-        result = run_command(["git", "remote"])
-        if remote_name not in result.stdout:
-            logger.warning("Remote '%s' not found, skipping push.", remote_name)
+        if not has_remote(remote_name):
             return
-        run_command(["git", "push", remote_name, ref_name, "--force" if force else ""])
+        command = ["git", "push", remote_name, ref_name]
+        if force:
+            command.append("--force")
+        run_command(command)
     except subprocess.CalledProcessError as e:
         format_and_raise_error(e)
+
+
+def delete_remote_tag(remote_name: str, ref_name: str) -> None:
+    """Delete `ref_name` from `remote_name`, ignoring missing remote tag errors."""
+    try:
+        run_command(["git", "push", "--delete", remote_name, ref_name])
+    except subprocess.CalledProcessError as e:
+        if _is_missing_remote_tag_error(e):
+            logger.debug("Remote tag '%s' does not exist in '%s', continuing.", ref_name, remote_name)
+            return
+        format_and_raise_error(e)
+
+
+def has_remote(remote_name: str) -> bool:
+    """Return True if `remote_name` exists in the repository remotes."""
+    try:
+        result = run_command(["git", "remote"])
+    except subprocess.CalledProcessError as e:
+        format_and_raise_error(e)
+    if remote_name not in result.stdout:
+        logger.warning("Remote '%s' not found, skipping push.", remote_name)
+        return False
+    return True
+
+
+def _is_missing_remote_tag_error(error: subprocess.CalledProcessError) -> bool:
+    """Return True if the error indicates the remote tag does not exist."""
+    stderr = (error.stderr or "").lower()
+    return "remote ref does not exist" in stderr
