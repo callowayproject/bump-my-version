@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.2.7 (2026-02-14)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.2.6...1.2.7)
+
+### Fixes
+
+- Refactor movable tag logic to delete remote tags before pushing; update tests and documentation. [a0d9580](https://github.com/callowayproject/bump-my-version/commit/a0d9580d523015be488a96da2e24ea358536e57d)
+    
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [ed0b8f6](https://github.com/callowayproject/bump-my-version/commit/ed0b8f620e784ddbcbf8cb7a3f4139ce74caaab7)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.14.10 → v0.15.0](https://github.com/astral-sh/ruff-pre-commit/compare/v0.14.10...v0.15.0)
+
+
 ## 1.2.6 (2025-12-29)
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.2.5...1.2.6)
 
