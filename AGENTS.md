@@ -1,117 +1,69 @@
 # Agent instructions
 
-## Running Pytest
+This file provides guidance to AI Agents when working with code in this repository.
 
-To run pytest for the agent codebase, navigate to the root directory of the repository and execute the following command in your terminal:
+## Commands
 
 ```bash
-uv run pytest
+# Install for development
+uv sync --all-groups
+
+# Run all tests
+uv run pytest --agent-digest=term -p no:sugar
+
+# Run a single test file
+uv run pytest --agent-digest=term -p no:sugar tests/test_files.py
+
+# Run a single test
+uv run pytest --agent-digest=term -p no:sugar tests/test_files.py::test_function_name
+
+# Lint and format
+uv run ruff check bumpversion/
+uv run ruff format bumpversion/
+
+# Type checking
+uv run mypy bumpversion/
+
+# Check docstring coverage (must stay above 95%)
+uv run interrogate bumpversion/
+
+# Run pre-commit hooks on all files
+pre-commit run --all-files
 ```
 
-This will run all tests in the `tests/` directory and provide detailed output on test results.
+## Architecture
 
-## When to Use What
+The tool works as a pipeline: read config → detect SCM state → parse current version → run setup hooks → calculate next version → build context → modify files → run pre-commit hooks → commit & tag → run post-commit hooks.
 
-| Your Need                                     | Skill                    | Example Trigger                                               |
-|-----------------------------------------------|--------------------------|---------------------------------------------------------------|
-| Local code search, structure, definitions     | **Local Search**         | "Find X in codebase", "Where is Y?", "Explore this dir"       |
-| Full research (local + GitHub, PRs, packages) | **Research**             | "How does X work?", "Who calls Z?", "Trace flow", "Review PR" |
-| Plan work before implementing                 | **Plan**                 | "Plan this feature", "Research & plan refactor"               |
-| Review a pull request                         | **PR Reviewer**          | "Review PR #123", "Is this PR safe to merge?"                 |
-| Brutal code criticism with fixes              | **Roast**                | "Roast my code", "Find code sins", "What's wrong with this?"  |
-| Strengthen prompts / agent instructions       | **Prompt Optimizer**     | "Optimize this SKILL.md", "Agent skips steps"                 |
-| Generate repo documentation                   | **Documentation Writer** | "Document this project", "Create developer docs"              |
+### Key modules
 
----
+**`bumpversion/cli.py`** — Click-based CLI entry point. Commands: `bump`, `show`, `replace`, `sample-config`, `show-bump`. Routes to `bump.py` or `show.py` for logic.
 
-## Skills Overview
+**`bumpversion/bump.py`** — Core workflow: `get_next_version()` and `do_bump()`. Orchestrates config loading, file modification, and SCM operations.
 
-### 1. OctoCode Local Search
+**`bumpversion/config/`** — Pydantic 2.x models for configuration. `files.py` discovers and reads config from `pyproject.toml`, `.bumpversion.toml`, `setup.cfg`, etc. `models.py` defines `BumpVersionConfig` and `FileChange`.
 
-**Location:** `octocode-local-search/`
+**`bumpversion/versioning/`** — Version parsing and manipulation. `models.py` has `Version`, `VersionComponent`, `VersionComponentSpec`. `functions.py` has `NumericFunction`, `ValuesFunction`, `CalVerFunction`. `serialization.py` handles template-based version string rendering.
 
-Local codebase exploration using Octocode Local + LSP. Search, structure, find files, trace definitions/usages—no GitHub. Fast local discovery.
+**`bumpversion/files.py`** — `ConfiguredFile` performs search/replace on individual files. `modify_files()` handles batches with dry-run support. Supports glob patterns, data files (JSON/YAML/TOML with key paths).
 
-| When              | Example                                  |
-|-------------------|------------------------------------------|
-| Local search only | "Find auth logic", "Where is X defined?" |
-| Explore structure | "List src/ files", "Show package layout" |
+**`bumpversion/scm/`** — Git (`git.py`) and Mercurial (`hg.py`) backends. Reads current version from tags, creates commits and tags. Supports moveable tags and commit signing.
 
----
+**`bumpversion/context.py`** — Builds the template context dict injected into version format strings (datetime, SCM info, environment variables).
 
-### 2. OctoCode Research
+**`bumpversion/hooks.py`** — Runs setup/pre-commit/post-commit shell hooks with version info as environment variables.
 
-**Location:** `octocode-research/`
+### Configuration model
 
-Deep code exploration: LSP, local tools, GitHub API, packages, PRs. File:line citations and GitHub URLs. Full stack research.
+Config flows from file (`.bumpversion.toml` or `[tool.bumpversion]` in `pyproject.toml`) → CLI overrides → resolved `BumpVersionConfig`. The `current_version` field is the source of truth; it's updated in-place in config files as part of each bump.
 
-| When            | Example                                               |
-|-----------------|-------------------------------------------------------|
-| Research code   | "Research how auth works"                             |
-| GitHub/external | "How does library X work?", "Find PRs that changed Y" |
+### Version components
 
----
+Each part of a version (major, minor, patch) is a `VersionComponent` with a `VersionComponentSpec` describing its behavior (numeric increment, fixed values list, or CalVer expression). Components have dependency relationships — bumping a higher-order component resets dependent ones.
 
-### 3. OctoCode Plan
+## Code style
 
-**Location:** `octocode-plan/`
-
-Evidence-based planning. Understand → Research (via Local Search/Research) → Plan → Implement. No guessing; validates with code.
-
-| When              | Example                                               |
-|-------------------|-------------------------------------------------------|
-| Multi-step work   | "Plan auth refactor", "Plan API v2"                   |
-| Non-trivial tasks | "Research & plan this feature"                        |
-
----
-
-### 4. OctoCode Prompt Optimizer
-
-**Location:** `octocode-prompt-optimizer/`
-
-Turns weak prompts into enforceable protocols. Gates, FORBIDDEN lists, failure analysis. Preserves intent, adds reliability.
-
-| When              | Example                                               |
-|-------------------|-------------------------------------------------------|
-| Prompts ignored   | "Agent keeps skipping steps"                          |
-| New/weak instructions | "Optimize this SKILL.md", "Make prompt reliable"       |
-
-*Not for:* Short prompts (<50 lines), already-optimized docs.
-
----
-
-### 5. OctoCode Documentation Writer
-**Location:** `octocode-documentation-writer/`
-
-6-phase pipeline: Discovery → Questions → Research → Orchestration → Writing → QA. Produces 16+ docs with validation.
-
-| When              | Example                                 |
-|-------------------|-----------------------------------------|
-| New/outdated docs | "Generate documentation", "Update docs" |
-| Onboarding        | "Create docs for new devs"              |
-
----
-
-### 6. OctoCode Roast
-
-**Location:** `octocode-roast/`
-
-Brutal code critique with file:line citations. Severity: gentle → nuclear. Sin registry, user picks fixes. Cites or dies.
-
-| When            | Example                              |
-|-----------------|--------------------------------------|
-| Code critique   | "Roast my code", "Find antipatterns" |
-| Honest feedback | "What's wrong with my code?"         |
-
----
-
-### 7. OctoCode Pull Request Reviewer
-
-**Location:** `octocode-pull-request-reviewer/`
-
-Holistic PR review via Octocode MCP: bugs, security, architecture, flow impact. 7 domains, evidence-backed, user checkpoint before deep dive.
-
-| When            | Example                           |
-|-----------------|-----------------------------------|
-| PR review       | "Review PR #456", "Check this PR" |
-| Security/impact | "Is this safe to merge?"          |
+- Line length: 119 characters
+- Docstrings: Google style, required on all public symbols (95% coverage enforced by interrogate)
+- Ruff with preview mode enabled; see `[tool.ruff.lint]` in `pyproject.toml` for full rule set
+- Type annotations required on all function signatures

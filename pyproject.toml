@@ -22,13 +22,14 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Programming Language :: Python :: Implementation :: PyPy",
     "Topic :: Software Development :: Build Tools",
     "Topic :: Software Development :: Version Control",
     "Topic :: System :: Software Distribution",
 ]
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 license = { file = "LICENSE" }
 keywords = ["bumpversion", "version", "release"]
 dynamic = ["version"]
@@ -82,6 +83,7 @@ test = [
     "pre-commit",
     "pytest-cov",
     "pytest",
+    "pytest-agent-digest>=0.3.1",
     "pytest-mock",
     "pytest-sugar",
     "pytest-localserver>=0.9.0.post0",
@@ -161,6 +163,36 @@ color = true
 [tool.black]
 line-length = 119
 
+[tool.rumdl]
+line-length = 120
+exclude = ["node_modules", "build", "dist", ".venv"]
+disable = []
+respect-gitignore = true
+flavor = "mkdocs"
+
+[tool.rumdl.MD013]
+line-length = 120  # Maximum characters per line (default: 80)
+code-blocks = true  # Don't check code blocks (default: true)
+tables = true  # Don't check tables (default: false)
+headings = true  # Check headings (default: true)
+paragraphs = true  # Check paragraph/regular text (default: true)
+strict = false  # Disables exceptions for URLs, etc. (default: false)
+reflow = false  # Enable automatic text reflow/wrapping (default: false)
+reflow-mode = "semantic-line-breaks"  # Reflow mode: "default", "normalize", "sentence-per-line", or "semantic-line-breaks" (default: "default")
+length-mode = "visual"  # How to count line length: "visual", "chars", or "bytes" (default: "visual")
+
+[tool.rumdl.MD049]
+style = "underscore"  # Options: "consistent", "asterisk", "underscore"
+
+[tool.rumdl.MD050]
+style = "asterisk"  # Options: "consistent", "asterisk", "underscore"
+
+[tool.rumdl.MD004]
+style = "dash"  # Options: "consistent", "asterisk", "plus", "dash", "sublist"
+
+[tool.rumdl.MD060]
+enabled = true
+
 [tool.ruff]
 exclude = [
     ".bzr",
@@ -217,6 +249,7 @@ ignore = [
     "ANN003",  # missing-type-kwargs
     "ANN204",  # missing-return-type-special-method
     "ANN401",  # any-type
+    "RUF067",  # non-empty-init-module
     "S101",    # assert
     "S104",    # hardcoded-bind-all-interfaces
     "S404",    # suspicious-subprocess-import

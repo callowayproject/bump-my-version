@@ -106,6 +106,7 @@ class Config(BaseSettings):
     setup_hooks: List[str] = Field(default_factory=list)
     pre_commit_hooks: List[str] = Field(default_factory=list)
     post_commit_hooks: List[str] = Field(default_factory=list)
+    allow_shell_hooks: bool = True
     included_paths: List[str] = Field(default_factory=list)
     excluded_paths: List[str] = Field(default_factory=list)
     model_config = SettingsConfigDict(env_prefix="bumpversion_")

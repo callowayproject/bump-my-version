@@ -71,5 +71,11 @@ repos:
       - id: interrogate
         exclude: test.*
 
+  - repo: https://github.com/rvben/rumdl-pre-commit
+    rev: v0.1.21  # Use latest version
+    hooks:
+      - id: rumdl      # Lint only
+      - id: rumdl-fmt  # Auto-format
+
 ci:
   autofix_prs: false

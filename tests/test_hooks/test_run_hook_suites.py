@@ -121,3 +121,24 @@ class TestHookSuites:
         mock_logger.info.assert_called_once_with(f"Would run {suite_name} hooks:".replace("_", "-"))
         mock_env.assert_called_once_with(config, *suite_args)
         assert mock_run_command.call_count == 1
+
+    @pytest.mark.parametrize(["suite_name", "suite_func", "suite_args"], suites)
+    def test_allow_shell_hooks_is_passed_from_config(
+        self, mocker, suite_name: str, suite_func: Callable, suite_args: tuple
+    ):
+        """The allow_shell_hooks value from config is forwarded to run_hooks."""
+        # Arrange
+        env = {"var": "value"}
+        mock_env = mocker.patch(f"bumpversion.hooks.get_{suite_name}_hook_env")
+        mock_env.return_value = env
+        mock_run_hooks = mocker.patch("bumpversion.hooks.run_hooks")
+
+        config, _, _ = get_config_data(
+            {"current_version": "1.0.0", f"{suite_name}_hooks": ["script1"], "allow_shell_hooks": True}
+        )
+
+        # Act
+        suite_func(config, *suite_args)
+
+        # Assert
+        mock_run_hooks.assert_called_once_with(["script1"], env, False, allow_shell_hooks=True)
