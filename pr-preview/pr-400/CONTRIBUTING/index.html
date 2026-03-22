@@ -3162,7 +3162,7 @@ python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </s
 <span class="c1"># Install the project in editable mode with its optional dependencies</span>
 python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>dev,test<span class="o">]</span>
 </code></pre></div>
-<p>If you are inclined to use the included <code>devenv.nix</code> environment, ensure you have both the <code>nix</code> package manager and <code>devenv</code> installed; reference the setup instructions for these tools <a href="http://devenv.sh/getting-started/">here</a>. Once <code>devenv</code> is installed, you can use the following command from the project&rsquo;s root directory:</p>
+<p>If you are inclined to use the included <code>devenv.nix</code> environment, ensure you have both the <code>nix</code> package manager and <code>devenv</code> installed; reference the setup instructions for these tools <a href="http://devenv.sh/getting-started/">in the getting started documentation</a>. Once <code>devenv</code> is installed, you can use the following command from the project&rsquo;s root directory:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Create and enter the devenv shell </span>
 devenv<span class="w"> </span>shell
 </code></pre></div>
@@ -3181,15 +3181,15 @@ devenv<span class="w"> </span>shell
 <h3 id="coding-style">Coding Style<a class="headerlink" href="#coding-style" title="Permanent link">&para;</a></h3>
 <p>All of the basic coding styles are configured into tools for fixing and checking them. <a href="https://pre-commit.com">Pre-commit</a> is used to automate the process.</p>
 <h3 id="commit-messages">Commit Messages<a class="headerlink" href="#commit-messages" title="Permanent link">&para;</a></h3>
-<p><strong>Commit messages are used to generate the change log.</strong></p>
-<p><strong>New changes</strong></p>
+<p>Commit messages are used to generate the change log.</p>
+<h4 id="new-changes">New changes<a class="headerlink" href="#new-changes" title="Permanent link">&para;</a></h4>
 <p>Commit messages are categorized as &ldquo;new&rdquo; if the commit message starts with:</p>
 <ul>
 <li>new</li>
 <li>add</li>
 </ul>
 <p>For example: <code>Added this cool new feature</code> or <code>New document type added</code>.</p>
-<p><strong>Updates</strong></p>
+<h4 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">&para;</a></h4>
 <p>Commit messages are categorized as &ldquo;updates&rdquo; if the commit message starts with:</p>
 <ul>
 <li>update</li>
@@ -3203,15 +3203,15 @@ devenv<span class="w"> </span>shell
 <li>modif</li>
 </ul>
 <p>For example: <code>Modified the taxonomy schema</code> or <code>Improves performance by 419%</code></p>
-<p><strong>Fixes</strong></p>
+<h4 id="fixes">Fixes<a class="headerlink" href="#fixes" title="Permanent link">&para;</a></h4>
 <p>Commit messages are categorizes as &ldquo;fixes&rdquo; if the commit message starts with:</p>
 <ul>
 <li>fix</li>
 </ul>
 <p>For example: <code>Fixes bug #123</code></p>
-<p><strong>Other</strong></p>
+<h4 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h4>
 <p>All other commit messages are categorized as &ldquo;other.&rdquo;</p>
-<p><strong>Ignoring commit messages</strong></p>
+<h4 id="ignoring-commit-messages">Ignoring commit messages<a class="headerlink" href="#ignoring-commit-messages" title="Permanent link">&para;</a></h4>
 <p>To have the change log generator ignore this commit, add to the summary line:</p>
 <ul>
 <li><code>@minor</code></li>
@@ -3224,7 +3224,7 @@ devenv<span class="w"> </span>shell
 <li><code>!wip</code></li>
 </ul>
 <h2 id="join-the-project-team">Join The Project Team<a class="headerlink" href="#join-the-project-team" title="Permanent link">&para;</a></h2>
-<p>If you would like to be a maintainer, reach out to coreyoordt@gmail.com.</p>
+<p>If you would like to be a maintainer, reach out to <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#114;&#101;&#121;&#111;&#111;&#114;&#100;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#99;&#111;&#114;&#101;&#121;&#111;&#111;&#114;&#100;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>.</p>
 <h2 id="attribution">Attribution<a class="headerlink" href="#attribution" title="Permanent link">&para;</a></h2>
 <p>This guide is based on the <strong>contributing-gen</strong>. <a href="https://github.com/bttger/contributing-gen">Make your own</a>!</p>
 

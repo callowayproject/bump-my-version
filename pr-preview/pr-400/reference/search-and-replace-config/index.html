@@ -2892,7 +2892,7 @@
 <li>If the rendered search string is <em>not</em> a valid regular expression or the <code>no-regex</code> flag is <code>True</code>, use the search string rendered with the unescaped context.</li>
 </ol>
 <h2 id="using-template-strings">Using template strings<a class="headerlink" href="#using-template-strings" title="Permanent link">&para;</a></h2>
-<p>Both the search and replace templates are rendered using the <a href="../formatting-context/">formatting context</a>. However, only the search template is also treated as a regular expression. The replacement fields available in the formatting context are enclosed in curly braces <code>{}</code>. </p>
+<p>Both the search and replace templates are rendered using the <a href="../formatting-context/">formatting context</a>. However, only the search template is also treated as a regular expression. The replacement fields available in the formatting context are enclosed in curly braces <code>{}</code>.</p>
 <p>The search and replace templates can be multiple lines, like so:</p>
 <div class="highlight"><pre><span></span><code><span class="k">[tool.bumpversion]</span>
 <span class="n">current_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;1.2.3&quot;</span>
@@ -2919,7 +2919,7 @@
 <h2 id="using-regular-expressions">Using regular expressions<a class="headerlink" href="#using-regular-expressions" title="Permanent link">&para;</a></h2>
 <p>Only the search template will use <a href="https://docs.python.org/3/library/re.html#regular-expression-syntax">Python&rsquo;s regular expression syntax</a> with minor changes. The template string is rendered using the formatting context. The resulting string is treated as a regular expression for searching unless configured otherwise.</p>
 <p>Curly braces (<code>{}</code>) must be doubled in the regular expression to escape them from the string-formatting process.</p>
-<p>If you are using a TOML-formatted configuration file, you must also escape backslashes (<code>\</code>) in the regular expression. The TOML parser will treat a single backslash as an escape character. </p>
+<p>If you are using a TOML-formatted configuration file, you must also escape backslashes (<code>\</code>) in the regular expression. The TOML parser will treat a single backslash as an escape character.</p>
 <p>The following template:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="toml" name="__tabbed_1" type="radio" /><input id="cfg" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="toml">TOML</label><label for="cfg">CFG</label></div>
 <div class="tabbed-content">
@@ -2969,7 +2969,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 18, 2024 16:43:45 UTC">February 18, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 22, 2026 13:21:58 UTC">March 22, 2026</span>
   </span>
 
     
