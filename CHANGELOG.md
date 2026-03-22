@@ -1,5 +1,38 @@
 # Changelog
 
+## 1.3.0 (2026-03-22)
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.2.7...1.3.0)
+
+### Fixes
+
+- Refactor hook script execution to handle platform-specific argument parsing; update typing imports. [a46b63d](https://github.com/callowayproject/bump-my-version/commit/a46b63dec2559c23ce2bee134f295d5b3e3439d5)
+    
+### New
+
+- Add `allow_shell_hooks` option for safe hook execution; improve shell syntax handling. [036ee1a](https://github.com/callowayproject/bump-my-version/commit/036ee1a909aeea02eb8e4b144f856fb6d70444e9)
+    
+  - Introduce `allow_shell_hooks` configuration to control shell metacharacters in hooks.
+  - Change default behavior to disallow shell syntax (`shell=False`) unless explicitly enabled.
+  - Add regex detection for shell syntax and migrate affected hooks.
+  - Update tests and fixtures to cover new functionality.
+  - Enhance documentation with migration guidance and best practices.
+### Other
+
+- Standardize formatting, spacing, and indentation across documentation and templates for consistency. [1b9eb42](https://github.com/callowayproject/bump-my-version/commit/1b9eb429b1cf9c458aea70c1eea6507c59089827)
+    
+- Modularize CLI commands into individual files: `bump`, `replace`, `show`, `show-bump`, and `sample-config`; add corresponding tests and shared options file. [c35c431](https://github.com/callowayproject/bump-my-version/commit/c35c4315407e775a714a971281ddcbda8a334ecc)
+    
+- Make `--regex` option nullable; add tests for precedence between CLI flags and config. [c78bbef](https://github.com/callowayproject/bump-my-version/commit/c78bbefdac3d0ee21acf2864c81c0cf0ffa8b27c)
+    
+### Updates
+
+- Update pre-commit, improve `is_subpath` logic, and enhance documentation. [919c66b](https://github.com/callowayproject/bump-my-version/commit/919c66b6c58095908dfd9ccdabab1cb367260df5)
+    
+  - Update `ruff-pre-commit` to v0.15.1 in pre-commit config.
+  - Refine `is_subpath` logic to handle edge cases and add path resolution.
+  - Add security test cases for path traversal in `test_is_subpath`.
+  - Extend `AGENTS.md` with pytest execution instructions.
+
 ## 1.2.7 (2026-02-14)
 
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.2.6...1.2.7)
