@@ -5,7 +5,8 @@ import os
 import re
 import shlex
 import subprocess
-from typing import Dict, List, Optional
+import sys
+from typing import Dict, List, Optional, Union
 
 from bumpversion.config.models import Config
 from bumpversion.context import get_context
@@ -34,8 +35,9 @@ def run_command(script: str, environment: Optional[dict] = None) -> subprocess.C
         raise TypeError(f"`script` must be a string, not {type(script)}")
     if environment and not isinstance(environment, dict):
         raise TypeError(f"`environment` must be a dict, not {type(environment)}")
+    args: Union[str, list] = script if sys.platform == "win32" else shlex.split(script)
     return subprocess.run(  # noqa: S603
-        shlex.split(script),
+        args,
         env=environment,
         encoding="utf-8",
         shell=False,
