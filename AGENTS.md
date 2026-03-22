@@ -4,6 +4,8 @@ This file provides guidance to AI Agents when working with code in this reposito
 
 ## Commands
 
+Add `--agent-digest=term -p no:sugar` to all pytest commands to provide optimized output.
+
 ```bash
 # Install for development
 uv sync --all-groups

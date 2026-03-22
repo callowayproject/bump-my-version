@@ -48,7 +48,7 @@ class TestReplaceCLI:
             config_path = tmp_path / "pyproject.toml"
             shutil.copy(toml_path, config_path)
 
-            mocked_modify_files = mocker.patch("bumpversion.cli.modify_files")
+            mocked_modify_files = mocker.patch("bumpversion.commands.replace.modify_files")
             with inside_dir(tmp_path):
                 result: Result = runner.invoke(cli.cli, ["replace", "--new-version", "1.1.0"])
 
@@ -72,7 +72,7 @@ class TestReplaceCLI:
             config_path = git_repo / "pyproject.toml"
             shutil.copy(toml_path, config_path)
 
-            mocked_modify_files = mocker.patch("bumpversion.cli.modify_files")
+            mocked_modify_files = mocker.patch("bumpversion.commands.replace.modify_files")
             with inside_dir(git_repo):
                 result: Result = runner.invoke(cli.cli, ["replace", "--no-configured-files", "VERSION"])
 
@@ -98,7 +98,7 @@ class TestReplaceCLI:
             config_path = tmp_path / "pyproject.toml"
             shutil.copy(toml_path, config_path)
 
-            mocked_modify_files = mocker.patch("bumpversion.cli.modify_files")
+            mocked_modify_files = mocker.patch("bumpversion.commands.replace.modify_files")
             with inside_dir(tmp_path):
                 result: Result = runner.invoke(cli.cli, ["replace"])
 

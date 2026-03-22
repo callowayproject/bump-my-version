@@ -23,7 +23,7 @@ class TestNoConfiguredFilesOption:
         """
         No files are sent to the `do_bump` function if the --no-configured-files option is used.
         """
-        mocked_do_bump = mocker.patch("bumpversion.cli.do_bump")
+        mocked_do_bump = mocker.patch("bumpversion.commands.bump.do_bump")
         with inside_dir(tmp_path):
             result: Result = runner.invoke(
                 cli.cli, ["bump", "--current-version", "1.0.0", "--no-configured-files", "patch"]
@@ -40,7 +40,7 @@ class TestNoConfiguredFilesOption:
 
     def test_file_args_marked_to_modify(self, mocker, tmp_path: Path, runner):
         """File paths marked in the command-line arguments are sent to the `do_bump` function."""
-        mocked_do_bump = mocker.patch("bumpversion.cli.do_bump")
+        mocked_do_bump = mocker.patch("bumpversion.commands.bump.do_bump")
         with inside_dir(tmp_path):
             result: Result = runner.invoke(
                 cli.cli,
@@ -98,7 +98,7 @@ def test_cli_options_override_config(tmp_path: Path, fixtures_path: Path, mocker
     config_path = tmp_path / "this_config.toml"
     fixture_toml = fixtures_path / "basic_cfg.toml"
     shutil.copy(fixture_toml, config_path)
-    mocked_do_bump = mocker.patch("bumpversion.cli.do_bump")
+    mocked_do_bump = mocker.patch("bumpversion.commands.bump.do_bump")
 
     # Act
     with inside_dir(tmp_path):
