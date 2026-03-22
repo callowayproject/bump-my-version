@@ -1,5 +1,7 @@
 """Tests for the run_hooks function."""
 
+import sys
+
 from bumpversion import hooks
 import pytest
 
@@ -73,3 +75,63 @@ def test_does_not_call_each_hook_when_dry_run(mocker):
     expected_calls = [mocker.call("Would run 'script1'"), mocker.call("Would run 'script2'")]
     mock_logger.info.assert_has_calls(expected_calls)
     mock_run_command.assert_not_called()
+
+
+def test_shell_syntax_raises_hook_error_by_default():
+    """A hook with shell syntax raises HookError when allow_shell_hooks is False (the default)."""
+    env = {"var": "value"}
+    shell_hooks = ["echo hello | cat"]
+
+    with pytest.raises(HookError, match="allow_shell_hooks"):
+        hooks.run_hooks(shell_hooks, env, allow_shell_hooks=False)
+
+
+def test_shell_variable_expansion_raises_hook_error_by_default():
+    """A hook using $VAR expansion raises HookError when allow_shell_hooks is False."""
+    env = {"var": "value"}
+    shell_hooks = ["echo $MY_VAR"]
+
+    with pytest.raises(HookError, match="allow_shell_hooks"):
+        hooks.run_hooks(shell_hooks, env, allow_shell_hooks=False)
+
+
+def test_shell_syntax_allowed_when_opt_in_enabled():
+    """A hook with shell syntax runs successfully when allow_shell_hooks=True."""
+    env = {}
+    shell_hooks = [f"{sys.executable} -c \"import sys; sys.exit(0)\""]
+
+    # No error raised; pipe-free hook with allow_shell_hooks just runs normally
+    hooks.run_hooks(shell_hooks, env, allow_shell_hooks=True)
+
+
+def test_shell_pipe_runs_when_opt_in_enabled(mocker):
+    """A hook using a pipe executes with shell=True when allow_shell_hooks=True."""
+    mocker.patch("bumpversion.hooks.logger")
+    mock_subprocess = mocker.patch("bumpversion.hooks.subprocess.run")
+    mock_subprocess.return_value = mocker.MagicMock(stdout="output", stderr="", returncode=0)
+
+    env = {}
+    hooks.run_hooks(["echo hello | cat"], env, allow_shell_hooks=True)
+
+    mock_subprocess.assert_called_once_with(
+        "echo hello | cat",
+        env=env,
+        encoding="utf-8",
+        shell=True,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+
+def test_shell_opt_in_emits_warning(mocker):
+    """When a shell-syntax hook runs under allow_shell_hooks=True, a warning is logged."""
+    mock_logger = mocker.patch("bumpversion.hooks.logger")
+    mock_subprocess = mocker.patch("bumpversion.hooks.subprocess.run")
+    mock_subprocess.return_value = mocker.MagicMock(stdout="", stderr="", returncode=0)
+
+    hooks.run_hooks(["echo $VAR"], {}, allow_shell_hooks=True)
+
+    mock_logger.warning.assert_any_call(
+        "Hook 'echo $VAR' uses shell syntax. Consider rewriting as an explicit command."
+    )

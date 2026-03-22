@@ -5,9 +5,10 @@ icon:
 date: 2024-08-11
 comments: true
 ---
+
 # Version component-specific configuration
 
-Version component configuration is grouped in a `[tool.bumpversion.parts.<partname>]` or  `[bumpversion:part:<partname>]` section, depending on if it is a TOML or INI file, respectfully.
+Version component configuration is grouped in a `[tool.bumpversion.parts.<partname>]` or `[bumpversion:part:<partname>]` section, depending on if it is a TOML or INI file, respectfully.
 
 You only need to configure version parts if they deviate from the default, and then you only need to specify the overridden options.
 
@@ -16,10 +17,10 @@ You only need to configure version parts if they deviate from the default, and t
 ::: field-list
     required
     : No
-    
+
     default
     : numeric (i.e. `0`, `1`, `2`, …)
-    
+
     type
     : array of strings
 
@@ -30,10 +31,10 @@ An explicit list of all values to iterate through when bumping this part. An emp
 ::: field-list
     required
     : No
-    
+
     default
     : The first entry in `values`, `0` when using numeric values
-    
+
     type
     : string
 
@@ -43,7 +44,6 @@ When the version part matches this value, it is considered optional when seriali
 
     Numeric values are still treated as strings internally, so when specifying an optional value, you must use a string.
 
-
 ## first_value
 
 ::: field-list
@@ -52,7 +52,7 @@ When the version part matches this value, it is considered optional when seriali
 
     default
     : The first entry in `values`, `0` when using numeric values
-    
+
     type
     : string
 
@@ -62,16 +62,15 @@ When the part is reset, the value will be set to the value specified here.
 
     Numeric values are still treated as strings internally, so when specifying a first value, you must use a string.
 
-
 ## independent
 
 ::: field-list
     required
     : No
-    
+
     default
     : `False`
-    
+
     type
     : boolean
 
@@ -86,22 +85,21 @@ independent of the other parts. It is useful when you have a build number in you
 
     default
     : `False` (`True` if `calver_format` is set)
-    
+
     type
     : boolean
 
 When this value is set to `True`, the part is always incremented when the version is bumped, regardless of the target part.
-
 
 ## calver_format
 
 ::: field-list
     required
     : No
-    
+
     default
     : empty
-    
+
     type
     : string
 

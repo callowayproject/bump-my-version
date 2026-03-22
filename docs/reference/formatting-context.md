@@ -14,10 +14,9 @@ These fields are available for
 
     `#`
     : The literal hash or [octothorpe](https://www.merriam-webster.com/dictionary/octothorpe) character.
-    
+
     `;`
     : The literal semicolon character.
-
 
 ## Date and time fields
 
@@ -25,7 +24,7 @@ These fields are available for
 
     `now`
     : A Python datetime object representing the current local time, without a time zone reference.
-    
+
     `utcnow`
     : A Python datetime object representing the current local time in the UTC time zone.
 
@@ -42,16 +41,16 @@ These fields will only have values if the code is in a Git or Mercurial reposito
 
     `short_commit_sha`
     : The short version of the latest commit reference.
-    
+
     `distance_to_latest_tag`
     : The number of commits since the latest tag.
-    
+
     `dirty`
     : A boolean indicating if the current repository has pending changes.
-    
+
     `branch_name`
     : The current branch name.
-    
+
     `short_branch_name`
     : The current branch name, converted to lowercase, with non-alphanumeric characters removed and truncated to 20 characters. For example, `feature/MY-long_branch-name` would become `featuremylongbranchn`.
 
@@ -60,13 +59,13 @@ These fields will only have values if the code is in a Git or Mercurial reposito
 ::: field-list
     `current_version`
     : The current version serialized as a string
-    
+
     `current_<version component>`
     : Each version component defined by the [version configuration parsing regular expression](configuration/global.md#parse). The default configuration would have `current_major`, `current_minor`, and `current_patch` available.
-    
+
     `new_version`
     : The new version serialized as a string
-    
+
     `new_<version component>`
     : Each version component defined by the [version configuration parsing regular expression](configuration/global.md#parse). The default configuration would have `new_major`, `new_minor`, and `new_patch` available.
 

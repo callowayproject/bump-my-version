@@ -7,7 +7,7 @@ define the version format in the `calver_format` configuration options. Formatti
 combined to create a custom version format. For example, the format `YYYY.MM.DD` can be defined as `"{YYYY}.{MM}.{DD}"`.
 
 | Code   | Example(s)          | Comment                                       |
-|--------|---------------------|-----------------------------------------------|
+| ------ | ------------------- | --------------------------------------------- |
 | `YYYY` | 2000, 2001, …, 2099 | Full year                                     |
 | `YY`   | 0, 1, 2, …, 99      | Short year as integer                         |
 | `0Y`   | 00, 01, 02, …, 99   | Short Year, zero-padded                       |
@@ -39,7 +39,7 @@ calver_format = "{YYYY}.{MM}.{DD}"
 Using the following chart, we can set up the version parsing:
 
 | Code   | Regex                                                             |
-|--------|-------------------------------------------------------------------|
+| ------ | ----------------------------------------------------------------- |
 | `YYYY` | `(?:[1-9][0-9]{3})`                                               |
 | `YY`   | `(?:[1-9][0-9]?)`                                                 |
 | `0Y`   | `(?:[0-9]{2})`                                                    |

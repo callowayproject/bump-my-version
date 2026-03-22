@@ -4,7 +4,7 @@ The main purpose of the `show` subcommand is to provide access to configuration 
 
 ## Basic use
 
-The configuration object is a `dict` containing nested data structures. The arguments and options of this command relate to extracting data from the configuration object and presenting the extracted data. 
+The configuration object is a `dict` containing nested data structures. The arguments and options of this command relate to extracting data from the configuration object and presenting the extracted data.
 
 ## Specifying the output data
 

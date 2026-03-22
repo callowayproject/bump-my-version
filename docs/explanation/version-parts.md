@@ -14,9 +14,9 @@ A version configuration consists of the following:
 
 A version string consists of one or more parts; e.g., version `1.0.2` has three parts, separated by a dot (`.`) character.
 
-The names of these parts are defined in the named groups within the `parse` regular expression. The default configuration calls them *major, minor,* and *patch.*
+The names of these parts are defined in the named groups within the `parse` regular expression. The default configuration calls them _major, minor,_ and _patch._
 
-The `serialize` configuration value is a list of default formats. You have the option for multiple serialization formats to omit *optional* values. For example, the following configuration:
+The `serialize` configuration value is a list of default formats. You have the option for multiple serialization formats to omit _optional_ values. For example, the following configuration:
 
 ```toml
 serialize = [
@@ -25,7 +25,7 @@ serialize = [
 ]
 ```
 
-Bump-my-version will serialize using the first format if the `patch` value is not `0`. If the `patch` value *is* `0`, Bump My Version will use the second format.
+Bump-my-version will serialize using the first format if the `patch` value is not `0`. If the `patch` value _is_ `0`, Bump My Version will use the second format.
 
 ## Version part configuration
 
@@ -55,7 +55,7 @@ values = [
 
 ### Optional values
 
-By default, the *first* value of a version part is considered *optional.* An optional value may be omitted from the version serialization. Using the example from above:
+By default, the _first_ value of a version part is considered _optional._ An optional value may be omitted from the version serialization. Using the example from above:
 
 ```toml
 serialize = [
@@ -96,7 +96,7 @@ values =[
 ]
 ```
 
-Bumping the `patch` part of version `1.0.0` would change the version to `1.0.1-alpha-0`. Bumping the `pre_label` part would change the version to `1.0.1-beta-0`. Bumping the `pre_label` part again would change the version to `1.0.1`. The `stable-0` is not serialized because both `stable` and `0` are *optional*.
+Bumping the `patch` part of version `1.0.0` would change the version to `1.0.1-alpha-0`. Bumping the `pre_label` part would change the version to `1.0.1-beta-0`. Bumping the `pre_label` part again would change the version to `1.0.1`. The `stable-0` is not serialized because both `stable` and `0` are _optional_.
 
 ### First Values
 
@@ -113,9 +113,9 @@ Bumping the `patch` value of version `1.0.0` would change the version to `1.0.1-
 
 ### Independent Values
 
-In the pattern `{major}.{minor}.{patch}-{pre_label}-{pre_n}`, each version part resets to its first value when the element preceding it changes. All these version parts are *dependent.*
+In the pattern `{major}.{minor}.{patch}-{pre_label}-{pre_n}`, each version part resets to its first value when the element preceding it changes. All these version parts are _dependent._
 
-You can include a value that incremented *independently* from the other parts, such as a `build` part: `{major}.{minor}.{patch}-{pre_label}-{pre_n}+{build}`—in the configuration for that part, set `independent=true`.
+You can include a value that incremented _independently_ from the other parts, such as a `build` part: `{major}.{minor}.{patch}-{pre_label}-{pre_n}+{build}`—in the configuration for that part, set `independent=true`.
 
 ```toml
 [tool.bumpversion.parts.build]
@@ -124,6 +124,6 @@ independent = true
 
 ## Reference
 
-- https://devopedia.org/semantic-versioning
-- https://semver.org
-- https://calver.org
+- <https://devopedia.org/semantic-versioning>
+- <https://semver.org>
+- <https://calver.org>

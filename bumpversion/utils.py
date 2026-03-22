@@ -141,8 +141,8 @@ def is_subpath(parent: Pathlike, path: Pathlike) -> bool:
     """
     Determines if a given path is a subpath of a specified parent path.
 
-    The function normalizes the inputs as Path objects and checks if the normalized path starts
-    with the normalized parent path as a prefix. For relative paths, the function assumes the path
+    The function normalizes the inputs as Path objects and checks if the normalized path is
+    within the normalized parent path. For relative paths, the function assumes the path
     could be within the parent and returns True.
 
     Args:
@@ -152,6 +152,20 @@ def is_subpath(parent: Pathlike, path: Pathlike) -> bool:
     Returns:
         True if the path is a subpath of the parent, or if it is a relative path; otherwise, False.
     """
-    normalized_parent = Path(parent)
     normalized_path = Path(path)
-    return str(normalized_path).startswith(str(normalized_parent)) if normalized_path.is_absolute() else True
+    if not normalized_path.is_absolute():
+        return True
+
+    try:
+        # Resolve both paths to eliminate symlinks and relative components
+        resolved_parent = Path(parent).resolve()
+        resolved_path = normalized_path.resolve()
+
+        # Check if resolved_path is relative to resolved_parent
+        # This will raise ValueError if resolved_path is not under resolved_parent
+        resolved_path.relative_to(resolved_parent)
+        return True
+    except (ValueError, OSError):
+        # ValueError: path is not relative to parent
+        # OSError: path resolution failed (e.g., doesn't exist)
+        return False

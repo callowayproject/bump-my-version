@@ -25,7 +25,7 @@ A **version component spec** defines how a single part of a _version spec,_ such
 
 A **version parser** is a regular expression used in several ways. Its named capture groups define the possible components in a version spec and the order in which they appear. It also parses a version string into version component names and their values.
 
-A **version** is the concrete representation of a _version spec._ It is a mapping of version component names to _version components._ 
+A **version** is the concrete representation of a _version spec._ It is a mapping of version component names to _version components._
 
 A **version component** is the concrete representation of a _version component spec._ It is a _version component spec_ with a specific value.
 
@@ -38,18 +38,13 @@ A **version serialization format** is a list of format strings used to serialize
     <figcaption>How a configuration file is used to generate a version spec.</figcaption>
 </figure>
 
-
-
-
-
-The most important part of the configuration file is the _version parser._ It defines the structure of the _version spec._ 
-
+The most important part of the configuration file is the _version parser._ It defines the structure of the _version spec._
 
 If the configuration file contains a _version component spec_ that matches a named capture group in the _version parser,_ then that _version component spec_ is used in the _version spec._ The yellow and green named capture groups in the diagram demonstrate this.
 
 If the configuration file does not contain a _version component spec_ that matches a named capture group in the _version parser,_ then a default _version component spec_ is used. The blue named capture group in the diagram demonstrates this.
 
-The _component dependency_ graph determines the order in which the _version components_ are incremented and reset. For example, in the diagram, the patch component depends on the minor component, which depends on the `major` component. Therefore, when the `major` component is incremented, the `minor` component is reset, which cascades to the `patch` component. 
+The _component dependency_ graph determines the order in which the _version components_ are incremented and reset. For example, in the diagram, the patch component depends on the minor component, which depends on the `major` component. Therefore, when the `major` component is incremented, the `minor` component is reset, which cascades to the `patch` component.
 
 ### How a version is generated
 
@@ -58,7 +53,7 @@ The _component dependency_ graph determines the order in which the _version comp
     <figcaption>How a version spec is used to generate a version.</figcaption>
 </figure>
 
-The _version spec_ has a `create_version` method that takes a mapping of version component names to values. 
+The _version spec_ has a `create_version` method that takes a mapping of version component names to values.
 
 Each _version component spec_ has a `create_component` method that takes a value. The `create_version` method calls the `create_component` method for each _version component spec_ in the _version spec_ with the value from the mapping.
 
@@ -95,12 +90,12 @@ The `serialize` method of the _version spec_ returns either the optimal serializ
     ::: card-container depth-0
         ::: card-media
             [![How a version is serialized with values major=1, minor=2, and patch=0](../assets/serializing-a-version-1-2-0.svg)](../assets/serializing-a-version-1-2-0.svg)
-            
+
         ::: card-content
-        
+
             One optional value
             {.card-content-title}
-            
+
             A version with values major=1, minor=2, and patch=0 has two valid serializations. The optimal serialization is the one that uses the fewest components. `1.2` in this example.
 
     ::: card-container depth-0

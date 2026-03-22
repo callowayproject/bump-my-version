@@ -1,4 +1,5 @@
 {'allow_dirty': False,
+ 'allow_shell_hooks': True,
  'commit': True,
  'commit_args': None,
  'current_version': '1.0.0',

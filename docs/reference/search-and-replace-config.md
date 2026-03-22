@@ -12,7 +12,7 @@ Bump My Version defaults to using a simple string search. If the search template
 
 ## Using template strings
 
-Both the search and replace templates are rendered using the [formatting context](formatting-context.md). However, only the search template is also treated as a regular expression. The replacement fields available in the formatting context are enclosed in curly braces `{}`. 
+Both the search and replace templates are rendered using the [formatting context](formatting-context.md). However, only the search template is also treated as a regular expression. The replacement fields available in the formatting context are enclosed in curly braces `{}`.
 
 The search and replace templates can be multiple lines, like so:
 
@@ -49,7 +49,7 @@ Only the search template will use [Python's regular expression syntax](https://d
 
 Curly braces (`{}`) must be doubled in the regular expression to escape them from the string-formatting process.
 
-If you are using a TOML-formatted configuration file, you must also escape backslashes (`\`) in the regular expression. The TOML parser will treat a single backslash as an escape character. 
+If you are using a TOML-formatted configuration file, you must also escape backslashes (`\`) in the regular expression. The TOML parser will treat a single backslash as an escape character.
 
 The following template:
 

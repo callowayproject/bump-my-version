@@ -30,7 +30,9 @@ replace = "MyProject=={new_version}"
 
 If the string to be replaced includes literal quotes, the search and replace patterns must include them to match. Given the file `version.sh`:
 
-    MY_VERSION="1.2.3"
+```text
+MY_VERSION="1.2.3"
+```
 
 Then the following search and replace patterns (including quotes) would be required:
 
