@@ -15,16 +15,18 @@ class TestRunCommand:
         assert isinstance(result, subprocess.CompletedProcess)
         assert result.stdout == "Hello\n"
 
-    def test_can_access_env(self):
-        """The command can access custom environment variables."""
-        cmd = "echo %TEST_ENV%" if sys.platform == "win32" else "echo $TEST_ENV"
-        result = run_command(cmd, environment={"TEST_ENV": "Hello"})
+    def test_env_is_passed_to_subprocess(self):
+        """The subprocess receives custom environment variables via env, without shell expansion in args."""
+        result = run_command(
+            f"{sys.executable} -c \"import os; print(os.environ['TEST_ENV'])\"",
+            environment={"TEST_ENV": "Hello"},
+        )
         assert isinstance(result, subprocess.CompletedProcess)
         assert result.stdout == "Hello\n"
 
     def test_non_zero_exit(self):
         """The result shows a non-zero result code."""
-        result = run_command("exit 1")
+        result = run_command(f"{sys.executable} -c \"import sys; sys.exit(1)\"")
         assert result.returncode == 1
 
     @pytest.mark.parametrize(
@@ -42,3 +44,9 @@ class TestRunCommand:
     def test_an_invalid_env_raises_type_error(self, invalid_env):
         with pytest.raises(TypeError):
             run_command("echo Hello", environment=invalid_env)
+
+    def test_no_shell_expansion_of_args(self):
+        """With shell=False, $VAR in command args is not expanded by the shell."""
+        result = run_command("echo $TEST_ENV", environment={"TEST_ENV": "Hello"})
+        # $TEST_ENV is passed literally to echo, not expanded
+        assert result.stdout.strip() == "$TEST_ENV"

@@ -39,6 +39,7 @@ DEFAULTS = {
     "setup_hooks": [],
     "pre_commit_hooks": [],
     "post_commit_hooks": [],
+    "allow_shell_hooks": True,
 }
 
 

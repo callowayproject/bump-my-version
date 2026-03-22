@@ -1,6 +1,6 @@
 # Using Calendar Versioning (CalVer)
 
-Calendar Versioning (CalVer) is a versioning scheme that uses a date-based version number. 
+Calendar Versioning (CalVer) is a versioning scheme that uses a date-based version number.
 
 For this example, we will use the following format: `YYYY.MM.DD.patch`. It will yield numbers like:
 
@@ -62,7 +62,6 @@ $ bump-my-version show-bump
 ### The result of a bump to patch depends on the date
 
 Calendar Versioned parts are updated with every bump, regardless of the part being bumped. If you are bumping the version within the same time period (in this example, the same day), the `release` part will not change. So bumping the `patch` part will increment the `patch` part only.
-
 
 ```console title="Bumping patch on the same day"
 $ date -I      

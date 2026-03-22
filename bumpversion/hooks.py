@@ -2,8 +2,11 @@
 
 import datetime
 import os
+import re
+import shlex
 import subprocess
-from typing import Dict, List, Optional
+import sys
+from typing import Dict, List, Optional, Union
 
 from bumpversion.config.models import Config
 from bumpversion.context import get_context
@@ -15,15 +18,32 @@ PREFIX = "BVHOOK_"
 
 logger = get_indented_logger(__name__)
 
+# Matches shell metacharacters that require shell=True to function correctly.
+# Includes: pipes, logical operators, command separators, redirects,
+# backtick substitution, variable expansion, and subshells.
+SHELL_SYNTAX_RE = re.compile(r"[|;&`$<>()\n\r]")
+
+
+def has_shell_syntax(script: str) -> bool:
+    """Return True if the command string contains shell metacharacters."""
+    return bool(SHELL_SYNTAX_RE.search(script))
+
 
 def run_command(script: str, environment: Optional[dict] = None) -> subprocess.CompletedProcess:
-    """Runs command-line programs using the shell."""
+    """Run a command using argv-based execution (shell=False)."""
     if not isinstance(script, str):
         raise TypeError(f"`script` must be a string, not {type(script)}")
     if environment and not isinstance(environment, dict):
         raise TypeError(f"`environment` must be a dict, not {type(environment)}")
-    return subprocess.run(
-        script, env=environment, encoding="utf-8", shell=True, text=True, capture_output=True, check=False
+    args: Union[str, list] = script if sys.platform == "win32" else shlex.split(script)
+    return subprocess.run(  # noqa: S603
+        args,
+        env=environment,
+        encoding="utf-8",
+        shell=False,
+        text=True,
+        capture_output=True,
+        check=False,
     )
 
 
@@ -93,8 +113,8 @@ def get_post_commit_hook_env(config: Config, current_version: Version, new_versi
     }
 
 
-def run_hooks(hooks: List[str], env: Dict[str, str], dry_run: bool = False) -> None:
-    """Run a list of command-line programs using the shell."""
+def run_hooks(hooks: List[str], env: Dict[str, str], dry_run: bool = False, allow_shell_hooks: bool = False) -> None:
+    """Run a list of command-line programs, defaulting to safe argv-based execution."""
     logger.indent()
     for script in hooks:
         if dry_run:
@@ -102,7 +122,19 @@ def run_hooks(hooks: List[str], env: Dict[str, str], dry_run: bool = False) -> N
             continue
         logger.info(f"Running {script!r}")
         logger.indent()
-        result = run_command(script, env)
+        if has_shell_syntax(script):
+            if not allow_shell_hooks:
+                raise HookError(
+                    f"Hook {script!r} contains shell syntax (pipes, redirects, or variable expansion). "
+                    f"Set `allow_shell_hooks = true` in your configuration to enable shell execution, "
+                    f"or rewrite the hook as an explicit command without shell syntax."
+                )
+            logger.warning(f"Hook {script!r} uses shell syntax. Consider rewriting as an explicit command.")
+            result = subprocess.run(
+                script, env=env, encoding="utf-8", shell=True, text=True, capture_output=True, check=False
+            )
+        else:
+            result = run_command(script, env)
         if result.returncode != 0:
             logger.warning(result.stdout)
             logger.warning(result.stderr)
@@ -125,7 +157,7 @@ def run_setup_hooks(config: Config, current_version: Version, dry_run: bool = Fa
         logger.info("No setup hooks defined")
         return
 
-    run_hooks(config.setup_hooks, env, dry_run)
+    run_hooks(config.setup_hooks, env, dry_run, allow_shell_hooks=config.allow_shell_hooks)
 
 
 def run_pre_commit_hooks(
@@ -141,7 +173,7 @@ def run_pre_commit_hooks(
         logger.info("No pre-commit hooks defined")
         return
 
-    run_hooks(config.pre_commit_hooks, env, dry_run)
+    run_hooks(config.pre_commit_hooks, env, dry_run, allow_shell_hooks=config.allow_shell_hooks)
 
 
 def run_post_commit_hooks(
@@ -156,4 +188,4 @@ def run_post_commit_hooks(
         logger.info("No post-commit hooks defined")
         return
 
-    run_hooks(config.post_commit_hooks, env, dry_run)
+    run_hooks(config.post_commit_hooks, env, dry_run, allow_shell_hooks=config.allow_shell_hooks)
