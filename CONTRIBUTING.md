@@ -53,11 +53,11 @@ A good bug report shouldn't leave others needing to chase you up for more inform
 - To see if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the [bug tracker](https://github.com/callowayproject/bump-my-version/issues).
 - Also, make sure to search the internet (including Stack Overflow) to see if users outside of the GitHub community have discussed the issue.
 - Collect information about the bug:
-   - Stack trace (Traceback)
-   - OS, Platform, and Version (Windows, Linux, macOS, x86, ARM)
-   - The version of Python
-   - Possibly your input and the output
-   - Can you reliably reproduce the issue? And can you also reproduce it with older versions?
+  - Stack trace (Traceback)
+  - OS, Platform, and Version (Windows, Linux, macOS, x86, ARM)
+  - The version of Python
+  - Possibly your input and the output
+  - Can you reliably reproduce the issue? And can you also reproduce it with older versions?
 
 ### How Do I Submit a Good Bug Report?
 
@@ -67,7 +67,7 @@ We use GitHub issues to track bugs and errors. If you run into an issue with the
 
 - Open an [Issue](https://github.com/callowayproject/bump-my-version/issues/new). (Since we can't be sure at this point whether it is a bug or not, we ask you not to talk about a bug yet and not to label the issue.)
 - Explain the behavior you would expect and the actual behavior.
-- Please provide as much context as possible and describe the *reproduction steps* that someone else can follow to recreate the issue on their own. This usually includes your code. For good bug reports, you should isolate the problem and create a reduced test case.
+- Please provide as much context as possible and describe the _reproduction steps_ that someone else can follow to recreate the issue on their own. This usually includes your code. For good bug reports, you should isolate the problem and create a reduced test case.
 - Provide the information you collected in the previous section.
 
 Once it's filed:
@@ -126,7 +126,7 @@ source env/bin/activate
 python -m pip install -e .[dev,test]
 ```
 
-If you are inclined to use the included `devenv.nix` environment, ensure you have both the `nix` package manager and `devenv` installed; reference the setup instructions for these tools [here](http://devenv.sh/getting-started/). Once `devenv` is installed, you can use the following command from the project's root directory:
+If you are inclined to use the included `devenv.nix` environment, ensure you have both the `nix` package manager and `devenv` installed; reference the setup instructions for these tools [in the getting started documentation](http://devenv.sh/getting-started/). Once `devenv` is installed, you can use the following command from the project's root directory:
 
 ```sh
 # Create and enter the devenv shell 
@@ -163,9 +163,9 @@ All of the basic coding styles are configured into tools for fixing and checking
 
 ### Commit Messages
 
-**Commit messages are used to generate the change log.**
+Commit messages are used to generate the change log.
 
-**New changes**
+#### New changes
 
 Commit messages are categorized as "new" if the commit message starts with:
 
@@ -174,7 +174,7 @@ Commit messages are categorized as "new" if the commit message starts with:
 
 For example: `Added this cool new feature` or `New document type added`.
 
-**Updates**
+#### Updates
 
 Commit messages are categorized as "updates" if the commit message starts with:
 
@@ -190,7 +190,7 @@ Commit messages are categorized as "updates" if the commit message starts with:
 
 For example: `Modified the taxonomy schema` or `Improves performance by 419%`
 
-**Fixes**
+#### Fixes
 
 Commit messages are categorizes as "fixes" if the commit message starts with:
 
@@ -198,11 +198,11 @@ Commit messages are categorizes as "fixes" if the commit message starts with:
 
 For example: `Fixes bug #123`
 
-**Other**
+#### Other
 
 All other commit messages are categorized as "other."
 
-**Ignoring commit messages**
+#### Ignoring commit messages
 
 To have the change log generator ignore this commit, add to the summary line:
 
@@ -217,7 +217,7 @@ To have the change log generator ignore this commit, add to the summary line:
 
 ## Join The Project Team
 
-If you would like to be a maintainer, reach out to coreyoordt@gmail.com.
+If you would like to be a maintainer, reach out to <coreyoordt@gmail.com>.
 
 ## Attribution
 

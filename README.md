@@ -23,14 +23,14 @@ Bump My Version's purpose is to:
 
 - Work as a part of an automated build system
 - Manage project versioning through the project's development life cycle
-    - Incrementing and serializing version numbers
-    - parsing version numbers
-    - supporting SemVer, CalVer, and other versioning schemes
+  - Incrementing and serializing version numbers
+  - parsing version numbers
+  - supporting SemVer, CalVer, and other versioning schemes
 - Search and replace data in project files
 - Work with the project's source control system
-    - Committing changes
-    - Tagging releases
-    - Reading version numbers from tags
+  - Committing changes
+  - Tagging releases
+  - Reading version numbers from tags
 
 ## Installation
 
@@ -100,10 +100,9 @@ $ bump-my-version show --increment minor new_version
 1.3.3
 ```
 
-
 ### Add support for pre-release versions
 
-Alter the `parse` configuration to support pre-release versions. This `parse` option uses an extended (or verbose) regular expression to extract the version components from the current version. 
+Alter the `parse` configuration to support pre-release versions. This `parse` option uses an extended (or verbose) regular expression to extract the version components from the current version.
 
 ```toml title="New parse configuration"
 parse = """(?x)
@@ -300,19 +299,21 @@ jobs:
 ```
 
 Inputs for the bump-my-version action are:
+
 1. `args` - The arguments to pass to the `bump-my-version bump [args]` command. See the CLI documentation for more information.
 2. `github-token` - The GitHub token to use for committing and tagging. This is optional.
 
 Output:
+
 1. `bumped` - Boolean flag for whether the version was bumped.
 2. `previous-version` - Version before bump was performed.
 3. `current-version` - Version after performing bump.
 
-If you want to ensure that workflows set up with on-push trigger will also start based on those newly pushed commits or tags, you need to provide a custom personal access token (PAT). See [here](https://github.com/orgs/community/discussions/25702). 
+If you want to ensure that workflows set up with on-push trigger will also start based on those newly pushed commits or tags, you need to provide a custom personal access token (PAT). See [this discussion](https://github.com/orgs/community/discussions/25702).
 
 ## Development & Contributing
 
-Thank you, contributors! You can find a full list here: https://github.com/callowayproject/bump-my-version/graphs/contributors
+Thank you, contributors! You can find a full list here: <https://github.com/callowayproject/bump-my-version/graphs/contributors>
 
 See also our [CONTRIBUTING.md](https://github.com/callowayproject/bump-my-version/blob/master/CONTRIBUTING.md)
 

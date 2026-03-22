@@ -165,8 +165,17 @@ line-length = 119
 
 [tool.rumdl]
 line-length = 120
-exclude = ["node_modules", "build", "dist", ".venv"]
-disable = []
+exclude = [
+    "node_modules",
+    "build",
+    "dist",
+    ".venv",
+    ".github",
+    "**/nav.md",
+    "**/index.md",
+    "**/semantic-versioning-example.md",
+]
+disable = ["MD033", "MD057"]
 respect-gitignore = true
 flavor = "mkdocs"
 
@@ -223,19 +232,19 @@ line-length = 119
 [tool.ruff.lint]
 preview = true
 select = [
-    "E",   # pycodestyle errors
-    "W",   # pycodestyle warnings
-    "F",   # pyflakes
-    "I",   # isort
-    "N",   # PEP8 naming
-    "B",   # flake8-bugbear
+    "E", # pycodestyle errors
+    "W", # pycodestyle warnings
+    "F", # pyflakes
+    "I", # isort
+    "N", # PEP8 naming
+    "B", # flake8-bugbear
     "BLE", # flake8-blind except
-    "D",   # pydocstyle
+    "D", # pydocstyle
     # "DOC", # pydoclint
-    "S",   # flakeu-bandit
+    "S", # flakeu-bandit
     "RUF", # Ruff-specific rules
     "NPY", # NumPy-specific rules
-    "PD",  # Pandas-vet
+    "PD", # Pandas-vet
     "PGH", # PyGrep hooks
     "ANN", # flake8-annotations
     "C90", # McCabe complexity
@@ -245,21 +254,21 @@ select = [
     "TCH", # Flake8 type-checking
 ]
 ignore = [
-    "ANN002",  # missing-type-args
-    "ANN003",  # missing-type-kwargs
-    "ANN204",  # missing-return-type-special-method
-    "ANN401",  # any-type
-    "RUF067",  # non-empty-init-module
-    "S101",    # assert
-    "S104",    # hardcoded-bind-all-interfaces
-    "S404",    # suspicious-subprocess-import
-    "S602",    # subprocess-popen-with-shell-equals-true
-    "D105",    # undocumented-magic-method
-    "D106",    # undocumented-public-nested-class
-    "D107",    # undocumented-public-init
-    "D200",    # fits-on-one-line
-    "D212",    # multi-line-summary-first-line
-    "PD011",   # pandas-use-of-dot-values
+    "ANN002", # missing-type-args
+    "ANN003", # missing-type-kwargs
+    "ANN204", # missing-return-type-special-method
+    "ANN401", # any-type
+    "RUF067", # non-empty-init-module
+    "S101", # assert
+    "S104", # hardcoded-bind-all-interfaces
+    "S404", # suspicious-subprocess-import
+    "S602", # subprocess-popen-with-shell-equals-true
+    "D105", # undocumented-magic-method
+    "D106", # undocumented-public-nested-class
+    "D107", # undocumented-public-init
+    "D200", # fits-on-one-line
+    "D212", # multi-line-summary-first-line
+    "PD011", # pandas-use-of-dot-values
     "PLC0415", # import-outside-toplevel
     "PLW1641", # eq-without-hash
 ]

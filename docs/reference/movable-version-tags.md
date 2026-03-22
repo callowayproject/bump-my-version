@@ -14,7 +14,6 @@ Bump My Version's stance is to provide unique, immutable release tags when taggi
 - All strings are serialized
 - Each string is forcibly tagged locally (as a lightweight, non-annotated tag), deleted on origin, and then pushed to origin without force.
 
-
 ## Configuration
 
 ```toml
@@ -27,4 +26,4 @@ moveable_tags = [
 
 ## Example
 
-![](../assets/moving-tags.svg)
+![Movable Tags Diagram](../assets/moving-tags.svg)

@@ -14,7 +14,7 @@ The default configuration uses a simplified version of [semantic versioning](htt
 
 !!! Note
 
-    Python projects can use `pyproject.toml` as the `--destination` of the sample config. 
+    Python projects can use `pyproject.toml` as the `--destination` of the sample config.
 
 ```console title="Generating a default configuration"
 $ bump-my-version sample-config --no-prompt --destination .bumpversion.toml

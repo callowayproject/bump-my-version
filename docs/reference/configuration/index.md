@@ -5,6 +5,7 @@ icon:
 date: 2024-08-11
 comments: true
 ---
+
 # Configuration
 
 Bump My Version looks in three places for configuration information (in order of precedence):
@@ -12,7 +13,6 @@ Bump My Version looks in three places for configuration information (in order of
 1. command line
 2. configuration file
 3. environment variables
-
 
 ## Configuration files
 

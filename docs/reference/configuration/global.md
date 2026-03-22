@@ -5,28 +5,28 @@ icon:
 date: 2024-08-11
 comments: true
 ---
+
 # Global Configuration
 
-The general configuration is grouped in a `[tool.bumpversion]` or  `[bumpversion]` section, depending on if it is a TOML or INI file, respectfully.
+The general configuration is grouped in a `[tool.bumpversion]` or `[bumpversion]` section, depending on if it is a TOML or INI file, respectfully.
 
 ## allow_dirty
 
 ::: field-list
     required
     :   No
-    
+
     default
     :   `False` 
-    
+
     type
     :   boolean
-    
+
     command line option
     :   `--allow-dirty | --no-allow-dirty`
-    
+
     environment var
     :   `BUMPVERSION_ALLOW_DIRTY`
-
 
 Bump-my-version's default behavior is to abort if the working directory has uncommitted changes. This protects you from releasing unversioned files and overwriting unsaved changes.
 
@@ -35,16 +35,16 @@ Bump-my-version's default behavior is to abort if the working directory has unco
 ::: field-list
     required
     :   No
-    
+
     default
     :   `False` (Don't create a commit)
-    
+
     type
     :   boolean
-    
+
     command line option
     :   `--commit | --no-commit`
-    
+
     environment var
     :   `BUMPVERSION_COMMIT`
 
@@ -58,16 +58,16 @@ If you have pre-commit hooks, add an option to [`commit_args`](global.md#commit_
 
     required
     : No
-    
+
     default
     : `""`
-    
+
     type
     : string
-    
+
     command line option
     : `--commit-args`
-    
+
     environment var
     : `BUMPVERSION_COMMIT_ARGS`
 
@@ -81,16 +81,16 @@ If you have pre-commit hooks, add an option to turn off your pre-commit hooks. F
 
     required
     : **Yes‡**
-    
+
     default
     : `""`
-    
+
     type
     : string
-    
+
     command line option
     : `--current-version`
-    
+
     environment var
     : `BUMPVERSION_CURRENT_VERSION`
 
@@ -106,16 +106,16 @@ The current version of the software package before bumping. A value for this is 
 
     required
     : No
-    
+
     default
     : `False`
-    
+
     type
     : boolean
-    
+
     command line option
     : `--ignore-missing-files`
-    
+
     environment var
     : `BUMPVERSION_IGNORE_MISSING_FILES`
 
@@ -126,16 +126,16 @@ If `True`, don't fail if the configured file is missing.
 ::: field-list
     required
     : No
-    
+
     default
     : `False`
-    
+
     type
     : boolean
-    
+
     command line option
     : `--ignore-missing-version`
-    
+
     environment var
     : `BUMPVERSION_IGNORE_MISSING_VERSION`
 
@@ -147,16 +147,16 @@ If `True`, don't fail if the version string to be replaced is not found in the f
 
     required
     :   No
-    
+
     default
     :   `Bump version: {current_version} → {new_version}`
-    
+
     type
     :   string
-    
+
     command line option
     :   `--message`
-    
+
     environment var
     :   `BUMPVERSION_MESSAGE`
 
@@ -169,16 +169,16 @@ This string is templated using the [Python Format String Syntax](https://docs.py
 ::: field-list
     required
     : No
-    
+
     default
     : `(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)`
-    
+
     type
     : string
-    
+
     command line option
     : `--parse`
-    
+
     environment var
     : `BUMPVERSION_PARSE`
 
@@ -192,16 +192,16 @@ The regular expression must be able to parse all strings produced by the configu
 
     required
     : No
-    
+
     default
     : `False`
-    
+
     type
     : boolean
-    
+
     command line option
     : `--regex | --no-regex`
-    
+
     environment var
     : `BUMPVERSION_REGEX`
 
@@ -212,16 +212,16 @@ Treat the `search` string as a regular expression.
 ::: field-list
     required
     : No
-    
+
     default
     : `{new_version}`
-    
+
     type
     : string
-    
+
     command line option
     : `--replace`
-    
+
     environment var
     : `BUMPVERSION_REPLACE`
 
@@ -232,16 +232,16 @@ This is the template to create the string that will replace the current version 
 ::: field-list
     required
     : No
-    
+
     default
     : `{current_version}`
-    
+
     type
     : string
-    
+
     command line option
     : `--search`
-    
+
     environment var
     : `BUMPVERSION_SEARCH`
 
@@ -254,16 +254,16 @@ This is useful if there is the remotest possibility that the current version num
 ::: field-list
     required
     : No
-    
+
     default
     : `["{major}.{minor}.{patch}"]`
-    
+
     type
     : an array of strings
-    
+
     command line option
     : `--serialize`
-    
+
     environment var
     : `BUMPVERSION_SERIALIZE`
 
@@ -273,15 +273,13 @@ Since version parts can be optional, bumpversion will try the serialization form
 
 In this example (in TOML):
 
-```toml
-serialize = [
-    "{major}.{minor}.{patch}",
-    "{major}.{minor}",
-    "{major}"
-]
-```
+    serialize = [
+        "{major}.{minor}.{patch}",
+        "{major}.{minor}",
+        "{major}"
+    ]
 
-Since `0` is optional by default, Version `1.8.9` will serialize to  `1.8.9`, `1.9.0` will serialize to `1.9`, and version `2.0.0` will serialize as `2`. 
+Since `0` is optional by default, Version `1.8.9` will serialize to `1.8.9`, `1.9.0` will serialize to `1.9`, and version `2.0.0` will serialize as `2`.
 
 Each string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](../formatting-context.md) describes the available variables.
 
@@ -291,16 +289,16 @@ Each string is templated using the [Python Format String Syntax](https://docs.py
 
     required
     : No
-    
+
     default
     : `False` (Don't sign tags)
-    
+
     type
     : boolean
-    
+
     command line option
     : `--sign-tags | --no-sign-tags`
-    
+
     environment var
     : `BUMPVERSION_SIGN_TAGS`
 
@@ -312,20 +310,20 @@ If `True`, sign the created tag, when [`tag`](global.md#tag) is `True`.
 
     required
     : No
-    
+
     default
     : `False` (Don't create a tag)
-    
+
     type
     : boolean
-    
+
     command line option
     : `--tag | --no-tag`
-    
+
     environment var
     : `BUMPVERSION_TAG`
 
-If `True`, create a tag after committing the changes. The tag is named using the [`tag_name`](global.md#tag_name) option. 
+If `True`, create a tag after committing the changes. The tag is named using the [`tag_name`](global.md#tag_name) option.
 
 If you are using `git`, don't forget to `git-push` with the `--tags` flag when you are done.
 
@@ -334,16 +332,16 @@ If you are using `git`, don't forget to `git-push` with the `--tags` flag when y
 ::: field-list
     required
     : No
-    
+
     default
     : `Bump version: {current_version} → {new_version}`
-    
+
     type
     : string
-    
+
     command line option
     : `--tag-message`
-    
+
     environment var
     : `BUMPVERSION_TAG_MESSAGE`
 
@@ -351,7 +349,7 @@ The tag message template to use when creating a tag when [`tag`](global.md#tag) 
 
 This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](../formatting-context.md) describes the available variables.
 
-Bump My Version creates an *annotated* tag in Git by default. To turn this off and create a *lightweight* tag, you must explicitly set an empty `tag_message` value.
+Bump My Version creates an _annotated_ tag in Git by default. To turn this off and create a _lightweight_ tag, you must explicitly set an empty `tag_message` value.
 
 ## tag_name
 
@@ -359,16 +357,16 @@ Bump My Version creates an *annotated* tag in Git by default. To turn this off a
 
     required
     : No
-    
+
     default
     : `v{new_version}`
-    
+
     type
     : string
-    
+
     command line option
     : `--tag-name`
-    
+
     environment var
     : `BUMPVERSION_TAG_NAME`
 
