@@ -233,6 +233,113 @@ class TestReplaceCLI:
                 == "# Changelog\n\n## [0.0.1 (2023-01-01)](https://cool.url)\n\n- Test unreleased package.\n"
             )
 
+    class TestRegexConfigPrecedence:
+        """Test that --regex/--no-regex CLI flags interact correctly with config."""
+
+        def test_config_regex_true_preserved_when_flag_omitted(self, tmp_path, runner):
+            """When config has regex=true and no CLI flag is given, regex behavior is applied."""
+            version_path = tmp_path / "VERSION"
+            version_path.write_text("version: 1.0.0\n", encoding="utf-8")
+            config_file = tmp_path / ".bumpversion.toml"
+            config_file.write_text(
+                "[tool.bumpversion]\n"
+                'current_version = "1.0.0"\n'
+                "allow_dirty = true\n"
+                "regex = true\n",
+                encoding="utf-8",
+            )
+
+            with inside_dir(tmp_path):
+                result: Result = runner.invoke(
+                    cli.cli,
+                    [
+                        "replace",
+                        "--no-configured-files",
+                        "--search",
+                        r"version: \d+\.\d+\.\d+",
+                        "--replace",
+                        "version: 2.0.0",
+                        "VERSION",
+                    ],
+                )
+
+            if result.exit_code != 0:
+                print(result.output)
+                print(traceback.print_exception(result.exc_info[1]))
+
+            assert result.exit_code == 0
+            assert version_path.read_text() == "version: 2.0.0\n"
+
+        def test_config_regex_true_overridden_by_no_regex_flag(self, tmp_path, runner):
+            """When config has regex=true but --no-regex is passed, literal behavior is applied."""
+            version_path = tmp_path / "VERSION"
+            version_path.write_text(r"version: \d+\.\d+\.\d+" + "\n", encoding="utf-8")
+            config_file = tmp_path / ".bumpversion.toml"
+            config_file.write_text(
+                "[tool.bumpversion]\n"
+                'current_version = "1.0.0"\n'
+                "allow_dirty = true\n"
+                "regex = true\n",
+                encoding="utf-8",
+            )
+
+            with inside_dir(tmp_path):
+                result: Result = runner.invoke(
+                    cli.cli,
+                    [
+                        "replace",
+                        "--no-configured-files",
+                        "--no-regex",
+                        "--search",
+                        r"version: \d+\.\d+\.\d+",
+                        "--replace",
+                        "version: 2.0.0",
+                        "VERSION",
+                    ],
+                )
+
+            if result.exit_code != 0:
+                print(result.output)
+                print(traceback.print_exception(result.exc_info[1]))
+
+            assert result.exit_code == 0
+            assert version_path.read_text() == "version: 2.0.0\n"
+
+        def test_config_regex_false_overridden_by_regex_flag(self, tmp_path, runner):
+            """When config has regex=false but --regex is passed, regex behavior is applied."""
+            version_path = tmp_path / "VERSION"
+            version_path.write_text("version: 1.0.0\n", encoding="utf-8")
+            config_file = tmp_path / ".bumpversion.toml"
+            config_file.write_text(
+                "[tool.bumpversion]\n"
+                'current_version = "1.0.0"\n'
+                "allow_dirty = true\n"
+                "regex = false\n",
+                encoding="utf-8",
+            )
+
+            with inside_dir(tmp_path):
+                result: Result = runner.invoke(
+                    cli.cli,
+                    [
+                        "replace",
+                        "--no-configured-files",
+                        "--regex",
+                        "--search",
+                        r"version: \d+\.\d+\.\d+",
+                        "--replace",
+                        "version: 2.0.0",
+                        "VERSION",
+                    ],
+                )
+
+            if result.exit_code != 0:
+                print(result.output)
+                print(traceback.print_exception(result.exc_info[1]))
+
+            assert result.exit_code == 0
+            assert version_path.read_text() == "version: 2.0.0\n"
+
     class TestReplaceInputs:
         """Test the replace inputs of the replace subcommand."""
 

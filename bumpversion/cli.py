@@ -431,7 +431,7 @@ def show(
 )
 @click.option(
     "--regex/--no-regex",
-    default=False,
+    default=None,
     envvar="BUMPVERSION_REGEX",
     help="Treat the search parameter as a regular expression or explicitly do not treat it as a regular expression.",
 )
@@ -474,7 +474,7 @@ def replace(
     serialize: Optional[List[str]],
     search: Optional[str],
     replace: Optional[str],
-    regex: bool,
+    regex: Optional[bool],
     no_configured_files: bool,
     ignore_missing_version: bool,
     ignore_missing_files: bool,
