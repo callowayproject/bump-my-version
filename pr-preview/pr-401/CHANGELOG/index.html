@@ -6760,11 +6760,15 @@
 </ul>
 <h3 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Add <code>allow_shell_hooks</code> option for safe hook execution; improve shell syntax handling. <a href="https://github.com/callowayproject/bump-my-version/commit/036ee1a909aeea02eb8e4b144f856fb6d70444e9">036ee1a</a><p>- Introduce <code>allow_shell_hooks</code> configuration to control shell metacharacters in hooks.
-  - Change default behavior to disallow shell syntax (<code>shell=False</code>) unless explicitly enabled.
-  - Add regex detection for shell syntax and migrate affected hooks.
-  - Update tests and fixtures to cover new functionality.
-  - Enhance documentation with migration guidance and best practices.</p>
+<li>
+<p>Add <code>allow_shell_hooks</code> option for safe hook execution; improve shell syntax handling. <a href="https://github.com/callowayproject/bump-my-version/commit/036ee1a909aeea02eb8e4b144f856fb6d70444e9">036ee1a</a></p>
+<ul>
+<li>Introduce <code>allow_shell_hooks</code> configuration to control shell metacharacters in hooks.</li>
+<li>Change default behavior to disallow shell syntax (<code>shell=False</code>) unless explicitly enabled.</li>
+<li>Add regex detection for shell syntax and migrate affected hooks.</li>
+<li>Update tests and fixtures to cover new functionality.</li>
+<li>Enhance documentation with migration guidance and best practices.</li>
+</ul>
 </li>
 </ul>
 <h3 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h3>
@@ -6779,10 +6783,14 @@
 </ul>
 <h3 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Update pre-commit, improve <code>is_subpath</code> logic, and enhance documentation. <a href="https://github.com/callowayproject/bump-my-version/commit/919c66b6c58095908dfd9ccdabab1cb367260df5">919c66b</a><p>- Update <code>ruff-pre-commit</code> to v0.15.1 in pre-commit config.
-  - Refine <code>is_subpath</code> logic to handle edge cases and add path resolution.
-  - Add security test cases for path traversal in <code>test_is_subpath</code>.
-  - Extend <code>AGENTS.md</code> with pytest execution instructions.</p>
+<li>
+<p>Update pre-commit, improve <code>is_subpath</code> logic, and enhance documentation. <a href="https://github.com/callowayproject/bump-my-version/commit/919c66b6c58095908dfd9ccdabab1cb367260df5">919c66b</a></p>
+<ul>
+<li>Update <code>ruff-pre-commit</code> to v0.15.1 in pre-commit config.</li>
+<li>Refine <code>is_subpath</code> logic to handle edge cases and add path resolution.</li>
+<li>Add security test cases for path traversal in <code>test_is_subpath</code>.</li>
+<li>Extend <code>AGENTS.md</code> with pytest execution instructions.</li>
+</ul>
 </li>
 </ul>
 <h2 id="127-2026-02-14">1.2.7 (2026-02-14)<a class="headerlink" href="#127-2026-02-14" title="Permanent link">&para;</a></h2>
@@ -6820,12 +6828,12 @@
 <ul>
 <li>Bump the github-actions group across 1 directory with 2 updates. <a href="https://github.com/callowayproject/bump-my-version/commit/05edf97baa237a6e628eb680179f60f66fa054ce">05edf97</a><p>Bumps the github-actions group with 2 updates in the / directory: <a href="https://github.com/actions/checkout">actions/checkout</a> and <a href="https://github.com/actions/download-artifact">actions/download-artifact</a>.</p>
 <p>Updates <code>actions/checkout</code> from 5 to 6
-  - <a href="https://github.com/actions/checkout/releases">Release notes</a>
-  - <a href="https://github.com/actions/checkout/blob/main/CHANGELOG.md">Changelog</a>
-  - <a href="https://github.com/actions/checkout/compare/v5...v6">Commits</a></p>
+- <a href="https://github.com/actions/checkout/releases">Release notes</a>
+- <a href="https://github.com/actions/checkout/blob/main/CHANGELOG.md">Changelog</a>
+- <a href="https://github.com/actions/checkout/compare/v5...v6">Commits</a></p>
 <p>Updates <code>actions/download-artifact</code> from 6 to 7
-  - <a href="https://github.com/actions/download-artifact/releases">Release notes</a>
-  - <a href="https://github.com/actions/download-artifact/compare/v6...v7">Commits</a></p>
+- <a href="https://github.com/actions/download-artifact/releases">Release notes</a>
+- <a href="https://github.com/actions/download-artifact/compare/v6...v7">Commits</a></p>
 </li>
 </ul>
 <hr />
@@ -6849,10 +6857,14 @@ dependency-group: github-actions</p>
 <li>Fix: Skip Mercurial tests if Mercurial is not available. <a href="https://github.com/callowayproject/bump-my-version/commit/bb5ff2466276546c80e42f1c6c8d97cc4a22d77b">bb5ff24</a></li>
 </ul>
 <ul>
-<li>Fix README.md&rsquo;s workflow permissions and token usage. <a href="https://github.com/callowayproject/bump-my-version/commit/bf4397e3886a0fec8fcad68de79c73dd6ca2892c">bf4397e</a><p>- Added explicit permissions for <code>id-token</code>, <code>pull-requests</code>, and <code>contents</code> in the build job.
-  - Replaced <code>GH_TOKEN</code> with <code>GITHUB_TOKEN</code> for consistency.
-  - Clarified documentation on using personal access tokens (PAT).
-  - Removed unused <code>MANIFEST.in</code> file.</p>
+<li>
+<p>Fix README.md&rsquo;s workflow permissions and token usage. <a href="https://github.com/callowayproject/bump-my-version/commit/bf4397e3886a0fec8fcad68de79c73dd6ca2892c">bf4397e</a></p>
+<ul>
+<li>Added explicit permissions for <code>id-token</code>, <code>pull-requests</code>, and <code>contents</code> in the build job.</li>
+<li>Replaced <code>GH_TOKEN</code> with <code>GITHUB_TOKEN</code> for consistency.</li>
+<li>Clarified documentation on using personal access tokens (PAT).</li>
+<li>Removed unused <code>MANIFEST.in</code> file.</li>
+</ul>
 </li>
 </ul>
 <ul>
@@ -6868,8 +6880,8 @@ dependency-group: github-actions</p>
 <ul>
 <li>Bump actions/download-artifact from 5 to 6 in the github-actions group. <a href="https://github.com/callowayproject/bump-my-version/commit/f2613d7dbee43234677bb7e84660da89d047542d">f2613d7</a><p>Bumps the github-actions group with 1 update: <a href="https://github.com/actions/download-artifact">actions/download-artifact</a>.</p>
 <p>Updates <code>actions/download-artifact</code> from 5 to 6
-  - <a href="https://github.com/actions/download-artifact/releases">Release notes</a>
-  - <a href="https://github.com/actions/download-artifact/compare/v5...v6">Commits</a></p>
+- <a href="https://github.com/actions/download-artifact/releases">Release notes</a>
+- <a href="https://github.com/actions/download-artifact/compare/v5...v6">Commits</a></p>
 </li>
 </ul>
 <hr />
@@ -6903,15 +6915,23 @@ dependency-type: direct:production</p>
 <p><a href="https://github.com/callowayproject/bump-my-version/compare/1.2.3...1.2.4">Compare the full difference.</a></p>
 <h3 id="fixes_4">Fixes<a class="headerlink" href="#fixes_4" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Fixed release hint rules. <a href="https://github.com/callowayproject/bump-my-version/commit/fbd3deb88e46744df5a8164777d926cbb89d5059">fbd3deb</a><p>- trigger release when pypproject.toml is changed</p>
+<li>
+<p>Fixed release hint rules. <a href="https://github.com/callowayproject/bump-my-version/commit/fbd3deb88e46744df5a8164777d926cbb89d5059">fbd3deb</a></p>
+<ul>
+<li>trigger release when pypproject.toml is changed</li>
+</ul>
 </li>
 </ul>
 <ul>
 <li>Fix mercurial install on Windows. <a href="https://github.com/callowayproject/bump-my-version/commit/c230f4ab09e72617a059f2696bb6cc19ebfe3ca3">c230f4a</a></li>
 </ul>
 <ul>
-<li>Fix breaking Click dependency. <a href="https://github.com/callowayproject/bump-my-version/commit/5a4073b49fd7f202e54c2456f3fc6d3d8d8a088d">5a4073b</a><p>- Set Click required version to <code>&lt;8.2.2</code>
-  - <code>uv.lock</code> regenerated with upgraded dependencies</p>
+<li>
+<p>Fix breaking Click dependency. <a href="https://github.com/callowayproject/bump-my-version/commit/5a4073b49fd7f202e54c2456f3fc6d3d8d8a088d">5a4073b</a></p>
+<ul>
+<li>Set Click required version to <code>&lt;8.2.2</code></li>
+<li><code>uv.lock</code> regenerated with upgraded dependencies</li>
+</ul>
 </li>
 </ul>
 <h3 id="other_4">Other<a class="headerlink" href="#other_4" title="Permanent link">&para;</a></h3>
@@ -6950,15 +6970,15 @@ dependency-type: direct:production</p>
 <ul>
 <li>Bump the github-actions group across 1 directory with 3 updates. <a href="https://github.com/callowayproject/bump-my-version/commit/b8e2f1c397a937b0496c0120878807f1973c6c57">b8e2f1c</a><p>Bumps the github-actions group with 3 updates in the / directory: <a href="https://github.com/actions/checkout">actions/checkout</a>, <a href="https://github.com/actions/setup-python">actions/setup-python</a> and <a href="https://github.com/actions/download-artifact">actions/download-artifact</a>.</p>
 <p>Updates <code>actions/checkout</code> from 4 to 5
-  - <a href="https://github.com/actions/checkout/releases">Release notes</a>
-  - <a href="https://github.com/actions/checkout/blob/main/CHANGELOG.md">Changelog</a>
-  - <a href="https://github.com/actions/checkout/compare/v4...v5">Commits</a></p>
+- <a href="https://github.com/actions/checkout/releases">Release notes</a>
+- <a href="https://github.com/actions/checkout/blob/main/CHANGELOG.md">Changelog</a>
+- <a href="https://github.com/actions/checkout/compare/v4...v5">Commits</a></p>
 <p>Updates <code>actions/setup-python</code> from 5 to 6
-  - <a href="https://github.com/actions/setup-python/releases">Release notes</a>
-  - <a href="https://github.com/actions/setup-python/compare/v5...v6">Commits</a></p>
+- <a href="https://github.com/actions/setup-python/releases">Release notes</a>
+- <a href="https://github.com/actions/setup-python/compare/v5...v6">Commits</a></p>
 <p>Updates <code>actions/download-artifact</code> from 4 to 5
-  - <a href="https://github.com/actions/download-artifact/releases">Release notes</a>
-  - <a href="https://github.com/actions/download-artifact/compare/v4...v5">Commits</a></p>
+- <a href="https://github.com/actions/download-artifact/releases">Release notes</a>
+- <a href="https://github.com/actions/download-artifact/compare/v4...v5">Commits</a></p>
 </li>
 </ul>
 <hr />
@@ -7220,7 +7240,11 @@ dependency-group: github-actions</p>
 <li>Fixed coverage issue. <a href="https://github.com/callowayproject/bump-my-version/commit/b0c46a37ff265b5306abf005b5742a85c4281ea2">b0c46a3</a></li>
 </ul>
 <ul>
-<li>Refactor SCMInfo and Config imports. <a href="https://github.com/callowayproject/bump-my-version/commit/49995c6a9b2ad59c65cb6c1e27362b1254ce7fb4">49995c6</a><p>- Fixes #300 incompatibility with Nuitka compiling</p>
+<li>
+<p>Refactor SCMInfo and Config imports. <a href="https://github.com/callowayproject/bump-my-version/commit/49995c6a9b2ad59c65cb6c1e27362b1254ce7fb4">49995c6</a></p>
+<ul>
+<li>Fixes #300 incompatibility with Nuitka compiling</li>
+</ul>
 </li>
 </ul>
 <h3 id="other_14">Other<a class="headerlink" href="#other_14" title="Permanent link">&para;</a></h3>
@@ -7263,8 +7287,8 @@ dependency-group: github-actions</p>
 <ul>
 <li>Bump actions/setup-python in the github-actions group. <a href="https://github.com/callowayproject/bump-my-version/commit/c0771b029073feb6a2a3c5e35170f25879b97bc0">c0771b0</a><p>Bumps the github-actions group with 1 update: <a href="https://github.com/actions/setup-python">actions/setup-python</a>.</p>
 <p>Updates <code>actions/setup-python</code> from 5.3.0 to 5.4.0
-  - <a href="https://github.com/actions/setup-python/releases">Release notes</a>
-  - <a href="https://github.com/actions/setup-python/compare/v5.3.0...v5.4.0">Commits</a></p>
+- <a href="https://github.com/actions/setup-python/releases">Release notes</a>
+- <a href="https://github.com/actions/setup-python/compare/v5.3.0...v5.4.0">Commits</a></p>
 </li>
 </ul>
 <hr />
@@ -7374,9 +7398,9 @@ dependency-group: github-actions</p>
 <ul>
 <li>Bump softprops/action-gh-release from 1 to 2 in the github-actions group. <a href="https://github.com/callowayproject/bump-my-version/commit/787c241236c1f4da2512868135aca75a81558cca">787c241</a><p>Bumps the github-actions group with 1 update: <a href="https://github.com/softprops/action-gh-release">softprops/action-gh-release</a>.</p>
 <p>Updates <code>softprops/action-gh-release</code> from 1 to 2
-  - <a href="https://github.com/softprops/action-gh-release/releases">Release notes</a>
-  - <a href="https://github.com/softprops/action-gh-release/blob/master/CHANGELOG.md">Changelog</a>
-  - <a href="https://github.com/softprops/action-gh-release/compare/v1...v2">Commits</a></p>
+- <a href="https://github.com/softprops/action-gh-release/releases">Release notes</a>
+- <a href="https://github.com/softprops/action-gh-release/blob/master/CHANGELOG.md">Changelog</a>
+- <a href="https://github.com/softprops/action-gh-release/compare/v1...v2">Commits</a></p>
 </li>
 </ul>
 <hr />
@@ -7451,8 +7475,8 @@ dependency-group: github-actions</p>
 <ul>
 <li>Bump actions/setup-python in the github-actions group. <a href="https://github.com/callowayproject/bump-my-version/commit/3dd666668ad099a9ee712bf4679296c7b1df16fb">3dd6666</a><p>Bumps the github-actions group with 1 update: <a href="https://github.com/actions/setup-python">actions/setup-python</a>.</p>
 <p>Updates <code>actions/setup-python</code> from 5.1.1 to 5.3.0
-  - <a href="https://github.com/actions/setup-python/releases">Release notes</a>
-  - <a href="https://github.com/actions/setup-python/compare/v5.1.1...v5.3.0">Commits</a></p>
+- <a href="https://github.com/actions/setup-python/releases">Release notes</a>
+- <a href="https://github.com/actions/setup-python/compare/v5.1.1...v5.3.0">Commits</a></p>
 </li>
 </ul>
 <hr />
@@ -7488,7 +7512,11 @@ dependency-group: github-actions</p>
 </li>
 </ul>
 <ul>
-<li>Refactored dependencies config. <a href="https://github.com/callowayproject/bump-my-version/commit/39fed070669258650cdf5d2a4c180399bf256ad6">39fed07</a><p>- Changed <code>project.optional-dependencies</code> to <code>dependency-groups</code></p>
+<li>
+<p>Refactored dependencies config. <a href="https://github.com/callowayproject/bump-my-version/commit/39fed070669258650cdf5d2a4c180399bf256ad6">39fed07</a></p>
+<ul>
+<li>Changed <code>project.optional-dependencies</code> to <code>dependency-groups</code></li>
+</ul>
 </li>
 </ul>
 <h3 id="new_11">New<a class="headerlink" href="#new_11" title="Permanent link">&para;</a></h3>
@@ -7511,9 +7539,9 @@ dependency-group: github-actions</p>
 <ul>
 <li>Bump codecov/codecov-action from 4 to 5 in the github-actions group. <a href="https://github.com/callowayproject/bump-my-version/commit/4194af89ca515f894447180152c87ef1f3c9be2a">4194af8</a><p>Bumps the github-actions group with 1 update: <a href="https://github.com/codecov/codecov-action">codecov/codecov-action</a>.</p>
 <p>Updates <code>codecov/codecov-action</code> from 4 to 5
-  - <a href="https://github.com/codecov/codecov-action/releases">Release notes</a>
-  - <a href="https://github.com/codecov/codecov-action/blob/main/CHANGELOG.md">Changelog</a>
-  - <a href="https://github.com/codecov/codecov-action/compare/v4...v5">Commits</a></p>
+- <a href="https://github.com/codecov/codecov-action/releases">Release notes</a>
+- <a href="https://github.com/codecov/codecov-action/blob/main/CHANGELOG.md">Changelog</a>
+- <a href="https://github.com/codecov/codecov-action/compare/v4...v5">Commits</a></p>
 </li>
 </ul>
 <hr />
@@ -7661,9 +7689,17 @@ dependency-group: github-actions</p>
 </ul>
 <h3 id="other_24">Other<a class="headerlink" href="#other_24" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Enhance hook handling and testing across hook types. <a href="https://github.com/callowayproject/bump-my-version/commit/49f1953c476a09cc9e7332af6347914935ee982c">49f1953</a><p>- Introduced unified handling for setup, pre-commit, and post-commit hooks, including dry-run support.</p>
-<p>- Added comprehensive tests to ensure the correct behavior for all hook phases, including cases where no hooks are specified or in dry run mode.</p>
-<p>- Updated environment setup to use a common version environment function.</p>
+<li>
+<p>Enhance hook handling and testing across hook types. <a href="https://github.com/callowayproject/bump-my-version/commit/49f1953c476a09cc9e7332af6347914935ee982c">49f1953</a></p>
+<ul>
+<li>Introduced unified handling for setup, pre-commit, and post-commit hooks, including dry-run support.</li>
+</ul>
+<ul>
+<li>Added comprehensive tests to ensure the correct behavior for all hook phases, including cases where no hooks are specified or in dry run mode.</li>
+</ul>
+<ul>
+<li>Updated environment setup to use a common version environment function.</li>
+</ul>
 </li>
 </ul>
 <ul>
@@ -7686,7 +7722,11 @@ dependency-group: github-actions</p>
 <li>Fixed documentation layout. <a href="https://github.com/callowayproject/bump-my-version/commit/57958eaed527447bd63e100c08763c8810e4dc8e">57958ea</a></li>
 </ul>
 <ul>
-<li>Fixed inconsistent terms in docstrings. <a href="https://github.com/callowayproject/bump-my-version/commit/dfdf23e04fe6a75341a8943f674c79897f5e0712">dfdf23e</a><p>- Switched from using both version parts and version components to simply version components.</p>
+<li>
+<p>Fixed inconsistent terms in docstrings. <a href="https://github.com/callowayproject/bump-my-version/commit/dfdf23e04fe6a75341a8943f674c79897f5e0712">dfdf23e</a></p>
+<ul>
+<li>Switched from using both version parts and version components to simply version components.</li>
+</ul>
 </li>
 </ul>
 <h3 id="updates_17">Updates<a class="headerlink" href="#updates_17" title="Permanent link">&para;</a></h3>
@@ -7923,8 +7963,12 @@ dependency-group: github-actions</p>
 <li>Fixed test logging setup. <a href="https://github.com/callowayproject/bump-my-version/commit/3777f2750a146a698ed0d15edd88c82f73e35354">3777f27</a></li>
 </ul>
 <ul>
-<li>Fixed the indentation problem. <a href="https://github.com/callowayproject/bump-my-version/commit/ec3cd998dfa7eaff678262163629abac73640c86">ec3cd99</a><p>- Added a dedent when a file does not match the change pattern.
-  - Fixes #181</p>
+<li>
+<p>Fixed the indentation problem. <a href="https://github.com/callowayproject/bump-my-version/commit/ec3cd998dfa7eaff678262163629abac73640c86">ec3cd99</a></p>
+<ul>
+<li>Added a dedent when a file does not match the change pattern.</li>
+<li>Fixes #181</li>
+</ul>
 </li>
 </ul>
 <h3 id="other_33">Other<a class="headerlink" href="#other_33" title="Permanent link">&para;</a></h3>
@@ -7936,7 +7980,11 @@ dependency-group: github-actions</p>
 <p><a href="https://github.com/callowayproject/bump-my-version/compare/0.20.1...0.20.2">Compare the full difference.</a></p>
 <h3 id="fixes_40">Fixes<a class="headerlink" href="#fixes_40" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Fixed the rendering of numeric version components. <a href="https://github.com/callowayproject/bump-my-version/commit/c522c75e9b51cbcf09e7a1a41a0b6d210a3b44be">c522c75</a><p>- Numeric version components now will attempt to render its value as an integer and fall back to the parsed value.</p>
+<li>
+<p>Fixed the rendering of numeric version components. <a href="https://github.com/callowayproject/bump-my-version/commit/c522c75e9b51cbcf09e7a1a41a0b6d210a3b44be">c522c75</a></p>
+<ul>
+<li>Numeric version components now will attempt to render its value as an integer and fall back to the parsed value.</li>
+</ul>
 </li>
 </ul>
 <ul>
@@ -7966,7 +8014,7 @@ dependency-group: github-actions</p>
 </ul>
 <ul>
 <li>Pre-commit: Discover typos with codespell. <a href="https://github.com/callowayproject/bump-my-version/commit/2509fc7690406f95dfc34a6d5e3eeb41205f8569">2509fc7</a><p>Related to:
-  - #168</p>
+- #168</p>
 </li>
 </ul>
 <ul>
@@ -7981,9 +8029,13 @@ dependency-group: github-actions</p>
 </ul>
 <h3 id="new_21">New<a class="headerlink" href="#new_21" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Added <code>always_increment</code> attribute for parts. <a href="https://github.com/callowayproject/bump-my-version/commit/53ee848988d3dae0665e47aa29d8fa02e604b87f">53ee848</a><p>This is a requirement for CalVer to ensure they always increment with each bump, but it will work for any type.
+<li>
+<p>Added <code>always_increment</code> attribute for parts. <a href="https://github.com/callowayproject/bump-my-version/commit/53ee848988d3dae0665e47aa29d8fa02e604b87f">53ee848</a></p>
+<p>This is a requirement for CalVer to ensure they always increment with each bump, but it will work for any type.
 - Added CalVer function and formatting. <a href="https://github.com/callowayproject/bump-my-version/commit/7a0e639da8d372e1960dc3dd1cd0620424a228d1">7a0e639</a></p>
-<p>- Version parts now have a <code>calver_format</code> attribute for CalVer parts.</p>
+<ul>
+<li>Version parts now have a <code>calver_format</code> attribute for CalVer parts.</li>
+</ul>
 </li>
 </ul>
 <h3 id="updates_22">Updates<a class="headerlink" href="#updates_22" title="Permanent link">&para;</a></h3>
@@ -7997,7 +8049,11 @@ dependency-group: github-actions</p>
 <li>Fixed packaging of dev releases. <a href="https://github.com/callowayproject/bump-my-version/commit/84254e0535f553a17a78ca879c7e73c1c2aa0db8">84254e0</a></li>
 </ul>
 <ul>
-<li>Fixed platform-dependent encoding. <a href="https://github.com/callowayproject/bump-my-version/commit/f8b4d65fbc10e9e758114546de3d9c490bbdcb82">f8b4d65</a><p>- Added <code>encoding="utf-8"</code> to all writes.</p>
+<li>
+<p>Fixed platform-dependent encoding. <a href="https://github.com/callowayproject/bump-my-version/commit/f8b4d65fbc10e9e758114546de3d9c490bbdcb82">f8b4d65</a></p>
+<ul>
+<li>Added <code>encoding="utf-8"</code> to all writes.</li>
+</ul>
 </li>
 </ul>
 <ul>
@@ -8011,16 +8067,16 @@ dependency-group: github-actions</p>
 <ul>
 <li>Bump the github-actions group with 3 updates. <a href="https://github.com/callowayproject/bump-my-version/commit/a422c588f40723ac0f441883bbeca29c0f6e406b">a422c58</a><p>Bumps the github-actions group with 3 updates: <a href="https://github.com/actions/checkout">actions/checkout</a>, <a href="https://github.com/actions/setup-python">actions/setup-python</a> and <a href="https://github.com/codecov/codecov-action">codecov/codecov-action</a>.</p>
 <p>Updates <code>actions/checkout</code> from 3 to 4
-  - <a href="https://github.com/actions/checkout/releases">Release notes</a>
-  - <a href="https://github.com/actions/checkout/blob/main/CHANGELOG.md">Changelog</a>
-  - <a href="https://github.com/actions/checkout/compare/v3...v4">Commits</a></p>
+- <a href="https://github.com/actions/checkout/releases">Release notes</a>
+- <a href="https://github.com/actions/checkout/blob/main/CHANGELOG.md">Changelog</a>
+- <a href="https://github.com/actions/checkout/compare/v3...v4">Commits</a></p>
 <p>Updates <code>actions/setup-python</code> from 4 to 5
-  - <a href="https://github.com/actions/setup-python/releases">Release notes</a>
-  - <a href="https://github.com/actions/setup-python/compare/v4...v5">Commits</a></p>
+- <a href="https://github.com/actions/setup-python/releases">Release notes</a>
+- <a href="https://github.com/actions/setup-python/compare/v4...v5">Commits</a></p>
 <p>Updates <code>codecov/codecov-action</code> from 3 to 4
-  - <a href="https://github.com/codecov/codecov-action/releases">Release notes</a>
-  - <a href="https://github.com/codecov/codecov-action/blob/main/CHANGELOG.md">Changelog</a>
-  - <a href="https://github.com/codecov/codecov-action/compare/v3...v4">Commits</a></p>
+- <a href="https://github.com/codecov/codecov-action/releases">Release notes</a>
+- <a href="https://github.com/codecov/codecov-action/blob/main/CHANGELOG.md">Changelog</a>
+- <a href="https://github.com/codecov/codecov-action/compare/v3...v4">Commits</a></p>
 </li>
 </ul>
 <hr />
@@ -8030,8 +8086,12 @@ update-type: version-update:semver-major
 dependency-group: github-actions</p>
 <p><strong>signed-off-by:</strong> dependabot[bot] <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#103;&#105;&#116;&#104;&#117;&#98;&#46;&#99;&#111;&#109;">&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#103;&#105;&#116;&#104;&#117;&#98;&#46;&#99;&#111;&#109;</a></p>
 <ul>
-<li>Keep GitHub Actions up to date with GitHub&rsquo;s Dependabot. <a href="https://github.com/callowayproject/bump-my-version/commit/2e55fa1956012fa8e36c3f91afc6e3825d809779">2e55fa1</a><p>- <a href="https://docs.github.com/en/code-security/dependabot/working-with-dependabot/keeping-your-actions-up-to-date-with-dependabot">https://docs.github.com/en/code-security/dependabot/working-with-dependabot/keeping-your-actions-up-to-date-with-dependabot</a>
-  - <a href="https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem">https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem</a></p>
+<li>
+<p>Keep GitHub Actions up to date with GitHub&rsquo;s Dependabot. <a href="https://github.com/callowayproject/bump-my-version/commit/2e55fa1956012fa8e36c3f91afc6e3825d809779">2e55fa1</a></p>
+<ul>
+<li><a href="https://docs.github.com/en/code-security/dependabot/working-with-dependabot/keeping-your-actions-up-to-date-with-dependabot">https://docs.github.com/en/code-security/dependabot/working-with-dependabot/keeping-your-actions-up-to-date-with-dependabot</a></li>
+<li><a href="https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem">https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem</a></li>
+</ul>
 </li>
 </ul>
 <h2 id="0192-2024-03-16">0.19.2 (2024-03-16)<a class="headerlink" href="#0192-2024-03-16" title="Permanent link">&para;</a></h2>
@@ -8089,12 +8149,20 @@ dependency-group: github-actions</p>
 <li>Fixed type annotation in config. <a href="https://github.com/callowayproject/bump-my-version/commit/2988ede7d1610d42e2249fb8bdbd5a327a85e307">2988ede</a></li>
 </ul>
 <ul>
-<li>Fixed naming issue for docs. <a href="https://github.com/callowayproject/bump-my-version/commit/2850aa7f5a804c554d304e45c56a757f55cc5940">2850aa7</a><p>- renamed changelog.md and contributing.md</p>
+<li>
+<p>Fixed naming issue for docs. <a href="https://github.com/callowayproject/bump-my-version/commit/2850aa7f5a804c554d304e45c56a757f55cc5940">2850aa7</a></p>
+<ul>
+<li>renamed changelog.md and contributing.md</li>
+</ul>
 </li>
 </ul>
 <h3 id="new_23">New<a class="headerlink" href="#new_23" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Added how-to doc. <a href="https://github.com/callowayproject/bump-my-version/commit/68643a9a4945eee20f5b7c4d8fb2f0bc4dd8e7b7">68643a9</a><p>- &ldquo;How to update a date in a file&rdquo;</p>
+<li>
+<p>Added how-to doc. <a href="https://github.com/callowayproject/bump-my-version/commit/68643a9a4945eee20f5b7c4d8fb2f0bc4dd8e7b7">68643a9</a></p>
+<ul>
+<li>&ldquo;How to update a date in a file&rdquo;</li>
+</ul>
 </li>
 </ul>
 <h3 id="other_38">Other<a class="headerlink" href="#other_38" title="Permanent link">&para;</a></h3>
@@ -8164,20 +8232,32 @@ dependency-group: github-actions</p>
 <li>Fixed some tests. <a href="https://github.com/callowayproject/bump-my-version/commit/593a4ee376cac57cf6bd26e704f0f6c2a841b99a">593a4ee</a></li>
 </ul>
 <ul>
-<li>Refactored serialization. <a href="https://github.com/callowayproject/bump-my-version/commit/0ac2cd80925c352b72840c1d5707bb61a18248eb">0ac2cd8</a><p>- Moved serialization from VersionConfig to version.serialization</p>
+<li>
+<p>Refactored serialization. <a href="https://github.com/callowayproject/bump-my-version/commit/0ac2cd80925c352b72840c1d5707bb61a18248eb">0ac2cd8</a></p>
+<ul>
+<li>Moved serialization from VersionConfig to version.serialization</li>
+</ul>
 </li>
 </ul>
 <ul>
 <li>Fixed extra capture group in PEP440 parser. <a href="https://github.com/callowayproject/bump-my-version/commit/384fd994f67df1fe1a1d56c94e568a00d2c7176b">384fd99</a></li>
 </ul>
 <ul>
-<li>Refactored verioning models. <a href="https://github.com/callowayproject/bump-my-version/commit/88e7f71e200ba0a7ef6f121205d634820a68c150">88e7f71</a><p>- created a &ldquo;conventions&rdquo; module for future release
-  - added an optional <code>depends_on</code> version component configuration
-  - The <code>depends_on</code> is required for PEP440 versioning</p>
+<li>
+<p>Refactored verioning models. <a href="https://github.com/callowayproject/bump-my-version/commit/88e7f71e200ba0a7ef6f121205d634820a68c150">88e7f71</a></p>
+<ul>
+<li>created a &ldquo;conventions&rdquo; module for future release</li>
+<li>added an optional <code>depends_on</code> version component configuration</li>
+<li>The <code>depends_on</code> is required for PEP440 versioning</li>
+</ul>
 </li>
 </ul>
 <ul>
-<li>Fixed None as value for a function. <a href="https://github.com/callowayproject/bump-my-version/commit/f8c4d05d1b4d8df25335b84823a00888a43349f0">f8c4d05</a><p>- Turns None into an empty string</p>
+<li>
+<p>Fixed None as value for a function. <a href="https://github.com/callowayproject/bump-my-version/commit/f8c4d05d1b4d8df25335b84823a00888a43349f0">f8c4d05</a></p>
+<ul>
+<li>Turns None into an empty string</li>
+</ul>
 </li>
 </ul>
 <ul>
@@ -8220,16 +8300,28 @@ dependency-group: github-actions</p>
 <li>Fixed bad test imports. <a href="https://github.com/callowayproject/bump-my-version/commit/a74342bfbdc556a7c5161c2c9cee12736c31ee8f">a74342b</a></li>
 </ul>
 <ul>
-<li>Refactored the create subcommand. <a href="https://github.com/callowayproject/bump-my-version/commit/f529d283fb3a32eddee9daf368f9ce17ba5efcf1">f529d28</a><p>- Also organized the CLI tests</p>
+<li>
+<p>Refactored the create subcommand. <a href="https://github.com/callowayproject/bump-my-version/commit/f529d283fb3a32eddee9daf368f9ce17ba5efcf1">f529d28</a></p>
+<ul>
+<li>Also organized the CLI tests</li>
+</ul>
 </li>
 </ul>
 <h3 id="new_26">New<a class="headerlink" href="#new_26" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Added <code>show-bump</code> subcommand. <a href="https://github.com/callowayproject/bump-my-version/commit/0bbd81489ea0484962e9b3c207e6c6860cab6c55">0bbd814</a><p>- Shows possible resulting versions of the <code>bump</code> command</p>
+<li>
+<p>Added <code>show-bump</code> subcommand. <a href="https://github.com/callowayproject/bump-my-version/commit/0bbd81489ea0484962e9b3c207e6c6860cab6c55">0bbd814</a></p>
+<ul>
+<li>Shows possible resulting versions of the <code>bump</code> command</li>
+</ul>
 </li>
 </ul>
 <ul>
-<li>Added sample-config feature. <a href="https://github.com/callowayproject/bump-my-version/commit/3d0f67dbf9f42ffad1583e1fe08bd0971262257c">3d0f67d</a><p>- Initial implementation</p>
+<li>
+<p>Added sample-config feature. <a href="https://github.com/callowayproject/bump-my-version/commit/3d0f67dbf9f42ffad1583e1fe08bd0971262257c">3d0f67d</a></p>
+<ul>
+<li>Initial implementation</li>
+</ul>
 </li>
 </ul>
 <h3 id="updates_26">Updates<a class="headerlink" href="#updates_26" title="Permanent link">&para;</a></h3>
@@ -8243,8 +8335,14 @@ dependency-group: github-actions</p>
 <li>Fixed a bad import. <a href="https://github.com/callowayproject/bump-my-version/commit/46c9c48ccc02a9b2d0e81d70c15323de3e8a4ce8">46c9c48</a></li>
 </ul>
 <ul>
-<li>Fixed extra whitespace added when updating pyproject.toml. <a href="https://github.com/callowayproject/bump-my-version/commit/839f17fbf7a0902fb15347a31778c55e9a91e7ab">839f17f</a><p>- Removed dotted-notation from requirements. There is an issue on how dotted-notation sets values in the TOMLkit data structure.</p>
-<p>- Added <code>get_nested_value</code> and <code>set_nested_value</code> as replacements for dotted-notation.</p>
+<li>
+<p>Fixed extra whitespace added when updating pyproject.toml. <a href="https://github.com/callowayproject/bump-my-version/commit/839f17fbf7a0902fb15347a31778c55e9a91e7ab">839f17f</a></p>
+<ul>
+<li>Removed dotted-notation from requirements. There is an issue on how dotted-notation sets values in the TOMLkit data structure.</li>
+</ul>
+<ul>
+<li>Added <code>get_nested_value</code> and <code>set_nested_value</code> as replacements for dotted-notation.</li>
+</ul>
 </li>
 </ul>
 <h3 id="other_42">Other<a class="headerlink" href="#other_42" title="Permanent link">&para;</a></h3>
@@ -8278,15 +8376,25 @@ dependency-group: github-actions</p>
 <li>Fix not being able to tag without also committing. <a href="https://github.com/callowayproject/bump-my-version/commit/753c9904505794dd66b0cda0f29206865eeacb3d">753c990</a></li>
 </ul>
 <ul>
-<li>Fixed testing automation. <a href="https://github.com/callowayproject/bump-my-version/commit/19215f1fc4eb6c51c26cf28c5aa7a36d7cd901a2">19215f1</a><p>- The new commit/tag decoupling requires the <code>--no-tag</code> flag</p>
+<li>
+<p>Fixed testing automation. <a href="https://github.com/callowayproject/bump-my-version/commit/19215f1fc4eb6c51c26cf28c5aa7a36d7cd901a2">19215f1</a></p>
+<ul>
+<li>The new commit/tag decoupling requires the <code>--no-tag</code> flag</li>
+</ul>
 </li>
 </ul>
 <h2 id="0153-2023-12-18">0.15.3 (2023-12-18)<a class="headerlink" href="#0153-2023-12-18" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/callowayproject/bump-my-version/compare/0.15.2...0.15.3">Compare the full difference.</a></p>
 <h3 id="fixes_58">Fixes<a class="headerlink" href="#fixes_58" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Fix miscast of current_version. <a href="https://github.com/callowayproject/bump-my-version/commit/b8ea2525aad07f370e59066bfb21db33e6656639">b8ea252</a><p>- When using the legacy configuration format, a single-digit version is parsed as an int</p>
+<li>
+<p>Fix miscast of current_version. <a href="https://github.com/callowayproject/bump-my-version/commit/b8ea2525aad07f370e59066bfb21db33e6656639">b8ea252</a></p>
+<ul>
+<li>
+<p>When using the legacy configuration format, a single-digit version is parsed as an int</p>
 <p>Fixes #99</p>
+</li>
+</ul>
 </li>
 </ul>
 <h2 id="0152-2023-12-18">0.15.2 (2023-12-18)<a class="headerlink" href="#0152-2023-12-18" title="Permanent link">&para;</a></h2>
@@ -8414,7 +8522,11 @@ dependency-group: github-actions</p>
 </ul>
 <h3 id="new_30">New<a class="headerlink" href="#new_30" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Added key_path to FileConfig. <a href="https://github.com/callowayproject/bump-my-version/commit/e160b401b0d14cef77255bbd87748721db4e2e3d">e160b40</a><p>- Also made all attributes required except <code>filename</code>, <code>glob</code>, and <code>key_path</code></p>
+<li>
+<p>Added key_path to FileConfig. <a href="https://github.com/callowayproject/bump-my-version/commit/e160b401b0d14cef77255bbd87748721db4e2e3d">e160b40</a></p>
+<ul>
+<li>Also made all attributes required except <code>filename</code>, <code>glob</code>, and <code>key_path</code></li>
+</ul>
 </li>
 </ul>
 <h3 id="other_45">Other<a class="headerlink" href="#other_45" title="Permanent link">&para;</a></h3>
@@ -8447,7 +8559,11 @@ dependency-group: github-actions</p>
 <li>Fix dev versioning with PR number. <a href="https://github.com/callowayproject/bump-my-version/commit/463082b1996d3bbd7cd4b6adfe732ede73f5cf54">463082b</a></li>
 </ul>
 <ul>
-<li>Fix dev versioning. <a href="https://github.com/callowayproject/bump-my-version/commit/1eed99bb93b2144cd033f47c13e324a78e8beb0f">1eed99b</a><p>- added an echo of the PR_NUMBER</p>
+<li>
+<p>Fix dev versioning. <a href="https://github.com/callowayproject/bump-my-version/commit/1eed99bb93b2144cd033f47c13e324a78e8beb0f">1eed99b</a></p>
+<ul>
+<li>added an echo of the PR_NUMBER</li>
+</ul>
 </li>
 </ul>
 <ul>
@@ -8490,9 +8606,13 @@ dependency-group: github-actions</p>
 </ul>
 <h3 id="updates_31">Updates<a class="headerlink" href="#updates_31" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Changed the default regex search to non-regex. <a href="https://github.com/callowayproject/bump-my-version/commit/0034716e4a8a4a45808a9c563a9957db5c63cac4">0034716</a><p>Fixes #59</p>
-<p>- Changed the flags to &ndash;regex/&ndash;no-regex
-  - updated tests and docs</p>
+<li>
+<p>Changed the default regex search to non-regex. <a href="https://github.com/callowayproject/bump-my-version/commit/0034716e4a8a4a45808a9c563a9957db5c63cac4">0034716</a></p>
+<p>Fixes #59</p>
+<ul>
+<li>Changed the flags to &ndash;regex/&ndash;no-regex</li>
+<li>updated tests and docs</li>
+</ul>
 </li>
 </ul>
 <h2 id="0110-2023-09-26">0.11.0 (2023-09-26)<a class="headerlink" href="#0110-2023-09-26" title="Permanent link">&para;</a></h2>
@@ -8513,12 +8633,16 @@ dependency-group: github-actions</p>
 <p><a href="https://github.com/callowayproject/bump-my-version/compare/0.9.3...0.10.0">Compare the full difference.</a></p>
 <h3 id="updates_33">Updates<a class="headerlink" href="#updates_33" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Refactored file resolution, inclusion, and exclusion. <a href="https://github.com/callowayproject/bump-my-version/commit/646af5438740e5dd17425144c6f2e4f305ffc30b">646af54</a><p>- Fixes #61
-  - Config now includes <code>resolved_filemap</code> property
-  - resolved filemap expands all globs
-  - Config now includes <code>files_to_modify</code> property
-  - files to modify resolves inclusions and exclutions
-  - Improved Config.add_files property</p>
+<li>
+<p>Refactored file resolution, inclusion, and exclusion. <a href="https://github.com/callowayproject/bump-my-version/commit/646af5438740e5dd17425144c6f2e4f305ffc30b">646af54</a></p>
+<ul>
+<li>Fixes #61</li>
+<li>Config now includes <code>resolved_filemap</code> property</li>
+<li>resolved filemap expands all globs</li>
+<li>Config now includes <code>files_to_modify</code> property</li>
+<li>files to modify resolves inclusions and exclutions</li>
+<li>Improved Config.add_files property</li>
+</ul>
 </li>
 </ul>
 <h2 id="093-2023-08-25">0.9.3 (2023-08-25)<a class="headerlink" href="#093-2023-08-25" title="Permanent link">&para;</a></h2>
@@ -8531,7 +8655,11 @@ dependency-group: github-actions</p>
 </li>
 </ul>
 <ul>
-<li>Fixed documentation regarding regex config. <a href="https://github.com/callowayproject/bump-my-version/commit/cd71a1a4216286e49e0d1b8b9d867a26ee88eff8">cd71a1a</a><p>- TOML requires the double backslash while INI doesn&rsquo;t</p>
+<li>
+<p>Fixed documentation regarding regex config. <a href="https://github.com/callowayproject/bump-my-version/commit/cd71a1a4216286e49e0d1b8b9d867a26ee88eff8">cd71a1a</a></p>
+<ul>
+<li>TOML requires the double backslash while INI doesn&rsquo;t</li>
+</ul>
 </li>
 </ul>
 <ul>
@@ -8562,8 +8690,12 @@ dependency-group: github-actions</p>
 <p><a href="https://github.com/callowayproject/bump-my-version/compare/0.9.1...0.9.2">Compare the full difference.</a></p>
 <h3 id="fixes_66">Fixes<a class="headerlink" href="#fixes_66" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Fixed modified context when committing. <a href="https://github.com/callowayproject/bump-my-version/commit/130bbe0dc9cbc436ed2d4a74878937fc784fbccd">130bbe0</a><p>- Resets the context before committing and tagging
-  - Fixes #14</p>
+<li>
+<p>Fixed modified context when committing. <a href="https://github.com/callowayproject/bump-my-version/commit/130bbe0dc9cbc436ed2d4a74878937fc784fbccd">130bbe0</a></p>
+<ul>
+<li>Resets the context before committing and tagging</li>
+<li>Fixes #14</li>
+</ul>
 </li>
 </ul>
 <h2 id="091-2023-08-03">0.9.1 (2023-08-03)<a class="headerlink" href="#091-2023-08-03" title="Permanent link">&para;</a></h2>
@@ -8589,12 +8721,20 @@ dependency-group: github-actions</p>
 <li>Added documentation about regular expressions. <a href="https://github.com/callowayproject/bump-my-version/commit/449b70aca09c44be2d834b531c85b6a8ff5dde03">449b70a</a></li>
 </ul>
 <ul>
-<li>Added configuration and command-line <code>no_regex</code> option. <a href="https://github.com/callowayproject/bump-my-version/commit/a295a328caedabfe8a1c270a34a6f3ddc41dff7b">a295a32</a><p>- Global and individual file configurations available for <code>no_regex</code>
-  - Command-line flag <code>--no-regex</code> flag added for <code>bump</code> and <code>replace</code> sub-commands</p>
+<li>
+<p>Added configuration and command-line <code>no_regex</code> option. <a href="https://github.com/callowayproject/bump-my-version/commit/a295a328caedabfe8a1c270a34a6f3ddc41dff7b">a295a32</a></p>
+<ul>
+<li>Global and individual file configurations available for <code>no_regex</code></li>
+<li>Command-line flag <code>--no-regex</code> flag added for <code>bump</code> and <code>replace</code> sub-commands</li>
+</ul>
 </li>
 </ul>
 <ul>
-<li>Adds regular expression searching ability. <a href="https://github.com/callowayproject/bump-my-version/commit/0210d74a2a66deb58b59b601d61a1b0409c2b6eb">0210d74</a><p>- Search strings are treated as regular expressions after the initial substitution</p>
+<li>
+<p>Adds regular expression searching ability. <a href="https://github.com/callowayproject/bump-my-version/commit/0210d74a2a66deb58b59b601d61a1b0409c2b6eb">0210d74</a></p>
+<ul>
+<li>Search strings are treated as regular expressions after the initial substitution</li>
+</ul>
 </li>
 </ul>
 <ul>
@@ -8610,21 +8750,35 @@ dependency-group: github-actions</p>
 <li>Added <code>--ignore-missing-version</code> flag to <code>bump</code> and <code>replace</code>. <a href="https://github.com/callowayproject/bump-my-version/commit/a5bd008cd60cde13f13505e7d21ba48b4820174a">a5bd008</a></li>
 </ul>
 <ul>
-<li>Added <code>ignore-missing-version</code> configuration. <a href="https://github.com/callowayproject/bump-my-version/commit/45c85be6cd1eea10baa37e4529c3fd9ca7afc78d">45c85be</a><p>- Defaults to <code>False</code>
-  - File configurations can also override this value</p>
+<li>
+<p>Added <code>ignore-missing-version</code> configuration. <a href="https://github.com/callowayproject/bump-my-version/commit/45c85be6cd1eea10baa37e4529c3fd9ca7afc78d">45c85be</a></p>
+<ul>
+<li>Defaults to <code>False</code></li>
+<li>File configurations can also override this value</li>
+</ul>
 </li>
 </ul>
 <ul>
-<li>Added deprecation warnings. <a href="https://github.com/callowayproject/bump-my-version/commit/733438beb8ad8e320968ef0b2ba2031dc05bd0a5">733438b</a><p>- <code>--list</code> option will go bye-bye in 1.0
-  - calling <code>bumpversion</code> without a subcomand will leave in 1.0</p>
+<li>
+<p>Added deprecation warnings. <a href="https://github.com/callowayproject/bump-my-version/commit/733438beb8ad8e320968ef0b2ba2031dc05bd0a5">733438b</a></p>
+<ul>
+<li><code>--list</code> option will go bye-bye in 1.0</li>
+<li>calling <code>bumpversion</code> without a subcomand will leave in 1.0</li>
+</ul>
 </li>
 </ul>
 <h2 id="071-2023-07-12">0.7.1 (2023-07-12)<a class="headerlink" href="#071-2023-07-12" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/callowayproject/bump-my-version/compare/0.7.0...0.7.1">Compare the full difference.</a></p>
 <h3 id="fixes_67">Fixes<a class="headerlink" href="#fixes_67" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Fix search and replace options for replace. <a href="https://github.com/callowayproject/bump-my-version/commit/781e8d8094ba9f16d915a551b3bc51bd6aa54cfa">781e8d8</a><p>- The <code>--search</code> and <code>--replace</code> options now completely override any other search and replace logic.</p>
+<li>
+<p>Fix search and replace options for replace. <a href="https://github.com/callowayproject/bump-my-version/commit/781e8d8094ba9f16d915a551b3bc51bd6aa54cfa">781e8d8</a></p>
+<ul>
+<li>
+<p>The <code>--search</code> and <code>--replace</code> options now completely override any other search and replace logic.</p>
 <p>Fixes #34</p>
+</li>
+</ul>
 </li>
 </ul>
 <h3 id="other_50">Other<a class="headerlink" href="#other_50" title="Permanent link">&para;</a></h3>
@@ -8646,8 +8800,12 @@ dependency-group: github-actions</p>
 <li>Fixed wrong pydantic version pinning. <a href="https://github.com/callowayproject/bump-my-version/commit/d4b125ea1e1c0179f3f544cfffed90d27c997ff5">d4b125e</a></li>
 </ul>
 <ul>
-<li>Fixed typing issue. <a href="https://github.com/callowayproject/bump-my-version/commit/bfe530668d8f176843eedcd7096fcd2b85eef228">bfe5306</a><p>- Declared SourceCodeManager attributes as <code>ClassVar[List[str]]</code>
-  - <code>_TEST_USABLE_COMMAND</code>, <code>_COMMIT_COMMAND</code>, and <code>_ALL_TAGS_COMMAND</code> affected</p>
+<li>
+<p>Fixed typing issue. <a href="https://github.com/callowayproject/bump-my-version/commit/bfe530668d8f176843eedcd7096fcd2b85eef228">bfe5306</a></p>
+<ul>
+<li>Declared SourceCodeManager attributes as <code>ClassVar[List[str]]</code></li>
+<li><code>_TEST_USABLE_COMMAND</code>, <code>_COMMIT_COMMAND</code>, and <code>_ALL_TAGS_COMMAND</code> affected</li>
+</ul>
 </li>
 </ul>
 <h3 id="new_35">New<a class="headerlink" href="#new_35" title="Permanent link">&para;</a></h3>
@@ -8658,16 +8816,30 @@ dependency-group: github-actions</p>
 <li>Added and re-organized documentation. <a href="https://github.com/callowayproject/bump-my-version/commit/c62d65e71fdc617d5435976cfa587f43b03ac92b">c62d65e</a></li>
 </ul>
 <ul>
-<li>Added replace subcommand. <a href="https://github.com/callowayproject/bump-my-version/commit/8722a0f84ab60cbfc254741b2a5bc0d968e423d9">8722a0f</a><p>- Works just like <code>bump</code> but
-      - doesn&rsquo;t do any version incrementing
-      - Will not change the configuration file
-      - Will not commit or tag</p>
-<p>- Can use <code>bumpversion show new_version --increment &lt;versionpart&gt;</code> to see what the new version would be</p>
+<li>
+<p>Added replace subcommand. <a href="https://github.com/callowayproject/bump-my-version/commit/8722a0f84ab60cbfc254741b2a5bc0d968e423d9">8722a0f</a></p>
+<ul>
+<li>Works just like <code>bump</code> but<ul>
+<li>doesn&rsquo;t do any version incrementing</li>
+<li>Will not change the configuration file</li>
+<li>Will not commit or tag</li>
+</ul>
 </li>
 </ul>
 <ul>
-<li>Adds <code>short_branch_name</code> to version rendering context. <a href="https://github.com/callowayproject/bump-my-version/commit/7f7e50c98dc20210468a9cef34baf4374956c2e9">7f7e50c</a><p>- <code>short_branch_name</code> is the branch name, lower case, containing only a-z and 0-9, and truncated to 20 characters.</p>
+<li>Can use <code>bumpversion show new_version --increment &lt;versionpart&gt;</code> to see what the new version would be</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>Adds <code>short_branch_name</code> to version rendering context. <a href="https://github.com/callowayproject/bump-my-version/commit/7f7e50c98dc20210468a9cef34baf4374956c2e9">7f7e50c</a></p>
+<ul>
+<li>
+<p><code>short_branch_name</code> is the branch name, lower case, containing only a-z and 0-9, and truncated to 20 characters.</p>
 <p>Fixes #28</p>
+</li>
+</ul>
 </li>
 </ul>
 <h3 id="other_51">Other<a class="headerlink" href="#other_51" title="Permanent link">&para;</a></h3>
@@ -8689,13 +8861,21 @@ dependency-group: github-actions</p>
 <p><a href="https://github.com/callowayproject/bump-my-version/compare/0.5.1.dev69...0.6.0">Compare the full difference.</a></p>
 <h3 id="fixes_69">Fixes<a class="headerlink" href="#fixes_69" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Fixed <code>--help</code> and <code>bump</code> invocations. <a href="https://github.com/callowayproject/bump-my-version/commit/9d965e57f2c0a41476d75ec053653416eae966c9">9d965e5</a><p>- <code>--help</code> works for individual sub-commands, but not for the command
-  - <code>bump</code> now works and fixed tests</p>
+<li>
+<p>Fixed <code>--help</code> and <code>bump</code> invocations. <a href="https://github.com/callowayproject/bump-my-version/commit/9d965e57f2c0a41476d75ec053653416eae966c9">9d965e5</a></p>
+<ul>
+<li><code>--help</code> works for individual sub-commands, but not for the command</li>
+<li><code>bump</code> now works and fixed tests</li>
+</ul>
 </li>
 </ul>
 <ul>
-<li>Fixed issue regarding TOML types. <a href="https://github.com/callowayproject/bump-my-version/commit/8960d249183cf78d8b35967b86fef8701fc9c37e">8960d24</a><p>- <code>tomlkit.parse()</code> returns a <code>TOMLDocument</code>.
-  - <code>unwrap()</code> converts it into a <code>dict</code></p>
+<li>
+<p>Fixed issue regarding TOML types. <a href="https://github.com/callowayproject/bump-my-version/commit/8960d249183cf78d8b35967b86fef8701fc9c37e">8960d24</a></p>
+<ul>
+<li><code>tomlkit.parse()</code> returns a <code>TOMLDocument</code>.</li>
+<li><code>unwrap()</code> converts it into a <code>dict</code></li>
+</ul>
 </li>
 </ul>
 <h3 id="new_36">New<a class="headerlink" href="#new_36" title="Permanent link">&para;</a></h3>
@@ -8706,30 +8886,46 @@ dependency-group: github-actions</p>
 <li>Added documentation for the show command. <a href="https://github.com/callowayproject/bump-my-version/commit/d5372742a8cf76777f1bf4450bf31e9310d04681">d537274</a></li>
 </ul>
 <ul>
-<li>Adds <code>--increment</code> option to <code>show</code> subcommand. <a href="https://github.com/callowayproject/bump-my-version/commit/b01fffcad8479db25375d53fdeebc879d7317b11">b01fffc</a><p>- when specified it increments the current version and adds <code>new_version</code> to the available output.</p>
+<li>
+<p>Adds <code>--increment</code> option to <code>show</code> subcommand. <a href="https://github.com/callowayproject/bump-my-version/commit/b01fffcad8479db25375d53fdeebc879d7317b11">b01fffc</a></p>
+<ul>
+<li>when specified it increments the current version and adds <code>new_version</code> to the available output.</li>
+</ul>
 </li>
 </ul>
 <ul>
-<li>Added <code>show</code> subcommand. <a href="https://github.com/callowayproject/bump-my-version/commit/9bce887cf5e72907ae00b45a7b7f4812dcc2f17e">9bce887</a><p>- supersedes the <code>--list</code> option
-  - provides much more capability
-  - Can output in YAML, JSON, and default
-  - Can specify one or more items to display
-  - Can use dotted-notation to pull items from nested data structures.</p>
+<li>
+<p>Added <code>show</code> subcommand. <a href="https://github.com/callowayproject/bump-my-version/commit/9bce887cf5e72907ae00b45a7b7f4812dcc2f17e">9bce887</a></p>
+<ul>
+<li>supersedes the <code>--list</code> option</li>
+<li>provides much more capability</li>
+<li>Can output in YAML, JSON, and default</li>
+<li>Can specify one or more items to display</li>
+<li>Can use dotted-notation to pull items from nested data structures.</li>
+</ul>
 </li>
 </ul>
 <h3 id="updates_36">Updates<a class="headerlink" href="#updates_36" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Changes bump-my-version into subcommands. <a href="https://github.com/callowayproject/bump-my-version/commit/31ffbcf839e2491c31d90b51041d1e840371108f">31ffbcf</a><p>- Is backwards-compatible with previous versions
-  - <code>bump-my-version</code> forwards command to <code>bump-my-version bump</code> subcommand
-  - Only problem is that Click will not show help automatically, must provide <code>--help</code></p>
+<li>
+<p>Changes bump-my-version into subcommands. <a href="https://github.com/callowayproject/bump-my-version/commit/31ffbcf839e2491c31d90b51041d1e840371108f">31ffbcf</a></p>
+<ul>
+<li>Is backwards-compatible with previous versions</li>
+<li><code>bump-my-version</code> forwards command to <code>bump-my-version bump</code> subcommand</li>
+<li>Only problem is that Click will not show help automatically, must provide <code>--help</code></li>
+</ul>
 </li>
 </ul>
 <h2 id="051-2023-06-14">0.5.1 (2023-06-14)<a class="headerlink" href="#051-2023-06-14" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/callowayproject/bump-my-version/compare/0.5.0...0.5.1">Compare the full difference.</a></p>
 <h3 id="fixes_70">Fixes<a class="headerlink" href="#fixes_70" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Fixes reporting the wrong version missing in a file. <a href="https://github.com/callowayproject/bump-my-version/commit/efb04e94a07fa886253bbfc9cf801040e4c03895">efb04e9</a><p>- Fixes issue #20
-  - Renders the correct <code>current_version</code> for each file being modified.</p>
+<li>
+<p>Fixes reporting the wrong version missing in a file. <a href="https://github.com/callowayproject/bump-my-version/commit/efb04e94a07fa886253bbfc9cf801040e4c03895">efb04e9</a></p>
+<ul>
+<li>Fixes issue #20</li>
+<li>Renders the correct <code>current_version</code> for each file being modified.</li>
+</ul>
 </li>
 </ul>
 <h3 id="other_52">Other<a class="headerlink" href="#other_52" title="Permanent link">&para;</a></h3>
@@ -8761,8 +8957,12 @@ dependency-group: github-actions</p>
 </ul>
 <h3 id="other_53">Other<a class="headerlink" href="#other_53" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Made <code>VERSION_PART</code> optional. <a href="https://github.com/callowayproject/bump-my-version/commit/f236b7de94d9f58e493c617848e3eb02e85a24c7">f236b7d</a><p>- Fixes #16
-  - <code>VERSION_PART</code> is detected from the arguments based on the configuration</p>
+<li>
+<p>Made <code>VERSION_PART</code> optional. <a href="https://github.com/callowayproject/bump-my-version/commit/f236b7de94d9f58e493c617848e3eb02e85a24c7">f236b7d</a></p>
+<ul>
+<li>Fixes #16</li>
+<li><code>VERSION_PART</code> is detected from the arguments based on the configuration</li>
+</ul>
 </li>
 </ul>
 <h3 id="updates_37">Updates<a class="headerlink" href="#updates_37" title="Permanent link">&para;</a></h3>
@@ -8773,7 +8973,11 @@ dependency-group: github-actions</p>
 <li>Updated tests for bad version parts. <a href="https://github.com/callowayproject/bump-my-version/commit/23be62deed9fb7d51a8bbc195433d1a4ce74c11f">23be62d</a></li>
 </ul>
 <ul>
-<li>Changed exception type raised when bad version part is detected. <a href="https://github.com/callowayproject/bump-my-version/commit/1e3ebc5b144294771b7bfe812299af4f92ae212a">1e3ebc5</a><p>- ValueError -&gt; click.BadArgumentUsage</p>
+<li>
+<p>Changed exception type raised when bad version part is detected. <a href="https://github.com/callowayproject/bump-my-version/commit/1e3ebc5b144294771b7bfe812299af4f92ae212a">1e3ebc5</a></p>
+<ul>
+<li>ValueError -&gt; click.BadArgumentUsage</li>
+</ul>
 </li>
 </ul>
 <ul>
@@ -8815,13 +9019,25 @@ dependency-group: github-actions</p>
 <li>Fixed some CI issues. <a href="https://github.com/callowayproject/bump-my-version/commit/d4b03d7c0d8dacc4f8c726b208763071202e76c5">d4b03d7</a></li>
 </ul>
 <ul>
-<li>Fixed vague commit and tagging info. <a href="https://github.com/callowayproject/bump-my-version/commit/4fb515851f3ddf78916c624db86c0b3e1869293b">4fb5158</a><p>- If commit is configured false, it will report that it will not commit</p>
-<p>- If commit is configured false, tagging is disabled and it reports that</p>
-<p>- If tagging is configured false, it will report it is not tagging</p>
+<li>
+<p>Fixed vague commit and tagging info. <a href="https://github.com/callowayproject/bump-my-version/commit/4fb515851f3ddf78916c624db86c0b3e1869293b">4fb5158</a></p>
+<ul>
+<li>If commit is configured false, it will report that it will not commit</li>
+</ul>
+<ul>
+<li>If commit is configured false, tagging is disabled and it reports that</li>
+</ul>
+<ul>
+<li>If tagging is configured false, it will report it is not tagging</li>
+</ul>
 </li>
 </ul>
 <ul>
-<li>Fixes test package. <a href="https://github.com/callowayproject/bump-my-version/commit/7c12072b11938385ec81c5e9cd285d91ac1c00d7">7c12072</a><p>- The build-and-inspect action didn&rsquo;t save the dist packages</p>
+<li>
+<p>Fixes test package. <a href="https://github.com/callowayproject/bump-my-version/commit/7c12072b11938385ec81c5e9cd285d91ac1c00d7">7c12072</a></p>
+<ul>
+<li>The build-and-inspect action didn&rsquo;t save the dist packages</li>
+</ul>
 </li>
 </ul>
 <h3 id="new_38">New<a class="headerlink" href="#new_38" title="Permanent link">&para;</a></h3>
@@ -8850,7 +9066,11 @@ dependency-group: github-actions</p>
 <li>Removed pre-commit dependency hook. <a href="https://github.com/callowayproject/bump-my-version/commit/ac6cdd03e5260d319146ea0d93cc093496e79a19">ac6cdd0</a></li>
 </ul>
 <ul>
-<li>Changed the version serialization. <a href="https://github.com/callowayproject/bump-my-version/commit/c529452b043e8ab1b5711065c1ef96d73030978b">c529452</a><p>- can bump &ldquo;dev&rdquo; to get a development release</p>
+<li>
+<p>Changed the version serialization. <a href="https://github.com/callowayproject/bump-my-version/commit/c529452b043e8ab1b5711065c1ef96d73030978b">c529452</a></p>
+<ul>
+<li>can bump &ldquo;dev&rdquo; to get a development release</li>
+</ul>
 </li>
 </ul>
 <ul>
@@ -8869,16 +9089,28 @@ dependency-group: github-actions</p>
 <li>Fixed assertion in failing test. <a href="https://github.com/callowayproject/bump-my-version/commit/7afe58c4a15e0b48f223c3f2c80c48679e44aebc">7afe58c</a></li>
 </ul>
 <ul>
-<li>Fixes issue when new version equals current version. <a href="https://github.com/callowayproject/bump-my-version/commit/64b0de39828367c6c6f3e7103497256ce3f44f41">64b0de3</a><p>- Now it reports they are the same and exits.</p>
+<li>
+<p>Fixes issue when new version equals current version. <a href="https://github.com/callowayproject/bump-my-version/commit/64b0de39828367c6c6f3e7103497256ce3f44f41">64b0de3</a></p>
+<ul>
+<li>Now it reports they are the same and exits.</li>
+</ul>
 </li>
 </ul>
 <ul>
-<li>Fixes issue of duplicate tags. <a href="https://github.com/callowayproject/bump-my-version/commit/c0256509cb39c3e78c09d35205007191fbf3732e">c025650</a><p>- Now it checks if the tag exists and reports a warning</p>
+<li>
+<p>Fixes issue of duplicate tags. <a href="https://github.com/callowayproject/bump-my-version/commit/c0256509cb39c3e78c09d35205007191fbf3732e">c025650</a></p>
+<ul>
+<li>Now it checks if the tag exists and reports a warning</li>
+</ul>
 </li>
 </ul>
 <ul>
-<li>Fixed automation tooling. <a href="https://github.com/callowayproject/bump-my-version/commit/19f13b7c0c388f15af45cf3fa04424a2946b4a04">19f13b7</a><p>- changed name to bump-my-version in setup.cfg
-  - added PAT in release pipeline to (hopefully) allow committing and tagging to master without issue.</p>
+<li>
+<p>Fixed automation tooling. <a href="https://github.com/callowayproject/bump-my-version/commit/19f13b7c0c388f15af45cf3fa04424a2946b4a04">19f13b7</a></p>
+<ul>
+<li>changed name to bump-my-version in setup.cfg</li>
+<li>added PAT in release pipeline to (hopefully) allow committing and tagging to master without issue.</li>
+</ul>
 </li>
 </ul>
 <h3 id="new_39">New<a class="headerlink" href="#new_39" title="Permanent link">&para;</a></h3>
@@ -8909,11 +9141,19 @@ dependency-group: github-actions</p>
 <li>Fixes the quoting in the bumpversion expressions. <a href="https://github.com/callowayproject/bump-my-version/commit/9a55d6d410bc6da6c451bda45f8228990bb542ab">9a55d6d</a></li>
 </ul>
 <ul>
-<li>Fixed issue with windows testing. <a href="https://github.com/callowayproject/bump-my-version/commit/b8abc44e77d62e85f7315e4866b772f0cf6c5eff">b8abc44</a><p>- different methods for reporting paths was resolved by casting them the pathlib.Paths</p>
+<li>
+<p>Fixed issue with windows testing. <a href="https://github.com/callowayproject/bump-my-version/commit/b8abc44e77d62e85f7315e4866b772f0cf6c5eff">b8abc44</a></p>
+<ul>
+<li>different methods for reporting paths was resolved by casting them the pathlib.Paths</li>
+</ul>
 </li>
 </ul>
 <ul>
-<li>Fixes windows testing error. <a href="https://github.com/callowayproject/bump-my-version/commit/556853bd017360651b3600cce00cdd6bf00d59f0">556853b</a><p>- the differences in path specifications seems to be causing problems.</p>
+<li>
+<p>Fixes windows testing error. <a href="https://github.com/callowayproject/bump-my-version/commit/556853bd017360651b3600cce00cdd6bf00d59f0">556853b</a></p>
+<ul>
+<li>the differences in path specifications seems to be causing problems.</li>
+</ul>
 </li>
 </ul>
 <ul>
@@ -8931,12 +9171,22 @@ dependency-group: github-actions</p>
 <li>Added additional option to manual runs: verbose. <a href="https://github.com/callowayproject/bump-my-version/commit/81eb097e1e30f48f8afb7962c9af5f6a4c80ed96">81eb097</a></li>
 </ul>
 <ul>
-<li>Added new workflows. <a href="https://github.com/callowayproject/bump-my-version/commit/a9cac5b7728fabd46551926b552aba12ed91bd0c">a9cac5b</a><p>- Added bumpversion.yaml to increase the version when a PR is closed</p>
-<p>- Added release.yaml to create a github release and upload things to PyPI</p>
+<li>
+<p>Added new workflows. <a href="https://github.com/callowayproject/bump-my-version/commit/a9cac5b7728fabd46551926b552aba12ed91bd0c">a9cac5b</a></p>
+<ul>
+<li>Added bumpversion.yaml to increase the version when a PR is closed</li>
+</ul>
+<ul>
+<li>Added release.yaml to create a github release and upload things to PyPI</li>
+</ul>
 </li>
 </ul>
 <ul>
-<li>Added PYTHONUTF8 mode. <a href="https://github.com/callowayproject/bump-my-version/commit/91a73e26af94185194aea1ddb803ac621c0ae84a">91a73e2</a><p>- see <a href="https://docs.python.org/3/using/windows.html#utf-8-mode">https://docs.python.org/3/using/windows.html#utf-8-mode</a></p>
+<li>
+<p>Added PYTHONUTF8 mode. <a href="https://github.com/callowayproject/bump-my-version/commit/91a73e26af94185194aea1ddb803ac621c0ae84a">91a73e2</a></p>
+<ul>
+<li>see <a href="https://docs.python.org/3/using/windows.html#utf-8-mode">https://docs.python.org/3/using/windows.html#utf-8-mode</a></li>
+</ul>
 </li>
 </ul>
 <ul>
@@ -8946,8 +9196,12 @@ dependency-group: github-actions</p>
 <li>Added a github CI workflow. <a href="https://github.com/callowayproject/bump-my-version/commit/2b3b3585afe3fdcf13ff47a229b4e3d3b5dacdc9">2b3b358</a></li>
 </ul>
 <ul>
-<li>Added files for coverage to ignore. <a href="https://github.com/callowayproject/bump-my-version/commit/cfbba08f23c44dd8e44b545961cbca2599b96e69">cfbba08</a><p>- <strong>main</strong>.py
-  - aliases.py</p>
+<li>
+<p>Added files for coverage to ignore. <a href="https://github.com/callowayproject/bump-my-version/commit/cfbba08f23c44dd8e44b545961cbca2599b96e69">cfbba08</a></p>
+<ul>
+<li><strong>main</strong>.py</li>
+<li>aliases.py</li>
+</ul>
 </li>
 </ul>
 <ul>
@@ -8980,8 +9234,12 @@ dependency-group: github-actions</p>
 </ul>
 <h3 id="updates_40">Updates<a class="headerlink" href="#updates_40" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Updated workflows. <a href="https://github.com/callowayproject/bump-my-version/commit/857835d7ce10fe52633fb3cc12f52a55a117cd31">857835d</a><p>- Added better changelog parsing
-  - Added workflow dispatch inputs for manual runs</p>
+<li>
+<p>Updated workflows. <a href="https://github.com/callowayproject/bump-my-version/commit/857835d7ce10fe52633fb3cc12f52a55a117cd31">857835d</a></p>
+<ul>
+<li>Added better changelog parsing</li>
+<li>Added workflow dispatch inputs for manual runs</li>
+</ul>
 </li>
 </ul>
 <ul>
