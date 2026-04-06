@@ -2448,8 +2448,6 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
-      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -2492,8 +2490,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -2502,6 +2498,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#global-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Global Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#allow_dirty" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2511,8 +2519,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#commit" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2522,8 +2530,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#commit_args" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2533,8 +2541,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#current_version" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2544,8 +2552,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#ignore_missing_files" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2555,8 +2563,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#ignore_missing_version" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2566,8 +2574,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#message" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2577,8 +2585,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#parse" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2588,8 +2596,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#regex" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2599,8 +2607,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#replace" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2610,8 +2618,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#search" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2621,8 +2629,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#serialize" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2632,8 +2640,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#sign_tags" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2643,8 +2651,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#tag" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2654,8 +2662,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#tag_message" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2665,8 +2673,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#tag_name" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2676,8 +2684,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2685,6 +2693,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3057,9 +3070,11 @@
   
 
 
-<h1 id="global-configuration">Global Configuration<a class="headerlink" href="#global-configuration" title="Permanent link">&para;</a></h1>
+  <h1>Global Configuration</h1>
+
+<h2 id="global-configuration">Global Configuration<a class="headerlink" href="#global-configuration" title="Permanent link">&para;</a></h2>
 <p>The general configuration is grouped in a <code>[tool.bumpversion]</code> or <code>[bumpversion]</code> section, depending on if it is a TOML or INI file, respectfully.</p>
-<h2 id="allow_dirty">allow_dirty<a class="headerlink" href="#allow_dirty" title="Permanent link">&para;</a></h2>
+<h3 id="allow_dirty">allow_dirty<a class="headerlink" href="#allow_dirty" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3075,7 +3090,7 @@
 </dl>
 </div>
 <p>Bump-my-version&rsquo;s default behavior is to abort if the working directory has uncommitted changes. This protects you from releasing unversioned files and overwriting unsaved changes.</p>
-<h2 id="commit">commit<a class="headerlink" href="#commit" title="Permanent link">&para;</a></h2>
+<h3 id="commit">commit<a class="headerlink" href="#commit" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3092,7 +3107,7 @@
 </div>
 <p>Whether to create a commit using git or Mercurial.</p>
 <p>If you have pre-commit hooks, add an option to <a href="./#commit_args"><code>commit_args</code></a> to turn off your pre-commit hooks. For Git, use <code>--no-verify</code> and use <code>--config hooks.pre-commit=</code> for Mercurial.</p>
-<h2 id="commit_args">commit_args<a class="headerlink" href="#commit_args" title="Permanent link">&para;</a></h2>
+<h3 id="commit_args">commit_args<a class="headerlink" href="#commit_args" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3109,7 +3124,7 @@
 </div>
 <p>Extra arguments to pass to commit command. This is only used when the <a href="./#commit"><code>commit</code></a> option is set to <code>True</code>.</p>
 <p>If you have pre-commit hooks, add an option to turn off your pre-commit hooks. For Git, use <code>--no-verify</code> and use <code>--config hooks.pre-commit=</code> for Mercurial.</p>
-<h2 id="current_version">current_version<a class="headerlink" href="#current_version" title="Permanent link">&para;</a></h2>
+<h3 id="current_version">current_version<a class="headerlink" href="#current_version" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3129,7 +3144,7 @@
 <p class="admonition-title">Note</p>
 <p>‡ If <code>pyproject.toml</code> exists, then <code>current_version</code> falls back to <code>project.version</code> in <code>pyproject.toml</code>. This only works if <code>project.version</code> is statically set.</p>
 </div>
-<h2 id="ignore_missing_files">ignore_missing_files<a class="headerlink" href="#ignore_missing_files" title="Permanent link">&para;</a></h2>
+<h3 id="ignore_missing_files">ignore_missing_files<a class="headerlink" href="#ignore_missing_files" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3145,7 +3160,7 @@
 </dl>
 </div>
 <p>If <code>True</code>, don&rsquo;t fail if the configured file is missing.</p>
-<h2 id="ignore_missing_version">ignore_missing_version<a class="headerlink" href="#ignore_missing_version" title="Permanent link">&para;</a></h2>
+<h3 id="ignore_missing_version">ignore_missing_version<a class="headerlink" href="#ignore_missing_version" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3161,7 +3176,7 @@
 </dl>
 </div>
 <p>If <code>True</code>, don&rsquo;t fail if the version string to be replaced is not found in the file.</p>
-<h2 id="message">message<a class="headerlink" href="#message" title="Permanent link">&para;</a></h2>
+<h3 id="message">message<a class="headerlink" href="#message" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3178,7 +3193,7 @@
 </div>
 <p>The commit message template to use when creating a commit. This is only used when the <a href="./#commit"><code>commit</code></a> option is set to <code>True</code>.</p>
 <p>This string is templated using the <a href="https://docs.python.org/3/library/string.html#format-string-syntax">Python Format String Syntax</a>. The <a href="../../formatting-context/">formatting context reference</a> describes the available variables.</p>
-<h2 id="parse">parse<a class="headerlink" href="#parse" title="Permanent link">&para;</a></h2>
+<h3 id="parse">parse<a class="headerlink" href="#parse" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3195,7 +3210,7 @@
 </div>
 <p>This is the default regular expression (<a href="https://docs.python.org/3/library/re.html#regular-expression-syntax">Python regular expression syntax</a>) for finding and parsing the version string into its components. Individual part or file configurations may override this.</p>
 <p>The regular expression must be able to parse all strings produced by the configured <a href="./#serialize"><code>serialize</code></a> value. Named matching groups (&ldquo;<code>(?P&lt;name&gt;...)</code>&rdquo;) indicate the version part the matched value belongs to.</p>
-<h2 id="regex">regex<a class="headerlink" href="#regex" title="Permanent link">&para;</a></h2>
+<h3 id="regex">regex<a class="headerlink" href="#regex" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3211,7 +3226,7 @@
 </dl>
 </div>
 <p>Treat the <code>search</code> string as a regular expression.</p>
-<h2 id="replace">replace<a class="headerlink" href="#replace" title="Permanent link">&para;</a></h2>
+<h3 id="replace">replace<a class="headerlink" href="#replace" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3227,7 +3242,7 @@
 </dl>
 </div>
 <p>This is the template to create the string that will replace the current version number in the file.</p>
-<h2 id="search">search<a class="headerlink" href="#search" title="Permanent link">&para;</a></h2>
+<h3 id="search">search<a class="headerlink" href="#search" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3244,7 +3259,7 @@
 </div>
 <p>This is the template string for searching. It is rendered using the <a href="../../formatting-context/">formatting context</a> for searching in the file. Individual file configurations may override this. This can span multiple lines and is templated using <a href="https://docs.python.org/3/library/string.html#format-string-syntax">Python Format String Syntax</a>. The <a href="../../formatting-context/">formatting context reference</a> describes the available variables.</p>
 <p>This is useful if there is the remotest possibility that the current version number might be present multiple times in the file and you mean to bump only one of the occurrences.</p>
-<h2 id="serialize">serialize<a class="headerlink" href="#serialize" title="Permanent link">&para;</a></h2>
+<h3 id="serialize">serialize<a class="headerlink" href="#serialize" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3270,7 +3285,7 @@
 </code></pre></div>
 <p>Since <code>0</code> is optional by default, Version <code>1.8.9</code> will serialize to <code>1.8.9</code>, <code>1.9.0</code> will serialize to <code>1.9</code>, and version <code>2.0.0</code> will serialize as <code>2</code>.</p>
 <p>Each string is templated using the <a href="https://docs.python.org/3/library/string.html#format-string-syntax">Python Format String Syntax</a>. The <a href="../../formatting-context/">formatting context reference</a> describes the available variables.</p>
-<h2 id="sign_tags">sign_tags<a class="headerlink" href="#sign_tags" title="Permanent link">&para;</a></h2>
+<h3 id="sign_tags">sign_tags<a class="headerlink" href="#sign_tags" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3286,7 +3301,7 @@
 </dl>
 </div>
 <p>If <code>True</code>, sign the created tag, when <a href="./#tag"><code>tag</code></a> is <code>True</code>.</p>
-<h2 id="tag">tag<a class="headerlink" href="#tag" title="Permanent link">&para;</a></h2>
+<h3 id="tag">tag<a class="headerlink" href="#tag" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3303,7 +3318,7 @@
 </div>
 <p>If <code>True</code>, create a tag after committing the changes. The tag is named using the <a href="./#tag_name"><code>tag_name</code></a> option.</p>
 <p>If you are using <code>git</code>, don&rsquo;t forget to <code>git-push</code> with the <code>--tags</code> flag when you are done.</p>
-<h2 id="tag_message">tag_message<a class="headerlink" href="#tag_message" title="Permanent link">&para;</a></h2>
+<h3 id="tag_message">tag_message<a class="headerlink" href="#tag_message" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3321,7 +3336,7 @@
 <p>The tag message template to use when creating a tag when <a href="./#tag"><code>tag</code></a> is <code>True</code></p>
 <p>This string is templated using the <a href="https://docs.python.org/3/library/string.html#format-string-syntax">Python Format String Syntax</a>. The <a href="../../formatting-context/">formatting context reference</a> describes the available variables.</p>
 <p>Bump My Version creates an <em>annotated</em> tag in Git by default. To turn this off and create a <em>lightweight</em> tag, you must explicitly set an empty <code>tag_message</code> value.</p>
-<h2 id="tag_name">tag_name<a class="headerlink" href="#tag_name" title="Permanent link">&para;</a></h2>
+<h3 id="tag_name">tag_name<a class="headerlink" href="#tag_name" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3338,7 +3353,7 @@
 </div>
 <p>The template used to render the tag when <a href="./#tag"><code>tag</code></a> is <code>True</code>.</p>
 <p>This string is templated using the <a href="https://docs.python.org/3/library/string.html#format-string-syntax">Python Format String Syntax</a>. The <a href="../../formatting-context/">formatting context reference</a> describes the available variables.</p>
-<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<h3 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h3>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="toml" name="__tabbed_1" type="radio" /><input id="cfg" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="toml">TOML</label><label for="cfg">CFG</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -3400,7 +3415,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 22, 2026 13:21:58 UTC">March 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 6, 2026 20:15:46 UTC">April 6, 2026</span>
   </span>
 
     
@@ -3415,7 +3430,7 @@
       
     </span>
     <nav>
-      Corey Oordt, Marco Ricci
+      Corey Oordt, Marco Ricci, pre-commit-ci[bot]
     </nav>
   </span>
 

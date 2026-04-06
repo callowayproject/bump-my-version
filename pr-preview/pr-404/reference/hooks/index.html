@@ -815,8 +815,6 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
-      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -859,8 +857,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -869,6 +865,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hooks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hooks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#hook-suites" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -878,8 +886,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -889,8 +897,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#safe-execution-and-shell-syntax" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -899,37 +907,9 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Safe execution and shell syntax">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#rewriting-shell-syntax-hooks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Rewriting shell-syntax hooks
-      
-    </span>
-  </a>
-  
 </li>
         
           <li class="md-nav__item">
-  <a href="#allow_shell_hooks-compatibility-opt-in" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        allow_shell_hooks (compatibility opt-in)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#hook-environments" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -938,70 +918,9 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Hook Environments">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#inherited-environment" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Inherited environment
-      
-    </span>
-  </a>
-  
 </li>
         
           <li class="md-nav__item">
-  <a href="#date-and-time-fields" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Date and time fields
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#source-code-management-fields" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Source code management fields
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#current-version-fields" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Current version fields
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#new-version-fields" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        New version fields
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#outputs" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1011,8 +930,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#dry-runs" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1020,6 +939,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3005,8 +2929,10 @@
   
 
 
-<h1 id="hooks">Hooks<a class="headerlink" href="#hooks" title="Permanent link">&para;</a></h1>
-<h2 id="hook-suites">Hook Suites<a class="headerlink" href="#hook-suites" title="Permanent link">&para;</a></h2>
+  <h1>Hooks</h1>
+
+<h2 id="hooks">Hooks<a class="headerlink" href="#hooks" title="Permanent link">&para;</a></h2>
+<h3 id="hook-suites">Hook Suites<a class="headerlink" href="#hook-suites" title="Permanent link">&para;</a></h3>
 <p>A <em>hook suite</em> is a list of <em>hooks</em> to run sequentially. A <em>hook</em> is either an individual shell command or an executable script.</p>
 <p>There are three hook suites: <em>setup, pre-commit,</em> and <em>post-commit.</em> During the version increment process this is the order of operations:</p>
 <ol>
@@ -3021,7 +2947,7 @@
 <p class="admonition-title">Note</p>
 <p>Don&rsquo;t confuse the <em>pre-commit</em> and <em>post-commit</em> hook suites with Git pre- and post-commit hooks. Those hook suites are named for their adjacency to the commit and tag operation.</p>
 </div>
-<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
+<h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
 <p>Configure each hook suite with the <code>setup_hooks</code>, <code>pre_commit_hooks</code>, or <code>post_commit_hooks</code> keys.</p>
 <p>Each suite takes a list of strings. The strings may be individual commands:</p>
 <div class="highlight"><pre><span></span><code>[tool.bumpversion]
@@ -3048,7 +2974,7 @@ post_commit_hooks = [&quot;path/to/post-commit.sh&quot;]
 <li>Run <code>chmod u+x path/to/script.sh</code> to set the executable bit</li>
 </ol>
 </div>
-<h2 id="safe-execution-and-shell-syntax">Safe execution and shell syntax<a class="headerlink" href="#safe-execution-and-shell-syntax" title="Permanent link">&para;</a></h2>
+<h3 id="safe-execution-and-shell-syntax">Safe execution and shell syntax<a class="headerlink" href="#safe-execution-and-shell-syntax" title="Permanent link">&para;</a></h3>
 <p>By default, bump-my-version executes hooks using <strong>argv-based execution</strong> (<code>shell=False</code>). Each hook string is parsed into an argument list using standard POSIX quoting rules, and the program is launched directly — no shell is involved.</p>
 <p>This means hooks that rely on shell features will raise an error unless you explicitly opt in:</p>
 <table>
@@ -3102,7 +3028,7 @@ post_commit_hooks = [&quot;path/to/post-commit.sh&quot;]
 </tr>
 </tbody>
 </table>
-<h3 id="rewriting-shell-syntax-hooks">Rewriting shell-syntax hooks<a class="headerlink" href="#rewriting-shell-syntax-hooks" title="Permanent link">&para;</a></h3>
+<h4 id="rewriting-shell-syntax-hooks">Rewriting shell-syntax hooks<a class="headerlink" href="#rewriting-shell-syntax-hooks" title="Permanent link">&para;</a></h4>
 <p>Most shell-syntax hooks can be replaced with a script file or explicit arguments:</p>
 <div class="highlight"><pre><span></span><code>[tool.bumpversion]
 # These will raise HookError by default
@@ -3121,7 +3047,7 @@ post_commit_hooks = [
 #!/bin/bash
 echo &quot;$BVHOOK_NEW_VERSION&quot; &gt; version.txt
 </code></pre></div>
-<h3 id="allow_shell_hooks-compatibility-opt-in">allow_shell_hooks (compatibility opt-in)<a class="headerlink" href="#allow_shell_hooks-compatibility-opt-in" title="Permanent link">&para;</a></h3>
+<h4 id="allow_shell_hooks-compatibility-opt-in">allow_shell_hooks (compatibility opt-in)<a class="headerlink" href="#allow_shell_hooks-compatibility-opt-in" title="Permanent link">&para;</a></h4>
 <p>If you cannot immediately rewrite your hooks, set <code>allow_shell_hooks = true</code> to restore shell execution:</p>
 <div class="highlight"><pre><span></span><code>[tool.bumpversion]
 allow_shell_hooks = true
@@ -3145,11 +3071,11 @@ post_commit_hooks = [&quot;echo $BVHOOK_NEW_VERSION | tee version.txt&quot;]
 </dl>
 </div>
 <p>Whether to allow hook strings that contain shell metacharacters (pipes, redirects, variable expansion, etc.) to run via the system shell. When <code>false</code> (the default), any hook containing shell syntax raises a <code>HookError</code> with a migration message. When <code>true</code>, those hooks run with <code>shell=True</code> and a warning is logged.</p>
-<h2 id="hook-environments">Hook Environments<a class="headerlink" href="#hook-environments" title="Permanent link">&para;</a></h2>
+<h3 id="hook-environments">Hook Environments<a class="headerlink" href="#hook-environments" title="Permanent link">&para;</a></h3>
 <p>Each hook has these environment variables set when executed.</p>
-<h3 id="inherited-environment">Inherited environment<a class="headerlink" href="#inherited-environment" title="Permanent link">&para;</a></h3>
+<h4 id="inherited-environment">Inherited environment<a class="headerlink" href="#inherited-environment" title="Permanent link">&para;</a></h4>
 <p>All environment variables set before bump-my-version was run are available.</p>
-<h3 id="date-and-time-fields">Date and time fields<a class="headerlink" href="#date-and-time-fields" title="Permanent link">&para;</a></h3>
+<h4 id="date-and-time-fields">Date and time fields<a class="headerlink" href="#date-and-time-fields" title="Permanent link">&para;</a></h4>
 <div class="field-list">
 <dl>
 <dt><code>BVHOOK_NOW</code></dt>
@@ -3158,7 +3084,7 @@ post_commit_hooks = [&quot;echo $BVHOOK_NEW_VERSION | tee version.txt&quot;]
 <dd>The ISO-8601-formatted current local time in the UTC time zone.</dd>
 </dl>
 </div>
-<h3 id="source-code-management-fields">Source code management fields<a class="headerlink" href="#source-code-management-fields" title="Permanent link">&para;</a></h3>
+<h4 id="source-code-management-fields">Source code management fields<a class="headerlink" href="#source-code-management-fields" title="Permanent link">&para;</a></h4>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>These fields will only have values if the code is in a Git or Mercurial repository.</p>
@@ -3179,7 +3105,7 @@ post_commit_hooks = [&quot;echo $BVHOOK_NEW_VERSION | tee version.txt&quot;]
 <dd>The current branch name, converted to lowercase, with non-alphanumeric characters removed and truncated to 20 characters. For example, <code>feature/MY-long_branch-name</code> would become <code>featuremylongbranchn</code>.</dd>
 </dl>
 </div>
-<h3 id="current-version-fields">Current version fields<a class="headerlink" href="#current-version-fields" title="Permanent link">&para;</a></h3>
+<h4 id="current-version-fields">Current version fields<a class="headerlink" href="#current-version-fields" title="Permanent link">&para;</a></h4>
 <div class="field-list">
 <dl>
 <dt><code>BVHOOK_CURRENT_VERSION</code></dt>
@@ -3190,7 +3116,7 @@ post_commit_hooks = [&quot;echo $BVHOOK_NEW_VERSION | tee version.txt&quot;]
 <dd>Each version component defined by the <a href="../configuration/global/#parse">version configuration parsing regular expression</a>. The default configuration would have <code>BVHOOK_CURRENT_MAJOR</code>, <code>BVHOOK_CURRENT_MINOR</code>, and <code>BVHOOK_CURRENT_PATCH</code> available.</dd>
 </dl>
 </div>
-<h3 id="new-version-fields">New version fields<a class="headerlink" href="#new-version-fields" title="Permanent link">&para;</a></h3>
+<h4 id="new-version-fields">New version fields<a class="headerlink" href="#new-version-fields" title="Permanent link">&para;</a></h4>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>These are not available in the <em>setup</em> hook suite.</p>
@@ -3205,9 +3131,9 @@ post_commit_hooks = [&quot;echo $BVHOOK_NEW_VERSION | tee version.txt&quot;]
 <dd>Each version component defined by the <a href="../configuration/global/#parse">version configuration parsing regular expression</a>. The default configuration would have <code>BVHOOK_NEW_MAJOR</code>, <code>BVHOOK_NEW_MINOR</code>, and <code>BVHOOK_NEW_PATCH</code> available.</dd>
 </dl>
 </div>
-<h2 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h2>
+<h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
 <p>The <code>stdout</code> and <code>stderr</code> streams are echoed to the console if you pass the <code>-vv</code> option.</p>
-<h2 id="dry-runs">Dry-runs<a class="headerlink" href="#dry-runs" title="Permanent link">&para;</a></h2>
+<h3 id="dry-runs">Dry-runs<a class="headerlink" href="#dry-runs" title="Permanent link">&para;</a></h3>
 <p>Bump my version does not execute any hooks during a dry run. With the verbose output option it will state which hooks it would have run.</p>
 
 
@@ -3229,7 +3155,7 @@ post_commit_hooks = [&quot;echo $BVHOOK_NEW_VERSION | tee version.txt&quot;]
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 21, 2026 22:56:18 UTC">March 21, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 6, 2026 20:15:46 UTC">April 6, 2026</span>
   </span>
 
     
@@ -3240,11 +3166,11 @@ post_commit_hooks = [&quot;echo $BVHOOK_NEW_VERSION | tee version.txt&quot;]
   <span class="md-source-file__fact">
     <span class="md-icon" title="Contributors">
       
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"/></svg>
       
     </span>
     <nav>
-      Corey Oordt
+      Corey Oordt, pre-commit-ci[bot]
     </nav>
   </span>
 

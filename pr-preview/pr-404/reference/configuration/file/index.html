@@ -2420,8 +2420,6 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
-      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -2464,8 +2462,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -2474,6 +2470,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#file-specific-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File-specific configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File-specific configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#filename" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2483,8 +2491,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#glob" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2494,8 +2502,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#glob_exclude" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2505,8 +2513,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#parse" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2516,8 +2524,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#serialize" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2527,8 +2535,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#search" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2538,8 +2546,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#regex" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2549,8 +2557,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#replace" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2560,8 +2568,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#ignore_missing_version" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2571,8 +2579,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#ignore_missing_file" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2582,8 +2590,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#include_bumps" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2593,8 +2601,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#exclude_bumps" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2604,8 +2612,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2613,6 +2621,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3013,9 +3026,11 @@
   
 
 
-<h1 id="file-specific-configuration">File-specific configuration<a class="headerlink" href="#file-specific-configuration" title="Permanent link">&para;</a></h1>
+  <h1>File-specific Configuration</h1>
+
+<h2 id="file-specific-configuration">File-specific configuration<a class="headerlink" href="#file-specific-configuration" title="Permanent link">&para;</a></h2>
 <p>This section configures which files Bump My Version should update by replacing their current version with the newly bumped version.</p>
-<h2 id="filename">filename<a class="headerlink" href="#filename" title="Permanent link">&para;</a></h2>
+<h3 id="filename">filename<a class="headerlink" href="#filename" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3031,7 +3046,7 @@
 <p class="admonition-title">Note</p>
 <p>‡ This is only used with TOML configuration and is only required if <a href="#glob"><code>glob</code></a> is <em>not</em> specified. INI-style configuration files specify the file name as part of the grouping.</p>
 </div>
-<h2 id="glob">glob<a class="headerlink" href="#glob" title="Permanent link">&para;</a></h2>
+<h3 id="glob">glob<a class="headerlink" href="#glob" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3047,7 +3062,7 @@
 <p class="admonition-title">Note</p>
 <p>‡ This is only used with TOML configuration, and is only required if <a href="#filename"><code>filename</code></a> is <em>not</em> specified. INI-style configuration files specify the glob pattern as part of the grouping.</p>
 </div>
-<h2 id="glob_exclude">glob_exclude<a class="headerlink" href="#glob_exclude" title="Permanent link">&para;</a></h2>
+<h3 id="glob_exclude">glob_exclude<a class="headerlink" href="#glob_exclude" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3059,7 +3074,7 @@
 </dl>
 </div>
 <p>A list of glob patterns to exclude from the files found via the <code>glob</code> parameter. Does nothing if <code>filename</code> is specified.</p>
-<h2 id="parse">parse<a class="headerlink" href="#parse" title="Permanent link">&para;</a></h2>
+<h3 id="parse">parse<a class="headerlink" href="#parse" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3071,7 +3086,7 @@
 </dl>
 </div>
 <p>This is an override to the default pattern to parse the version number from this file.</p>
-<h2 id="serialize">serialize<a class="headerlink" href="#serialize" title="Permanent link">&para;</a></h2>
+<h3 id="serialize">serialize<a class="headerlink" href="#serialize" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3083,7 +3098,7 @@
 </dl>
 </div>
 <p>This is an override to the default templates to serialize the new version number in this file.</p>
-<h2 id="search">search<a class="headerlink" href="#search" title="Permanent link">&para;</a></h2>
+<h3 id="search">search<a class="headerlink" href="#search" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3095,7 +3110,7 @@
 </dl>
 </div>
 <p>This is an override to the default template string how to search for the string to be replaced in the file.</p>
-<h2 id="regex">regex<a class="headerlink" href="#regex" title="Permanent link">&para;</a></h2>
+<h3 id="regex">regex<a class="headerlink" href="#regex" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3107,7 +3122,7 @@
 </dl>
 </div>
 <p>If <code>True</code>, treat the <code>search</code> parameter as a regular expression.</p>
-<h2 id="replace">replace<a class="headerlink" href="#replace" title="Permanent link">&para;</a></h2>
+<h3 id="replace">replace<a class="headerlink" href="#replace" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3119,7 +3134,7 @@
 </dl>
 </div>
 <p>This is an override to the template to create the string that will replace the current version number in the file.</p>
-<h2 id="ignore_missing_version">ignore_missing_version<a class="headerlink" href="#ignore_missing_version" title="Permanent link">&para;</a></h2>
+<h3 id="ignore_missing_version">ignore_missing_version<a class="headerlink" href="#ignore_missing_version" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3131,7 +3146,7 @@
 </dl>
 </div>
 <p>If <code>True</code>, don&rsquo;t fail if the version string to be replaced is not found in the file.</p>
-<h2 id="ignore_missing_file">ignore_missing_file<a class="headerlink" href="#ignore_missing_file" title="Permanent link">&para;</a></h2>
+<h3 id="ignore_missing_file">ignore_missing_file<a class="headerlink" href="#ignore_missing_file" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3143,7 +3158,7 @@
 </dl>
 </div>
 <p>if <code>True</code>, don&rsquo;t fail if the configured file is missing.</p>
-<h2 id="include_bumps">include_bumps<a class="headerlink" href="#include_bumps" title="Permanent link">&para;</a></h2>
+<h3 id="include_bumps">include_bumps<a class="headerlink" href="#include_bumps" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3156,7 +3171,7 @@
 </div>
 <p>The <code>include_bumps</code> file configuration allows you to control when bump-my-version includes this file for changes. Its alternative is the <code>exclude_bumps</code> configuration. When a <code>bump &lt;version component&gt;</code> command is issued, this file is changed only if the version component is in this list and not in <a href="#exclude_bumps"><code>exclude_bumps</code></a>. The <a href="#parse">parse</a> configuration defines version components.</p>
 <p>The default value, or an empty list, includes all version components.</p>
-<h2 id="exclude_bumps">exclude_bumps<a class="headerlink" href="#exclude_bumps" title="Permanent link">&para;</a></h2>
+<h3 id="exclude_bumps">exclude_bumps<a class="headerlink" href="#exclude_bumps" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
 <dt>required</dt>
@@ -3169,7 +3184,7 @@
 </div>
 <p>The <code>exclude_bumps</code> file configuration allows you to control when bump-my-version excludes this file for changes. Its alternative is the <code>include_bumps</code> configuration. When a <code>bump &lt;version component&gt;</code> command is issued, this file is only changed if the version component is <em>not in this list.</em> The <a href="#parse">parse</a> configuration defines version components.</p>
 <p>The default value does not exclude anything.</p>
-<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<h3 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h3>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="toml" name="__tabbed_1" type="radio" /><input id="cfg" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="toml">TOML</label><label for="cfg">CFG</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -3228,7 +3243,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 22, 2026 13:21:58 UTC">March 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 6, 2026 20:15:46 UTC">April 6, 2026</span>
   </span>
 
     
@@ -3239,11 +3254,11 @@
   <span class="md-source-file__fact">
     <span class="md-icon" title="Contributors">
       
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"/></svg>
       
     </span>
     <nav>
-      Corey Oordt
+      Corey Oordt, pre-commit-ci[bot]
     </nav>
   </span>
 
