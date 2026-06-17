@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.7.6">
     
     
       
@@ -1985,12 +1985,12 @@
   <a href="#bumpversion.scm.git-functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Functions
+        Functions:
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Functions">
+    <nav class="md-nav" aria-label="Functions:">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3145,7 +3145,7 @@
 
 
 
-<h4 id="bumpversion.scm.git.Git-functions">Functions<a href="#bumpversion.scm.git.Git-functions" class="headerlink" title="Permanent link">&para;</a></h4>
+<h4 id="bumpversion.scm.git.Git-functions">Methods:<a href="#bumpversion.scm.git.Git-functions" class="headerlink" title="Permanent link">&para;</a></h4>
 
 <div class="doc doc-object doc-function">
 
@@ -3223,18 +3223,28 @@
         <p>Asserts that the repository is not dirty.</p>
 
 
-
-  <p class="doc-section-head">Raises:</p>
-  <dl class="doc-field-list">
-      <dt class="doc-field-term doc-raises-annotation">
-          <code><a class="autorefs autorefs-internal" title="            DirtyWorkingDirectoryError (bumpversion.exceptions.DirtyWorkingDirectoryError)" href="../../exceptions/#bumpversion.exceptions.DirtyWorkingDirectoryError">DirtyWorkingDirectoryError</a></code>
-      </dt>
-      <dd class="doc-field-def doc-raises-details">
-        <div class="doc-md-description">
-          <p>If the repository is not clean.</p>
-        </div>
-      </dd>
-  </dl>
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">RAISES</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+              <span class="doc-raises-annotation">
+                  <code><a class="autorefs autorefs-internal" title="            DirtyWorkingDirectoryError (bumpversion.exceptions.DirtyWorkingDirectoryError)" href="../../exceptions/#bumpversion.exceptions.DirtyWorkingDirectoryError">DirtyWorkingDirectoryError</a></code>
+              </span>
+            </td>
+            <td class="doc-raises-details">
+              <div class="doc-md-description">
+                <p>If the repository is not clean.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -3269,11 +3279,7 @@
 
 
 <a href="#bumpversion.scm.git.Git.commit_and_tag" class="headerlink" title="Permanent link">&para;</a></h5>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">commit_and_tag</span><span class="p">(</span>
-    <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Pathlike</span><span class="p">],</span>
-    <span class="n">context</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">,</span>
-    <span class="n">dry_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">commit_and_tag</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Pathlike</span><span class="p">],</span> <span class="n">context</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">dry_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3352,7 +3358,7 @@
     </div>
 
 </div>
-<h2 id="bumpversion.scm.git-functions">Functions<a href="#bumpversion.scm.git-functions" class="headerlink" title="Permanent link">&para;</a></h2>
+<h2 id="bumpversion.scm.git-functions">Functions:<a href="#bumpversion.scm.git-functions" class="headerlink" title="Permanent link">&para;</a></h2>
 
 <div class="doc doc-object doc-function">
 
@@ -3390,40 +3396,61 @@
         <p>Get the commit info for the repo.</p>
 
 
-
-  <p class="doc-section-head">Parameters:</p>
-  <dl class="doc-field-list">
-    <dt class="doc-field-term"><code>config</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The source control configuration.</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-internal" title="            SCMConfig
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">PARAMETER</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>config</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The source control configuration.</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-internal" title="            SCMConfig
 
 
   
       dataclass
    (bumpversion.scm.models.SCMConfig)" href="../models/#bumpversion.scm.models.SCMConfig">SCMConfig</a></code>
-      </p>    </dd>
-  </dl>
+                  </span>
+              </p>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
-
-  <p class="doc-section-head">Returns:</p>
-  <dl class="doc-field-list">
-      <dt class="doc-field-term">
-          <span class="doc-returns-annotation">
-              <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a></code>
-          </span>
-      </dt>
-      <dd class="doc-field-def doc-returns-details">
-        <div class="doc-md-description">
-          <p>A dictionary containing information about the latest commit.</p>
-        </div>
-      </dd>
-  </dl>
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">RETURNS</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <span class="doc-returns-annotation">
+                    <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a></code>
+                </span>
+            </td>
+            <td class="doc-returns-details">
+              <div class="doc-md-description">
+                <p>A dictionary containing information about the latest commit.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -3486,19 +3513,32 @@
         <p>Create a new lightweight tag that should overwrite any previous tags with the same name.</p>
 
 
-
-  <p class="doc-section-head">Parameters:</p>
-  <dl class="doc-field-list">
-    <dt class="doc-field-term"><code>name</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The name of the moveable tag.</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-      </p>    </dd>
-  </dl>
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">PARAMETER</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>name</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The name of the moveable tag.</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -3513,9 +3553,7 @@
 
 
 <a href="#bumpversion.scm.git.push_remote" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">push_remote</span><span class="p">(</span>
-    <span class="n">remote_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ref_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">push_remote</span><span class="p">(</span><span class="n">remote_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ref_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3544,23 +3582,31 @@
 <p>If an error occurs while running the git command, the dictionary values will be set to None.</p>
 
 
-
-  <p class="doc-section-head">Returns:</p>
-  <dl class="doc-field-list">
-      <dt class="doc-field-term">
-          <span class="doc-returns-annotation">
-              <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a></code>
-          </span>
-      </dt>
-      <dd class="doc-field-def doc-returns-details">
-        <div class="doc-md-description">
-          <p>A dictionary with the following keys:
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">RETURNS</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <span class="doc-returns-annotation">
+                    <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a></code>
+                </span>
+            </td>
+            <td class="doc-returns-details">
+              <div class="doc-md-description">
+                <p>A dictionary with the following keys:
 - branch_name: The name of the current branch.
 - short_branch_name: A 20 lowercase characters of the branch name with special characters removed.
 - repository_root: The root directory of the Git repository.</p>
-        </div>
-      </dd>
-  </dl>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -3575,11 +3621,7 @@
 
 
 <a href="#bumpversion.scm.git.tag" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">tag</span><span class="p">(</span>
-    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">sign</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">message</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">tag</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sign</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3589,43 +3631,72 @@
 Otherwise, it uses an annotated tag.</p>
 
 
-
-  <p class="doc-section-head">Parameters:</p>
-  <dl class="doc-field-list">
-    <dt class="doc-field-term"><code>name</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The name of the tag</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>sign</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>True to sign the tag</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
-      </p><p class="doc-param-default">
-        <span class="doc-param-key">DEFAULT:</span>
-          <code>False</code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>message</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>An optional message to annotate the tag.</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
-      </p><p class="doc-param-default">
-        <span class="doc-param-key">DEFAULT:</span>
-          <code>None</code>
-      </p>    </dd>
-  </dl>
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">PARAMETER</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>name</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The name of the tag</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>sign</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>True to sign the tag</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  </span>
+                  <span class="doc-param-default">
+                    <b>DEFAULT:</b>
+                      <code>False</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>message</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>An optional message to annotate the tag.</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
+                  </span>
+                  <span class="doc-param-default">
+                    <b>DEFAULT:</b>
+                      <code>None</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -3679,7 +3750,7 @@ Otherwise, it uses an annotated tag.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 16, 2026 18:31:26 UTC">June 16, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 17, 2026 13:10:36 UTC">June 17, 2026</span>
   </span>
 
     

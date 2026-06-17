@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.7.6">
     
     
       
@@ -2898,7 +2898,7 @@
 <h2 id="bumpversion.config-attributes">Attributes<a href="#bumpversion.config-attributes" class="headerlink" title="Permanent link">&para;</a></h2>
 
 <h2 id="bumpversion.config-classes">Classes<a href="#bumpversion.config-classes" class="headerlink" title="Permanent link">&para;</a></h2>
-<h2 id="bumpversion.config-functions">Functions<a href="#bumpversion.config-functions" class="headerlink" title="Permanent link">&para;</a></h2>
+<h2 id="bumpversion.config-functions">Functions:<a href="#bumpversion.config-functions" class="headerlink" title="Permanent link">&para;</a></h2>
 
 <div class="doc doc-object doc-function">
 
@@ -2918,49 +2918,80 @@
 it attempts to retrieve it via a tag.</p>
 
 
-
-  <p class="doc-section-head">Parameters:</p>
-  <dl class="doc-field-list">
-    <dt class="doc-field-term"><code>config</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The current configuration dictionary.</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-internal" title="            Config (bumpversion.config.models.Config)" href="models/#bumpversion.config.models.Config">Config</a></code>
-      </p>    </dd>
-  </dl>
-
-
-
-  <p class="doc-section-head">Returns:</p>
-  <dl class="doc-field-list">
-      <dt class="doc-field-term">
-          <span class="doc-returns-annotation">
-              <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-          </span>
-      </dt>
-      <dd class="doc-field-def doc-returns-details">
-        <div class="doc-md-description">
-          <p>The version number</p>
-        </div>
-      </dd>
-  </dl>
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">PARAMETER</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>config</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The current configuration dictionary.</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-internal" title="            Config (bumpversion.config.models.Config)" href="models/#bumpversion.config.models.Config">Config</a></code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">RETURNS</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <span class="doc-returns-annotation">
+                    <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+                </span>
+            </td>
+            <td class="doc-returns-details">
+              <div class="doc-md-description">
+                <p>The version number</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
-  <p class="doc-section-head">Raises:</p>
-  <dl class="doc-field-list">
-      <dt class="doc-field-term doc-raises-annotation">
-          <code><a class="autorefs autorefs-internal" title="            ConfigurationError (bumpversion.exceptions.ConfigurationError)" href="../exceptions/#bumpversion.exceptions.ConfigurationError">ConfigurationError</a></code>
-      </dt>
-      <dd class="doc-field-def doc-raises-details">
-        <div class="doc-md-description">
-          <p>If it can&rsquo;t find the current version</p>
-        </div>
-      </dd>
-  </dl>
+
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">RAISES</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+              <span class="doc-raises-annotation">
+                  <code><a class="autorefs autorefs-internal" title="            ConfigurationError (bumpversion.exceptions.ConfigurationError)" href="../exceptions/#bumpversion.exceptions.ConfigurationError">ConfigurationError</a></code>
+              </span>
+            </td>
+            <td class="doc-raises-details">
+              <div class="doc-md-description">
+                <p>If it can&rsquo;t find the current version</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -2975,9 +3006,7 @@ it attempts to retrieve it via a tag.</p>
 
 
 <a href="#bumpversion.config.get_configuration" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">get_configuration</span><span class="p">(</span>
-    <span class="n">config_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Pathlike</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">overrides</span><span class="p">:</span> <span class="n">Any</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Config</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">get_configuration</span><span class="p">(</span><span class="n">config_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Pathlike</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">overrides</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Config</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -2985,55 +3014,85 @@ it attempts to retrieve it via a tag.</p>
         <p>Return the configuration based on any configuration files and overrides.</p>
 
 
-
-  <p class="doc-section-head">Parameters:</p>
-  <dl class="doc-field-list">
-    <dt class="doc-field-term"><code>config_file</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>An explicit configuration file to use, otherwise search for one</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a>[<a class="autorefs autorefs-internal" title="            Pathlike
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">PARAMETER</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>config_file</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>An explicit configuration file to use, otherwise search for one</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a>[<a class="autorefs autorefs-internal" title="            Pathlike
 
 
   
       module-attribute
    (bumpversion.utils.Pathlike)" href="../utils/#bumpversion.utils.Pathlike">Pathlike</a>]</code>
-      </p><p class="doc-param-default">
-        <span class="doc-param-key">DEFAULT:</span>
-          <code>None</code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>**overrides</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>Specific configuration key-values to override in the configuration</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></code>
-      </p><p class="doc-param-default">
-        <span class="doc-param-key">DEFAULT:</span>
-          <code>{}</code>
-      </p>    </dd>
-  </dl>
+                  </span>
+                  <span class="doc-param-default">
+                    <b>DEFAULT:</b>
+                      <code>None</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>**overrides</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>Specific configuration key-values to override in the configuration</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></code>
+                  </span>
+                  <span class="doc-param-default">
+                    <b>DEFAULT:</b>
+                      <code>{}</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
-
-  <p class="doc-section-head">Returns:</p>
-  <dl class="doc-field-list">
-      <dt class="doc-field-term">
-          <span class="doc-returns-annotation">
-              <code><a class="autorefs autorefs-internal" title="            Config (bumpversion.config.models.Config)" href="models/#bumpversion.config.models.Config">Config</a></code>
-          </span>
-      </dt>
-      <dd class="doc-field-def doc-returns-details">
-        <div class="doc-md-description">
-          <p>The configuration</p>
-        </div>
-      </dd>
-  </dl>
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">RETURNS</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <span class="doc-returns-annotation">
+                    <code><a class="autorefs autorefs-internal" title="            Config (bumpversion.config.models.Config)" href="models/#bumpversion.config.models.Config">Config</a></code>
+                </span>
+            </td>
+            <td class="doc-returns-details">
+              <div class="doc-md-description">
+                <p>The configuration</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -3048,9 +3107,7 @@ it attempts to retrieve it via a tag.</p>
 
 
 <a href="#bumpversion.config.set_config_defaults" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">set_config_defaults</span><span class="p">(</span>
-    <span class="n">parsed_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">overrides</span><span class="p">:</span> <span class="n">Any</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">set_config_defaults</span><span class="p">(</span><span class="n">parsed_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">overrides</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3089,7 +3146,7 @@ it attempts to retrieve it via a tag.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 16, 2026 18:31:25 UTC">June 16, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 17, 2026 13:10:36 UTC">June 17, 2026</span>
   </span>
 
     

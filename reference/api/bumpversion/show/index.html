@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.7.6">
     
     
       
@@ -2047,12 +2047,12 @@
   <a href="#bumpversion.show-functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Functions
+        Functions:
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Functions">
+    <nav class="md-nav" aria-label="Functions:">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3015,7 +3015,7 @@
 
 
 <h2 id="bumpversion.show-classes">Classes<a href="#bumpversion.show-classes" class="headerlink" title="Permanent link">&para;</a></h2>
-<h2 id="bumpversion.show-functions">Functions<a href="#bumpversion.show-functions" class="headerlink" title="Permanent link">&para;</a></h2>
+<h2 id="bumpversion.show-functions">Functions:<a href="#bumpversion.show-functions" class="headerlink" title="Permanent link">&para;</a></h2>
 
 <div class="doc doc-object doc-function">
 
@@ -3025,13 +3025,7 @@
 
 
 <a href="#bumpversion.show.do_show" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">do_show</span><span class="p">(</span>
-    <span class="o">*</span><span class="n">args</span><span class="p">,</span>
-    <span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">,</span>
-    <span class="n">format_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">,</span>
-    <span class="n">increment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">current_version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">do_show</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">,</span> <span class="n">format_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="n">increment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">current_version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3111,12 +3105,7 @@
 
 
 <a href="#bumpversion.show.resolve_name" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">resolve_name</span><span class="p">(</span>
-    <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">default</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">err_on_missing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">resolve_name</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">err_on_missing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3131,98 +3120,160 @@
 </ul>
 
 
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">PARAMETER</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>obj</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The object to access</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>name</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>A dotted name to the value, such as <code>mykey.0.name</code></p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>default</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>If the name cannot be resolved from the object, return this value</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></code>
+                  </span>
+                  <span class="doc-param-default">
+                    <b>DEFAULT:</b>
+                      <code>None</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>err_on_missing</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>Raise a <code>BadInputError</code> if the name cannot be resolved</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  </span>
+                  <span class="doc-param-default">
+                    <b>DEFAULT:</b>
+                      <code>False</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
-  <p class="doc-section-head">Parameters:</p>
-  <dl class="doc-field-list">
-    <dt class="doc-field-term"><code>obj</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The object to access</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>name</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>A dotted name to the value, such as <code>mykey.0.name</code></p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>default</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>If the name cannot be resolved from the object, return this value</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></code>
-      </p><p class="doc-param-default">
-        <span class="doc-param-key">DEFAULT:</span>
-          <code>None</code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>err_on_missing</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>Raise a <code>BadInputError</code> if the name cannot be resolved</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
-      </p><p class="doc-param-default">
-        <span class="doc-param-key">DEFAULT:</span>
-          <code>False</code>
-      </p>    </dd>
-  </dl>
+
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">RETURNS</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <span class="doc-returns-annotation">
+                    <code><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></code>
+                </span>
+            </td>
+            <td class="doc-returns-details">
+              <div class="doc-md-description">
+                <p>The value at the resolved name or the default value.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
-
-  <p class="doc-section-head">Returns:</p>
-  <dl class="doc-field-list">
-      <dt class="doc-field-term">
-          <span class="doc-returns-annotation">
-              <code><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></code>
-          </span>
-      </dt>
-      <dd class="doc-field-def doc-returns-details">
-        <div class="doc-md-description">
-          <p>The value at the resolved name or the default value.</p>
-        </div>
-      </dd>
-  </dl>
-
-
-
-  <p class="doc-section-head">Raises:</p>
-  <dl class="doc-field-list">
-      <dt class="doc-field-term doc-raises-annotation">
-          <code><a class="autorefs autorefs-internal" title="            BadInputError (bumpversion.exceptions.BadInputError)" href="../exceptions/#bumpversion.exceptions.BadInputError">BadInputError</a></code>
-      </dt>
-      <dd class="doc-field-def doc-raises-details">
-        <div class="doc-md-description">
-          <p>If we cannot resolve the name and <code>err_on_missing</code> is <code>True</code></p>
-        </div>
-      </dd>
-      <dt class="doc-field-term doc-raises-annotation">
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/exceptions.html#AttributeError">AttributeError</a></code>
-      </dt>
-      <dd class="doc-field-def doc-raises-details">
-        <div class="doc-md-description">
-          <p>If a @property decorator raised it</p>
-        </div>
-      </dd>
-      <dt class="doc-field-term doc-raises-annotation">
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/exceptions.html#TypeError">TypeError</a></code>
-      </dt>
-      <dd class="doc-field-def doc-raises-details">
-        <div class="doc-md-description">
-          <p>If a @property decorator raised it</p>
-        </div>
-      </dd>
-  </dl>
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">RAISES</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+              <span class="doc-raises-annotation">
+                  <code><a class="autorefs autorefs-internal" title="            BadInputError (bumpversion.exceptions.BadInputError)" href="../exceptions/#bumpversion.exceptions.BadInputError">BadInputError</a></code>
+              </span>
+            </td>
+            <td class="doc-raises-details">
+              <div class="doc-md-description">
+                <p>If we cannot resolve the name and <code>err_on_missing</code> is <code>True</code></p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+              <span class="doc-raises-annotation">
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/exceptions.html#AttributeError">AttributeError</a></code>
+              </span>
+            </td>
+            <td class="doc-raises-details">
+              <div class="doc-md-description">
+                <p>If a @property decorator raised it</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+              <span class="doc-raises-annotation">
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/exceptions.html#TypeError">TypeError</a></code>
+              </span>
+            </td>
+            <td class="doc-raises-details">
+              <div class="doc-md-description">
+                <p>If a @property decorator raised it</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
         <h4 id="bumpversion.show.resolve_name--noqa-dar401">noqa: DAR401<a class="headerlink" href="#bumpversion.show.resolve_name--noqa-dar401" title="Permanent link">&para;</a></h4>
 
 
@@ -3257,7 +3308,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 16, 2026 18:31:25 UTC">June 16, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 17, 2026 13:10:36 UTC">June 17, 2026</span>
   </span>
 
     

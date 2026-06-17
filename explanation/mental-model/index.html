@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.7.6">
     
     
       
@@ -2976,44 +2976,55 @@
 <p>The optimal serialization is the valid serialization that uses the fewest components.</p>
 <p>The <code>serialize</code> method of the <em>version spec</em> returns either the optimal serialization or the first invalid serialization.</p>
 <h3 id="version-serialization-examples">Version serialization examples<a class="headerlink" href="#version-serialization-examples" title="Permanent link">&para;</a></h3>
-<div class="grid wide-gap">
-<div class="card-container depth-0">
-<div class="card-media">
-<p><a href="../../assets/serializing-a-version-1-2-3.svg"><img alt="How a version is serialized with values major=1, minor=2, and patch=3" src="../../assets/serializing-a-version-1-2-3.svg" /></a></p>
-</div>
-<div class="card-content">
-<p class="card-content-title">No optional values</p>
-<p>In this example, the <code>major</code> component is <code>1</code>,  the <code>minor</code> component is <code>2</code>, and <code>patch</code> component is <code>3</code>. Since none of the values are optional (<code>0</code>), only one serialization format is valid. This one valid format is the optimal format.</p>
-</div>
-</div>
-<div class="card-container depth-0">
-<div class="card-media">
-<p><a href="../../assets/serializing-a-version-1-2-0.svg"><img alt="How a version is serialized with values major=1, minor=2, and patch=0" src="../../assets/serializing-a-version-1-2-0.svg" /></a></p>
-</div>
-<div class="card-content">
-<p class="card-content-title">One optional value</p>
-<p>A version with values major=1, minor=2, and patch=0 has two valid serializations. The optimal serialization is the one that uses the fewest components. <code>1.2</code> in this example.</p>
-</div>
-</div>
-<div class="card-container depth-0">
-<div class="card-media">
-<p><a href="../../assets/serializing-a-version-1-0-0.svg"><img alt="How a version is serialized with values major=1, minor=0, and patch=0" src="../../assets/serializing-a-version-1-0-0.svg" /></a></p>
-</div>
-<div class="card-content">
-<p class="card-content-title">Two optional values</p>
-<p>A version with values major=1, minor=0, and patch=0 has three valid serializations. The optimal serialization is the one that uses the fewest components. <code>1</code> in this example.</p>
-</div>
-</div>
-<div class="card-container depth-0">
-<div class="card-media">
-<p><a href="../../assets/serializing-a-version-1.svg"><img alt="How a version is serialized with invalid serialization formats" src="../../assets/serializing-a-version-1.svg" /></a></p>
-</div>
-<div class="card-content">
-<p class="card-content-title">No valid serialization options</p>
-<p>A version with values major=1, minor=2, and patch=3 has no valid serializations in this example. The <code>serialize</code> method returns the first invalid serialization.</p>
-</div>
-</div>
-</div>
+<p>/// grid wide-gap</p>
+<div class="highlight"><pre><span></span><code>/// card-container depth-0
+    /// card-media
+        [![How a version is serialized with values major=1, minor=2, and patch=3](../assets/serializing-a-version-1-2-3.svg)](../assets/serializing-a-version-1-2-3.svg)
+    ///
+    /// card-content
+        No optional values
+        {.card-content-title}
+
+        In this example, the `major` component is `1`,  the `minor` component is `2`, and `patch` component is `3`. Since none of the values are optional (`0`), only one serialization format is valid. This one valid format is the optimal format.
+    ///
+///
+
+/// card-container depth-0
+    /// card-media
+        [![How a version is serialized with values major=1, minor=2, and patch=0](../assets/serializing-a-version-1-2-0.svg)](../assets/serializing-a-version-1-2-0.svg)
+    ///
+    /// card-content
+
+        One optional value
+        {.card-content-title}
+
+        A version with values major=1, minor=2, and patch=0 has two valid serializations. The optimal serialization is the one that uses the fewest components. `1.2` in this example.
+    ///
+///
+/// card-container depth-0
+    /// card-media
+        [![How a version is serialized with values major=1, minor=0, and patch=0](../assets/serializing-a-version-1-0-0.svg)](../assets/serializing-a-version-1-0-0.svg)
+    ///
+    /// card-content
+        Two optional values
+        {.card-content-title}
+
+        A version with values major=1, minor=0, and patch=0 has three valid serializations. The optimal serialization is the one that uses the fewest components. `1` in this example.
+    ///
+///
+/// card-container depth-0
+    /// card-media
+        [![How a version is serialized with invalid serialization formats](../assets/serializing-a-version-1.svg)](../assets/serializing-a-version-1.svg)
+    ///
+    /// card-content
+        No valid serialization options
+        {.card-content-title}
+
+        A version with values major=1, minor=2, and patch=3 has no valid serializations in this example. The `serialize` method returns the first invalid serialization.
+    ///
+///
+</code></pre></div>
+<p>///</p>
 
 
 
@@ -3034,7 +3045,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 22, 2026 13:21:58 UTC">March 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 16, 2026 18:06:05 UTC">June 16, 2026</span>
   </span>
 
     

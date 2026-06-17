@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.7.6">
     
     
       
@@ -1840,12 +1840,12 @@
   <a href="#bumpversion.files-functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Functions
+        Functions:
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Functions">
+    <nav class="md-nav" aria-label="Functions:">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3053,12 +3053,7 @@
 
 
 <a href="#bumpversion.files.ConfiguredFile" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">ConfiguredFile</span><span class="p">(</span>
-    <span class="n">file_change</span><span class="p">:</span> <span class="n">FileChange</span><span class="p">,</span>
-    <span class="n">version_config</span><span class="p">:</span> <span class="n">VersionConfig</span><span class="p">,</span>
-    <span class="n">search</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">replace</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">ConfiguredFile</span><span class="p">(</span><span class="n">file_change</span><span class="p">:</span> <span class="n">FileChange</span><span class="p">,</span> <span class="n">version_config</span><span class="p">:</span> <span class="n">VersionConfig</span><span class="p">,</span> <span class="n">search</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">replace</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3086,7 +3081,7 @@
 
 
 
-<h4 id="bumpversion.files.ConfiguredFile-functions">Functions<a href="#bumpversion.files.ConfiguredFile-functions" class="headerlink" title="Permanent link">&para;</a></h4>
+<h4 id="bumpversion.files.ConfiguredFile-functions">Methods:<a href="#bumpversion.files.ConfiguredFile-functions" class="headerlink" title="Permanent link">&para;</a></h4>
 
 <div class="doc doc-object doc-function">
 
@@ -3104,34 +3099,52 @@
         <p>Return the contents of the file.</p>
 
 
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">RETURNS</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <span class="doc-returns-annotation">
+                    <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+                </span>
+            </td>
+            <td class="doc-returns-details">
+              <div class="doc-md-description">
+                <p>The contents of the file</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
-  <p class="doc-section-head">Raises:</p>
-  <dl class="doc-field-list">
-      <dt class="doc-field-term doc-raises-annotation">
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/exceptions.html#FileNotFoundError">FileNotFoundError</a></code>
-      </dt>
-      <dd class="doc-field-def doc-raises-details">
-        <div class="doc-md-description">
-          <p>if the file doesn&rsquo;t exist</p>
-        </div>
-      </dd>
-  </dl>
 
-
-
-  <p class="doc-section-head">Returns:</p>
-  <dl class="doc-field-list">
-      <dt class="doc-field-term">
-          <span class="doc-returns-annotation">
-              <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-          </span>
-      </dt>
-      <dd class="doc-field-def doc-returns-details">
-        <div class="doc-md-description">
-          <p>The contents of the file</p>
-        </div>
-      </dd>
-  </dl>
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">RAISES</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+              <span class="doc-raises-annotation">
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/exceptions.html#FileNotFoundError">FileNotFoundError</a></code>
+              </span>
+            </td>
+            <td class="doc-raises-details">
+              <div class="doc-md-description">
+                <p>if the file doesn&rsquo;t exist</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -3146,12 +3159,7 @@
 
 
 <a href="#bumpversion.files.ConfiguredFile.make_file_change" class="headerlink" title="Permanent link">&para;</a></h5>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">make_file_change</span><span class="p">(</span>
-    <span class="n">current_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span>
-    <span class="n">new_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span>
-    <span class="n">context</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">,</span>
-    <span class="n">dry_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">make_file_change</span><span class="p">(</span><span class="n">current_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span> <span class="n">new_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">dry_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3200,10 +3208,7 @@
 
 
 <a href="#bumpversion.files.DataFileUpdater" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">DataFileUpdater</span><span class="p">(</span>
-    <span class="n">file_change</span><span class="p">:</span> <span class="n">FileChange</span><span class="p">,</span>
-    <span class="n">version_part_configs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VersionComponentSpec</span><span class="p">],</span>
-<span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">DataFileUpdater</span><span class="p">(</span><span class="n">file_change</span><span class="p">:</span> <span class="n">FileChange</span><span class="p">,</span> <span class="n">version_part_configs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VersionComponentSpec</span><span class="p">])</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3231,7 +3236,7 @@
 
 
 
-<h4 id="bumpversion.files.DataFileUpdater-functions">Functions<a href="#bumpversion.files.DataFileUpdater-functions" class="headerlink" title="Permanent link">&para;</a></h4>
+<h4 id="bumpversion.files.DataFileUpdater-functions">Methods:<a href="#bumpversion.files.DataFileUpdater-functions" class="headerlink" title="Permanent link">&para;</a></h4>
 
 <div class="doc doc-object doc-function">
 
@@ -3241,12 +3246,7 @@
 
 
 <a href="#bumpversion.files.DataFileUpdater.update_file" class="headerlink" title="Permanent link">&para;</a></h5>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">update_file</span><span class="p">(</span>
-    <span class="n">current_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span>
-    <span class="n">new_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span>
-    <span class="n">context</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">,</span>
-    <span class="n">dry_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">update_file</span><span class="p">(</span><span class="n">current_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span> <span class="n">new_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">dry_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3275,12 +3275,7 @@
 
 
 <a href="#bumpversion.files.FileUpdater" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">FileUpdater</span><span class="p">(</span>
-    <span class="n">file_change</span><span class="p">:</span> <span class="n">FileChange</span><span class="p">,</span>
-    <span class="n">version_config</span><span class="p">:</span> <span class="n">VersionConfig</span><span class="p">,</span>
-    <span class="n">search</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">replace</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">FileUpdater</span><span class="p">(</span><span class="n">file_change</span><span class="p">:</span> <span class="n">FileChange</span><span class="p">,</span> <span class="n">version_config</span><span class="p">:</span> <span class="n">VersionConfig</span><span class="p">,</span> <span class="n">search</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">replace</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3308,7 +3303,7 @@
 
 
 
-<h4 id="bumpversion.files.FileUpdater-functions">Functions<a href="#bumpversion.files.FileUpdater-functions" class="headerlink" title="Permanent link">&para;</a></h4>
+<h4 id="bumpversion.files.FileUpdater-functions">Methods:<a href="#bumpversion.files.FileUpdater-functions" class="headerlink" title="Permanent link">&para;</a></h4>
 
 <div class="doc doc-object doc-function">
 
@@ -3318,12 +3313,7 @@
 
 
 <a href="#bumpversion.files.FileUpdater.update_file" class="headerlink" title="Permanent link">&para;</a></h5>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">update_file</span><span class="p">(</span>
-    <span class="n">current_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span>
-    <span class="n">new_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span>
-    <span class="n">context</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">,</span>
-    <span class="n">dry_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">update_file</span><span class="p">(</span><span class="n">current_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span> <span class="n">new_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">dry_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3342,7 +3332,7 @@
     </div>
 
 </div>
-<h2 id="bumpversion.files-functions">Functions<a href="#bumpversion.files-functions" class="headerlink" title="Permanent link">&para;</a></h2>
+<h2 id="bumpversion.files-functions">Functions:<a href="#bumpversion.files-functions" class="headerlink" title="Permanent link">&para;</a></h2>
 
 <div class="doc doc-object doc-function">
 
@@ -3372,12 +3362,7 @@
 
 
 <a href="#bumpversion.files.log_changes" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">log_changes</span><span class="p">(</span>
-    <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">file_content_before</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">file_content_after</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">dry_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">log_changes</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_content_before</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_content_after</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dry_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3385,49 +3370,84 @@
         <p>Log the changes that would be made to the file.</p>
 
 
-
-  <p class="doc-section-head">Parameters:</p>
-  <dl class="doc-field-list">
-    <dt class="doc-field-term"><code>file_path</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The path to the file</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>file_content_before</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The file contents before the change</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>file_content_after</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The file contents after the change</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>dry_run</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>True if this is a report-only job</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
-      </p><p class="doc-param-default">
-        <span class="doc-param-key">DEFAULT:</span>
-          <code>False</code>
-      </p>    </dd>
-  </dl>
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">PARAMETER</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>file_path</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The path to the file</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>file_content_before</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The file contents before the change</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>file_content_after</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The file contents after the change</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>dry_run</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>True if this is a report-only job</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  </span>
+                  <span class="doc-param-default">
+                    <b>DEFAULT:</b>
+                      <code>False</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -3442,13 +3462,7 @@
 
 
 <a href="#bumpversion.files.modify_files" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">modify_files</span><span class="p">(</span>
-    <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ConfiguredFile</span><span class="p">],</span>
-    <span class="n">current_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span>
-    <span class="n">new_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span>
-    <span class="n">context</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">,</span>
-    <span class="n">dry_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">modify_files</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ConfiguredFile</span><span class="p">],</span> <span class="n">current_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span> <span class="n">new_version</span><span class="p">:</span> <span class="n">Version</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">dry_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3456,58 +3470,100 @@
         <p>Modify the files, searching and replacing values according to the FileConfig.</p>
 
 
-
-  <p class="doc-section-head">Parameters:</p>
-  <dl class="doc-field-list">
-    <dt class="doc-field-term"><code>files</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The list of configured files</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" title="typing.List" href="https://docs.python.org/3/library/typing.html#typing.List">List</a>[<a class="autorefs autorefs-internal" title="            ConfiguredFile (bumpversion.files.ConfiguredFile)" href="#bumpversion.files.ConfiguredFile">ConfiguredFile</a>]</code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>current_version</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The current version</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-internal" title="            Version (bumpversion.versioning.models.Version)" href="../versioning/models/#bumpversion.versioning.models.Version">Version</a></code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>new_version</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The next version</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-internal" title="            Version (bumpversion.versioning.models.Version)" href="../versioning/models/#bumpversion.versioning.models.Version">Version</a></code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>context</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The context used for rendering the version</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" title="typing.MutableMapping" href="https://docs.python.org/3/library/typing.html#typing.MutableMapping">MutableMapping</a></code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>dry_run</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>True if this should be a report-only job</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
-      </p><p class="doc-param-default">
-        <span class="doc-param-key">DEFAULT:</span>
-          <code>False</code>
-      </p>    </dd>
-  </dl>
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">PARAMETER</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>files</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The list of configured files</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" title="typing.List" href="https://docs.python.org/3/library/typing.html#typing.List">List</a>[<a class="autorefs autorefs-internal" title="            ConfiguredFile (bumpversion.files.ConfiguredFile)" href="#bumpversion.files.ConfiguredFile">ConfiguredFile</a>]</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>current_version</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The current version</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-internal" title="            Version (bumpversion.versioning.models.Version)" href="../versioning/models/#bumpversion.versioning.models.Version">Version</a></code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>new_version</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The next version</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-internal" title="            Version (bumpversion.versioning.models.Version)" href="../versioning/models/#bumpversion.versioning.models.Version">Version</a></code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>context</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The context used for rendering the version</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" title="typing.MutableMapping" href="https://docs.python.org/3/library/typing.html#typing.MutableMapping">MutableMapping</a></code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>dry_run</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>True if this should be a report-only job</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  </span>
+                  <span class="doc-param-default">
+                    <b>DEFAULT:</b>
+                      <code>False</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -3522,12 +3578,7 @@
 
 
 <a href="#bumpversion.files.resolve_file_config" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">resolve_file_config</span><span class="p">(</span>
-    <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">FileChange</span><span class="p">],</span>
-    <span class="n">version_config</span><span class="p">:</span> <span class="n">VersionConfig</span><span class="p">,</span>
-    <span class="n">search</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">replace</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ConfiguredFile</span><span class="p">]</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">resolve_file_config</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">FileChange</span><span class="p">],</span> <span class="n">version_config</span><span class="p">:</span> <span class="n">VersionConfig</span><span class="p">,</span> <span class="n">search</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">replace</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ConfiguredFile</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3535,68 +3586,112 @@
         <p>Resolve the files, searching and replacing values according to the FileConfig.</p>
 
 
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">PARAMETER</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>files</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>A list of file configurations</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" title="typing.List" href="https://docs.python.org/3/library/typing.html#typing.List">List</a>[<a class="autorefs autorefs-internal" title="            FileChange (bumpversion.config.models.FileChange)" href="../config/models/#bumpversion.config.models.FileChange">FileChange</a>]</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>version_config</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>How the version should be changed</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-internal" title="            VersionConfig (bumpversion.versioning.version_config.VersionConfig)" href="../versioning/version_config/#bumpversion.versioning.version_config.VersionConfig">VersionConfig</a></code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>search</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The search pattern to use instead of any configured search pattern</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
+                  </span>
+                  <span class="doc-param-default">
+                    <b>DEFAULT:</b>
+                      <code>None</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>replace</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The replace pattern to use instead of any configured replace pattern</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
+                  </span>
+                  <span class="doc-param-default">
+                    <b>DEFAULT:</b>
+                      <code>None</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
-  <p class="doc-section-head">Parameters:</p>
-  <dl class="doc-field-list">
-    <dt class="doc-field-term"><code>files</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>A list of file configurations</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" title="typing.List" href="https://docs.python.org/3/library/typing.html#typing.List">List</a>[<a class="autorefs autorefs-internal" title="            FileChange (bumpversion.config.models.FileChange)" href="../config/models/#bumpversion.config.models.FileChange">FileChange</a>]</code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>version_config</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>How the version should be changed</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-internal" title="            VersionConfig (bumpversion.versioning.version_config.VersionConfig)" href="../versioning/version_config/#bumpversion.versioning.version_config.VersionConfig">VersionConfig</a></code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>search</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The search pattern to use instead of any configured search pattern</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
-      </p><p class="doc-param-default">
-        <span class="doc-param-key">DEFAULT:</span>
-          <code>None</code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>replace</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The replace pattern to use instead of any configured replace pattern</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
-      </p><p class="doc-param-default">
-        <span class="doc-param-key">DEFAULT:</span>
-          <code>None</code>
-      </p>    </dd>
-  </dl>
 
-
-
-  <p class="doc-section-head">Returns:</p>
-  <dl class="doc-field-list">
-      <dt class="doc-field-term">
-          <span class="doc-returns-annotation">
-              <code><a class="autorefs autorefs-external" title="typing.List" href="https://docs.python.org/3/library/typing.html#typing.List">List</a>[<a class="autorefs autorefs-internal" title="            ConfiguredFile (bumpversion.files.ConfiguredFile)" href="#bumpversion.files.ConfiguredFile">ConfiguredFile</a>]</code>
-          </span>
-      </dt>
-      <dd class="doc-field-def doc-returns-details">
-        <div class="doc-md-description">
-          <p>A list of ConfiguredFiles</p>
-        </div>
-      </dd>
-  </dl>
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">RETURNS</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <span class="doc-returns-annotation">
+                    <code><a class="autorefs autorefs-external" title="typing.List" href="https://docs.python.org/3/library/typing.html#typing.List">List</a>[<a class="autorefs autorefs-internal" title="            ConfiguredFile (bumpversion.files.ConfiguredFile)" href="#bumpversion.files.ConfiguredFile">ConfiguredFile</a>]</code>
+                </span>
+            </td>
+            <td class="doc-returns-details">
+              <div class="doc-md-description">
+                <p>A list of ConfiguredFiles</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -3630,7 +3725,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 16, 2026 18:31:25 UTC">June 16, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 17, 2026 13:10:35 UTC">June 17, 2026</span>
   </span>
 
     

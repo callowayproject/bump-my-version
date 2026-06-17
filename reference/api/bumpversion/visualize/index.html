@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.7.6">
     
     
       
@@ -2370,12 +2370,12 @@
   <a href="#bumpversion.visualize-functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Functions
+        Functions:
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Functions">
+    <nav class="md-nav" aria-label="Functions:">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3046,19 +3046,7 @@
   </span>
 
 <a href="#bumpversion.visualize.Border" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">Border</span><span class="p">(</span>
-    <span class="n">corner_bottom_right</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">corner_top_right</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">corner_top_left</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">corner_bottom_left</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">divider_left</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">divider_up</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">divider_down</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">divider_right</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">pipe</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">cross</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-<span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">Border</span><span class="p">(</span><span class="n">corner_bottom_right</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">corner_top_right</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">corner_top_left</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">corner_bottom_left</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">divider_left</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">divider_up</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">divider_down</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">divider_right</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pipe</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cross</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3095,7 +3083,7 @@
     </div>
 
 </div>
-<h2 id="bumpversion.visualize-functions">Functions<a href="#bumpversion.visualize-functions" class="headerlink" title="Permanent link">&para;</a></h2>
+<h2 id="bumpversion.visualize-functions">Functions:<a href="#bumpversion.visualize-functions" class="headerlink" title="Permanent link">&para;</a></h2>
 
 <div class="doc doc-object doc-function">
 
@@ -3105,11 +3093,7 @@
 
 
 <a href="#bumpversion.visualize.connection_str" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">connection_str</span><span class="p">(</span>
-    <span class="n">border</span><span class="p">:</span> <span class="n">Border</span><span class="p">,</span>
-    <span class="n">has_next</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">has_previous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">connection_str</span><span class="p">(</span><span class="n">border</span><span class="p">:</span> <span class="n">Border</span><span class="p">,</span> <span class="n">has_next</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">has_previous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3117,64 +3101,101 @@
         <p>Return the correct connection string based on the next and previous.</p>
 
 
-
-  <p class="doc-section-head">Parameters:</p>
-  <dl class="doc-field-list">
-    <dt class="doc-field-term"><code>border</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The border definition to draw the lines</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-internal" title="            Border
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">PARAMETER</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>border</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The border definition to draw the lines</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-internal" title="            Border
 
 
   
       dataclass
    (bumpversion.visualize.Border)" href="#bumpversion.visualize.Border">Border</a></code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>has_next</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>If <code>True</code>, there is a next line</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
-      </p><p class="doc-param-default">
-        <span class="doc-param-key">DEFAULT:</span>
-          <code>False</code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>has_previous</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>If <code>True</code>, there is a previous line</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
-      </p><p class="doc-param-default">
-        <span class="doc-param-key">DEFAULT:</span>
-          <code>False</code>
-      </p>    </dd>
-  </dl>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>has_next</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>If <code>True</code>, there is a next line</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  </span>
+                  <span class="doc-param-default">
+                    <b>DEFAULT:</b>
+                      <code>False</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>has_previous</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>If <code>True</code>, there is a previous line</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  </span>
+                  <span class="doc-param-default">
+                    <b>DEFAULT:</b>
+                      <code>False</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
-
-  <p class="doc-section-head">Returns:</p>
-  <dl class="doc-field-list">
-      <dt class="doc-field-term">
-          <span class="doc-returns-annotation">
-              <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-          </span>
-      </dt>
-      <dd class="doc-field-def doc-returns-details">
-        <div class="doc-md-description">
-          <p>A string that connects left-to-right and top-to-bottom based on the next and previous</p>
-        </div>
-      </dd>
-  </dl>
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">RETURNS</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <span class="doc-returns-annotation">
+                    <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+                </span>
+            </td>
+            <td class="doc-returns-details">
+              <div class="doc-md-description">
+                <p>A string that connects left-to-right and top-to-bottom based on the next and previous</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -3197,35 +3218,56 @@
         <p>Return the version parts that are in the configuration.</p>
 
 
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">PARAMETER</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>config</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The configuration to check against</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-internal" title="            Config (bumpversion.config.Config)" href="../config/models/#bumpversion.config.models.Config">Config</a></code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
-  <p class="doc-section-head">Parameters:</p>
-  <dl class="doc-field-list">
-    <dt class="doc-field-term"><code>config</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The configuration to check against</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-internal" title="            Config (bumpversion.config.Config)" href="../config/models/#bumpversion.config.models.Config">Config</a></code>
-      </p>    </dd>
-  </dl>
 
-
-
-  <p class="doc-section-head">Returns:</p>
-  <dl class="doc-field-list">
-      <dt class="doc-field-term">
-          <span class="doc-returns-annotation">
-              <code><a class="autorefs autorefs-external" title="typing.List" href="https://docs.python.org/3/library/typing.html#typing.List">List</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
-          </span>
-      </dt>
-      <dd class="doc-field-def doc-returns-details">
-        <div class="doc-md-description">
-          <p>The version parts that are in the configuration</p>
-        </div>
-      </dd>
-  </dl>
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">RETURNS</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <span class="doc-returns-annotation">
+                    <code><a class="autorefs autorefs-external" title="typing.List" href="https://docs.python.org/3/library/typing.html#typing.List">List</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
+                </span>
+            </td>
+            <td class="doc-returns-details">
+              <div class="doc-md-description">
+                <p>The version parts that are in the configuration</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -3240,11 +3282,7 @@
 
 
 <a href="#bumpversion.visualize.labeled_line" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">labeled_line</span><span class="p">(</span>
-    <span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">border</span><span class="p">:</span> <span class="n">Border</span><span class="p">,</span>
-    <span class="n">fit_length</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">labeled_line</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">border</span><span class="p">:</span> <span class="n">Border</span><span class="p">,</span> <span class="n">fit_length</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3252,61 +3290,97 @@
         <p>Return the version part string with the correct padding.</p>
 
 
-
-  <p class="doc-section-head">Parameters:</p>
-  <dl class="doc-field-list">
-    <dt class="doc-field-term"><code>label</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The label to render</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>border</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The border definition to draw the lines</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-internal" title="            Border
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">PARAMETER</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>label</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The label to render</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>border</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The border definition to draw the lines</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-internal" title="            Border
 
 
   
       dataclass
    (bumpversion.visualize.Border)" href="#bumpversion.visualize.Border">Border</a></code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>fit_length</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The length to fit the label to</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>]</code>
-      </p><p class="doc-param-default">
-        <span class="doc-param-key">DEFAULT:</span>
-          <code>None</code>
-      </p>    </dd>
-  </dl>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>fit_length</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The length to fit the label to</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>]</code>
+                  </span>
+                  <span class="doc-param-default">
+                    <b>DEFAULT:</b>
+                      <code>None</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
-
-  <p class="doc-section-head">Returns:</p>
-  <dl class="doc-field-list">
-      <dt class="doc-field-term">
-          <span class="doc-returns-annotation">
-              <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-          </span>
-      </dt>
-      <dd class="doc-field-def doc-returns-details">
-        <div class="doc-md-description">
-          <p>A labeled line with leading and trailing spaces</p>
-        </div>
-      </dd>
-  </dl>
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">RETURNS</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <span class="doc-returns-annotation">
+                    <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+                </span>
+            </td>
+            <td class="doc-returns-details">
+              <div class="doc-md-description">
+                <p>A labeled line with leading and trailing spaces</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -3321,9 +3395,7 @@
 
 
 <a href="#bumpversion.visualize.lead_string" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">lead_string</span><span class="p">(</span>
-    <span class="n">version_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">border</span><span class="p">:</span> <span class="n">Border</span><span class="p">,</span> <span class="n">blank</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">lead_string</span><span class="p">(</span><span class="n">version_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">border</span><span class="p">:</span> <span class="n">Border</span><span class="p">,</span> <span class="n">blank</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3339,61 +3411,97 @@
 </code></pre></div>
 
 
-
-  <p class="doc-section-head">Parameters:</p>
-  <dl class="doc-field-list">
-    <dt class="doc-field-term"><code>version_str</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The string to render as the starting point</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>border</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>The border definition to draw the lines</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-internal" title="            Border
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">PARAMETER</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>version_str</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The string to render as the starting point</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>border</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The border definition to draw the lines</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-internal" title="            Border
 
 
   
       dataclass
    (bumpversion.visualize.Border)" href="#bumpversion.visualize.Border">Border</a></code>
-      </p>    </dd>
-    <dt class="doc-field-term"><code>blank</code></dt>
-    <dd class="doc-field-def">
-      <div class="doc-md-description">
-        <p>If <code>True</code>, return a blank string the same length as the version bump string</p>
-      </div>
-<p class="doc-param-annotation">
-        <span class="doc-param-key">TYPE:</span>
-          <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
-      </p><p class="doc-param-default">
-        <span class="doc-param-key">DEFAULT:</span>
-          <code>False</code>
-      </p>    </dd>
-  </dl>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>blank</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>If <code>True</code>, return a blank string the same length as the version bump string</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  </span>
+                  <span class="doc-param-default">
+                    <b>DEFAULT:</b>
+                      <code>False</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
-
-  <p class="doc-section-head">Returns:</p>
-  <dl class="doc-field-list">
-      <dt class="doc-field-term">
-          <span class="doc-returns-annotation">
-              <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-          </span>
-      </dt>
-      <dd class="doc-field-def doc-returns-details">
-        <div class="doc-md-description">
-          <p>The version bump string or a blank string</p>
-        </div>
-      </dd>
-  </dl>
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">RETURNS</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <span class="doc-returns-annotation">
+                    <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+                </span>
+            </td>
+            <td class="doc-returns-details">
+              <div class="doc-md-description">
+                <p>The version bump string or a blank string</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -3408,11 +3516,7 @@
 
 
 <a href="#bumpversion.visualize.visualize" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">visualize</span><span class="p">(</span>
-    <span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">,</span>
-    <span class="n">version_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">box_style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;light&quot;</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">visualize</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">,</span> <span class="n">version_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">box_style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;light&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3451,7 +3555,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 16, 2026 18:31:25 UTC">June 16, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 17, 2026 13:10:36 UTC">June 17, 2026</span>
   </span>
 
     
