@@ -59,6 +59,8 @@
     
       <link rel="stylesheet" href="../../assets/css/field-list.css">
     
+      <link rel="stylesheet" href="../../assets/click-extra/ansi.css">
+    
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -2982,60 +2984,73 @@
 <p>If you are in a Git or Mercurial repository, you may see additional messages.</p>
 </div>
 <div class="highlight"><span class="filename">Incrementing the minor segment</span><pre><span></span><code><span class="gp">$ </span>bump-my-version<span class="w"> </span>bump<span class="w"> </span>minor<span class="w"> </span>--dry-run<span class="w"> </span>-vv
-<span class="go">Starting BumpVersion 0.25.1</span>
-<span class="go">Reading configuration</span>
-<span class="go">  Reading config file: /users/gettingstarted/.bumpversion.toml</span>
-<span class="go">  Parsing current version &#39;0.1.0&#39;</span>
-<span class="go">    Parsing version &#39;0.1.0&#39; using regexp &#39;(?P&lt;major&gt;\d+)\.(?P&lt;minor&gt;\d+)\.(?P&lt;patch&gt;\d+)&#39;</span>
-<span class="go">      Parsed the following values: major=0, minor=1, patch=0</span>
-<span class="go">  Attempting to increment part &#39;minor&#39;</span>
-<span class="go">    Values are now: major=0, minor=2, patch=0</span>
-<span class="go">  Serializing version &#39;&lt;bumpversion.Version:major=0, minor=2, patch=0&gt;&#39;</span>
-<span class="go">    Using serialization format &#39;{major}.{minor}.{patch}&#39;</span>
-<span class="go">    Serialized to &#39;0.2.0&#39;</span>
-<span class="go">  New version will be &#39;0.2.0&#39;</span>
-<span class="go">Dry run active, won&#39;t touch any files.</span>
+Starting BumpVersion <span class="-Ansi -Ansi-Bold -Ansi-Cyan">1.4</span>.<span class="-Ansi -Ansi-Bold -Ansi-Cyan">0</span>
+Reading configuration
+  Reading config file: <span class="-Ansi -Ansi-Magenta">/users/gettingstarted/</span><span class="-Ansi -Ansi-BrightMagenta">.bumpversion.toml</span>
+  config.pep621_info = <span class="-Ansi -Ansi-Italic -Ansi-Magenta">None</span>
+  Parsing current version <span class="-Ansi -Ansi-Green">&#39;0.1.0&#39;</span>
+    Parsing version <span class="-Ansi -Ansi-Green">&#39;0.1.0&#39;</span> using regexp <span class="-Ansi -Ansi-Green">&#39;(?P&lt;major&gt;\d+)\.(?P&lt;minor&gt;\d+)\.(?P&lt;patch&gt;\d+)&#39;</span>
+      Parsed the following values: <span class="-Ansi -Ansi-Yellow">major</span>=<span class="-Ansi -Ansi-Bold -Ansi-Cyan">0</span>, <span class="-Ansi -Ansi-Yellow">minor</span>=<span class="-Ansi -Ansi-Bold -Ansi-Cyan">1</span>, <span class="-Ansi -Ansi-Yellow">patch</span>=<span class="-Ansi -Ansi-Bold -Ansi-Cyan">0</span>
+  No setup hooks defined
+  Attempting to increment part <span class="-Ansi -Ansi-Green">&#39;minor&#39;</span>
+    Values are now: <span class="-Ansi -Ansi-Yellow">major</span>=<span class="-Ansi -Ansi-Bold -Ansi-Cyan">0</span>, <span class="-Ansi -Ansi-Yellow">minor</span>=<span class="-Ansi -Ansi-Bold -Ansi-Cyan">2</span>, <span class="-Ansi -Ansi-Yellow">patch</span>=<span class="-Ansi -Ansi-Bold -Ansi-Cyan">0</span>
+  Serializing version <span class="-Ansi -Ansi-Green">&#39;&lt;bumpversion.Version:major=0, minor=2, patch=0&gt;&#39;</span>
+    Using serialization format <span class="-Ansi -Ansi-Green">&#39;{major}.{minor}.{patch}&#39;</span>
+    Serialized to <span class="-Ansi -Ansi-Green">&#39;0.2.0&#39;</span>
+  New version will be <span class="-Ansi -Ansi-Green">&#39;0.2.0&#39;</span>
+Dry run active, won&#39;t touch any files.
 
-<span class="go">File VERSION: replace `{current_version}` with `{new_version}`</span>
-<span class="go">  Serializing the current version</span>
-<span class="go">    Serializing version &#39;&lt;bumpversion.Version:major=0, minor=1, patch=0&gt;&#39;</span>
-<span class="go">      Using serialization format &#39;{major}.{minor}.{patch}&#39;</span>
-<span class="go">      Serialized to &#39;0.1.0&#39;</span>
-<span class="go">  Serializing the new version</span>
-<span class="go">    Serializing version &#39;&lt;bumpversion.Version:major=0, minor=2, patch=0&gt;&#39;</span>
-<span class="go">      Using serialization format &#39;{major}.{minor}.{patch}&#39;</span>
-<span class="go">      Serialized to &#39;0.2.0&#39;</span>
-<span class="go">  Rendering search pattern with context</span>
-<span class="go">    No RegEx flag detected. Searching for the default pattern: &#39;0\.1\.0&#39;</span>
-<span class="go">  Found &#39;0\.1\.0&#39; at line 1: 0.1.0</span>
-<span class="go">  Would change file VERSION:</span>
-<span class="go">    *** before VERSION</span>
-<span class="go">    --- after VERSION</span>
-<span class="go">    ***************</span>
-<span class="go">    *** 1 ****</span>
-<span class="go">    ! 0.1.0</span>
-<span class="go">    --- 1 ----</span>
-<span class="go">    ! 0.2.0</span>
+File VERSION: replace `<span class="-Ansi -Ansi-Bold">{</span>current_version<span class="-Ansi -Ansi-Bold">}</span>` with `<span class="-Ansi -Ansi-Bold">{</span>new_version<span class="-Ansi -Ansi-Bold">}</span>`
+  Serializing the current version
+    Serializing version <span class="-Ansi -Ansi-Green">&#39;&lt;bumpversion.Version:major=0, minor=1, patch=0&gt;&#39;</span>
+      Using serialization format <span class="-Ansi -Ansi-Green">&#39;{major}.{minor}.{patch}&#39;</span>
+      Serialized to <span class="-Ansi -Ansi-Green">&#39;0.1.0&#39;</span>
+  Serializing the new version
+    Serializing version <span class="-Ansi -Ansi-Green">&#39;&lt;bumpversion.Version:major=0, minor=2, patch=0&gt;&#39;</span>
+      Using serialization format <span class="-Ansi -Ansi-Green">&#39;{major}.{minor}.{patch}&#39;</span>
+      Serialized to <span class="-Ansi -Ansi-Green">&#39;0.2.0&#39;</span>
+  Rendering search pattern with context
+    No RegEx flag detected. Searching for the default pattern: <span class="-Ansi -Ansi-Green">&#39;0\.1\.0&#39;</span>
+  Found <span class="-Ansi -Ansi-Green">&#39;0\.1\.0&#39;</span> at line <span class="-Ansi -Ansi-Bold -Ansi-Cyan">1</span>: <span class="-Ansi -Ansi-Bold -Ansi-Cyan">0.1</span>.<span class="-Ansi -Ansi-Bold -Ansi-Cyan">0</span>
+  Would change file VERSION:
+    *** before VERSION
+    --- after VERSION
+    ***************
+    *** <span class="-Ansi -Ansi-Bold -Ansi-Cyan">1</span> ****
+    ! <span class="-Ansi -Ansi-Bold -Ansi-Cyan">0.1</span>.<span class="-Ansi -Ansi-Bold -Ansi-Cyan">0</span>
+    --- <span class="-Ansi -Ansi-Bold -Ansi-Cyan">1</span> ----
+    ! <span class="-Ansi -Ansi-Bold -Ansi-Cyan">0.2</span>.<span class="-Ansi -Ansi-Bold -Ansi-Cyan">0</span>
 
-<span class="go">Processing config file: /users/gettingstarted/.bumpversion.toml</span>
-<span class="go">  Serializing version &#39;&lt;bumpversion.Version:major=0, minor=1, patch=0&gt;&#39;</span>
-<span class="go">    Using serialization format &#39;{major}.{minor}.{patch}&#39;</span>
-<span class="go">    Serialized to &#39;0.1.0&#39;</span>
-<span class="go">  Serializing version &#39;&lt;bumpversion.Version:major=0, minor=2, patch=0&gt;&#39;</span>
-<span class="go">    Using serialization format &#39;{major}.{minor}.{patch}&#39;</span>
-<span class="go">    Serialized to &#39;0.2.0&#39;</span>
-<span class="go">  Rendering search pattern with context</span>
-<span class="go">    No RegEx flag detected. Searching for the default pattern: &#39;0\.1\.0&#39;</span>
-<span class="go">  Found &#39;0\.1\.0&#39; at line 1: 0.1.0</span>
-<span class="go">  Would change file /users/gettingstarted/.bumpversion.toml:tool.bumpversion.current_version:</span>
-<span class="go">    *** before /users/gettingstarted/.bumpversion.toml:tool.bumpversion.current_version</span>
-<span class="go">    --- after /users/gettingstarted/.bumpversion.toml:tool.bumpversion.current_version</span>
-<span class="go">    ***************</span>
-<span class="go">    *** 1 ****</span>
-<span class="go">    ! 0.1.0</span>
-<span class="go">    --- 1 ----</span>
-<span class="go">    ! 0.2.0</span>
-<span class="go">Done.</span>
+Processing config file: <span class="-Ansi -Ansi-Magenta">/users/gettingstarted/</span><span class="-Ansi -Ansi-BrightMagenta">.bumpversion.toml</span>
+  Serializing version <span class="-Ansi -Ansi-Green">&#39;&lt;bumpversion.Version:major=0, minor=1, patch=0&gt;&#39;</span>
+    Using serialization format <span class="-Ansi -Ansi-Green">&#39;{major}.{minor}.{patch}&#39;</span>
+    Serialized to <span class="-Ansi -Ansi-Green">&#39;0.1.0&#39;</span>
+  Serializing version <span class="-Ansi -Ansi-Green">&#39;&lt;bumpversion.Version:major=0, minor=2, patch=0&gt;&#39;</span>
+    Using serialization format <span class="-Ansi -Ansi-Green">&#39;{major}.{minor}.{patch}&#39;</span>
+    Serialized to <span class="-Ansi -Ansi-Green">&#39;0.2.0&#39;</span>
+  Rendering search pattern with context
+    No RegEx flag detected. Searching for the default pattern: <span class="-Ansi -Ansi-Green">&#39;0\.1\.0&#39;</span>
+  Found <span class="-Ansi -Ansi-Green">&#39;0\.1\.0&#39;</span> at line <span class="-Ansi -Ansi-Bold -Ansi-Cyan">1</span>: <span class="-Ansi -Ansi-Bold -Ansi-Cyan">0.1</span>.<span class="-Ansi -Ansi-Bold -Ansi-Cyan">0</span>
+  Would change file <span class="-Ansi -Ansi-Magenta">/users/gettingstarted/</span><span class="-Ansi -Ansi-BrightMagenta">.bumpversion.toml</span>:tool.bumpversion.current_version:
+    *** before <span class="-Ansi -Ansi-Magenta">/users/gettingstarted/</span><span class="-Ansi -Ansi-BrightMagenta">.bumpversion.toml</span>:tool.bumpversion.current_version
+    --- after <span class="-Ansi -Ansi-Magenta">/users/gettingstarted/</span><span class="-Ansi -Ansi-BrightMagenta">.bumpversion.toml</span>:tool.bumpversion.current_version
+    ***************
+    *** <span class="-Ansi -Ansi-Bold -Ansi-Cyan">1</span> ****
+    ! <span class="-Ansi -Ansi-Bold -Ansi-Cyan">0.1</span>.<span class="-Ansi -Ansi-Bold -Ansi-Cyan">0</span>
+    --- <span class="-Ansi -Ansi-Bold -Ansi-Cyan">1</span> ----
+    ! <span class="-Ansi -Ansi-Bold -Ansi-Cyan">0.2</span>.<span class="-Ansi -Ansi-Bold -Ansi-Cyan">0</span>
+Serializing version <span class="-Ansi -Ansi-Green">&#39;&lt;bumpversion.Version:major=0, minor=2, patch=0&gt;&#39;</span>
+  Using serialization format <span class="-Ansi -Ansi-Green">&#39;{major}.{minor}.{patch}&#39;</span>
+  Serialized to <span class="-Ansi -Ansi-Green">&#39;0.2.0&#39;</span>
+No pre-commit hooks defined
+  Would not commit
+  Would not tag
+  No source code management system configured. Skipping committing and tagging.
+Serializing version <span class="-Ansi -Ansi-Green">&#39;&lt;bumpversion.Version:major=0, minor=2, patch=0&gt;&#39;</span>
+  Using serialization format <span class="-Ansi -Ansi-Green">&#39;{major}.{minor}.{patch}&#39;</span>
+  Serialized to <span class="-Ansi -Ansi-Green">&#39;0.2.0&#39;</span>
+No post-commit hooks defined
+Done.
 </code></pre></div>
 
 
@@ -3057,7 +3072,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 22, 2026 13:21:58 UTC">March 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 18, 2026 05:14:44 UTC">June 18, 2026</span>
   </span>
 
     
@@ -3068,11 +3083,11 @@
   <span class="md-source-file__fact">
     <span class="md-icon" title="Contributors">
       
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"/></svg>
       
     </span>
     <nav>
-      Corey Oordt
+      Corey Oordt, Kevin Deldycke
     </nav>
   </span>
 
