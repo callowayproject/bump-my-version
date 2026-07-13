@@ -30,7 +30,7 @@ jobs:
           - "3.14"
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-python-and-git
         with:
           python-version: ${{ matrix.python-version }}
@@ -65,7 +65,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
