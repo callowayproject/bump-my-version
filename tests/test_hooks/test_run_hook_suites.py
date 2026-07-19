@@ -1,19 +1,22 @@
+"""Tests for the hook suite runner functions."""
+
 import subprocess
 from typing import Callable
 
 import pytest
 from pytest import param
-from bumpversion.hooks import run_setup_hooks, run_pre_commit_hooks, run_post_commit_hooks
+
+from bumpversion.hooks import run_post_commit_hooks, run_pre_commit_hooks, run_setup_hooks
 from tests.conftest import get_config_data, get_semver
 
 
 def get_hook_env(*args, **kwargs) -> dict:
-    """Mocked function for the environment setup"""
+    """Mocked function for the environment setup."""
     return {}
 
 
 def run_command(script: str, env: dict) -> subprocess.CompletedProcess:
-    """Mocked function for command execution"""
+    """Mocked function for command execution."""
     return subprocess.CompletedProcess(args=script, returncode=0)
 
 
@@ -141,4 +144,4 @@ class TestHookSuites:
         suite_func(config, *suite_args)
 
         # Assert
-        mock_run_hooks.assert_called_once_with(["script1"], env, False, allow_shell_hooks=True)
+        mock_run_hooks.assert_called_once_with(["script1"], env, False, allow_shell_hooks=True, context=mocker.ANY)
