@@ -9,8 +9,8 @@
 .highlight .-Ansi-BGBrightWhite { background-color: #FEFFFF } /* Ansi.BGBrightWhite */
 .highlight .-Ansi-BGBrightYellow { background-color: #FEFB67 } /* Ansi.BGBrightYellow */
 .highlight .-Ansi-BGC0 { background-color: #000 } /* Ansi.BGC0 */
-.highlight .-Ansi-BGC1 { background-color: #800000 } /* Ansi.BGC1 */
-.highlight .-Ansi-BGC10 { background-color: #0F0 } /* Ansi.BGC10 */
+.highlight .-Ansi-BGC1 { background-color: #EF2929 } /* Ansi.BGC1 */
+.highlight .-Ansi-BGC10 { background-color: #5FF967 } /* Ansi.BGC10 */
 .highlight .-Ansi-BGC100 { background-color: #878700 } /* Ansi.BGC100 */
 .highlight .-Ansi-BGC101 { background-color: #87875F } /* Ansi.BGC101 */
 .highlight .-Ansi-BGC102 { background-color: #878787 } /* Ansi.BGC102 */
@@ -21,7 +21,7 @@
 .highlight .-Ansi-BGC107 { background-color: #87AF5F } /* Ansi.BGC107 */
 .highlight .-Ansi-BGC108 { background-color: #87AF87 } /* Ansi.BGC108 */
 .highlight .-Ansi-BGC109 { background-color: #87AFAF } /* Ansi.BGC109 */
-.highlight .-Ansi-BGC11 { background-color: #FF0 } /* Ansi.BGC11 */
+.highlight .-Ansi-BGC11 { background-color: #FEFB67 } /* Ansi.BGC11 */
 .highlight .-Ansi-BGC110 { background-color: #87AFD7 } /* Ansi.BGC110 */
 .highlight .-Ansi-BGC111 { background-color: #87AFFF } /* Ansi.BGC111 */
 .highlight .-Ansi-BGC112 { background-color: #87D700 } /* Ansi.BGC112 */
@@ -32,7 +32,7 @@
 .highlight .-Ansi-BGC117 { background-color: #87D7FF } /* Ansi.BGC117 */
 .highlight .-Ansi-BGC118 { background-color: #87FF00 } /* Ansi.BGC118 */
 .highlight .-Ansi-BGC119 { background-color: #87FF5F } /* Ansi.BGC119 */
-.highlight .-Ansi-BGC12 { background-color: #00F } /* Ansi.BGC12 */
+.highlight .-Ansi-BGC12 { background-color: #6871FF } /* Ansi.BGC12 */
 .highlight .-Ansi-BGC120 { background-color: #87FF87 } /* Ansi.BGC120 */
 .highlight .-Ansi-BGC121 { background-color: #87FFAF } /* Ansi.BGC121 */
 .highlight .-Ansi-BGC122 { background-color: #87FFD7 } /* Ansi.BGC122 */
@@ -43,7 +43,7 @@
 .highlight .-Ansi-BGC127 { background-color: #AF00AF } /* Ansi.BGC127 */
 .highlight .-Ansi-BGC128 { background-color: #AF00D7 } /* Ansi.BGC128 */
 .highlight .-Ansi-BGC129 { background-color: #AF00FF } /* Ansi.BGC129 */
-.highlight .-Ansi-BGC13 { background-color: #F0F } /* Ansi.BGC13 */
+.highlight .-Ansi-BGC13 { background-color: #FF76FF } /* Ansi.BGC13 */
 .highlight .-Ansi-BGC130 { background-color: #AF5F00 } /* Ansi.BGC130 */
 .highlight .-Ansi-BGC131 { background-color: #AF5F5F } /* Ansi.BGC131 */
 .highlight .-Ansi-BGC132 { background-color: #AF5F87 } /* Ansi.BGC132 */
@@ -54,7 +54,7 @@
 .highlight .-Ansi-BGC137 { background-color: #AF875F } /* Ansi.BGC137 */
 .highlight .-Ansi-BGC138 { background-color: #AF8787 } /* Ansi.BGC138 */
 .highlight .-Ansi-BGC139 { background-color: #AF87AF } /* Ansi.BGC139 */
-.highlight .-Ansi-BGC14 { background-color: #0FF } /* Ansi.BGC14 */
+.highlight .-Ansi-BGC14 { background-color: #5FFDFF } /* Ansi.BGC14 */
 .highlight .-Ansi-BGC140 { background-color: #AF87D7 } /* Ansi.BGC140 */
 .highlight .-Ansi-BGC141 { background-color: #AF87FF } /* Ansi.BGC141 */
 .highlight .-Ansi-BGC142 { background-color: #AFAF00 } /* Ansi.BGC142 */
@@ -65,7 +65,7 @@
 .highlight .-Ansi-BGC147 { background-color: #AFAFFF } /* Ansi.BGC147 */
 .highlight .-Ansi-BGC148 { background-color: #AFD700 } /* Ansi.BGC148 */
 .highlight .-Ansi-BGC149 { background-color: #AFD75F } /* Ansi.BGC149 */
-.highlight .-Ansi-BGC15 { background-color: #FFF } /* Ansi.BGC15 */
+.highlight .-Ansi-BGC15 { background-color: #FEFFFF } /* Ansi.BGC15 */
 .highlight .-Ansi-BGC150 { background-color: #AFD787 } /* Ansi.BGC150 */
 .highlight .-Ansi-BGC151 { background-color: #AFD7AF } /* Ansi.BGC151 */
 .highlight .-Ansi-BGC152 { background-color: #AFD7D7 } /* Ansi.BGC152 */
@@ -120,7 +120,7 @@
 .highlight .-Ansi-BGC197 { background-color: #FF005F } /* Ansi.BGC197 */
 .highlight .-Ansi-BGC198 { background-color: #FF0087 } /* Ansi.BGC198 */
 .highlight .-Ansi-BGC199 { background-color: #FF00AF } /* Ansi.BGC199 */
-.highlight .-Ansi-BGC2 { background-color: #008000 } /* Ansi.BGC2 */
+.highlight .-Ansi-BGC2 { background-color: #8AE234 } /* Ansi.BGC2 */
 .highlight .-Ansi-BGC20 { background-color: #0000D7 } /* Ansi.BGC20 */
 .highlight .-Ansi-BGC200 { background-color: #FF00D7 } /* Ansi.BGC200 */
 .highlight .-Ansi-BGC201 { background-color: #F0F } /* Ansi.BGC201 */
@@ -187,7 +187,7 @@
 .highlight .-Ansi-BGC27 { background-color: #005FFF } /* Ansi.BGC27 */
 .highlight .-Ansi-BGC28 { background-color: #008700 } /* Ansi.BGC28 */
 .highlight .-Ansi-BGC29 { background-color: #00875F } /* Ansi.BGC29 */
-.highlight .-Ansi-BGC3 { background-color: #808000 } /* Ansi.BGC3 */
+.highlight .-Ansi-BGC3 { background-color: #FCE94F } /* Ansi.BGC3 */
 .highlight .-Ansi-BGC30 { background-color: #008787 } /* Ansi.BGC30 */
 .highlight .-Ansi-BGC31 { background-color: #0087AF } /* Ansi.BGC31 */
 .highlight .-Ansi-BGC32 { background-color: #0087D7 } /* Ansi.BGC32 */
@@ -198,7 +198,7 @@
 .highlight .-Ansi-BGC37 { background-color: #00AFAF } /* Ansi.BGC37 */
 .highlight .-Ansi-BGC38 { background-color: #00AFD7 } /* Ansi.BGC38 */
 .highlight .-Ansi-BGC39 { background-color: #00AFFF } /* Ansi.BGC39 */
-.highlight .-Ansi-BGC4 { background-color: #000080 } /* Ansi.BGC4 */
+.highlight .-Ansi-BGC4 { background-color: #3465A4 } /* Ansi.BGC4 */
 .highlight .-Ansi-BGC40 { background-color: #00D700 } /* Ansi.BGC40 */
 .highlight .-Ansi-BGC41 { background-color: #00D75F } /* Ansi.BGC41 */
 .highlight .-Ansi-BGC42 { background-color: #00D787 } /* Ansi.BGC42 */
@@ -209,7 +209,7 @@
 .highlight .-Ansi-BGC47 { background-color: #00FF5F } /* Ansi.BGC47 */
 .highlight .-Ansi-BGC48 { background-color: #00FF87 } /* Ansi.BGC48 */
 .highlight .-Ansi-BGC49 { background-color: #00FFAF } /* Ansi.BGC49 */
-.highlight .-Ansi-BGC5 { background-color: #800080 } /* Ansi.BGC5 */
+.highlight .-Ansi-BGC5 { background-color: #C509C5 } /* Ansi.BGC5 */
 .highlight .-Ansi-BGC50 { background-color: #00FFD7 } /* Ansi.BGC50 */
 .highlight .-Ansi-BGC51 { background-color: #0FF } /* Ansi.BGC51 */
 .highlight .-Ansi-BGC52 { background-color: #5F0000 } /* Ansi.BGC52 */
@@ -220,7 +220,7 @@
 .highlight .-Ansi-BGC57 { background-color: #5F00FF } /* Ansi.BGC57 */
 .highlight .-Ansi-BGC58 { background-color: #5F5F00 } /* Ansi.BGC58 */
 .highlight .-Ansi-BGC59 { background-color: #5F5F5F } /* Ansi.BGC59 */
-.highlight .-Ansi-BGC6 { background-color: #008080 } /* Ansi.BGC6 */
+.highlight .-Ansi-BGC6 { background-color: #34E2E2 } /* Ansi.BGC6 */
 .highlight .-Ansi-BGC60 { background-color: #5F5F87 } /* Ansi.BGC60 */
 .highlight .-Ansi-BGC61 { background-color: #5F5FAF } /* Ansi.BGC61 */
 .highlight .-Ansi-BGC62 { background-color: #5F5FD7 } /* Ansi.BGC62 */
@@ -231,7 +231,7 @@
 .highlight .-Ansi-BGC67 { background-color: #5F87AF } /* Ansi.BGC67 */
 .highlight .-Ansi-BGC68 { background-color: #5F87D7 } /* Ansi.BGC68 */
 .highlight .-Ansi-BGC69 { background-color: #5F87FF } /* Ansi.BGC69 */
-.highlight .-Ansi-BGC7 { background-color: #C0C0C0 } /* Ansi.BGC7 */
+.highlight .-Ansi-BGC7 { background-color: #F5F5F5 } /* Ansi.BGC7 */
 .highlight .-Ansi-BGC70 { background-color: #5FAF00 } /* Ansi.BGC70 */
 .highlight .-Ansi-BGC71 { background-color: #5FAF5F } /* Ansi.BGC71 */
 .highlight .-Ansi-BGC72 { background-color: #5FAF87 } /* Ansi.BGC72 */
@@ -242,7 +242,7 @@
 .highlight .-Ansi-BGC77 { background-color: #5FD75F } /* Ansi.BGC77 */
 .highlight .-Ansi-BGC78 { background-color: #5FD787 } /* Ansi.BGC78 */
 .highlight .-Ansi-BGC79 { background-color: #5FD7AF } /* Ansi.BGC79 */
-.highlight .-Ansi-BGC8 { background-color: #808080 } /* Ansi.BGC8 */
+.highlight .-Ansi-BGC8 { background-color: #676767 } /* Ansi.BGC8 */
 .highlight .-Ansi-BGC80 { background-color: #5FD7D7 } /* Ansi.BGC80 */
 .highlight .-Ansi-BGC81 { background-color: #5FD7FF } /* Ansi.BGC81 */
 .highlight .-Ansi-BGC82 { background-color: #5FFF00 } /* Ansi.BGC82 */
@@ -253,7 +253,7 @@
 .highlight .-Ansi-BGC87 { background-color: #5FFFFF } /* Ansi.BGC87 */
 .highlight .-Ansi-BGC88 { background-color: #870000 } /* Ansi.BGC88 */
 .highlight .-Ansi-BGC89 { background-color: #87005F } /* Ansi.BGC89 */
-.highlight .-Ansi-BGC9 { background-color: #F00 } /* Ansi.BGC9 */
+.highlight .-Ansi-BGC9 { background-color: #FF6D67 } /* Ansi.BGC9 */
 .highlight .-Ansi-BGC90 { background-color: #870087 } /* Ansi.BGC90 */
 .highlight .-Ansi-BGC91 { background-color: #8700AF } /* Ansi.BGC91 */
 .highlight .-Ansi-BGC92 { background-color: #8700D7 } /* Ansi.BGC92 */
@@ -281,8 +281,8 @@
 .highlight .-Ansi-BrightWhite { color: #FEFFFF } /* Ansi.BrightWhite */
 .highlight .-Ansi-BrightYellow { color: #FEFB67 } /* Ansi.BrightYellow */
 .highlight .-Ansi-C0 { color: #000 } /* Ansi.C0 */
-.highlight .-Ansi-C1 { color: #800000 } /* Ansi.C1 */
-.highlight .-Ansi-C10 { color: #0F0 } /* Ansi.C10 */
+.highlight .-Ansi-C1 { color: #EF2929 } /* Ansi.C1 */
+.highlight .-Ansi-C10 { color: #5FF967 } /* Ansi.C10 */
 .highlight .-Ansi-C100 { color: #878700 } /* Ansi.C100 */
 .highlight .-Ansi-C101 { color: #87875F } /* Ansi.C101 */
 .highlight .-Ansi-C102 { color: #878787 } /* Ansi.C102 */
@@ -293,7 +293,7 @@
 .highlight .-Ansi-C107 { color: #87AF5F } /* Ansi.C107 */
 .highlight .-Ansi-C108 { color: #87AF87 } /* Ansi.C108 */
 .highlight .-Ansi-C109 { color: #87AFAF } /* Ansi.C109 */
-.highlight .-Ansi-C11 { color: #FF0 } /* Ansi.C11 */
+.highlight .-Ansi-C11 { color: #FEFB67 } /* Ansi.C11 */
 .highlight .-Ansi-C110 { color: #87AFD7 } /* Ansi.C110 */
 .highlight .-Ansi-C111 { color: #87AFFF } /* Ansi.C111 */
 .highlight .-Ansi-C112 { color: #87D700 } /* Ansi.C112 */
@@ -304,7 +304,7 @@
 .highlight .-Ansi-C117 { color: #87D7FF } /* Ansi.C117 */
 .highlight .-Ansi-C118 { color: #87FF00 } /* Ansi.C118 */
 .highlight .-Ansi-C119 { color: #87FF5F } /* Ansi.C119 */
-.highlight .-Ansi-C12 { color: #00F } /* Ansi.C12 */
+.highlight .-Ansi-C12 { color: #6871FF } /* Ansi.C12 */
 .highlight .-Ansi-C120 { color: #87FF87 } /* Ansi.C120 */
 .highlight .-Ansi-C121 { color: #87FFAF } /* Ansi.C121 */
 .highlight .-Ansi-C122 { color: #87FFD7 } /* Ansi.C122 */
@@ -315,7 +315,7 @@
 .highlight .-Ansi-C127 { color: #AF00AF } /* Ansi.C127 */
 .highlight .-Ansi-C128 { color: #AF00D7 } /* Ansi.C128 */
 .highlight .-Ansi-C129 { color: #AF00FF } /* Ansi.C129 */
-.highlight .-Ansi-C13 { color: #F0F } /* Ansi.C13 */
+.highlight .-Ansi-C13 { color: #FF76FF } /* Ansi.C13 */
 .highlight .-Ansi-C130 { color: #AF5F00 } /* Ansi.C130 */
 .highlight .-Ansi-C131 { color: #AF5F5F } /* Ansi.C131 */
 .highlight .-Ansi-C132 { color: #AF5F87 } /* Ansi.C132 */
@@ -326,7 +326,7 @@
 .highlight .-Ansi-C137 { color: #AF875F } /* Ansi.C137 */
 .highlight .-Ansi-C138 { color: #AF8787 } /* Ansi.C138 */
 .highlight .-Ansi-C139 { color: #AF87AF } /* Ansi.C139 */
-.highlight .-Ansi-C14 { color: #0FF } /* Ansi.C14 */
+.highlight .-Ansi-C14 { color: #5FFDFF } /* Ansi.C14 */
 .highlight .-Ansi-C140 { color: #AF87D7 } /* Ansi.C140 */
 .highlight .-Ansi-C141 { color: #AF87FF } /* Ansi.C141 */
 .highlight .-Ansi-C142 { color: #AFAF00 } /* Ansi.C142 */
@@ -337,7 +337,7 @@
 .highlight .-Ansi-C147 { color: #AFAFFF } /* Ansi.C147 */
 .highlight .-Ansi-C148 { color: #AFD700 } /* Ansi.C148 */
 .highlight .-Ansi-C149 { color: #AFD75F } /* Ansi.C149 */
-.highlight .-Ansi-C15 { color: #FFF } /* Ansi.C15 */
+.highlight .-Ansi-C15 { color: #FEFFFF } /* Ansi.C15 */
 .highlight .-Ansi-C150 { color: #AFD787 } /* Ansi.C150 */
 .highlight .-Ansi-C151 { color: #AFD7AF } /* Ansi.C151 */
 .highlight .-Ansi-C152 { color: #AFD7D7 } /* Ansi.C152 */
@@ -392,7 +392,7 @@
 .highlight .-Ansi-C197 { color: #FF005F } /* Ansi.C197 */
 .highlight .-Ansi-C198 { color: #FF0087 } /* Ansi.C198 */
 .highlight .-Ansi-C199 { color: #FF00AF } /* Ansi.C199 */
-.highlight .-Ansi-C2 { color: #008000 } /* Ansi.C2 */
+.highlight .-Ansi-C2 { color: #8AE234 } /* Ansi.C2 */
 .highlight .-Ansi-C20 { color: #0000D7 } /* Ansi.C20 */
 .highlight .-Ansi-C200 { color: #FF00D7 } /* Ansi.C200 */
 .highlight .-Ansi-C201 { color: #F0F } /* Ansi.C201 */
@@ -459,7 +459,7 @@
 .highlight .-Ansi-C27 { color: #005FFF } /* Ansi.C27 */
 .highlight .-Ansi-C28 { color: #008700 } /* Ansi.C28 */
 .highlight .-Ansi-C29 { color: #00875F } /* Ansi.C29 */
-.highlight .-Ansi-C3 { color: #808000 } /* Ansi.C3 */
+.highlight .-Ansi-C3 { color: #FCE94F } /* Ansi.C3 */
 .highlight .-Ansi-C30 { color: #008787 } /* Ansi.C30 */
 .highlight .-Ansi-C31 { color: #0087AF } /* Ansi.C31 */
 .highlight .-Ansi-C32 { color: #0087D7 } /* Ansi.C32 */
@@ -470,7 +470,7 @@
 .highlight .-Ansi-C37 { color: #00AFAF } /* Ansi.C37 */
 .highlight .-Ansi-C38 { color: #00AFD7 } /* Ansi.C38 */
 .highlight .-Ansi-C39 { color: #00AFFF } /* Ansi.C39 */
-.highlight .-Ansi-C4 { color: #000080 } /* Ansi.C4 */
+.highlight .-Ansi-C4 { color: #3465A4 } /* Ansi.C4 */
 .highlight .-Ansi-C40 { color: #00D700 } /* Ansi.C40 */
 .highlight .-Ansi-C41 { color: #00D75F } /* Ansi.C41 */
 .highlight .-Ansi-C42 { color: #00D787 } /* Ansi.C42 */
@@ -481,7 +481,7 @@
 .highlight .-Ansi-C47 { color: #00FF5F } /* Ansi.C47 */
 .highlight .-Ansi-C48 { color: #00FF87 } /* Ansi.C48 */
 .highlight .-Ansi-C49 { color: #00FFAF } /* Ansi.C49 */
-.highlight .-Ansi-C5 { color: #800080 } /* Ansi.C5 */
+.highlight .-Ansi-C5 { color: #C509C5 } /* Ansi.C5 */
 .highlight .-Ansi-C50 { color: #00FFD7 } /* Ansi.C50 */
 .highlight .-Ansi-C51 { color: #0FF } /* Ansi.C51 */
 .highlight .-Ansi-C52 { color: #5F0000 } /* Ansi.C52 */
@@ -492,7 +492,7 @@
 .highlight .-Ansi-C57 { color: #5F00FF } /* Ansi.C57 */
 .highlight .-Ansi-C58 { color: #5F5F00 } /* Ansi.C58 */
 .highlight .-Ansi-C59 { color: #5F5F5F } /* Ansi.C59 */
-.highlight .-Ansi-C6 { color: #008080 } /* Ansi.C6 */
+.highlight .-Ansi-C6 { color: #34E2E2 } /* Ansi.C6 */
 .highlight .-Ansi-C60 { color: #5F5F87 } /* Ansi.C60 */
 .highlight .-Ansi-C61 { color: #5F5FAF } /* Ansi.C61 */
 .highlight .-Ansi-C62 { color: #5F5FD7 } /* Ansi.C62 */
@@ -503,7 +503,7 @@
 .highlight .-Ansi-C67 { color: #5F87AF } /* Ansi.C67 */
 .highlight .-Ansi-C68 { color: #5F87D7 } /* Ansi.C68 */
 .highlight .-Ansi-C69 { color: #5F87FF } /* Ansi.C69 */
-.highlight .-Ansi-C7 { color: #C0C0C0 } /* Ansi.C7 */
+.highlight .-Ansi-C7 { color: #F5F5F5 } /* Ansi.C7 */
 .highlight .-Ansi-C70 { color: #5FAF00 } /* Ansi.C70 */
 .highlight .-Ansi-C71 { color: #5FAF5F } /* Ansi.C71 */
 .highlight .-Ansi-C72 { color: #5FAF87 } /* Ansi.C72 */
@@ -514,7 +514,7 @@
 .highlight .-Ansi-C77 { color: #5FD75F } /* Ansi.C77 */
 .highlight .-Ansi-C78 { color: #5FD787 } /* Ansi.C78 */
 .highlight .-Ansi-C79 { color: #5FD7AF } /* Ansi.C79 */
-.highlight .-Ansi-C8 { color: #808080 } /* Ansi.C8 */
+.highlight .-Ansi-C8 { color: #676767 } /* Ansi.C8 */
 .highlight .-Ansi-C80 { color: #5FD7D7 } /* Ansi.C80 */
 .highlight .-Ansi-C81 { color: #5FD7FF } /* Ansi.C81 */
 .highlight .-Ansi-C82 { color: #5FFF00 } /* Ansi.C82 */
@@ -525,7 +525,7 @@
 .highlight .-Ansi-C87 { color: #5FFFFF } /* Ansi.C87 */
 .highlight .-Ansi-C88 { color: #870000 } /* Ansi.C88 */
 .highlight .-Ansi-C89 { color: #87005F } /* Ansi.C89 */
-.highlight .-Ansi-C9 { color: #F00 } /* Ansi.C9 */
+.highlight .-Ansi-C9 { color: #FF6D67 } /* Ansi.C9 */
 .highlight .-Ansi-C90 { color: #870087 } /* Ansi.C90 */
 .highlight .-Ansi-C91 { color: #8700AF } /* Ansi.C91 */
 .highlight .-Ansi-C92 { color: #8700D7 } /* Ansi.C92 */
