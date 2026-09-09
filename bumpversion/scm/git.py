@@ -209,7 +209,7 @@ def revision_info() -> dict:
     """
     info = dict.fromkeys(["branch_name", "short_branch_name", "repository_root"])
     repo_root_command = ["git", "rev-parse", "--show-toplevel"]
-    current_branch_command = ["git", "branch", "--show-current"]
+    current_branch_command = ["git", "symbolic-ref", "--short", "HEAD"]
 
     try:
         repository_root_result = run_command(repo_root_command)
