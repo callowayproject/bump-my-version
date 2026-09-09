@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.5.2 (2026-09-09)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.5.1...1.5.2)
+
+### Fixes
+
+- Fix git branch detection for older git versions and unborn HEAD. [ac7b3ba](https://github.com/callowayproject/bump-my-version/commit/ac7b3ba22442fd98d31f8f23d8f4b6ce116b8c8c)
+
+  `git branch --show-current` requires git 2.22+; on older versions it
+  raises an exception that is silently swallowed, causing revision_info()
+  to return None and skip staging files before commit. Replace it with
+  `git symbolic-ref --short HEAD`, which works on git 1.x+ and also
+  resolves correctly on an unborn HEAD (a repo with no commits yet).
+
+  Fixes #426
+
+  **claude-session:** https://claude.ai/code/session_01NgKrJnSAZmhGvVcwH32w3z
+
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [1efe237](https://github.com/callowayproject/bump-my-version/commit/1efe237678aebd3e7098eccaa4fba7d8ad4c1b54)
+
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.16.0 → v0.16.6](https://github.com/astral-sh/ruff-pre-commit/compare/v0.16.0...v0.16.6)
+
 ## 1.5.1 (2026-08-06)
 
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.5.0...1.5.1)
