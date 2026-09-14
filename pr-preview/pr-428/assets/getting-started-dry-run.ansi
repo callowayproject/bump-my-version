@@ -1,0 +1,67 @@
+Starting BumpVersion [1;36m1.4[0m.[1;36m0[0m
+Reading configuration
+  Reading config file: [35m/users/gettingstarted/[0m[95m.bumpversion.toml[0m
+  config.pep621_info = [3;35mNone[0m
+  Parsing current version [32m'0.1.0'[0m
+    Parsing version [32m'0.1.0'[0m using regexp [32m'[0m[32m([0m[32m?P[0m[32m<[0m[32mmajor[0m[32m>\d+[0m[32m)[0m[32m\.[0m[32m([0m[32m?P<minor>\d+[0m[32m)[0m[32m\.[0m[32m([0m[32m?P<patch[0m[32m>[0m[32m\d+[0m[32m)[0m[32m'[0m
+      Parsed the following values: [33mmajor[0m=[1;36m0[0m, [33mminor[0m=[1;36m1[0m, [33mpatch[0m=[1;36m0[0m
+  No setup hooks defined
+  Attempting to increment part [32m'minor'[0m
+    Values are now: [33mmajor[0m=[1;36m0[0m, [33mminor[0m=[1;36m2[0m, [33mpatch[0m=[1;36m0[0m
+  Serializing version [32m'[0m[32m<[0m[32mbumpversion.Version:[0m[32mmajor[0m[32m=[0m[32m0[0m[32m, [0m[32mminor[0m[32m=[0m[32m2[0m[32m, [0m[32mpatch[0m[32m=[0m[32m0[0m[32m>[0m[32m'[0m
+    Using serialization format [32m'[0m[32m{[0m[32mmajor[0m[32m}[0m[32m.[0m[32m{[0m[32mminor[0m[32m}[0m[32m.[0m[32m{[0m[32mpatch[0m[32m}[0m[32m'[0m
+    Serialized to [32m'0.2.0'[0m
+  New version will be [32m'0.2.0'[0m
+Dry run active, won't touch any files.
+
+File VERSION: replace `[1m{[0mcurrent_version[1m}[0m` with `[1m{[0mnew_version[1m}[0m`
+  Serializing the current version
+    Serializing version [32m'[0m[32m<[0m[32mbumpversion.Version:[0m[32mmajor[0m[32m=[0m[32m0[0m[32m, [0m[32mminor[0m[32m=[0m[32m1[0m[32m, [0m[32mpatch[0m[32m=[0m[32m0[0m[32m>[0m[32m'[0m
+      Using serialization format [32m'[0m[32m{[0m[32mmajor[0m[32m}[0m[32m.[0m[32m{[0m[32mminor[0m[32m}[0m[32m.[0m[32m{[0m[32mpatch[0m[32m}[0m[32m'[0m
+      Serialized to [32m'0.1.0'[0m
+  Serializing the new version
+    Serializing version [32m'[0m[32m<[0m[32mbumpversion.Version:[0m[32mmajor[0m[32m=[0m[32m0[0m[32m, [0m[32mminor[0m[32m=[0m[32m2[0m[32m, [0m[32mpatch[0m[32m=[0m[32m0[0m[32m>[0m[32m'[0m
+      Using serialization format [32m'[0m[32m{[0m[32mmajor[0m[32m}[0m[32m.[0m[32m{[0m[32mminor[0m[32m}[0m[32m.[0m[32m{[0m[32mpatch[0m[32m}[0m[32m'[0m
+      Serialized to [32m'0.2.0'[0m
+  Rendering search pattern with context
+    No RegEx flag detected. Searching for the default pattern: [32m'0\.1\.0'[0m
+  Found [32m'0\.1\.0'[0m at line [1;36m1[0m: [1;36m0.1[0m.[1;36m0[0m
+  Would change file VERSION:
+    *** before VERSION
+    --- after VERSION
+    ***************
+    *** [1;36m1[0m ****
+    ! [1;36m0.1[0m.[1;36m0[0m
+    --- [1;36m1[0m ----
+    ! [1;36m0.2[0m.[1;36m0[0m
+
+Processing config file: [35m/users/gettingstarted/[0m[95m.bumpversion.toml[0m
+  Serializing version [32m'[0m[32m<[0m[32mbumpversion.Version:[0m[32mmajor[0m[32m=[0m[32m0[0m[32m, [0m[32mminor[0m[32m=[0m[32m1[0m[32m, [0m[32mpatch[0m[32m=[0m[32m0[0m[32m>[0m[32m'[0m
+    Using serialization format [32m'[0m[32m{[0m[32mmajor[0m[32m}[0m[32m.[0m[32m{[0m[32mminor[0m[32m}[0m[32m.[0m[32m{[0m[32mpatch[0m[32m}[0m[32m'[0m
+    Serialized to [32m'0.1.0'[0m
+  Serializing version [32m'[0m[32m<[0m[32mbumpversion.Version:[0m[32mmajor[0m[32m=[0m[32m0[0m[32m, [0m[32mminor[0m[32m=[0m[32m2[0m[32m, [0m[32mpatch[0m[32m=[0m[32m0[0m[32m>[0m[32m'[0m
+    Using serialization format [32m'[0m[32m{[0m[32mmajor[0m[32m}[0m[32m.[0m[32m{[0m[32mminor[0m[32m}[0m[32m.[0m[32m{[0m[32mpatch[0m[32m}[0m[32m'[0m
+    Serialized to [32m'0.2.0'[0m
+  Rendering search pattern with context
+    No RegEx flag detected. Searching for the default pattern: [32m'0\.1\.0'[0m
+  Found [32m'0\.1\.0'[0m at line [1;36m1[0m: [1;36m0.1[0m.[1;36m0[0m
+  Would change file [35m/users/gettingstarted/[0m[95m.bumpversion.toml[0m:tool.bumpversion.current_version:
+    *** before [35m/users/gettingstarted/[0m[95m.bumpversion.toml[0m:tool.bumpversion.current_version
+    --- after [35m/users/gettingstarted/[0m[95m.bumpversion.toml[0m:tool.bumpversion.current_version
+    ***************
+    *** [1;36m1[0m ****
+    ! [1;36m0.1[0m.[1;36m0[0m
+    --- [1;36m1[0m ----
+    ! [1;36m0.2[0m.[1;36m0[0m
+Serializing version [32m'[0m[32m<[0m[32mbumpversion.Version:[0m[32mmajor[0m[32m=[0m[32m0[0m[32m, [0m[32mminor[0m[32m=[0m[32m2[0m[32m, [0m[32mpatch[0m[32m=[0m[32m0[0m[32m>[0m[32m'[0m
+  Using serialization format [32m'[0m[32m{[0m[32mmajor[0m[32m}[0m[32m.[0m[32m{[0m[32mminor[0m[32m}[0m[32m.[0m[32m{[0m[32mpatch[0m[32m}[0m[32m'[0m
+  Serialized to [32m'0.2.0'[0m
+No pre-commit hooks defined
+  Would not commit
+  Would not tag
+  No source code management system configured. Skipping committing and tagging.
+Serializing version [32m'[0m[32m<[0m[32mbumpversion.Version:[0m[32mmajor[0m[32m=[0m[32m0[0m[32m, [0m[32mminor[0m[32m=[0m[32m2[0m[32m, [0m[32mpatch[0m[32m=[0m[32m0[0m[32m>[0m[32m'[0m
+  Using serialization format [32m'[0m[32m{[0m[32mmajor[0m[32m}[0m[32m.[0m[32m{[0m[32mminor[0m[32m}[0m[32m.[0m[32m{[0m[32mpatch[0m[32m}[0m[32m'[0m
+  Serialized to [32m'0.2.0'[0m
+No post-commit hooks defined
+Done.
