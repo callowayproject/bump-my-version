@@ -207,6 +207,35 @@ All environment variables set before bump-my-version was run are available.
 
 ///
 
+### Version placeholders in hook commands
+
+Hook command strings may contain version placeholders that bump-my-version replaces before executing the hook. This works with safe argv-based execution, so you do not need to enable `allow_shell_hooks` to use them.
+
+!!! Note
+
+    Placeholders are only substituted when `allow_shell_hooks` is `false` (the default). When `allow_shell_hooks` is `true`, hook commands are passed through unchanged so that shell variable expansion (`$BVHOOK_NEW_VERSION`) can be used instead.
+
+The following placeholders are available:
+
+| Placeholder | Value | Available in |
+| --- | --- | --- |
+| `{current_version}` | The current version serialized as a string | All hook suites |
+| `{current_<component>}` | The value of a parsed version component, e.g. `{current_major}` | All hook suites |
+| `{new_version}` | The new version serialized as a string | Pre-commit and post-commit hooks |
+| `{new_<component>}` | The value of a parsed new version component, e.g. `{new_major}` | Pre-commit and post-commit hooks |
+
+For example:
+
+    [tool.bumpversion]
+    current_version = "1.2.3"
+    pre_commit_hooks = ["git tag release/{new_major}.{new_minor}"]
+
+During a bump to `1.3.0`, the command becomes:
+
+    git tag release/1.3
+
+Placeholders that do not match a known version key are left unchanged, so existing commands with unrelated braces continue to work.
+
 ### Outputs
 
 The `stdout` and `stderr` streams are echoed to the console if you pass the `-vv` option.
