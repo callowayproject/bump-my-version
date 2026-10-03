@@ -250,23 +250,23 @@ select = [
     "TCH", # Flake8 type-checking
 ]
 ignore = [
-    "ANN002", # missing-type-args
-    "ANN003", # missing-type-kwargs
-    "ANN204", # missing-return-type-special-method
-    "ANN401", # any-type
-    "RUF067", # non-empty-init-module
-    "S101", # assert
-    "S104", # hardcoded-bind-all-interfaces
-    "S404", # suspicious-subprocess-import
-    "S602", # subprocess-popen-with-shell-equals-true
-    "D105", # undocumented-magic-method
-    "D106", # undocumented-public-nested-class
-    "D107", # undocumented-public-init
-    "D200", # fits-on-one-line
-    "D212", # multi-line-summary-first-line
-    "PD011", # pandas-use-of-dot-values
-    "PLC0415", # import-outside-toplevel
-    "PLW1641", # eq-without-hash
+    "missing-type-args", # missing-type-args
+    "missing-type-kwargs", # missing-type-kwargs
+    "missing-return-type-special-method", # missing-return-type-special-method
+    "any-type", # any-type
+    "non-empty-init-module", # non-empty-init-module
+    "assert", # assert
+    "hardcoded-bind-all-interfaces", # hardcoded-bind-all-interfaces
+    "suspicious-subprocess-import", # suspicious-subprocess-import
+    "subprocess-popen-with-shell-equals-true", # subprocess-popen-with-shell-equals-true
+    "undocumented-magic-method", # undocumented-magic-method
+    "undocumented-public-nested-class", # undocumented-public-nested-class
+    "undocumented-public-init", # undocumented-public-init
+    "unnecessary-multiline-docstring", # fits-on-one-line
+    "multi-line-summary-first-line", # multi-line-summary-first-line
+    "pandas-use-of-dot-values", # pandas-use-of-dot-values
+    "import-outside-top-level", # import-outside-toplevel
+    "eq-without-hash", # eq-without-hash
 ]
 
 fixable = ["ALL"]
@@ -285,24 +285,24 @@ typing-modules = [
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = [
-    "S101",
-    "PLR0913",
-    "PLR0915",
-    "PGH003",
-    "ANN001",
-    "ANN202",
-    "ANN201",
-    "PLR0912",
-    "TRY301",
-    "PLW0603",
-    "PLR2004",
-    "ANN101",
-    "S106",
-    "TRY201",
-    "ANN003",
-    "ANN002",
-    "S105",
-    "TRY003",
+    "assert",
+    "too-many-arguments",
+    "too-many-statements",
+    "blanket-type-ignore",
+    "missing-type-function-argument",
+    "missing-return-type-private-function",
+    "missing-return-type-undocumented-public-function",
+    "too-many-branches",
+    "raise-within-try",
+    "global-statement",
+    "magic-value-comparison",
+    "missing-type-self",
+    "hardcoded-password-func-arg",
+    "verbose-raise",
+    "missing-type-kwargs",
+    "missing-type-args",
+    "hardcoded-password-string",
+    "raise-vanilla-args",
 ]
 
 [tool.ruff.lint.mccabe]
