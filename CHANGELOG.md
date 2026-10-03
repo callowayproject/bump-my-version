@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.6.0 (2026-10-03)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.5.3...1.6.0)
+
+### New
+
+- Add --to option to set a version part to a specific value. [2ce68b3](https://github.com/callowayproject/bump-my-version/commit/2ce68b3bba3827235dbd7c7d6b471abbf5c02b74)
+
+  Closes #327
+
 ## 1.5.3 (2026-10-03)
 
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.5.2...1.5.3)
