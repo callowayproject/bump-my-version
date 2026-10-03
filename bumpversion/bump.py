@@ -21,7 +21,11 @@ logger = get_indented_logger(__name__)
 
 
 def get_next_version(
-    current_version: "Version", config: Config, version_part: Optional[str], new_version: Optional[str]
+    current_version: "Version",
+    config: Config,
+    version_part: Optional[str],
+    new_version: Optional[str],
+    to_value: Optional[str] = None,
 ) -> "Version":
     """
     Bump the version_part to the next value.
@@ -31,6 +35,7 @@ def get_next_version(
         config: The current configuration
         version_part: Optional part of the version to bump
         new_version: Optional specific version to bump to
+        to_value: Optional specific value to set `version_part` to
 
     Returns:
         The new version
@@ -43,6 +48,10 @@ def get_next_version(
             logger.info("Attempting to set new version '%s'", new_version)
             logger.indent()
             next_version = config.version_config.parse(new_version)
+        elif version_part and to_value is not None:
+            logger.info("Attempting to set part '%s' to '%s'", version_part, to_value)
+            logger.indent()
+            next_version = current_version.bump_to(version_part, to_value)
         elif version_part:
             logger.info("Attempting to increment part '%s'", version_part)
             logger.indent()
@@ -63,6 +72,7 @@ def do_bump(
     config: Config,
     config_file: Optional[Path] = None,
     dry_run: bool = False,
+    to_value: Optional[str] = None,
 ) -> None:
     """
     Bump the version_part to the next value or set the version to new_version.
@@ -73,6 +83,7 @@ def do_bump(
         config: The configuration to use
         config_file: The configuration file to update
         dry_run: True if the operation should be a dry run
+        to_value: The explicit value to set `version_part` to instead of incrementing it
     """
     from bumpversion.files import modify_files, resolve_file_config
 
@@ -87,7 +98,7 @@ def do_bump(
 
     run_setup_hooks(config, version, dry_run)
 
-    next_version = get_next_version(version, config, version_part, new_version)
+    next_version = get_next_version(version, config, version_part, new_version, to_value)
     next_version_str = config.version_config.serialize(next_version, ctx)
     logger.info("New version will be '%s'", next_version_str)
 

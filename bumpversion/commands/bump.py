@@ -21,6 +21,7 @@ logger = get_indented_logger(__name__)
 @cli_options.allow_dirty_option
 @cli_options.current_version_option
 @cli_options.new_version_option
+@cli_options.to_option
 @cli_options.parse_option
 @cli_options.serialize_option
 @cli_options.search_option
@@ -45,6 +46,7 @@ def bump(
     allow_dirty: Optional[bool],
     current_version: Optional[str],
     new_version: Optional[str],
+    to_value: Optional[str],
     parse: Optional[str],
     serialize: Optional[List[str]],
     search: Optional[str],
@@ -75,6 +77,12 @@ def bump(
     If you want to rewrite only files specified on the command line, use with the
     `--no-configured-files` option.
     """
+    if to_value is not None:
+        if new_version:
+            raise click.BadOptionUsage("to", "--to cannot be used with --new-version.")
+        if not args:
+            raise click.BadOptionUsage("to", "--to requires a VERSION_PART argument.")
+
     setup_logging(verbose)
 
     logger.info("Starting BumpVersion %s", __version__)
@@ -122,4 +130,4 @@ def bump(
         config.included_paths = files
 
     logger.dedent()
-    do_bump(version_part, new_version, config, found_config_file, dry_run)
+    do_bump(version_part, new_version, config, found_config_file, dry_run, to_value)

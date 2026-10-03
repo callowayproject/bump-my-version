@@ -55,6 +55,16 @@ new_version_option: Callable = click.option(
     help="New version that should be in the files",
 )
 
+to_option: Callable = click.option(
+    "--to",
+    "to_value",
+    metavar="VALUE",
+    required=False,
+    envvar="BUMPVERSION_TO",
+    help="Set the VERSION_PART to this value instead of incrementing it. "
+    "Use `--new-version` to replace the whole version.",
+)
+
 parse_option: Callable = click.option(
     "--parse",
     metavar="REGEX",
