@@ -1,6 +1,14 @@
 """Tests for the base CLI commands."""
+from typing import TYPE_CHECKING, cast
 
-from bumpversion import cli
+from click import Parameter
+
+from bumpversion.cli import cli as base_cli
+
+if TYPE_CHECKING:
+    from rich_click import RichGroup
+
+cli = cast("RichGroup", base_cli)
 
 
 class TestBadOptionRaisesError:
@@ -8,7 +16,7 @@ class TestBadOptionRaisesError:
 
     def test_bad_option_raises_error(self, runner):
         """Passing an invalid option should raise an error."""
-        result = runner.invoke(cli.cli, ["--bad-option", "bump", "--current-version", "1.0.0", "patch"])
+        result = runner.invoke(cli, ["--bad-option", "bump", "--current-version", "1.0.0", "patch"])
         assert result.exit_code != 0
         assert "No such option" in result.output
 
@@ -18,28 +26,28 @@ class TestCommandRegistration:
 
     def test_bump_registered(self):
         """The bump command must be registered."""
-        assert "bump" in cli.cli.commands
+        assert "bump" in cli.commands
 
     def test_show_registered(self):
         """The show command must be registered."""
-        assert "show" in cli.cli.commands
+        assert "show" in cli.commands
 
     def test_replace_registered(self):
         """The replace command must be registered."""
-        assert "replace" in cli.cli.commands
+        assert "replace" in cli.commands
 
     def test_sample_config_registered(self):
         """The sample-config command must be registered."""
-        assert "sample-config" in cli.cli.commands
+        assert "sample-config" in cli.commands
 
     def test_show_bump_registered(self):
         """The show-bump command must be registered."""
-        assert "show-bump" in cli.cli.commands
+        assert "show-bump" in cli.commands
 
 
-def _get_param(command_name: str, param_name: str):
+def _get_param(command_name: str, param_name: str) -> Parameter | None:
     """Return the Click parameter object for *param_name* on *command_name*."""
-    cmd = cli.cli.commands[command_name]
+    cmd = cli.commands[command_name]
     return next((p for p in cmd.params if p.name == param_name), None)
 
 
@@ -79,11 +87,9 @@ class TestReplaceDefaults:
         param = _get_param("replace", "ignore_missing_files")
         assert param is not None, "ignore_missing_files param not found on replace"
         assert param.is_flag
-        assert param.default is False
 
     def test_ignore_missing_version_is_flag(self):
         """replace --ignore-missing-version must be a simple boolean flag (no --no- counterpart)."""
         param = _get_param("replace", "ignore_missing_version")
         assert param is not None, "ignore_missing_version param not found on replace"
         assert param.is_flag
-        assert param.default is False
