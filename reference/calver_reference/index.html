@@ -432,6 +432,8 @@
       
         
       
+        
+      
     
     
     
@@ -585,6 +587,34 @@
     
   
     Multiple replacements within the same file
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howtos/set-a-part-to-a-value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to set a version part to a specific value
   
 
     
@@ -2989,7 +3019,7 @@ combined to create a custom version format. For example, the format <code>YYYY.M
 </tbody>
 </table>
 <div class="highlight"><span class="filename">Example configuration</span><pre><span></span><code><span class="k">[tool.bumpversion.parts.release]</span>
-<span class="n">calver_format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;{YYYY}.{MM}.{DD}&quot;</span>
+<span class="n">calver_format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"{YYYY}.{MM}.{DD}"</span>
 </code></pre></div>
 <h2 id="parsing-calver-versions">Parsing CalVer versions<a class="headerlink" href="#parsing-calver-versions" title="Permanent link">&para;</a></h2>
 <p>Using the following chart, we can set up the version parsing:</p>
@@ -3093,13 +3123,13 @@ combined to create a custom version format. For example, the format <code>YYYY.M
 configuration can be used to parse a version string in the format <code>YYYY.MM.DD</code> as the <code>release</code> part of the version
 string:</p>
 <div class="highlight"><pre><span></span><code><span class="k">[tool.bumpversion]</span>
-<span class="n">parse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;(?x)                      # Verbose mode</span>
+<span class="n">parse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"""(?x)                      # Verbose mode</span>
 <span class="s2">    (?P&lt;release&gt;</span>
 <span class="s2">        (?:[1-9][0-9]{3})</span><span class="se">\\</span><span class="s2">.         # YYYY.</span>
 <span class="s2">        (?:1[0-2]|[1-9])</span><span class="se">\\</span><span class="s2">.          # MM.</span>
 <span class="s2">        (?:3[0-1]|[1-2][0-9]|[1-9])  # DD</span>
 <span class="s2">    )</span>
-<span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">"""</span>
 </code></pre></div>
 
 

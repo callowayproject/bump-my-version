@@ -434,6 +434,8 @@
       
         
       
+        
+      
     
     
     
@@ -587,6 +589,34 @@
     
   
     Multiple replacements within the same file
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howtos/set-a-part-to-a-value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to set a version part to a specific value
   
 
     
@@ -2954,19 +2984,19 @@
 <p>Each suite takes a list of strings. The strings may be individual commands:</p>
 <div class="highlight"><pre><span></span><code>[tool.bumpversion]
 setup_hooks = [
-    &quot;git config --global user.email \&quot;bump-my-version@github.actions\&quot;&quot;,
-    &quot;git config --global user.name \&quot;Testing Git\&quot;&quot;,
-    &quot;git --version&quot;,
-    &quot;git config --list&quot;,
+    "git config --global user.email \"bump-my-version@github.actions\"",
+    "git config --global user.name \"Testing Git\"",
+    "git --version",
+    "git config --list",
 ]
-pre_commit_hooks = [&quot;cat CHANGELOG.md&quot;]
-post_commit_hooks = [&quot;echo Done&quot;]
+pre_commit_hooks = ["cat CHANGELOG.md"]
+post_commit_hooks = ["echo Done"]
 </code></pre></div>
 <p>or the path to an executable script:</p>
 <div class="highlight"><pre><span></span><code>[tool.bumpversion]
-setup_hooks = [&quot;path/to/setup.sh&quot;]
-pre_commit_hooks = [&quot;path/to/pre-commit.sh&quot;]
-post_commit_hooks = [&quot;path/to/post-commit.sh&quot;]
+setup_hooks = ["path/to/setup.sh"]
+pre_commit_hooks = ["path/to/pre-commit.sh"]
+post_commit_hooks = ["path/to/post-commit.sh"]
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -3035,25 +3065,25 @@ post_commit_hooks = [&quot;path/to/post-commit.sh&quot;]
 <div class="highlight"><pre><span></span><code>[tool.bumpversion]
 # These will raise HookError by default
 post_commit_hooks = [
-    &quot;echo $BVHOOK_NEW_VERSION &gt; version.txt&quot;,
-    &quot;git log --oneline | head -5&quot;,
+    "echo $BVHOOK_NEW_VERSION &gt; version.txt",
+    "git log --oneline | head -5",
 ]
 
 [tool.bumpversion]
 # Pass the script file directly — no shell required
 post_commit_hooks = [
-    &quot;path/to/update-version-file.sh&quot;,
-    &quot;path/to/show-log.sh&quot;,
+    "path/to/update-version-file.sh",
+    "path/to/show-log.sh",
 ]
 
 #!/bin/bash
-echo &quot;$BVHOOK_NEW_VERSION&quot; &gt; version.txt
+echo "$BVHOOK_NEW_VERSION" &gt; version.txt
 </code></pre></div>
 <h4 id="allow_shell_hooks-compatibility-opt-in">allow_shell_hooks (compatibility opt-in)<a class="headerlink" href="#allow_shell_hooks-compatibility-opt-in" title="Permanent link">&para;</a></h4>
 <p>If you cannot immediately rewrite your hooks, set <code>allow_shell_hooks = true</code> to restore shell execution:</p>
 <div class="highlight"><pre><span></span><code>[tool.bumpversion]
 allow_shell_hooks = true
-post_commit_hooks = [&quot;echo $BVHOOK_NEW_VERSION | tee version.txt&quot;]
+post_commit_hooks = ["echo $BVHOOK_NEW_VERSION | tee version.txt"]
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>

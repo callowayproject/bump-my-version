@@ -434,6 +434,8 @@
       
         
       
+        
+      
     
     
     
@@ -597,6 +599,34 @@
     
   
     Multiple replacements within the same file
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../set-a-part-to-a-value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to set a version part to a specific value
   
 
     
@@ -2825,21 +2855,21 @@ MyProject==1.5.6
 <p>Providing search and replace templates for the <code>requirements.txt</code> file will avoid this.</p>
 <p>This <code>.bumpversion.toml</code> will ensure only the line containing <code>MyProject</code> will be changed:</p>
 <div class="highlight"><pre><span></span><code><span class="k">[tool.bumpversion]</span>
-<span class="n">current_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;1.5.6&quot;</span>
+<span class="n">current_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"1.5.6"</span>
 
 <span class="k">[[tool.bumpversion.files]]</span>
-<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;requirements.txt&quot;</span>
-<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;MyProject=={current_version}&quot;</span>
-<span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;MyProject=={new_version}&quot;</span>
+<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"requirements.txt"</span>
+<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"MyProject=={current_version}"</span>
+<span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"MyProject=={new_version}"</span>
 </code></pre></div>
 <p>If the string to be replaced includes literal quotes, the search and replace patterns must include them to match. Given the file <code>version.sh</code>:</p>
-<div class="highlight"><pre><span></span><code>MY_VERSION=&quot;1.2.3&quot;
+<div class="highlight"><pre><span></span><code>MY_VERSION="1.2.3"
 </code></pre></div>
 <p>Then the following search and replace patterns (including quotes) would be required:</p>
 <div class="highlight"><pre><span></span><code><span class="k">[[tool.bumpversion.files]]</span>
-<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;version.sh&quot;</span>
-<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;MY_VERSION=</span><span class="se">\&quot;</span><span class="s2">{current_version}</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
-<span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;MY_VERSION=</span><span class="se">\&quot;</span><span class="s2">{new_version}</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
+<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"version.sh"</span>
+<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"MY_VERSION=</span><span class="se">\"</span><span class="s2">{current_version}</span><span class="se">\"</span><span class="s2">"</span>
+<span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"MY_VERSION=</span><span class="se">\"</span><span class="s2">{new_version}</span><span class="se">\"</span><span class="s2">"</span>
 </code></pre></div>
 
 

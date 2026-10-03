@@ -434,6 +434,8 @@
       
         
       
+        
+      
     
     
     
@@ -684,6 +686,34 @@
     
   
     Multiple replacements within the same file
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../set-a-part-to-a-value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to set a version part to a specific value
   
 
     
@@ -2909,19 +2939,19 @@
 </ul>
 <h2 id="initial-configuration">Initial configuration<a class="headerlink" href="#initial-configuration" title="Permanent link">&para;</a></h2>
 <div class="highlight"><span class="filename">.bumpversion.toml</span><pre><span></span><code><span class="k">[tool.bumpversion]</span>
-<span class="n">current_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;2024.3.1.4&quot;</span>
-<span class="n">parse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;(?x)                     # Verbose mode</span>
+<span class="n">current_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"2024.3.1.4"</span>
+<span class="n">parse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"""(?x)                     # Verbose mode</span>
 <span class="s2">    (?P&lt;release&gt;                    # The release part</span>
 <span class="s2">        (?:[1-9][0-9]{3})</span><span class="se">\\</span><span class="s2">.        # YYYY.</span>
 <span class="s2">        (?:1[0-2]|[1-9])</span><span class="se">\\</span><span class="s2">.         # MM.</span>
 <span class="s2">        (?:3[0-1]|[1-2][0-9]|[1-9]) # DD</span>
 <span class="s2">    )</span>
 <span class="s2">    (?:</span><span class="se">\\</span><span class="s2">.(?P&lt;patch&gt;</span><span class="se">\\</span><span class="s2">d+))?         # .patch, optional</span>
-<span class="s2">&quot;&quot;&quot;</span>
-<span class="n">serialize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;{release}.{patch}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;{release}&quot;</span><span class="p">]</span>
+<span class="s2">"""</span>
+<span class="n">serialize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"{release}.{patch}"</span><span class="p">,</span><span class="w"> </span><span class="s2">"{release}"</span><span class="p">]</span>
 
 <span class="k">[tool.bumpversion.parts.release]</span>
-<span class="n">calver_format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;{YYYY}.{MM}.{DD}&quot;</span>
+<span class="n">calver_format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"{YYYY}.{MM}.{DD}"</span>
 </code></pre></div>
 <p>You can look up the regular expressions for the CalVer format in the <a href="../../reference/calver_reference/">CalVer reference</a>.</p>
 <h2 id="expected-behavior">Expected behavior<a class="headerlink" href="#expected-behavior" title="Permanent link">&para;</a></h2>

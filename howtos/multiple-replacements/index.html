@@ -12,7 +12,7 @@
         <link rel="prev" href="../custom-version-formats-by-file/">
       
       
-        <link rel="next" href="../update-a-date/">
+        <link rel="next" href="../set-a-part-to-a-value/">
       
       
         
@@ -434,6 +434,8 @@
       
         
       
+        
+      
     
     
     
@@ -605,6 +607,34 @@
 
       </a>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../set-a-part-to-a-value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to set a version part to a specific value
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2819,13 +2849,13 @@
 <p>To change <code>Unreleased</code> to the current version, we have an entry with <code>search</code> set to <code>Unreleased</code>. The default <code>replace</code> value is <code>{new_version}</code>, so changing it is unnecessary.</p>
 <p>To change the link, another entry has its <code>search</code> set to <code>{current_version}...HEAD</code> and the <code>replace</code> set to <code>{current_version}...{new_version}</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="k">[[tool.bumpversion.files]]</span>
-<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;CHANGELOG.md&quot;</span>
-<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Unreleased&quot;</span>
+<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"CHANGELOG.md"</span>
+<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Unreleased"</span>
 
 <span class="k">[[tool.bumpversion.files]]</span>
-<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;CHANGELOG.md&quot;</span>
-<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;{current_version}...HEAD&quot;</span>
-<span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;{current_version}...{new_version}&quot;</span>
+<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"CHANGELOG.md"</span>
+<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"{current_version}...HEAD"</span>
+<span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"{current_version}...{new_version}"</span>
 </code></pre></div>
 <details class="note">
 <summary>Note: <code>project.version</code> in <code>pyproject.toml</code></summary>

@@ -434,6 +434,8 @@
       
         
       
+        
+      
     
     
     
@@ -587,6 +589,34 @@
     
   
     Multiple replacements within the same file
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../howtos/set-a-part-to-a-value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to set a version part to a specific value
   
 
     
@@ -3193,16 +3223,16 @@
 <p>TOML allows us to specify the files using an <a href="https://toml.io/en/v1.0.0#array-of-tables">array of tables.</a> TOML configuration adds two fields to each file configuration: <code>filename</code> and <code>glob</code>. These fields are mutually exclusive: if you specify a value for both, only the <code>glob</code> value is used.</p>
 <p>For example, to change <code>coolapp/__init__.py</code> with the defaults and alter <code>CHANGELOG.md</code> twice:</p>
 <div class="highlight"><pre><span></span><code><span class="k">[[tool.bumpversion.files]]</span>
-<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;coolapp/__init__.py&quot;</span>
+<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"coolapp/__init__.py"</span>
 
 <span class="k">[[tool.bumpversion.files]]</span>
-<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;CHANGELOG.md&quot;</span>
-<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Unreleased&quot;</span>
+<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"CHANGELOG.md"</span>
+<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Unreleased"</span>
 
 <span class="k">[[tool.bumpversion.files]]</span>
-<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;CHANGELOG.md&quot;</span>
-<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;{current_version}...HEAD&quot;</span>
-<span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;{current_version}...{new_version}&quot;</span>
+<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"CHANGELOG.md"</span>
+<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"{current_version}...HEAD"</span>
+<span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"{current_version}...{new_version}"</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">

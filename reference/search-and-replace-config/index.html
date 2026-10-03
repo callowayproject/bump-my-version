@@ -432,6 +432,8 @@
       
         
       
+        
+      
     
     
     
@@ -585,6 +587,34 @@
     
   
     Multiple replacements within the same file
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howtos/set-a-part-to-a-value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to set a version part to a specific value
   
 
     
@@ -2897,26 +2927,26 @@
 <p>Both the search and replace templates are rendered using the <a href="../formatting-context/">formatting context</a>. However, only the search template is also treated as a regular expression. The replacement fields available in the formatting context are enclosed in curly braces <code>{}</code>.</p>
 <p>The search and replace templates can be multiple lines, like so:</p>
 <div class="highlight"><pre><span></span><code><span class="k">[tool.bumpversion]</span>
-<span class="n">current_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;1.2.3&quot;</span>
+<span class="n">current_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"1.2.3"</span>
 
 <span class="k">[[tool.bumpversion.files]]</span>
-<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;config.ini&quot;</span>
-<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;[myproject]</span><span class="se">\n</span><span class="s2">version={current_version}&quot;</span>
-<span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;[myproject]</span><span class="se">\n</span><span class="s2">version={new_version}&quot;</span>
+<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"config.ini"</span>
+<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"[myproject]</span><span class="se">\n</span><span class="s2">version={current_version}"</span>
+<span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"[myproject]</span><span class="se">\n</span><span class="s2">version={new_version}"</span>
 </code></pre></div>
 <p>Alternatively, using <a href="https://toml.io/en/v1.0.0#string">TOML&rsquo;s multiline strings</a>:</p>
 <div class="highlight"><pre><span></span><code><span class="k">[tool.bumpversion]</span>
-<span class="n">current_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;1.2.3&quot;</span>
+<span class="n">current_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"1.2.3"</span>
 
 <span class="k">[[tool.bumpversion.files]]</span>
-<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;config.ini&quot;</span>
-<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"config.ini"</span>
+<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"""</span>
 <span class="s2">[myproject]</span>
-<span class="s2">version={current_version}&quot;&quot;&quot;</span>
+<span class="s2">version={current_version}"""</span>
 
-<span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"""</span>
 <span class="s2">[myproject]</span>
-<span class="s2">version={new_version}&quot;&quot;&quot;</span>
+<span class="s2">version={new_version}"""</span>
 </code></pre></div>
 <h2 id="using-regular-expressions">Using regular expressions<a class="headerlink" href="#using-regular-expressions" title="Permanent link">&para;</a></h2>
 <p>Only the search template will use <a href="https://docs.python.org/3/library/re.html#regular-expression-syntax">Python&rsquo;s regular expression syntax</a> with minor changes. The template string is rendered using the formatting context. The resulting string is treated as a regular expression for searching unless configured otherwise.</p>
@@ -2926,11 +2956,11 @@
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="toml" name="__tabbed_1" type="radio" /><input id="cfg" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="toml">TOML</label><label for="cfg">CFG</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;{current_version} date-released: </span><span class="se">\\</span><span class="s2">d{{4}}-</span><span class="se">\\</span><span class="s2">d{{2}}-</span><span class="se">\\</span><span class="s2">d{{2}}&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"{current_version} date-released: </span><span class="se">\\</span><span class="s2">d{{4}}-</span><span class="se">\\</span><span class="s2">d{{2}}-</span><span class="se">\\</span><span class="s2">d{{2}}"</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="na">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;{current_version} date-released: \d{{4}}-\d{{2}}-\d{{2}}&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="na">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"{current_version} date-released: \d{{4}}-\d{{2}}-\d{{2}}"</span>
 </code></pre></div>
 </div>
 </div>

@@ -434,6 +434,8 @@
       
         
       
+        
+      
     
     
     
@@ -597,6 +599,34 @@
     
   
     Multiple replacements within the same file
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../set-a-part-to-a-value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to set a version part to a specific value
   
 
     
@@ -2822,26 +2852,26 @@
 <span class="k">go</span><span class="w"> </span><span class="mf">1.12</span>
 
 <span class="nx">require</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="o">...</span>
+<span class="w">    </span><span class="p">...</span>
 <span class="p">)</span>
 </code></pre></div>
 <p><code>release-channels.yaml</code> file:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">stable</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;v2.21.4&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">stable</span><span class="p">:</span><span class="w"> </span><span class="s">"v2.21.4"</span>
 </code></pre></div>
 <p>You can use Bump My Version to maintain the major version number within the <code>go.mod</code> file by using the <code>parse</code> and <code>serialize</code> options, as in this example:</p>
 <p><code>.bumpversion.toml</code> file:</p>
 <div class="highlight"><pre><span></span><code><span class="k">[tool.bumpversion]</span>
-<span class="n">current_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;2.21.4&quot;</span>
+<span class="n">current_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"2.21.4"</span>
 
 <span class="k">[[tool.bumpversion.files]]</span>
-<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;go.mod&quot;</span>
-<span class="n">parse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;(?P&lt;major&gt;</span><span class="se">\\</span><span class="s2">d+)&quot;</span>
-<span class="n">serialize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;{major}&quot;</span>
-<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;module github.com/myorg/myproject/v{current_version}&quot;</span>
-<span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;module github.com/myorg/myproject/v{new_version}&quot;</span>
+<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"go.mod"</span>
+<span class="n">parse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"(?P&lt;major&gt;</span><span class="se">\\</span><span class="s2">d+)"</span>
+<span class="n">serialize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"{major}"</span>
+<span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"module github.com/myorg/myproject/v{current_version}"</span>
+<span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"module github.com/myorg/myproject/v{new_version}"</span>
 
 <span class="k">[[tool.bumpversion.files]]</span>
-<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;release-channels.yaml&quot;</span>
+<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"release-channels.yaml"</span>
 </code></pre></div>
 <p>While all the version bumps are <code>minor</code> or <code>patch</code>, the <code>go.mod</code> file doesn&rsquo;t change, while the <code>release-channels.yaml</code> file will. As soon as you do a <code>major</code> version bump, the <code>go.mod</code> file now contains this module directive:</p>
 <div class="highlight"><pre><span></span><code><span class="nx">module</span><span class="w"> </span><span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">myorg</span><span class="o">/</span><span class="nx">myproject</span><span class="o">/</span><span class="nx">v3</span>

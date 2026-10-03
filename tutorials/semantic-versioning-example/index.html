@@ -554,6 +554,8 @@
       
         
       
+        
+      
     
     
     
@@ -707,6 +709,34 @@
     
   
     Multiple replacements within the same file
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howtos/set-a-part-to-a-value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to set a version part to a specific value
   
 
     
@@ -2930,21 +2960,21 @@
 <div class="highlight"><span class="filename">Generating a default configuration</span><pre><span></span><code><span class="gp">$ </span>bump-my-version<span class="w"> </span>sample-config<span class="w"> </span>--no-prompt<span class="w"> </span>--destination<span class="w"> </span>.bumpversion.toml
 <span class="gp">$ </span>cat<span class="w"> </span>.bumpversion.toml
 <span class="go">[tool.bumpversion]</span>
-<span class="go">current_version = &quot;0.1.0&quot;</span>
-<span class="go">parse = &quot;(?P&lt;major&gt;\\d+)\\.(?P&lt;minor&gt;\\d+)\\.(?P&lt;patch&gt;\\d+)&quot;</span>
-<span class="go">serialize = [&quot;{major}.{minor}.{patch}&quot;]</span>
-<span class="go">search = &quot;{current_version}&quot;</span>
-<span class="go">replace = &quot;{new_version}&quot;</span>
+<span class="go">current_version = "0.1.0"</span>
+<span class="go">parse = "(?P&lt;major&gt;\\d+)\\.(?P&lt;minor&gt;\\d+)\\.(?P&lt;patch&gt;\\d+)"</span>
+<span class="go">serialize = ["{major}.{minor}.{patch}"]</span>
+<span class="go">search = "{current_version}"</span>
+<span class="go">replace = "{new_version}"</span>
 <span class="go">regex = false</span>
 <span class="go">ignore_missing_version = false</span>
 <span class="go">tag = false</span>
 <span class="go">sign_tags = false</span>
-<span class="go">tag_name = &quot;v{new_version}&quot;</span>
-<span class="go">tag_message = &quot;Bump version: {current_version} → {new_version}&quot;</span>
+<span class="go">tag_name = "v{new_version}"</span>
+<span class="go">tag_message = "Bump version: {current_version} → {new_version}"</span>
 <span class="go">allow_dirty = false</span>
 <span class="go">commit = false</span>
-<span class="go">message = &quot;Bump version: {current_version} → {new_version}&quot;</span>
-<span class="go">commit_args = &quot;&quot;</span>
+<span class="go">message = "Bump version: {current_version} → {new_version}"</span>
+<span class="go">commit_args = ""</span>
 </code></pre></div>
 <h3 id="visualize-the-versioning-path">Visualize the versioning path<a class="headerlink" href="#visualize-the-versioning-path" title="Permanent link">&para;</a></h3>
 <p>You can see the potential versioning paths with the <code>show-bump</code> subcommand.</p>
@@ -2967,7 +2997,7 @@
 </code></pre></div>
 <h3 id="add-support-for-pre-release-versions">Add support for pre-release versions<a class="headerlink" href="#add-support-for-pre-release-versions" title="Permanent link">&para;</a></h3>
 <p>Alter the <code>parse</code> configuration to support pre-release versions. This <code>parse</code> option uses an extended (or verbose) regular expression to extract the version components from the current version.</p>
-<div class="highlight"><span class="filename">New parse configuration</span><pre><span></span><code><span class="n">parse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;(?x)</span>
+<div class="highlight"><span class="filename">New parse configuration</span><pre><span></span><code><span class="n">parse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"""(?x)</span>
 <span class="s2">    (?P&lt;major&gt;0|[1-9]</span><span class="se">\\</span><span class="s2">d*)</span><span class="se">\\</span><span class="s2">.</span>
 <span class="s2">    (?P&lt;minor&gt;0|[1-9]</span><span class="se">\\</span><span class="s2">d*)</span><span class="se">\\</span><span class="s2">.</span>
 <span class="s2">    (?P&lt;patch&gt;0|[1-9]</span><span class="se">\\</span><span class="s2">d*)</span>
@@ -2976,18 +3006,18 @@
 <span class="s2">        (?P&lt;pre_l&gt;[a-zA-Z-]+)         # pre-release label</span>
 <span class="s2">        (?P&lt;pre_n&gt;0|[1-9]</span><span class="se">\\</span><span class="s2">d*)        # pre-release version number</span>
 <span class="s2">    )?                                # pre-release section is optional</span>
-<span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">"""</span>
 </code></pre></div>
 <p>Alter the <code>serialize</code> configuration to support pre-release versions.</p>
 <div class="highlight"><span class="filename">New serialize configuration</span><pre><span></span><code><span class="n">serialize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}-{pre_l}{pre_n}&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"{major}.{minor}.{patch}-{pre_l}{pre_n}"</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"{major}.{minor}.{patch}"</span><span class="p">,</span>
 <span class="p">]</span>
 </code></pre></div>
 <p>Add a new configuration section for the <code>pre_l</code> part.</p>
 <div class="highlight"><span class="filename">New pre_l configuration</span><pre><span></span><code><span class="k">[tool.bumpversion.parts.pre_l]</span>
-<span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;dev&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;rc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;final&quot;</span><span class="p">]</span>
-<span class="n">optional_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;final&quot;</span>
+<span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"dev"</span><span class="p">,</span><span class="w"> </span><span class="s2">"rc"</span><span class="p">,</span><span class="w"> </span><span class="s2">"final"</span><span class="p">]</span>
+<span class="n">optional_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"final"</span>
 </code></pre></div>
 <h3 id="visualize-the-new-versioning-path">Visualize the new versioning path<a class="headerlink" href="#visualize-the-new-versioning-path" title="Permanent link">&para;</a></h3>
 <p>Now when you run <code>bump-my-version show-bump</code>, you can see the new pre-release versioning path.</p>
@@ -2995,7 +3025,7 @@
 <span class="go">0.1.0 ── bump ─┬─ major ─ 1.0.0-dev0</span>
 <span class="go">               ├─ minor ─ 0.2.0-dev0</span>
 <span class="go">               ├─ patch ─ 0.1.1-dev0</span>
-<span class="go">               ├─ pre_l ─ invalid: The part has already the maximum value among [&#39;dev&#39;, &#39;rc&#39;, &#39;final&#39;] and cannot be bumped.</span>
+<span class="go">               ├─ pre_l ─ invalid: The part has already the maximum value among ['dev', 'rc', 'final'] and cannot be bumped.</span>
 <span class="go">               ╰─ pre_n ─ 0.1.0-final1</span>
 </code></pre></div>
 <p>The <code>pre_l</code> is not bump-able because it is already at the maximum value. The <code>pre_n</code> is bump-able because it is not at the maximum value.</p>
@@ -3033,7 +3063,7 @@
 </ol>
 <h3 id="automate-the-pre-release-numbering">Automate the pre-release numbering<a class="headerlink" href="#automate-the-pre-release-numbering" title="Permanent link">&para;</a></h3>
 <p>The <code>pre_n</code> or pre-release number is a number that increases with each pre-release. You can automate this by changing the serialization configuration.</p>
-<div class="highlight"><span class="filename">Serialize configuration with pre_n automation</span><pre><span></span><code><span class="n">parse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;(?x)</span>
+<div class="highlight"><span class="filename">Serialize configuration with pre_n automation</span><pre><span></span><code><span class="n">parse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"""(?x)</span>
 <span class="s2">    (?P&lt;major&gt;0|[1-9]</span><span class="se">\\</span><span class="s2">d*)</span><span class="se">\\</span><span class="s2">.</span>
 <span class="s2">    (?P&lt;minor&gt;0|[1-9]</span><span class="se">\\</span><span class="s2">d*)</span><span class="se">\\</span><span class="s2">.</span>
 <span class="s2">    (?P&lt;patch&gt;0|[1-9]</span><span class="se">\\</span><span class="s2">d*)</span>
@@ -3042,11 +3072,11 @@
 <span class="s2">        (?P&lt;pre_l&gt;[a-zA-Z-]+)         # pre-release label</span>
 <span class="s2">        (?:0|[1-9]</span><span class="se">\\</span><span class="s2">d*)               # pre-release version number</span>
 <span class="s2">    )?                                # pre-release section is optional</span>
-<span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">"""</span>
 
 <span class="n">serialize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}-{pre_l}{distance_to_latest_tag}&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"{major}.{minor}.{patch}-{pre_l}{distance_to_latest_tag}"</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"{major}.{minor}.{patch}"</span><span class="p">,</span>
 <span class="p">]</span>
 </code></pre></div>
 <p>Now the <code>pre_n</code> is no longer captured in the <code>parse</code> expression and <code>serialize</code> replaces <code>pre_n</code> with <code>distance_to_latest_tag</code>. The <code>distance_to_latest_tag</code> is a special value replaced with the number of commits since the last tag. This is a good value to use for the <code>pre_n</code> because it will always increase with each commit.</p>
@@ -3056,7 +3086,7 @@
 <span class="go">0.1.0 ── bump ─┬─ major ─ 1.0.0-dev0</span>
 <span class="go">               ├─ minor ─ 0.2.0-dev0</span>
 <span class="go">               ├─ patch ─ 0.1.1-dev0</span>
-<span class="go">               ╰─ pre_l ─ invalid: The part has already the maximum value among [&#39;dev&#39;, &#39;rc&#39;, &#39;final&#39;] and cannot be bumped.</span>
+<span class="go">               ╰─ pre_l ─ invalid: The part has already the maximum value among ['dev', 'rc', 'final'] and cannot be bumped.</span>
 <span class="gp">$ </span>bump-my-version<span class="w"> </span>show-bump<span class="w"> </span><span class="m">1</span>.0.0-dev0
 <span class="go">1.0.0-dev0 ── bump ─┬─ major ─ 2.0.0-dev0</span>
 <span class="go">                    ├─ minor ─ 1.1.0-dev0</span>

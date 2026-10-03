@@ -432,6 +432,8 @@
       
         
       
+        
+      
     
     
     
@@ -585,6 +587,34 @@
     
   
     Multiple replacements within the same file
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howtos/set-a-part-to-a-value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to set a version part to a specific value
   
 
     
@@ -2950,8 +2980,8 @@
 <p>The names of these parts are defined in the named groups within the <code>parse</code> regular expression. The default configuration calls them <em>major, minor,</em> and <em>patch.</em></p>
 <p>The <code>serialize</code> configuration value is a list of default formats. You have the option for multiple serialization formats to omit <em>optional</em> values. For example, the following configuration:</p>
 <div class="highlight"><pre><span></span><code><span class="n">serialize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;{major}.{minor}&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"{major}.{minor}.{patch}"</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"{major}.{minor}"</span><span class="p">,</span>
 <span class="p">]</span>
 </code></pre></div>
 <p>Bump-my-version will serialize using the first format if the <code>patch</code> value is not <code>0</code>. If the <code>patch</code> value <em>is</em> <code>0</code>, Bump My Version will use the second format.</p>
@@ -2969,24 +2999,24 @@
 <p>You can configure a part using the values function by providing a list of values in the version part&rsquo;s configuration. For example, for the <code>release_name</code> part:</p>
 <div class="highlight"><pre><span></span><code><span class="k">[tool.bumpversion.parts.release_name]</span>
 <span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="s2">&quot;witty-warthog&quot;</span><span class="p">,</span><span class="w"> </span>
-<span class="w">    </span><span class="s2">&quot;ridiculous-rat&quot;</span><span class="p">,</span><span class="w"> </span>
-<span class="w">    </span><span class="s2">&quot;marvelous-mantis&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"witty-warthog"</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="s2">"ridiculous-rat"</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="s2">"marvelous-mantis"</span><span class="p">,</span>
 <span class="p">]</span>
 </code></pre></div>
 <h3 id="optional-values">Optional values<a class="headerlink" href="#optional-values" title="Permanent link">&para;</a></h3>
 <p>By default, the <em>first</em> value of a version part is considered <em>optional.</em> An optional value may be omitted from the version serialization. Using the example from above:</p>
 <div class="highlight"><pre><span></span><code><span class="n">serialize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;{major}.{minor}&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"{major}.{minor}.{patch}"</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"{major}.{minor}"</span><span class="p">,</span>
 <span class="p">]</span>
 </code></pre></div>
 <p>Version <code>1.4.0</code> is rendered as <code>1.4</code> since the <code>patch</code> is <code>0</code>; as the first value, it is optional.</p>
 <p>Optional values are helpful for non-numeric version parts that indicate development stages, such as <a href="http://en.wikipedia.org/wiki/Software_release_life_cycle#Stages_of_development">alpha or beta</a>.</p>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="k">[tool.bumpversion]</span>
-<span class="n">current_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span>
-<span class="n">parse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;(?x)</span>
+<span class="n">current_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"1.0.0"</span>
+<span class="n">parse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"""(?x)</span>
 <span class="s2">    (?P&lt;major&gt;[0-9]+)</span>
 <span class="s2">    </span><span class="se">\\</span><span class="s2">.(?P&lt;minor&gt;[0-9]+)</span>
 <span class="s2">    </span><span class="se">\\</span><span class="s2">.(?P&lt;patch&gt;[0-9]+)</span>
@@ -2994,18 +3024,18 @@
 <span class="s2">        -(?P&lt;pre_label&gt;alpha|beta|stable)</span>
 <span class="s2">        (?:-(?P&lt;pre_n&gt;[0-9]+))?</span>
 <span class="s2">    )?</span>
-<span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">"""</span>
 <span class="n">serialize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}-{pre_label}-{pre_n}&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;{major}.{minor}.{patch}&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"{major}.{minor}.{patch}-{pre_label}-{pre_n}"</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"{major}.{minor}.{patch}"</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="k">[tool.bumpversion.parts.pre_label]</span>
-<span class="n">optional_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;stable&quot;</span>
+<span class="n">optional_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"stable"</span>
 <span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="p">[</span>
-<span class="w">    </span><span class="s2">&quot;alpha&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;beta&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;stable&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"alpha"</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"beta"</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"stable"</span><span class="p">,</span>
 <span class="p">]</span>
 </code></pre></div>
 <p>Bumping the <code>patch</code> part of version <code>1.0.0</code> would change the version to <code>1.0.1-alpha-0</code>. Bumping the <code>pre_label</code> part would change the version to <code>1.0.1-beta-0</code>. Bumping the <code>pre_label</code> part again would change the version to <code>1.0.1</code>. The <code>stable-0</code> is not serialized because both <code>stable</code> and <code>0</code> are <em>optional</em>.</p>
@@ -3013,7 +3043,7 @@
 <p>You can specify the starting number with the first_value configuration for numeric version parts.</p>
 <p>For example, if we added the following to the above configuration:</p>
 <div class="highlight"><pre><span></span><code><span class="k">[tool.bumpversion.parts.pre_n]</span>
-<span class="n">first_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;1&quot;</span>
+<span class="n">first_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"1"</span>
 </code></pre></div>
 <p>Bumping the <code>patch</code> value of version <code>1.0.0</code> would change the version to <code>1.0.1-alpha-1</code> instead of <code>1.0.1-alpha-0</code>.</p>
 <h3 id="independent-values">Independent Values<a class="headerlink" href="#independent-values" title="Permanent link">&para;</a></h3>
