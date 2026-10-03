@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.5.3 (2026-10-03)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.5.2...1.5.3)
+
+### Fixes
+
+- Refactor CLI tests to improve type safety and update `uv.lock` dependencies to latest compatible versions. [cd9fdfa](https://github.com/callowayproject/bump-my-version/commit/cd9fdfaf50007606990619bb2c380ca83816aa0c)
+
+### Other
+
+- Standardize string quotation in example code within update-a-date documentation. [8b42d2a](https://github.com/callowayproject/bump-my-version/commit/8b42d2a21a780e309302e3649235c111c218ff33)
+
+- [pre-commit.ci] pre-commit autoupdate. [7a3cba4](https://github.com/callowayproject/bump-my-version/commit/7a3cba4c2a60f3f9c6276c3acf78f47ca51f3356)
+
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.16.6 → v0.16.9](https://github.com/astral-sh/ruff-pre-commit/compare/v0.16.6...v0.16.9)
+
 ## 1.5.2 (2026-09-09)
 
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.5.1...1.5.2)
