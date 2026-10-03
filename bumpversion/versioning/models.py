@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections import defaultdict, deque
 from itertools import chain
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 from pydantic import BaseModel, model_validator
 
@@ -71,6 +71,14 @@ class VersionComponent:
         """Return a part with bumped value."""
         new_component = self.copy()
         new_component._value = self.func.bump(self.value)
+        return new_component
+
+    def bump_to(self, value: str) -> VersionComponent:
+        """Return a part set to the given value. Raises a ValueError if the value is not valid for the part."""
+        value = str(value)
+        self.func.validate(value)
+        new_component = self.copy()
+        new_component._value = value
         return new_component
 
     def null(self) -> VersionComponent:
@@ -245,6 +253,14 @@ class Version:
 
     def bump(self, component_name: str) -> Version:
         """Increase the value of the specified component, reset its dependents, and return a new Version."""
+        return self._change(component_name, VersionComponent.bump)
+
+    def bump_to(self, component_name: str, value: str) -> Version:
+        """Set the specified component to value, reset its dependents, and return a new Version."""
+        return self._change(component_name, lambda component: component.bump_to(value))
+
+    def _change(self, component_name: str, change: Callable[[VersionComponent], VersionComponent]) -> Version:
+        """Apply `change` to the specified component, reset its dependents, and return a new Version."""
         if component_name not in self.components:
             raise InvalidVersionPartError(f"No part named {component_name!r}")
 
@@ -253,7 +269,7 @@ class Version:
         new_values.update(always_incr_values)
 
         if component_name not in components_to_reset:
-            new_values[component_name] = self.components[component_name].bump()
+            new_values[component_name] = change(self.components[component_name])
             components_to_reset |= set(self.version_spec.get_dependents(component_name))
 
         for component in components_to_reset:

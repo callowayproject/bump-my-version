@@ -28,6 +28,7 @@ click.rich_click.OPTION_GROUPS = {
                 "--config-file",
                 "--current-version",
                 "--new-version",
+                "--to",
                 "--parse",
                 "--serialize",
                 "--search",
