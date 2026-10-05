@@ -12,6 +12,8 @@ $ bump-my-version check
 Did not find '1.2.3' in file: 'CITATION.cff'
 ```
 
+A file configuration whose `search` does not contain the version at all (like an `**unreleased**` changelog heading, which a bump may replace) is skipped, as it says nothing about the version.
+
 The PEP 621 `project.version` in `pyproject.toml`, which `bump` keeps in sync with `current_version`, is checked too.
 
 ## Block a release in CI/CD

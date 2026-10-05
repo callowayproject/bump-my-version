@@ -3,7 +3,7 @@
 from pathlib import Path
 from textwrap import dedent
 
-from bumpversion.check import do_check
+from bumpversion.check import do_check, references_current_version
 from bumpversion.config import get_configuration
 from tests.conftest import inside_dir
 
@@ -181,3 +181,19 @@ class TestDoCheck:
 
         # Assert
         assert problems == []
+
+
+class TestReferencesCurrentVersion:
+    """Tests for the references_current_version function."""
+
+    def test_detects_the_version_and_its_components(self):
+        """The current version, or any of its components, counts."""
+        assert references_current_version("{current_version}")
+        assert references_current_version("version = {current_major}.{current_minor}")
+        assert references_current_version("^## {current_version} \\(\\d{{4}}\\)")
+
+    def test_version_less_patterns(self):
+        """New version fields, escaped braces and plain text do not count."""
+        assert not references_current_version("## Unreleased")
+        assert not references_current_version("**unreleased**")
+        assert not references_current_version("{new_version} {{current_version}}")

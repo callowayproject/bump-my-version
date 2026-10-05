@@ -107,3 +107,29 @@ regex = true
     assert (tmp_path / "CHANGELOG.md").read_text() == changelog
     assert check_after.exit_code == 1
     assert "CHANGELOG.md" in check_after.output
+
+
+def test_version_less_search_is_skipped(tmp_path: Path, runner):
+    """A search pattern without the version, which a bump consumes, does not fail the check afterwards."""
+    # Arrange
+    (tmp_path / ".bumpversion.toml").write_text(
+        CONFIG
+        + """
+[[tool.bumpversion.files]]
+filename = "CHANGELOG.md"
+search = "## Unreleased"
+replace = "## {new_version}"
+"""
+    )
+    (tmp_path / "VERSION").write_text("1.2.3\n")
+    (tmp_path / "CHANGELOG.md").write_text("## Unreleased\n- fix\n")
+
+    # Act
+    with inside_dir(tmp_path):
+        bump: Result = runner.invoke(cli.cli, ["bump", "patch", "--no-commit", "--no-tag"])
+        check: Result = runner.invoke(cli.cli, ["check"])
+
+    # Assert
+    assert bump.exit_code == 0, bump.output
+    assert (tmp_path / "CHANGELOG.md").read_text() == "## 1.2.4\n- fix\n"
+    assert check.exit_code == 0, check.output

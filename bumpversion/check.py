@@ -1,5 +1,6 @@
 """Verify that the project is consistent with its current version, without changing anything."""
 
+from string import Formatter
 from typing import List, Optional
 
 from bumpversion.config import Config
@@ -11,12 +12,19 @@ from bumpversion.ui import get_indented_logger
 logger = get_indented_logger(__name__)
 
 
+def references_current_version(search: str) -> bool:
+    """Does the search pattern contain the current version, or one of its components?"""
+    return any(field and field.startswith("current_") for _, field, _, _ in Formatter().parse(search))
+
+
 def do_check(config: Config, release_tag: Optional[str] = None) -> List[str]:
     """
     Check that every configured file contains the current version.
 
     Each file is searched exactly as the next `bump` would search it before replacing anything,
     so a file somebody forgot to bump (or bumped by hand to a different version) is reported.
+    A search pattern without the current version (ex. an "Unreleased" changelog heading) says nothing
+    about the version and is skipped; a bump may well have replaced it.
 
     Args:
         config: The configuration to use
@@ -32,6 +40,13 @@ def do_check(config: Config, release_tag: Optional[str] = None) -> List[str]:
     ctx = get_context(config, version, version)
 
     for configured_file in resolve_file_config(config.files_to_modify, config.version_config):
+        if not references_current_version(configured_file.file_change.search):
+            logger.info(
+                "Skipping %s: the search pattern '%s' does not contain the current version",
+                configured_file.file_change.filename,
+                configured_file.file_change.search,
+            )
+            continue
         try:
             configured_file.contains_version(version, ctx)
         except (FileNotFoundError, VersionNotFoundError) as e:
