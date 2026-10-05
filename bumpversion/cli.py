@@ -4,7 +4,7 @@ import rich_click as click
 from click.core import Context
 
 from bumpversion import __version__
-from bumpversion.commands import bump, replace, sample_config, show, show_bump
+from bumpversion.commands import bump, check, replace, sample_config, show, show_bump
 
 
 @click.group(
@@ -59,6 +59,7 @@ click.rich_click.OPTION_GROUPS = {
 }
 
 cli.add_command(bump)
+cli.add_command(check)
 cli.add_command(show)
 cli.add_command(replace)
 cli.add_command(sample_config)

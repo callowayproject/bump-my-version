@@ -39,7 +39,7 @@ The tool works as a pipeline: read config → detect SCM state → parse current
 
 ### Key modules
 
-**`bumpversion/cli.py`** — Click-based CLI entry point. Commands: `bump`, `show`, `replace`, `sample-config`, `show-bump`. Routes to `bump.py` or `show.py` for logic.
+**`bumpversion/cli.py`** — Click-based CLI entry point. Commands: `bump`, `check`, `show`, `replace`, `sample-config`, `show-bump`. Routes to `bump.py`, `check.py` or `show.py` for logic.
 
 **`bumpversion/bump.py`** — Core workflow: `get_next_version()` and `do_bump()`. Orchestrates config loading, file modification, and SCM operations.
 
