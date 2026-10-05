@@ -96,6 +96,95 @@ class TestModifyFiles:
 
         assert changelog_path.read_text() == changelog_content
 
+    def test_failing_file_leaves_every_file_untouched(self, tmp_path: Path):
+        """When a later file cannot be changed, the files before it are not written either."""
+        # Arrange
+        version_path = tmp_path / "VERSION"
+        version_path.write_text("1.2.3", encoding="utf-8")
+        changelog_path = tmp_path / "CHANGELOG.md"
+        changelog_path.write_text("# 1.2.3\n", encoding="utf-8")
+
+        overrides = {
+            "current_version": "1.2.3",
+            "files": [
+                {"filename": str(version_path)},
+                {"filename": str(changelog_path), "search": "# Unreleased", "replace": "# {new_version}"},
+            ],
+        }
+        conf, version_config, current_version = get_config_data(overrides)
+        new_version = current_version.bump("patch")
+        configured_files = files.resolve_file_config(conf.files, version_config)
+
+        # Act
+        with pytest.raises(VersionNotFoundError, match="Did not find '# Unreleased'"):
+            files.modify_files(configured_files, current_version, new_version, get_context(conf))
+
+        # Assert
+        assert version_path.read_text() == "1.2.3"
+        assert changelog_path.read_text() == "# 1.2.3\n"
+
+    def test_missing_file_leaves_every_file_untouched(self, tmp_path: Path):
+        """When a later file does not exist, the files before it are not written either."""
+        # Arrange
+        version_path = tmp_path / "VERSION"
+        version_path.write_text("1.2.3", encoding="utf-8")
+
+        overrides = {
+            "current_version": "1.2.3",
+            "files": [{"filename": str(version_path)}, {"filename": str(tmp_path / "missing.txt")}],
+        }
+        conf, version_config, current_version = get_config_data(overrides)
+        new_version = current_version.bump("patch")
+        configured_files = files.resolve_file_config(conf.files, version_config)
+
+        # Act
+        with pytest.raises(FileNotFoundError):
+            files.modify_files(configured_files, current_version, new_version, get_context(conf))
+
+        # Assert
+        assert version_path.read_text() == "1.2.3"
+
+    def test_changes_to_the_same_file_are_chained(self, tmp_path: Path):
+        """A change may search for what an earlier change to the same file has just written."""
+        # Arrange
+        changelog_path = tmp_path / "CHANGELOG.md"
+        changelog_path.write_text("# Unreleased\n\n# 1.2.3\n", encoding="utf-8")
+
+        overrides = {
+            "current_version": "1.2.3",
+            "files": [
+                {"filename": str(changelog_path), "search": "# Unreleased", "replace": "# Pending {new_version}"},
+                {"filename": str(changelog_path), "search": "# Pending {new_version}", "replace": "# {new_version}"},
+            ],
+        }
+        conf, version_config, current_version = get_config_data(overrides)
+        new_version = current_version.bump("patch")
+        configured_files = files.resolve_file_config(conf.files, version_config)
+
+        # Act
+        files.modify_files(configured_files, current_version, new_version, get_context(conf))
+
+        # Assert
+        assert changelog_path.read_text() == "# 1.2.4\n\n# 1.2.3\n"
+
+    def test_dry_run_writes_nothing(self, tmp_path: Path):
+        """A dry run computes the changes but does not write them."""
+        # Arrange
+        version_path = tmp_path / "VERSION"
+        version_path.write_text("1.2.3", encoding="utf-8")
+
+        conf, version_config, current_version = get_config_data(
+            {"current_version": "1.2.3", "files": [{"filename": str(version_path)}]}
+        )
+        new_version = current_version.bump("patch")
+        configured_files = files.resolve_file_config(conf.files, version_config)
+
+        # Act
+        files.modify_files(configured_files, current_version, new_version, get_context(conf), dry_run=True)
+
+        # Assert
+        assert version_path.read_text() == "1.2.3"
+
     @pytest.mark.parametrize(
         ["global_value", "file_value", "should_raise"],
         [
