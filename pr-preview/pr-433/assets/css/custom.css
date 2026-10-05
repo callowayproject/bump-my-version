@@ -1,0 +1,12 @@
+/* Indentation. */
+div.doc-contents:not(.first) {
+  padding-left: 25px;
+  border-left: .05rem solid var(--md-typeset-table-color);
+}
+
+/* Normal size fonts on parameter tables */
+.md-typeset div.doc-contents table {
+  font-size: 1em;
+  width: 100%;
+  display: table;
+}
