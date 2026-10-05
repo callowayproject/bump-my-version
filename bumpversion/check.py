@@ -1,13 +1,16 @@
 """Verify that the project is consistent with its current version, without changing anything."""
 
 from string import Formatter
-from typing import List, Optional
+from typing import TYPE_CHECKING, List, Optional, cast
 
 from bumpversion.config import Config
 from bumpversion.context import get_context
 from bumpversion.exceptions import VersionNotFoundError
 from bumpversion.files import resolve_file_config
 from bumpversion.ui import get_indented_logger
+
+if TYPE_CHECKING:  # pragma: no-coverage
+    from bumpversion.versioning.models import Version
 
 logger = get_indented_logger(__name__)
 
@@ -35,8 +38,8 @@ def do_check(config: Config, release_tag: Optional[str] = None) -> List[str]:
     """
     logger.indent()
     problems = []
-    version = config.version_config.parse(config.current_version, raise_error=True)
-    assert version is not None  # parse raises instead of returning None
+    # parse raises instead of returning None
+    version = cast("Version", config.version_config.parse(config.current_version, raise_error=True))
     ctx = get_context(config, version, version)
 
     for configured_file in resolve_file_config(config.files_to_modify, config.version_config):
