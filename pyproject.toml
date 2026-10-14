@@ -378,3 +378,6 @@ check-return-types = false
 skip-checking-raises = true
 quiet = true
 check-class-attributes = false
+
+[tool.bandit.assert_used]
+skips = ['*test_*.py']
