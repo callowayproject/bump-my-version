@@ -278,6 +278,23 @@ class TestRevisionInfo:
         assert result["short_branch_name"] == "main"
         assert result["repository_root"] == git_repo
 
+    def test_detached_head_keeps_repository_root(self, git_repo: Path) -> None:
+        """A detached HEAD has no branch name, but the repository root is still returned."""
+        # Arrange
+        with inside_dir(git_repo):
+            (git_repo / "readme.md").write_text("hello")
+            run_command(["git", "add", "readme.md"])
+            run_command(["git", "commit", "-m", "first"])
+            run_command(["git", "checkout", "--detach"])
+
+            # Act
+            result = revision_info()
+
+        # Assert
+        assert result["branch_name"] == ""
+        assert result["short_branch_name"] == ""
+        assert result["repository_root"] == git_repo
+
     @patch("bumpversion.scm.git.run_command")
     def test_returns_empty_data_on_git_command_error(self, mock_run_command):
         """If there is an error with the git command, the branch name and repository root should be empty."""
