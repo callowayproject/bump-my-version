@@ -226,6 +226,33 @@ class ConfiguredFile:
         if not dry_run:  # pragma: no-coverage
             self.write_file_contents(file_content_after)
 
+    def contains_version(self, current_version: Version, context: MutableMapping) -> bool:
+        """
+        Does the file contain the current version, as the next bump would search for it?
+
+        Nothing is changed. The search pattern is rendered exactly as `make_file_change` renders it.
+
+        Args:
+            current_version: The version expected in the file
+            context: The context used for rendering the search pattern
+
+        Returns:
+            True if the search pattern was found, False if it is missing but the file is configured to ignore that.
+
+        Raises:
+            FileNotFoundError: if the file doesn't exist and missing files are not ignored
+        """
+        if not os.path.exists(self.file_change.filename):
+            if self.file_change.ignore_missing_file:
+                logger.info("File %s not found, but ignoring", self.file_change.filename)
+                return False
+            raise FileNotFoundError(f"File not found: '{self.file_change.filename}'")
+        context = {**context}
+        context["current_version"] = self._get_serialized_version("current_version", current_version, context)
+        context["new_version"] = context["current_version"]
+        search_for, raw_search_pattern = self.file_change.get_search_pattern(context)
+        return self._contains_change_pattern(search_for, raw_search_pattern, current_version)
+
     def _get_serialized_version(self, context_key: str, version: Version, context: MutableMapping) -> str:
         """Get the serialized version."""
         logger.debug("Serializing the %s", context_key.replace("_", " "))
