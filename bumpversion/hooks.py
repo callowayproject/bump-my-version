@@ -83,7 +83,11 @@ def new_version_env(config: Config, current_version: Version, new_version: Versi
     new_version_string = config.version_config.serialize(new_version, ctx)
     ctx["new_version"] = new_version_string
     new_version_tag = config.tag_name.format(**ctx)
-    return {f"{PREFIX}NEW_VERSION": new_version_string, f"{PREFIX}NEW_VERSION_TAG": new_version_tag}
+    return {
+        f"{PREFIX}NEW_VERSION": new_version_string,
+        f"{PREFIX}NEW_TAG": new_version_tag,
+        f"{PREFIX}NEW_VERSION_TAG": new_version_tag,
+    }
 
 
 def get_setup_hook_env(config: Config, current_version: Version) -> Dict[str, str]:

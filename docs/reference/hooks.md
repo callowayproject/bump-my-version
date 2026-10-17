@@ -202,6 +202,9 @@ All environment variables set before bump-my-version was run are available.
 `BVHOOK_NEW_TAG`
 : The new tag
 
+`BVHOOK_NEW_VERSION_TAG`
+: An alias for `BVHOOK_NEW_TAG`, retained for backwards compatibility.
+
 `BVHOOK_NEW_<version component>`
 : Each version component defined by the [version configuration parsing regular expression](configuration/global.md#parse). The default configuration would have `BVHOOK_NEW_MAJOR`, `BVHOOK_NEW_MINOR`, and `BVHOOK_NEW_PATCH` available.
 
