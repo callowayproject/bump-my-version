@@ -217,18 +217,20 @@ def revision_info() -> dict:
         logger.debug("Error when determining the repository root: %s", e.stderr)
         return info
 
+    info["repository_root"] = Path(repository_root_result.stdout.strip())
+
     try:
         branch_name_result = run_command(current_branch_command)
     except subprocess.CalledProcessError as e:
+        # A detached HEAD (e.g. a CI checkout) has no branch, but files still need staging
         logger.debug("Error when determining the current branch: %s", e.stderr)
+        info["branch_name"] = info["short_branch_name"] = ""
         return info
 
-    repository_root = Path(repository_root_result.stdout.strip())
     branch_name = branch_name_result.stdout.strip()
     short_branch_name = re.sub(r"([^a-zA-Z0-9]*)", "", branch_name).lower()[:20]
     info["branch_name"] = branch_name
     info["short_branch_name"] = short_branch_name
-    info["repository_root"] = repository_root
 
     return info
 
