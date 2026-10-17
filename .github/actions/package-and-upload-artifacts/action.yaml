@@ -46,4 +46,4 @@ runs:
 
     - name: Package and upload artifacts
       if: ${{ env.PACKAGE == 'true' }}
-      uses: hynek/build-and-inspect-python-package@v2
+      uses: hynek/build-and-inspect-python-package@v3.0.1
