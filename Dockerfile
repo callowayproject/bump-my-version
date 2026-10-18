@@ -27,11 +27,11 @@ LABEL com.github.actions.name="Bump My Version" \
     com.github.actions.color="blue" \
     maintainer="@coordt" \
     org.opencontainers.image.authors="Calloway Project https://github.com/callowayproject" \
-    org.opencontainers.image.created=2026-10-18T13:52:17Z \
+    org.opencontainers.image.created=2026-10-18T17:49:58Z \
     org.opencontainers.image.url=https://github.com/callowayproject/bump-my-version \
     org.opencontainers.image.documentation=https://callowayproject.github.io/bump-my-version \
     org.opencontainers.image.source=https://github.com/callowayproject/bump-my-version \
-    org.opencontainers.image.version=1.6.2 \
+    org.opencontainers.image.version=1.6.3 \
     org.opencontainers.image.licenses=MIT
 
 # Add a non-root user and group

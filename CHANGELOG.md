@@ -1,5 +1,45 @@
 # Changelog
 
+## 1.6.3 (2026-10-18)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.2...1.6.3)
+
+### Fixes
+
+- Fix: close review gaps in config discovery and file resolution. [aff2341](https://github.com/callowayproject/bump-my-version/commit/aff2341f8d56e0441f1eedf50e58481e9d8fa96a)
+
+  - recognise POSIX and Windows absolute paths on every platform
+  - raise ConfigurationError for non-mapping 'files' entries
+  - resolve each filemap key once in files_to_modify
+  - use find_repo_root for scm repository_root (git and hg)
+  - strengthen symlink tests, add symlinked config case
+  - narrow broad pytest.raises(Exception) to ValidationError
+
+- Fix: don't re-add CLI files already configured; limit '!' handling to glob_exclude. [ce16247](https://github.com/callowayproject/bump-my-version/commit/ce1624786e68e1b4146f87e9f84cc48aa67bd5b9)
+
+- Fix: compare CLI and configured file paths as resolved paths. [f36ef5d](https://github.com/callowayproject/bump-my-version/commit/f36ef5d23757d1ae66cf0c0e72e4409e2b069182)
+
+  Also handle '!' glob_exclude negation when rebasing paths, ignore non-mapping
+  files entries, simplify config-dir walk, and document discovery and path rules.
+
+### Other
+
+- Test: add docstrings to discovery and resolution tests. [5001ca1](https://github.com/callowayproject/bump-my-version/commit/5001ca1ca0e91290f66c86deaca9e326ab299b2f)
+
+- Test: use posix paths for resolved filenames and skip '|' path test on Windows. [b1a2d20](https://github.com/callowayproject/bump-my-version/commit/b1a2d206d8dd2cb56bf9e1089b7cc6a116d746eb)
+
+- Test: compare resolved filename as Path for Windows separators. [ad7b894](https://github.com/callowayproject/bump-my-version/commit/ad7b8945182e9436eaaab345e575ac4bbbbaa916)
+
+- Test: expect single entry for symlinked cwd. [2635f8e](https://github.com/callowayproject/bump-my-version/commit/2635f8e84b48d805dae7860c27c60599991c350c)
+
+- Feat: resolve config through repo parents and anchor file paths to config dir. [276dfc4](https://github.com/callowayproject/bump-my-version/commit/276dfc4b1d458c065ed936afd82ff682d0aa2b78)
+
+  Search parent directories up to the git/hg repo root for a config file (#8).
+  Resolve relative filename/glob from the config file's directory and add a
+  {repo_root} placeholder (#9).
+
+  Closes #8, closes #9
+
 ## 1.6.2 (2026-10-18)
 
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.1...1.6.2)
