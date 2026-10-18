@@ -78,7 +78,7 @@ class TestFileResolution:
         cfg = self._config(tmp_path, '[[tool.bumpversion.files]]\nfilename = "pkg/__init__.py"\n')
         with inside_dir(sub):
             conf = get_configuration(cfg)
-        assert conf.files[0].filename == str(tmp_path / "pkg" / "__init__.py")
+        assert Path(conf.files[0].filename) == tmp_path / "pkg" / "__init__.py"
 
     def test_relative_filename_unchanged_when_cwd_is_config_dir(self, tmp_path: Path) -> None:
         cfg = self._config(tmp_path, '[[tool.bumpversion.files]]\nfilename = "a.py"\n')
