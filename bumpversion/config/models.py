@@ -6,6 +6,7 @@ import re
 from collections import defaultdict
 from dataclasses import dataclass
 from itertools import chain
+from pathlib import Path
 from typing import TYPE_CHECKING, Dict, List, MutableMapping, Optional, Tuple, Union
 
 from pydantic import BaseModel, Field
@@ -168,11 +169,14 @@ class Config(BaseSettings):
     @property
     def files_to_modify(self) -> List[FileChange]:
         """A list of files to modify."""
-        files_not_excluded = [filename for filename in self.resolved_filemap if filename not in self.excluded_paths]
-        inclusion_set = set(self.included_paths) | set(files_not_excluded)
+        # Compare resolved paths: config filenames may be absolute while CLI paths are relative.
+        excluded = {Path(p).resolve() for p in self.excluded_paths}
+        included = {Path(p).resolve() for p in self.included_paths}
         return list(
             chain.from_iterable(
-                file_cfg_list for key, file_cfg_list in self.resolved_filemap.items() if key in inclusion_set
+                file_cfg_list
+                for key, file_cfg_list in self.resolved_filemap.items()
+                if Path(key).resolve() in included or Path(key).resolve() not in excluded
             )
         )
 

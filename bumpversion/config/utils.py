@@ -13,6 +13,9 @@ from bumpversion.exceptions import BumpVersionError, ConfigurationError
 from bumpversion.utils import Pathlike, find_repo_root
 from bumpversion.versioning.models import VersionComponentSpec
 
+# Built by concatenation so ruff doesn't flag it as a missing f-string.
+REPO_ROOT_TOKEN = "{" + "repo_root}"
+
 
 def get_all_file_configs(config_dict: dict) -> List[FileChange]:
     """Make sure all version components are included."""
@@ -26,7 +29,11 @@ def get_all_file_configs(config_dict: dict) -> List[FileChange]:
         "regex": config_dict["regex"],
         "include_bumps": tuple(config_dict["parts"]),
     }
-    files = [{k: v for k, v in filecfg.items() if v is not None} for filecfg in filter(None, config_dict["files"])]
+    files = [
+        {k: v for k, v in filecfg.items() if v is not None}
+        for filecfg in config_dict["files"]
+        if isinstance(filecfg, dict) and filecfg
+    ]
     for f in files:
         f.update({k: v for k, v in defaults.items() if k not in f})
     return [FileChange(**f) for f in files]
@@ -50,9 +57,12 @@ def resolve_file_paths(files: List[FileChange], config_file: Optional[Pathlike])
     # Leave paths untouched when they already resolve from the cwd, to keep output stable.
     rebase = config_dir != Path.cwd().resolve()
     repo_root = find_repo_root(config_dir)
-    token = "{" + "repo_root}"
+    token = REPO_ROOT_TOKEN
 
     def resolve(value: str, escape: bool = False) -> str:
+        negated = value.startswith("!")  # glob_exclude negation: keep the `!` in front of the base dir
+        if negated:
+            value = value[1:]
         if token in value:
             if repo_root is None:
                 raise ConfigurationError(f"'{token}' used in '{value}', but not in a git or mercurial repository.")
@@ -61,7 +71,7 @@ def resolve_file_paths(files: List[FileChange], config_file: Optional[Pathlike])
         if rebase and not Path(value).is_absolute():
             base = config_dir.as_posix()
             value = f"{glob.escape(base) if escape else base}/{value}"
-        return value
+        return f"!{value}" if negated else value
 
     for file_cfg in files:
         if file_cfg.filename:
