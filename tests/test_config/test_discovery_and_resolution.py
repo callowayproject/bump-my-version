@@ -1,5 +1,6 @@
 """Tests for config discovery through parent directories and file path resolution."""
 
+import sys
 from pathlib import Path
 
 import pytest
@@ -140,14 +141,14 @@ class TestCliPathsAndGaps:
             conf.included_paths = ["../a.py"]
             names = {f.filename for f in conf.files_to_modify}
         # the CLI spelling of an already-configured file is not added again
-        assert names == {str(tmp_path / "pkg" / "a.py")}
+        assert names == {(tmp_path / "pkg" / "a.py").as_posix()}
 
     def test_bang_filename_is_not_treated_as_negation(self, tmp_path: Path) -> None:
         sub = make_repo(tmp_path)
         cfg = self._config(tmp_path, '[[tool.bumpversion.files]]\nfilename = "!weird.py"\n')
         with inside_dir(sub):
             conf = get_configuration(cfg)
-        assert conf.files[0].filename == str(tmp_path / "!weird.py")
+        assert conf.files[0].filename == (tmp_path / "!weird.py").as_posix()
 
     def test_cli_path_not_matching_stays_excluded(self, tmp_path: Path) -> None:
         sub = make_repo(tmp_path)
@@ -171,7 +172,7 @@ class TestCliPathsAndGaps:
             conf.excluded_paths = list(conf.resolved_filemap)
             conf.add_files(["../a.py"])
             conf.included_paths = ["../a.py"]
-            assert [f.filename for f in conf.files_to_modify] == [str(real.resolve() / "pkg" / "a.py")]
+            assert [f.filename for f in conf.files_to_modify] == [(real.resolve() / "pkg" / "a.py").as_posix()]
 
     def test_symlinked_config_file(self, tmp_path: Path) -> None:
         real = tmp_path / "real"
@@ -182,7 +183,7 @@ class TestCliPathsAndGaps:
         with inside_dir(sub):
             conf = get_configuration(link)
         # relative names are anchored at the real config's directory
-        assert conf.files[0].filename == str(real.resolve() / "pkg" / "a.py")
+        assert conf.files[0].filename == (real.resolve() / "pkg" / "a.py").as_posix()
 
     def test_ini_config_found_in_parent(self, tmp_path: Path) -> None:
         sub = make_repo(tmp_path)
@@ -191,7 +192,7 @@ class TestCliPathsAndGaps:
         with inside_dir(sub):
             assert find_config_file() == cfg
             conf = get_configuration(cfg)
-            assert conf.files[0].filename == str(tmp_path / "pkg" / "a.py")
+            assert conf.files[0].filename == (tmp_path / "pkg" / "a.py").as_posix()
             update_ini_config_file(cfg, "1.0.0", "1.0.1")
         assert "current_version = 1.0.1" in cfg.read_text(encoding="utf-8")
 
@@ -202,6 +203,7 @@ class TestCliPathsAndGaps:
             conf = get_configuration(cfg)
         assert conf.files[0].glob_exclude == (f"!{glob.escape(tmp_path.as_posix())}/pkg/a.py",)
 
+    @pytest.mark.skipif(sys.platform == "win32", reason="'|' is not a valid Windows path character")
     def test_pipe_in_repo_path_does_not_split_glob(self, tmp_path: Path) -> None:
         root = tmp_path / "a|b"
         sub = make_repo(root)
