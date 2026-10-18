@@ -11,7 +11,7 @@ from typing import Any, ClassVar, List, MutableMapping, Optional
 from bumpversion.exceptions import DirtyWorkingDirectoryError
 from bumpversion.scm.models import LatestTagInfo, SCMConfig
 from bumpversion.ui import get_indented_logger
-from bumpversion.utils import Pathlike, format_and_raise_error, is_subpath, run_command
+from bumpversion.utils import Pathlike, find_repo_root, format_and_raise_error, is_subpath, run_command
 
 logger = get_indented_logger(__name__)
 
@@ -208,16 +208,14 @@ def revision_info() -> dict:
             - repository_root: The root directory of the Git repository.
     """
     info = dict.fromkeys(["branch_name", "short_branch_name", "repository_root"])
-    repo_root_command = ["git", "rev-parse", "--show-toplevel"]
     current_branch_command = ["git", "symbolic-ref", "--short", "HEAD"]
 
-    try:
-        repository_root_result = run_command(repo_root_command)
-    except subprocess.CalledProcessError as e:
-        logger.debug("Error when determining the repository root: %s", e.stderr)
+    repository_root = find_repo_root(Path.cwd())
+    if repository_root is None:
+        logger.debug("Error when determining the repository root: not in a repository")
         return info
 
-    info["repository_root"] = Path(repository_root_result.stdout.strip())
+    info["repository_root"] = repository_root
 
     try:
         branch_name_result = run_command(current_branch_command)

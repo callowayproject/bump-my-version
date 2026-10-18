@@ -296,13 +296,14 @@ class TestRevisionInfo:
         assert result["repository_root"] == git_repo
 
     @patch("bumpversion.scm.git.run_command")
-    def test_returns_empty_data_on_git_command_error(self, mock_run_command):
-        """If there is an error with the git command, the branch name and repository root should be empty."""
+    def test_returns_empty_data_on_git_command_error(self, mock_run_command, tmp_path):
+        """Outside a repository, the branch name and repository root should be empty."""
         # Arrange
         mock_run_command.side_effect = subprocess.CalledProcessError(1, "git")
 
         # Act
-        result = revision_info()
+        with inside_dir(tmp_path):
+            result = revision_info()
 
         # Assert
         assert result["branch_name"] is None

@@ -6,6 +6,7 @@ import re
 from collections import defaultdict
 from dataclasses import dataclass
 from itertools import chain
+from pathlib import Path
 from typing import TYPE_CHECKING, Dict, List, MutableMapping, Optional, Tuple, Union
 
 from pydantic import BaseModel, Field
@@ -122,7 +123,10 @@ class Config(BaseSettings):
             return
         filenames = [filename] if isinstance(filename, str) else filename
         files = set(self.files)
+        configured = {Path(key).resolve() for key in self.resolved_filemap}
         for name in filenames:
+            if Path(name).resolve() in configured:
+                continue  # already configured under another spelling; don't process it twice
             files.add(
                 FileChange(
                     filename=name,
@@ -168,13 +172,15 @@ class Config(BaseSettings):
     @property
     def files_to_modify(self) -> List[FileChange]:
         """A list of files to modify."""
-        files_not_excluded = [filename for filename in self.resolved_filemap if filename not in self.excluded_paths]
-        inclusion_set = set(self.included_paths) | set(files_not_excluded)
-        return list(
-            chain.from_iterable(
-                file_cfg_list for key, file_cfg_list in self.resolved_filemap.items() if key in inclusion_set
-            )
-        )
+        # Compare resolved paths: config filenames may be absolute while CLI paths are relative.
+        excluded = {Path(p).resolve() for p in self.excluded_paths}
+        included = {Path(p).resolve() for p in self.included_paths}
+        selected = []
+        for key, file_cfg_list in self.resolved_filemap.items():
+            resolved = Path(key).resolve()  # once per key
+            if resolved in included or resolved not in excluded:
+                selected.append(file_cfg_list)
+        return list(chain.from_iterable(selected))
 
     @property
     def version_config(self) -> VersionConfig:
