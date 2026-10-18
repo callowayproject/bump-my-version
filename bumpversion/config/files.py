@@ -73,9 +73,19 @@ def find_config_file(explicit_file: Optional[Pathlike] = None) -> Union[Path, No
     Returns:
         The configuration file path
     """
-    search_paths = (
-        [Path(explicit_file)] if explicit_file else [Path.cwd().joinpath(path) for path in CONFIG_FILE_SEARCH_ORDER]
-    )
+    if explicit_file:
+        search_paths = [Path(explicit_file)]
+    else:
+        from bumpversion.utils import find_repo_root
+
+        cwd = Path.cwd()
+        repo_root = find_repo_root(cwd)
+        # Inside a repo, walk up to the repo root; otherwise only look in the cwd.
+        dirs = [cwd]
+        if repo_root:
+            resolved = cwd.resolve()
+            dirs = [d for d in (resolved, *resolved.parents) if d == repo_root or repo_root in d.parents]
+        search_paths = [d / name for d in dirs for name in CONFIG_FILE_SEARCH_ORDER]
     return next(
         (
             cfg_file
