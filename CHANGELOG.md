@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.6.1 (2026-10-17)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.0...1.6.1)
+
+### Fixes
+
+- Fix the --increment examples in the show subcommand docs. [bee5795](https://github.com/callowayproject/bump-my-version/commit/bee579555044e3f9e509bd578c624cdbf51f9ad5)
+
+  --increment is an option of show, so it has to come after it: 'bump-my-version --increment patch show' fails with "No such option '--increment'." The examples also name new_version, so that show prints the version each one shows.
+
+### Other
+
+- Keep the repository root when HEAD is detached. [6f40aee](https://github.com/callowayproject/bump-my-version/commit/6f40aeeeccd6b6fde3bba20567a46527b9290813)
+
+  Since ac7b3ba, the branch is read with git symbolic-ref, which fails on a
+  detached HEAD (the usual CI checkout). revision_info() then returned early
+  without the repository root, so the changed files were never staged and
+  the commit failed. Keep the root and use an empty branch name, as
+  git branch --show-current did.
+
+  Fixes #438
+
+- [pre-commit.ci] pre-commit autoupdate. [ed13388](https://github.com/callowayproject/bump-my-version/commit/ed13388d5140432b83d0639ef9de51caef5060cb)
+
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.16.9 → v0.16.10](https://github.com/astral-sh/ruff-pre-commit/compare/v0.16.9...v0.16.10)
+
 ## 1.6.0 (2026-10-03)
 
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.5.3...1.6.0)
