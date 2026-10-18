@@ -123,7 +123,10 @@ class Config(BaseSettings):
             return
         filenames = [filename] if isinstance(filename, str) else filename
         files = set(self.files)
+        configured = {Path(key).resolve() for key in self.resolved_filemap}
         for name in filenames:
+            if Path(name).resolve() in configured:
+                continue  # already configured under another spelling; don't process it twice
             files.add(
                 FileChange(
                     filename=name,

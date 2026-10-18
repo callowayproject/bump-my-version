@@ -59,8 +59,8 @@ def resolve_file_paths(files: List[FileChange], config_file: Optional[Pathlike])
     repo_root = find_repo_root(config_dir)
     token = REPO_ROOT_TOKEN
 
-    def resolve(value: str, escape: bool = False) -> str:
-        negated = value.startswith("!")  # glob_exclude negation: keep the `!` in front of the base dir
+    def resolve(value: str, escape: bool = False, negatable: bool = False) -> str:
+        negated = negatable and value.startswith("!")  # keep the `!` in front of the base dir
         if negated:
             value = value[1:]
         if token in value:
@@ -79,7 +79,7 @@ def resolve_file_paths(files: List[FileChange], config_file: Optional[Pathlike])
         if file_cfg.glob:
             file_cfg.glob = resolve(file_cfg.glob, escape=True)
             if file_cfg.glob_exclude:
-                file_cfg.glob_exclude = tuple(resolve(p, escape=True) for p in file_cfg.glob_exclude)
+                file_cfg.glob_exclude = tuple(resolve(p, escape=True, negatable=True) for p in file_cfg.glob_exclude)
 
 
 def get_all_part_configs(config_dict: dict) -> Dict[str, VersionComponentSpec]:

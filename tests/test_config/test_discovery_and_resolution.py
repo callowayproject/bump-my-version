@@ -138,8 +138,15 @@ class TestCliPathsAndGaps:
             conf.add_files(["../a.py"])
             conf.included_paths = ["../a.py"]
             names = {f.filename for f in conf.files_to_modify}
-        # configured (absolute) and CLI (relative-from-cwd) spellings of the same file both match
-        assert names == {str(tmp_path / "pkg" / "a.py"), "../a.py"}
+        # the CLI spelling of an already-configured file is not added again
+        assert names == {str(tmp_path / "pkg" / "a.py")}
+
+    def test_bang_filename_is_not_treated_as_negation(self, tmp_path: Path) -> None:
+        sub = make_repo(tmp_path)
+        cfg = self._config(tmp_path, '[[tool.bumpversion.files]]\nfilename = "!weird.py"\n')
+        with inside_dir(sub):
+            conf = get_configuration(cfg)
+        assert conf.files[0].filename == str(tmp_path / "!weird.py")
 
     def test_cli_path_not_matching_stays_excluded(self, tmp_path: Path) -> None:
         sub = make_repo(tmp_path)
