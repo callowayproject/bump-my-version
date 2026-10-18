@@ -13,7 +13,8 @@ This section configures which files Bump My Version should update by replacing t
 ### How file paths are resolved
 
 - Paths given on the command line are relative to the current working directory. Absolute paths are used as-is.
-- `filename`, `glob` and `glob_exclude` in a configuration file are relative to the directory containing that configuration file. Absolute paths are used as-is.
+- `filename`, `glob` and `glob_exclude` in a configuration file are relative to the directory containing that configuration file. Absolute paths are used as-is. Both POSIX (`/foo`) and Windows (`C:\foo`) style absolute paths are recognised on every platform.
+- Every entry in `files` must be a table; anything else is a configuration error.
 - `{repo_root}` in `filename`, `glob` or `glob_exclude` expands to the root of the enclosing git or mercurial repository (an error if there is none). The root is found by walking up from the configuration file's directory, so an explicit `--config-file` outside any repository is an error, and one in a different repository gives that repository's root:
 
     ```toml

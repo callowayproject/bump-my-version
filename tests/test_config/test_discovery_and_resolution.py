@@ -3,6 +3,7 @@
 from pathlib import Path
 
 import pytest
+from pydantic import ValidationError
 from wcmatch import glob
 
 from bumpversion.config import get_configuration
@@ -170,7 +171,18 @@ class TestCliPathsAndGaps:
             conf.excluded_paths = list(conf.resolved_filemap)
             conf.add_files(["../a.py"])
             conf.included_paths = ["../a.py"]
-            assert len(conf.files_to_modify) == 1
+            assert [f.filename for f in conf.files_to_modify] == [str(real.resolve() / "pkg" / "a.py")]
+
+    def test_symlinked_config_file(self, tmp_path: Path) -> None:
+        real = tmp_path / "real"
+        sub = make_repo(real)
+        cfg = self._config(real, '[[tool.bumpversion.files]]\nfilename = "pkg/a.py"\n')
+        link = tmp_path / "elsewhere.toml"
+        link.symlink_to(cfg)
+        with inside_dir(sub):
+            conf = get_configuration(link)
+        # relative names are anchored at the real config's directory
+        assert conf.files[0].filename == str(real.resolve() / "pkg" / "a.py")
 
     def test_ini_config_found_in_parent(self, tmp_path: Path) -> None:
         sub = make_repo(tmp_path)
@@ -200,15 +212,25 @@ class TestCliPathsAndGaps:
             assert list(conf.resolved_filemap) == [str(root / "pkg" / "x.py")]
 
     @pytest.mark.parametrize("entry", ["files = [1, 'x']", "files = [[]]"])
-    def test_malformed_files_entries_ignored(self, tmp_path: Path, entry: str) -> None:
+    def test_non_mapping_files_entries_rejected(self, tmp_path: Path, entry: str) -> None:
         cfg = tmp_path / ".bumpversion.toml"
         cfg.write_text(CFG.replace("[tool.bumpversion]\n", "[tool.bumpversion]\n" + entry + "\n"), encoding="utf-8")
-        with inside_dir(tmp_path):
-            assert get_configuration(cfg).files == []
+        with inside_dir(tmp_path), pytest.raises(ConfigurationError, match="files"):
+            get_configuration(cfg)
 
     @pytest.mark.parametrize("line", ["filename = 1", "glob = 1", "glob = ['a']"])
     def test_non_string_filename_or_glob_rejected(self, tmp_path: Path, line: str) -> None:
         cfg = tmp_path / ".bumpversion.toml"
         cfg.write_text(CFG + f"[[tool.bumpversion.files]]\n{line}\n", encoding="utf-8")
-        with inside_dir(tmp_path), pytest.raises(Exception):
+        with inside_dir(tmp_path), pytest.raises(ValidationError):
             get_configuration(cfg)
+
+    def test_windows_and_posix_absolute_paths_not_rebased(self, tmp_path: Path) -> None:
+        sub = make_repo(tmp_path)
+        cfg = self._config(
+            tmp_path,
+            '[[tool.bumpversion.files]]\nfilename = "/abs/a.py"\n[[tool.bumpversion.files]]\nfilename = "C:\\\\abs\\\\b.py"\n',
+        )
+        with inside_dir(sub):
+            conf = get_configuration(cfg)
+        assert [f.filename for f in conf.files] == ["/abs/a.py", "C:\\abs\\b.py"]

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import Dict, List, Optional
 
 from wcmatch import glob
@@ -29,11 +29,10 @@ def get_all_file_configs(config_dict: dict) -> List[FileChange]:
         "regex": config_dict["regex"],
         "include_bumps": tuple(config_dict["parts"]),
     }
-    files = [
-        {k: v for k, v in filecfg.items() if v is not None}
-        for filecfg in config_dict["files"]
-        if isinstance(filecfg, dict) and filecfg
-    ]
+    for filecfg in config_dict["files"]:
+        if not isinstance(filecfg, dict):
+            raise ConfigurationError(f"Each 'files' entry must be a table/mapping, got {filecfg!r}.")
+    files = [{k: v for k, v in filecfg.items() if v is not None} for filecfg in config_dict["files"] if filecfg]
     for f in files:
         f.update({k: v for k, v in defaults.items() if k not in f})
     return [FileChange(**f) for f in files]
@@ -68,7 +67,8 @@ def resolve_file_paths(files: List[FileChange], config_file: Optional[Pathlike])
                 raise ConfigurationError(f"'{token}' used in '{value}', but not in a git or mercurial repository.")
             root = repo_root.as_posix()
             value = value.replace(token, glob.escape(root) if escape else root)
-        if rebase and not Path(value).is_absolute():
+        # Check both flavours so `/foo` and `C:\foo` are absolute on every platform.
+        if rebase and not (PurePosixPath(value).is_absolute() or PureWindowsPath(value).is_absolute()):
             base = config_dir.as_posix()
             value = f"{glob.escape(base) if escape else base}/{value}"
         return f"!{value}" if negated else value

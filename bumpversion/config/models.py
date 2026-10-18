@@ -175,13 +175,12 @@ class Config(BaseSettings):
         # Compare resolved paths: config filenames may be absolute while CLI paths are relative.
         excluded = {Path(p).resolve() for p in self.excluded_paths}
         included = {Path(p).resolve() for p in self.included_paths}
-        return list(
-            chain.from_iterable(
-                file_cfg_list
-                for key, file_cfg_list in self.resolved_filemap.items()
-                if Path(key).resolve() in included or Path(key).resolve() not in excluded
-            )
-        )
+        selected = []
+        for key, file_cfg_list in self.resolved_filemap.items():
+            resolved = Path(key).resolve()  # once per key
+            if resolved in included or resolved not in excluded:
+                selected.append(file_cfg_list)
+        return list(chain.from_iterable(selected))
 
     @property
     def version_config(self) -> VersionConfig:
