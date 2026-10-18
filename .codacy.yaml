@@ -1,0 +1,10 @@
+---
+exclude_paths:
+  - ".github/actions/release/action.yaml"
+engines:
+  bandit:
+    exclude_paths:
+      - "tests/**"
+  markdownlint:
+    exclude_paths:
+      - "CHANGELOG.md"
