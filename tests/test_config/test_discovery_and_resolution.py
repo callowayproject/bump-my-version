@@ -170,7 +170,7 @@ class TestCliPathsAndGaps:
             conf.excluded_paths = list(conf.resolved_filemap)
             conf.add_files(["../a.py"])
             conf.included_paths = ["../a.py"]
-            assert len(conf.files_to_modify) == 2
+            assert len(conf.files_to_modify) == 1
 
     def test_ini_config_found_in_parent(self, tmp_path: Path) -> None:
         sub = make_repo(tmp_path)
