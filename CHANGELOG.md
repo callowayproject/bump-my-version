@@ -1,5 +1,49 @@
 # Changelog
 
+## 1.6.2 (2026-10-18)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.1...1.6.2)
+
+### Fixes
+
+- Fix the BVHOOK_NEW_TAG environment variable in hook environments. [8f0d03e](https://github.com/callowayproject/bump-my-version/commit/8f0d03ef95fc851cdcf5c9883956ac877670b84c)
+
+### Other
+
+- Ci: exclude uv.lock from Codacy analysis. [b2732f4](https://github.com/callowayproject/bump-my-version/commit/b2732f4bd4c15ac649ed89805d1cd4c6fbfaded7)
+
+- Chore(deps): update `uv.lock` for Python 3.10+ compatibility and dependency upgrades. [37225f8](https://github.com/callowayproject/bump-my-version/commit/37225f8dc68409a380dd64fd5266273f271c5722)
+
+- Ci: drop Python 3.9 and add Python 3.15 to test matrix. [8d46056](https://github.com/callowayproject/bump-my-version/commit/8d4605643dcb34a143c20fb9759bc11e3971cc6b)
+
+- Ci: add Codacy exclusions and ignore local .codacy directory. [1217a32](https://github.com/callowayproject/bump-my-version/commit/1217a32936f63fafb8d65112e58d1712aacd5495)
+
+- Ci: make release work for fork PRs and skip fork-incompatible previews. [364b98c](https://github.com/callowayproject/bump-my-version/commit/364b98cc1c8147d634a7c202bd321f77581898dd)
+
+  Trigger the release workflow on push to master so merged fork PRs get a
+  version bump with full permissions. Skip the version-hint and docs-preview
+  workflows for fork PRs, which only get a read-only token and no secrets.
+
+- Bump `actions/upload-artifact` to v7 and `actions/setup-python` to v7. [ba36db7](https://github.com/callowayproject/bump-my-version/commit/ba36db7c2c2333bc5e94876ae54564c2731d2519)
+
+- Bump python from 3.14-slim-bookworm to 3.15-slim-bookworm. [cfed8a8](https://github.com/callowayproject/bump-my-version/commit/cfed8a887e2dc39bdc963e299deedadc64a5ce86)
+
+  Bumps python from 3.14-slim-bookworm to 3.15-slim-bookworm.
+
+  ______________________________________________________________________
+
+  **updated-dependencies:** - dependency-name: python
+  dependency-version: 3.15-slim-bookworm
+  dependency-type: direct:production
+
+  **signed-off-by:** dependabot[bot] <support@github.com>
+
+- [pre-commit.ci] pre-commit autoupdate. [0640b3e](https://github.com/callowayproject/bump-my-version/commit/0640b3e451ae7955dcf68d976b7626bb9f2e58d6)
+
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.16.10 → v0.17.0](https://github.com/astral-sh/ruff-pre-commit/compare/v0.16.10...v0.17.0)
+
+- Bump `build-and-inspect-python-package` action to version 3.0.1. [8b42383](https://github.com/callowayproject/bump-my-version/commit/8b423834d5817bf0de150686b0b88e0493edfefe)
+
 ## 1.6.1 (2026-10-17)
 
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.0...1.6.1)
