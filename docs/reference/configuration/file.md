@@ -62,6 +62,8 @@ type
 
 The glob pattern specifying the files to modify.
 
+If the pattern matches no files (including when [`glob_exclude`](#glob_exclude) removes every match), Bump My Version raises a `FileNotFoundError`, the same as for a missing [`filename`](#filename). Set [`ignore_missing_file`](#ignore_missing_file) to skip it instead.
+
 !!! note
 
     ‡ This is only used with TOML configuration, and is only required if [`filename`](#filename) is _not_ specified. INI-style configuration files specify the glob pattern as part of the grouping.
@@ -200,7 +202,7 @@ type
 
 ///
 
-if `True`, don't fail if the configured file is missing.
+if `True`, don't fail if the configured file is missing, or if the configured [`glob`](#glob) matches no files.
 
 ### include_bumps
 
