@@ -68,7 +68,7 @@ def get_configuration(config_file: Optional[Pathlike] = None, **overrides: Any) 
     Returns:
         The configuration
     """
-    from bumpversion.config.utils import get_all_file_configs, get_all_part_configs
+    from bumpversion.config.utils import get_all_file_configs, get_all_part_configs, resolve_file_paths
     from bumpversion.scm.models import SCMConfig, SCMInfo
 
     logger.info("Reading configuration")
@@ -82,6 +82,7 @@ def get_configuration(config_file: Optional[Pathlike] = None, **overrides: Any) 
 
     # Set any missing file configuration
     config_dict["files"] = get_all_file_configs(config_dict)
+    resolve_file_paths(config_dict["files"], config_file)
 
     # Resolve the SCMInfo class for Pydantic's BaseSettings
     Config.model_rebuild()

@@ -48,6 +48,7 @@ def assert_new_version_info_included(result_env: dict):
     assert f"{PREFIX}NEW_MINOR" in result_env
     assert f"{PREFIX}NEW_PATCH" in result_env
     assert f"{PREFIX}NEW_VERSION" in result_env
+    assert f"{PREFIX}NEW_TAG" in result_env
     assert f"{PREFIX}NEW_VERSION_TAG" in result_env
 
 
@@ -132,6 +133,7 @@ def test_new_version_env_includes_correct_info():
     result = new_version_env(config, current_version, new_version)
 
     assert result[f"{PREFIX}NEW_VERSION"] == "0.2.0"
+    assert result[f"{PREFIX}NEW_TAG"] == "v0.2.0"
     assert result[f"{PREFIX}NEW_VERSION_TAG"] == "v0.2.0"
 
 

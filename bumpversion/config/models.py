@@ -6,6 +6,7 @@ import re
 from collections import defaultdict
 from dataclasses import dataclass
 from itertools import chain
+from pathlib import Path
 from typing import TYPE_CHECKING, Dict, List, MutableMapping, Optional, Tuple, Union
 
 from pydantic import BaseModel, Field
@@ -115,6 +116,7 @@ class Config(BaseSettings):
     excluded_paths: List[str] = Field(default_factory=list)
     model_config = SettingsConfigDict(env_prefix="bumpversion_")
     _resolved_filemap: Optional[Dict[str, List[FileChange]]] = None
+    _ignore_unmatched_globs: bool = False
 
     def add_files(self, filename: Union[str, List[str]]) -> None:
         """Add a filename to the list of files."""
@@ -122,7 +124,10 @@ class Config(BaseSettings):
             return
         filenames = [filename] if isinstance(filename, str) else filename
         files = set(self.files)
+        configured = {Path(key).resolve() for key in self.resolved_filemap}
         for name in filenames:
+            if Path(name).resolve() in configured:
+                continue  # already configured under another spelling; don't process it twice
             files.add(
                 FileChange(
                     filename=name,
@@ -142,6 +147,13 @@ class Config(BaseSettings):
 
         self._resolved_filemap = None
 
+    def exclude_configured_files(self) -> None:
+        """Exclude all configured files, so only files added later are modified."""
+        # Configured files won't be modified, so a glob that matches nothing isn't an error.
+        self._ignore_unmatched_globs = True
+        self._resolved_filemap = None
+        self.excluded_paths = list(self.resolved_filemap.keys())
+
     @property
     def resolved_filemap(self) -> Dict[str, List[FileChange]]:
         """The cached resolved filemap."""
@@ -157,7 +169,7 @@ class Config(BaseSettings):
         new_files = []
         for file_cfg in self.files:
             if file_cfg.glob:
-                new_files.extend(resolve_glob_files(file_cfg))
+                new_files.extend(resolve_glob_files(file_cfg, ignore_missing=self._ignore_unmatched_globs))
             else:
                 new_files.append(file_cfg)
 
@@ -168,13 +180,15 @@ class Config(BaseSettings):
     @property
     def files_to_modify(self) -> List[FileChange]:
         """A list of files to modify."""
-        files_not_excluded = [filename for filename in self.resolved_filemap if filename not in self.excluded_paths]
-        inclusion_set = set(self.included_paths) | set(files_not_excluded)
-        return list(
-            chain.from_iterable(
-                file_cfg_list for key, file_cfg_list in self.resolved_filemap.items() if key in inclusion_set
-            )
-        )
+        # Compare resolved paths: config filenames may be absolute while CLI paths are relative.
+        excluded = {Path(p).resolve() for p in self.excluded_paths}
+        included = {Path(p).resolve() for p in self.included_paths}
+        selected = []
+        for key, file_cfg_list in self.resolved_filemap.items():
+            resolved = Path(key).resolve()  # once per key
+            if resolved in included or resolved not in excluded:
+                selected.append(file_cfg_list)
+        return list(chain.from_iterable(selected))
 
     @property
     def version_config(self) -> VersionConfig:

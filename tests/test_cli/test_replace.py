@@ -112,6 +112,32 @@ class TestReplaceCLI:
             call_args = mocked_modify_files.call_args[0]
             assert call_args[2] is None
 
+        def test_unmatched_configured_glob_is_ignored_without_configured_files(self, mocker, tmp_path, runner):
+            """A configured glob that matches nothing doesn't fail when configured files aren't used."""
+            tmp_path.joinpath(".bumpversion.toml").write_text(
+                "[tool.bumpversion]\n"
+                'current_version = "0.0.1"\n'
+                "allow_dirty = true\n\n"
+                "[[tool.bumpversion.files]]\n"
+                'glob = "**/*requirements.txt"\n',
+                encoding="utf-8",
+            )
+            tmp_path.joinpath("VERSION").write_text("0.0.1", encoding="utf-8")
+
+            mocked_modify_files = mocker.patch("bumpversion.commands.replace.modify_files")
+            with inside_dir(tmp_path):
+                result: Result = runner.invoke(
+                    cli.cli, ["replace", "--no-configured-files", "--new-version", "0.0.2", "VERSION"]
+                )
+
+            if result.exit_code != 0:
+                print(result.output)
+
+            assert result.exit_code == 0
+
+            configured_files = mocked_modify_files.call_args[0][0]
+            assert [f.file_change.filename for f in configured_files] == ["VERSION"]
+
         def test_ignores_missing_files_with_option(self, mocker, tmp_path, fixtures_path, runner):
             """The replace subcommand should ignore missing."""
 
@@ -197,7 +223,7 @@ class TestReplaceCLI:
             )
             config_file = tmp_path / ".bumpversion.toml"
             config_file.write_text(
-                "[tool.bumpversion]\n" 'current_version = "0.0.1"\n' "allow_dirty = true\n\n",
+                '[tool.bumpversion]\ncurrent_version = "0.0.1"\nallow_dirty = true\n\n',
                 encoding="utf-8",
             )
 
@@ -242,10 +268,7 @@ class TestReplaceCLI:
             version_path.write_text("version: 1.0.0\n", encoding="utf-8")
             config_file = tmp_path / ".bumpversion.toml"
             config_file.write_text(
-                "[tool.bumpversion]\n"
-                'current_version = "1.0.0"\n'
-                "allow_dirty = true\n"
-                "regex = true\n",
+                '[tool.bumpversion]\ncurrent_version = "1.0.0"\nallow_dirty = true\nregex = true\n',
                 encoding="utf-8",
             )
 
@@ -276,10 +299,7 @@ class TestReplaceCLI:
             version_path.write_text(r"version: \d+\.\d+\.\d+" + "\n", encoding="utf-8")
             config_file = tmp_path / ".bumpversion.toml"
             config_file.write_text(
-                "[tool.bumpversion]\n"
-                'current_version = "1.0.0"\n'
-                "allow_dirty = true\n"
-                "regex = true\n",
+                '[tool.bumpversion]\ncurrent_version = "1.0.0"\nallow_dirty = true\nregex = true\n',
                 encoding="utf-8",
             )
 
@@ -311,10 +331,7 @@ class TestReplaceCLI:
             version_path.write_text("version: 1.0.0\n", encoding="utf-8")
             config_file = tmp_path / ".bumpversion.toml"
             config_file.write_text(
-                "[tool.bumpversion]\n"
-                'current_version = "1.0.0"\n'
-                "allow_dirty = true\n"
-                "regex = false\n",
+                '[tool.bumpversion]\ncurrent_version = "1.0.0"\nallow_dirty = true\nregex = false\n',
                 encoding="utf-8",
             )
 

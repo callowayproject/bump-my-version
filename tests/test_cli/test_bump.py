@@ -57,6 +57,27 @@ class TestNoConfiguredFilesOption:
         assert len(passed_config.files) == 1
         assert passed_config.files[0].filename == "do-this-file.txt"
 
+    def test_unmatched_configured_glob_is_ignored(self, mocker, tmp_path: Path, runner):
+        """A configured glob that matches nothing doesn't fail when configured files aren't used."""
+        mocked_do_bump = mocker.patch("bumpversion.commands.bump.do_bump")
+        tmp_path.joinpath(".bumpversion.toml").write_text(
+            "[tool.bumpversion]\n"
+            'current_version = "1.0.0"\n\n'
+            "[[tool.bumpversion.files]]\n"
+            'glob = "**/*requirements.txt"\n',
+            encoding="utf-8",
+        )
+        with inside_dir(tmp_path):
+            result: Result = runner.invoke(cli.cli, ["bump", "--no-configured-files", "patch", "do-this-file.txt"])
+
+        if result.exit_code != 0:
+            print(result.output)
+
+        assert result.exit_code == 0
+
+        passed_config = mocked_do_bump.call_args[0][2]
+        assert [f.filename for f in passed_config.files_to_modify] == ["do-this-file.txt"]
+
 
 def test_bump_nested_regex(tmp_path: Path, fixtures_path: Path, caplog, runner):
     """

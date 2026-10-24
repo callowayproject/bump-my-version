@@ -137,6 +137,23 @@ def run_command(command: list, env: Optional[dict] = None) -> CompletedProcess:
     return result
 
 
+def find_repo_root(start: Pathlike) -> Optional[Path]:
+    """
+    Return the nearest ancestor of `start` (inclusive) containing a `.git` or `.hg` entry.
+
+    Args:
+        start: The directory to start searching from.
+
+    Returns:
+        The repository root, or `None` if `start` is not inside a repository.
+    """
+    start = Path(start).resolve()
+    return next(
+        (d for d in (start, *start.parents) if (d / ".git").exists() or (d / ".hg").exists()),
+        None,
+    )
+
+
 def is_subpath(parent: Pathlike, path: Pathlike) -> bool:
     """
     Determines if a given path is a subpath of a specified parent path.

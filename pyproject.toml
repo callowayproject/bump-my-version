@@ -29,7 +29,7 @@ classifiers = [
     "Topic :: System :: Software Distribution",
 ]
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = { file = "LICENSE" }
 keywords = ["bumpversion", "version", "release"]
 dynamic = ["version"]
@@ -285,6 +285,7 @@ typing-modules = [
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = [
+    "S",  # flake8-bandit security rules
     "assert",
     "too-many-arguments",
     "too-many-statements",
@@ -322,7 +323,7 @@ suppress-dummy-args = true
 suppress-none-returning = true
 
 [tool.bumpversion]
-current_version = "1.6.1"
+current_version = "1.6.4"
 commit = true
 commit_args = "--no-verify"
 tag = true

@@ -10,6 +10,20 @@ comments: true
 
 This section configures which files Bump My Version should update by replacing their current version with the newly bumped version.
 
+### How file paths are resolved
+
+- Paths given on the command line are relative to the current working directory. Absolute paths are used as-is.
+- `filename`, `glob` and `glob_exclude` in a configuration file are relative to the directory containing that configuration file. Absolute paths are used as-is. Both POSIX (`/foo`) and Windows (`C:\foo`) style absolute paths are recognised on every platform.
+- Every entry in `files` must be a table; anything else is a configuration error.
+- `{repo_root}` in `filename`, `glob` or `glob_exclude` expands to the root of the enclosing git or mercurial repository (an error if there is none). The root is found by walking up from the configuration file's directory, so an explicit `--config-file` outside any repository is an error, and one in a different repository gives that repository's root:
+
+    ```toml
+    [[tool.bumpversion.files]]
+    filename = "{repo_root}/mylibrary/__init__.py"
+    ```
+
+When no `--config-file` is given and you are inside a git or mercurial repository, Bump My Version searches for a configuration file in the current directory, then each parent directory up to the repository root. The nearest directory with a configuration file wins. Outside a repository, only the current directory is searched.
+
 ### filename
 
 /// html | div.field-list
@@ -47,6 +61,8 @@ type
 ///
 
 The glob pattern specifying the files to modify.
+
+If the pattern matches no files (including when [`glob_exclude`](#glob_exclude) removes every match), Bump My Version raises a `FileNotFoundError`, the same as for a missing [`filename`](#filename). Set [`ignore_missing_file`](#ignore_missing_file) to skip it instead.
 
 !!! note
 
@@ -186,7 +202,7 @@ type
 
 ///
 
-if `True`, don't fail if the configured file is missing.
+if `True`, don't fail if the configured file is missing, or if the configured [`glob`](#glob) matches no files.
 
 ### include_bumps
 

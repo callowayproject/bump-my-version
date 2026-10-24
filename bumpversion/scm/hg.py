@@ -12,7 +12,7 @@ from typing import ClassVar, List, MutableMapping, Optional
 from bumpversion.exceptions import DirtyWorkingDirectoryError, SignedTagsError
 from bumpversion.scm.models import LatestTagInfo, SCMConfig
 from bumpversion.ui import get_indented_logger
-from bumpversion.utils import Pathlike, format_and_raise_error, is_subpath, run_command
+from bumpversion.utils import Pathlike, find_repo_root, format_and_raise_error, is_subpath, run_command
 
 logger = get_indented_logger(__name__)
 
@@ -181,7 +181,6 @@ def commit_info(config: SCMConfig) -> dict:
 
     info["distance_to_latest_tag"] = 0
     result = run_command(["hg", "log", "-r", f"last(tag('re:{tag_pattern}') - tip)", "-T", "json"])
-    repo_path = run_command(["hg", "root"]).stdout.strip()
 
     output_info = parse_commit_log(result.stdout, config)
     info |= output_info
@@ -189,7 +188,7 @@ def commit_info(config: SCMConfig) -> dict:
     if not output_info:
         logger.debug("No tags found")
 
-    info["repository_root"] = Path(repo_path)
+    info["repository_root"] = find_repo_root(Path.cwd())
     info["dirty"] = len(run_command(["hg", "status", "-mard"]).stdout) != 0
     return info
 

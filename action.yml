@@ -46,10 +46,9 @@ runs:
       uses: actions/setup-python@v7
       with:
         python-version: '3.12'
-        cache: 'pip'
     - name: Install bump-my-version
       shell: bash
-      run: pip install "bump-my-version==1.6.1"
+      run: pip install "bump-my-version==1.6.4"
     - name: Pass Inputs to Shell
       id: bump
       shell: bash
