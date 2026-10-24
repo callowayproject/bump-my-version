@@ -2,22 +2,36 @@
 
 This file provides guidance to AI Agents when working with code in this repository.
 
-## Commands
+Follow the [Coding standards](CODING_STANDARDS.md); it indexes topic guidance in `docs/agents/python/`.
 
-Add `--agent-digest=term -p no:sugar` to all pytest commands to provide optimized output.
+## Agent skills
+
+### Issue tracker
+
+Issues live in GitHub Issues (`callowayproject/bump-my-version`) via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default vocabulary: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: one `GLOSSARY.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+
+## Commands
 
 ```bash
 # Install for development
 uv sync --all-groups
 
 # Run all tests
-uv run pytest --agent-digest=term -p no:sugar
+uv run pytest
 
 # Run a single test file
-uv run pytest --agent-digest=term -p no:sugar tests/test_files.py
+uv run pytest tests/test_files.py
 
 # Run a single test
-uv run pytest --agent-digest=term -p no:sugar tests/test_files.py::test_function_name
+uv run pytest tests/test_files.py::test_function_name
 
 # Lint and format
 uv run ruff check bumpversion/
@@ -65,7 +79,7 @@ Each part of a version (major, minor, patch) is a `VersionComponent` with a `Ver
 
 ## Code style
 
-- Line length: 119 characters
+- Line length: 120 characters
 - Docstrings: Google style, required on all public symbols (95% coverage enforced by interrogate)
 - Ruff with preview mode enabled; see `[tool.ruff.lint]` in `pyproject.toml` for full rule set
 - Type annotations required on all function signatures
