@@ -543,7 +543,7 @@
 .highlight .-Ansi-White { color: #F5F5F5 } /* Ansi.White */
 .highlight .-Ansi-Yellow { color: #FCE94F } /* Ansi.Yellow */
 .highlight .-Ansi-Bold { font-weight: bold }
-.highlight .-Ansi-Faint { opacity: 0.5 }
+.highlight .-Ansi-Faint { opacity: 0.6 }
 .highlight .-Ansi-Italic { font-style: italic }
 .highlight .-Ansi-Underline { text-decoration: underline }
 .highlight .-Ansi-Blink { animation: ansi-blink 1s step-end infinite }
