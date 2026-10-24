@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.6.5 (2026-10-24)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.4...1.6.5)
+
+### Fixes
+
+- Fix: don't enable pip caching in the GitHub Action. [3245d15](https://github.com/callowayproject/bump-my-version/commit/3245d15328cb5a3d6c842562d72f5327db3f8e06)
+
+  setup-python's pip cache looks for requirements.txt or pyproject.toml in
+  the caller's checkout and fails when neither exists. The action installs
+  bump-my-version from PyPI and doesn't need the cache.
+
+  Fixes #320
+
+### Other
+
+- **docs: add Python testing guidelines and examples**. [5ad4106](https://github.com/callowayproject/bump-my-version/commit/5ad410632994cdd84359a8e47b6f174ee1d33e1e)
+
+  - Introduce comprehensive testing documentation for Python using pytest.
+  - Include docs on fixtures, parametrized tests, mocking, temporary files, async testing, and exception handling.
+  - Provide TDD best practices and docstring conventions.
+  - Add examples and patterns for common use cases to improve test coverage and maintainability.
+  - Establish `docs/agents/python/` for future Python-related references.
+
 ## 1.6.4 (2026-10-24)
 
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.3...1.6.4)
