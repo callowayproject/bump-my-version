@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING, Any, Dict, MutableMapping, Optional, Union
 from bumpversion.config.files_legacy import read_ini_file
 from bumpversion.config.models import PEP621Info
 from bumpversion.ui import get_indented_logger, print_warning
+from bumpversion.utils import find_repo_root
 
 if TYPE_CHECKING:  # pragma: no-coverage
     from bumpversion.config.models import Config
@@ -73,9 +74,17 @@ def find_config_file(explicit_file: Optional[Pathlike] = None) -> Union[Path, No
     Returns:
         The configuration file path
     """
-    search_paths = (
-        [Path(explicit_file)] if explicit_file else [Path.cwd().joinpath(path) for path in CONFIG_FILE_SEARCH_ORDER]
-    )
+    if explicit_file:
+        search_paths = [Path(explicit_file)]
+    else:
+        cwd = Path.cwd()
+        repo_root = find_repo_root(cwd)
+        # Inside a repo, walk up to the repo root; otherwise only look in the cwd.
+        dirs = [cwd]
+        if repo_root:
+            resolved = cwd.resolve()
+            dirs = [resolved, *resolved.parents][: len(resolved.parts) - len(repo_root.parts) + 1]
+        search_paths = [d / name for d in dirs for name in CONFIG_FILE_SEARCH_ORDER]
     return next(
         (
             cfg_file

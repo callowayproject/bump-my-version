@@ -91,7 +91,7 @@ def replace(
         config.scm_info.tool.assert_nondirty()
 
     if no_configured_files:
-        config.excluded_paths = list(config.resolved_filemap.keys())
+        config.exclude_configured_files()
 
     if files:
         config.add_files(files)

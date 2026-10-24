@@ -1,7 +1,7 @@
 name: Bump the version on merge
 on:
-  pull_request:
-    types: [closed]
+  # A push run (unlike a fork's pull_request run) has write access and secrets.
+  push:
     branches: [master]
 
   workflow_dispatch:
@@ -62,14 +62,6 @@ jobs:
         id: release-kind
         run: |
           echo "release-kind=${{ env.RELEASE_KIND }}" >> $GITHUB_OUTPUT
-
-      - name: Get Pull Request Number
-        id: pr
-        run: |
-          PR_NUMBER=$(gh pr view --json number -q .number || echo "${{ github.event.number }}")
-          echo "pull_request_number=${PR_NUMBER}" >> $GITHUB_OUTPUT
-          echo "::notice::PR_NUMBER is ${PR_NUMBER}"
-          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
 
       - name: Bump version
         id: bump-version

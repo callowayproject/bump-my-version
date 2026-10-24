@@ -44,10 +44,10 @@ $ bump-my-version show --format json current_version
 Your workflow might want to know the new version before you actually do the bumping. The `--increment` or `-i` option accepts a version part to bump and adds a `new_version` key into the configuration.
 
 ```console
-$ bump-my-version --increment patch show
+$ bump-my-version show --increment patch new_version
 1.0.2
-$ bump-my-version --increment minor show
+$ bump-my-version show --increment minor new_version
 1.1.0
-$ bump-my-version --increment major show
+$ bump-my-version show --increment major new_version
 2.0.0
 ```

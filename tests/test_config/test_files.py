@@ -256,7 +256,8 @@ def test_get_glob_files(glob_pattern: str, file_list: set, fixtures_path: Path):
 def test_file_overrides_config(fixtures_path: Path):
     """If a file has a different config, it should override the main config."""
     cfg_file = fixtures_path / "file_config_overrides.toml"
-    conf = config.get_configuration(cfg_file)
+    with inside_dir(fixtures_path):
+        conf = config.get_configuration(cfg_file)
     file_map = {f.filename: f for f in conf.files}
     assert file_map["should_contain_defaults.txt"].parse == conf.parse
     assert file_map["should_contain_defaults.txt"].serialize == conf.serialize
