@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.6.4 (2026-10-24)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.3...1.6.4)
+
+### Fixes
+
+- Fix: raise FileNotFoundError when a glob matches no files. [a83d288](https://github.com/callowayproject/bump-my-version/commit/a83d288e4eb25bc811a1667bfcfa7fd984c508fe)
+
+  A `glob` file entry that matched nothing (or whose matches were all
+  removed by `glob_exclude`) was silently skipped, while a missing
+  `filename` raised FileNotFoundError. Glob entries now follow the same
+  **rule:** raise unless `ignore_missing_file` (or the global
+
+### Other
+
+- Test: share no-match glob parametrization and trim helper. [3b935ac](https://github.com/callowayproject/bump-my-version/commit/3b935ac79ebc7f8a9384efaa1813911d2dbb0102)
+
+- [pre-commit.ci] pre-commit autoupdate. [ef27fcd](https://github.com/callowayproject/bump-my-version/commit/ef27fcd1b3c082dfef56d5c1c583698249c6bb5b)
+
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.17.0 → v0.17.1](https://github.com/astral-sh/ruff-pre-commit/compare/v0.17.0...v0.17.1)
+
 ## 1.6.3 (2026-10-18)
 
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.2...1.6.3)

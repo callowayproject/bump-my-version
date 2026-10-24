@@ -86,6 +86,15 @@ class TestGetAllFileConfigs:
         assert getattr(file_configs[0], file_attribute) == file_value
 
 
+NO_MATCH_CASES = pytest.mark.parametrize(
+    ["glob_pattern", "glob_exclude"],
+    [
+        param("**/*requirements.txt", (), id="no matches"),
+        param("**/*.cfg", ("**/*.cfg",), id="all matches excluded"),
+    ],
+)
+
+
 class TestResolveGlobFiles:
     """Tests for the resolve_glob_files function."""
 
@@ -207,3 +216,47 @@ class TestResolveGlobFiles:
         with inside_dir(tmp_path):
             resolved_files = resolve_glob_files(file_cfg)
         assert len(resolved_files) == expected_number
+
+    @staticmethod
+    def _glob_file_change(glob_pattern: str, ignore_missing_file: bool, glob_exclude: tuple = ()) -> FileChange:
+        """Build a glob file configuration."""
+        return FileChange(
+            glob=glob_pattern,
+            glob_exclude=glob_exclude,
+            parse=r"v(?P<major>\d+)",
+            serialize=("v{major}",),
+            search="v{current_version}",
+            replace="v{new_version}",
+            ignore_missing_version=False,
+            ignore_missing_file=ignore_missing_file,
+            regex=False,
+        )
+
+    @NO_MATCH_CASES
+    def test_no_matches_raises_file_not_found(self, tmp_path: Path, glob_pattern: str, glob_exclude: tuple):
+        """A glob that matches no files raises FileNotFoundError, like a missing filename."""
+        tmp_path.joinpath("setup.cfg").touch()
+        file_cfg = self._glob_file_change(glob_pattern, ignore_missing_file=False, glob_exclude=glob_exclude)
+
+        with inside_dir(tmp_path), pytest.raises(FileNotFoundError, match="No files found matching glob"):
+            resolve_glob_files(file_cfg)
+
+    @NO_MATCH_CASES
+    def test_no_matches_ignored_when_ignore_missing_file(self, tmp_path: Path, glob_pattern: str, glob_exclude: tuple):
+        """A glob that matches no files is skipped when ignore_missing_file is set."""
+        tmp_path.joinpath("setup.cfg").touch()
+        file_cfg = self._glob_file_change(glob_pattern, ignore_missing_file=True, glob_exclude=glob_exclude)
+
+        with inside_dir(tmp_path):
+            assert resolve_glob_files(file_cfg) == []
+
+    def test_no_matches_follows_global_ignore_missing_files(self, tmp_path: Path):
+        """The global ignore_missing_files setting applies to glob entries."""
+        overrides = {"current_version": "1.2.3", "files": [{"glob": "**/*requirements.txt"}]}
+        with inside_dir(tmp_path):
+            conf, _, _ = get_config_data(overrides)
+            with pytest.raises(FileNotFoundError):
+                _ = conf.files_to_modify
+
+            conf, _, _ = get_config_data({**overrides, "ignore_missing_files": True})
+            assert conf.files_to_modify == []

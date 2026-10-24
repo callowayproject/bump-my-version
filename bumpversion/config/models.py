@@ -116,6 +116,7 @@ class Config(BaseSettings):
     excluded_paths: List[str] = Field(default_factory=list)
     model_config = SettingsConfigDict(env_prefix="bumpversion_")
     _resolved_filemap: Optional[Dict[str, List[FileChange]]] = None
+    _ignore_unmatched_globs: bool = False
 
     def add_files(self, filename: Union[str, List[str]]) -> None:
         """Add a filename to the list of files."""
@@ -146,6 +147,13 @@ class Config(BaseSettings):
 
         self._resolved_filemap = None
 
+    def exclude_configured_files(self) -> None:
+        """Exclude all configured files, so only files added later are modified."""
+        # Configured files won't be modified, so a glob that matches nothing isn't an error.
+        self._ignore_unmatched_globs = True
+        self._resolved_filemap = None
+        self.excluded_paths = list(self.resolved_filemap.keys())
+
     @property
     def resolved_filemap(self) -> Dict[str, List[FileChange]]:
         """The cached resolved filemap."""
@@ -161,7 +169,7 @@ class Config(BaseSettings):
         new_files = []
         for file_cfg in self.files:
             if file_cfg.glob:
-                new_files.extend(resolve_glob_files(file_cfg))
+                new_files.extend(resolve_glob_files(file_cfg, ignore_missing=self._ignore_unmatched_globs))
             else:
                 new_files.append(file_cfg)
 
