@@ -86,6 +86,15 @@ class TestGetAllFileConfigs:
         assert getattr(file_configs[0], file_attribute) == file_value
 
 
+NO_MATCH_CASES = pytest.mark.parametrize(
+    ["glob_pattern", "glob_exclude"],
+    [
+        param("**/*requirements.txt", (), id="no matches"),
+        param("**/*.cfg", ("**/*.cfg",), id="all matches excluded"),
+    ],
+)
+
+
 class TestResolveGlobFiles:
     """Tests for the resolve_glob_files function."""
 
@@ -212,10 +221,8 @@ class TestResolveGlobFiles:
     def _glob_file_change(glob_pattern: str, ignore_missing_file: bool, glob_exclude: tuple = ()) -> FileChange:
         """Build a glob file configuration."""
         return FileChange(
-            filename=None,
             glob=glob_pattern,
             glob_exclude=glob_exclude,
-            key_path=None,
             parse=r"v(?P<major>\d+)",
             serialize=("v{major}",),
             search="v{current_version}",
@@ -225,13 +232,7 @@ class TestResolveGlobFiles:
             regex=False,
         )
 
-    @pytest.mark.parametrize(
-        ["glob_pattern", "glob_exclude"],
-        [
-            param("**/*requirements.txt", (), id="no matches"),
-            param("**/*.cfg", ("**/*.cfg",), id="all matches excluded"),
-        ],
-    )
+    @NO_MATCH_CASES
     def test_no_matches_raises_file_not_found(self, tmp_path: Path, glob_pattern: str, glob_exclude: tuple):
         """A glob that matches no files raises FileNotFoundError, like a missing filename."""
         tmp_path.joinpath("setup.cfg").touch()
@@ -240,13 +241,7 @@ class TestResolveGlobFiles:
         with inside_dir(tmp_path), pytest.raises(FileNotFoundError, match="No files found matching glob"):
             resolve_glob_files(file_cfg)
 
-    @pytest.mark.parametrize(
-        ["glob_pattern", "glob_exclude"],
-        [
-            param("**/*requirements.txt", (), id="no matches"),
-            param("**/*.cfg", ("**/*.cfg",), id="all matches excluded"),
-        ],
-    )
+    @NO_MATCH_CASES
     def test_no_matches_ignored_when_ignore_missing_file(self, tmp_path: Path, glob_pattern: str, glob_exclude: tuple):
         """A glob that matches no files is skipped when ignore_missing_file is set."""
         tmp_path.joinpath("setup.cfg").touch()
