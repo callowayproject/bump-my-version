@@ -10,11 +10,14 @@ from wcmatch import glob
 
 from bumpversion.config.models import FileChange
 from bumpversion.exceptions import BumpVersionError, ConfigurationError
+from bumpversion.ui import get_indented_logger
 from bumpversion.utils import Pathlike, find_repo_root
 from bumpversion.versioning.models import VersionComponentSpec
 
 # Built by concatenation so ruff doesn't flag it as a missing f-string.
 REPO_ROOT_TOKEN = "{" + "repo_root}"
+
+logger = get_indented_logger(__name__)
 
 
 def get_all_file_configs(config_dict: dict) -> List[FileChange]:
@@ -101,15 +104,19 @@ def get_all_part_configs(config_dict: dict) -> Dict[str, VersionComponentSpec]:
     return part_configs
 
 
-def resolve_glob_files(file_cfg: FileChange) -> List[FileChange]:
+def resolve_glob_files(file_cfg: FileChange, ignore_missing: bool = False) -> List[FileChange]:
     """
     Return a list of file configurations that match the glob pattern.
 
     Args:
         file_cfg: The file configuration containing the glob pattern
+        ignore_missing: Don't raise if the pattern matches no files, regardless of `ignore_missing_file`
 
     Returns:
         A list of resolved file configurations according to the pattern.
+
+    Raises:
+        FileNotFoundError: If no files match the pattern and neither `ignore_missing_file` nor `ignore_missing` is set.
     """
     files: List[FileChange] = []
     exclude = file_cfg.glob_exclude or ()
@@ -119,4 +126,8 @@ def resolve_glob_files(file_cfg: FileChange) -> List[FileChange]:
         new_file_cfg.filename = filename_glob
         new_file_cfg.glob = None
         files.append(new_file_cfg)
+    if not files:
+        if not (file_cfg.ignore_missing_file or ignore_missing):
+            raise FileNotFoundError(f"No files found matching glob '{file_cfg.glob}'")
+        logger.info("No files found matching glob '%s', but ignoring", file_cfg.glob)
     return files
