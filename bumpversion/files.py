@@ -185,9 +185,13 @@ class ConfiguredFile:
         context: MutableMapping,
         dry_run: bool = False,
     ) -> None:
-        """Make the change to the file."""
+        """
+        Make the change to this file and write it, unless this is a dry run.
+
+        Prefer `modify_files()` for several files: it writes nothing unless every file could be changed.
+        """
         file_content_after = self.get_changed_contents(current_version, new_version, context, dry_run=dry_run)
-        if file_content_after is not None and not dry_run:  # pragma: no-coverage
+        if file_content_after is not None and not dry_run:
             self.write_file_contents(file_content_after)
 
     def get_changed_contents(
@@ -313,18 +317,31 @@ def modify_files(
     """
     # Every change is made in memory first, so that no file is written unless all of them can be changed.
     # Several changes to the same file apply one after another, each to the contents left by the previous one.
-    pending: Dict[str, Tuple[ConfiguredFile, str]] = {}
+    pending_contents: Dict[str, str] = {}
+    writers: Dict[str, ConfiguredFile] = {}
     for f in files:
         path = os.path.abspath(f.file_change.filename)
-        contents = pending[path][1] if path in pending else None
-        changed = f.get_changed_contents(current_version, new_version, context, contents, dry_run)
+        changed = f.get_changed_contents(current_version, new_version, context, pending_contents.get(path), dry_run)
         if changed is not None:
-            pending[path] = (f, changed)
+            pending_contents[path] = changed
+            writers[path] = f
 
     if dry_run:
         return
-    for f, changed in pending.values():
-        f.write_file_contents(changed)
+
+    # If a write fails, put back what was already written, so the files stay consistent.
+    originals: List[Tuple[ConfiguredFile, str]] = []
+    try:
+        for path, f in writers.items():
+            originals.append((f, f.get_file_contents()))
+            f.write_file_contents(pending_contents[path])
+    except OSError:
+        for f, original in reversed(originals):
+            try:
+                f.write_file_contents(original)
+            except OSError:
+                logger.error("Could not restore '%s'; check its contents.", f.file_change.filename)
+        raise
 
 
 class FileUpdater:
