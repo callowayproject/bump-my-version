@@ -1,5 +1,34 @@
 # Changelog
 
+## 1.6.6 (2026-10-25)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.5...1.6.6)
+
+### Fixes
+
+- Refactor: clean up line formatting and improve spelling. [07ada6f](https://github.com/callowayproject/bump-my-version/commit/07ada6f6f3f237d3c94e0d739726f8d318925401)
+
+- Fix a failing bump leaving some files already changed. [a8a9403](https://github.com/callowayproject/bump-my-version/commit/a8a9403bc490201097b4405499cae80e73c990b8)
+
+  All the file changes are made in memory first and written only when every file could be changed;
+  several changes to one file still chain. Part of #381.
+
+  **co-authored-by:** Claude Opus 5.5 <noreply@anthropic.com>
+
+### Other
+
+- Test the restore-failure, no-new-version and on-disk search paths. [ea9a033](https://github.com/callowayproject/bump-my-version/commit/ea9a0336474b7d35aa9635e01616742484101f63)
+
+  Covers the lines Codecov reported as missing in files.py for #454.
+
+- Restore files when a write fails in modify_files. [1b69816](https://github.com/callowayproject/bump-my-version/commit/1b698166e3ba7c2fe2e34b1e114ea4cf0aa979f7)
+
+  Follow-ups to #432 (part of #381): drop the stale coverage pragma on
+  make_file_change and document it, replace the tuple dict in modify_files
+  with two dicts, restore already-written files when a later write raises
+  OSError, and add tests for ignored files, write failure, make_file_change
+  writes and do_bump leaving config untouched.
+
 ## 1.6.5 (2026-10-24)
 
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.4...1.6.5)
