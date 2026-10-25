@@ -255,6 +255,40 @@ class TestModifyFiles:
         assert first_path.read_text() == "1.2.3"
         assert second_path.read_text() == "1.2.3"
 
+    def test_failing_restore_is_logged_and_the_write_error_is_raised(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
+    ):
+        """When restoring a file also fails, the file is named in the log and the original error still propagates."""
+        # Arrange
+        first_path = tmp_path / "FIRST"
+        first_path.write_text("1.2.3", encoding="utf-8")
+        second_path = tmp_path / "SECOND"
+        second_path.write_text("1.2.3", encoding="utf-8")
+
+        overrides = {
+            "current_version": "1.2.3",
+            "files": [{"filename": str(first_path)}, {"filename": str(second_path)}],
+        }
+        conf, version_config, current_version = get_config_data(overrides)
+        new_version = current_version.bump("patch")
+        configured_files = files.resolve_file_config(conf.files, version_config)
+
+        real_write = files.ConfiguredFile.write_file_contents
+
+        def failing_write(self, contents: str) -> None:
+            if self.file_change.filename == str(second_path) or contents == "1.2.3":
+                raise OSError("disk full")
+            real_write(self, contents)
+
+        monkeypatch.setattr(files.ConfiguredFile, "write_file_contents", failing_write)
+
+        # Act
+        with pytest.raises(OSError, match="disk full"):
+            files.modify_files(configured_files, current_version, new_version, get_context(conf))
+
+        # Assert
+        assert f"Could not restore '{first_path}'" in caplog.text
+
     @pytest.mark.parametrize(
         ["global_value", "file_value", "should_raise"],
         [
