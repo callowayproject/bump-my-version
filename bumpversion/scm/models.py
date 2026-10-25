@@ -241,9 +241,7 @@ class SCMInfo:
             logger.info("%s changes in file '%s' to repository", "Adding" if do_commit else "Would add", path)
 
         commit_message = self.config.message.format(**context)
-        logger.info(
-            "%s to repository with message '%s'", "Committing" if do_commit else "Would commit", commit_message
-        )
+        logger.info("%s to repository with message '%s'", "Committing" if do_commit else "Would commit", commit_message)
 
     def _tag(self, context: MutableMapping, dry_run: bool = False) -> None:
         """Tag the current commit in the source code management system."""

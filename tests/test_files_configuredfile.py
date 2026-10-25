@@ -149,6 +149,58 @@ class TestConfiguredFile:
             with pytest.raises(FileNotFoundError):
                 configured_file.make_file_change(current_version, new_version, ctx, dry_run=True)
 
+        def test_writes_the_changed_file_unless_dry_run(self, tmp_path: Path) -> None:
+            """The make_file_change method writes the new version, except in a dry run."""
+            # Arrange
+            filepath = tmp_path / "VERSION"
+            filepath.write_text("1.2.3", encoding="utf-8")
+            overrides = {"current_version": "1.2.3", "files": [{"filename": str(filepath)}]}
+            conf, version_config, current_version = get_config_data(overrides)
+            configured_file = ConfiguredFile(conf.files_to_modify[0], version_config)
+            new_version = current_version.bump("patch")
+            ctx = get_context(conf)
+
+            # Act
+            configured_file.make_file_change(current_version, new_version, ctx, dry_run=True)
+            unchanged = filepath.read_text()
+            configured_file.make_file_change(current_version, new_version, ctx)
+
+            # Assert
+            assert unchanged == "1.2.3"
+            assert filepath.read_text() == "1.2.4"
+
+        def test_get_changed_contents_without_new_version_keeps_the_version(self, tmp_path: Path) -> None:
+            """Without a new version, get_changed_contents uses the current version as the new one."""
+            # Arrange
+            filepath = tmp_path / "VERSION"
+            filepath.write_text("1.2.3", encoding="utf-8")
+            overrides = {"current_version": "1.2.3", "files": [{"filename": str(filepath)}]}
+            conf, version_config, current_version = get_config_data(overrides)
+            configured_file = ConfiguredFile(conf.files_to_modify[0], version_config)
+
+            # Act
+            changed = configured_file.get_changed_contents(current_version, None, get_context(conf))
+
+            # Assert
+            assert changed == "1.2.3"
+            assert filepath.read_text() == "1.2.3"
+
+        def test_contains_change_pattern_reads_the_file_when_no_contents_are_given(self, tmp_path: Path) -> None:
+            """The file on disk is searched when no pending contents are passed."""
+            # Arrange
+            filepath = tmp_path / "VERSION"
+            filepath.write_text("1.2.3", encoding="utf-8")
+            overrides = {"current_version": "1.2.3", "files": [{"filename": str(filepath)}]}
+            conf, version_config, current_version = get_config_data(overrides)
+            configured_file = ConfiguredFile(conf.files_to_modify[0], version_config)
+            search_for, raw_search = configured_file.file_change.get_search_pattern(get_context(conf))
+
+            # Act
+            result = configured_file._contains_change_pattern(search_for, raw_search, current_version)
+
+            # Assert
+            assert result is True
+
         def test_logs_missing_file_when_ignore_missing_file_set(self, tmp_path: Path, caplog) -> None:
             """The make_file_change method logs missing file when ignore_missing_file set to True."""
             self._setup_logging(caplog)
