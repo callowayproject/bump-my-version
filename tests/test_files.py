@@ -186,6 +186,76 @@ class TestModifyFiles:
         assert version_path.read_text() == "1.2.3"
 
     @pytest.mark.parametrize(
+        "ignore_option",
+        [
+            param({"ignore_missing_file": True}, id="missing-file"),
+            param({"ignore_missing_version": True}, id="no-version"),
+        ],
+    )
+    def test_ignored_files_do_not_stop_the_other_files_from_being_written(self, tmp_path: Path, ignore_option: dict):
+        """A file that is ignored (missing, or without the version) is skipped; the others are still changed."""
+        # Arrange
+        first_path = tmp_path / "FIRST"
+        first_path.write_text("1.2.3", encoding="utf-8")
+        ignored_path = tmp_path / "IGNORED"
+        if "ignore_missing_version" in ignore_option:
+            ignored_path.write_text("nothing here", encoding="utf-8")
+        last_path = tmp_path / "LAST"
+        last_path.write_text("1.2.3", encoding="utf-8")
+
+        overrides = {
+            "current_version": "1.2.3",
+            "files": [
+                {"filename": str(first_path)},
+                {"filename": str(ignored_path), **ignore_option},
+                {"filename": str(last_path)},
+            ],
+        }
+        conf, version_config, current_version = get_config_data(overrides)
+        new_version = current_version.bump("patch")
+        configured_files = files.resolve_file_config(conf.files, version_config)
+
+        # Act
+        files.modify_files(configured_files, current_version, new_version, get_context(conf))
+
+        # Assert
+        assert first_path.read_text() == "1.2.4"
+        assert last_path.read_text() == "1.2.4"
+
+    def test_failing_write_restores_the_files_already_written(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+        """When writing a file fails, the files written before it get their original contents back."""
+        # Arrange
+        first_path = tmp_path / "FIRST"
+        first_path.write_text("1.2.3", encoding="utf-8")
+        second_path = tmp_path / "SECOND"
+        second_path.write_text("1.2.3", encoding="utf-8")
+
+        overrides = {
+            "current_version": "1.2.3",
+            "files": [{"filename": str(first_path)}, {"filename": str(second_path)}],
+        }
+        conf, version_config, current_version = get_config_data(overrides)
+        new_version = current_version.bump("patch")
+        configured_files = files.resolve_file_config(conf.files, version_config)
+
+        real_write = files.ConfiguredFile.write_file_contents
+
+        def failing_write(self, contents: str) -> None:
+            if self.file_change.filename == str(second_path) and contents == "1.2.4":
+                raise OSError("disk full")
+            real_write(self, contents)
+
+        monkeypatch.setattr(files.ConfiguredFile, "write_file_contents", failing_write)
+
+        # Act
+        with pytest.raises(OSError, match="disk full"):
+            files.modify_files(configured_files, current_version, new_version, get_context(conf))
+
+        # Assert
+        assert first_path.read_text() == "1.2.3"
+        assert second_path.read_text() == "1.2.3"
+
+    @pytest.mark.parametrize(
         ["global_value", "file_value", "should_raise"],
         [
             param(True, True, False, id="ignore global and file"),
