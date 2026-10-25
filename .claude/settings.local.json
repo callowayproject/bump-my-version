@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv run:*)",
+      "Bash(ls:*)",
+      "Bash(grep *)"
+    ]
+  }
+}
