@@ -170,15 +170,15 @@ from contextlib import nullcontext as does_not_raise
 
 
 @pytest.mark.parametrize(
-    "a,b,expect,ans",
+    "a,b,expect,answer",
     [
         param(30, 2.5, does_not_raise(), 12.0, id="ok"),
         param(10, 0, pytest.raises(ZeroDivisionError, match="zero"), None, id="zero"),
     ],
 )
-def test_divide(a, b, expect, ans):
+def test_divide(a, b, expect, answer):
     with expect:
-        assert divide(a, b) == ans
+        assert divide(a, b) == answer
 ```
 
 For more information refer to @testing-exceptions.md
