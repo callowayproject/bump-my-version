@@ -924,11 +924,11 @@ wheels = [
 
 [[package]]
 name = "deepmerge"
-version = "3.0.1"
+version = "4.0.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/38/6e/5cb3548b4d3112fea529375e55e6f3cdc52b8054e3a66f203b1f888ba885/deepmerge-3.0.1.tar.gz", hash = "sha256:35b39a4cb92cf328d6eca61cbbf65f68a37c2ceb3085f0f853cbb2e52a59fc23", size = 22328, upload-time = "2026-09-01T14:09:44.383Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ca/e9/5e99e56e03f9461858e686fdaf82e2516671bc1bd46f8b7ad7b9a8375f6f/deepmerge-4.0.0.tar.gz", hash = "sha256:948565f2bc9cdb41259a4a23d26638e5840c9e084a343ab279ffd3edcfdf74d3", size = 22792, upload-time = "2026-10-25T19:25:28.967Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/20/91/600003aaad107e27553fbc9cbfc57e96fa37e0223d2ef9d7d3a0e8d8d070/deepmerge-3.0.1-py3-none-any.whl", hash = "sha256:35c96f6a68fcf90719a5b31d9f8042ecef6c00fb56836660d33455d0f5cfda65", size = 14909, upload-time = "2026-09-01T14:09:43.364Z" },
+    { url = "https://files.pythonhosted.org/packages/c2/89/362146b2ec7d0d503f824ac8496c88f0408ee0d39203b02cc10feac08146/deepmerge-4.0.0-py3-none-any.whl", hash = "sha256:a36dd5810fc3b90bd3e0b681158221361d6a31a6109411b27b211b371fed6d5b", size = 15429, upload-time = "2026-10-25T19:25:28.012Z" },
 ]
 
 [[package]]
@@ -954,11 +954,11 @@ wheels = [
 
 [[package]]
 name = "extra-platforms"
-version = "13.12.0"
+version = "13.13.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/2b/7e/b92eb5fe6c14b00c1469357622ee32e8b96ba8247b90b9da4cba3743ab32/extra_platforms-13.12.0.tar.gz", hash = "sha256:883feefe546402e1ccfe6f53b3f248dbaee3cd72d82e137549769db452c4712c", size = 494651, upload-time = "2026-10-12T18:13:30.702Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/3e/2f/c8f34db12c09070b47885d51e4f5cf722107442c3c423cb9a1eb5ec7047a/extra_platforms-13.13.0.tar.gz", hash = "sha256:77f9927d5c3ca286241ccba049d4ac6d8256e3df123779e036148fc94d0ff583", size = 495226, upload-time = "2026-10-25T16:18:40.743Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/36/26/7f61812ba2cc540edd3889802e90deeee03cd9569fafe41c64f1e35e03f7/extra_platforms-13.12.0-py3-none-any.whl", hash = "sha256:68a0cc9a16be81e6a9795bf413da7e14b1e8707dee260a47bedff7b6a5db58b3", size = 107721, upload-time = "2026-10-12T18:13:28.764Z" },
+    { url = "https://files.pythonhosted.org/packages/80/1e/d3bbdc269318732e0c4e60411cd0ab419298e886d0d323df6f024208ee68/extra_platforms-13.13.0-py3-none-any.whl", hash = "sha256:6c0f39a18d3cf02cfaa061e1cb70f2a2f4bdc37557688518d887931c525e512b", size = 108736, upload-time = "2026-10-25T16:18:38.922Z" },
 ]
 
 [[package]]
@@ -1764,7 +1764,7 @@ wheels = [
 
 [[package]]
 name = "mkdocs-git-revision-date-localized-plugin"
-version = "1.6.0"
+version = "1.6.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "babel" },
@@ -1773,9 +1773,9 @@ dependencies = [
     { name = "packaging" },
     { name = "tzdata", marker = "sys_platform == 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f1/a7/ded2f0e2321213862225f9f657a51493af8f92626e3dd0a02ce9ef9b1131/mkdocs_git_revision_date_localized_plugin-1.6.0.tar.gz", hash = "sha256:469af4b344a4d493a6402aa92eec87a6138e1dac444e9551c1af06991453954b", size = 36957, upload-time = "2026-09-14T12:57:04.84Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/73/6f/94ee072d671bf9b1e3f2e6271dae626f6962e0d882a261c650ed1bff8483/mkdocs_git_revision_date_localized_plugin-1.6.1.tar.gz", hash = "sha256:e4d04ba32e9550102a1aa6db37d65165744cc07577ab5cc620b6400ae4f1c878", size = 37096, upload-time = "2026-10-25T14:11:39.575Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/5a/f7/d4aeef9f48150900634e7f864b076038e69014fb3ae4e515035803bca561/mkdocs_git_revision_date_localized_plugin-1.6.0-py3-none-any.whl", hash = "sha256:88b2d524d24c49a05cd6c9b1456f7dc0c8fa5e233b09ecf8a1dd12aebc127990", size = 27966, upload-time = "2026-09-14T12:57:03.607Z" },
+    { url = "https://files.pythonhosted.org/packages/0f/82/34b717920420519c1ec83f0c6e4c4ae3c4d94257d1f14a7ad27084cf14df/mkdocs_git_revision_date_localized_plugin-1.6.1-py3-none-any.whl", hash = "sha256:fc3cbca36b4d10d5a374b44d0304485776fc81ab949dea2537910c761db46575", size = 27967, upload-time = "2026-10-25T14:11:38.354Z" },
 ]
 
 [[package]]

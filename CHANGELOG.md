@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.6.7 (2026-10-25)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.6...1.6.7)
+
+### New
+
+- Add docstrings to pyproject discovery tests. [39b2f2c](https://github.com/callowayproject/bump-my-version/commit/39b2f2c06523e69f99eea80aa0834026b5b529df)
+
+### Other
+
+- Document pyproject.toml discovery by parsing and PEP 621 fallback (#363). [1db7c46](https://github.com/callowayproject/bump-my-version/commit/1db7c46d286ae42907d4564f30e859bf2fe93cce)
+
+- Discover pyproject.toml by parsing; fall back to PEP 621 project.version (#363). [168a7d9](https://github.com/callowayproject/bump-my-version/commit/168a7d9dd120ddb44070894befb87087d5b2ae5f)
+
 ## 1.6.6 (2026-10-25)
 
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.5...1.6.6)
