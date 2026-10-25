@@ -108,7 +108,7 @@ The current version of the software package before bumping. A value for this is 
 
 !!! note
 
-    ‡ If `pyproject.toml` exists, then `current_version` falls back to `project.version` in `pyproject.toml`. This only works if `project.version` is statically set.
+    ‡ If `pyproject.toml` exists, then `current_version` falls back to `project.version` in `pyproject.toml`. This only works if `project.version` is statically set. Such a `pyproject.toml` is also found by [configuration file discovery](index.md#configuration-files) when it has no `[tool.bumpversion]` table, or only `[[tool.bumpversion.files]]`.
 
 ### ignore_missing_files
 

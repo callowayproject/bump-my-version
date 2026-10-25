@@ -54,11 +54,14 @@ def get_pep621_info(config_file: Optional[Pathlike] = None) -> Optional[PEP621In
     if config_path.name != "pyproject.toml":
         return None
 
-    import tomlkit
-
-    toml_data = tomlkit.parse(config_path.read_text(encoding="utf-8")).unwrap()
-    project = toml_data.get("project", {})
-    return PEP621Info(version=None if "version" in project.get("dynamic", []) else project.get("version"))
+    project = _load_toml_mapping(config_path).get("project")
+    if not isinstance(project, dict):
+        return PEP621Info(version=None)
+    dynamic = project.get("dynamic")
+    if isinstance(dynamic, list) and "version" in dynamic:
+        return PEP621Info(version=None)
+    version = project.get("version")
+    return PEP621Info(version=version if isinstance(version, str) else None)
 
 
 def find_config_file(explicit_file: Optional[Pathlike] = None) -> Union[Path, None]:
@@ -85,14 +88,36 @@ def find_config_file(explicit_file: Optional[Pathlike] = None) -> Union[Path, No
             resolved = cwd.resolve()
             dirs = [resolved, *resolved.parents][: len(resolved.parts) - len(repo_root.parts) + 1]
         search_paths = [d / name for d in dirs for name in CONFIG_FILE_SEARCH_ORDER]
-    return next(
-        (
-            cfg_file
-            for cfg_file in search_paths
-            if cfg_file.exists() and "bumpversion]" in cfg_file.read_text(encoding="utf-8")
-        ),
-        None,
-    )
+    existing = [f for f in search_paths if f.exists()]
+    match = next((f for f in existing if _has_bumpversion_config(f)), None)
+    # A bare pyproject.toml with a static PEP 621 version is the last resort
+    return match or next((f for f in existing if _has_static_pep621_version(f)), None)
+
+
+def _load_toml_mapping(path: Path) -> Dict[str, Any]:
+    """Parse a TOML file, returning `{}` if it is invalid or not a mapping."""
+    import tomlkit
+    from tomlkit.exceptions import TOMLKitError
+
+    try:
+        data = tomlkit.parse(path.read_text(encoding="utf-8")).unwrap()
+    except TOMLKitError:
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def _has_bumpversion_config(path: Path) -> bool:
+    """Does the file contain bump-my-version configuration?"""
+    if path.suffix != ".toml":
+        return "bumpversion]" in path.read_text(encoding="utf-8")
+    tool = _load_toml_mapping(path).get("tool")
+    return isinstance(tool, dict) and isinstance(tool.get("bumpversion"), dict)
+
+
+def _has_static_pep621_version(path: Path) -> bool:
+    """Is the file a `pyproject.toml` with a static `project.version`?"""
+    info = get_pep621_info(path)
+    return info is not None and bool(info.version)
 
 
 def read_config_file(config_file: Optional[Pathlike] = None) -> Dict[str, Any]:
