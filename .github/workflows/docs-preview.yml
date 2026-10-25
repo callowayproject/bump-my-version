@@ -17,6 +17,8 @@ permissions:
 
 jobs:
   deploy-preview:
+    # Fork PRs get a read-only token, so they can't push the preview.
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

@@ -25,6 +25,8 @@ Bump My Version looks in four places for the configuration file to parse (in ord
 5. `setup.cfg` _(legacy)_
 6. `pyproject.toml`
 
+Items 3-6 are searched for in the current directory, then, when inside a git or mercurial repository, in each parent directory up to the repository root. The nearest directory containing a configuration file wins. Outside a repository, only the current directory is searched.
+
 `.toml` files are recommended. We will likely drop support for `ini`-style formats in the future. You should add your configuration file to your source code management system.
 
 By using a configuration file, you no longer need to specify those options on the command line. The configuration file also allows greater flexibility in specifying how files are modified.

@@ -6,6 +6,8 @@ on:
 
 jobs:
   preview-version-hint:
+    # Fork PRs get no secrets (PAT) and a read-only token, so they can't comment.
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
