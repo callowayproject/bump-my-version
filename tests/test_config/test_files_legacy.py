@@ -137,7 +137,8 @@ def test_file_keyword_with_suffix_is_accepted(tmp_path: Path, cfg_file: str, cfg
         "replace = The current version is {new_version}\n",
         encoding="utf-8",
     )
-    setup_cfg = config.get_configuration(cfg_file_path)
+    with inside_dir(tmp_path):
+        setup_cfg = config.get_configuration(cfg_file_path)
     assert len(setup_cfg.files) == 2
     assert all(f.filename == "file2" for f in setup_cfg.files)
 

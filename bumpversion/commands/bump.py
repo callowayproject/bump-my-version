@@ -21,6 +21,7 @@ logger = get_indented_logger(__name__)
 @cli_options.allow_dirty_option
 @cli_options.current_version_option
 @cli_options.new_version_option
+@cli_options.to_option
 @cli_options.parse_option
 @cli_options.serialize_option
 @cli_options.search_option
@@ -32,6 +33,7 @@ logger = get_indented_logger(__name__)
 @cli_options.dry_run_option
 @cli_options.commit_option
 @cli_options.tag_option
+@cli_options.push_tag_option
 @cli_options.sign_tags_option
 @cli_options.tag_name_option
 @cli_options.tag_message_option
@@ -44,6 +46,7 @@ def bump(
     allow_dirty: Optional[bool],
     current_version: Optional[str],
     new_version: Optional[str],
+    to_value: Optional[str],
     parse: Optional[str],
     serialize: Optional[List[str]],
     search: Optional[str],
@@ -55,6 +58,7 @@ def bump(
     dry_run: bool,
     commit: Optional[bool],
     tag: Optional[bool],
+    push_tag: Optional[bool],
     sign_tags: Optional[bool],
     tag_name: Optional[str],
     tag_message: Optional[str],
@@ -73,6 +77,12 @@ def bump(
     If you want to rewrite only files specified on the command line, use with the
     `--no-configured-files` option.
     """
+    if to_value is not None:
+        if new_version:
+            raise click.BadOptionUsage("to", "--to cannot be used with --new-version.")
+        if not args:
+            raise click.BadOptionUsage("to", "--to requires a VERSION_PART argument.")
+
     setup_logging(verbose)
 
     logger.info("Starting BumpVersion %s", __version__)
@@ -86,6 +96,7 @@ def bump(
         replace=replace,
         commit=commit,
         tag=tag,
+        push_tag=push_tag,
         sign_tags=sign_tags,
         tag_name=tag_name,
         tag_message=tag_message,
@@ -112,11 +123,11 @@ def bump(
         config.scm_info.tool.assert_nondirty()
 
     if no_configured_files:
-        config.excluded_paths = list(config.resolved_filemap.keys())
+        config.exclude_configured_files()
 
     if files:
         config.add_files(files)
         config.included_paths = files
 
     logger.dedent()
-    do_bump(version_part, new_version, config, found_config_file, dry_run)
+    do_bump(version_part, new_version, config, found_config_file, dry_run, to_value)

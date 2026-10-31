@@ -360,7 +360,30 @@ environment var
 
 If `True`, create a tag after committing the changes. The tag is named using the [`tag_name`](global.md#tag_name) option.
 
-If you are using `git`, don't forget to `git-push` with the `--tags` flag when you are done.
+If you are using `git`, don't forget to `git-push` with the `--tags` flag when you are done, or set [`push_tag`](global.md#push_tag) to `True` to do it automatically.
+
+### push_tag
+
+/// html | div.field-list
+
+required
+: No
+
+default
+: `False` (Don't push the tag)
+
+type
+: boolean
+
+command line option
+: `--push-tag | --no-push-tag`
+
+environment var
+: `BUMPVERSION_PUSH_TAG`
+
+///
+
+If `True`, push the tag to the `origin` remote after it is created, when [`tag`](global.md#tag) is `True`. This is useful for tag-only release processes, where [`commit`](global.md#commit) is `False` and there would otherwise be no other reason to push.
 
 ### tag_message
 
@@ -425,6 +448,7 @@ This string is templated using the [Python Format String Syntax](https://docs.py
     message = "Bump version: {current_version} → {new_version}"
     commit_args = ""
     tag = false
+    push_tag = false
     sign_tags = false
     tag_name = "v{new_version}"
     tag_message = "Bump version: {current_version} → {new_version}"
@@ -446,6 +470,7 @@ This string is templated using the [Python Format String Syntax](https://docs.py
     message = Bump version: {current_version} → {new_version}
     commit_args = 
     tag = False
+    push_tag = False
     sign_tags = False
     tag_name = v{new_version}
     tag_message = Bump version: {current_version} → {new_version}

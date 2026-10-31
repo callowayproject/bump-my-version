@@ -735,3 +735,36 @@ def test_empty_files_config_is_ignored(git_repo: Path, caplog):
 
     # Assert
     assert result.exit_code == 0
+
+
+def test_changes_are_committed_on_a_detached_head(git_repo: Path):
+    """A CI checkout is usually a detached HEAD, the changed files must still be committed."""
+    # Arrange
+    config_path = git_repo / ".bumpversion.toml"
+    config_path.write_text(
+        dedent(
+            """
+            [tool.bumpversion]
+            current_version = "0.1.26"
+            commit = true
+            """
+        ),
+        encoding="utf-8",
+    )
+
+    with inside_dir(git_repo):
+        run_command(["git", "add", str(config_path)])
+        run_command(["git", "commit", "-m", "Initial commit"])
+        run_command(["git", "checkout", "--detach"])
+
+    # Act
+    runner: CliRunner = CliRunner()
+    with inside_dir(git_repo):
+        result: Result = runner.invoke(cli.cli, ["bump", "minor"])
+
+    # Assert
+    assert result.exit_code == 0, result.output
+    assert 'current_version = "0.2.0"' in config_path.read_text()
+    with inside_dir(git_repo):
+        assert run_command(["git", "status", "--porcelain"]).stdout == ""
+        assert run_command(["git", "log", "-1", "--format=%s"]).stdout.strip() == "Bump version: 0.1.26 → 0.2.0"

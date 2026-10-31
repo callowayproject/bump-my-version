@@ -115,6 +115,7 @@ post_commit_hooks:
 
 pre_commit_hooks:
 
+push_tag: false
 regex: false
 replace: "{new_version}"
 scm_info:

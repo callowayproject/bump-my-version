@@ -100,6 +100,7 @@ def scm_config() -> SCMConfig:
     """Dummy SCMConfig fixture."""
     return SCMConfig(
         tag=DEFAULTS["tag"],
+        push_tag=DEFAULTS["push_tag"],
         sign_tags=DEFAULTS["sign_tags"],
         tag_name=DEFAULTS["tag_name"],
         allow_dirty=DEFAULTS["allow_dirty"],

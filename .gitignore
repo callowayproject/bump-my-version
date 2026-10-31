@@ -177,3 +177,6 @@ requirements.lock
 .devenv/
 devenv.lock
 .devenv.flake.nix
+
+# Codacy local analysis
+.codacy/

@@ -28,6 +28,7 @@ replace = "{new_version}"
 regex = false
 ignore_missing_version = false
 tag = false
+push_tag = false
 sign_tags = false
 tag_name = "v{new_version}"
 tag_message = "Bump version: {current_version} → {new_version}"

@@ -19,6 +19,7 @@ class SCMConfig:
     """Configuration for source code management functions."""
 
     tag: bool
+    push_tag: bool
     sign_tags: bool
     tag_name: str
     allow_dirty: bool
@@ -45,6 +46,7 @@ class SCMConfig:
         """Return a SCMConfig from a Config object."""
         return cls(
             tag=config.tag,
+            push_tag=config.push_tag,
             tag_name=config.tag_name,
             sign_tags=config.sign_tags,
             allow_dirty=config.allow_dirty,

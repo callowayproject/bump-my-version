@@ -1,5 +1,200 @@
 # Changelog
 
+## 1.6.4 (2026-10-24)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.3...1.6.4)
+
+### Fixes
+
+- Fix: raise FileNotFoundError when a glob matches no files. [a83d288](https://github.com/callowayproject/bump-my-version/commit/a83d288e4eb25bc811a1667bfcfa7fd984c508fe)
+
+  A `glob` file entry that matched nothing (or whose matches were all
+  removed by `glob_exclude`) was silently skipped, while a missing
+  `filename` raised FileNotFoundError. Glob entries now follow the same
+  **rule:** raise unless `ignore_missing_file` (or the global
+
+### Other
+
+- Test: share no-match glob parametrization and trim helper. [3b935ac](https://github.com/callowayproject/bump-my-version/commit/3b935ac79ebc7f8a9384efaa1813911d2dbb0102)
+
+- [pre-commit.ci] pre-commit autoupdate. [ef27fcd](https://github.com/callowayproject/bump-my-version/commit/ef27fcd1b3c082dfef56d5c1c583698249c6bb5b)
+
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.17.0 → v0.17.1](https://github.com/astral-sh/ruff-pre-commit/compare/v0.17.0...v0.17.1)
+
+## 1.6.3 (2026-10-18)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.2...1.6.3)
+
+### Fixes
+
+- Fix: close review gaps in config discovery and file resolution. [aff2341](https://github.com/callowayproject/bump-my-version/commit/aff2341f8d56e0441f1eedf50e58481e9d8fa96a)
+
+  - recognise POSIX and Windows absolute paths on every platform
+  - raise ConfigurationError for non-mapping 'files' entries
+  - resolve each filemap key once in files_to_modify
+  - use find_repo_root for scm repository_root (git and hg)
+  - strengthen symlink tests, add symlinked config case
+  - narrow broad pytest.raises(Exception) to ValidationError
+
+- Fix: don't re-add CLI files already configured; limit '!' handling to glob_exclude. [ce16247](https://github.com/callowayproject/bump-my-version/commit/ce1624786e68e1b4146f87e9f84cc48aa67bd5b9)
+
+- Fix: compare CLI and configured file paths as resolved paths. [f36ef5d](https://github.com/callowayproject/bump-my-version/commit/f36ef5d23757d1ae66cf0c0e72e4409e2b069182)
+
+  Also handle '!' glob_exclude negation when rebasing paths, ignore non-mapping
+  files entries, simplify config-dir walk, and document discovery and path rules.
+
+### Other
+
+- Test: add docstrings to discovery and resolution tests. [5001ca1](https://github.com/callowayproject/bump-my-version/commit/5001ca1ca0e91290f66c86deaca9e326ab299b2f)
+
+- Test: use posix paths for resolved filenames and skip '|' path test on Windows. [b1a2d20](https://github.com/callowayproject/bump-my-version/commit/b1a2d206d8dd2cb56bf9e1089b7cc6a116d746eb)
+
+- Test: compare resolved filename as Path for Windows separators. [ad7b894](https://github.com/callowayproject/bump-my-version/commit/ad7b8945182e9436eaaab345e575ac4bbbbaa916)
+
+- Test: expect single entry for symlinked cwd. [2635f8e](https://github.com/callowayproject/bump-my-version/commit/2635f8e84b48d805dae7860c27c60599991c350c)
+
+- Feat: resolve config through repo parents and anchor file paths to config dir. [276dfc4](https://github.com/callowayproject/bump-my-version/commit/276dfc4b1d458c065ed936afd82ff682d0aa2b78)
+
+  Search parent directories up to the git/hg repo root for a config file (#8).
+  Resolve relative filename/glob from the config file's directory and add a
+  {repo_root} placeholder (#9).
+
+  Closes #8, closes #9
+
+## 1.6.2 (2026-10-18)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.1...1.6.2)
+
+### Fixes
+
+- Fix the BVHOOK_NEW_TAG environment variable in hook environments. [8f0d03e](https://github.com/callowayproject/bump-my-version/commit/8f0d03ef95fc851cdcf5c9883956ac877670b84c)
+
+### Other
+
+- Ci: exclude uv.lock from Codacy analysis. [b2732f4](https://github.com/callowayproject/bump-my-version/commit/b2732f4bd4c15ac649ed89805d1cd4c6fbfaded7)
+
+- Chore(deps): update `uv.lock` for Python 3.10+ compatibility and dependency upgrades. [37225f8](https://github.com/callowayproject/bump-my-version/commit/37225f8dc68409a380dd64fd5266273f271c5722)
+
+- Ci: drop Python 3.9 and add Python 3.15 to test matrix. [8d46056](https://github.com/callowayproject/bump-my-version/commit/8d4605643dcb34a143c20fb9759bc11e3971cc6b)
+
+- Ci: add Codacy exclusions and ignore local .codacy directory. [1217a32](https://github.com/callowayproject/bump-my-version/commit/1217a32936f63fafb8d65112e58d1712aacd5495)
+
+- Ci: make release work for fork PRs and skip fork-incompatible previews. [364b98c](https://github.com/callowayproject/bump-my-version/commit/364b98cc1c8147d634a7c202bd321f77581898dd)
+
+  Trigger the release workflow on push to master so merged fork PRs get a
+  version bump with full permissions. Skip the version-hint and docs-preview
+  workflows for fork PRs, which only get a read-only token and no secrets.
+
+- Bump `actions/upload-artifact` to v7 and `actions/setup-python` to v7. [ba36db7](https://github.com/callowayproject/bump-my-version/commit/ba36db7c2c2333bc5e94876ae54564c2731d2519)
+
+- Bump python from 3.14-slim-bookworm to 3.15-slim-bookworm. [cfed8a8](https://github.com/callowayproject/bump-my-version/commit/cfed8a887e2dc39bdc963e299deedadc64a5ce86)
+
+  Bumps python from 3.14-slim-bookworm to 3.15-slim-bookworm.
+
+  ______________________________________________________________________
+
+  **updated-dependencies:** - dependency-name: python
+  dependency-version: 3.15-slim-bookworm
+  dependency-type: direct:production
+
+  **signed-off-by:** dependabot[bot] <support@github.com>
+
+- [pre-commit.ci] pre-commit autoupdate. [0640b3e](https://github.com/callowayproject/bump-my-version/commit/0640b3e451ae7955dcf68d976b7626bb9f2e58d6)
+
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.16.10 → v0.17.0](https://github.com/astral-sh/ruff-pre-commit/compare/v0.16.10...v0.17.0)
+
+- Bump `build-and-inspect-python-package` action to version 3.0.1. [8b42383](https://github.com/callowayproject/bump-my-version/commit/8b423834d5817bf0de150686b0b88e0493edfefe)
+
+## 1.6.1 (2026-10-17)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.0...1.6.1)
+
+### Fixes
+
+- Fix the --increment examples in the show subcommand docs. [bee5795](https://github.com/callowayproject/bump-my-version/commit/bee579555044e3f9e509bd578c624cdbf51f9ad5)
+
+  --increment is an option of show, so it has to come after it: 'bump-my-version --increment patch show' fails with "No such option '--increment'." The examples also name new_version, so that show prints the version each one shows.
+
+### Other
+
+- Keep the repository root when HEAD is detached. [6f40aee](https://github.com/callowayproject/bump-my-version/commit/6f40aeeeccd6b6fde3bba20567a46527b9290813)
+
+  Since ac7b3ba, the branch is read with git symbolic-ref, which fails on a
+  detached HEAD (the usual CI checkout). revision_info() then returned early
+  without the repository root, so the changed files were never staged and
+  the commit failed. Keep the root and use an empty branch name, as
+  git branch --show-current did.
+
+  Fixes #438
+
+- [pre-commit.ci] pre-commit autoupdate. [ed13388](https://github.com/callowayproject/bump-my-version/commit/ed13388d5140432b83d0639ef9de51caef5060cb)
+
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.16.9 → v0.16.10](https://github.com/astral-sh/ruff-pre-commit/compare/v0.16.9...v0.16.10)
+
+## 1.6.0 (2026-10-03)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.5.3...1.6.0)
+
+### New
+
+- Add --to option to set a version part to a specific value. [2ce68b3](https://github.com/callowayproject/bump-my-version/commit/2ce68b3bba3827235dbd7c7d6b471abbf5c02b74)
+
+  Closes #327
+
+## 1.5.3 (2026-10-03)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.5.2...1.5.3)
+
+### Fixes
+
+- Refactor CLI tests to improve type safety and update `uv.lock` dependencies to latest compatible versions. [cd9fdfa](https://github.com/callowayproject/bump-my-version/commit/cd9fdfaf50007606990619bb2c380ca83816aa0c)
+
+### Other
+
+- Standardize string quotation in example code within update-a-date documentation. [8b42d2a](https://github.com/callowayproject/bump-my-version/commit/8b42d2a21a780e309302e3649235c111c218ff33)
+
+- [pre-commit.ci] pre-commit autoupdate. [7a3cba4](https://github.com/callowayproject/bump-my-version/commit/7a3cba4c2a60f3f9c6276c3acf78f47ca51f3356)
+
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.16.6 → v0.16.9](https://github.com/astral-sh/ruff-pre-commit/compare/v0.16.6...v0.16.9)
+
+## 1.5.2 (2026-09-09)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.5.1...1.5.2)
+
+### Fixes
+
+- Fix git branch detection for older git versions and unborn HEAD. [ac7b3ba](https://github.com/callowayproject/bump-my-version/commit/ac7b3ba22442fd98d31f8f23d8f4b6ce116b8c8c)
+
+  `git branch --show-current` requires git 2.22+; on older versions it
+  raises an exception that is silently swallowed, causing revision_info()
+  to return None and skip staging files before commit. Replace it with
+  `git symbolic-ref --short HEAD`, which works on git 1.x+ and also
+  resolves correctly on an unborn HEAD (a repo with no commits yet).
+
+  Fixes #426
+
+  **claude-session:** https://claude.ai/code/session_01NgKrJnSAZmhGvVcwH32w3z
+
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [1efe237](https://github.com/callowayproject/bump-my-version/commit/1efe237678aebd3e7098eccaa4fba7d8ad4c1b54)
+
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.16.0 → v0.16.6](https://github.com/astral-sh/ruff-pre-commit/compare/v0.16.0...v0.16.6)
+
+## 1.5.1 (2026-08-06)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.5.0...1.5.1)
+
+### New
+
+- Add tests to cover new push on tag. [d73288a](https://github.com/callowayproject/bump-my-version/commit/d73288a8cae05be099b7bb3b484aeb9751c92fe9)
+
+### Other
+
+- Document `push_tag` configuration and usage in global settings. [e832c97](https://github.com/callowayproject/bump-my-version/commit/e832c97e78075e842b5cbf7bff15f227c1bc3230)
+
+- Support pushing tag-only releases in one go. [ec14558](https://github.com/callowayproject/bump-my-version/commit/ec14558e5fe66b0fb46732324e2c79e8a92a06bb)
+
 ## 1.5.0 (2026-07-27)
 
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.4.1...1.5.0)

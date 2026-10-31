@@ -370,3 +370,61 @@ class TestCalVerVersion:
 
             # Assert
             assert required_components == expected
+
+
+class TestBumpTo:
+    """Tests for Version.bump_to."""
+
+    def test_sets_part_and_resets_dependents(self, semver_version_spec: VersionSpec):
+        version = semver_version_spec.create_version({"major": "0", "minor": "9", "patch": "3"})
+        new = version.bump_to("major", "1")
+        assert (new["major"].value, new["minor"].value, new["patch"].value) == ("1", "0", "0")
+
+    def test_can_move_backwards(self, semver_version_spec: VersionSpec):
+        version = semver_version_spec.create_version({"major": "2", "minor": "1", "patch": "3"})
+        assert version.bump_to("major", "1")["major"].value == "1"
+
+    def test_values_part_jumps_to_last_value(self):
+        spec = VersionSpec(
+            {
+                "major": VersionComponentSpec(),
+                "release": VersionComponentSpec(values=["beta", "rc", "final"], optional_value="final"),
+            }
+        )
+        version = spec.create_version({"major": "1", "release": "beta"})
+        assert version.bump_to("release", "final")["release"].value == "final"
+
+    def test_invalid_values_part_value_raises(self):
+        spec = VersionSpec({"release": VersionComponentSpec(values=["beta", "rc", "final"])})
+        version = spec.create_version({"release": "beta"})
+        with pytest.raises(ValueError, match="beta"):
+            version.bump_to("release", "gamma")
+
+    def test_invalid_numeric_value_raises(self, semver_version_spec: VersionSpec):
+        version = semver_version_spec.create_version({"major": "1", "minor": "2", "patch": "3"})
+        with pytest.raises(ValueError):
+            version.bump_to("major", "abc")
+        with pytest.raises(ValueError):
+            VersionSpec({"major": VersionComponentSpec(first_value="1")}).create_version({"major": "2"}).bump_to(
+                "major", "0"
+            )
+
+    def test_unknown_part_raises(self, semver_version_spec: VersionSpec):
+        version = semver_version_spec.create_version({"major": "1", "minor": "2", "patch": "3"})
+        with pytest.raises(exceptions.InvalidVersionPartError):
+            version.bump_to("nope", "1")
+
+    def test_calver_part_is_rejected(self, calver_version_spec: VersionSpec):
+        version = calver_version_spec.create_version({"release": "2024.1.1", "patch": "1"})
+        with pytest.raises(ValueError, match="CalVer"):
+            version.bump_to("release", "2025.1.1")
+
+    def test_independent_part_resets_nothing(self, semver_version_spec: VersionSpec):
+        version = semver_version_spec.create_version({"major": "1", "minor": "2", "patch": "3", "build": "4"})
+        new = version.bump_to("build", "9")
+        assert (new["build"].value, new["patch"].value) == ("9", "3")
+
+    def test_always_increment_parts_still_increment(self, semver_version_spec: VersionSpec):
+        version = semver_version_spec.create_version({"major": "1", "minor": "2", "patch": "3", "auto": "5"})
+        new = version.bump_to("minor", "7")
+        assert (new["minor"].value, new["patch"].value, new["auto"].value) == ("7", "0", "6")

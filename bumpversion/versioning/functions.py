@@ -19,6 +19,10 @@ class PartFunction:
         """Increase the value."""
         raise NotImplementedError
 
+    def validate(self, value: str) -> None:
+        """Raise a ValueError if the value can't be explicitly set on this part."""
+        return None
+
 
 class IndependentFunction(PartFunction):
     """
@@ -54,6 +58,10 @@ class CalVerFunction(PartFunction):
     def bump(self, value: Optional[str] = None) -> str:
         """Return the optional value."""
         return self.calver_format.format(**get_datetime_info(datetime.datetime.now()))
+
+    def validate(self, value: str) -> None:
+        """CalVer values come from the date and can't be set explicitly."""
+        raise ValueError("A CalVer part is based on the date and cannot be set to a specific value.")
 
 
 class NumericFunction(PartFunction):
@@ -97,6 +105,14 @@ class NumericFunction(PartFunction):
         bumped_numeric = int(part_numeric) + 1
 
         return "".join([part_prefix, str(bumped_numeric), part_suffix])
+
+    def validate(self, value: str) -> None:
+        """Raise a ValueError if the value has no digit or is lower than the first value."""
+        match = self.FIRST_NUMERIC.search(str(value))
+        if not match:
+            raise ValueError(f"The given value {value} does not contain any digit")
+        if int(match.group("number")) < int(self.first_value):
+            raise ValueError(f"The given value {value} is lower than the first value {self.first_value}.")
 
 
 class ValuesFunction(PartFunction):
@@ -149,3 +165,8 @@ class ValuesFunction(PartFunction):
             raise ValueError(
                 f"The part has already the maximum value among {self._values} and cannot be bumped."
             ) from e
+
+    def validate(self, value: str) -> None:
+        """Raise a ValueError if the value isn't one of the configured values."""
+        if value not in self._values:
+            raise ValueError(f"The value {value!r} must be one of {self._values}.")

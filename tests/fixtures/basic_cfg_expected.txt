@@ -83,6 +83,7 @@
  'pep621_info': {'version': None},
  'post_commit_hooks': [],
  'pre_commit_hooks': [],
+ 'push_tag': False,
  'regex': False,
  'replace': '{new_version}',
  'scm_info': {'branch_name': None,

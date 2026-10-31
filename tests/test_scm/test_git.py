@@ -229,6 +229,38 @@ class TestGit:
             mock_tag.assert_not_called()
             mock_moveable_tag.assert_not_called()
 
+        def test_pushes_tag_when_push_tag_is_true(self, git_instance: Git, mocker):
+            """The method pushes the tag to origin when push_tag is True."""
+            # Arrange
+            files = ["file1.txt"]
+            context = {"new_version": "1.0.0", "new_major": "1", "current_version": "0.1.0"}
+            git_instance.config.tag = True
+            git_instance.config.push_tag = True
+            mocker.patch("bumpversion.scm.git.tag")
+            mock_push_remote = mocker.patch("bumpversion.scm.git.push_remote")
+
+            # Act
+            git_instance.commit_and_tag(files, context, dry_run=False)
+
+            # Assert
+            mock_push_remote.assert_called_once_with("origin", "v1.0.0")
+
+        def test_does_not_push_tag_when_push_tag_is_false(self, git_instance: Git, mocker):
+            """The method does not push the tag when push_tag is False."""
+            # Arrange
+            files = ["file1.txt"]
+            context = {"new_version": "1.0.0", "new_major": "1", "current_version": "0.1.0"}
+            git_instance.config.tag = True
+            git_instance.config.push_tag = False
+            mocker.patch("bumpversion.scm.git.tag")
+            mock_push_remote = mocker.patch("bumpversion.scm.git.push_remote")
+
+            # Act
+            git_instance.commit_and_tag(files, context, dry_run=False)
+
+            # Assert
+            mock_push_remote.assert_not_called()
+
 
 class TestRevisionInfo:
     """Tests for the revision_info function."""
@@ -246,14 +278,32 @@ class TestRevisionInfo:
         assert result["short_branch_name"] == "main"
         assert result["repository_root"] == git_repo
 
+    def test_detached_head_keeps_repository_root(self, git_repo: Path) -> None:
+        """A detached HEAD has no branch name, but the repository root is still returned."""
+        # Arrange
+        with inside_dir(git_repo):
+            (git_repo / "readme.md").write_text("hello")
+            run_command(["git", "add", "readme.md"])
+            run_command(["git", "commit", "-m", "first"])
+            run_command(["git", "checkout", "--detach"])
+
+            # Act
+            result = revision_info()
+
+        # Assert
+        assert result["branch_name"] == ""
+        assert result["short_branch_name"] == ""
+        assert result["repository_root"] == git_repo
+
     @patch("bumpversion.scm.git.run_command")
-    def test_returns_empty_data_on_git_command_error(self, mock_run_command):
-        """If there is an error with the git command, the branch name and repository root should be empty."""
+    def test_returns_empty_data_on_git_command_error(self, mock_run_command, tmp_path):
+        """Outside a repository, the branch name and repository root should be empty."""
         # Arrange
         mock_run_command.side_effect = subprocess.CalledProcessError(1, "git")
 
         # Act
-        result = revision_info()
+        with inside_dir(tmp_path):
+            result = revision_info()
 
         # Assert
         assert result["branch_name"] is None

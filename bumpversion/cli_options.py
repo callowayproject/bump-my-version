@@ -55,6 +55,16 @@ new_version_option: Callable = click.option(
     help="New version that should be in the files",
 )
 
+to_option: Callable = click.option(
+    "--to",
+    "to_value",
+    metavar="VALUE",
+    required=False,
+    envvar="BUMPVERSION_TO",
+    help="Set the VERSION_PART to this value instead of incrementing it. "
+    "Use `--new-version` to replace the whole version.",
+)
+
 parse_option: Callable = click.option(
     "--parse",
     metavar="REGEX",
@@ -190,6 +200,13 @@ tag_option: Callable = click.option(
     default=None,
     envvar="BUMPVERSION_TAG",
     help="Create a tag in version control",
+)
+
+push_tag_option: Callable = click.option(
+    "--push-tag/--no-push-tag",
+    default=None,
+    envvar="BUMPVERSION_PUSH_TAG",
+    help="Push the tag to the remote after creation (only works with --tag)",
 )
 
 sign_tags_option: Callable = click.option(
