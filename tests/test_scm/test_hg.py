@@ -242,5 +242,13 @@ class TestAssertNonDirty:
             commit_readme("first")
             readme.write_text("new text")
             assert_nondirty(["readme.*"])
+
+    def test_still_raises_for_files_not_matching_allow_dirty_files(self, hg_repo: Path):
+        """Files that do not match `allow_dirty_files` still make the repo dirty."""
+        readme = hg_repo.joinpath("readme.md")
+        readme.touch()
+        with inside_dir(hg_repo):
+            commit_readme("first")
+            readme.write_text("new text")
             with pytest.raises(DirtyWorkingDirectoryError):
                 assert_nondirty(["CHANGELOG.md"])

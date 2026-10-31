@@ -279,7 +279,9 @@ def assert_nondirty(allow_dirty_files: Optional[List[str]] = None) -> None:
     lines = [
         line.strip()
         for line in run_command(["git", "status", "--porcelain"]).stdout.splitlines()
-        if not line.strip().startswith("??") and not is_allowed_dirty(line[3:].split(" -> ")[-1].strip('"'), patterns)
+        if not line.strip().startswith("??")
+        # a rename lists "old -> new"; both paths must be allowed
+        and not all(is_allowed_dirty(path.strip('"'), patterns) for path in line[3:].split(" -> "))
     ]
     if joined_lines := "\n".join(lines):
         raise DirtyWorkingDirectoryError(f"Git working directory is not clean:\n\n{joined_lines}")

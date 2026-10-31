@@ -454,24 +454,32 @@ class TestAssertNonDirty:
     def test_ignores_dirty_files_matching_allow_dirty_files(self, git_repo: Path) -> None:
         """Modified files matching an `allow_dirty_files` pattern do not make the repo dirty."""
         with inside_dir(git_repo):
-            git_repo.joinpath("readme.md").touch()
             git_repo.joinpath("CHANGELOG.md").touch()
             git_repo.joinpath("docs").mkdir()
             git_repo.joinpath("docs", "notes.md").touch()
             subprocess.run(["git", "add", "."], check=True)
-            assert_nondirty(["readme.md", "CHANGELOG.md", "docs/*"])
+            assert_nondirty(["CHANGELOG.md", "docs/*"])
+
+    def test_reports_only_files_not_matching_allow_dirty_files(self, git_repo: Path) -> None:
+        """Files that do not match `allow_dirty_files` still make the repo dirty and are the only ones listed."""
+        with inside_dir(git_repo):
+            git_repo.joinpath("readme.md").touch()
+            git_repo.joinpath("CHANGELOG.md").touch()
+            subprocess.run(["git", "add", "."], check=True)
             with pytest.raises(DirtyWorkingDirectoryError) as exc:
                 assert_nondirty(["CHANGELOG.md"])
         assert "readme.md" in str(exc.value)
         assert "CHANGELOG.md" not in str(exc.value)
 
-    def test_still_raises_for_files_not_matching_allow_dirty_files(self, git_repo: Path) -> None:
-        """Files that do not match `allow_dirty_files` still make the repo dirty."""
+    def test_rename_is_ignored_only_when_both_paths_match(self, git_repo: Path) -> None:
+        """A rename from a protected file to an allowed name is still dirty."""
+        git_repo.joinpath("readme.md").write_text("some text\n" * 5)
         with inside_dir(git_repo):
-            git_repo.joinpath("readme.md").touch()
-            subprocess.run(["git", "add", "readme.md"], check=True)  # noqa: S603, S607
+            commit_readme("first")
+            subprocess.run(["git", "mv", "readme.md", "CHANGELOG.md"], check=True)
             with pytest.raises(DirtyWorkingDirectoryError):
                 assert_nondirty(["CHANGELOG.md"])
+            assert_nondirty(["readme.md", "CHANGELOG.md"])
 
 
 class TestCommitInfo:
