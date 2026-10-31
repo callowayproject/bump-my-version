@@ -451,6 +451,28 @@ class TestAssertNonDirty:
                 subprocess.run(["git", "add", "readme.md"], check=False)  # noqa: S603, S607
                 assert_nondirty()
 
+    def test_ignores_dirty_files_matching_allow_dirty_files(self, git_repo: Path) -> None:
+        """Modified files matching an `allow_dirty_files` pattern do not make the repo dirty."""
+        with inside_dir(git_repo):
+            git_repo.joinpath("readme.md").touch()
+            git_repo.joinpath("CHANGELOG.md").touch()
+            git_repo.joinpath("docs").mkdir()
+            git_repo.joinpath("docs", "notes.md").touch()
+            subprocess.run(["git", "add", "."], check=True)  # noqa: S603, S607
+            assert_nondirty(["readme.md", "CHANGELOG.md", "docs/*"])
+            with pytest.raises(DirtyWorkingDirectoryError) as exc:
+                assert_nondirty(["CHANGELOG.md"])
+        assert "readme.md" in str(exc.value)
+        assert "CHANGELOG.md" not in str(exc.value)
+
+    def test_still_raises_for_files_not_matching_allow_dirty_files(self, git_repo: Path) -> None:
+        """Files that do not match `allow_dirty_files` still make the repo dirty."""
+        with inside_dir(git_repo):
+            git_repo.joinpath("readme.md").touch()
+            subprocess.run(["git", "add", "readme.md"], check=True)  # noqa: S603, S607
+            with pytest.raises(DirtyWorkingDirectoryError):
+                assert_nondirty(["CHANGELOG.md"])
+
 
 class TestCommitInfo:
     """Tests for the commit_info function."""

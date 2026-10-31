@@ -9,7 +9,7 @@ from tempfile import NamedTemporaryFile
 from typing import Any, ClassVar, List, MutableMapping, Optional
 
 from bumpversion.exceptions import DirtyWorkingDirectoryError
-from bumpversion.scm.models import LatestTagInfo, SCMConfig
+from bumpversion.scm.models import LatestTagInfo, SCMConfig, is_allowed_dirty
 from bumpversion.ui import get_indented_logger
 from bumpversion.utils import Pathlike, find_repo_root, format_and_raise_error, is_subpath, run_command
 
@@ -114,7 +114,7 @@ class Git:
         Raises:
             DirtyWorkingDirectoryError: If the repository is not clean.
         """
-        assert_nondirty()
+        assert_nondirty(self.config.allow_dirty_files)
 
     def commit(self, context: MutableMapping) -> None:
         """Commit the changes."""
@@ -273,12 +273,13 @@ def moveable_tag(name: str) -> None:
         format_and_raise_error(e)
 
 
-def assert_nondirty() -> None:
-    """Assert that the working directory is not dirty."""
+def assert_nondirty(allow_dirty_files: Optional[List[str]] = None) -> None:
+    """Assert that the working directory is not dirty, ignoring files matching `allow_dirty_files`."""
+    patterns = allow_dirty_files or []
     lines = [
         line.strip()
         for line in run_command(["git", "status", "--porcelain"]).stdout.splitlines()
-        if not line.strip().startswith("??")
+        if not line.strip().startswith("??") and not is_allowed_dirty(line[3:].split(" -> ")[-1].strip('"'), patterns)
     ]
     if joined_lines := "\n".join(lines):
         raise DirtyWorkingDirectoryError(f"Git working directory is not clean:\n\n{joined_lines}")

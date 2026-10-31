@@ -233,3 +233,14 @@ class TestAssertNonDirty:
 
         assert "Mercurial working directory is not clean" in str(exc.value)
         assert "M readme.md" in str(exc.value)
+
+    def test_ignores_dirty_files_matching_allow_dirty_files(self, hg_repo: Path):
+        """Modified files matching an `allow_dirty_files` pattern do not make the repo dirty."""
+        readme = hg_repo.joinpath("readme.md")
+        readme.touch()
+        with inside_dir(hg_repo):
+            commit_readme("first")
+            readme.write_text("new text")
+            assert_nondirty(["readme.*"])
+            with pytest.raises(DirtyWorkingDirectoryError):
+                assert_nondirty(["CHANGELOG.md"])
