@@ -140,6 +140,8 @@ The current version of the software package before bumping. A value for this is 
 
     ‡ If `pyproject.toml` exists, then `current_version` falls back to `project.version` in `pyproject.toml`. This only works if `project.version` is statically set. Such a `pyproject.toml` is also found by [configuration file discovery](index.md#configuration-files) when it has no `[tool.bumpversion]` table, or only `[[tool.bumpversion.files]]`.
 
+When `current_version` differs from the version of the last SCM tag, Bump My Version compares the two using your `parse` and `serialize` settings. It logs a warning only if `current_version` is _older_ than the last tag. If it is ahead of the tag (the normal state during development), or the two versions can't be compared, the mismatch is logged at debug level. Use `-vv` to see it.
+
 ### ignore_missing_files
 
 /// html | div.field-list
