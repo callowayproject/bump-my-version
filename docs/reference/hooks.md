@@ -31,22 +31,26 @@ Configure each hook suite with the `setup_hooks`, `pre_commit_hooks`, or `post_c
 
 Each suite takes a list of strings. The strings may be individual commands:
 
-    [tool.bumpversion]
-    setup_hooks = [
-        "git config --global user.email \"bump-my-version@github.actions\"",
-        "git config --global user.name \"Testing Git\"",
-        "git --version",
-        "git config --list",
-    ]
-    pre_commit_hooks = ["cat CHANGELOG.md"]
-    post_commit_hooks = ["echo Done"]
+```text
+[tool.bumpversion]
+setup_hooks = [
+    "git config --global user.email \"bump-my-version@github.actions\"",
+    "git config --global user.name \"Testing Git\"",
+    "git --version",
+    "git config --list",
+]
+pre_commit_hooks = ["cat CHANGELOG.md"]
+post_commit_hooks = ["echo Done"]
+```
 
 or the path to an executable script:
 
-    [tool.bumpversion]
-    setup_hooks = ["path/to/setup.sh"]
-    pre_commit_hooks = ["path/to/pre-commit.sh"]
-    post_commit_hooks = ["path/to/post-commit.sh"]
+```text
+[tool.bumpversion]
+setup_hooks = ["path/to/setup.sh"]
+pre_commit_hooks = ["path/to/pre-commit.sh"]
+post_commit_hooks = ["path/to/post-commit.sh"]
+```
 
 !!! Note
 
@@ -76,30 +80,34 @@ This means hooks that rely on shell features will raise an error unless you expl
 
 Most shell-syntax hooks can be replaced with a script file or explicit arguments:
 
-    [tool.bumpversion]
-    # These will raise HookError by default
-    post_commit_hooks = [
-        "echo $BVHOOK_NEW_VERSION > version.txt",
-        "git log --oneline | head -5",
-    ]
+```text
+[tool.bumpversion]
+# These will raise HookError by default
+post_commit_hooks = [
+    "echo $BVHOOK_NEW_VERSION > version.txt",
+    "git log --oneline | head -5",
+]
 
-    [tool.bumpversion]
-    # Pass the script file directly — no shell required
-    post_commit_hooks = [
-        "path/to/update-version-file.sh",
-        "path/to/show-log.sh",
-    ]
+[tool.bumpversion]
+# Pass the script file directly — no shell required
+post_commit_hooks = [
+    "path/to/update-version-file.sh",
+    "path/to/show-log.sh",
+]
 
-    #!/bin/bash
-    echo "$BVHOOK_NEW_VERSION" > version.txt
+#!/bin/bash
+echo "$BVHOOK_NEW_VERSION" > version.txt
+```
 
 #### allow_shell_hooks (compatibility opt-in)
 
 If you cannot immediately rewrite your hooks, set `allow_shell_hooks = true` to restore shell execution:
 
-    [tool.bumpversion]
-    allow_shell_hooks = true
-    post_commit_hooks = ["echo $BVHOOK_NEW_VERSION | tee version.txt"]
+```text
+[tool.bumpversion]
+allow_shell_hooks = true
+post_commit_hooks = ["echo $BVHOOK_NEW_VERSION | tee version.txt"]
+```
 
 !!! Warning
 
@@ -209,6 +217,41 @@ All environment variables set before bump-my-version was run are available.
 : Each version component defined by the [version configuration parsing regular expression](configuration/global.md#parse). The default configuration would have `BVHOOK_NEW_MAJOR`, `BVHOOK_NEW_MINOR`, and `BVHOOK_NEW_PATCH` available.
 
 ///
+
+### Version placeholders in hook commands
+
+Hook command strings may contain version placeholders that bump-my-version replaces before executing the hook. This works with safe argv-based execution, so you do not need to enable `allow_shell_hooks` to use them.
+
+!!! Note
+
+    Placeholders are only substituted when `allow_shell_hooks` is `false` (the default). When `allow_shell_hooks` is `true`, hook commands are passed through unchanged so that shell variable expansion (`$BVHOOK_NEW_VERSION`) can be used instead.
+
+The following placeholders are available:
+
+| Placeholder | Value | Available in |
+| --- | --- | --- |
+| `{current_version}` | The current version serialized as a string | All hook suites |
+| `{current_<component>}` | The value of a parsed version component, e.g. `{current_major}` | All hook suites |
+| `{new_version}` | The new version serialized as a string | Pre-commit and post-commit hooks |
+| `{new_<component>}` | The value of a parsed new version component, e.g. `{new_major}` | Pre-commit and post-commit hooks |
+
+For example:
+
+```toml
+[tool.bumpversion]
+current_version = "1.2.3"
+pre_commit_hooks = ["git tag release/{new_major}.{new_minor}"]
+```
+
+During a bump to `1.3.0`, the command becomes:
+
+```console
+git tag release/1.3
+```
+
+Substituted values are shell-quoted, so a value containing spaces stays a single argument.
+
+Placeholders that do not match a known version key are left unchanged, so existing commands with unrelated braces continue to work.
 
 ### Outputs
 

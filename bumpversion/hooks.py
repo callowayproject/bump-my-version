@@ -90,6 +90,46 @@ def new_version_env(config: Config, current_version: Version, new_version: Versi
     }
 
 
+def hook_context(config: Config, current_version: Version, new_version: Optional[Version] = None) -> Dict[str, str]:
+    """
+    Build a context dictionary for formatting hook command strings.
+
+    Only version-related keys are included so that unrelated braces in a hook
+    command are not accidentally substituted.
+    """
+    ctx: Dict[str, str] = {"current_version": config.current_version or ""}
+    for part in current_version:
+        ctx[f"current_{part}"] = current_version[part].value
+
+    if new_version is not None:
+        base_ctx = get_context(config, current_version, new_version)
+        ctx["new_version"] = config.version_config.serialize(new_version, base_ctx)
+        for part in new_version:
+            ctx[f"new_{part}"] = new_version[part].value
+
+    return ctx
+
+
+def format_hooks(hooks: List[str], context: Dict[str, str]) -> List[str]:
+    """
+    Replace known version placeholders in hook command strings.
+
+    Placeholders that do not match a key in ``context`` are left untouched. Values are
+    shell-quoted (except on Windows) so whitespace or quotes in a value cannot add argv elements.
+    """
+    if not context:
+        return hooks
+
+    def replace_match(match: re.Match) -> str:
+        key = match.group(1)
+        if key not in context:
+            return match.group(0)
+        value = str(context[key])
+        return value if sys.platform == "win32" else shlex.quote(value)
+
+    return [re.sub(r"\{(\w+)\}", replace_match, hook) for hook in hooks]
+
+
 def get_setup_hook_env(config: Config, current_version: Version) -> Dict[str, str]:
     """Provide the environment dictionary for `setup_hook`s."""
     return {**base_env(config), **scm_env(config), **version_env(current_version, "CURRENT_")}
@@ -117,8 +157,22 @@ def get_post_commit_hook_env(config: Config, current_version: Version, new_versi
     }
 
 
-def run_hooks(hooks: List[str], env: Dict[str, str], dry_run: bool = False, allow_shell_hooks: bool = False) -> None:
-    """Run a list of command-line programs, defaulting to safe argv-based execution."""
+def run_hooks(
+    hooks: List[str],
+    env: Dict[str, str],
+    dry_run: bool = False,
+    allow_shell_hooks: bool = False,
+    context: Optional[Dict[str, str]] = None,
+) -> None:
+    """
+    Run a list of command-line programs, defaulting to safe argv-based execution.
+
+    ``context`` is used for placeholder substitution only when it is not ``None`` and
+    ``allow_shell_hooks`` is false; ``None`` and ``{}`` both mean no substitution.
+    """
+    if context is not None and not allow_shell_hooks:
+        hooks = format_hooks(hooks, context)
+
     logger.indent()
     for script in hooks:
         if dry_run:
@@ -161,7 +215,13 @@ def run_setup_hooks(config: Config, current_version: Version, dry_run: bool = Fa
         logger.info("No setup hooks defined")
         return
 
-    run_hooks(config.setup_hooks, env, dry_run, allow_shell_hooks=config.allow_shell_hooks)
+    run_hooks(
+        config.setup_hooks,
+        env,
+        dry_run,
+        allow_shell_hooks=config.allow_shell_hooks,
+        context=None if config.allow_shell_hooks else hook_context(config, current_version),
+    )
 
 
 def run_pre_commit_hooks(config: Config, current_version: Version, new_version: Version, dry_run: bool = False) -> None:
@@ -175,7 +235,13 @@ def run_pre_commit_hooks(config: Config, current_version: Version, new_version: 
         logger.info("No pre-commit hooks defined")
         return
 
-    run_hooks(config.pre_commit_hooks, env, dry_run, allow_shell_hooks=config.allow_shell_hooks)
+    run_hooks(
+        config.pre_commit_hooks,
+        env,
+        dry_run,
+        allow_shell_hooks=config.allow_shell_hooks,
+        context=None if config.allow_shell_hooks else hook_context(config, current_version, new_version),
+    )
 
 
 def run_post_commit_hooks(
@@ -190,4 +256,10 @@ def run_post_commit_hooks(
         logger.info("No post-commit hooks defined")
         return
 
-    run_hooks(config.post_commit_hooks, env, dry_run, allow_shell_hooks=config.allow_shell_hooks)
+    run_hooks(
+        config.post_commit_hooks,
+        env,
+        dry_run,
+        allow_shell_hooks=config.allow_shell_hooks,
+        context=None if config.allow_shell_hooks else hook_context(config, current_version, new_version),
+    )
