@@ -1,5 +1,6 @@
 """Tests for version placeholder substitution in hook commands."""
 
+import sys
 from typing import Any, Callable, Dict, List, Optional
 
 import pytest
@@ -48,6 +49,7 @@ class TestFormatHooks:
                 {"v": "a b"},
                 ["echo 'a b'"],
                 id="value_with_space_is_quoted",
+                marks=pytest.mark.skipif(sys.platform == "win32", reason="values are not quoted on Windows"),
             ),
         ],
     )
