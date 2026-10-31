@@ -1,6 +1,9 @@
+import re
+
 import pytest
 from pytest import param
 from freezegun import freeze_time
+from bumpversion.context import calver_string_to_regex
 from bumpversion.versioning.functions import NumericFunction, ValuesFunction, IndependentFunction, CalVerFunction
 
 
@@ -192,6 +195,27 @@ class TestCalVerFunction:
         """Test that the calver is formatted correctly."""
         func = CalVerFunction(calver)
         assert func.bump() == expected
+
+    @pytest.mark.parametrize(
+        ["calver", "expected"],
+        [
+            param("{YYYY}", "2106", id="{YYYY}"),
+            param("{YY}", "106", id="{YY}"),
+            param("{0Y}", "106", id="{0Y}"),
+        ],
+    )
+    @freeze_time("2106-05-01")
+    def test_years_after_2099_follow_calver_org(self, calver: str, expected: str):
+        """calver.org renders 2106 as `106` for both `YY` and `0Y`."""
+        assert CalVerFunction(calver).bump() == expected
+
+    @pytest.mark.parametrize("year", [2000, 2006, 2024, 2099, 2100, 2106])
+    @pytest.mark.parametrize("calver", ["{YY}", "{0Y}"])
+    def test_short_year_round_trips_through_parse_regex(self, calver: str, year: int):
+        """The rendered `YY` and `0Y` values can be parsed back, including the year 2000."""
+        with freeze_time(f"{year}-05-01"):
+            rendered = CalVerFunction(calver).bump()
+        assert re.fullmatch(calver_string_to_regex(calver), rendered)
 
     @pytest.mark.parametrize(
         ["calver", "expected"],

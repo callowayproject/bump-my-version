@@ -6,28 +6,28 @@ The following table lists the available format codes for calendar versioning (Ca
 define the version format in the `calver_format` configuration options. Formatting codes, surrounded by `{ }` can be
 combined to create a custom version format. For example, the format `YYYY.MM.DD` can be defined as `"{YYYY}.{MM}.{DD}"`.
 
-| Code   | Example(s)          | Comment                                       |
-| ------ | ------------------- | --------------------------------------------- |
-| `YYYY` | 2000, 2001, …, 2099 | Full year                                     |
-| `YY`   | 0, 1, 2, …, 99      | Short year as integer                         |
-| `0Y`   | 00, 01, 02, …, 99   | Short Year, zero-padded                       |
-| `MMM`  | Jan, Feb, jan, fév  | Month abbreviation, locale-based              |
-| `MM`   | 1, 2, …, 12         | Month as integer                              |
-| `0M`   | 01, 02, …, 12       | Month, zero-padded                            |
-| `DD`   | 1, 2, …, 31         | Day of month as integer                       |
-| `0D`   | 01, 02, …, 31       | Day of month, zero-padded                     |
-| `JJJ`  | 1, 2, 3, …, 366     | Day of year as integer                        |
-| `00J`  | 001, 002, …, 366    | Day of year, zero-padded                      |
-| `Q`    | 1, 2, 3, 4          | Quarter                                       |
-| `WW`   | 0, 1, 2, …, 53      | Week number, Monday is first day              |
-| `0W`   | 00, 01, 02, …, 53   | Week number, Monday is first day, zero-padded |
-| `UU`   | 0, 1, 2, …, 53      | Week number, Sunday is first day              |
-| `0U`   | 00, 01, 02, …, 53   | Week number, Sunday is first day, zero-padded |
-| `VV`   | 1, 2, …, 53         | ISO 8601 week number as integer               |
-| `0V`   | 01, 02, …, 53       | ISO 8601 week number, zero-padded             |
-| `GGGG` | 2000, 2001, …, 2099 | ISO 8601 week-based year                      |
-| `GG`   | 0, 1, 2, …, 99      | ISO 8601 short week-based year as integer     |
-| `0G`   | 01, 02, …, 99       | ISO 8601 short week-based year, zero-padded   |
+| Code   | Example(s)          | Comment                                             |
+| ------ | ------------------- | --------------------------------------------------- |
+| `YYYY` | 2000, 2001, …, 2099 | Full year                                           |
+| `YY`   | 0, 1, 2, …, 99, 100 | Short year as integer (year − 2000)                 |
+| `0Y`   | 00, 01, 02, …, 100  | Short year (year − 2000), zero-padded to two digits |
+| `MMM`  | Jan, Feb, jan, fév  | Month abbreviation, locale-based                    |
+| `MM`   | 1, 2, …, 12         | Month as integer                                    |
+| `0M`   | 01, 02, …, 12       | Month, zero-padded                                  |
+| `DD`   | 1, 2, …, 31         | Day of month as integer                             |
+| `0D`   | 01, 02, …, 31       | Day of month, zero-padded                           |
+| `JJJ`  | 1, 2, 3, …, 366     | Day of year as integer                              |
+| `00J`  | 001, 002, …, 366    | Day of year, zero-padded                            |
+| `Q`    | 1, 2, 3, 4          | Quarter                                             |
+| `WW`   | 0, 1, 2, …, 53      | Week number, Monday is first day                    |
+| `0W`   | 00, 01, 02, …, 53   | Week number, Monday is first day, zero-padded       |
+| `UU`   | 0, 1, 2, …, 53      | Week number, Sunday is first day                    |
+| `0U`   | 00, 01, 02, …, 53   | Week number, Sunday is first day, zero-padded       |
+| `VV`   | 1, 2, …, 53         | ISO 8601 week number as integer                     |
+| `0V`   | 01, 02, …, 53       | ISO 8601 week number, zero-padded                   |
+| `GGGG` | 2000, 2001, …, 2099 | ISO 8601 week-based year                            |
+| `GG`   | 0, 1, 2, …, 99      | ISO 8601 short week-based year as integer           |
+| `0G`   | 01, 02, …, 99       | ISO 8601 short week-based year, zero-padded         |
 
 ```toml title="Example configuration"
 [tool.bumpversion.parts.release]
@@ -41,8 +41,8 @@ Using the following chart, we can set up the version parsing:
 | Code   | Regex                                                             |
 | ------ | ----------------------------------------------------------------- |
 | `YYYY` | `(?:[1-9][0-9]{3})`                                               |
-| `YY`   | `(?:[1-9][0-9]?)`                                                 |
-| `0Y`   | `(?:[0-9]{2})`                                                    |
+| `YY`   | `(?:[1-9][0-9]?\|0\|[1-9][0-9]{2})`                               |
+| `0Y`   | `(?:[0-9]{2}\|[0-9]{3})`                                          |
 | `MMM`  | See below                                                         |
 | `MM`   | `(?:1[0-2]\|[1-9])`                                               |
 | `0M`   | `(?:1[0-2]\|0[1-9])`                                              |
