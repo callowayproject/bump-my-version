@@ -97,9 +97,7 @@ def get_all_part_configs(config_dict: dict) -> Dict[str, VersionComponentSpec]:
     for label in parsing_groups:
         is_independent = label.startswith("$")
         part_configs[label] = (
-            VersionComponentSpec(**parts[label])
-            if label in parts
-            else VersionComponentSpec(independent=is_independent)
+            VersionComponentSpec(**parts[label]) if label in parts else VersionComponentSpec(independent=is_independent)
         )
     return part_configs
 

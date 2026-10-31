@@ -165,6 +165,41 @@ class TestDoBump:
 
         mock_update_config_file.assert_not_called()
 
+    def test_modify_error_leaves_files_and_config_current_version_untouched(self, tmp_path: Path):
+        """If a file cannot be changed, no file and not the config's current_version is changed."""
+        # Arrange
+        version_path = tmp_path / "VERSION"
+        version_path.write_text("1.2.3", encoding="utf-8")
+        changelog_path = tmp_path / "CHANGELOG.md"
+        changelog_path.write_text("# 1.2.3\n", encoding="utf-8")
+        config_path = tmp_path / ".bumpversion.toml"
+        config_content = dedent(
+            """\
+            [tool.bumpversion]
+            current_version = "1.2.3"
+
+            [[tool.bumpversion.files]]
+            filename = "VERSION"
+
+            [[tool.bumpversion.files]]
+            filename = "CHANGELOG.md"
+            search = "# Unreleased"
+            replace = "# {new_version}"
+            """
+        )
+        config_path.write_text(config_content, encoding="utf-8")
+
+        # Act
+        with inside_dir(tmp_path):
+            conf = get_configuration(config_file=config_path)
+            with pytest.raises(VersionNotFoundError):
+                bump.do_bump("patch", None, conf, config_path)
+
+        # Assert
+        assert version_path.read_text() == "1.2.3"
+        assert changelog_path.read_text() == "# 1.2.3\n"
+        assert config_path.read_text() == config_content
+
     @patch("bumpversion.files.modify_files")
     @patch("bumpversion.bump.update_config_file")
     def test_when_new_equals_current_nothing_happens(self, mock_update_config_file, mock_modify_files, tmp_path: Path):

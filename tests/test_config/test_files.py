@@ -66,6 +66,57 @@ class TestFindConfigFile:
                     expected_path.unlink()  # remove the file so it doesn't get found again
 
 
+class TestFindPyprojectConfig:
+    """Tests for discovering pyproject.toml by parsing it."""
+
+    def test_files_only_table_is_discovered(self, tmp_path: Path) -> None:
+        """A pyproject.toml containing only `[[tool.bumpversion.files]]` is found."""
+        pyproject = tmp_path / "pyproject.toml"
+        pyproject.write_text('[[tool.bumpversion.files]]\nfilename = "README.md"\n', encoding="utf-8")
+        with inside_dir(tmp_path):
+            assert find_config_file() == pyproject
+
+    def test_bare_static_version_is_used_for_current_version(self, tmp_path: Path) -> None:
+        """A bare pyproject.toml with a static `project.version` supplies the current version."""
+        pyproject = tmp_path / "pyproject.toml"
+        pyproject.write_text('[project]\nname = "x"\nversion = "1.3.1"\n', encoding="utf-8")
+        with inside_dir(tmp_path):
+            found = find_config_file()
+            assert found == pyproject
+            assert config.get_configuration(found).current_version == "1.3.1"
+
+    def test_dynamic_version_is_not_a_source(self, tmp_path: Path) -> None:
+        """A pyproject.toml with a dynamic version and no bumpversion config is ignored."""
+        (tmp_path / "pyproject.toml").write_text('[project]\nname = "x"\ndynamic = ["version"]\n', encoding="utf-8")
+        with inside_dir(tmp_path):
+            assert find_config_file() is None
+
+    def test_bumpversion_toml_takes_precedence(self, tmp_path: Path) -> None:
+        """A `.bumpversion.toml` wins over a pyproject.toml with a static version."""
+        (tmp_path / "pyproject.toml").write_text('[project]\nversion = "1.3.1"\n', encoding="utf-8")
+        bump = tmp_path / ".bumpversion.toml"
+        bump.write_text('[tool.bumpversion]\ncurrent_version = "1.0.0"\n', encoding="utf-8")
+        with inside_dir(tmp_path):
+            assert find_config_file() == bump
+
+    @pytest.mark.parametrize(
+        "content",
+        [
+            "this is [not toml",
+            "tool = 1\nproject = 1\n",
+            "tool = []\nproject = []\n",
+            "project = []\n[tool]\nbumpversion = 3\n",
+            "[tool]\nbumpversion = []\n",
+            'project = "x"\n',
+        ],
+    )
+    def test_malformed_input_does_not_raise(self, tmp_path: Path, content: str) -> None:
+        """Invalid TOML or non-mapping `tool`/`project` values are treated as no match."""
+        (tmp_path / "pyproject.toml").write_text(content, encoding="utf-8")
+        with inside_dir(tmp_path):
+            assert find_config_file() is None
+
+
 class TestReadConfigFile:
     """Tests for reading the config file."""
 

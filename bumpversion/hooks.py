@@ -224,9 +224,7 @@ def run_setup_hooks(config: Config, current_version: Version, dry_run: bool = Fa
     )
 
 
-def run_pre_commit_hooks(
-    config: Config, current_version: Version, new_version: Version, dry_run: bool = False
-) -> None:
+def run_pre_commit_hooks(config: Config, current_version: Version, new_version: Version, dry_run: bool = False) -> None:
     """Run the pre-commit hooks."""
     env = get_pre_commit_hook_env(config, current_version, new_version)
 

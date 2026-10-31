@@ -5,7 +5,7 @@ import re
 from copy import deepcopy
 from difflib import context_diff
 from pathlib import Path
-from typing import Dict, List, MutableMapping, Optional
+from typing import Dict, List, MutableMapping, Optional, Tuple
 
 from bumpversion.config import DEFAULTS as DEFAULT_CONFIG
 from bumpversion.config.models import FileChange
@@ -139,6 +139,7 @@ class ConfiguredFile:
         search_expression: re.Pattern,
         raw_search_expression: str,
         version: Version,
+        file_contents: Optional[str] = None,
     ) -> bool:
         """
         Does the file contain the change pattern?
@@ -147,6 +148,7 @@ class ConfiguredFile:
             search_expression: The compiled search expression
             raw_search_expression: The raw search expression
             version: The version to check, in case it's not the same as the original
+            file_contents: The contents to search instead of the file on disk, ex. with changes not yet written
 
         Returns:
             True if the version number is in fact present.
@@ -154,7 +156,8 @@ class ConfiguredFile:
         Raises:
             VersionNotFoundError: if the version number isn't present in this file.
         """
-        file_contents = self.get_file_contents()
+        if file_contents is None:
+            file_contents = self.get_file_contents()
         if contains_pattern(search_expression, file_contents):
             return True
 
@@ -182,7 +185,39 @@ class ConfiguredFile:
         context: MutableMapping,
         dry_run: bool = False,
     ) -> None:
-        """Make the change to the file."""
+        """
+        Make the change to this file and write it, unless this is a dry run.
+
+        Prefer `modify_files()` for several files: it writes nothing unless every file could be changed.
+        """
+        file_content_after = self.get_changed_contents(current_version, new_version, context, dry_run=dry_run)
+        if file_content_after is not None and not dry_run:
+            self.write_file_contents(file_content_after)
+
+    def get_changed_contents(
+        self,
+        current_version: Version,
+        new_version: Version,
+        context: MutableMapping,
+        file_contents: Optional[str] = None,
+        dry_run: bool = False,
+    ) -> Optional[str]:
+        """
+        Return the contents of the file with the change made, without writing anything.
+
+        Args:
+            current_version: The current version
+            new_version: The next version
+            context: The context used for rendering the version
+            file_contents: The contents to change instead of the file on disk, ex. with earlier changes not yet written
+            dry_run: True if this is a report-only job (only changes the wording of the log)
+
+        Returns:
+            The changed contents, or None if the file or the version is missing and that is ignored.
+
+        Raises:
+            FileNotFoundError: if the file doesn't exist and missing files are not ignored
+        """
         logger.info(
             "\n%sFile %s: replace `%s` with `%s`",
             logger.indent_str,
@@ -195,7 +230,7 @@ class ConfiguredFile:
             if self.file_change.ignore_missing_file:
                 logger.info("File not found, but ignoring")
                 logger.dedent()
-                return
+                return None
             raise FileNotFoundError(f"File not found: '{self.file_change.filename}'")  # pragma: no-coverage
         context["current_version"] = self._get_serialized_version("current_version", current_version, context)
         if new_version:
@@ -207,11 +242,13 @@ class ConfiguredFile:
         search_for, raw_search_pattern = self.file_change.get_search_pattern(context)
         replace_with = self.version_config.replace.format(**context)
 
-        if not self._contains_change_pattern(search_for, raw_search_pattern, current_version):
+        if file_contents is None:
+            file_contents = self.get_file_contents()
+        if not self._contains_change_pattern(search_for, raw_search_pattern, current_version, file_contents):
             logger.dedent()
-            return
+            return None
 
-        file_content_before = self.get_file_contents()
+        file_content_before = file_contents
 
         file_content_after = search_for.sub(replace_with, file_content_before)
 
@@ -223,8 +260,7 @@ class ConfiguredFile:
 
         log_changes(self.file_change.filename, file_content_before, file_content_after, dry_run)
         logger.dedent()
-        if not dry_run:  # pragma: no-coverage
-            self.write_file_contents(file_content_after)
+        return file_content_after
 
     def _get_serialized_version(self, context_key: str, version: Version, context: MutableMapping) -> str:
         """Get the serialized version."""
@@ -279,9 +315,33 @@ def modify_files(
         context: The context used for rendering the version
         dry_run: True if this should be a report-only job
     """
-    # _check_files_contain_version(files, current_version, context)
+    # Every change is made in memory first, so that no file is written unless all of them can be changed.
+    # Several changes to the same file apply one after another, each to the contents left by the previous one.
+    pending_contents: Dict[str, str] = {}
+    writers: Dict[str, ConfiguredFile] = {}
     for f in files:
-        f.make_file_change(current_version, new_version, context, dry_run)
+        path = os.path.abspath(f.file_change.filename)
+        changed = f.get_changed_contents(current_version, new_version, context, pending_contents.get(path), dry_run)
+        if changed is not None:
+            pending_contents[path] = changed
+            writers[path] = f
+
+    if dry_run:
+        return
+
+    # If a write fails, put back what was already written, so the files stay consistent.
+    originals: List[Tuple[ConfiguredFile, str]] = []
+    try:
+        for path, f in writers.items():
+            originals.append((f, f.get_file_contents()))
+            f.write_file_contents(pending_contents[path])
+    except OSError:
+        for f, original in reversed(originals):
+            try:
+                f.write_file_contents(original)
+            except OSError:
+                logger.error("Could not restore '%s'; check its contents.", f.file_change.filename)
+        raise
 
 
 class FileUpdater:
