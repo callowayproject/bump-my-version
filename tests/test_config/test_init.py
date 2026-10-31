@@ -73,6 +73,28 @@ class TestCheckCurrentVersion:
         assert bool(warnings) is (level == logging.WARNING)
         assert len(mismatches) == (1 if current != tagged else 0)
 
+    def test_equal_parsed_versions_are_not_behind(self, caplog, scm_config: SCMConfig):
+        """Strings that differ but parse to the same components are not reported as behind."""
+        config = self.make_config(scm_config, "1.2.03", "1.2.3")
+
+        with caplog.at_level(logging.DEBUG):
+            check_current_version(config)
+
+        assert not [r for r in caplog.records if r.levelno == logging.WARNING]
+
+    def test_non_numeric_component_cannot_be_compared(self, caplog, scm_config: SCMConfig):
+        """A component that is neither numeric nor in a `values` list can't be ordered, so no warning."""
+        overrides = {
+            "parse": r"(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)(?P<suffix>[a-z]*)",
+            "serialize": ("{major}.{minor}.{patch}{suffix}",),
+        }
+        config = self.make_config(scm_config, "1.2.3a", "1.2.3b", overrides)
+
+        with caplog.at_level(logging.DEBUG):
+            check_current_version(config)
+
+        assert not [r for r in caplog.records if r.levelno == logging.WARNING]
+
     def test_no_tag_logs_nothing(self, caplog, scm_config: SCMConfig):
         """Without a tag there is nothing to compare against."""
         config = self.make_config(scm_config, "1.2.3", None)
