@@ -1,6 +1,6 @@
 """Tests for version placeholder substitution in hook commands."""
 
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional
 
 import pytest
 
@@ -43,6 +43,12 @@ class TestFormatHooks:
                 ["echo {major}", "script2"],
                 id="empty_context",
             ),
+            pytest.param(
+                ["echo {v}"],
+                {"v": "a b"},
+                ["echo 'a b'"],
+                id="value_with_space_is_quoted",
+            ),
         ],
     )
     def test_format_hooks(self, hooks_list: List[str], context: Dict[str, str], expected: List[str]) -> None:
@@ -79,7 +85,7 @@ class TestHookContext:
             assert "new_version" not in ctx
 
 
-SUITE_CASES: List[Tuple[str, Callable, Optional[str], Dict[str, Any], str]] = [
+SUITE_CASES = [
     pytest.param(
         "setup",
         run_setup_hooks,
@@ -161,7 +167,7 @@ class TestSuiteFormatting:
             ]
         )
 
-    def test_formatting_before_shell_syntax_check(self, mocker, pre_commit_setup) -> None:
+    def test_formatting_before_shell_syntax_check(self, pre_commit_setup) -> None:
         """Shell syntax in a formatted hook is still detected and rejected by default."""
         config, current_version, new_version, _env = pre_commit_setup
         config.pre_commit_hooks = ["echo {new_version} | cat"]  # noqa: RUF027
@@ -183,7 +189,7 @@ class TestSuiteFormatting:
             env,
             False,
             allow_shell_hooks=True,
-            context=mocker.ANY,
+            context=None,
         )
 
 

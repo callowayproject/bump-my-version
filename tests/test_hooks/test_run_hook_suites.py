@@ -141,4 +141,4 @@ class TestHookSuites:
         suite_func(config, *suite_args)
 
         # Assert
-        mock_run_hooks.assert_called_once_with(["script1"], env, False, allow_shell_hooks=True)
+        mock_run_hooks.assert_called_once_with(["script1"], env, False, allow_shell_hooks=True, context=None)
