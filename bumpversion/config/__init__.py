@@ -29,6 +29,7 @@ DEFAULTS = {
     "tag_name": "v{new_version}",
     "tag_message": "Bump version: {current_version} → {new_version}",
     "allow_dirty": False,
+    "allow_dirty_files": [],
     "commit": False,
     "message": "Bump version: {current_version} → {new_version}",
     "moveable_tags": [],

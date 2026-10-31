@@ -33,6 +33,36 @@ environment var
 
 Bump-my-version's default behavior is to abort if the working directory has uncommitted changes. This protects you from releasing unversioned files and overwriting unsaved changes.
 
+### allow_dirty_files
+
+/// html | div.field-list
+
+required
+:   No
+
+default
+:   `[]`
+
+type
+:   list of strings
+
+command line option
+:   None
+
+environment var
+:   None
+
+///
+
+A list of glob patterns for files that are ignored by the dirty working directory check, even when `allow_dirty` is `False`. Patterns are matched against repository-relative paths using [`fnmatch`](https://docs.python.org/3/library/fnmatch.html), so `*` also matches `/`.
+
+This does not stage the files. To include them in the commit, add them in a [pre-commit hook](../hooks.md), such as `git add CHANGELOG.md`.
+
+```toml
+[tool.bumpversion]
+allow_dirty_files = ["CHANGELOG.md", "docs/changelog/*"]
+```
+
 ### commit
 
 /// html | div.field-list
@@ -304,11 +334,13 @@ Since version parts can be optional, bumpversion will try the serialization form
 
 In this example (in TOML):
 
-    serialize = [
-        "{major}.{minor}.{patch}",
-        "{major}.{minor}",
-        "{major}"
-    ]
+```text
+serialize = [
+    "{major}.{minor}.{patch}",
+    "{major}.{minor}",
+    "{major}"
+]
+```
 
 Since `0` is optional by default, Version `1.8.9` will serialize to `1.8.9`, `1.9.0` will serialize to `1.9`, and version `2.0.0` will serialize as `2`.
 

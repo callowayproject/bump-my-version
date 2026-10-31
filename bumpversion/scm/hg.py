@@ -10,7 +10,7 @@ from tempfile import NamedTemporaryFile
 from typing import ClassVar, List, MutableMapping, Optional
 
 from bumpversion.exceptions import DirtyWorkingDirectoryError, SignedTagsError
-from bumpversion.scm.models import LatestTagInfo, SCMConfig
+from bumpversion.scm.models import LatestTagInfo, SCMConfig, is_allowed_dirty
 from bumpversion.ui import get_indented_logger
 from bumpversion.utils import Pathlike, find_repo_root, format_and_raise_error, is_subpath, run_command
 
@@ -148,10 +148,9 @@ class Mercurial:
         """
         tag(name, sign=sign, message=message)
 
-    @staticmethod
-    def assert_nondirty() -> None:
+    def assert_nondirty(self) -> None:
         """Assert that the working directory is clean."""
-        assert_nondirty()
+        assert_nondirty(self.config.allow_dirty_files)
 
 
 def commit_info(config: SCMConfig) -> dict:
@@ -236,12 +235,13 @@ def tag(name: str, sign: bool = False, message: Optional[str] = None) -> None:
     run_command(command)
 
 
-def assert_nondirty() -> None:
-    """Assert that the working directory is clean."""
+def assert_nondirty(allow_dirty_files: Optional[List[str]] = None) -> None:
+    """Assert that the working directory is clean, ignoring files matching `allow_dirty_files`."""
+    patterns = allow_dirty_files or []
     if lines := [
         line.strip()
         for line in run_command(["hg", "status", "-mard"]).stdout.splitlines()
-        if not line.strip().startswith("??")
+        if not line.strip().startswith("??") and not is_allowed_dirty(line[2:].strip(), patterns)
     ]:
         joined_lines = "\n".join(lines)
         raise DirtyWorkingDirectoryError(f"Mercurial working directory is not clean:\n{joined_lines}")
