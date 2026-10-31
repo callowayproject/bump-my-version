@@ -953,6 +953,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#version-placeholders-in-hook-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version placeholders in hook commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#outputs" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3165,6 +3176,54 @@ post_commit_hooks = ["echo $BVHOOK_NEW_VERSION | tee version.txt"]
 <dd>Each version component defined by the <a href="../configuration/global/#parse">version configuration parsing regular expression</a>. The default configuration would have <code>BVHOOK_NEW_MAJOR</code>, <code>BVHOOK_NEW_MINOR</code>, and <code>BVHOOK_NEW_PATCH</code> available.</dd>
 </dl>
 </div>
+<h3 id="version-placeholders-in-hook-commands">Version placeholders in hook commands<a class="headerlink" href="#version-placeholders-in-hook-commands" title="Permanent link">&para;</a></h3>
+<p>Hook command strings may contain version placeholders that bump-my-version replaces before executing the hook. This works with safe argv-based execution, so you do not need to enable <code>allow_shell_hooks</code> to use them.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Placeholders are only substituted when <code>allow_shell_hooks</code> is <code>false</code> (the default). When <code>allow_shell_hooks</code> is <code>true</code>, hook commands are passed through unchanged so that shell variable expansion (<code>$BVHOOK_NEW_VERSION</code>) can be used instead.</p>
+</div>
+<p>The following placeholders are available:</p>
+<table>
+<thead>
+<tr>
+<th>Placeholder</th>
+<th>Value</th>
+<th>Available in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{current_version}</code></td>
+<td>The current version serialized as a string</td>
+<td>All hook suites</td>
+</tr>
+<tr>
+<td><code>{current_&lt;component&gt;}</code></td>
+<td>The value of a parsed version component, e.g. <code>{current_major}</code></td>
+<td>All hook suites</td>
+</tr>
+<tr>
+<td><code>{new_version}</code></td>
+<td>The new version serialized as a string</td>
+<td>Pre-commit and post-commit hooks</td>
+</tr>
+<tr>
+<td><code>{new_&lt;component&gt;}</code></td>
+<td>The value of a parsed new version component, e.g. <code>{new_major}</code></td>
+<td>Pre-commit and post-commit hooks</td>
+</tr>
+</tbody>
+</table>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[tool.bumpversion]</span>
+<span class="n">current_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"1.2.3"</span>
+<span class="n">pre_commit_hooks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"git tag release/{new_major}.{new_minor}"</span><span class="p">]</span>
+</code></pre></div>
+<p>During a bump to <code>1.3.0</code>, the command becomes:</p>
+<div class="highlight"><pre><span></span><code><span class="go">git tag release/1.3</span>
+</code></pre></div>
+<p>Substituted values are shell-quoted, so a value containing spaces stays a single argument.</p>
+<p>Placeholders that do not match a known version key are left unchanged, so existing commands with unrelated braces continue to work.</p>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
 <p>The <code>stdout</code> and <code>stderr</code> streams are echoed to the console if you pass the <code>-vv</code> option.</p>
 <h3 id="dry-runs">Dry-runs<a class="headerlink" href="#dry-runs" title="Permanent link">&para;</a></h3>
@@ -3189,7 +3248,7 @@ post_commit_hooks = ["echo $BVHOOK_NEW_VERSION | tee version.txt"]
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 13, 2026 17:48:33 UTC">October 13, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 31, 2026 13:45:42 UTC">October 31, 2026</span>
   </span>
 
     
@@ -3204,7 +3263,7 @@ post_commit_hooks = ["echo $BVHOOK_NEW_VERSION | tee version.txt"]
       
     </span>
     <nav>
-      Christopher Pruijsen, Corey Oordt
+      Christopher Pruijsen, Corey Oordt, Roman Tolkachyov
     </nav>
   </span>
 
