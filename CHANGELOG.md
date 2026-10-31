@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.7.0 (2026-10-31)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.7...1.7.0)
+
+### New
+
+- Added version placeholders in hook commands for safe execution. [adc21f0](https://github.com/callowayproject/bump-my-version/commit/adc21f0c8105e95201b464da10f375d7a02a82c3)
+
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [d222c27](https://github.com/callowayproject/bump-my-version/commit/d222c27aeec30691b195e4f5a7c493096c33c89f)
+
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.17.1 → v0.17.2](https://github.com/astral-sh/ruff-pre-commit/compare/v0.17.1...v0.17.2)
+
+- Skip POSIX quoting test on Windows. [4d7e582](https://github.com/callowayproject/bump-my-version/commit/4d7e582ce18295821ee420a7b265bec3b5e0fd03)
+
+- Quote hook placeholder values and skip context when shell hooks allowed. [53b6700](https://github.com/callowayproject/bump-my-version/commit/53b6700cb066706ce9b6894f79ae879fa562785e)
+
 ## 1.6.7 (2026-10-25)
 
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.6...1.6.7)
