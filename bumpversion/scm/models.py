@@ -1,5 +1,6 @@
 """Data models for source code management functions."""
 
+import fnmatch
 import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -29,6 +30,7 @@ class SCMConfig:
     tag_message: Optional[str] = None
     commit_args: Optional[str] = None
     moveable_tags: List[str] = field(default_factory=list)
+    allow_dirty_files: List[str] = field(default_factory=list)
 
     def get_version_from_tag(self, tag: str) -> Optional[str]:
         """Return the version from a tag."""
@@ -56,6 +58,7 @@ class SCMConfig:
             tag_message=config.tag_message,
             commit_args=config.commit_args,
             moveable_tags=config.moveable_tags,
+            allow_dirty_files=config.allow_dirty_files,
         )
 
 
@@ -107,6 +110,12 @@ class SCMTool(Protocol):
             DirtyWorkingDirectoryError: If the repository is not clean.
         """
         ...
+
+
+def is_allowed_dirty(path: str, patterns: List[str]) -> bool:
+    """Return `True` if `path` matches any of the `allow_dirty_files` glob `patterns`."""
+    posix_path = Path(path).as_posix()
+    return any(fnmatch.fnmatch(posix_path, pattern) for pattern in patterns)
 
 
 class DefaultSCMTool:
