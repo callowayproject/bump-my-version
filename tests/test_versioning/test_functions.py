@@ -1,3 +1,5 @@
+"""Tests for the version component functions."""
+
 import re
 
 import pytest

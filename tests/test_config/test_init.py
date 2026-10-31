@@ -8,8 +8,8 @@ import pytest
 
 from bumpversion.config import DEFAULTS, Config, check_current_version
 from bumpversion.config.models import PEP621Info
-from bumpversion.scm.models import SCMConfig, SCMInfo
 from bumpversion.config.utils import get_all_part_configs
+from bumpversion.scm.models import SCMConfig, SCMInfo
 from bumpversion.versioning.version_config import VersionConfig
 
 

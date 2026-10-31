@@ -458,7 +458,7 @@ class TestAssertNonDirty:
             git_repo.joinpath("CHANGELOG.md").touch()
             git_repo.joinpath("docs").mkdir()
             git_repo.joinpath("docs", "notes.md").touch()
-            subprocess.run(["git", "add", "."], check=True)  # noqa: S603, S607
+            subprocess.run(["git", "add", "."], check=True)
             assert_nondirty(["readme.md", "CHANGELOG.md", "docs/*"])
             with pytest.raises(DirtyWorkingDirectoryError) as exc:
                 assert_nondirty(["CHANGELOG.md"])
