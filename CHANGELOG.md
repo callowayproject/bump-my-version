@@ -1,5 +1,47 @@
 # Changelog
 
+## 1.8.0 (2026-11-01)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.7.0...1.8.0)
+
+### Fixes
+
+- Fix allow_dirty_files for renames and fold duplicated tag mismatch tests. [128dba0](https://github.com/callowayproject/bump-my-version/commit/128dba07c751c456be58f7ce0116a6fe15d4ec90)
+
+  A git rename is only ignored when both the old and new paths match.
+
+- Fix lint findings in new tests. [61132ba](https://github.com/callowayproject/bump-my-version/commit/61132ba3d8d109791356b63e12efdb45957e2e52)
+
+- Fix YY and 0Y calver formatting and parsing for years 2000 and 2100+. [7edb0c1](https://github.com/callowayproject/bump-my-version/commit/7edb0c10e1bb2a01b7832059c24e394d23c178fa)
+
+  YY is now the year minus 2000, as calver.org specifies, so 2106 renders
+  as 106. The parse patterns accept the values they render, including 0
+  for the year 2000.
+
+  Refs #346
+
+### New
+
+- Add tests for uncomparable and equal tag mismatch versions. [74990b1](https://github.com/callowayproject/bump-my-version/commit/74990b1cc928fd7ad3673fbb8eaa703f7324f854)
+
+- Add allow_dirty_files setting to exempt files from the dirty check. [d70acda](https://github.com/callowayproject/bump-my-version/commit/d70acda374803ffa703021be7688c145ffc70e00)
+
+  Files matching these glob patterns no longer make the working directory
+  dirty, so generated files like a changelog don't require --allow-dirty.
+
+  Refs #237
+
+### Updates
+
+- Change tag mismatch warning to fire only when the version is behind the tag. [6088a9f](https://github.com/callowayproject/bump-my-version/commit/6088a9f977e889798459c7075ecee6f889176662)
+
+  A current version ahead of the last tag is normal during development, so
+  that case, and versions that can't be compared, now log at debug level.
+
+  Refs #318
+
+- Update pre-commit hooks to latest versions: Ruff v0.17.3, MyPy v2.4.1, PyDocLint v0.12.0, and Rumdl v0.3.2. [972ffcf](https://github.com/callowayproject/bump-my-version/commit/972ffcf7a50c11b24c5cc4e7732330ed0553c876)
+
 ## 1.7.0 (2026-10-31)
 
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.6.7...1.7.0)
