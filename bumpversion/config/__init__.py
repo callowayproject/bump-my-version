@@ -29,6 +29,7 @@ DEFAULTS = {
     "tag_name": "v{new_version}",
     "tag_message": "Bump version: {current_version} → {new_version}",
     "allow_dirty": False,
+    "allow_dirty_files": [],
     "commit": False,
     "message": "Bump version: {current_version} → {new_version}",
     "moveable_tags": [],
@@ -104,6 +105,33 @@ def get_configuration(config_file: Optional[Pathlike] = None, **overrides: Any) 
     return config
 
 
+def _is_behind(config: Config, current_version: str, tagged_version: str) -> bool:
+    """
+    Return `True` only when `current_version` is provably older than `tagged_version`.
+
+    Returns `False` when either version can't be parsed or compared using the configured version parts.
+    """
+    version_config = config.version_config
+    current = version_config.parse(current_version)
+    tagged = version_config.parse(tagged_version)
+    if current is None or tagged is None:
+        return False
+
+    def sort_key(version: Any, name: str) -> int:
+        component = version[name]
+        values = getattr(component.func, "_values", None)
+        return values.index(component.value) if values else int(component.value)
+
+    try:
+        for name in version_config.order:
+            current_key, tagged_key = sort_key(current, name), sort_key(tagged, name)
+            if current_key != tagged_key:
+                return current_key < tagged_key
+    except (ValueError, TypeError, KeyError):
+        return False
+    return False
+
+
 def check_current_version(config: Config) -> str:
     """
     Returns the current version.
@@ -129,7 +157,9 @@ def check_current_version(config: Config) -> str:
     elif current_version is None and scm_info.current_version:
         return scm_info.current_version
     elif current_version and scm_info.current_version and current_version != scm_info.current_version:
-        logger.warning(
+        # A version behind the last tag is suspicious. Ahead of it is normal during development.
+        log = logger.warning if _is_behind(config, current_version, scm_info.current_version) else logger.debug
+        log(
             "Specified version (%s) does not match last tagged version (%s)",
             current_version,
             scm_info.current_version,

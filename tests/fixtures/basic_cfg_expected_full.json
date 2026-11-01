@@ -1,5 +1,6 @@
 {
   "allow_dirty": false,
+  "allow_dirty_files": [],
   "allow_shell_hooks": false,
   "commit": true,
   "commit_args": null,

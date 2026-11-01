@@ -13,8 +13,8 @@ MONTH_ABBREVIATIONS = [abbr for abbr in calendar.month_abbr if abbr]
 
 CALVER_PATTERN_MAP = {
     "{YYYY}": r"(?:[1-9][0-9]{3})",
-    "{YY}": r"(?:[1-9][0-9]?)",
-    "{0Y}": r"(?:[0-9]{2})",
+    "{YY}": r"(?:[1-9][0-9]?|0|[1-9][0-9]{2})",
+    "{0Y}": r"(?:[0-9]{2}|[0-9]{3})",
     "{MMM}": f"(?:{'|'.join(MONTH_ABBREVIATIONS)})",
     "{MM}": r"(?:1[0-2]|[1-9])",
     "{0M}": r"(?:1[0-2]|0[1-9])",
@@ -82,10 +82,12 @@ def get_context(
 
 def get_datetime_info(current_dt: datetime.datetime) -> dict:
     """Return the full structure of the given datetime for formatting."""
+    # calver.org defines YY as the year minus 2000, so 2106 is 106, not 6
+    short_year = current_dt.year - 2000 if current_dt.year >= 2000 else current_dt.year % 100
     return {
         "YYYY": current_dt.strftime("%Y"),
-        "YY": current_dt.strftime("%y").lstrip("0") or "0",
-        "0Y": current_dt.strftime("%y"),
+        "YY": str(short_year),
+        "0Y": f"{short_year:02d}",
         "MMM": current_dt.strftime("%b"),
         "MM": str(current_dt.month),
         "0M": current_dt.strftime("%m"),

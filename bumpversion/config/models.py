@@ -100,6 +100,7 @@ class Config(BaseSettings):
     tag_name: str
     tag_message: Optional[str]
     allow_dirty: bool
+    allow_dirty_files: List[str] = Field(default_factory=list)
     commit: bool
     message: str
     commit_args: Optional[str]
