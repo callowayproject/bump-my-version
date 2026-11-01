@@ -269,8 +269,8 @@ tests/
 - Class: `Test<Thing>`
 - Test names explain behavior/intent
 - Examples:
-    - `test_is_not_adult_if_age_less_than_18`
-    - `test_fails_if_account_invalid`
+  - `test_is_not_adult_if_age_less_than_18`
+  - `test_fails_if_account_invalid`
 
 ## Coverage
 

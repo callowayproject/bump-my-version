@@ -59,9 +59,9 @@ Guidelines for effective test-driven development workflows.
 - Use descriptive names that read as specifications
 - Format: `should_<expected>_when_<condition>`
 - Examples:
-    - `should_return_zero_when_cart_is_empty`
-    - `should_reject_negative_amounts`
-    - `should_apply_discount_for_members`
+  - `should_return_zero_when_cart_is_empty`
+  - `should_reject_negative_amounts`
+  - `should_apply_discount_for_members`
 
 ### Test Structure
 
