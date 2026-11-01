@@ -1,1 +1,3 @@
-- *.md
+- [The mental model used by Bump My Version](mental-model.md)
+- [Version components](version-parts.md)
+- [The show subcommand](show-subcommand.md)

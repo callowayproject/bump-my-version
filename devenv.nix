@@ -38,6 +38,7 @@ in {
     docker
     fish
     pre-commit
+    nodejs_22
   ];
 
   # Commands which run when the shell is started

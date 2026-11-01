@@ -1,0 +1,15 @@
+{
+  "name": "bump-my-version-docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "gen": "uv run --group docs python scripts/generate_reference.py",
+    "dev": "npm run gen && vitepress dev",
+    "build": "npm run gen && vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "markdown-it-deflist": "^3.0.0",
+    "vitepress": "^1.6.4"
+  }
+}

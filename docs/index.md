@@ -1,134 +1,39 @@
 ---
-comments: true
+layout: home
 title: Bump My Version
+
+hero:
+  name: Bump My Version
+  tagline: Update the version of your project and the files that mention it.
+  image:
+    src: /bump-my-version-logo.svg
+    alt: Bump My Version
+  actions:
+    - theme: brand
+      text: Get started
+      link: /tutorials/getting-started/
+    - theme: alt
+      text: Reference
+      link: /reference/
+
+features:
+  - icon: ⚙️
+    title: Work as a part of an automated build system
+    details: Bump My Version works with automation workflows.
+  - icon: 🔎
+    title: Search and replace data in project files
+    details: Update the version and metadata in your files when you increment your version.
+  - icon: 🎚️
+    title: Manage your project's versioning
+    details: Increment and serialize version numbers, parse them, and support SemVer, CalVer, and other versioning schemes.
+  - icon: 🔀
+    title: Work with the project's source control system
+    details: Commit changes, tag releases, and read version numbers from tags.
 ---
-
-# Bump My Version
-
-## Bump My Version's purpose is to
-
-
-/// html | div.grid.wide-gap
-/// html | div.card-container.horizontal.depth-0
-/// html | div.card-icon
-:fontawesome-solid-gear:
-///
-/// html | div.card-content
-/// html | div.card-content-title
-Work as a part of an automated build system.
-///
-Bump My Version works with automation workflows.
-///
-///
-/// html | div.card-container.horizontal.depth-0
-/// html | div.card-icon
-:fontawesome-solid-magnifying-glass:
-///
-/// html | div.card-content
-/// html | div.card-content-title
-Search and replace data in project files
-///
-Update the version and metadata in your files when you increment your version.
-///
-///
-/// html | div.card-container.horizontal.depth-0
-/// html | div.card-icon
-:fontawesome-solid-sliders:
-///
-/// html | div.card-content
-/// html | div.card-content-title
-Manage your project's versioning
-///
-- Increment and serialize version numbers
-- Parsing version numbers
-- Support SemVer, CalVer, and other versioning schemes
-///
-///
-/// html | div.card-container.horizontal.depth-0
-/// html | div.card-icon
-:fontawesome-solid-code-commit:
-///
-/// html | div.card-content
-/// html | div.card-content-title
-Work with the project's source control system
-///
-- Committing changes
-- Tagging releases
-- Reading version numbers from tags
-///
-///
-///
 
 ## Jump to section
 
-/// html | div.grid.wide-gap
-
-/// html | div.card-container
-
-/// html | div.card-media
-
-![Tutorials](assets/tutorial.jpg)
-
-///
-/// html | div.card-content
-
-[Tutorials](tutorials/getting-started.md)
-{ .card-content-title }
-
-Follow along with our guides to learn how to use Bump My Version.
-///
-///
-
-/// html | div.card-container
-
-/// html | div.card-media
-
-![Reference](assets/reference.jpg)
-
-///
-
-/// html | div.card-content
-
-[Reference](reference/)
-{ .card-content-title }
-
-Consult the reference for specifics about the Bump My Version's configuration and commands.
-///
-///
-
-/// html | div.card-container
-
-/// html | div.card-media
-
-![How-To's](assets/how-to.jpg)
-
-///
-
-/// html | div.card-content
-
-[How-To's](howtos/index.md)
-{ .card-content-title }
-
-Need to get something done? Check out our how-to guides.
-///
-///
-
-/// html | div.card-container
-
-/// html | div.card-media
-
-![Explanations](assets/explanations.jpg)
-
-///
-
-/// html | div.card-content
-
-[Explanations](explanation/index.md)
-{ .card-content-title }
-
-Want to understand the library better? Read our explanations behind the design.
-
-///
-
-///
-///
+- [Tutorials](tutorials/getting-started.md): Follow along with our guides to learn how to use Bump My Version.
+- [Reference](reference/index.md): Consult the reference for specifics about the Bump My Version's configuration and commands.
+- [How-To's](howtos/index.md): Need to get something done? Check out our how-to guides.
+- [Explanations](explanation/index.md): Want to understand the library better? Read our explanations behind the design.

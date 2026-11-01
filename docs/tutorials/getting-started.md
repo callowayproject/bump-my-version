@@ -12,11 +12,13 @@ uv tool install bump-my-version
 
 The default configuration uses a simplified version of [semantic versioning](https://semver.org/).
 
-!!! Note
+::: info Note
 
-    Python projects can use `pyproject.toml` as the `--destination` of the sample config.
+Python projects can use `pyproject.toml` as the `--destination` of the sample config.
 
-```console title="Generating a default configuration"
+:::
+
+```console [Generating a default configuration]
 $ bump-my-version sample-config --no-prompt --destination .bumpversion.toml
 $ cat .bumpversion.toml
 [tool.bumpversion]
@@ -42,7 +44,7 @@ commit_args = ""
 
 You can see the potential versioning paths with the `show-bump` subcommand. This visualization will help debug any versioning logic you implement.
 
-```console title="Showing the potential versioning path"
+```console [Showing the potential versioning path]
 $ bump-my-version show-bump
 0.1.0 ── bump ─┬─ major ─ 1.0.0
                ├─ minor ─ 0.2.0
@@ -51,7 +53,7 @@ $ bump-my-version show-bump
 
 You can also pass in a specific version to see how bumping that version would work.
 
-```console title="Showing the potential versioning path from a specific version"
+```console [Showing the potential versioning path from a specific version]
 $ bump-my-version show-bump 1.2.3
 1.2.3 ── bump ─┬─ major ─ 2.0.0
                ├─ minor ─ 1.3.0
@@ -62,7 +64,7 @@ $ bump-my-version show-bump 1.2.3
 
 If you want to get the new version within a script, you can use the [`show`](../../reference/cli/#bump-my-version-show) method.
 
-```console title="Extract the new version"
+```console [Extract the new version]
 $ bump-my-version show current_version
 1.2.3
 $ bump-my-version show --increment minor new_version
@@ -75,13 +77,13 @@ Let's say your version is stored in a file named `VERSION`. Every time you bump 
 
 Create the `VERSION` file with the current version `0.1.0`:
 
-```console title="Create a VERSION file"
+```console [Create a VERSION file]
 $ echo "0.1.0" >> VERSION
 ```
 
 Add the following to the `.bumpversion.toml` file.
 
-```toml title=".bumpversion.toml"
+```toml [.bumpversion.toml]
 [[tool.bumpversion.files]]
 filename = "VERSION"
 ```
@@ -94,11 +96,14 @@ You will increment the version using the `bump` subcommand. You "bump" a specifi
 
 The `--dry-run` option will explain all the steps it performs without permanent changes. Use the `-vv` option to get the full description for debugging later.
 
-!!! Note
+::: info Note
 
-    If you are in a Git or Mercurial repository, you may see additional messages.
+If you are in a Git or Mercurial repository, you may see additional messages.
 
-```ansi-shell-session title="Incrementing the minor segment"
-$ bump-my-version bump minor --dry-run -vv
-{% include-markdown "../assets/getting-started-dry-run.ansi" comments=false %}
+:::
+
+```console [Incrementing the minor segment]
+bump-my-version bump minor --dry-run -vv
 ```
+
+<<< ../assets/getting-started-dry-run.ansi

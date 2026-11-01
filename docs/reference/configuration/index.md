@@ -3,7 +3,6 @@ title: Configuration
 description: How to configure Bump My Version
 icon:
 date: 2024-08-11
-comments: true
 ---
 
 # Configuration

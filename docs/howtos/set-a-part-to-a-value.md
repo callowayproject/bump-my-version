@@ -12,7 +12,7 @@ With a current version of `0.9.3`, the new version is `1.0.0`. Like a normal bum
 
 Given this configuration:
 
-```toml title=".bumpversion.toml or other config file"
+```toml [.bumpversion.toml or other config file]
 [tool.bumpversion.parts.release]
 optional_value = "final"
 values = ["beta", "rc", "final"]

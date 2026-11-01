@@ -128,9 +128,6 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
-# mkdocs documentation
-/site
-
 # mypy
 .mypy_cache/
 .dmypy.json
@@ -180,3 +177,11 @@ devenv.lock
 
 # Codacy local analysis
 .codacy/
+
+# VitePress docs
+docs/node_modules/
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+docs/.vitepress/api-sidebar.json
+docs/reference/api/
+docs/reference/cli.md

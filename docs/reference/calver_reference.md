@@ -29,7 +29,7 @@ combined to create a custom version format. For example, the format `YYYY.MM.DD`
 | `GG`   | 0, 1, 2, …, 99      | ISO 8601 short week-based year as integer           |
 | `0G`   | 01, 02, …, 99       | ISO 8601 short week-based year, zero-padded         |
 
-```toml title="Example configuration"
+```toml [Example configuration]
 [tool.bumpversion.parts.release]
 calver_format = "{YYYY}.{MM}.{DD}"
 ```
@@ -61,13 +61,15 @@ Using the following chart, we can set up the version parsing:
 | `GG`   | `(?:[0-9][0-9]?)`                                                 |
 | `0G`   | `(?:[0-9]{2})`                                                    |
 
-!!! Note "Month abbreviations"
+::: info Month abbreviations
 
-    The month abbreviation is locale-based. Here are some examples:
+The month abbreviation is locale-based. Here are some examples:
 
-    `(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)` for English
+`(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)` for English
 
-    `(?:jan|fév|mar|avr|mai|jui|jui|aoû|sep|oct|nov|déc)` for French
+`(?:jan|fév|mar|avr|mai|jui|jui|aoû|sep|oct|nov|déc)` for French
+
+:::
 
 You can use these regular expressions to parse CalVer versions in your project. For example, the following `parse`
 configuration can be used to parse a version string in the format `YYYY.MM.DD` as the `release` part of the version

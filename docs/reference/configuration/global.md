@@ -3,7 +3,6 @@ title: Global Configuration
 description: Configuration values that affect all of Bump My Version
 icon:
 date: 2024-08-11
-comments: true
 ---
 
 ## Global Configuration
@@ -12,13 +11,11 @@ The general configuration is grouped in a `[tool.bumpversion]` or `[bumpversion]
 
 ### allow_dirty
 
-/// html | div.field-list
-
 required
 :   No
 
 default
-:   `False` 
+:   `False`
 
 type
 :   boolean
@@ -29,13 +26,9 @@ command line option
 environment var
 :   `BUMPVERSION_ALLOW_DIRTY`
 
-///
-
 Bump-my-version's default behavior is to abort if the working directory has uncommitted changes. This protects you from releasing unversioned files and overwriting unsaved changes.
 
 ### allow_dirty_files
-
-/// html | div.field-list
 
 required
 :   No
@@ -52,8 +45,6 @@ command line option
 environment var
 :   None
 
-///
-
 A list of glob patterns for files that are ignored by the dirty working directory check, even when `allow_dirty` is `False`. Patterns are matched against repository-relative paths using [`fnmatch`](https://docs.python.org/3/library/fnmatch.html), so `*` also matches `/`.
 
 This does not stage the files. To include them in the commit, add them in a [pre-commit hook](../hooks.md), such as `git add CHANGELOG.md`.
@@ -64,8 +55,6 @@ allow_dirty_files = ["CHANGELOG.md", "docs/changelog/*"]
 ```
 
 ### commit
-
-/// html | div.field-list
 
 required
 :   No
@@ -82,15 +71,11 @@ command line option
 environment var
 :   `BUMPVERSION_COMMIT`
 
-///
-
 Whether to create a commit using git or Mercurial.
 
 If you have pre-commit hooks, add an option to [`commit_args`](global.md#commit_args) to turn off your pre-commit hooks. For Git, use `--no-verify` and use `--config hooks.pre-commit=` for Mercurial.
 
 ### commit_args
-
-/// html | div.field-list
 
 required
 : No
@@ -107,15 +92,11 @@ command line option
 environment var
 : `BUMPVERSION_COMMIT_ARGS`
 
-///
-
 Extra arguments to pass to commit command. This is only used when the [`commit`](global.md#commit) option is set to `True`.
 
 If you have pre-commit hooks, add an option to turn off your pre-commit hooks. For Git, use `--no-verify` and use `--config hooks.pre-commit=` for Mercurial.
 
 ### current_version
-
-/// html | div.field-list
 
 required
 : **Yes‡**
@@ -132,19 +113,17 @@ command line option
 environment var
 : `BUMPVERSION_CURRENT_VERSION`
 
-///
-
 The current version of the software package before bumping. A value for this is required, unless a fallback value is found.
 
-!!! note
+::: info Note
 
-    ‡ If `pyproject.toml` exists, then `current_version` falls back to `project.version` in `pyproject.toml`. This only works if `project.version` is statically set. Such a `pyproject.toml` is also found by [configuration file discovery](index.md#configuration-files) when it has no `[tool.bumpversion]` table, or only `[[tool.bumpversion.files]]`.
+‡ If `pyproject.toml` exists, then `current_version` falls back to `project.version` in `pyproject.toml`. This only works if `project.version` is statically set. Such a `pyproject.toml` is also found by [configuration file discovery](index.md#configuration-files) when it has no `[tool.bumpversion]` table, or only `[[tool.bumpversion.files]]`.
+
+:::
 
 When `current_version` differs from the version of the last SCM tag, Bump My Version compares the two using your `parse` and `serialize` settings. It logs a warning only if `current_version` is _older_ than the last tag. If it is ahead of the tag (the normal state during development), or the two versions can't be compared, the mismatch is logged at debug level. Use `-vv` to see it.
 
 ### ignore_missing_files
-
-/// html | div.field-list
 
 required
 : No
@@ -161,13 +140,9 @@ command line option
 environment var
 : `BUMPVERSION_IGNORE_MISSING_FILES`
 
-///
-
 If `True`, don't fail if the configured file is missing.
 
 ### ignore_missing_version
-
-/// html | div.field-list
 
 required
 : No
@@ -184,13 +159,9 @@ command line option
 environment var
 : `BUMPVERSION_IGNORE_MISSING_VERSION`
 
-///
-
 If `True`, don't fail if the version string to be replaced is not found in the file.
 
 ### message
-
-/// html | div.field-list
 
 required
 :   No
@@ -207,15 +178,11 @@ command line option
 environment var
 :   `BUMPVERSION_MESSAGE`
 
-///
-
 The commit message template to use when creating a commit. This is only used when the [`commit`](global.md#commit) option is set to `True`.
 
 This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](../formatting-context.md) describes the available variables.
 
 ### parse
-
-/// html | div.field-list
 
 required
 : No
@@ -232,15 +199,11 @@ command line option
 environment var
 : `BUMPVERSION_PARSE`
 
-///
-
 This is the default regular expression ([Python regular expression syntax](https://docs.python.org/3/library/re.html#regular-expression-syntax)) for finding and parsing the version string into its components. Individual part or file configurations may override this.
 
 The regular expression must be able to parse all strings produced by the configured [`serialize`](global.md#serialize) value. Named matching groups ("`(?P<name>...)`") indicate the version part the matched value belongs to.
 
 ### regex
-
-/// html | div.field-list
 
 required
 : No
@@ -257,13 +220,9 @@ command line option
 environment var
 : `BUMPVERSION_REGEX`
 
-///
-
 Treat the `search` string as a regular expression.
 
 ### replace
-
-/// html | div.field-list
 
 required
 : No
@@ -280,13 +239,9 @@ command line option
 environment var
 : `BUMPVERSION_REPLACE`
 
-///
-
 This is the template to create the string that will replace the current version number in the file.
 
 ### search
-
-/// html | div.field-list
 
 required
 : No
@@ -303,15 +258,11 @@ command line option
 environment var
 : `BUMPVERSION_SEARCH`
 
-///
-
 This is the template string for searching. It is rendered using the [formatting context](../formatting-context.md) for searching in the file. Individual file configurations may override this. This can span multiple lines and is templated using [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](../formatting-context.md) describes the available variables.
 
 This is useful if there is the remotest possibility that the current version number might be present multiple times in the file and you mean to bump only one of the occurrences.
 
 ### serialize
-
-/// html | div.field-list
 
 required
 : No
@@ -327,8 +278,6 @@ command line option
 
 environment var
 : `BUMPVERSION_SERIALIZE`
-
-///
 
 This is the default list of templates specifying how to serialize the version parts back to a version string. Individual part or file configurations may override this.
 
@@ -350,8 +299,6 @@ Each string is templated using the [Python Format String Syntax](https://docs.py
 
 ### sign_tags
 
-/// html | div.field-list
-
 required
 : No
 
@@ -367,13 +314,9 @@ command line option
 environment var
 : `BUMPVERSION_SIGN_TAGS`
 
-///
-
 If `True`, sign the created tag, when [`tag`](global.md#tag) is `True`.
 
 ### tag
-
-/// html | div.field-list
 
 required
 : No
@@ -390,15 +333,11 @@ command line option
 environment var
 : `BUMPVERSION_TAG`
 
-///
-
 If `True`, create a tag after committing the changes. The tag is named using the [`tag_name`](global.md#tag_name) option.
 
 If you are using `git`, don't forget to `git-push` with the `--tags` flag when you are done, or set [`push_tag`](global.md#push_tag) to `True` to do it automatically.
 
 ### push_tag
-
-/// html | div.field-list
 
 required
 : No
@@ -415,13 +354,9 @@ command line option
 environment var
 : `BUMPVERSION_PUSH_TAG`
 
-///
-
 If `True`, push the tag to the `origin` remote after it is created, when [`tag`](global.md#tag) is `True`. This is useful for tag-only release processes, where [`commit`](global.md#commit) is `False` and there would otherwise be no other reason to push.
 
 ### tag_message
-
-/// html | div.field-list
 
 required
 : No
@@ -438,8 +373,6 @@ command line option
 environment var
 : `BUMPVERSION_TAG_MESSAGE`
 
-///
-
 The tag message template to use when creating a tag when [`tag`](global.md#tag) is `True`
 
 This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](../formatting-context.md) describes the available variables.
@@ -447,8 +380,6 @@ This string is templated using the [Python Format String Syntax](https://docs.py
 Bump My Version creates an _annotated_ tag in Git by default. To turn this off and create a _lightweight_ tag, you must explicitly set an empty `tag_message` value.
 
 ### tag_name
-
-/// html | div.field-list
 
 required
 : No
@@ -465,53 +396,51 @@ command line option
 environment var
 : `BUMPVERSION_TAG_NAME`
 
-///
-
 The template used to render the tag when [`tag`](global.md#tag) is `True`.
 
 This string is templated using the [Python Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax). The [formatting context reference](../formatting-context.md) describes the available variables.
 
 ### Examples
 
-=== "TOML"
+::: code-group
 
-    ```toml
-    [tool.bumpversion]
-    allow_dirty = false
-    commit = false
-    message = "Bump version: {current_version} → {new_version}"
-    commit_args = ""
-    tag = false
-    push_tag = false
-    sign_tags = false
-    tag_name = "v{new_version}"
-    tag_message = "Bump version: {current_version} → {new_version}"
-    current_version = "1.0.0"
-    parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
-    serialize = [
-        "{major}.{minor}.{patch}"
-    ]
-    search = "{current_version}"
-    replace = "{new_version}"
-    ```
+```toml [TOML]
+[tool.bumpversion]
+allow_dirty = false
+commit = false
+message = "Bump version: {current_version} → {new_version}"
+commit_args = ""
+tag = false
+push_tag = false
+sign_tags = false
+tag_name = "v{new_version}"
+tag_message = "Bump version: {current_version} → {new_version}"
+current_version = "1.0.0"
+parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
+serialize = [
+    "{major}.{minor}.{patch}"
+]
+search = "{current_version}"
+replace = "{new_version}"
+```
 
-=== "CFG"
+```ini [CFG]
+[bumpversion]
+allow_dirty = False
+commit = False
+message = Bump version: {current_version} → {new_version}
+commit_args = 
+tag = False
+push_tag = False
+sign_tags = False
+tag_name = v{new_version}
+tag_message = Bump version: {current_version} → {new_version}
+current_version = 1.0.0
+parse = (?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)
+serialize =
+    {major}.{minor}.{patch}
+search = {current_version}
+replace = {new_version}
+```
 
-    ```ini
-    [bumpversion]
-    allow_dirty = False
-    commit = False
-    message = Bump version: {current_version} → {new_version}
-    commit_args = 
-    tag = False
-    push_tag = False
-    sign_tags = False
-    tag_name = v{new_version}
-    tag_message = Bump version: {current_version} → {new_version}
-    current_version = 1.0.0
-    parse = (?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)
-    serialize =
-        {major}.{minor}.{patch}
-    search = {current_version}
-    replace = {new_version}
-    ```
+:::

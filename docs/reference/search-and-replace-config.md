@@ -53,17 +53,17 @@ If you are using a TOML-formatted configuration file, you must also escape backs
 
 The following template:
 
-=== "TOML"
+::: code-group
 
-    ```toml
-    search = "{current_version} date-released: \\d{{4}}-\\d{{2}}-\\d{{2}}"
-    ```
+```toml [TOML]
+search = "{current_version} date-released: \\d{{4}}-\\d{{2}}-\\d{{2}}"
+```
 
-=== "CFG"
+```ini [CFG]
+search = "{current_version} date-released: \d{{4}}-\d{{2}}-\d{{2}}"
+```
 
-    ```ini
-    search = "{current_version} date-released: \d{{4}}-\d{{2}}-\d{{2}}"
-    ```
+:::
 
 Gets rendered to:
 

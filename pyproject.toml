@@ -61,20 +61,7 @@ dev = [
     "pre-commit",
 ]
 docs = [
-    "click-extra[mkdocs]>=7.20.1 ; python_version >= '3.10'",
-    "mdx-truly-sane-lists",
-    "properdocs",
-    "mkdocs-click",
-    "mkdocs-drawio",
-    "mkdocs-gen-files",
-    "mkdocs-git-authors-plugin",
-    "mkdocs-git-committers-plugin",
-    "mkdocs-git-revision-date-localized-plugin>=1.2.6",
-    "mkdocs-include-markdown-plugin",
-    "mkdocs-literate-nav",
-    "mkdocs-material",
-    "mkdocstrings[python]",
-    "python-frontmatter",
+    "griffe",
 ]
 test = [
     "coverage",
@@ -173,7 +160,7 @@ exclude = [
 ]
 disable = ["MD033", "MD057"]
 respect-gitignore = true
-flavor = "mkdocs"
+flavor = "standard"
 
 [tool.rumdl.MD013]
 line-length = 120  # Maximum characters per line (default: 80)

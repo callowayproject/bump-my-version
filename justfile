@@ -31,6 +31,14 @@ ready-py:
     uv sync --group dev --group test
     unset VIRTUAL_ENV
 
+# Serve the documentation with live reload
+docs-dev:
+    cd docs && npm install && npm run dev
+
+# Build the documentation into docs/.vitepress/dist
+docs-build:
+    cd docs && npm ci && npm run build
+
 # Run the tests and open the coverage report
 test:
     -pytest
