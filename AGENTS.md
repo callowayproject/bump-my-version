@@ -24,27 +24,11 @@ Single-context: one `GLOSSARY.md` + `docs/adr/` at the repo root. See `docs/agen
 # Install for development
 uv sync --all-groups
 
-# Run all tests
-uv run pytest
-
-# Run a single test file
-uv run pytest tests/test_files.py
-
 # Run a single test
 uv run pytest tests/test_files.py::test_function_name
 
-# Lint and format
-uv run ruff check bumpversion/
-uv run ruff format bumpversion/
-
-# Type checking
-uv run mypy bumpversion/
-
-# Check docstring coverage (must stay above 95%)
-uv run interrogate bumpversion/
-
-# Run pre-commit hooks on all files
-pre-commit run --all-files
+# Lint, format, typecheck, docstrings, markdown: see "Pre-commit gate" in CODING_STANDARDS.md
+uv run pre-commit run --all-files
 ```
 
 ## Architecture
@@ -76,10 +60,3 @@ Config flows from file (`.bumpversion.toml` or `[tool.bumpversion]` in `pyprojec
 ### Version components
 
 Each part of a version (major, minor, patch) is a `VersionComponent` with a `VersionComponentSpec` describing its behavior (numeric increment, fixed values list, or CalVer expression). Components have dependency relationships — bumping a higher-order component resets dependent ones.
-
-## Code style
-
-- Line length: 120 characters
-- Docstrings: Google style, required on all public symbols (95% coverage enforced by interrogate)
-- Ruff with preview mode enabled; see `[tool.ruff.lint]` in `pyproject.toml` for full rule set
-- Type annotations required on all function signatures

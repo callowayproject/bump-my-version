@@ -28,11 +28,11 @@ Rules for code in this repository. Tooling config in `pyproject.toml` is authori
 ## Pre-commit gate
 
 ```bash
-uv run ruff check bumpversion/ && uv run ruff format bumpversion/
-uv run mypy bumpversion/
-uv run interrogate bumpversion/
+uv run pre-commit run --all-files
 uv run pytest --agent-digest=term -p no:sugar
 ```
+
+`.pre-commit-config.yaml` is the single list of lint checks (ruff, mypy, interrogate, pydoclint, rumdl for markdown, codespell); pre-commit.ci runs it on every PR.
 
 ## Topic guidance
 
