@@ -3,7 +3,6 @@ title: Hooks
 description: Details about writing and setting up hooks
 icon:
 date: 2024-08-15
-comments: true
 ---
 
 ## Hooks
@@ -21,9 +20,11 @@ There are three hook suites: _setup, pre-commit,_ and _post-commit._ During the 
 5. Commit and tag
 6. Run _post-commit_ hooks
 
-!!! Note
+::: info Note
 
-    Don't confuse the _pre-commit_ and _post-commit_ hook suites with Git pre- and post-commit hooks. Those hook suites are named for their adjacency to the commit and tag operation.
+Don't confuse the _pre-commit_ and _post-commit_ hook suites with Git pre- and post-commit hooks. Those hook suites are named for their adjacency to the commit and tag operation.
+
+:::
 
 ### Configuration
 
@@ -52,12 +53,14 @@ pre_commit_hooks = ["path/to/pre-commit.sh"]
 post_commit_hooks = ["path/to/post-commit.sh"]
 ```
 
-!!! Note
+::: info Note
 
-    You can make a script executable using the following steps:
+You can make a script executable using the following steps:
 
-    1. Add a [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)) line to the top like `#!/bin/bash`
-    2. Run `chmod u+x path/to/script.sh` to set the executable bit
+1. Add a [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)) line to the top like `#!/bin/bash`
+2. Run `chmod u+x path/to/script.sh` to set the executable bit
+
+:::
 
 ### Safe execution and shell syntax
 
@@ -109,11 +112,11 @@ allow_shell_hooks = true
 post_commit_hooks = ["echo $BVHOOK_NEW_VERSION | tee version.txt"]
 ```
 
-!!! Warning
+::: warning
 
-    `allow_shell_hooks = true` restores the previous behavior but exposes you to shell-injection risks if any hook string is ever constructed from untrusted input. Prefer rewriting hooks to remove shell syntax and leaving this option at its default of `false`.
+`allow_shell_hooks = true` restores the previous behavior but exposes you to shell-injection risks if any hook string is ever constructed from untrusted input. Prefer rewriting hooks to remove shell syntax and leaving this option at its default of `false`.
 
-/// html | div.field-list
+:::
 
 `allow_shell_hooks`
 
@@ -129,8 +132,6 @@ type
 environment var
 :   `BUMPVERSION_ALLOW_SHELL_HOOKS`
 
-///
-
 Whether to allow hook strings that contain shell metacharacters (pipes, redirects, variable expansion, etc.) to run via the system shell. When `false` (the default), any hook containing shell syntax raises a `HookError` with a migration message. When `true`, those hooks run with `shell=True` and a warning is logged.
 
 ### Hook Environments
@@ -143,23 +144,19 @@ All environment variables set before bump-my-version was run are available.
 
 #### Date and time fields
 
-/// html | div.field-list
-
 `BVHOOK_NOW`
 : The ISO-8601-formatted current local time without a time zone reference.
 
 `BVHOOK_UTCNOW`
 : The ISO-8601-formatted current local time in the UTC time zone.
 
-///
-
 #### Source code management fields
 
-!!! Note
+::: info Note
 
-    These fields will only have values if the code is in a Git or Mercurial repository.
+These fields will only have values if the code is in a Git or Mercurial repository.
 
-/// html | div.field-list
+:::
 
 `BVHOOK_COMMIT_SHA`
 : The latest commit reference.
@@ -179,11 +176,7 @@ All environment variables set before bump-my-version was run are available.
 `BVHOOK_SHORT_BRANCH_NAME`
 : The current branch name, converted to lowercase, with non-alphanumeric characters removed and truncated to 20 characters. For example, `feature/MY-long_branch-name` would become `featuremylongbranchn`.
 
-///
-
 #### Current version fields
-
-/// html | div.field-list
 
 `BVHOOK_CURRENT_VERSION`
 : The current version serialized as a string
@@ -194,15 +187,13 @@ All environment variables set before bump-my-version was run are available.
 `BVHOOK_CURRENT_<version component>`
 : Each version component defined by the [version configuration parsing regular expression](configuration/global.md#parse). The default configuration would have `BVHOOK_CURRENT_MAJOR`, `BVHOOK_CURRENT_MINOR`, and `BVHOOK_CURRENT_PATCH` available.
 
-///
-
 #### New version fields
 
-!!! Note
+::: info Note
 
-    These are not available in the _setup_ hook suite.
+These are not available in the _setup_ hook suite.
 
-/// html | div.field-list
+:::
 
 `BVHOOK_NEW_VERSION`
 : The new version serialized as a string
@@ -216,15 +207,15 @@ All environment variables set before bump-my-version was run are available.
 `BVHOOK_NEW_<version component>`
 : Each version component defined by the [version configuration parsing regular expression](configuration/global.md#parse). The default configuration would have `BVHOOK_NEW_MAJOR`, `BVHOOK_NEW_MINOR`, and `BVHOOK_NEW_PATCH` available.
 
-///
-
 ### Version placeholders in hook commands
 
 Hook command strings may contain version placeholders that bump-my-version replaces before executing the hook. This works with safe argv-based execution, so you do not need to enable `allow_shell_hooks` to use them.
 
-!!! Note
+::: info Note
 
-    Placeholders are only substituted when `allow_shell_hooks` is `false` (the default). When `allow_shell_hooks` is `true`, hook commands are passed through unchanged so that shell variable expansion (`$BVHOOK_NEW_VERSION`) can be used instead.
+Placeholders are only substituted when `allow_shell_hooks` is `false` (the default). When `allow_shell_hooks` is `true`, hook commands are passed through unchanged so that shell variable expansion (`$BVHOOK_NEW_VERSION`) can be used instead.
+
+:::
 
 The following placeholders are available:
 

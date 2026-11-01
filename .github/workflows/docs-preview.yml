@@ -31,14 +31,25 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
+
       - name: Install dependencies
-        run: uv sync -p 3.12 --group docs
+        run: |
+          uv sync -p 3.12 --group docs
+          npm ci --prefix docs
 
       - name: Build documentation
-        run: |
-          uv run properdocs build --strict
+        env:
+          # pr-preview-action publishes under pr-preview/pr-<number>/
+          DOCS_BASE: /bump-my-version/pr-preview/pr-${{ github.event.number }}/
+        run: npm run build --prefix docs
 
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1
         with:
-          source-dir: ./site/
+          source-dir: ./docs/.vitepress/dist/

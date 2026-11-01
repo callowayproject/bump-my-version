@@ -24,11 +24,25 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
+
       - name: Install dependencies
         run: |
-          git pull --all
           uv sync -p 3.12 --group docs
+          npm ci --prefix docs
 
-      - name: Build and deploy documentation
-        run: |
-          uv run properdocs gh-deploy --strict
+      - name: Build documentation
+        run: npm run build --prefix docs
+
+      - name: Deploy documentation
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/.vitepress/dist
+          # Keep the PR previews that live under pr-preview/
+          keep_files: true

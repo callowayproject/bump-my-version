@@ -9,7 +9,7 @@ For this example, we will use the following format: `YYYY.MM.DD.patch`. It will 
 
 ## Initial configuration
 
-```toml title=".bumpversion.toml"
+```toml [.bumpversion.toml]
 [tool.bumpversion]
 current_version = "2024.3.1.4"
 parse = """(?x)                     # Verbose mode
@@ -41,7 +41,7 @@ You can look up the regular expressions for the CalVer format in the [CalVer ref
 
 When you bump the calendar version, the patch is reset to 0 _even if the release did not change._
 
-```console title="Bumping the release resets patch"
+```console [Bumping the release resets patch]
 $ date -I      
 2024-03-1
 $ bump-my-version show-bump
@@ -51,7 +51,7 @@ $ bump-my-version show-bump
 
 The next day:
 
-```console title="Bumping the release resets patch, the next day"
+```console [Bumping the release resets patch, the next day]
 $ date -I      
 2024-03-2
 $ bump-my-version show-bump
@@ -63,7 +63,7 @@ $ bump-my-version show-bump
 
 Calendar Versioned parts are updated with every bump, regardless of the part being bumped. If you are bumping the version within the same time period (in this example, the same day), the `release` part will not change. So bumping the `patch` part will increment the `patch` part only.
 
-```console title="Bumping patch on the same day"
+```console [Bumping patch on the same day]
 $ date -I      
 2024-03-1
 $ bump-my-version show-bump
@@ -73,7 +73,7 @@ $ bump-my-version show-bump
 
 However, if you bump the version on the next day, the `release` part will also be updated.
 
-```console title="Bumping patch on the next day"
+```console [Bumping patch on the next day]
 $ date -I      
 2024-03-2
 $ bump-my-version show-bump

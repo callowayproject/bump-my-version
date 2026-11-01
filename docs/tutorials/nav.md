@@ -1,2 +1,0 @@
-- [Getting Started](getting-started.md)
-- [Semantic Versioning](semantic-versioning-example.md)

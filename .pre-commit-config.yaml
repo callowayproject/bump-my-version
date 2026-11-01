@@ -15,6 +15,7 @@ repos:
       additional_dependencies:
         - tomli
       args: [--ignore-words-list, astroid ]
+      exclude: package-lock.json
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
@@ -28,11 +29,7 @@ repos:
       - id: check-symlinks
       - id: check-toml
       - id: check-yaml
-        exclude: |
-          (?x)^(
-            test.*|
-            properdocs.yml
-          )$
+        exclude: test.*
         args: [--allow-multiple-documents]
       - id: debug-statements
       - id: end-of-file-fixer
