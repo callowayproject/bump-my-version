@@ -110,17 +110,23 @@ export default defineConfig({
     config: (md) => {
       md.use(deflist);
       // `foo.md` is emitted as `foo/index.html`, which would resolve relative links one level too deep.
-      // Make relative `.md` links absolute from the source location so they are unaffected.
+      // Resolve internal links from the source location and point them at the emitted URL
+      // (`/foo/`), which is what the dead-link checker expects for rewritten pages.
       md.core.ruler.push("absolute-md-links", (state) => {
         // `env.relativePath` is the rewritten path; map it back to the source file.
-        const source = sourceOf[state.env.relativePath as string];
-        if (!source) return;
+        const relativePath = state.env.relativePath as string;
+        const source = sourceOf[relativePath] ?? relativePath;
         for (const block of state.tokens) {
           for (const token of block.children ?? []) {
             if (token.type !== "link_open") continue;
             const href = token.attrGet("href");
-            if (!href || !/^[^/#:][^:]*\.md(#.*)?$/.test(href)) continue;
-            token.attrSet("href", posix.join("/", posix.dirname(source), href));
+            if (!href || /^(#|[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) continue;
+            const [, path, hash] = href.match(/^([^?#]*)(.*)$/)!;
+            if (!path) continue;
+            const abs = path.startsWith("/") ? path : posix.join("/", posix.dirname(source), path);
+            const stem = abs.replace(/\.md$/, "").replace(/\/$/, "");
+            if (rewrites[`${stem.slice(1)}.md`]) token.attrSet("href", `${stem}/${hash}`);
+            else if (path.endsWith(".md")) token.attrSet("href", abs + hash);
           }
         }
       });

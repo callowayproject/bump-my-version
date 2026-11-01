@@ -6,7 +6,7 @@
     "gen": "uv run --group docs python scripts/generate_reference.py",
     "dev": "npm run gen && vitepress dev",
     "build": "npm run gen && vitepress build",
-    "preview": "vitepress preview"
+    "preview": "npm run gen && vitepress preview"
   },
   "devDependencies": {
     "markdown-it-deflist": "4.0.0",
