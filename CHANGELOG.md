@@ -1,5 +1,38 @@
 # Changelog
 
+## 1.8.1 (2026-11-01)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.8.0...1.8.1)
+
+### Fixes
+
+- Fix linting issues in documentation and code snippets. [c912a6b](https://github.com/callowayproject/bump-my-version/commit/c912a6b9c77e8749930e72b8afe945f26e73a96e)
+
+### Other
+
+- Upgrade `markdown-it-deflist` to version 4.0.0 for updated features and dependencies. [475aafa](https://github.com/callowayproject/bump-my-version/commit/475aafa916568c838b27f7b725cdbe3032ac903a)
+
+- Migrate documentation site from ProperDocs to VitePress. [700beae](https://github.com/callowayproject/bump-my-version/commit/700beaec58511e579b3ccfa0683c51c6127a7d38)
+
+  Replace the Material for MkDocs / ProperDocs site with VitePress (#459).
+
+  - Add a VitePress project under docs/ (npm, Node 22 via .nvmrc and devenv).
+  - Generate the CLI and API reference at build time with a griffe/click
+    script (docs/scripts/generate_reference.py); output is gitignored.
+  - Keep existing URLs by emitting each page as foo/index.html and making
+    relative .md links absolute for rewritten pages.
+  - Auto-scan the sidebar from the section directories.
+  - Convert admonitions, tabs, collapsibles, includes, and the home page to
+    VitePress syntax; render definition lists with markdown-it-deflist.
+  - Update the final-deploy and PR-preview workflows, justfile, pre-commit
+    config, and the docs dependency group.
+  - Remove properdocs.yml, overrides/, gen_doc_stubs.py, custom CSS, and
+    giscus comments.
+  - Switch the rumdl flavor to "standard"; this reindents nested lists in
+    README.md.
+
+  Closes #459
+
 ## 1.8.0 (2026-11-01)
 
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.7.0...1.8.0)
