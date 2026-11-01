@@ -2553,6 +2553,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#allow_dirty_files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        allow_dirty_files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#commit" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3133,6 +3144,26 @@
 </dl>
 </div>
 <p>Bump-my-version&rsquo;s default behavior is to abort if the working directory has uncommitted changes. This protects you from releasing unversioned files and overwriting unsaved changes.</p>
+<h3 id="allow_dirty_files">allow_dirty_files<a class="headerlink" href="#allow_dirty_files" title="Permanent link">&para;</a></h3>
+<div class="field-list">
+<dl>
+<dt>required</dt>
+<dd>No</dd>
+<dt>default</dt>
+<dd><code>[]</code></dd>
+<dt>type</dt>
+<dd>list of strings</dd>
+<dt>command line option</dt>
+<dd>None</dd>
+<dt>environment var</dt>
+<dd>None</dd>
+</dl>
+</div>
+<p>A list of glob patterns for files that are ignored by the dirty working directory check, even when <code>allow_dirty</code> is <code>False</code>. Patterns are matched against repository-relative paths using <a href="https://docs.python.org/3/library/fnmatch.html"><code>fnmatch</code></a>, so <code>*</code> also matches <code>/</code>.</p>
+<p>This does not stage the files. To include them in the commit, add them in a <a href="../../hooks/">pre-commit hook</a>, such as <code>git add CHANGELOG.md</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">[tool.bumpversion]</span>
+<span class="n">allow_dirty_files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"CHANGELOG.md"</span><span class="p">,</span><span class="w"> </span><span class="s2">"docs/changelog/*"</span><span class="p">]</span>
+</code></pre></div>
 <h3 id="commit">commit<a class="headerlink" href="#commit" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
@@ -3187,6 +3218,7 @@
 <p class="admonition-title">Note</p>
 <p>‡ If <code>pyproject.toml</code> exists, then <code>current_version</code> falls back to <code>project.version</code> in <code>pyproject.toml</code>. This only works if <code>project.version</code> is statically set. Such a <code>pyproject.toml</code> is also found by <a href="../#configuration-files">configuration file discovery</a> when it has no <code>[tool.bumpversion]</code> table, or only <code>[[tool.bumpversion.files]]</code>.</p>
 </div>
+<p>When <code>current_version</code> differs from the version of the last SCM tag, Bump My Version compares the two using your <code>parse</code> and <code>serialize</code> settings. It logs a warning only if <code>current_version</code> is <em>older</em> than the last tag. If it is ahead of the tag (the normal state during development), or the two versions can&rsquo;t be compared, the mismatch is logged at debug level. Use <code>-vv</code> to see it.</p>
 <h3 id="ignore_missing_files">ignore_missing_files<a class="headerlink" href="#ignore_missing_files" title="Permanent link">&para;</a></h3>
 <div class="field-list">
 <dl>
@@ -3476,7 +3508,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 25, 2026 14:05:44 UTC">October 25, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 31, 2026 14:34:27 UTC">October 31, 2026</span>
   </span>
 
     
