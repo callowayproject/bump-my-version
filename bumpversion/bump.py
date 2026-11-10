@@ -96,6 +96,11 @@ def do_bump(
     version = config.version_config.parse(config.current_version)
     logger.dedent()
 
+    if version is None:
+        raise ConfigurationError(
+            f"Current version '{config.current_version}' does not match the configured version pattern."
+        )
+
     run_setup_hooks(config, version, dry_run)
 
     next_version = get_next_version(version, config, version_part, new_version, to_value)

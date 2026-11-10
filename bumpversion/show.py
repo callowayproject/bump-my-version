@@ -127,6 +127,10 @@ def do_show(
     """Show current version or configuration information."""
     if current_version:
         config.current_version = current_version
+        if config.version_config.parse(current_version) is None:
+            raise BadInputError(
+                f"Current version '{current_version}' does not match the configured version pattern."
+            )
     config_dict = config.model_dump()
     ctx = get_context(config)
 

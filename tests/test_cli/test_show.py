@@ -61,3 +61,22 @@ def test_show_no_args(tmp_path: Path, fixtures_path: Path, runner):
 
     assert result.exit_code == 0
     assert result.output.strip() == expected_output.strip()
+
+
+def test_show_increment_with_unparsable_version_is_a_clean_error(
+    tmp_path: Path, fixtures_path: Path, runner
+):
+    """An unparsable current version should be a usage error, not a traceback."""
+    # Arrange
+    config_path = tmp_path / "pyproject.toml"
+    toml_path = fixtures_path / "basic_cfg.toml"
+    shutil.copy(toml_path, config_path)
+
+    with inside_dir(tmp_path):
+        result: Result = runner.invoke(
+            cli.cli, ["show", "--increment", "patch", "--current-version", "garbage!!"]
+        )
+
+    assert result.exit_code == 2
+    assert "garbage!!" in result.output
+    assert "Traceback" not in result.output

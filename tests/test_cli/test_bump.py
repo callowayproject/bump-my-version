@@ -504,3 +504,13 @@ class TestToOption:
             result: Result = runner.invoke(cli.cli, ["bump", "major", "--to", "1", "--no-commit"])
         assert result.exit_code == 0, result.output
         assert (tmp_path / "a.txt").read_text() == "0.9.3"
+
+    def test_unparsable_current_version_is_a_clean_error(self, tmp_path: Path, runner):
+        with inside_dir(tmp_path):
+            result: Result = runner.invoke(
+                cli.cli,
+                ["bump", "patch", "--current-version", "garbage!!", "--dry-run", "--allow-dirty"],
+            )
+        assert result.exit_code == 2, result.output
+        assert "garbage!!" in result.output
+        assert "Traceback" not in result.output
