@@ -103,7 +103,9 @@ def update_ini_config_file(
     )
 
     config_path = Path(config_file)
-    existing_config = config_path.read_text(encoding="utf-8")
+    with config_path.open(encoding="utf-8") as f:
+        existing_config = f.read()
+        newlines = f.newlines[0] if isinstance(f.newlines, tuple) else f.newlines
     if config_path.suffix == ".cfg" and cfg_current_version_regex.search(existing_config):
         sub_str = f"\\g<section_prefix>{new_version}"
         new_config = cfg_current_version_regex.sub(sub_str, existing_config)
@@ -132,4 +134,6 @@ def update_ini_config_file(
     )
 
     if not dry_run:
-        config_path.write_text(new_config, encoding="utf-8")
+        # Write the line endings the file already had, instead of the platform's default.
+        with config_path.open("w", encoding="utf-8", newline=newlines) as f:
+            f.write(new_config)
