@@ -438,7 +438,9 @@ class DataFileUpdater:
         """Update a TOML file."""
         import tomlkit
 
-        toml_data = tomlkit.parse(self.path.read_text(encoding="utf-8"))
+        with self.path.open(encoding="utf-8") as f:
+            toml_data = tomlkit.parse(f.read())
+            self._newlines = f.newlines[0] if isinstance(f.newlines, tuple) else f.newlines
         value_before = get_nested_value(toml_data, self.file_change.key_path)
 
         if not contains_pattern(search_for, value_before) and not self.file_change.ignore_missing_version:
@@ -455,4 +457,6 @@ class DataFileUpdater:
 
         set_nested_value(toml_data, new_value, self.file_change.key_path)
 
-        self.path.write_text(tomlkit.dumps(toml_data), encoding="utf-8")
+        # Write the line endings the file already had, instead of the platform's default.
+        with self.path.open("w", encoding="utf-8", newline=self._newlines) as f:
+            f.write(tomlkit.dumps(toml_data))
