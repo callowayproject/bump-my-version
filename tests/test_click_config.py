@@ -8,7 +8,7 @@ import httpx2 as httpx
 import pytest
 
 from bumpversion.click_config import config_option, download_url, resolve_conf_location
-from bumpversion.exceptions import BadInputError
+from bumpversion.exceptions import BadInputError, BumpVersionError
 
 
 @click.command()
@@ -69,6 +69,14 @@ class TestResolveConfLocation:
         result = resolve_conf_location(str(dummy_path))
         assert isinstance(result, Path)
         assert result == dummy_path
+
+    def test_passing_directory_raises_error(self, fixtures_path: Path):
+        """A directory is not a configuration file."""
+        with pytest.raises(BumpVersionError) as exc_info:
+            resolve_conf_location(str(fixtures_path))
+
+        assert "is not a file" in str(exc_info.value)
+
 
     def test_resolves_valid_url(self, fixtures_path: Path, httpserver):
         """Should download the file if given a valid URL."""

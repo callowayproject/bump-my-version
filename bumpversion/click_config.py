@@ -122,6 +122,8 @@ def resolve_conf_location(url_or_path: str) -> Path:
     path = Path(url_or_path)
     if not path.exists():
         raise BumpVersionError(f"'{path}' does not exist.")
+    if not path.is_file():
+        raise BumpVersionError(f"'{path}' is not a file.")
     return path
 
 
