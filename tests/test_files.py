@@ -167,6 +167,59 @@ class TestModifyFiles:
         # Assert
         assert changelog_path.read_text() == "# 1.2.4\n\n# 1.2.3\n"
 
+    def test_backslashes_in_replace_are_written_as_is(self, tmp_path: Path):
+        """Backslashes in the replace text are not treated as escapes."""
+        # Arrange
+        path = tmp_path / "setup.iss"
+        path.write_text("OutputDir=C:\\Users\\build\\app-1.2.3\n", encoding="utf-8")
+
+        overrides = {
+            "current_version": "1.2.3",
+            "files": [
+                {
+                    "filename": str(path),
+                    "search": "C:\\Users\\build\\app-{current_version}",
+                    "replace": "C:\\Users\\build\\app-{new_version}",
+                }
+            ],
+        }
+        conf, version_config, current_version = get_config_data(overrides)
+        new_version = current_version.bump("patch")
+        configured_files = files.resolve_file_config(conf.files, version_config)
+
+        # Act
+        files.modify_files(configured_files, current_version, new_version, get_context(conf))
+
+        # Assert
+        assert path.read_text() == "OutputDir=C:\\Users\\build\\app-1.2.4\n"
+
+    def test_backreferences_in_replace_expand_with_regex(self, tmp_path: Path):
+        """With regex on, the replace text is a regex template and backreferences expand."""
+        # Arrange
+        path = tmp_path / "a.txt"
+        path.write_text("app-1.2.3\n", encoding="utf-8")
+
+        overrides = {
+            "current_version": "1.2.3",
+            "files": [
+                {
+                    "filename": str(path),
+                    "regex": True,
+                    "search": "(?P<p>app-){current_version}",
+                    "replace": "\\g<p>{new_version}",
+                }
+            ],
+        }
+        conf, version_config, current_version = get_config_data(overrides)
+        new_version = current_version.bump("patch")
+        configured_files = files.resolve_file_config(conf.files, version_config)
+
+        # Act
+        files.modify_files(configured_files, current_version, new_version, get_context(conf))
+
+        # Assert
+        assert path.read_text() == "app-1.2.4\n"
+
     def test_dry_run_writes_nothing(self, tmp_path: Path):
         """A dry run computes the changes but does not write them."""
         # Arrange
@@ -452,6 +505,35 @@ class TestModifyFilesRegex:
 
 class TestDataFileUpdater:
     """Tests for the DataFileUpdater class."""
+
+    def test_backslashes_in_replace_are_written_as_is(self, tmp_path: Path) -> None:
+        """Backslashes in the replace text of a key path are not treated as escapes."""
+        # Arrange
+        config_path = tmp_path / "pyproject.toml"
+        config_path.write_text('[tool.app]\noutput = "C:\\\\build\\\\app-1.2.3"\n', encoding="utf-8")
+
+        overrides = {"current_version": "1.2.3"}
+        conf, version_config, current_version = get_config_data(overrides)
+        new_version = current_version.bump("patch")
+        datafile_config = FileChange(
+            filename=str(config_path),
+            key_path="tool.app.output",
+            search="C:\\build\\app-{current_version}",
+            replace="C:\\build\\app-{new_version}",
+            regex=False,
+            ignore_missing_version=conf.ignore_missing_version,
+            ignore_missing_file=conf.ignore_missing_files,
+            serialize=conf.serialize,
+            parse=conf.parse,
+        )
+
+        # Act
+        files.DataFileUpdater(datafile_config, version_config.part_configs).update_file(
+            current_version, new_version, get_context(conf)
+        )
+
+        # Assert
+        assert tomlkit.parse(config_path.read_text())["tool"]["app"]["output"] == "C:\\build\\app-1.2.4"
 
     def test_update_file_does_not_modify_non_toml_files(self, tmp_path: Path) -> None:
         """A non-TOML file is not modified."""
