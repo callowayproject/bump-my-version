@@ -14,6 +14,8 @@ Bump My Version defaults to using a simple string search. If the search template
 
 Both the search and replace templates are rendered using the [formatting context](formatting-context.md). However, only the search template is also treated as a regular expression. The replacement fields available in the formatting context are enclosed in curly braces `{}`.
 
+When `regex` is false, the rendered `replace` text is written as is. When `regex` is true, it is used as a [regular expression replacement template](https://docs.python.org/3/library/re.html#re.sub), so backreferences like `\g<name>` work and literal backslashes must be escaped.
+
 The search and replace templates can be multiple lines, like so:
 
 ```toml
