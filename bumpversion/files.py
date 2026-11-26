@@ -11,7 +11,7 @@ from bumpversion.config import DEFAULTS as DEFAULT_CONFIG
 from bumpversion.config.models import FileChange
 from bumpversion.exceptions import VersionNotFoundError
 from bumpversion.ui import get_indented_logger
-from bumpversion.utils import get_nested_value, set_nested_value
+from bumpversion.utils import get_nested_value, read_text_and_newline, set_nested_value
 from bumpversion.versioning.models import Version, VersionComponentSpec
 from bumpversion.versioning.version_config import VersionConfig
 
@@ -121,10 +121,8 @@ class ConfiguredFile:
         if not os.path.exists(self.file_change.filename):
             raise FileNotFoundError(f"File not found: '{self.file_change.filename}'")  # pragma: no-coverage
 
-        with open(self.file_change.filename, encoding="utf-8") as f:
-            contents = f.read()
-            self._newlines = f.newlines[0] if isinstance(f.newlines, tuple) else f.newlines
-            return contents
+        contents, self._newlines = read_text_and_newline(self.file_change.filename)
+        return contents
 
     def write_file_contents(self, contents: str) -> None:
         """Write the contents of the file."""
@@ -404,7 +402,6 @@ class DataFileUpdater:
             version_part_configs,
         )
         self.path = Path(self.file_change.filename)
-        self._newlines: Optional[str] = None
 
     def update_file(
         self,
@@ -438,7 +435,8 @@ class DataFileUpdater:
         """Update a TOML file."""
         import tomlkit
 
-        toml_data = tomlkit.parse(self.path.read_text(encoding="utf-8"))
+        contents, newline = read_text_and_newline(self.path)
+        toml_data = tomlkit.parse(contents)
         value_before = get_nested_value(toml_data, self.file_change.key_path)
 
         if not contains_pattern(search_for, value_before) and not self.file_change.ignore_missing_version:
@@ -455,4 +453,6 @@ class DataFileUpdater:
 
         set_nested_value(toml_data, new_value, self.file_change.key_path)
 
-        self.path.write_text(tomlkit.dumps(toml_data), encoding="utf-8")
+        # Write the line endings the file already had, instead of the platform's default.
+        with self.path.open("w", encoding="utf-8", newline=newline) as f:
+            f.write(tomlkit.dumps(toml_data))

@@ -536,3 +536,34 @@ class TestDataFileUpdater:
         assert actual_difference == expected_difference
         assert toml_data["tool"]["pdm"]["dev-dependencies"]["lint"] == ["ruff==0.0.292"]
         assert toml_data["tool"]["bumpversion"]["current_version"] == "0.1.0"
+
+    @pytest.mark.parametrize("newline", [param("\n", id="LF"), param("\r\n", id="CRLF")])
+    def test_update_keeps_line_endings(self, tmp_path: Path, newline: str) -> None:
+        """The file keeps its line endings, whatever the platform's default line ending is."""
+        # Arrange
+        contents = '[tool.bumpversion]\ncurrent_version = "1.2.3"\n\n[tool.other]\nkey = "value"\n'
+        config_path = tmp_path / ".bumpversion.toml"
+        config_path.write_bytes(contents.replace("\n", newline).encode("utf-8"))
+
+        conf, version_config, current_version = get_config_data({"current_version": "1.2.3"})
+        new_version = current_version.bump("patch")
+        datafile_config = FileChange(
+            filename=str(config_path),
+            key_path="tool.bumpversion.current_version",
+            search=conf.search,
+            replace=conf.replace,
+            regex=conf.regex,
+            ignore_missing_version=conf.ignore_missing_version,
+            ignore_missing_file=conf.ignore_missing_files,
+            serialize=conf.serialize,
+            parse=conf.parse,
+        )
+
+        # Act
+        files.DataFileUpdater(datafile_config, version_config.part_configs).update_file(
+            current_version, new_version, get_context(conf)
+        )
+
+        # Assert
+        expected = contents.replace("1.2.3", "1.2.4").replace("\n", newline)
+        assert config_path.read_bytes() == expected.encode("utf-8")
