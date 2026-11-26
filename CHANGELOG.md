@@ -1,5 +1,61 @@
 # Changelog
 
+## 1.8.3 (2026-11-26)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.8.2...1.8.3)
+
+### Other
+
+- Reject only directories as --config-file. [7506893](https://github.com/callowayproject/bump-my-version/commit/75068933d426a17ab0405a95a039ae4003f18908)
+
+  is_file() also rejected existing non-regular paths such as /dev/null, which worked before.
+
+- Reject a --config-file that is not a file. [ec5fdab](https://github.com/callowayproject/bump-my-version/commit/ec5fdabd1971bfb57b46ff8a50562077aca2cebf)
+
+  `resolve_conf_location()` only checks that the path exists, so a directory is
+  accepted and handed to the config search, where reading it as TOML crashes:
+
+  ```
+  $ bump-my-version bump --config-file /tmp patch --dry-run
+  Traceback (most recent call last):
+    File ".../bumpversion/config/files.py", line 112, in _has_bumpversion_config
+      return "bumpversion]" in path.read_text(encoding="utf-8")
+  IsADirectoryError: [Errno 21] Is a directory: '/tmp'
+  ```
+
+  A path that does not exist is already reported along the same option:
+
+  ```
+  $ bump-my-version bump --config-file /nope.toml patch --dry-run ; echo $?
+  Error: '/nope.toml' does not exist.
+  ```
+
+  ## Change
+
+  `resolve_conf_location()` also rejects a path that is not a file, so both bad
+  inputs come out of the same place:
+
+  ```
+  $ bump-my-version bump --config-file /tmp patch --dry-run ; echo $?
+  Error: '/tmp' is not a file.
+  2
+  ```
+
+  | case | before | after |
+  |---|---|---|
+  | `--config-file <directory>` | `IsADirectoryError` traceback, exit 1 | `'/tmp' is not a file.`, exit 2 |
+  | `--config-file <missing>` | `'...' does not exist.` | unchanged |
+  | `--config-file <valid file>` | loaded | unchanged |
+  | no `--config-file` | search as before | unchanged |
+
+  ## Tests
+
+  `test_passing_directory_raises_error` in `tests/test_click_config.py`.
+  `pytest tests/test_click_config.py` here: 7 passed / 3 failed with the change,
+  6 passed / 4 failed on the current tree — the difference is the new test; the
+  remaining 3 (`test_*url*`, `test_download_url_success`) fail on the current tree
+  too because the installed `pytest-httpserver` no longer has `serve_content`.
+
 ## 1.8.2 (2026-11-26)
 
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.8.1...1.8.2)
