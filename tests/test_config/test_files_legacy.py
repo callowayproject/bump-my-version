@@ -139,6 +139,31 @@ def test_update_ini_config_file_keeps_line_endings(tmp_path: Path, newline: str)
     assert cfg_path.read_bytes() == expected.encode("utf-8")
 
 
+@pytest.mark.parametrize(
+    ["endings", "expected_ending"],
+    [
+        param(("\n", "\r", "\n"), "\n", id="stray-CR-in-LF"),
+        param(("\r\n", "\n", "\r\n"), "\r\n", id="mostly-CRLF"),
+        param(("\n", "\r\n", "\n"), "\n", id="mostly-LF"),
+    ],
+)
+def test_update_ini_config_file_uses_most_common_line_ending(
+    tmp_path: Path, endings: tuple, expected_ending: str
+) -> None:
+    """A file with mixed line endings is written with the most common one."""
+    # Arrange
+    lines = ["[bumpversion]", "current_version = 1.0.0", "commit = True"]
+    cfg_path = tmp_path / ".bumpversion.cfg"
+    cfg_path.write_bytes("".join(line + end for line, end in zip(lines, endings)).encode("utf-8"))
+
+    # Act
+    update_ini_config_file(cfg_path, "1.0.0", "1.0.1")
+
+    # Assert
+    expected = "".join(line + expected_ending for line in lines).replace("1.0.0", "1.0.1")
+    assert cfg_path.read_bytes() == expected.encode("utf-8")
+
+
 def test_file_keyword_with_suffix_is_accepted(tmp_path: Path, cfg_file: str, cfg_file_keyword: str):
     cfg_file_path = tmp_path / cfg_file
     cfg_file_path.write_text(
