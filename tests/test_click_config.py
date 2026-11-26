@@ -1,5 +1,6 @@
 """Tests for the bumpversion.click_config module."""
 
+import os
 from pathlib import Path
 from typing import Optional
 
@@ -75,8 +76,11 @@ class TestResolveConfLocation:
         with pytest.raises(BumpVersionError) as exc_info:
             resolve_conf_location(str(fixtures_path))
 
-        assert "is not a file" in str(exc_info.value)
+        assert "is a directory" in str(exc_info.value)
 
+    def test_resolves_non_regular_file(self):
+        """Only directories are rejected; other existing paths such as the null device are allowed."""
+        assert resolve_conf_location(os.devnull) == Path(os.devnull)
 
     def test_resolves_valid_url(self, fixtures_path: Path, httpserver):
         """Should download the file if given a valid URL."""
