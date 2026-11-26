@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.8.4 (2026-11-26)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.8.3...1.8.4)
+
+### Fixes
+
+- Fix backslashes in replace being read as regex escapes. [578c4a3](https://github.com/callowayproject/bump-my-version/commit/578c4a3225953aa9756b9df626f3d392afe445a8)
+
+### Other
+
+- Keep regex replacement templates when regex is true. [b986b17](https://github.com/callowayproject/bump-my-version/commit/b986b1736d37ac0cbd9c6eb2889bf276e1e138bc)
+
+  The replace text is written literally only when regex is false, so
+  backreferences like \\g<name> still expand with regex = true.
+
 ## 1.8.3 (2026-11-26)
 
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.8.2...1.8.3)
