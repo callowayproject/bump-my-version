@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import re
 import string
 import subprocess
+from collections import Counter
 from pathlib import Path
 from subprocess import CompletedProcess
 from typing import Any, List, Optional, Tuple, Union
@@ -28,8 +30,6 @@ def extract_regex_flags(regex_pattern: str) -> Tuple[str, str]:
     Returns:
         A tuple of the regex pattern without the flag string and regex flag string
     """
-    import re
-
     flag_pattern = r"^(\(\?[aiLmsux]+\))"
     bits = re.split(flag_pattern, regex_pattern)
     return (regex_pattern, "") if len(bits) == 1 else (bits[2], bits[1])
@@ -56,6 +56,24 @@ def labels_for_format(serialize_format: str) -> List[str]:
 def get_overrides(**kwargs) -> dict:
     """Return a dictionary containing only the overridden key-values."""
     return {key: val for key, val in kwargs.items() if val is not None}
+
+
+def read_text_and_newline(path: Pathlike) -> Tuple[str, Optional[str]]:
+    """
+    Read a text file and detect the line ending to write it back with.
+
+    Args:
+        path: The file to read
+
+    Returns:
+        The contents with every line ending translated to a newline character, and the file's most common line
+        ending (the first one found, if tied). The line ending is `None` if the file has none.
+    """
+    with open(path, encoding="utf-8", newline="") as f:
+        contents = f.read()
+    endings = Counter(re.findall(r"\r\n|\r|\n", contents))
+    newline = endings.most_common(1)[0][0] if endings else None
+    return re.sub(r"\r\n?", "\n", contents), newline
 
 
 def get_nested_value(d: dict, path: str) -> Any:

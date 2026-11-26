@@ -112,7 +112,7 @@ def resolve_conf_location(url_or_path: str) -> Path:
         The contents of the location.
 
     Raises:
-        BumpVersionError: if the file does not exist.
+        BumpVersionError: if the path does not exist or is a directory.
     """
     parsed_url = urlparse(url_or_path)
 
@@ -122,6 +122,8 @@ def resolve_conf_location(url_or_path: str) -> Path:
     path = Path(url_or_path)
     if not path.exists():
         raise BumpVersionError(f"'{path}' does not exist.")
+    if path.is_dir():
+        raise BumpVersionError(f"'{path}' is a directory.")
     return path
 
 

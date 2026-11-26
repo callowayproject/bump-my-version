@@ -1,5 +1,124 @@
 # Changelog
 
+## 1.8.3 (2026-11-26)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.8.2...1.8.3)
+
+### Other
+
+- Reject only directories as --config-file. [7506893](https://github.com/callowayproject/bump-my-version/commit/75068933d426a17ab0405a95a039ae4003f18908)
+
+  is_file() also rejected existing non-regular paths such as /dev/null, which worked before.
+
+- Reject a --config-file that is not a file. [ec5fdab](https://github.com/callowayproject/bump-my-version/commit/ec5fdabd1971bfb57b46ff8a50562077aca2cebf)
+
+  `resolve_conf_location()` only checks that the path exists, so a directory is
+  accepted and handed to the config search, where reading it as TOML crashes:
+
+  ```
+  $ bump-my-version bump --config-file /tmp patch --dry-run
+  Traceback (most recent call last):
+    File ".../bumpversion/config/files.py", line 112, in _has_bumpversion_config
+      return "bumpversion]" in path.read_text(encoding="utf-8")
+  IsADirectoryError: [Errno 21] Is a directory: '/tmp'
+  ```
+
+  A path that does not exist is already reported along the same option:
+
+  ```
+  $ bump-my-version bump --config-file /nope.toml patch --dry-run ; echo $?
+  Error: '/nope.toml' does not exist.
+  ```
+
+  ## Change
+
+  `resolve_conf_location()` also rejects a path that is not a file, so both bad
+  inputs come out of the same place:
+
+  ```
+  $ bump-my-version bump --config-file /tmp patch --dry-run ; echo $?
+  Error: '/tmp' is not a file.
+  2
+  ```
+
+  | case | before | after |
+  |---|---|---|
+  | `--config-file <directory>` | `IsADirectoryError` traceback, exit 1 | `'/tmp' is not a file.`, exit 2 |
+  | `--config-file <missing>` | `'...' does not exist.` | unchanged |
+  | `--config-file <valid file>` | loaded | unchanged |
+  | no `--config-file` | search as before | unchanged |
+
+  ## Tests
+
+  `test_passing_directory_raises_error` in `tests/test_click_config.py`.
+  `pytest tests/test_click_config.py` here: 7 passed / 3 failed with the change,
+  6 passed / 4 failed on the current tree — the difference is the new test; the
+  remaining 3 (`test_*url*`, `test_download_url_success`) fail on the current tree
+  too because the installed `pytest-httpserver` no longer has `serve_content`.
+
+## 1.8.2 (2026-11-26)
+
+[Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.8.1...1.8.2)
+
+### Fixes
+
+- Fix line ending detection for files with mixed endings. [074ff35](https://github.com/callowayproject/bump-my-version/commit/074ff35546d04d7cf00423e192d20d1e639451e8)
+
+  f.newlines lists the endings seen in a fixed order (CR, LF, CRLF), so taking the first entry let a single stray CR convert a whole LF file to CR.
+
+  Add read_text_and_newline, which picks the most common line ending, and use it for configured files, TOML files and the legacy INI config.
+
+- Fix config file line endings changing on a bump. [b5751b8](https://github.com/callowayproject/bump-my-version/commit/b5751b89ff7de6b9a0854e916ac239d634923c2f)
+
+  The TOML and legacy .cfg config files were read and written in text mode
+  with the default newline handling, so a bump rewrote the whole file with
+  the platform's line ending: LF became CRLF on Windows.
+
+  Write back the line ending the file already had, as ConfiguredFile does.
+
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [f7cb4a5](https://github.com/callowayproject/bump-my-version/commit/f7cb4a507a51db60db872b4537672415811d8593)
+
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.17.3 → v0.17.5](https://github.com/astral-sh/ruff-pre-commit/compare/v0.17.3...v0.17.5)
+
+- Chore(deps): bump actions/setup-node. [cd87626](https://github.com/callowayproject/bump-my-version/commit/cd87626efbdc44b30908555d467a937f4b73d251)
+
+  Bumps the github-actions group with 1 update: [actions/setup-node](https://github.com/actions/setup-node).
+
+  Updates `actions/setup-node` from 4 to 7
+
+  - [Release notes](https://github.com/actions/setup-node/releases)
+  - [Commits](https://github.com/actions/setup-node/compare/v4...v7)
+
+  ______________________________________________________________________
+
+  **updated-dependencies:** - dependency-name: actions/setup-node
+  dependency-version: '7'
+  dependency-type: direct:production
+  update-type: version-update:semver-major
+  dependency-group: github-actions
+
+  **signed-off-by:** dependabot[bot] <support@github.com>
+
+- **Fix internal link rewriting for `.md` files in VitePress and update preview script**. [2900b22](https://github.com/callowayproject/bump-my-version/commit/2900b22bde79fee2549ef6e47229b68d26feb482)
+
+  - Improve handling of internal `.md` links to correctly resolve and rewrite URLs for emitted pages, aligning with the dead-link checker expectations.
+  - Adjust `docs/package.json` to ensure reference generation is included in the `preview` script.
+
+- **Upgrade dependencies for VitePress and related packages**. [630aa17](https://github.com/callowayproject/bump-my-version/commit/630aa177e82e26d49a20eb7b5dcdeb6f1c4feb53)
+
+  - Bump VitePress to `2.0.0-alpha.21`.
+  - Upgrade `@docsearch/css` and `@docsearch/js` to `4.7.1`.
+  - Replace older Rollup platform bindings with updated Rolldown bindings (`1.2.16`).
+  - Add `@oxc-project/types` dependency (`0.156.0`).
+
+- Point agent docs at pre-commit as the single lint gate. [2854288](https://github.com/callowayproject/bump-my-version/commit/28542888d9670529c5d964626a0696dcc90e18fa)
+
+  Replace the hand-copied lint commands in CODING_STANDARDS.md with
+  pre-commit (which includes rumdl for markdown), and drop the duplicated
+  Code style and Commands content from AGENTS.md.
+
 ## 1.8.1 (2026-11-01)
 
 [Compare the full difference.](https://github.com/callowayproject/bump-my-version/compare/1.8.0...1.8.1)
