@@ -440,6 +440,11 @@ class DataFileUpdater:
         toml_data = tomlkit.parse(contents)
         value_before = get_nested_value(toml_data, self.file_change.key_path)
 
+        # A `files` entry for this file may have written the new value already;
+        # searching again would find the old version inside it (1.2 in 1.2.1).
+        if value_before == replace_with:
+            return
+
         if not contains_pattern(search_for, value_before) and not self.file_change.ignore_missing_version:
             raise ValueError(
                 f"Key '{self.file_change.key_path}' in {self.path} does not contain the correct contents: "
