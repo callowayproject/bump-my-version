@@ -578,6 +578,39 @@ class TestPep621Fallback:
             """
         )
 
+    def test_pyproject_in_files_new_version_starting_with_old(self, tmp_path: Path):
+        """A pyproject.toml files entry and a new version that starts with the old one (1.2 -> 1.2.1)."""
+        config_path = tmp_path / "pyproject.toml"
+        config_path.write_text(
+            dedent(
+                """
+                [project]
+                version = "1.2"
+
+                [tool.bumpversion]
+                current_version = "1.2"
+                parse = "(?P<major>\\\\d+)\\\\.(?P<minor>\\\\d+)(\\\\.(?P<patch>\\\\d+))?"
+                serialize = ["{major}.{minor}.{patch}", "{major}.{minor}"]
+                allow_dirty = true
+
+                [[tool.bumpversion.files]]
+                filename = "pyproject.toml"
+                search = 'version = "{current_version}"'
+                replace = 'version = "{new_version}"'
+                """
+            ),
+            encoding="utf-8",
+        )
+
+        with inside_dir(tmp_path):
+            result: Result = CliRunner().invoke(cli.cli, ["bump", "patch"])
+
+        assert result.exit_code == 0, result.output
+        contents = config_path.read_text()
+        assert 'version = "1.2.1"' in contents
+        assert 'current_version = "1.2.1"' in contents
+        assert "1.2.1.1" not in contents
+
     def test_dynamic_pep621_value_never_updated(self, tmp_path: Path, caplog):
         """Never update project.version if it is dynamic."""
         # Arrange
